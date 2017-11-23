@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RoRClient.Model.Connections;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace RoRClient
 {
     /// <summary>
@@ -22,8 +24,10 @@ namespace RoRClient
     {
         public MainWindow()
         {
+            ClientModel CM = new ClientModel();
+           
             InitializeComponent();
-
+            
         }
     }
 }
