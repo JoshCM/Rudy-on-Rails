@@ -23,6 +23,7 @@ namespace RoRClient
         public MainWindow()
         {
             InitializeComponent();
+
         }
     }
 }
