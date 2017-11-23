@@ -1,6 +1,9 @@
-package connections;
+package models;
 
 import org.apache.log4j.Logger;
+
+import communication.session.SessionQueueReceiver;
+import communication.session.SessionTopicSender;
 
 public class DummyGame {
 	

@@ -1,4 +1,4 @@
-package communication.Broker;
+package communication.broker;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.activemq.broker.TransportConnector;
 import org.apache.log4j.Logger;

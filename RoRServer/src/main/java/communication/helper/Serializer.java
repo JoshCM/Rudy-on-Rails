@@ -1,11 +1,11 @@
-package helper;
+package communication.helper;
 import java.lang.reflect.Type;
 import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import connections.DummyGame;
+import models.DummyGame;
 
 public class Serializer {
 	private static Gson gson = new Gson();

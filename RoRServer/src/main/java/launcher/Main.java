@@ -1,6 +1,6 @@
 package launcher;
 
-import communication.Broker.MessageBroker;
+import communication.broker.MessageBroker;
 
 public class Main {
 	public static void main(String[] args) {
