@@ -13,6 +13,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+*.prefs
 
 # External tool builders
 .externalToolBuilders/
@@ -118,11 +119,11 @@ fabric.properties
 
 ### Intellij Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
-
-# *.iml
-# modules.xml
-# .idea/misc.xml
-# *.ipr
+# Anmerkung: Eventuell auskommentieren, wenn benötigt.
+*.iml
+modules.xml
+.idea/misc.xml
+*.ipr
 
 # Sonarlint plugin
 .idea/sonarlint
