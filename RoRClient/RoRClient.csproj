@@ -91,7 +91,7 @@
     <Compile Include="Model\Connections\QueueBase.cs" />
     <Compile Include="Model\Connections\QueueReceiver.cs" />
     <Compile Include="Model\Connections\QueueSender.cs" />
-    <Compile Include="Model\Connections\ClientModel.cs" />
+    <Compile Include="Model\Models\ClientModel.cs" />
     <Compile Include="Model\Connections\TopicReceiver.cs" />
     <Compile Include="Model\Helper\Command.cs" />
     <Compile Include="Model\Helper\Serializer.cs" />

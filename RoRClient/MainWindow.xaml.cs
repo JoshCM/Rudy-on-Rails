@@ -1,4 +1,4 @@
-﻿using RoRClient.Model.Connections;
+﻿using RoRClient.Model.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
