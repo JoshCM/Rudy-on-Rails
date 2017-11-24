@@ -4,12 +4,19 @@ package models;
 
 public class Map {
 	
-	private final int mapSize = 3;
 	private static Map map = null;
 	private Square squares [][];
+	private final int mapSize = 3;
 	
 	private Map() {
 		squares = new Square[mapSize][mapSize];
+		
+		for(int i= 0; i < mapSize; i++) {
+			for(int j = 0; j < mapSize; j++) {
+				Square s = new Square(i);
+				squares[i][j] = s;
+			}
+		}
 	}
 	
 	public static Map getInstance() {
@@ -19,13 +26,16 @@ public class Map {
 		return map;
 	}
 	
-	public void fillMap() {
-		for(int i= 0; i < mapSize; i++) {
-			for(int j = 0; j < mapSize; j++) {
-				Square s = new Square(i);
-				map.squares[i][j] = s;
-			}
-		}
+	public Square getSquare(int i, int j) {
+		return squares[i][j];
+	}
+	
+	public Square[][] getSquares() {
+		return squares;
+	}
+	
+	public void setSquares(Square squares[][]) {
+		this.squares = squares;
 	}
 
 }
