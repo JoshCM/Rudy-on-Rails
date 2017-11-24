@@ -31,13 +31,13 @@ namespace RoRClient.Model.Connections
         private ClientConnection()
         {
             
-            Console.WriteLine("erstellt connection(base)");
-            connectionFactory = new ConnectionFactory(BROKER_URL);
-            connection = connectionFactory.CreateConnection();
-            Console.WriteLine("startet Session(base)");
-            session = connection.CreateSession(AcknowledgementMode.AutoAcknowledge);
-            Console.WriteLine("startet queue(base)");
-            connection.Start();
+            //Console.WriteLine("erstellt connection(base)");
+            //connectionFactory = new ConnectionFactory(BROKER_URL);
+            //connection = connectionFactory.CreateConnection();
+            //Console.WriteLine("startet Session(base)");
+            //session = connection.CreateSession(AcknowledgementMode.AutoAcknowledge);
+            //Console.WriteLine("startet queue(base)");
+            //connection.Start();
 
         }
 
