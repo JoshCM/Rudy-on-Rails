@@ -73,6 +73,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\DummyMap.cs" />
+    <Compile Include="ViewModel\DummyRail.cs" />
+    <Compile Include="ViewModel\DummySquare.cs" />
+    <Compile Include="ViewModel\EditorViewModel.cs" />
+    <Compile Include="View\DummySquareUserControl.xaml.cs">
+      <DependentUpon>DummySquareUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditorView.xaml.cs">
+      <DependentUpon>EditorView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -85,6 +95,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\DummySquareUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Connections\ClientConnection.cs" />
@@ -124,10 +142,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-    <Folder Include="View\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
