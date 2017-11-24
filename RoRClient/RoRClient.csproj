@@ -77,6 +77,8 @@
     <Compile Include="View\EditorUserControl.xaml.cs">
       <DependentUpon>EditorUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Helper\ActionCommand.cs" />
+    <Compile Include="ViewModel\Helper\ViewModelBase.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
