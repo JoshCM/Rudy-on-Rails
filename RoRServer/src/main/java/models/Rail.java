@@ -5,4 +5,6 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	RailSection section1;
 	RailSection section2;
 	
+	
+	
 }
