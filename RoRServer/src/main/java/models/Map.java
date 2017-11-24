@@ -6,7 +6,7 @@ public class Map {
 	
 	private final int mapSize = 3;
 	private static Map map = null;
-	Square squares [][];
+	private Square squares [][];
 	
 	private Map() {
 		squares = new Square[mapSize][mapSize];

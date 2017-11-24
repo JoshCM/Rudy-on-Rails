@@ -1,7 +1,12 @@
 package models;
 
 public class RailSection {
-	RailSectionPosition node1;
-	RailSectionPosition node2;
+	
+	private RailSectionPosition node1;
+	private RailSectionPosition node2;
+	
+	public RailSection() {
+		
+	}
 
 }
