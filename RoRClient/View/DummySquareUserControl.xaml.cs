@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace RoRClient.View
 {
-    /// <summary>
-    /// Interaktionslogik für DummySquareUserControl.xaml
-    /// </summary>
     public partial class DummySquareUserControl : UserControl
     {
         public DummySquareUserControl()
@@ -101,5 +98,18 @@ namespace RoRClient.View
             }
         }
         public static readonly DependencyProperty SquareDimProperty = DependencyProperty.Register("SquareDim", typeof(int), typeof(DummySquareUserControl), new UIPropertyMetadata(0));
+
+        public bool HasRail
+        {
+            get
+            {
+                return (bool)GetValue(HasRailProperty);
+            }
+            set
+            {
+                SetValue(HasRailProperty, value);
+            }
+        }
+        public static readonly DependencyProperty HasRailProperty = DependencyProperty.Register("HasRail", typeof(bool), typeof(DummySquareUserControl), new UIPropertyMetadata(true));
     }
 }

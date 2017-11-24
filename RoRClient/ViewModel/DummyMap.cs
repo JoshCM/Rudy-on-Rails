@@ -20,7 +20,8 @@
                     squares[i, j] = new DummySquare(i, j);
 
                     // Zum Test hier einfach mal ein DummyRail erzeugen, um es testweise anzuzeigen
-                    squares[i, j].Rail = new DummyRail();
+                    if(i % 2 == 0)
+                        squares[i, j].Rail = new DummyRail();
                 }             
             }
         }

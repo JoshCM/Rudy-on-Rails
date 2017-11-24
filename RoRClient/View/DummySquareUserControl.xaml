@@ -13,11 +13,25 @@
              Canvas.Left="{Binding RealX, ElementName=dummySquareUserControl}"
              >
 
-    <Rectangle
-        Width="{Binding SquareDim, ElementName=dummySquareUserControl}"
-        Height="{Binding SquareDim, ElementName=dummySquareUserControl}"
-        Fill="BROWN"
-        Stroke="WHITE"
-        StrokeThickness="1" />
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Canvas Width="{Binding SquareDim, ElementName=dummySquareUserControl}"
+            Height="{Binding SquareDim, ElementName=dummySquareUserControl}">
 
+        <Rectangle
+            Width="{Binding SquareDim, ElementName=dummySquareUserControl}"
+            Height="{Binding SquareDim, ElementName=dummySquareUserControl}"
+            Fill="BROWN"
+            Stroke="WHITE"
+            StrokeThickness="1" />
+
+        <Rectangle
+            Width="20"
+            Height="20"
+            Fill="GREEN"
+            Stroke="WHITE"
+            StrokeThickness="1" 
+            Visibility="{Binding HasRail, ElementName=dummySquareUserControl, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+    </Canvas>
 </UserControl>

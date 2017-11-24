@@ -5,12 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:v="clr-namespace:RoRClient.View"
         xmlns:vm="clr-namespace:RoRClient.ViewModel"
+        xmlns:converter="clr-namespace:RoRClient.BindingConverter"
         mc:Ignorable="d"
         Title="EditorView" Height="600" Width="800">
 
     <Window.DataContext>
         <vm:EditorViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <converter:ObjectIsNullToBoolConverter  x:Key="ObjectIsNullToBoolConverter"/>
+    </Window.Resources>
 
     <DockPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
@@ -19,7 +23,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type vm:DummySquare}">
                             <Canvas>
-                                <v:DummySquareUserControl X="{Binding XPos}" Y="{Binding YPos}"/>
+                                <v:DummySquareUserControl X="{Binding XPos}" Y="{Binding YPos}" HasRail="{Binding Rail, Converter={StaticResource ObjectIsNullToBoolConverter}}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
