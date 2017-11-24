@@ -8,9 +8,21 @@ namespace RoRClient.Model.Models
 {
     class Map
     {
-        Map map = null;
-        Square[,] squares;
         const int mapSize = 3;
+
+        Square[,] squares;
+
+        public Square[,] Squares
+        {
+            get
+            {
+                return squares;
+            }
+            set
+            {
+                squares = value;
+            }
+        }
 
         public Map()
         {
@@ -26,12 +38,9 @@ namespace RoRClient.Model.Models
             }
         }
 
-        public Map map
+        public Square getSquare(int i, int j)
         {
-            set
-            {
-
-            }
+            return this.squares[i,j];
         }
     }
 }
