@@ -1,10 +1,12 @@
-﻿using System;
+﻿using RoRClient.ViewModel.Helper;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace RoRClient.ViewModel
 {
@@ -67,6 +69,33 @@ namespace RoRClient.ViewModel
                 {
                     mapHeight = value;
                     OnPropertyChanged("MapHeight");
+                }
+            }
+        }
+
+        private ICommand createRandomRailsCommand;
+        public ICommand CreateRandomRailsCommand
+        {
+            get
+            {
+                if (createRandomRailsCommand == null)
+                {
+                    createRandomRailsCommand = new ActionCommand(param => CreateRandomRails());
+                }
+                return createRandomRailsCommand;
+            }
+        }
+
+        private void CreateRandomRails()
+        {
+            Random rand = new Random();
+            foreach (DummySquare square in Squares)
+            {
+                square.Rail = null;
+
+                if (rand.Next(2) == 0)
+                {
+                    square.Rail = new DummyRail();
                 }
             }
         }

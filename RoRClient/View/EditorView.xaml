@@ -17,7 +17,9 @@
     </Window.Resources>
 
     <DockPanel>
-        <Button DockPanel.Dock="Top" Click="Button_Click" Height="50">Lösche alle Schienen und setzen zufällig neue zum Test</Button>
+        <Button DockPanel.Dock="Top" Height="50" Command="{Binding CreateRandomRailsCommand}">
+            Lösche alle Schienen und setzen zufällig neue zum Test
+        </Button>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Bottom">
             <Canvas x:Name="thisCanvas" Background="Brown" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
                 <ItemsControl ItemsSource="{Binding Squares}">

@@ -74,6 +74,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
+    <Compile Include="ViewModel\Helper\ActionCommand.cs" />
     <Compile Include="ViewModel\ViewConstants.cs" />
     <Compile Include="ViewModel\DummyMap.cs" />
     <Compile Include="ViewModel\DummyRail.cs" />
