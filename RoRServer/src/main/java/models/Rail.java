@@ -10,6 +10,10 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		
 	}
 	
+	public void setPlaceable(PlaceableOnRail placeable) {
+		this.placeableOnRail = placeable;
+	}
+	
 	
 	
 }
