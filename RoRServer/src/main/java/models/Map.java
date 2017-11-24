@@ -3,7 +3,7 @@ package models;
 public class Map {
 	
 	private static Map map = null;
-	Square squares [][];
+	private Square squares [][];
 	
 	private Map() {
 		
