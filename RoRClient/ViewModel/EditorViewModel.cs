@@ -10,8 +10,6 @@ namespace RoRClient.ViewModel
 {
     class EditorViewModel : INotifyPropertyChanged
     {
-        private const int SQUARE_DIM = 50;
-
         #region Das hier später in einer Base Klasse
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -32,8 +30,8 @@ namespace RoRClient.ViewModel
                 squares.Add(square);
             }
 
-            MapWidth = map.Squares.GetLength(0) * SQUARE_DIM;
-            MapHeight = map.Squares.GetLength(1) * SQUARE_DIM;
+            MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
+            MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
         }
 
         private ObservableCollection<DummySquare> squares = new ObservableCollection<DummySquare>();

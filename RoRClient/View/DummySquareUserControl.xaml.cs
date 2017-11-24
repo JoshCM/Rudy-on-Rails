@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RoRClient.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,12 +21,10 @@ namespace RoRClient.View
     /// </summary>
     public partial class DummySquareUserControl : UserControl
     {
-        private const int SQUARE_DIM = 50;
-
         public DummySquareUserControl()
         {
             InitializeComponent();
-            SquareDim = SQUARE_DIM;
+            SquareDim = ViewConstants.SQUARE_DIM;
         }
         public int X
         {
@@ -43,7 +42,7 @@ namespace RoRClient.View
         private static void OnXchanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DummySquareUserControl dummySquareUserControl = (DummySquareUserControl)d;
-            dummySquareUserControl.RealX = dummySquareUserControl.X * SQUARE_DIM;
+            dummySquareUserControl.RealX = dummySquareUserControl.X * ViewConstants.SQUARE_DIM;
         }
 
         public int RealX
@@ -75,7 +74,7 @@ namespace RoRClient.View
         private static void OnYchanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DummySquareUserControl dummySquareUserControl = (DummySquareUserControl)d;
-            dummySquareUserControl.RealY = dummySquareUserControl.Y * SQUARE_DIM;
+            dummySquareUserControl.RealY = dummySquareUserControl.Y * ViewConstants.SQUARE_DIM;
         }
         public int RealY
         {
