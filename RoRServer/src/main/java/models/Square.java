@@ -15,6 +15,17 @@ public class Square {
 		if (placeableOnSquare == null ) {
 			this.placeableOnSquare = placeable;
 		}
-		
+	}
+	
+	public PlaceableOnSquare getPlaceableOnSquare(){
+		return placeableOnSquare;
+	}
+	
+	public int getXIndex(){
+		return xIndex;
+	}
+	
+	public int getYIndex(){
+		return yIndex;
 	}
 }
