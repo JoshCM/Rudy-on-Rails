@@ -25,6 +25,7 @@ namespace RoRClient.View
         public DummySquareUserControl()
         {
             InitializeComponent();
+            SquareDim = SQUARE_DIM;
         }
         public int X
         {
@@ -89,5 +90,17 @@ namespace RoRClient.View
         }
         public static readonly DependencyProperty RealYProperty = DependencyProperty.Register("RealY", typeof(int), typeof(DummySquareUserControl), new UIPropertyMetadata(0));
 
+        public int SquareDim
+        {
+            get
+            {
+                return (int)GetValue(SquareDimProperty);
+            }
+            set
+            {
+                SetValue(SquareDimProperty, value);
+            }
+        }
+        public static readonly DependencyProperty SquareDimProperty = DependencyProperty.Register("SquareDim", typeof(int), typeof(DummySquareUserControl), new UIPropertyMetadata(0));
     }
 }

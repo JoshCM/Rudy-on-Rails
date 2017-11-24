@@ -14,8 +14,8 @@
              >
 
     <Rectangle
-        Width="50"
-        Height="50"
+        Width="{Binding SquareDim, ElementName=dummySquareUserControl}"
+        Height="{Binding SquareDim, ElementName=dummySquareUserControl}"
         Fill="BROWN"
         Stroke="WHITE"
         StrokeThickness="1" />
