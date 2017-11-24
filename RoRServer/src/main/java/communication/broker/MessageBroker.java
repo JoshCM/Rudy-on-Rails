@@ -13,6 +13,8 @@ public class MessageBroker {
 	private BrokerService broker = null;
 	static Logger log = Logger.getLogger(MessageBroker.class.getName());
 	private static String clientRequestQueueName = "ClientRequestQueue";
+	 
+
 
 
 	private MessageBroker() {
@@ -23,8 +25,6 @@ public class MessageBroker {
 		if (messageBroker == null) {
 			messageBroker = new MessageBroker();
 			messageBroker.startBroker();
-			
-			QueueReceiver clientRequestQueue = new ClientRequestQueueReceiver(clientRequestQueueName); 
 		}
 		
 		return messageBroker;	
@@ -32,9 +32,10 @@ public class MessageBroker {
 	
 	public void startBroker() {
 		try {
-			broker.addConnector("tcp://0.0.0.0:61616");
+			broker.addConnector("tcp://localhost:61616");
 			broker.start();
-			log.info("MessageBroker.startBroker(): tcp://0.0.0.0:61616");
+			QueueReceiver clientRequestQueue = new ClientRequestQueueReceiver(clientRequestQueueName);
+			log.info("MessageBroker.startBroker(): tcp://localhost:61616");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -6,10 +6,6 @@ import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 import org.apache.log4j.Logger;
-
-import communication.helper.Command;
-import communication.helper.Serializer;
-
 import java.util.Date;
 
 
@@ -29,10 +25,9 @@ public abstract class QueueReceiver extends QueueBase implements MessageListener
 	public void onMessage(Message message) {
 		System.out.println("Message incoming ...");
 		TextMessage textMessage = (TextMessage)message;
-		Command command = null;
+	
 		try {
-			command = Serializer.deserialize(textMessage.getText());
-			System.out.println(command);
+			System.out.println(textMessage.getText());
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}		
