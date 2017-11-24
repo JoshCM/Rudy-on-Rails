@@ -3,11 +3,12 @@ package models;
 public class Square {
 
 	private PlaceableOnSquare placeableOnSquare = null;
-	int id;
+	private int xIndex;
+	private int yIndex;
 	
-	public Square(int id) {
-		this.id = id;
-		this.setPlaceable(placeableOnSquare);
+	public Square(int xIndex, int yIndex) {
+		this.xIndex = xIndex;
+		this.yIndex = yIndex;
 	}
 	
 	public void setPlaceable(PlaceableOnSquare placeable) {
@@ -16,14 +17,4 @@ public class Square {
 		}
 		
 	}
-	
-	public int getSquareId() {
-		return id;
-	}
-	
-	public void setSquareId(int id) {
-		this.id = id;
-	}
-	
-
 }

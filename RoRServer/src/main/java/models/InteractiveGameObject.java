@@ -1,8 +1,13 @@
 package models;
 
 public abstract class InteractiveGameObject {
-	Square square;
-	Rail rail;
+	protected Square square;
+	protected Rail rail;
+	
+	public InteractiveGameObject() {
+		
+		
+	}
 	
 	
 

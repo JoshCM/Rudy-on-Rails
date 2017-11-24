@@ -13,7 +13,7 @@ public class Map {
 		
 		for(int i= 0; i < mapSize; i++) {
 			for(int j = 0; j < mapSize; j++) {
-				Square s = new Square(i);
+				Square s = new Square(i, j);
 				squares[i][j] = s;
 			}
 		}
