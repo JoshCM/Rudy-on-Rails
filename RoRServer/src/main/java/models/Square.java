@@ -1,7 +1,7 @@
 package models;
 
 public class Square {
-	private PlaceableOnSquare placeableOnSquare;
+	private PlaceableOnSquare placeableOnSquare = null;
 	int id;
 	
 	public Square(int id) {
@@ -9,7 +9,10 @@ public class Square {
 	}
 	
 	public void setPlaceable(PlaceableOnSquare placeable) {
-		this.placeableOnSquare = placeable;
+		if (placeableOnSquare == null ) {
+			this.placeableOnSquare = placeable;
+		}
+		
 	}
 	
 
