@@ -9,8 +9,8 @@ namespace RoRClient.Model.Models
     class Square
     {
         private PlaceableOnSquare placeableOnSquare = null;
-        private int xIndex;
-        private int yIndex;
+        private int xIndex { set; get; }
+        private int yIndex { set; get; }
 
         public Square (int xIndex, int yIndex)
         {
