@@ -7,7 +7,6 @@ package models;
 
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	
-	protected Square square;
 	protected PlaceableOnRail placeableOnRail = null;
 	protected RailSection section1;
 	protected RailSection section2;
@@ -16,7 +15,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	 * Konstruktor für Geraden oder Kurven
 	 */
 	public Rail (Square square , RailSection section) {
-		this.square = square;
+		super(square);
 		this.section1 = section;
 	}
 	
