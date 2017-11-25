@@ -11,7 +11,7 @@
 	VerticalContentAlignment="Stretch"
     Height="auto"
     Width="auto"
-             d:DesignHeight="40" d:DesignWidth="1920"
+             d:DesignWidth="1920"
              Background="Aquamarine">
     <Menu IsMainMenu="True">
         <MenuItem Header="_File" >
