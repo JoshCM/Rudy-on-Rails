@@ -11,15 +11,48 @@
 	VerticalContentAlignment="Stretch"
     Height="auto"
     Width="auto"
-             Background="Beige" d:DesignWidth="230" d:DesignHeight="548">
-    <StackPanel HorizontalAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Top">
-        <Button Height="100" Width="100">
-            <Image Source="/RoRClient;component/Resources/Images/smiley.jpg"></Image>
+             Background="Beige">
+    <WrapPanel HorizontalAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Top">
+        <Button Height="100" Width="100" Margin="10">
+            <Image Source="/RoRClient;component/Resources/Images/railcurve.png"></Image>
         </Button>
-        <Button Height="100" Width="100">
-            <svgc:SvgViewbox Margin="5" Stretch="Uniform" Source="/RoRClient;component/Resources/Images/test.svg"/>
+        <Button Height="100" Width="100" Margin="10">
+            <Image Source="/RoRClient;component/Resources/Images/railstraight.png"></Image>
         </Button>
-    </StackPanel>
+        <Button Height="100" Width="100" Margin="10">
+            <Image Source="/RoRClient;component/Resources/Images/railstraight.png"></Image>
+        </Button>
+        <Button Height="100" Width="100" Margin="10">
+            <Image Source="/RoRClient;component/Resources/Images/railstraight.png"></Image>
+        </Button>
+        <Button Height="100" Width="100" Margin="10">
+            <Image Source="/RoRClient;component/Resources/Images/railstraight.png"></Image>
+        </Button>
+        <Button Height="100" Width="100" Margin="10">
+            <Image Source="/RoRClient;component/Resources/Images/railstraight.png"></Image>
+        </Button>
+        <Button Height="100" Width="100" Margin="10">
+            <Image Source="/RoRClient;component/Resources/Images/railstraight.png"></Image>
+        </Button>
+        <Button Height="100" Width="100" Margin="10">
+            <Image Source="/RoRClient;component/Resources/Images/railstraight.png"></Image>
+        </Button>
+        <Button Height="100" Width="100" Margin="10">
+            <Image Source="/RoRClient;component/Resources/Images/railstraight.png"></Image>
+        </Button>
+        <Button Height="100" Width="100" Margin="10">
+            <Image Source="/RoRClient;component/Resources/Images/railstraight.png"></Image>
+        </Button>
+        <Button Height="100" Width="100" Margin="10">
+            <Image Source="/RoRClient;component/Resources/Images/railstraight.png"></Image>
+        </Button>
+        <Button Height="100" Width="100" Margin="10">
+            <Image Source="/RoRClient;component/Resources/Images/railstraight.png"></Image>
+        </Button>
+
+    </WrapPanel>
+    
+    
 
 
 </UserControl>
