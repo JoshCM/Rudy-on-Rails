@@ -101,6 +101,9 @@
     <Compile Include="View\EditorToolbarUserControl.xaml.cs">
       <DependentUpon>EditorToolbarUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\EditorTopMenuUserControl.xaml.cs">
+      <DependentUpon>EditorTopMenuUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\EditorUserControl.xaml.cs">
       <DependentUpon>EditorUserControl.xaml</DependentUpon>
     </Compile>
@@ -119,6 +122,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\EditorToolbarUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditorTopMenuUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
