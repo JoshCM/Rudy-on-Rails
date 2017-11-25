@@ -5,8 +5,53 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RoRClient.View"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Background="Aqua">
-        <Button Height="100" Width="100"></Button>
+             HorizontalAlignment="Stretch"
+	VerticalAlignment="Stretch"
+	HorizontalContentAlignment="Stretch"
+	VerticalContentAlignment="Stretch"
+    Height="1080"
+    Width="1920">
+    <Grid Name="ContentGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="9*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0"
+          Grid.Column="0"
+              Grid.ColumnSpan="3"
+          Background="Red" >
+            <!-- Menü oben -->
+        </Grid>
+
+        <Grid Grid.Row="1"
+          Grid.Column="1"
+              Grid.ColumnSpan="2"
+          Background="Blue" >
+            <!-- Darstellung der Map -->
+        </Grid>
+
+        <Grid Grid.Row="1"
+          Grid.Column="0"
+          Background="Violet" >
+            <!-- Werkzeugleiste -->
+            <!--<local:EditorToolbarUserControl />-->
+        </Grid>
+
+        <Grid Grid.Row="2"
+          Grid.Column="0"
+          Grid.ColumnSpan="3"
+          Background="Green" >
+            <!-- Statusfenster oder so was -->
+        </Grid>
+
+
     </Grid>
 </UserControl>
