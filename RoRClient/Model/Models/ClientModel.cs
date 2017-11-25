@@ -11,29 +11,40 @@ namespace RoRClient.Model.Models
     class ClientModel
     {
         //"tcp://172.26.38.104:61616"
-        public static string BROKER_URL = "tcp://localhost:61616";
-        private QueueSender queueSender;
-        private QueueReceiver queueReceiver;
-        public ClientModel(){
-            // Anmelden bei Queue, an die alle Clients ihre Anfragen schicken
-            Console.Write("Anmelden bei ClientRequestQueue");
-            queueSender = new QueueSender("ClientRequestQueue");
+        public static string BROKER_URL = "tcp://localhost:8080";
+        private FromClientRequestSender fromClientRequestSender;
+        private FromServerResponseReceiver queueReceiver;
+		private Guid clientId;
+		private static ClientModel clientModel;
 
-            // Erstelle die eigene Queue, an die der Server etwas zurücksenden kannGuid id = Guid.NewGuid();
-            Guid id = Guid.NewGuid();
-            Console.Write("Erstellt receiverQueue mit id:"+id.ToString());
-            queueReceiver = new QueueReceiver(id.ToString());
+        private ClientModel(){
+			// Anmelden bei Queue, an die alle Clients ihre Anfragen schicken
+			Console.Write("Anmelden bei ClientRequestQueue");
+			fromClientRequestSender = new FromClientRequestSender("ClientRequestQueue");
 
-            //ruft sende-test-methode auf
-            DoTheTest(id);
-        }
+			// Erstelle die eigene Queue, an die der Server etwas zurücksenden kannGuid id = Guid.NewGuid();
+			clientId = Guid.NewGuid();
+			Console.Write("Erstellt receiverQueue mit id:" + clientId.ToString());
+			queueReceiver = new FromServerResponseReceiver(clientId.ToString());
+		}
 
-        public void DoTheTest(Guid id)
-        {
-            // Sende den eigenen Queue-Namen, damit der Server etwas daran zurückschicken kann
-            Console.WriteLine("Nachricht sollte jetzt gesendet werden");
-            Console.WriteLine("Guid wird übermittelt");
-            queueSender.SendMessage(id.ToString());
-        }
+		public static ClientModel getInstance()
+		{
+			if (clientModel == null)
+			{
+				clientModel = new ClientModel();
+			}
+			return clientModel;
+		}
+
+		public FromClientRequestSender getFromClientRequestSender()
+		{
+			return fromClientRequestSender;
+		}
+
+		public Guid getClientId()
+		{
+			return clientId;
+		}
     }
 }

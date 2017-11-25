@@ -9,23 +9,22 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Connections
 {
-    class QueueSender : QueueBase
+    class FromClientRequestSender : QueueBase
     {
         private IMessageProducer messageProducer;
 
-        public QueueSender(string queueName) : base(queueName)
+        public FromClientRequestSender(string queueName) : base(queueName)
         {
             Console.WriteLine("startet messageproducer(queueSender)");
             messageProducer = session.CreateProducer(queue);
             //connection.Start();
         }
 
-        public void SendMessage(string text)
+        public void SendMessage(IMessage message)
         {
             try
             {
                 Console.WriteLine("sendet message(queueSender)");
-                IMessage message = session.CreateTextMessage(text);
                 messageProducer.Send(message);
             }
             catch (Exception e)

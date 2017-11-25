@@ -32,10 +32,10 @@ public class MessageBroker {
 	
 	public void startBroker() {
 		try {
-			broker.addConnector("tcp://localhost:61616");
+			broker.addConnector("tcp://localhost:8080");
 			broker.start();
 			QueueReceiver clientRequestQueue = new ClientRequestQueueReceiver(clientRequestQueueName);
-			log.info("MessageBroker.startBroker(): tcp://localhost:61616");
+			log.info("MessageBroker.startBroker(): tcp://localhost:8080");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

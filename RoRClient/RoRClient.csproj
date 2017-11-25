@@ -73,6 +73,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Helper\MessageBuilder.cs" />
+    <Compile Include="Model\Models\MessageType.cs" />
+    <Compile Include="Model\Models\RequestType.cs" />
+    <Compile Include="ViewModel\Helper\ActionCommand.cs" />
     <Compile Include="ViewModel\PlayerViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -90,13 +94,10 @@
   <ItemGroup>
     <Compile Include="Model\Connections\ClientConnection.cs" />
     <Compile Include="Model\Connections\QueueBase.cs" />
-    <Compile Include="Model\Connections\QueueReceiver.cs" />
-    <Compile Include="Model\Connections\QueueSender.cs" />
+    <Compile Include="Model\Connections\FromServerResponseReceiver.cs" />
+    <Compile Include="Model\Connections\FromClientRequestSender.cs" />
     <Compile Include="Model\Models\ClientModel.cs" />
     <Compile Include="Model\Connections\TopicReceiver.cs" />
-    <Compile Include="Model\Helper\Command.cs" />
-    <Compile Include="Model\Helper\Serializer.cs" />
-    <Compile Include="Model\Models\DummyGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

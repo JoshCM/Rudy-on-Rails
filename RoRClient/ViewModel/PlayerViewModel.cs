@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Apache.NMS;
+using RoRClient.Model.Connections;
+using RoRClient.Model.Helper;
+using RoRClient.Model.Models;
+using RoRClient.ViewModel.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +29,8 @@ namespace RoRClient.ViewModel
 
 		private void CreateNewPlayerCommand()
 		{
-			Console.WriteLine("create player");
+			IMessage message = MessageBuilder.build(MessageType.CREATE, RequestType.PLAYER);
+			ClientModel.getInstance().getFromClientRequestSender().SendMessage(message);
 		}
 	}
 }

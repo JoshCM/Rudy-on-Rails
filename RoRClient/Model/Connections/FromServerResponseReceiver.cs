@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Connections
 {
-    class QueueReceiver : QueueBase
+    class FromServerResponseReceiver : QueueBase
     {
         private IMessageConsumer messageConsumer;
 
-        public QueueReceiver(string queueName) : base(queueName)
+        public FromServerResponseReceiver(string queueName) : base(queueName)
         {
             init();
         }
