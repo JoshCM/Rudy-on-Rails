@@ -14,8 +14,7 @@
              Background="Beige" d:DesignWidth="230" d:DesignHeight="548">
     <StackPanel HorizontalAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Top">
         <Button Height="100" Width="100">
-            <!--<svgc:SvgViewbox Margin="5" Stretch="Uniform" Source="/RoRClient;component/View/Resources/Images/test.svg"/>-->
-            <Image Source="/RoRClient;component/View/Resources/Images/smiley.jpg"></Image>
+            <Image Source="/RoRClient;component/Resources/Images/smiley.jpg"></Image>
         </Button>
         <Button Height="100" Width="100">
             <svgc:SvgViewbox Margin="5" Stretch="Uniform" Source="/RoRClient;component/Resources/Images/test.svg"/>
