@@ -1,10 +1,12 @@
 package models;
 
 public class RailSection {
-	
 	public static final RailSection STRAIGHT_VERTICAL = new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH);
 	public static final RailSection STRAIGHT_HORIZONTAL = new RailSection(RailSectionPosition.EAST, RailSectionPosition.WEST);
 	public static final RailSection CURVE_NE = new RailSection(RailSectionPosition.NORTH, RailSectionPosition.EAST);
+	public static final RailSection CURVE_ES = new RailSection(RailSectionPosition.EAST, RailSectionPosition.SOUTH);
+	public static final RailSection CURVE_SW = new RailSection(RailSectionPosition.SOUTH, RailSectionPosition.WEST);
+	public static final RailSection CURVE_WN = new RailSection(RailSectionPosition.WEST, RailSectionPosition.NORTH);
 	
 	private RailSectionPosition node1;
 	private RailSectionPosition node2;
