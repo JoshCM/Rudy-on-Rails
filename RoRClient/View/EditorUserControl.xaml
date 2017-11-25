@@ -13,7 +13,7 @@
     Width="1920">
     <Grid Name="ContentGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="8*" />
             <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
@@ -29,6 +29,7 @@
               Grid.ColumnSpan="3"
           Background="Red" >
             <!-- Menü oben -->
+            <local:EditorTopMenuUserControl />
         </Grid>
 
         <Grid Grid.Row="1"
