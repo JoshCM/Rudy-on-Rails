@@ -167,6 +167,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="Resources\Images\railcurve.png" />
+    <Resource Include="Resources\Images\railstraight.png" />
     <Content Include="Resources\Images\rail_curve_v1.svg" />
     <Content Include="Resources\Images\rail_straight_v1.svg" />
     <Resource Include="Resources\Images\smiley.jpg" />
@@ -176,8 +178,6 @@
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
-    <Resource Include="View\Resources\Images\smiley.jpg" />
-    <Content Include="View\Resources\Images\test.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
