@@ -2,13 +2,25 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:RoRClient.View"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
              mc:Ignorable="d" 
                           HorizontalAlignment="Stretch"
 	VerticalAlignment="Stretch"
 	HorizontalContentAlignment="Stretch"
 	VerticalContentAlignment="Stretch"
-    Height="600"
-    Width="200">
+    Height="auto"
+    Width="auto"
+             Background="Beige" d:DesignWidth="230" d:DesignHeight="548">
+    <StackPanel HorizontalAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Top">
+        <Button Height="100" Width="100">
+            <!--<svgc:SvgViewbox Margin="5" Stretch="Uniform" Source="/RoRClient;component/View/Resources/Images/test.svg"/>-->
+            <Image Source="/RoRClient;component/View/Resources/Images/smiley.jpg"></Image>
+        </Button>
+        <Button Height="100" Width="100">
+            <svgc:SvgViewbox Margin="5" Stretch="Uniform" Source="/RoRClient;component/Resources/Images/test.svg"/>
+        </Button>
+    </StackPanel>
+
+
 </UserControl>

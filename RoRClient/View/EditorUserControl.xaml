@@ -42,7 +42,7 @@
           Grid.Column="0"
           Background="Violet" >
             <!-- Werkzeugleiste -->
-            <!--<local:EditorToolbarUserControl />-->
+            <local:EditorToolbarUserControl />
         </Grid>
 
         <Grid Grid.Row="2"
