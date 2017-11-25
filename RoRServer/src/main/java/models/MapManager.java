@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class MapManager {
 
@@ -14,6 +15,7 @@ public class MapManager {
 
 	public MapManager() {
 		gson = new Gson();
+		// gson = new GsonBuilder().registerTypeAdapter(Rail.class, new RailInterfaceAdapter()).create();
 	}
 
 	public Map loadMap(String mapName) {
@@ -48,14 +50,14 @@ public class MapManager {
         return jsonMap;
 	}
 
-	public void saveMap(Map map) {
+	public void saveMap(Map map, String mapName) {
 		String jsonMap = gson.toJson(map);
 		System.out.println("Gespeicherte Map: "+ jsonMap);
-		saveToFile(jsonMap);
+		saveToFile(jsonMap, mapName);
 	}
 	
-	private void saveToFile(String jsonMap){
-		try (PrintWriter out = new PrintWriter("Maps/Map.map")) {
+	private void saveToFile(String jsonMap, String mapName){
+		try (PrintWriter out = new PrintWriter("Maps/"+ mapName + ".map")) {
 			out.println(jsonMap);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

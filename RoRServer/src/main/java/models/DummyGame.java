@@ -33,8 +33,8 @@ public class DummyGame {
 		this.map = map;
 	}
 	
-	public void saveMap(){
-		mapManager.saveMap(map);
+	public void saveMap(String mapName){
+		mapManager.saveMap(map, mapName);
 	}
 	
 	public void loadMap(String mapName){
