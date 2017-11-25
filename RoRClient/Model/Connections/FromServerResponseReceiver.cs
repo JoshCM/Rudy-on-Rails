@@ -29,10 +29,7 @@ namespace RoRClient.Model.Connections
 
         public void OnMessageReceived(IMessage message)
         {
-            ITextMessage textMessage = message as ITextMessage;
-
-            Console.WriteLine(textMessage.Text+"(queueReceiver)");
-            TopicReceiver tR = new TopicReceiver(textMessage.Text);
+			ResponseHandler.getInstance().handle(message);
         }
     }
 }
