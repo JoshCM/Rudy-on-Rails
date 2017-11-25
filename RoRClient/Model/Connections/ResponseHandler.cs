@@ -26,7 +26,7 @@ namespace RoRClient.Model.Connections
 
 		internal void handle(IMessage message)
 		{
-			
+
 		}
 	}
 }

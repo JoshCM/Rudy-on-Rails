@@ -73,6 +73,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Connections\ResponseHandler.cs" />
     <Compile Include="Model\Helper\MessageBuilder.cs" />
     <Compile Include="Model\Models\MessageType.cs" />
     <Compile Include="Model\Models\RequestType.cs" />
