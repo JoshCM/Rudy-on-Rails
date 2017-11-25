@@ -97,6 +97,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModel\EditorToolbarViewModel.cs" />
     <Compile Include="ViewModel\EditorViewModel.cs" />
     <Compile Include="View\EditorToolbarUserControl.xaml.cs">
       <DependentUpon>EditorToolbarUserControl.xaml</DependentUpon>

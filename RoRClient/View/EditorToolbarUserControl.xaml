@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+             xmlns:local="clr-namespace:RoRClient.ViewModel"
              mc:Ignorable="d" 
                           HorizontalAlignment="Stretch"
 	VerticalAlignment="Stretch"
@@ -11,9 +11,12 @@
 	VerticalContentAlignment="Stretch"
     Height="auto"
     Width="auto"
-             Background="Beige">
+    Background="Beige">
+    <UserControl.DataContext>
+        <local:EditorToolbarViewModel/>
+    </UserControl.DataContext>
     <WrapPanel HorizontalAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Top">
-        <Button Height="100" Width="100" Margin="10">
+        <Button Command="{Binding MachScheisseCommand}" Height="100" Width="100" Margin="10">
             <Image Source="/RoRClient;component/Resources/Images/railcurve.png"></Image>
         </Button>
         <Button Height="100" Width="100" Margin="10">
