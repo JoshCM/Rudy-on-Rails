@@ -24,7 +24,7 @@ namespace RoRClient.Model.Models
             }
         }
 
-        public Map()
+        public Map ()
         {
             squares = new Square[mapSize, mapSize];
 
@@ -38,7 +38,7 @@ namespace RoRClient.Model.Models
             }
         }
 
-        public Square getSquare(int i, int j)
+        public Square getSquare (int i, int j)
         {
             return this.squares[i,j];
         }
