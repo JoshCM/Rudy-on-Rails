@@ -8,5 +8,6 @@ namespace RoRClient.Model.Models
 {
     interface PlaceableOnRail : Placeable
     {
+        //Interface für Objekte, die auf einer Rail platziert werden
     }
 }

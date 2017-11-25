@@ -8,5 +8,6 @@ namespace RoRClient.Model.Models
 {
     interface Placeable
     {
+        //Interface für platzierbare Objekte
     }
 }

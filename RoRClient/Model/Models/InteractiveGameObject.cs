@@ -8,5 +8,6 @@ namespace RoRClient.Model.Models
 {
     abstract class InteractiveGameObject
     {
+        //Abstrakte Klasse für alle Objekte, mit denen interagiert werden kann
     }
 }

@@ -8,5 +8,6 @@ namespace RoRClient.Model.Models
 {
     interface PlaceableOnSquare : Placeable
     {
+        //Interface für Objekte, die auf einem Square platziert werden
     }
 }
