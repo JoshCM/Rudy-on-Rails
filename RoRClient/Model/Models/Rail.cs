@@ -33,7 +33,7 @@ namespace RoRClient.Model.Models
 
         public void setPlaceableOnRail (PlaceableOnRail placeableOnRail)
         {
-            if  (placeableOnRail == null)
+            if (placeableOnRail == null)
             {
                 this.placeableOnRail = placeableOnRail;
             }
