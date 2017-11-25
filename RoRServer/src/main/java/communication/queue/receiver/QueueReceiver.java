@@ -1,12 +1,13 @@
-package communication.queue;
+package communication.queue.receiver;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
+import communication.queue.QueueBase;
+import communication.queue.sender.QueueSender;
 import org.apache.log4j.Logger;
-import java.util.Date;
 
 
 // Receiver für Client Requests und Spiel/Editor

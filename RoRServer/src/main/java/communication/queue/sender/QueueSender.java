@@ -1,9 +1,10 @@
-package communication.queue;
+package communication.queue.sender;
 import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.TextMessage;
 
+import communication.queue.QueueBase;
 import org.apache.log4j.Logger;
 
 // QueueSender für Client Queues
