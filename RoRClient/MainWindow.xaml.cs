@@ -24,10 +24,7 @@ namespace RoRClient
     {
         public MainWindow()
         {
-            ClientModel CM = new ClientModel();
-           
             InitializeComponent();
-            
         }
 	}
 }

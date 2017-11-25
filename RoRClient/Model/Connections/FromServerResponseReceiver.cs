@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Connections
 {
-    class QueueReceiver : QueueBase
+    class FromServerResponseReceiver : QueueBase
     {
         private IMessageConsumer messageConsumer;
 
-        public QueueReceiver(string queueName) : base(queueName)
+        public FromServerResponseReceiver(string queueName) : base(queueName)
         {
             init();
         }
@@ -29,10 +29,7 @@ namespace RoRClient.Model.Connections
 
         public void OnMessageReceived(IMessage message)
         {
-            ITextMessage textMessage = message as ITextMessage;
-
-            Console.WriteLine(textMessage.Text+"(queueReceiver)");
-            TopicReceiver tR = new TopicReceiver(textMessage.Text);
+			ResponseHandler.getInstance().handle(message);
         }
     }
 }
