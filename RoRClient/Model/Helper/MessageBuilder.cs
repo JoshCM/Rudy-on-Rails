@@ -16,7 +16,7 @@ namespace RoRClient.Model.Helper
 		{
 			Guid clientId = ClientModel.getInstance().getClientId();
 			ISession session = ClientConnection.GetInstance().Session;
-			String content = "{\"clientid\":\"" + clientId.ToString() + "\" ,\"request\":\"" + requestType.ToString() + "\",\"attributes\": {\"Playername\": \"Joendhard Biffel\"}}";
+			String content = "{\"clientid\":\"" + clientId.ToString() + "\" ,\"request\":\"" + requestType.ToString() + "\",\"attributes\": {\"Playername\": \"Wie gehts du Fisch\"}}";
 
 			IMessage message = session.CreateTextMessage(content);
 			message.NMSType = messageType.ToString();

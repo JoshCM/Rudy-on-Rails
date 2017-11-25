@@ -5,6 +5,7 @@ using RoRClient.Model.Models;
 using RoRClient.ViewModel.Helper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +13,17 @@ using System.Windows.Input;
 
 namespace RoRClient.ViewModel
 {
-	class PlayerViewModel
+	class PlayerViewModel : INotifyPropertyChanged
 	{
+		public event PropertyChangedEventHandler PropertyChanged;
+		public virtual void OnPropertyChanged(string propertyName)
+		{
+			if (PropertyChanged != null)
+			{
+				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+
 		private ICommand createPlayerCommand;
 		public ICommand CreatePlayerCommand
 		{
@@ -31,6 +41,20 @@ namespace RoRClient.ViewModel
 		{
 			IMessage message = MessageBuilder.build(MessageType.CREATE, RequestType.PLAYER);
 			ClientModel.getInstance().getFromClientRequestSender().SendMessage(message);
+		}
+
+		private String playerLabel;
+		public String PlayerLabel
+		{
+			get { return playerLabel; }
+			set
+			{
+				if (playerLabel != value)
+				{
+					playerLabel = value;
+					OnPropertyChanged("PlayerLabel");
+				}
+			}
 		}
 	}
 }
