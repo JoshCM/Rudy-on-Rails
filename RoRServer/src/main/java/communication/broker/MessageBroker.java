@@ -1,10 +1,8 @@
 package communication.broker;
+import communication.queue.receiver.FromClientRequestQueue;
 import org.apache.activemq.broker.BrokerService;
-import org.apache.activemq.broker.TransportConnector;
 import org.apache.log4j.Logger;
 
-import communication.queue.ClientRequestQueueReceiver;
-import communication.queue.QueueReceiver;
 
 // Singleton
 public class MessageBroker {
@@ -34,7 +32,7 @@ public class MessageBroker {
 		try {
 			broker.addConnector("tcp://localhost:8080");
 			broker.start();
-			QueueReceiver clientRequestQueue = new ClientRequestQueueReceiver(clientRequestQueueName);
+			FromClientRequestQueue clientRequestQueue = new FromClientRequestQueue(clientRequestQueueName);
 			log.info("MessageBroker.startBroker(): tcp://localhost:8080");
 		} catch (Exception e) {
 			e.printStackTrace();
