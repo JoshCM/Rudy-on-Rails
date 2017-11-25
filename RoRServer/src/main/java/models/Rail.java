@@ -6,6 +6,10 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	protected RailSection section1;
 	protected RailSection section2;
 	
+	public Rail(){
+		
+	}
+	
 	public Rail (RailSection section) {
 		//super(square);
 		this.section1 = section;

@@ -1,21 +1,20 @@
 package models;
 
 import org.apache.log4j.Logger;
-
-import com.google.gson.Gson;
-
 import communication.session.SessionQueueReceiver;
 import communication.session.SessionTopicSender;
 
 public class DummyGame {
 	
 	private Map map;
+	private MapManager mapManager;
 	SessionQueueReceiver sessionQueueReceiver;
 	SessionTopicSender sessionTopicSender;
 	static Logger log = Logger.getLogger(DummyGame.class.getName());
 	
 	public DummyGame(){
-		
+		map = new Map();
+		mapManager = new MapManager();
 	}
 	
 	public DummyGame(String sessionName) {
@@ -35,14 +34,11 @@ public class DummyGame {
 	}
 	
 	public void saveMap(){
-		Gson gson = new Gson();
-		String jsonMap = gson.toJson(map);
-		System.out.println(jsonMap);
+		mapManager.saveMap(map);
 	}
 	
-	public void loadMap(String jsonMap){
-		Gson gson = new Gson();
-		map = gson.fromJson(jsonMap, Map.class);
+	public void loadMap(String mapName){
+		map = mapManager.loadMap(mapName);
 	}
 	
 
