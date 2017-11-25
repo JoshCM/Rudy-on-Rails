@@ -8,9 +8,9 @@ namespace RoRClient.Model.Models
 {
     class RailSection
     {
-        //Klasse für ein Schienenstück mit Ein- und Ausgang
+        //Klasse für ein Schienenstück mit "Eingang" und "Ausgang"
 
-        //Gerade Schienen
+        //Geraden
         public static readonly RailSection STRAIGHT_VERTICAL = new RailSection (RailSectionPosition.NORTH, RailSectionPosition.SOUTH);
         public static readonly RailSection STRAIGHT_HORIZONTAL = new RailSection (RailSectionPosition.EAST, RailSectionPosition.WEST);
         //Kurven

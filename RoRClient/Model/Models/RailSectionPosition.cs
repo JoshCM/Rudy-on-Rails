@@ -8,7 +8,7 @@ namespace RoRClient.Model.Models
 {
     enum RailSectionPosition
     {
-        //Position eines Knotens an einem Schienenstück
+        //Knotenposition eines Schienenstücks
 
         NORTH, EAST, SOUTH, WEST
     };

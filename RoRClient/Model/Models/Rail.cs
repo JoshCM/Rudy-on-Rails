@@ -8,8 +8,8 @@ namespace RoRClient.Model.Models
 {
     class Rail : InteractiveGameObject, PlaceableOnSquare
     {
-        //Klasse für Schienen, die einem Square zugeordnet sind
-        //und ein (Gerade) oder zwei (Kurve) Schienenstücke besitzen
+        //Klasse für Schienen, die einem Feld (Square) zugeordnet sind
+        //und ein Schienenstück (= Gerade, Kurve) bzw. zwei Schienenstücke (= Kreuzung, Weiche) besitzen
 
         protected Square square;
         protected PlaceableOnRail placeableOnRail = null;
@@ -18,14 +18,14 @@ namespace RoRClient.Model.Models
 
         public Rail (Square square, RailSection section)
         {
-            //Konstruktor für gerade Schiene
+            //Konstruktor für Geraden oder Kurven
             this.square = square;
             this.section1 = section;
         }
 
         public Rail (Square square, RailSection section1, RailSection section2)
         {
-            //Konstruktor für Kurve
+            //Konstruktor für Kreuzungen oder Weichen
             this.square = square;
             this.section1 = section1;
             this.section2 = section2;
