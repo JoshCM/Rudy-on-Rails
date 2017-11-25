@@ -1,9 +1,9 @@
 package communication.broker;
-import communication.queue.FromClientRequestQueue;
+import communication.queue.receiver.FromClientRequestQueue;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.log4j.Logger;
 
-import communication.queue.QueueReceiver;
+import communication.queue.receiver.QueueReceiver;
 
 // Singleton
 public class MessageBroker {

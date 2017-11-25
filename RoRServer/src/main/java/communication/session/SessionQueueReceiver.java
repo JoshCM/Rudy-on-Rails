@@ -1,7 +1,7 @@
 package communication.session;
 import javax.jms.Message;
 
-import communication.queue.QueueReceiver;
+import communication.queue.receiver.QueueReceiver;
 import models.DummyGame;
 
 // Queue für das Spiel/Editor

@@ -1,10 +1,12 @@
-package communication.queue;
+package communication.queue.receiver;
 
 import java.util.Date;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
+
+import communication.queue.sender.QueueSender;
 import models.DummyGame;
 
 import org.apache.log4j.Logger;

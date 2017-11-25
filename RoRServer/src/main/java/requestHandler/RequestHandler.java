@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import communication.queue.sender.FromServerResponseQueue;
 import models.Player;
 import org.apache.log4j.Logger;
 
@@ -36,11 +37,13 @@ public class RequestHandler {
         switch(command) {
             case "CREATE":
                 JsonArray attributes = jsonObject.getAsJsonArray("attributes");
-                String id  = jsonObject.get("clientid").getAsString();
+                String clientid  = jsonObject.get("clientid").getAsString();
                 for(JsonElement jsonElement: attributes) {
                     JsonObject obj = jsonElement.getAsJsonObject();
                     String name = obj.get("Playername").getAsString();
-                    Player player = new Player(id, name);
+                    Player player = new Player(clientid, name);
+                    FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(clientid);
+                    fromServerResponseQueue.sendMessage("alles ok du sahnetörtchen");
                 }
                 break;
             case "DELETE":

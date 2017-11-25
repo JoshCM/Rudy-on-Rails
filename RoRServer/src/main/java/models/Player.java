@@ -1,7 +1,7 @@
 package models;
 
 public class Player {
-    private String clientid;     //Das ist ebenfalls die ClientID
+    private String id;     //Das ist ebenfalls die ClientID
     private String name;
 
     public Player (String id, String name) {
@@ -9,11 +9,11 @@ public class Player {
         this.name = name;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
