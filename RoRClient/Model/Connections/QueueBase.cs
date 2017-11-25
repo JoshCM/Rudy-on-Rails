@@ -18,7 +18,7 @@ namespace RoRClient.Model.Connections
         public QueueBase(string queueName)
         {
             this.queueName = queueName;
-            session=ClientConnection.GetInstance().Session;
+            session = ClientConnection.GetInstance().Session;
             queue = new ActiveMQQueue(queueName);
             
         }

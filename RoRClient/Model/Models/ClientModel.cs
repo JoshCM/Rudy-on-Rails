@@ -32,13 +32,8 @@ namespace RoRClient.Model.Models
         {
             // Sende den eigenen Queue-Namen, damit der Server etwas daran zurückschicken kann
             Console.WriteLine("Nachricht sollte jetzt gesendet werden");
-            Command cmd = new Command();
-            Dictionary<String, String> attributes = new Dictionary<String, String>();
-            attributes.Add("id", id.ToString());
-            cmd.attributes = attributes;
-            cmd.cEnum = Command.CommandEnum.CREATE;
-            Console.WriteLine(Serializer.serialize(cmd));
-            queueSender.SendMessage(Serializer.serialize(cmd));
+            Console.WriteLine("Guid wird übermittelt");
+            queueSender.SendMessage(id.ToString());
         }
     }
 }

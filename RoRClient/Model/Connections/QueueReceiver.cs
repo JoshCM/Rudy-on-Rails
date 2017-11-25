@@ -32,13 +32,7 @@ namespace RoRClient.Model.Connections
             ITextMessage textMessage = message as ITextMessage;
 
             Console.WriteLine(textMessage.Text+"(queueReceiver)");
-
-            Command cmd = Serializer.deserialize(textMessage.Text);
-            Console.WriteLine(cmd);
-            String name = cmd.attributes["name"];
-            Console.WriteLine(name);
-            // Hier wird jetzt ein DummyGame erstellt mit einem Sender drin, der dann Anfragen an den Server senden kann
-            DummyGame game = new DummyGame(name);
+            TopicReceiver tR = new TopicReceiver(textMessage.Text);
         }
     }
 }

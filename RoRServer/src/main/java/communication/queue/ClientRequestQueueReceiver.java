@@ -11,6 +11,8 @@ import models.DummyGame;
 
 import org.apache.log4j.Logger;
 
+import communication.session.SessionTopicSender;
+
 // Allgemeine Queue für Clients, die ein Spiel oder Editor erstellen wollen
 public class ClientRequestQueueReceiver extends QueueReceiver {
 
@@ -32,6 +34,11 @@ public class ClientRequestQueueReceiver extends QueueReceiver {
 		try {
 			log.info("ClientRequestReceiver.onMessage(): ... Message received [" + new Date().toString() + "]: "
 					+ textMessage.getText());
+			QueueSender sender = new QueueSender(textMessage.getText());
+			String tT = "testTopic";
+			SessionTopicSender testTopic = new SessionTopicSender(tT);
+			sender.sendMessage(tT);
+			testTopic.sendMessage("es hat hoffentlich geklappt!");
 		} catch (JMSException e) {
 			log.error(
 					"ClientRequestQueueReceiver.onMessage(Message message) : QueueSender konnte Nachricht nicht verschicken");
