@@ -24,7 +24,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	 * Konstruktor für Kreuzungen oder Weichen
 	 */
 	public Rail (Square square, RailSection section1, RailSection section2) {
-		this.square = square;
+		super(square);
 		this.section1 = section1;
 		this.section2 = section2;
 	}
