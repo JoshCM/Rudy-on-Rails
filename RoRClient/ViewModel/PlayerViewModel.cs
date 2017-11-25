@@ -9,10 +9,22 @@ namespace RoRClient.ViewModel
 {
 	class PlayerViewModel
 	{
-		public ICommand CreatePlayerCommand()
+		private ICommand createPlayerCommand;
+		public ICommand CreatePlayerCommand
+		{
+			get
+			{
+				if (createPlayerCommand == null)
+				{
+					createPlayerCommand = new ActionCommand(param => CreateNewPlayerCommand());
+				}
+				return createPlayerCommand;
+			}
+		}
+
+		private void CreateNewPlayerCommand()
 		{
 			Console.WriteLine("create player");
-			return null;
 		}
 	}
 }
