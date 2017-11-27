@@ -14,13 +14,12 @@ import javax.jms.TextMessage;
 // Singleton
 public class RequestHandler {
 
-    private static RequestHandler requestHandler = null;
+    private static RequestHandler requestHandler;
     static Logger log = Logger.getLogger(RequestHandler.class.getName());
 
 
 
     private RequestHandler() {
-        requestHandler = new RequestHandler();
     }
 
     public static RequestHandler getInstance() {
@@ -36,15 +35,13 @@ public class RequestHandler {
         JsonObject jsonObject = gson.fromJson(message, JsonElement.class).getAsJsonObject();
         switch(command) {
             case "CREATE":
-                JsonArray attributes = jsonObject.getAsJsonArray("attributes");
+                //JsonArray attributes = jsonObject.getAsJsonArray("attributes");
+            	JsonObject obj = jsonObject.getAsJsonObject("attributes");
                 String clientid  = jsonObject.get("clientid").getAsString();
-                for(JsonElement jsonElement: attributes) {
-                    JsonObject obj = jsonElement.getAsJsonObject();
-                    String name = obj.get("Playername").getAsString();
-                    Player player = new Player(clientid, name);
-                    FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(clientid);
-                    fromServerResponseQueue.sendMessage("alles ok du sahnetörtchen");
-                }
+                String name = obj.get("Playername").getAsString();
+                Player player = new Player(clientid, name);
+                FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(clientid);
+                fromServerResponseQueue.sendMessage("alles ok du sahnetoertchen");
                 break;
             case "DELETE":
                 break;

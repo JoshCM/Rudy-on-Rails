@@ -12,10 +12,11 @@ public class FromServerResponseQueue extends QueueSender{
 
     @Override
     protected void createQueue() {
-
+    	super.createQueue();
     }
 
     @Override
     public void sendMessage(String message) {
+    	super.sendMessage(message);
     }
 }
