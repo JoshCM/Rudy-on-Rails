@@ -27,10 +27,6 @@ namespace RoRClient.Model.Connections
 
 		internal void handle(IMessage message)
 		{
-			switch (message.GetType())
-			{
-				case RequestType.
-			}
 			PlayerViewModel playerViewModel = new PlayerViewModel();
 			ITextMessage textMessage = message as ITextMessage;
 			playerViewModel.PlayerLabel = textMessage.Text;

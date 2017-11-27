@@ -29,6 +29,7 @@ namespace RoRClient.Model.Connections
 
         public void OnMessageReceived(IMessage message)
         {
+			Console.WriteLine("from server: " + ((ITextMessage)message).Text);
 			ResponseHandler.getInstance().handle(message);
         }
     }
