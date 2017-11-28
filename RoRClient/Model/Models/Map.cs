@@ -30,6 +30,8 @@ namespace RoRClient.Model.Models
         {
             squares = new Square[mapSize, mapSize];
             InitSquares();
+            // For testing purposes
+            CreateRandomRailsForTest();
         }
 
         /// <summary>
@@ -44,6 +46,19 @@ namespace RoRClient.Model.Models
                 {
                     Square s = new Square(x, y);
                     squares[x, y] = s;
+                }
+            }
+        }
+
+        private void CreateRandomRailsForTest()
+        {
+            for (int x = 0; x < mapSize; x++)
+            {
+                for (int y = 0; y < mapSize; y++)
+                {
+                    Random rand = new Random();
+                    Rail rail = new Rail(squares[x, y], new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+                    squares[x, y].PlaceableOnSquare = rail;
                 }
             }
         }

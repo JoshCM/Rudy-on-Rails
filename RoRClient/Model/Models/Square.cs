@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RoRClient.ViewModel.Helper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -15,62 +16,77 @@ namespace RoRClient.Model.Models
         #region Das hier später in Base Klasse für Models und/oder ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public virtual void OnPropertyChanged(string propertyName)
+        public virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+                handler(sender, e);
+        }
+
+        protected void NotifyPropertyChanged<T>(string propertyName, T oldvalue, T newvalue)
+        {
+            OnPropertyChanged(this, new PropertyChangedExtendedEventArgs<T>(propertyName, oldvalue, newvalue));
         }
         #endregion
 
-        PlaceableOnSquare placeableOnSquare = null;
-        private int xPos;
-        public int XPos
+        private int posX;
+        public int PosX
         {
             get
             {
-                return xPos;
+                return posX;
             }
             set
             {
-                if(xPos != value)
+                if(posX != value)
                 {
-                    xPos = value;
-                    OnPropertyChanged("XPos");
+                    int temp = posX;
+                    posX = value;
+                    NotifyPropertyChanged("XPos", temp, posX);
                 }
             }
         }
 
-        private int yPos;
+        private int posY;
 
-        public int YPos
+        public int PosY
         {
             get
             {
-                return yPos;
+                return posY;
             }
             set
             {
-                if(yPos != value)
+                if(posY != value)
                 {
-                    yPos = value;
-                    OnPropertyChanged("YPos");
+                    int temp = posY;
+                    posY = value;
+                    NotifyPropertyChanged("YPos", temp, posY);
                 }
             }
         }
 
         public Square (int xPos, int yPos)
         {
-            this.xPos = xPos;
-            this.yPos = yPos;
+            this.posX = xPos;
+            this.posY = yPos;
         }
 
-        public void SetPlaceable (PlaceableOnSquare placeableOnSquare)
+        PlaceableOnSquare placeableOnSquare = null;
+        public PlaceableOnSquare PlaceableOnSquare
         {
-            if (placeableOnSquare == null)
+            get
             {
-                this.placeableOnSquare = placeableOnSquare;
+                return placeableOnSquare;
+            }
+            set
+            {
+                if(placeableOnSquare != value)
+                {
+                    PlaceableOnSquare temp = placeableOnSquare;
+                    placeableOnSquare = value;
+                    NotifyPropertyChanged("PlaceableOnSquare", temp, placeableOnSquare);
+                }
             }
         }
     }

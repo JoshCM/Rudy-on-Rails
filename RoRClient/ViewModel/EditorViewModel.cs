@@ -4,23 +4,12 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Linq;
 
 namespace RoRClient.ViewModel
 {
-    class EditorViewModel : INotifyPropertyChanged
+    class EditorViewModel : BaseViewModel
     {
-        #region Das hier später in einer Base Klasse
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public virtual void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-        #endregion
-
         private ObservableCollection<Square> squares = new ObservableCollection<Square>();
         public ObservableCollection<Square> Squares
         {
@@ -30,6 +19,14 @@ namespace RoRClient.ViewModel
             }
         }
 
+        private ObservableCollection<CanvasViewModel> placeableOnSquareCollection = new ObservableCollection<CanvasViewModel>();
+        public ObservableCollection<CanvasViewModel> PlaceableOnSquareCollection
+        {
+            get
+            {
+                return placeableOnSquareCollection;
+            }
+        }
 
         private int mapWidth;
         public int MapWidth
@@ -65,13 +62,21 @@ namespace RoRClient.ViewModel
             foreach(Square square in map.Squares)
             {
                 squares.Add(square);
+                square.PropertyChanged += OnSquarePropertyChanged;
+
+                if(square.PlaceableOnSquare != null && square.PlaceableOnSquare.GetType() == typeof(Rail))
+                {
+                    Rail rail = (Rail)square.PlaceableOnSquare;
+                    RailViewModel railViewModel = new RailViewModel(rail);
+                    placeableOnSquareCollection.Add(railViewModel);
+                    rail.PropertyChanged += OnRailPropertyChanged;                    
+                }
             }
 
             MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
             MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
         }
 
-        /*
         private ICommand createRandomRailsCommand;
         public ICommand CreateRandomRailsCommand
         {
@@ -88,16 +93,49 @@ namespace RoRClient.ViewModel
         private void CreateRandomRails()
         {
             Random rand = new Random();
-            foreach Square square in Squares)
+            foreach (Square square in Squares)
             {
-                square.Rail = null;
-
-                if (rand.Next(2) == 0)
+                square.PlaceableOnSquare = null;
+                if(rand.Next(3) == 0)
                 {
-                    square.Rail = new DummyRail();
+                    Rail rail = new Rail(square, new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+                    square.PlaceableOnSquare = rail;
                 }
             }
         }
-        */
+
+        private void OnRailPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Rail rail = (Rail)sender;
+
+            
+        }
+
+        private void OnSquarePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Square square = (Square)sender;
+
+            // Erstmal Annahme: Ist immer Rail
+            if (e.PropertyName == "PlaceableOnSquare")
+            {
+                PropertyChangedExtendedEventArgs<PlaceableOnSquare> eventArgs = (PropertyChangedExtendedEventArgs<PlaceableOnSquare>)e;
+
+                if (square.PlaceableOnSquare == null)
+                {
+                    Rail rail = (Rail)eventArgs.OldValue;
+                    CanvasViewModel result = placeableOnSquareCollection.Where(x => x.Id == rail.Id).First();
+
+                    if (result != null)
+                    {
+                        placeableOnSquareCollection.Remove(result);
+                    }
+                }
+                else
+                {
+                    RailViewModel railViewModel = new RailViewModel((Rail)square.PlaceableOnSquare);
+                    placeableOnSquareCollection.Add(railViewModel);
+                }
+            }
+        }
     }
 }

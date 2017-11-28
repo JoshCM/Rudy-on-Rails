@@ -7,9 +7,8 @@
         xmlns:vm="clr-namespace:RoRClient.ViewModel"
         xmlns:m="clr-namespace:RoRClient.Model.Models"
         xmlns:converter="clr-namespace:RoRClient.BindingConverter"
-        mc:Ignorable="d"
-        Title="EditorView" Height="600" Width="800">
-
+        Title="EditorView" Height="600" Width="800"
+        mc:Ignorable="d">
     <Window.DataContext>
         <vm:EditorViewModel/>
     </Window.DataContext>
@@ -18,8 +17,7 @@
     </Window.Resources>
 
     <DockPanel>
-        <!-- <Button DockPanel.Dock="Top" Height="50" Command="{Binding CreateRandomRailsCommand}">-->
-        <Button DockPanel.Dock="Top" Height="50">
+        <Button DockPanel.Dock="Top" Height="50" Command="{Binding CreateRandomRailsCommand}">
             Lösche alle Schienen und setzen zufällig neue zum Test
         </Button>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Bottom">
@@ -28,8 +26,16 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type m:Square}">
                             <Canvas>
-                                <!-- HasRail="{Binding Rail, Converter={StaticResource ObjectIsNullToBoolConverter}}" -->
-                                <v:SquareUserControl X="{Binding XPos}" Y="{Binding YPos}"/>
+                                <v:SquareUserControl X="{Binding PosX}" Y="{Binding PosY}"/>
+                            </Canvas>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl ItemsSource="{Binding PlaceableOnSquareCollection}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type vm:RailViewModel}">
+                            <Canvas>
+                                <v:RailUserControl X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

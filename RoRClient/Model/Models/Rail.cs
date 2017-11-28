@@ -11,6 +11,16 @@ namespace RoRClient.Model.Models
         //Klasse für Schienen, die einem Feld (Square) zugeordnet sind
         //und ein Schienenstück (= Gerade, Kurve) bzw. zwei Schienenstücke (= Kreuzung, Weiche) besitzen
 
+        // ToDo: Das mit den IDs müssen ALLE Models bekommen, die durchs Netzwerk geschickt werden. Sonst doof. Alles ganz doof.
+        private Guid id;
+        public Guid Id
+        {
+            get
+            {
+                return id;
+            }
+        }
+        
         protected PlaceableOnRail placeableOnRail = null;
         protected RailSection section1;
         protected RailSection section2;
@@ -19,6 +29,9 @@ namespace RoRClient.Model.Models
         {
             //Konstruktor für Geraden oder Kurven
             this.section1 = section;
+
+            // ToDo: Refactor
+            id = Guid.NewGuid();
         }
 
         public Rail (Square square, RailSection section1, RailSection section2) : base(square)
