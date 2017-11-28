@@ -55,6 +55,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -77,6 +79,7 @@
     <Compile Include="ViewModel\Helper\ActionCommand.cs" />
     <Compile Include="ViewModel\ViewConstants.cs" />
     <Compile Include="ViewModel\EditorViewModel.cs" />
+    <Compile Include="View\CanvasUserControl.cs" />
     <Compile Include="View\SquareUserControl.xaml.cs">
       <DependentUpon>SquareUserControl.xaml</DependentUpon>
     </Compile>

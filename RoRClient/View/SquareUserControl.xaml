@@ -1,22 +1,17 @@
-﻿<UserControl x:Class="RoRClient.View.SquareUserControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:RoRClient.View"
-             mc:Ignorable="d" 
-             x:Name="squareUserControl"
-             xmlns:v="clr-namespace:RoRClient.View"
-             xmlns:vm="clr-namespace:RoRClient.ViewModel"
-             xmlns:m="clr-namespace:RoRClient.Model.Models"
-             d:DesignHeight="50" d:DesignWidth="50 "
-             Canvas.Top="{Binding RealY, ElementName=squareUserControl}"
-             Canvas.Left="{Binding RealX, ElementName=squareUserControl}"
-             >
+﻿<local:CanvasUserControl x:Class="RoRClient.View.SquareUserControl"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                     xmlns:local="clr-namespace:RoRClient.View"
+                     mc:Ignorable="d" 
+                     x:Name="squareUserControl"
+                     xmlns:vm="clr-namespace:RoRClient.ViewModel"
+                     xmlns:m="clr-namespace:RoRClient.Model.Models"
+                     Canvas.Top="{Binding RealY, ElementName=squareUserControl}"
+                     Canvas.Left="{Binding RealX, ElementName=squareUserControl}"
+                     >
 
-    <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-    </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=squareUserControl}"
             Height="{Binding SquareDim, ElementName=squareUserControl}">
 
@@ -27,4 +22,4 @@
             Stroke="WHITE"
             StrokeThickness="1" />
     </Canvas>
-</UserControl>
+</local:CanvasUserControl>
