@@ -1,19 +1,39 @@
 package models;
 
+
+/**
+ * Klasse, die das Spielfeld darstellt und aus Feldern (Squares) besteht
+ */
 public class Map {
 	
-	private static Map map = null;
-	Square squares [][];
+	private Square squares [][];
+	private final int mapSize = 3;
 	
-	private Map() {
+	/**
+	 * Jedes Square auf der Map braucht einen Index,
+	 * um jedem Objekt, das auf einem Square platziert wird, ein eindeutiges Objekt zuzuordnen
+	 */
+	public Map() {
+		squares = new Square[mapSize][mapSize];
 		
+		for(int i= 0; i < mapSize; i++) {
+			for(int j = 0; j < mapSize; j++) {
+				Square s = new Square(i, j);
+				squares[i][j] = s;
+			}
+		}
 	}
 	
-	public static Map getInstance() {
-		if (map == null) {
-			map = new Map();
-		}
-		return map;
+	public Square getSquare(int i, int j) {
+		return squares[i][j];
+	}
+	
+	public Square[][] getSquares() {
+		return squares;
+	}
+	
+	public void setSquares(Square squares[][]) {
+		this.squares = squares;
 	}
 
 }
