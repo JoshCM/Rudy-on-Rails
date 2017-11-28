@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:v="clr-namespace:RoRClient.View"
         xmlns:vm="clr-namespace:RoRClient.ViewModel"
+        xmlns:m="clr-namespace:RoRClient.Model.Models"
         xmlns:converter="clr-namespace:RoRClient.BindingConverter"
         mc:Ignorable="d"
         Title="EditorView" Height="600" Width="800">
@@ -17,16 +18,18 @@
     </Window.Resources>
 
     <DockPanel>
-        <Button DockPanel.Dock="Top" Height="50" Command="{Binding CreateRandomRailsCommand}">
+        <!-- <Button DockPanel.Dock="Top" Height="50" Command="{Binding CreateRandomRailsCommand}">-->
+        <Button DockPanel.Dock="Top" Height="50">
             Lösche alle Schienen und setzen zufällig neue zum Test
         </Button>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Bottom">
             <Canvas x:Name="thisCanvas" Background="Brown" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
                 <ItemsControl ItemsSource="{Binding Squares}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type vm:DummySquare}">
+                        <DataTemplate DataType="{x:Type m:Square}">
                             <Canvas>
-                                <v:DummySquareUserControl X="{Binding XPos}" Y="{Binding YPos}" HasRail="{Binding Rail, Converter={StaticResource ObjectIsNullToBoolConverter}}"/>
+                                <!-- HasRail="{Binding Rail, Converter={StaticResource ObjectIsNullToBoolConverter}}" -->
+                                <v:SquareUserControl X="{Binding XPos}" Y="{Binding YPos}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

@@ -1,11 +1,8 @@
-﻿using RoRClient.ViewModel.Helper;
+﻿using RoRClient.Model.Models;
+using RoRClient.ViewModel.Helper;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace RoRClient.ViewModel
@@ -24,26 +21,15 @@ namespace RoRClient.ViewModel
         }
         #endregion
 
-        public EditorViewModel()
-        {
-            DummyMap map = new DummyMap(100);
-            foreach(DummySquare square in map.Squares)
-            {
-                squares.Add(square);
-            }
-
-            MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
-            MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
-        }
-
-        private ObservableCollection<DummySquare> squares = new ObservableCollection<DummySquare>();
-        public ObservableCollection<DummySquare> Squares
+        private ObservableCollection<Square> squares = new ObservableCollection<Square>();
+        public ObservableCollection<Square> Squares
         {
             get
             {
                 return squares;
             }
         }
+
 
         private int mapWidth;
         public int MapWidth
@@ -65,7 +51,7 @@ namespace RoRClient.ViewModel
             get { return mapHeight; }
             set
             {
-                if(mapHeight != value)
+                if (mapHeight != value)
                 {
                     mapHeight = value;
                     OnPropertyChanged("MapHeight");
@@ -73,6 +59,19 @@ namespace RoRClient.ViewModel
             }
         }
 
+        public EditorViewModel()
+        {
+            Map map = new Map();
+            foreach(Square square in map.Squares)
+            {
+                squares.Add(square);
+            }
+
+            MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
+            MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+        }
+
+        /*
         private ICommand createRandomRailsCommand;
         public ICommand CreateRandomRailsCommand
         {
@@ -89,7 +88,7 @@ namespace RoRClient.ViewModel
         private void CreateRandomRails()
         {
             Random rand = new Random();
-            foreach (DummySquare square in Squares)
+            foreach Square square in Squares)
             {
                 square.Rail = null;
 
@@ -99,5 +98,6 @@ namespace RoRClient.ViewModel
                 }
             }
         }
+        */
     }
 }

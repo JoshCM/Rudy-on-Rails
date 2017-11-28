@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace RoRClient.View
 {
-    /// <summary>
-    /// Interaktionslogik für Window1.xaml
-    /// </summary>
     public partial class EditorView : Window
     {
         public EditorView()
