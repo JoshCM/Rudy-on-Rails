@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModel
 {
-    class BaseViewModel : INotifyPropertyChanged
+    class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public virtual void OnPropertyChanged(string propertyName)

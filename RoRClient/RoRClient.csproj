@@ -78,7 +78,7 @@
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
     <Compile Include="Model\Models\IModel.cs" />
     <Compile Include="Model\Models\ModelBase.cs" />
-    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\CanvasViewModel.cs" />
     <Compile Include="ViewModel\Helper\ActionCommand.cs" />
     <Compile Include="ViewModel\Helper\INotifyPropertyChangedExtended.cs" />

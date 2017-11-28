@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace RoRClient.ViewModel
 {
-    class EditorViewModel : BaseViewModel
+    class EditorViewModel : ViewModelBase
     {
         private const string VIEWMODEL_TYPE_PREFIX = "RoRClient.ViewModel.";
         private const string VIEWMODEL_CLASS_SUFFIX = "ViewModel";
