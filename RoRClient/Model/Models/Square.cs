@@ -12,16 +12,39 @@ namespace RoRClient.Model.Models
         //Auf dem Feld platzierte Objekte können auf die jeweilige Position zugreifen
 
         PlaceableOnSquare placeableOnSquare = null;
-        int xIndex { set; get; }
-        int yIndex { set; get; }
-
-        public Square (int xIndex, int yIndex)
+        private int xPos;
+        public int XPos
         {
-            this.xIndex = xIndex;
-            this.yIndex = yIndex;
+            get
+            {
+                return xPos;
+            }
+            set
+            {
+                xPos = value;
+            }
         }
 
-        public void setPlaceable (PlaceableOnSquare placeableOnSquare)
+        private int yPos;
+        public int YPos
+        {
+            get
+            {
+                return yPos;
+            }
+            set
+            {
+                yPos = value;
+            }
+        }
+
+        public Square (int xPos, int yPos)
+        {
+            this.xPos = xPos;
+            this.yPos = yPos;
+        }
+
+        public void SetPlaceable (PlaceableOnSquare placeableOnSquare)
         {
             if (placeableOnSquare == null)
             {

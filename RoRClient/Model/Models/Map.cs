@@ -32,20 +32,20 @@ namespace RoRClient.Model.Models
 
             //Jedes Square auf der Map braucht einen Index,
             //um jedem Objekt, das auf einem Square platziert, ein eindeutiges Objekt zuzuordnen
-            for (int i = 0; i < mapSize; i++)
+            for (int x = 0; x < mapSize; x++)
             {
-                for (int j = 0; j < mapSize; j++)
+                for (int y = 0; y < mapSize; y++)
                 {
-                    Square s = new Square(i, j);
-                    squares[i,j] = s;
+                    Square s = new Square(x, y);
+                    squares[x, y] = s;
                 }
             }
         }
 
-        public Square getSquare (int i, int j)
+        public Square GetSquare (int x, int y)
         {
             //Getter für ein Square auf der Map
-            return this.squares[i,j];
+            return this.squares[x, y];
         }
     }
 }
