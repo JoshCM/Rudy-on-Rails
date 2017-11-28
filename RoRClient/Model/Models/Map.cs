@@ -29,9 +29,15 @@ namespace RoRClient.Model.Models
         public Map ()
         {
             squares = new Square[mapSize, mapSize];
+            InitSquares();
+        }
 
-            //Jedes Square auf der Map braucht einen Index,
-            //um jedem Objekt, das auf einem Square platziert, ein eindeutiges Objekt zuzuordnen
+        /// <summary>
+        /// Jedes Square auf der Map braucht einen Index,
+        /// um jedem Objekt, das auf einem Square platziert, ein eindeutiges Objekt zuzuordnen
+        /// </summary>
+        private void InitSquares()
+        {
             for (int x = 0; x < mapSize; x++)
             {
                 for (int y = 0; y < mapSize; y++)
