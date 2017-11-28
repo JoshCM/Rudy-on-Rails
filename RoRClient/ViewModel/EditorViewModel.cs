@@ -10,6 +10,9 @@ namespace RoRClient.ViewModel
 {
     class EditorViewModel : BaseViewModel
     {
+        private const string VIEWMODEL_TYPE_PREFIX = "RoRClient.ViewModel.";
+        private const string VIEWMODEL_CLASS_SUFFIX = "ViewModel";
+
         private ObservableCollection<Square> squares = new ObservableCollection<Square>();
         public ObservableCollection<Square> Squares
         {
@@ -108,7 +111,7 @@ namespace RoRClient.ViewModel
         {
             Rail rail = (Rail)sender;
 
-            
+            // ToDo
         }
 
         private void OnSquarePropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -118,12 +121,12 @@ namespace RoRClient.ViewModel
             // Erstmal Annahme: Ist immer Rail
             if (e.PropertyName == "PlaceableOnSquare")
             {
-                PropertyChangedExtendedEventArgs<PlaceableOnSquare> eventArgs = (PropertyChangedExtendedEventArgs<PlaceableOnSquare>)e;
-
+                PropertyChangedExtendedEventArgs<IPlaceableOnSquare> eventArgs = (PropertyChangedExtendedEventArgs<IPlaceableOnSquare>)e;
+                
                 if (square.PlaceableOnSquare == null)
                 {
-                    Rail rail = (Rail)eventArgs.OldValue;
-                    CanvasViewModel result = placeableOnSquareCollection.Where(x => x.Id == rail.Id).First();
+                    ModelBase model = (ModelBase)eventArgs.OldValue;
+                    CanvasViewModel result = placeableOnSquareCollection.Where(x => x.Id == model.Id).First();
 
                     if (result != null)
                     {
@@ -132,10 +135,19 @@ namespace RoRClient.ViewModel
                 }
                 else
                 {
-                    RailViewModel railViewModel = new RailViewModel((Rail)square.PlaceableOnSquare);
-                    placeableOnSquareCollection.Add(railViewModel);
+                    CanvasViewModel viewModel = CreateViewModelForModel(square.PlaceableOnSquare);
+                    placeableOnSquareCollection.Add(viewModel);
                 }
             }
+        }
+
+        private CanvasViewModel CreateViewModelForModel(IModel model)
+        {
+            Type modelType = model.GetType();
+            String viewModelTypeName = VIEWMODEL_TYPE_PREFIX + modelType.Name + VIEWMODEL_CLASS_SUFFIX;
+            Type viewModelType = Type.GetType(viewModelTypeName);
+            CanvasViewModel viewModel = (CanvasViewModel)Activator.CreateInstance(viewModelType, model);
+            return viewModel;
         }
     }
 }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-    interface Placeable
+    interface IPlaceableOnSquare : IPlaceable
     {
-        //Interface für platzierbare Objekte
+        //Interface für Objekte, die auf einem Square platziert werden
     }
 }

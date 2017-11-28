@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-    class Map
+    class Map : ModelBase
     {
         //Map mit Squares gefüllt (Spielfeld)
 
@@ -26,7 +26,7 @@ namespace RoRClient.Model.Models
             }
         }
 
-        public Map ()
+        public Map () : base()
         {
             squares = new Square[mapSize, mapSize];
             InitSquares();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-    class RailSection
+    class RailSection : ModelBase
     {
         //Klasse für ein Schienenstück mit "Eingang" und "Ausgang"
 
@@ -22,7 +22,7 @@ namespace RoRClient.Model.Models
         RailSectionPosition node1;
         RailSectionPosition node2;
 
-        public RailSection (RailSectionPosition node1, RailSectionPosition node2)
+        public RailSection (RailSectionPosition node1, RailSectionPosition node2) : base()
         {
             this.node1 = node1;
             this.node2 = node2;

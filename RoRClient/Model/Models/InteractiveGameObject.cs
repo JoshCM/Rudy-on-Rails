@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-    abstract class InteractiveGameObject : INotifyPropertyChanged
+    abstract class InteractiveGameObject : ModelBase, INotifyPropertyChanged
     {
         //Abstrakte Klasse für alle Objekte, mit denen interagiert werden kann
 
