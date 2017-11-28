@@ -12,6 +12,7 @@ namespace RoRClient.Model.Models
 		READ,
 		UPDATE,
 		DELETE,
+        LEAVE,
 		ERROR
 	};
 }
