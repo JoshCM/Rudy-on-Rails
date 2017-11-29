@@ -99,10 +99,10 @@
     </ApplicationDefinition>
     <Compile Include="ViewModel\EditorToolbarViewModel.cs" />
     <Compile Include="ViewModel\EditorViewModel.cs" />
-    <Compile Include="View\EditorToolbarUserControl.xaml.cs">
+    <Compile Include="View\Editor\EditorToolbarUserControl.xaml.cs">
       <DependentUpon>EditorToolbarUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\EditorTopMenuUserControl.xaml.cs">
+    <Compile Include="View\Editor\EditorTopMenuUserControl.xaml.cs">
       <DependentUpon>EditorTopMenuUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditorUserControl.xaml.cs">
@@ -122,11 +122,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\EditorToolbarUserControl.xaml">
+    <Page Include="View\Editor\EditorToolbarUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\EditorTopMenuUserControl.xaml">
+    <Page Include="View\Editor\EditorTopMenuUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

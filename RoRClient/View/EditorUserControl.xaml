@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RoRClient.View"
+             xmlns:editor="clr-namespace:RoRClient.View.Editor"
              mc:Ignorable="d" 
              HorizontalAlignment="Stretch"
 	VerticalAlignment="Stretch"
@@ -29,7 +30,7 @@
               Grid.ColumnSpan="3"
           Background="Red" >
             <!-- Menü oben -->
-            <local:EditorTopMenuUserControl />
+            <editor:EditorTopMenuUserControl />
         </Grid>
 
         <Grid Grid.Row="1"
@@ -43,7 +44,7 @@
           Grid.Column="0"
           Background="Violet" >
             <!-- Werkzeugleiste -->
-            <local:EditorToolbarUserControl />
+            <editor:EditorToolbarUserControl />
         </Grid>
 
         <Grid Grid.Row="2"

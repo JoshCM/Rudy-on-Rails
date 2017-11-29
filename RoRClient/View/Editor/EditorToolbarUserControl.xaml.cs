@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RoRClient.View
+namespace RoRClient.View.Editor
 {
     /// <summary>
     /// Interaktionslogik für EditorToolbarUserControl.xaml
