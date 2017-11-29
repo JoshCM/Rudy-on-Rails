@@ -7,46 +7,29 @@ using RoRClient.Model.EditorModels;
 using RoRClient.ViewModel.Helper;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using RoRClient.Model.Models;
+using System.IO;
+using System.Reflection;
 
 namespace RoRClient.ViewModel.Editor
 {
-    class ToolbarViewModel : ObservableObjectBaseClass
+    class ToolbarViewModel : ViewModelBase
     {
-        private readonly Werkzeug _textConverter = new Werkzeug(s => s.ToUpper());
-        private string _someText;
-        private readonly ObservableCollection<string> _history = new ObservableCollection<string>();
-
-        public string SomeText
+     
+        public ToolbarViewModel()
         {
-            get { return _someText; }
-            set
+            string[] paths = System.IO.Directory.GetFiles("../../Resources/Images/Tools");
+            foreach(string path in paths)
             {
-                _someText = value;
-                RaisePropertyChangedEvent("SomeText");
+                toolItems.Add(new ToolItem(Path.GetFileNameWithoutExtension(path), path));
             }
         }
 
-        public IEnumerable<string> History
+        private ObservableCollection<ToolItem> toolItems = new ObservableCollection<ToolItem>();
+        public ObservableCollection<ToolItem> ToolItems
         {
-            get { return _history; }
+            get { return toolItems; }
         }
-
-        public ICommand ConvertTextCommand
-        {
-            get { return new DelegateCommand(ConvertText); }
-        }
-
-        private void ConvertText()
-        {
-            if (string.IsNullOrWhiteSpace(SomeText)) return;
-            AddToHistory(_textConverter.ConvertText(SomeText));
-            SomeText = string.Empty;
-        }
-
-        private void AddToHistory(string item)
-        {
-            if (!_history.Contains(item))
-                _history.Add(item);
-        }
+        
     }
 }

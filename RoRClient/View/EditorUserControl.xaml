@@ -29,7 +29,7 @@
               Grid.ColumnSpan="3"
           Background="Red" >
             <!-- Menü oben -->
-            <editor:EditorTopMenuUserControl />
+            <editor:TopMenuUserControl />
         </Grid>
 
         <Grid Grid.Row="1"
@@ -43,7 +43,7 @@
           Grid.Column="0"
           Background="Violet" >
             <!-- Werkzeugleiste -->
-            <editor:EditorToolbarUserControl />
+            <editor:ToolbarUserControl />
         </Grid>
 
         <Grid Grid.Row="2"
