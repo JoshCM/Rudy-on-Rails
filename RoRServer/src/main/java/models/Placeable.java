@@ -1,5 +1,5 @@
 package models;
 
-public interface Placeable {
-
+public interface Placeable extends Convertable {
+	
 }

@@ -41,5 +41,9 @@ public class DummyGame {
 		map = mapManager.loadMap(mapName);
 	}
 	
+	public Map getMap() {
+		return map;
+	}
+	
 
 }

@@ -14,8 +14,8 @@ public class MapManager {
 	private Gson gson;
 
 	public MapManager() {
-		gson = new Gson();
-		// gson = new GsonBuilder().registerTypeAdapter(Rail.class, new RailInterfaceAdapter()).create();
+		// gson = new Gson();
+		gson = new GsonBuilder().registerTypeAdapter(PlaceableOnSquare.class, new ConvertableDeserializer<PlaceableOnSquare>()).create();
 	}
 
 	public Map loadMap(String mapName) {

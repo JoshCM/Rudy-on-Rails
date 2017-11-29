@@ -12,9 +12,9 @@ public class Square {
 	}
 	
 	public void setPlaceable(PlaceableOnSquare placeable) {
-		if (placeableOnSquare == null ) {
+		//if (placeableOnSquare == null ) {
 			this.placeableOnSquare = placeable;
-		}
+		//}
 	}
 	
 	public PlaceableOnSquare getPlaceableOnSquare(){
