@@ -15,7 +15,8 @@ namespace RoRClient.ViewModel.Editor
 {
     class ToolbarViewModel : ViewModelBase
     {
-     
+        private string previewImagePath;
+
         public ToolbarViewModel()
         {
             string[] paths = System.IO.Directory.GetFiles("../../Resources/Images/Tools");
@@ -29,6 +30,18 @@ namespace RoRClient.ViewModel.Editor
         public ObservableCollection<ToolItem> ToolItems
         {
             get { return toolItems; }
+        }
+        public string PreviewImagePath
+        {
+            get { return previewImagePath; }
+            set
+            {
+                if (previewImagePath != value)
+                {
+                    previewImagePath = value;
+                    OnPropertyChanged();
+                }
+            }
         }
         
     }
