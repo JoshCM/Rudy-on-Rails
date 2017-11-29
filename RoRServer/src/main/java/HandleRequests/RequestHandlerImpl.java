@@ -1,5 +1,6 @@
 package HandleRequests;
 
+import models.DataTranserObject.RequestInformation;
 import org.apache.log4j.Logger;
 
 
@@ -26,10 +27,11 @@ public class RequestHandlerImpl {
     }
 
     public void handleRequest(String request, String message) {
-        //Information object -- message propeties
+        RequestSerializer requestSerializer = RequestSerializer.getInstance();
+        RequestInformation requestInformation = requestSerializer.deserialize(message);
         switch(request) {
             case "CREATE":
-                createHandler.manageRequest(message);
+                createHandler.manageRequest(requestInformation);
 
                 //Antworte dem Client!
                 //FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(clientid);

@@ -6,10 +6,13 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 
+import communication.queue.sender.FromServerResponseQueue;
 import communication.queue.sender.QueueSender;
 import models.Game.DummyGame;
 
 import org.apache.log4j.Logger;
+
+import com.google.gson.JsonObject;
 
 import communication.session.SessionTopicSender;
 import HandleRequests.RequestHandlerImpl;
@@ -30,6 +33,7 @@ public class FromClientRequestQueue extends QueueReceiver {
 		// Hier wird der Queue-Name des Clients empfangen, um den Namen einer neuen
 		// GameQueue zurück zuschicken
 		System.out.println("Message incoming ...");
+
 		TextMessage textMessage = (TextMessage) message;
 		try {
 			String command = message.getJMSType();
@@ -48,5 +52,39 @@ public class FromClientRequestQueue extends QueueReceiver {
 			e.printStackTrace();
 		}
 
+
+
+	}
+
+	/**
+	 * sucht nach dem passenden MessageType
+	 * @param commandString welcher den JMSType als String angibt
+	 * @return passender MessageType der dem commandString entspricht
+	 */
+
+	public MessageType findMessageType(String commandString) {
+		MessageType command = null;
+        switch(commandString) {
+        case "CREATE":
+            command = MessageType.CREATE;
+            break;
+        case "READ":
+        	command = MessageType.READ;
+            break;
+        case "UPDATE":
+        	command = MessageType.UPDATE;
+            break;
+        case "DELETE":
+        	command = MessageType.DELETE;
+            break;
+        case "LEAVE":
+        	command = MessageType.LEAVE;
+            break;
+        case "ERROR":
+        	command = MessageType.ERROR;
+            break;
+        }
+
+        return command;
 	}
 }

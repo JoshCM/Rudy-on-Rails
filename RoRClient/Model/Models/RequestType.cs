@@ -16,6 +16,13 @@ namespace RoRClient.Model.Models
 		DISCONNECT_PLAYER,
 		LEAVE_GAMESESSION,
 		LEAVE_EDITORSESSION,
-		PLAYERSTATUS
+		PLAYERSTATUS,
+
+        CREATE,
+        UPDATE,
+        DELETE,
+        MAP_SAVE,
+        MAP_LOAD,
+        GET_INITIAL_LOAD
 	}
 }

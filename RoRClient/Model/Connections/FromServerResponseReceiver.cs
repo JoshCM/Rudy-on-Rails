@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RoRClient.Model.Handler;
 
 namespace RoRClient.Model.Connections
 {
@@ -29,6 +30,7 @@ namespace RoRClient.Model.Connections
 
         public void OnMessageReceived(IMessage message)
         {
+			Console.WriteLine("from server: " + ((ITextMessage)message).Text);
 			ResponseHandler.getInstance().handle(message);
         }
     }

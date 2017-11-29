@@ -6,17 +6,13 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-	enum MessageType
+	enum ResponseType
 	{
-		CREATE,
-		READ,
-		UPDATE,
-		DELETE,
-        LEAVE,
+		CREATERESPONSE,
+		READRESPONSES,
+		UPDATERESPONSES,
 		ERROR,
-
-        MODIFYOBJECT,
-        SESSIONREQUEST
-    
-    };
+		STATUSMESSAGES,
+		DELETE
+	}
 }

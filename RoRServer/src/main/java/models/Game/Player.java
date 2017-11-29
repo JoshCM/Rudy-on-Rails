@@ -7,6 +7,7 @@ public class Player {
     public Player (String id, String name) {
         this.id = id;
         this.name = name;
+        System.out.println("player wurde erstellt: Name " + this.name + " id: " + this.id);
     }
 
     public String getId() {
