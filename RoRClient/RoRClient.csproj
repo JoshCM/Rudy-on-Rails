@@ -98,18 +98,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\EditorModels\Werkzeug.cs" />
-    <Compile Include="ViewModel\EditorToolbarViewModel.cs" />
+    <Compile Include="Model\Models\ToolItem.cs" />
     <Compile Include="ViewModel\EditorViewModel.cs" />
     <Compile Include="ViewModel\Editor\ToolbarViewModel.cs" />
     <Compile Include="ViewModel\Helper\DelegateCommand.cs" />
     <Compile Include="ViewModel\Helper\EditorCommands.cs" />
     <Compile Include="ViewModel\Helper\Exit.cs" />
     <Compile Include="ViewModel\Helper\ObservableObjectBaseClass.cs" />
-    <Compile Include="View\Editor\EditorToolbarUserControl.xaml.cs">
-      <DependentUpon>EditorToolbarUserControl.xaml</DependentUpon>
+    <Compile Include="View\Editor\ToolbarUserControl.xaml.cs">
+      <DependentUpon>ToolbarUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Editor\EditorTopMenuUserControl.xaml.cs">
-      <DependentUpon>EditorTopMenuUserControl.xaml</DependentUpon>
+    <Compile Include="View\Editor\TopMenuUserControl.xaml.cs">
+      <DependentUpon>TopMenuUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditorUserControl.xaml.cs">
       <DependentUpon>EditorUserControl.xaml</DependentUpon>
@@ -128,11 +128,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\Editor\EditorToolbarUserControl.xaml">
+    <Page Include="View\Editor\ToolbarUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Editor\EditorTopMenuUserControl.xaml">
+    <Page Include="View\Editor\TopMenuUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -190,12 +190,15 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Resources\Images\railcurve.png" />
-    <Resource Include="Resources\Images\railstraight.png" />
+    <Resource Include="Resources\Images\Tools\railcurve.png" />
+    <Resource Include="Resources\Images\Tools\railstraight.png" />
     <Content Include="Resources\Images\rail_curve_v1.svg" />
     <Content Include="Resources\Images\rail_straight_v1.svg" />
     <Resource Include="Resources\Images\smiley.jpg" />
     <Content Include="Resources\Images\test.svg" />
+    <Resource Include="Resources\Images\Tools\railcurve - Kopie.png" />
+    <Resource Include="Resources\Images\Tools\railstraight - Kopie.png" />
+    <Resource Include="Resources\Images\Tools\railstraight - Kopie2.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

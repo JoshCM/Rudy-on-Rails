@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace RoRClient.View.Editor
 {
     /// <summary>
-    /// Interaktionslogik für EditorTopMenuUserControl.xaml
+    /// Interaktionslogik für ToolbarUserControl.xaml
     /// </summary>
-    public partial class EditorTopMenuUserControl : UserControl
+    public partial class ToolbarUserControl : UserControl
     {
-        public EditorTopMenuUserControl()
+        public ToolbarUserControl()
         {
             InitializeComponent();
         }
