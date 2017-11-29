@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RoRClient.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +25,18 @@ namespace RoRClient.View
         {
             InitializeComponent();
         }
+
+        RailViewModel RailViewModelBind
+        {
+            get
+            {
+                return (RailViewModel)GetValue(RailViewModelProperty);
+            }
+            set
+            {
+                SetValue(RailViewModelProperty, value);
+            }
+        }
+        public static readonly DependencyProperty RailViewModelProperty = DependencyProperty.Register("RailViewModel", typeof(RailViewModel), typeof(RailUserControl), new UIPropertyMetadata(null));
     }
 }

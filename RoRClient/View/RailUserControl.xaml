@@ -1,21 +1,25 @@
-﻿<local:CanvasUserControl x:Class="RoRClient.View.RailUserControl"
+﻿<v:CanvasUserControl x:Class="RoRClient.View.RailUserControl"
                          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-                         xmlns:local="clr-namespace:RoRClient.View"
+                         xmlns:v="clr-namespace:RoRClient.View"
+                         xmlns:converter="clr-namespace:RoRClient.BindingConverter"
                          x:Name="railUserControl"
                          mc:Ignorable="d" 
                          Canvas.Top="{Binding RealY, ElementName=railUserControl}"
                          Canvas.Left="{Binding RealX, ElementName=railUserControl}">
-    <Canvas Width="20"
-            Height="20">
-
-        <Rectangle
+    <UserControl.Resources>
+        <converter:RailSectionToImagePathConverter  x:Key="RailSectionToImagePathConverter"/>
+    </UserControl.Resources>
+    <Canvas Width="{Binding SquareDim, ElementName=railUserControl}"
+            Height="{Binding SquareDim, ElementName=railUserControl}">
+        <Image Width="{Binding SquareDim, ElementName=railUserControl}" Height="{Binding SquareDim, ElementName=railUserControl}" Source="L:/SWTPRO/ror/RoRClient/Ressourcen/images/rail_straight_v1.svg"/>
+        <!--<Rectangle
             Width="20"
             Height="20"
             Fill="Green"
             Stroke="WHITE"
-            StrokeThickness="1" />
+            StrokeThickness="1" />-->
     </Canvas>
-</local:CanvasUserControl>
+</v:CanvasUserControl>

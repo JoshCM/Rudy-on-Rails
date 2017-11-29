@@ -9,20 +9,6 @@ namespace RoRClient.View
         public SquareUserControl()
         {
             InitializeComponent();
-            SquareDim = ViewConstants.SQUARE_DIM;
         }
-        
-        public int SquareDim
-        {
-            get
-            {
-                return (int)GetValue(SquareDimProperty);
-            }
-            set
-            {
-                SetValue(SquareDimProperty, value);
-            }
-        }
-        public static readonly DependencyProperty SquareDimProperty = DependencyProperty.Register("SquareDim", typeof(int), typeof(SquareUserControl), new UIPropertyMetadata(0));
     }
 }
