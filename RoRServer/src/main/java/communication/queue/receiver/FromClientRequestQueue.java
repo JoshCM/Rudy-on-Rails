@@ -7,12 +7,12 @@ import javax.jms.Message;
 import javax.jms.TextMessage;
 
 import communication.queue.sender.QueueSender;
-import models.DummyGame;
+import models.Game.DummyGame;
 
 import org.apache.log4j.Logger;
 
 import communication.session.SessionTopicSender;
-import requestHandler.RequestHandler;
+import HandleRequests.RequestHandlerImpl;
 
 // Allgemeine Queue für Clients, die ein Spiel oder Editor erstellen wollen
 public class FromClientRequestQueue extends QueueReceiver {
@@ -35,7 +35,7 @@ public class FromClientRequestQueue extends QueueReceiver {
 			String command = message.getJMSType();
 			log.info("ClientRequestReceiver.onMessage(): ... Message received [" + new Date().toString() + "]: "
 					+ textMessage.getText());
-			RequestHandler requestHandler = RequestHandler.getInstance();
+			RequestHandlerImpl requestHandler = RequestHandlerImpl.getInstance();
 			requestHandler.handleRequest(command, textMessage.getText());
 			QueueSender sender = new QueueSender(textMessage.getText());
 			String tT = "testTopic";

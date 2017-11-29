@@ -1,4 +1,4 @@
-package models;
+package models.Game;
 
 public abstract class InteractiveGameObject {
 	protected Square square;

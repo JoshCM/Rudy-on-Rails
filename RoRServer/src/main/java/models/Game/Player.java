@@ -1,4 +1,4 @@
-package models;
+package models.Game;
 
 public class Player {
     private String id;     //Das ist ebenfalls die ClientID

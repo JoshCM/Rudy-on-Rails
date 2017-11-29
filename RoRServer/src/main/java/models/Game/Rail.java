@@ -1,4 +1,4 @@
-package models;
+package models.Game;
 
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	

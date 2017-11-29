@@ -1,4 +1,4 @@
-package models;
+package models.Game;
 
 import org.apache.log4j.Logger;
 
