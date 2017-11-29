@@ -1,9 +1,9 @@
 package models;
 
 /**
- * Interface für Objekte, die auf einer Rail platziert werden
+ * Interface fuer Objekte, die auf einer Rail platziert werden
  */
-public interface PlaceableOnSquare extends Placeable {
+public interface PlaceableOnSquare extends Model, Placeable {
 
 	
 }

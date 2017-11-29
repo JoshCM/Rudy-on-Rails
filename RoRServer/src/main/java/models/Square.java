@@ -1,10 +1,10 @@
 package models;
 
 /**
- * Klasse für ein Feld (Square), dass auf der Map liegt und eine Position hat.
- * Auf dem Feld platzierte Objekte können auf die jeweilige Position zugreifen.
+ * Klasse fuer ein Feld (Square), dass auf der Map liegt und eine Position hat.
+ * Auf dem Feld platzierte Objekte koennen auf die jeweilige Position zugreifen.
  */
-public class Square {
+public class Square extends ModelBase {
 
 	private PlaceableOnSquare placeableOnSquare = null;
 	private int xIndex;

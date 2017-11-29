@@ -4,7 +4,7 @@ package models;
 /**
  * Klasse, die das Spielfeld darstellt und aus Feldern (Squares) besteht
  */
-public class Map {
+public class Map extends ModelBase {
 	
 	private Square squares [][];
 	private final int mapSize = 3;
