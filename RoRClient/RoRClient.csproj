@@ -102,6 +102,8 @@
     <Compile Include="ViewModel\EditorViewModel.cs" />
     <Compile Include="ViewModel\Editor\ToolbarViewModel.cs" />
     <Compile Include="ViewModel\Helper\DelegateCommand.cs" />
+    <Compile Include="ViewModel\Helper\EditorCommands.cs" />
+    <Compile Include="ViewModel\Helper\Exit.cs" />
     <Compile Include="ViewModel\Helper\ObservableObjectBaseClass.cs" />
     <Compile Include="View\Editor\EditorToolbarUserControl.xaml.cs">
       <DependentUpon>EditorToolbarUserControl.xaml</DependentUpon>

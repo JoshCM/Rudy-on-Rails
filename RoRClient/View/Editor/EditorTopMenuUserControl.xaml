@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:RoRClient.View"
+             xmlns:cmd="clr-namespace:RoRClient.ViewModel.Helper"
              mc:Ignorable="d" 
                                        HorizontalAlignment="Stretch"
 	VerticalAlignment="Stretch"
@@ -22,13 +22,14 @@
             <MenuItem Header="_Save" />
             <MenuItem Header="_Save As..." />
             <Separator />
-            <MenuItem Header="_Exit" />
+            <MenuItem Header="_Exit" Command="{x:Static cmd:EditorCommands.Exit}" />
         </MenuItem>
         <MenuItem Header="_Edit" />
         <MenuItem Header="_View" />
         <MenuItem Header="_Window" />
         <MenuItem Header="_Help" />
         <MenuItem Header="_Alles nur Platzhalter" />
+        <MenuItem Header="_Eigener Exit Button" Command="{x:Static cmd:EditorCommands.Exit}" />
     </Menu>
 
 </UserControl>

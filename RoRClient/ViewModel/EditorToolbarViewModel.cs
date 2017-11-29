@@ -9,7 +9,6 @@ namespace RoRClient.ViewModel
 {
     class EditorToolbarViewModel : ViewModelBase
     {
-        private string bildstring;
         private ActionCommand testCommand;
         public ActionCommand TestCommand
         {
