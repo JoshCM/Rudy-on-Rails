@@ -17,7 +17,7 @@
         <local:EditorToolbarViewModel/>
     </UserControl.DataContext>
     <WrapPanel HorizontalAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Top">
-        <Button Command="{Binding TestCommand}" Height="100" Width="100" Margin="10">
+        <Button Name="CurvedRail" Command="{Binding TestCommand}" Height="100" Width="100" Margin="10">
             <Image Source="/RoRClient;component/Resources/Images/railcurve.png"></Image>
         </Button>
         <Button Height="100" Width="100" Margin="10">
