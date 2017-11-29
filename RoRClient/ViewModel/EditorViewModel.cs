@@ -9,10 +9,15 @@ using System.Collections.Generic;
 
 namespace RoRClient.ViewModel
 {
+    /// <summary>
+    /// 
+    /// </summary>
     class EditorViewModel : ViewModelBase
     {
         private const string VIEWMODEL_TYPE_PREFIX = "RoRClient.ViewModel.";
         private const string VIEWMODEL_CLASS_SUFFIX = "ViewModel";
+
+        private Map testMap;
 
         private ObservableCollection<Square> squares = new ObservableCollection<Square>();
         public ObservableCollection<Square> Squares
@@ -62,23 +67,34 @@ namespace RoRClient.ViewModel
 
         public EditorViewModel()
         {
+            testMap = GenerateTestMap();
+            MapWidth = testMap.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
+            MapHeight = testMap.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+        }
+
+        /// <summary>
+        /// Erstellt eine Map mit mehreren Rails, die zurzeit zu Testzwecken verwendet wird.
+        /// Später wird die Map dann über den Server geschickt.
+        /// </summary>
+        /// <returns>TestMap</returns>
+        private Map GenerateTestMap()
+        {
             Map map = new Map();
-            foreach(Square square in map.Squares)
+            foreach (Square square in map.Squares)
             {
                 squares.Add(square);
                 square.PropertyChanged += OnSquarePropertyChanged;
 
-                if(square.PlaceableOnSquare != null && square.PlaceableOnSquare.GetType() == typeof(Rail))
+                if (square.PlaceableOnSquare != null && square.PlaceableOnSquare.GetType() == typeof(Rail))
                 {
                     Rail rail = (Rail)square.PlaceableOnSquare;
                     RailViewModel railViewModel = new RailViewModel(rail);
                     placeableOnSquareCollection.Add(railViewModel);
-                    rail.PropertyChanged += OnRailPropertyChanged;                    
+                    rail.PropertyChanged += OnRailPropertyChanged;
                 }
             }
 
-            MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
-            MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+            return map;
         }
 
         private ICommand createRandomRailsCommand;
@@ -94,6 +110,9 @@ namespace RoRClient.ViewModel
             }
         }
 
+        /// <summary>
+        /// Hier werden testweise alle Rails von Squares gelöscht und zufällig neue generiert und den Squares zugeordnet. 
+        /// </summary>
         private void CreateRandomRails()
         {
             Random rand = new Random();
@@ -123,11 +142,15 @@ namespace RoRClient.ViewModel
             // ToDo
         }
 
+        /// <summary>
+        /// Wenn sich eine Property in Square ändert, dann wird diese Methode aufgerufen.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnSquarePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             Square square = (Square)sender;
 
-            // Erstmal Annahme: Ist immer Rail
             if (e.PropertyName == "PlaceableOnSquare")
             {
                 PropertyChangedExtendedEventArgs<IPlaceableOnSquare> eventArgs = (PropertyChangedExtendedEventArgs<IPlaceableOnSquare>)e;
@@ -150,6 +173,13 @@ namespace RoRClient.ViewModel
             }
         }
 
+        /// <summary>
+        /// Erstellt das zu einem Model zugehörige ViewModel und gibt es zurück.
+        /// Konvention ist dabei das Suffix 'ViewModel' sowie dass das ViewModel sein Model durch den Konstruktor reingereicht bekommt
+        /// Beispiel: Rail -> RailViewModel
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>Konkretes ViewModel zu einem Model</returns>
         private CanvasViewModel CreateViewModelForModel(IModel model)
         {
             Type modelType = model.GetType();

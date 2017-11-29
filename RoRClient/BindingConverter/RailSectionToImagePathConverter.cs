@@ -10,6 +10,10 @@ using System.Windows.Data;
 
 namespace RoRClient.BindingConverter
 {
+    /// <summary>
+    /// Wird genutzt, um bei einem RailViewModel zu entscheiden, um welchen Schienentyp es sich handelt und gibt dann den Pfad zum passenden
+    /// Bild zurück
+    /// </summary>
     class RailSectionToImagePathConverter : IValueConverter
     {
         private const string IMAGE_FOLDER_PATH = "..\\..\\Ressourcen\\Images\\";

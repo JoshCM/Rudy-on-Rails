@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModel
 {
+    /// <summary>
+    /// Diese Klasse wird als Base-Klasse für alle ViewModels verwendet, die auf einem Canvas angezeigt werden.
+    /// Dazu gehören zum Beispiel Squares und Rails. 
+    /// </summary>
     public class CanvasViewModel : ViewModelBase
     {
         public CanvasViewModel(Guid modelId)

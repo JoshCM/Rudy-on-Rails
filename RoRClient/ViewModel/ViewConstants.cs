@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModel
 {
+    /// <summary>
+    /// Hier kommen alle Konstanten hin, die die Views betreffen
+    /// </summary>
     static class ViewConstants
     {
         public const int SQUARE_DIM = 50;

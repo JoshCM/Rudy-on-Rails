@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModel
 {
+    /// <summary>
+    /// Base Klasse für ViewModels, damit alle das INotifyPropertyChanged Interface besitzen
+    /// </summary>
     public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
