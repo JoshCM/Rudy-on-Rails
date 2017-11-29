@@ -10,7 +10,7 @@ namespace RoRClient.Model.Models
     {
         //Map mit Squares gefüllt (Spielfeld)
 
-        const int mapSize = 3;
+        const int mapSize = 25;
 
         Square[,] squares;
 

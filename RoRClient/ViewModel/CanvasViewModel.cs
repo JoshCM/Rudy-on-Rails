@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModel
 {
-    class CanvasViewModel : ViewModelBase
+    public class CanvasViewModel : ViewModelBase
     {
         public CanvasViewModel(Guid modelId)
         {

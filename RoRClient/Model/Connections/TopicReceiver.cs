@@ -18,8 +18,6 @@ namespace RoRClient.Model.Connections
         private IMessageConsumer messageConsumer;
         ISession session;
 
-        // Da der TopicReceiver das Game ändern können muss, braucht er eine Referenz. Wird hier erstmal nicht genutzt.
-        private DummyGame dummyGame;
 
         public TopicReceiver(string topicName)
         {

@@ -26,7 +26,7 @@ namespace RoRClient.View
             InitializeComponent();
         }
 
-        RailViewModel RailViewModelBind
+        public RailViewModel RailViewModel
         {
             get
             {

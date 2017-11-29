@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-    abstract class ModelBase : IModel
+    public abstract class ModelBase : IModel
     {
         public ModelBase()
         {

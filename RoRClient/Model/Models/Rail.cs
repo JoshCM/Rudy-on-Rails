@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-    class Rail : InteractiveGameObject, IPlaceableOnSquare
+    public class Rail : InteractiveGameObject, IPlaceableOnSquare
     {
         //Klasse für Schienen, die einem Feld (Square) zugeordnet sind
         //und ein Schienenstück (= Gerade, Kurve) bzw. zwei Schienenstücke (= Kreuzung, Weiche) besitzen
@@ -20,9 +20,7 @@ namespace RoRClient.Model.Models
 
         public virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-                handler(sender, e);
+            PropertyChanged?.Invoke(sender, e);
         }
 
         protected void NotifyPropertyChanged<T>(string propertyName, T oldvalue, T newvalue)

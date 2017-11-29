@@ -35,7 +35,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type vm:RailViewModel}">
                             <Canvas>
-                                <v:RailUserControl X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                                <v:RailUserControl X="{Binding SquarePosX}" Y="{Binding SquarePosY}" RailViewModel="{Binding}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

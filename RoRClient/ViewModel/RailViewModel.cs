@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModel
 {
-    class RailViewModel : CanvasViewModel
+    public class RailViewModel : CanvasViewModel
     {
         private Rail rail;
         public RailViewModel(Rail rail) : base(rail.Id)

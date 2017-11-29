@@ -1,4 +1,5 @@
 ﻿using RoRClient.Model.Models;
+using RoRClient.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -11,14 +12,38 @@ namespace RoRClient.BindingConverter
 {
     class RailSectionToImagePathConverter : IValueConverter
     {
-        private const string IMAGE_FOLDER_PATH = "..\\..\\Ressourcen\\images\\";
+        private const string IMAGE_FOLDER_PATH = "..\\..\\Ressourcen\\Images\\";
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            // TODO: beide sections zum converten nutzen
-            Rail rail = (Rail)value;
-            List<RailSectionPosition> positionList = rail.Section1.GetNodesAsList();
-            if(positionList.Contains(RailSectionPosition.NORTH) && positionList.Contains(RailSectionPosition.SOUTH)){
-                return IMAGE_FOLDER_PATH + "rail_straight_v1.svg";
+            if (value != null)
+            {
+                // TODO: beide sections zum converten nutzen
+                RailViewModel railViewModel = (RailViewModel)value;
+                Rail rail = railViewModel.Rail;
+                List<RailSectionPosition> positionList = rail.Section1.GetNodesAsList();
+                if (positionList.Contains(RailSectionPosition.NORTH) && positionList.Contains(RailSectionPosition.SOUTH))
+                {
+                    return IMAGE_FOLDER_PATH + "rail_ns.png";
+                }else if(positionList.Contains(RailSectionPosition.EAST) && positionList.Contains(RailSectionPosition.WEST))
+                {
+                    return IMAGE_FOLDER_PATH + "rail_ew.png";
+                }
+                else if (positionList.Contains(RailSectionPosition.SOUTH) && positionList.Contains(RailSectionPosition.WEST))
+                {
+                    return IMAGE_FOLDER_PATH + "railcurve_sw.png";
+                }
+                else if (positionList.Contains(RailSectionPosition.SOUTH) && positionList.Contains(RailSectionPosition.EAST))
+                {
+                    return IMAGE_FOLDER_PATH + "railcurve_se.png";
+                }
+                else if (positionList.Contains(RailSectionPosition.NORTH) && positionList.Contains(RailSectionPosition.WEST))
+                {
+                    return IMAGE_FOLDER_PATH + "railcurve_nw.png";
+                }
+                else if (positionList.Contains(RailSectionPosition.NORTH) && positionList.Contains(RailSectionPosition.EAST))
+                {
+                    return IMAGE_FOLDER_PATH + "railcurve_ne.png";
+                }
             }
             return "";
         }

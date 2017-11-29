@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-    interface IModel
+    public interface IModel
     {
         Guid Id
         {

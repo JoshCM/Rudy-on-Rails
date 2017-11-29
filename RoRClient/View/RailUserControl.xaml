@@ -14,7 +14,7 @@
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=railUserControl}"
             Height="{Binding SquareDim, ElementName=railUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=railUserControl}" Height="{Binding SquareDim, ElementName=railUserControl}" Source="L:/SWTPRO/ror/RoRClient/Ressourcen/images/rail_straight_v1.svg"/>
+        <Image Width="{Binding SquareDim, ElementName=railUserControl}" Height="{Binding SquareDim, ElementName=railUserControl}" Source="{Binding RailViewModel, ElementName=railUserControl, Converter={StaticResource RailSectionToImagePathConverter}}"/>
         <!--<Rectangle
             Width="20"
             Height="20"

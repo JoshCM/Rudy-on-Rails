@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace RoRClient.ViewModel
 {
@@ -101,7 +102,15 @@ namespace RoRClient.ViewModel
                 square.PlaceableOnSquare = null;
                 if(rand.Next(3) == 0)
                 {
-                    Rail rail = new Rail(square, new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+                    List<RailSection> railSections = new List<RailSection>();
+                    railSections.Add(new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+                    railSections.Add(new RailSection(RailSectionPosition.WEST, RailSectionPosition.SOUTH));
+                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.WEST));
+                    railSections.Add(new RailSection(RailSectionPosition.WEST, RailSectionPosition.NORTH));
+                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.SOUTH));
+                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.NORTH));
+
+                    Rail rail = new Rail(square, railSections[rand.Next(railSections.Count)]);
                     square.PlaceableOnSquare = rail;
                 }
             }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-    class Square : ModelBase, INotifyPropertyChanged
+    public class Square : ModelBase, INotifyPropertyChanged
     {
         //Klasse für ein Feld, dass auf der Map liegt und eine Position hat.
         //Auf dem Feld platzierte Objekte können auf die jeweilige Position zugreifen

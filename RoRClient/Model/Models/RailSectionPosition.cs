@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-    enum RailSectionPosition
+    public enum RailSectionPosition
     {
         //Knotenposition eines Schienenstücks
 
