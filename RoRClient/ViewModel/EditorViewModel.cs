@@ -125,7 +125,7 @@ namespace RoRClient.ViewModel
                 
                 if (square.PlaceableOnSquare == null)
                 {
-                    ModelBase model = (ModelBase)eventArgs.OldValue;
+                    IModel model = (IModel)eventArgs.OldValue;
                     CanvasViewModel result = placeableOnSquareCollection.Where(x => x.Id == model.Id).First();
 
                     if (result != null)

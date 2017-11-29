@@ -10,6 +10,8 @@ namespace RoRClient.Model.Models
     {
         //Klasse für ein Schienenstück mit "Eingang" und "Ausgang"
 
+        // ToDo: Methoden mit festen Instanzen
+
         //Geraden
         public static readonly RailSection STRAIGHT_VERTICAL = new RailSection (RailSectionPosition.NORTH, RailSectionPosition.SOUTH);
         public static readonly RailSection STRAIGHT_HORIZONTAL = new RailSection (RailSectionPosition.EAST, RailSectionPosition.WEST);
