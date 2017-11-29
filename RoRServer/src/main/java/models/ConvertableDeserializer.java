@@ -9,10 +9,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 
-public class ConvertableDeserializer<T extends Convertable> implements JsonDeserializer<T> {
+public class ConvertableDeserializer<T extends Convertable> implements JsonDeserializer<T>{
 
 	private static final String CLASS_NAME = "className";
-	
 	
 	@Override
 	public T deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -26,10 +25,10 @@ public class ConvertableDeserializer<T extends Convertable> implements JsonDeser
 		JsonPrimitive prim = (JsonPrimitive) jsonObject.get(CLASS_NAME);
 		System.out.println("json prim: " + prim);
 		String className = prim.getAsString();
-		System.out.println(className);
+		System.out.println("className: " + className);
 		Class<T> myClass = getClassInstance(className);
-		System.out.println(myClass);
-		return context.deserialize(jsonObject.get(className), myClass);
+		System.out.println("Klasse: " + myClass);
+		return context.deserialize(jsonObject, myClass);
 	}
 	
 	@SuppressWarnings("unchecked")

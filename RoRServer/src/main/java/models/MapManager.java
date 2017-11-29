@@ -12,16 +12,18 @@ import com.google.gson.GsonBuilder;
 public class MapManager {
 
 	private Gson gson;
+	private Gson gson2;
 
 	public MapManager() {
 		// gson = new Gson();
-		gson = new GsonBuilder().registerTypeAdapter(PlaceableOnSquare.class, new ConvertableDeserializer<PlaceableOnSquare>()).create();
+		gson = new GsonBuilder().registerTypeAdapter(Convertable.class, new ConvertableDeserializer<Convertable>()).setPrettyPrinting().create();
+		gson2 = new GsonBuilder().registerTypeAdapter(PlaceableOnSquare.class, new ConvertableDeserializer<PlaceableOnSquare>()).create();
 	}
 
 	public Map loadMap(String mapName) {
 	    String jsonMap = readFromFile(mapName);
 	    System.out.println("Eingelesene Map: " + jsonMap);
-		Map map = gson.fromJson(jsonMap, Map.class);
+		Map map = gson2.fromJson(jsonMap, Map.class);
 		return map;
 	}
 	
