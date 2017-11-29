@@ -9,6 +9,7 @@ namespace RoRClient.ViewModel
 {
     class EditorToolbarViewModel : ViewModelBase
     {
+        private string bildstring;
         private ActionCommand testCommand;
         public ActionCommand TestCommand
         {
@@ -17,16 +18,18 @@ namespace RoRClient.ViewModel
                 if (testCommand == null)
                 {
                     // 1. Argument: Kommando-Effekt (Execute), 2. Argument: Bedingung "Kommando aktiv?" (CanExecute)
-                    testCommand = new ActionCommand(dummy => this.TestMethode());
+                    testCommand = new ActionCommand(dummy => this.TestMethode(dummy));
                 }
                 return testCommand;
             }
         }
 
-        // Hilfsmethode für AddEinkaufCommand
-        private void TestMethode()
-        {
+        public string BildString {get; set;}
 
+        // Hilfsmethode für AddEinkaufCommand
+        private void TestMethode(object dummy)
+        {
+            Console.WriteLine(dummy.ToString());
         }
     }
 }

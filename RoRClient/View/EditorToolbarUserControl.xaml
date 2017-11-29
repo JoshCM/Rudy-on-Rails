@@ -5,18 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:RoRClient.ViewModel"
              mc:Ignorable="d" 
+            
                           HorizontalAlignment="Stretch"
 	VerticalAlignment="Stretch"
 	HorizontalContentAlignment="Stretch"
 	VerticalContentAlignment="Stretch"
     Height="auto"
     Width="auto"
-    Background="Beige">
+    Background="Beige" d:DesignHeight="813.443" d:DesignWidth="389.613">
     <UserControl.DataContext>
         <local:EditorToolbarViewModel/>
     </UserControl.DataContext>
     <WrapPanel HorizontalAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Top">
-        <Button Command="{Binding MachScheisseCommand}" Height="100" Width="100" Margin="10">
+        <Button Command="{Binding TestCommand}" Height="100" Width="100" Margin="10">
             <Image Source="/RoRClient;component/Resources/Images/railcurve.png"></Image>
         </Button>
         <Button Height="100" Width="100" Margin="10">
@@ -53,9 +54,8 @@
             <Image Source="/RoRClient;component/Resources/Images/railstraight.png"></Image>
         </Button>
 
+        <Button Height="100" Width="100" BorderBrush="Red" BorderThickness="5" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="50,100">
+            <Image Source="{Binding bildstring}"></Image>
+        </Button>
     </WrapPanel>
-    
-    
-
-
 </UserControl>
