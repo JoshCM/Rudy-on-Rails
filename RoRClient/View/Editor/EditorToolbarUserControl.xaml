@@ -14,7 +14,7 @@
     Width="auto"
     Background="Beige" d:DesignHeight="813.443" d:DesignWidth="389.613">
     <UserControl.DataContext>
-        <local:EditorToolbarViewModel/>
+        <local:EditorViewModel />
     </UserControl.DataContext>
     <WrapPanel HorizontalAlignment="Left" Margin="10,10,10,10" VerticalAlignment="Top">
         <Button Name="CurvedRail" Command="{Binding TestCommand}" Height="100" Width="100" Margin="10">
