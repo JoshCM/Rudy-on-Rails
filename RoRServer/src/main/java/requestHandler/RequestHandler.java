@@ -38,11 +38,11 @@ public class RequestHandler {
                 //JsonArray attributes = jsonObject.getAsJsonArray("attributes");
             	JsonObject obj = jsonObject.getAsJsonObject("attributes");
             	
-                String clientid  = jsonObject.get("clientid").getAsString();
-                String name = obj.get("Playername").getAsString();
+                String clientId  = jsonObject.get("clientId").getAsString();
+                //String name = obj.get("Playername").getAsString();
                 
-                Player player = new Player(clientid, name);
-                FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(clientid);
+                //Player player = new Player(clientid, name);
+                FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(clientId);
                 fromServerResponseQueue.sendMessage("alles ok du sahnetoertchen");
                 
                 break;

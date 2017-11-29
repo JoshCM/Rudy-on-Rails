@@ -13,6 +13,10 @@ namespace RoRClient.Model.Models
 		UPDATE,
 		DELETE,
         LEAVE,
-		ERROR
-	};
+		ERROR,
+
+        MODIFYOBJECT,
+        SESSIONREQUEST
+    
+    };
 }

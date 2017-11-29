@@ -37,9 +37,11 @@ namespace RoRClient.ViewModel
 			}
 		}
 
+        //Beispiel wie eine Message versendet werden kann
 		private void CreateNewPlayerCommand()
 		{
-			IMessage message = MessageBuilder.build(MessageType.CREATE, RequestType.PLAYER);
+            Content content = new Content(RequestType.PLAYER, new Dictionary<string, string>() { { "testAttribut1", "1" }, { "testAttribut2", "2" } });
+            IMessage message = MessageBuilder.build(MessageType.CREATE,content) ;
 			ClientModel.getInstance().getFromClientRequestSender().SendMessage(message);
 		}
 
