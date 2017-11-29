@@ -195,7 +195,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Ressourcen\images\rail_straight_v1.svg" />
+    <Resource Include="Ressourcen\Images\railcurve_ne.png" />
+    <Resource Include="Ressourcen\Images\railcurve_nw.png" />
+    <Resource Include="Ressourcen\Images\railcurve_se.png" />
+    <Resource Include="Ressourcen\Images\railcurve_sw.png" />
+    <Resource Include="Ressourcen\Images\rail_ew.png" />
+    <Resource Include="Ressourcen\Images\rail_ns.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
