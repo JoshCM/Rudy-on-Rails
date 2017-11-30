@@ -8,26 +8,10 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-    public class Square : ModelBase, INotifyPropertyChanged
+    public class Square : ModelBase
     {
         //Klasse für ein Feld, dass auf der Map liegt und eine Position hat.
         //Auf dem Feld platzierte Objekte können auf die jeweilige Position zugreifen
-
-        #region Property Changed 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-                handler(sender, e);
-        }
-
-        protected void NotifyPropertyChanged<T>(string propertyName, T oldvalue, T newvalue)
-        {
-            OnPropertyChanged(this, new PropertyChangedExtendedEventArgs<T>(propertyName, oldvalue, newvalue));
-        }
-        #endregion
 
         public Square() : base()
         {

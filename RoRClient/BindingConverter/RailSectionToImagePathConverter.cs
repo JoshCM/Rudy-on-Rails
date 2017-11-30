@@ -21,10 +21,8 @@ namespace RoRClient.BindingConverter
         {
             if (value != null)
             {
-                // TODO: beide sections zum converten nutzen
-                RailViewModel railViewModel = (RailViewModel)value;
-                Rail rail = railViewModel.Rail;
-                List<RailSectionPosition> positionList = rail.Section1.GetNodesAsList();
+                RailSection railSection = (RailSection)value;
+                List<RailSectionPosition> positionList = railSection.GetNodesAsList();
                 if (positionList.Contains(RailSectionPosition.NORTH) && positionList.Contains(RailSectionPosition.SOUTH))
                 {
                     return IMAGE_FOLDER_PATH + "rail_ns.png";
@@ -49,7 +47,9 @@ namespace RoRClient.BindingConverter
                     return IMAGE_FOLDER_PATH + "railcurve_ne.png";
                 }
             }
-            return "";
+
+            // ToDo: Hier brauchen wir ein Dummy-Bild oder so, das ganz total transparent ist
+            return IMAGE_FOLDER_PATH + "dummy.png";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

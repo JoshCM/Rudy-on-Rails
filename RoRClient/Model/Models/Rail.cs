@@ -13,22 +13,6 @@ namespace RoRClient.Model.Models
         //Klasse für Schienen, die einem Feld (Square) zugeordnet sind
         //und ein Schienenstück (= Gerade, Kurve) bzw. zwei Schienenstücke (= Kreuzung, Weiche) besitzen
 
-        // ToDo: Das mit den IDs müssen ALLE Models bekommen, die durchs Netzwerk geschickt werden. Sonst doof. Alles ganz doof.
-
-        #region Property Changed 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            PropertyChanged?.Invoke(sender, e);
-        }
-
-        protected void NotifyPropertyChanged<T>(string propertyName, T oldvalue, T newvalue)
-        {
-            OnPropertyChanged(this, new PropertyChangedExtendedEventArgs<T>(propertyName, oldvalue, newvalue));
-        }
-        #endregion
-
         protected IPlaceableOnRail placeableOnRail = null;
         private RailSection section1;
         public RailSection Section1

@@ -7,18 +7,9 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-    public abstract class InteractiveGameObject : ModelBase, INotifyPropertyChanged
+    public abstract class InteractiveGameObject : ModelBase
     {
         //Abstrakte Klasse für alle Objekte, mit denen interagiert werden kann
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public virtual void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
 
         private Square square;
         public Square Square
@@ -32,7 +23,7 @@ namespace RoRClient.Model.Models
                 if(square != value)
                 {
                     square = value;
-                    OnPropertyChanged("Square");            
+                    NotifyPropertyChanged("Square");            
                 }
             }
         }

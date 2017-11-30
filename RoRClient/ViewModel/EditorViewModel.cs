@@ -101,7 +101,7 @@ namespace RoRClient.ViewModel
             {
                 if (createRandomRailsCommand == null)
                 {
-                    createRandomRailsCommand = new ActionCommand(param => CreateRandomRails());
+                    createRandomRailsCommand = new ActionCommand(param => ChangeRailSectionsFromActiveRails());
                 }
                 return createRandomRailsCommand;
             }
@@ -132,11 +132,30 @@ namespace RoRClient.ViewModel
             }
         }
 
+        private void ChangeRailSectionsFromActiveRails()
+        {
+            Random rand = new Random();
+            foreach (Square square in Squares)
+            {
+                if(square.PlaceableOnSquare != null)
+                {
+                    List<RailSection> railSections = new List<RailSection>();
+                    railSections.Add(new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+                    railSections.Add(new RailSection(RailSectionPosition.WEST, RailSectionPosition.SOUTH));
+                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.WEST));
+                    railSections.Add(new RailSection(RailSectionPosition.WEST, RailSectionPosition.NORTH));
+                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.SOUTH));
+                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.NORTH));
+
+                    Rail rail = (Rail)square.PlaceableOnSquare;
+                    rail.Section1 = railSections[rand.Next(railSections.Count)];
+                }
+            }
+        }
+
         private void OnRailPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             Rail rail = (Rail)sender;
-
-            // ToDo
         }
 
         /// <summary>
@@ -151,7 +170,7 @@ namespace RoRClient.ViewModel
             if (e.PropertyName == "PlaceableOnSquare")
             {
                 PropertyChangedExtendedEventArgs<IPlaceableOnSquare> eventArgs = (PropertyChangedExtendedEventArgs<IPlaceableOnSquare>)e;
-                
+
                 if (square.PlaceableOnSquare == null)
                 {
                     IModel model = (IModel)eventArgs.OldValue;
