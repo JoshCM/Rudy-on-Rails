@@ -10,7 +10,7 @@ public abstract class ModelBase implements Model{
 		this.id = UUID.randomUUID();
 	}
 	
-	public UUID Id() {
+	public UUID getId() {
 		return id;
 	}
 }

@@ -4,5 +4,5 @@ import java.util.UUID;
 
 public interface Model {
 	
-	public UUID Id();
+	public UUID getId();
 }
