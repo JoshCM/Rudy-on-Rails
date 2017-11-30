@@ -103,6 +103,7 @@
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
     <Compile Include="Model\Models\IModel.cs" />
     <Compile Include="Model\Models\ModelBase.cs" />
+    <Compile Include="ViewModel\Helper\ViewModelFactory.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\CanvasViewModel.cs" />
     <Compile Include="ViewModel\Helper\ActionCommand.cs" />

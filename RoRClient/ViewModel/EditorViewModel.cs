@@ -14,9 +14,6 @@ namespace RoRClient.ViewModel
     /// </summary>
     class EditorViewModel : ViewModelBase
     {
-        private const string VIEWMODEL_TYPE_PREFIX = "RoRClient.ViewModel.";
-        private const string VIEWMODEL_CLASS_SUFFIX = "ViewModel";
-
         private Map testMap;
 
         private ObservableCollection<Square> squares = new ObservableCollection<Square>();
@@ -167,26 +164,11 @@ namespace RoRClient.ViewModel
                 }
                 else
                 {
-                    CanvasViewModel viewModel = CreateViewModelForModel(square.PlaceableOnSquare);
+                    ViewModelFactory factory = new ViewModelFactory();
+                    CanvasViewModel viewModel = factory.CreateViewModelForModel(square.PlaceableOnSquare);
                     placeableOnSquareCollection.Add(viewModel);
                 }
             }
-        }
-
-        /// <summary>
-        /// Erstellt das zu einem Model zugehörige ViewModel und gibt es zurück.
-        /// Konvention ist dabei das Suffix 'ViewModel' sowie dass das ViewModel sein Model durch den Konstruktor reingereicht bekommt
-        /// Beispiel: Rail -> RailViewModel
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns>Konkretes ViewModel zu einem Model</returns>
-        private CanvasViewModel CreateViewModelForModel(IModel model)
-        {
-            Type modelType = model.GetType();
-            String viewModelTypeName = VIEWMODEL_TYPE_PREFIX + modelType.Name + VIEWMODEL_CLASS_SUFFIX;
-            Type viewModelType = Type.GetType(viewModelTypeName);
-            CanvasViewModel viewModel = (CanvasViewModel)Activator.CreateInstance(viewModelType, model);
-            return viewModel;
         }
     }
 }
