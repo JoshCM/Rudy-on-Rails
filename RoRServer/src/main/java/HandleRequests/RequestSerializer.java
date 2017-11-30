@@ -1,13 +1,9 @@
 package HandleRequests;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import models.DataTranserObject.RequestInformation;
-
-import java.util.HashMap;
-import java.util.Map;
+import models.DataTranserObject.MessageInformation;
 
 public class RequestSerializer {
 
@@ -25,16 +21,20 @@ public class RequestSerializer {
     }
 
     /**
-     * Deserialize a JSON-String and transfer it to the DataTransferObject(DTO) RequestInformation
+     * Deserialize a JSON-String and transfer it to the DataTransferObject(DTO) MessageInformation
      * @param msg - Represents the request message from the client
-     * @return RequestInformation object
+     * @return MessageInformation object
      */
-    public RequestInformation deserialize(String msg) {
-        RequestInformation requestInformation = null;
+    public MessageInformation deserialize(String msg) {
+        MessageInformation messageInformation = null;
 
         JsonObject jsonObject = gson.fromJson(msg, JsonElement.class).getAsJsonObject();
-        requestInformation = gson.fromJson(msg, RequestInformation.class);
+        messageInformation = gson.fromJson(msg, MessageInformation.class);
 
-        return requestInformation;
+        return messageInformation;
+    }
+
+    public String serialize(MessageInformation messageInformation) {
+        return gson.toJson(messageInformation);
     }
 }

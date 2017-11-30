@@ -1,7 +1,8 @@
 package HandleRequests;
 
+import communication.queue.sender.FromServerResponseQueue;
+import models.DataTranserObject.MessageInformation;
 import models.DataTranserObject.MessageType;
-import models.DataTranserObject.RequestInformation;
 import models.Game.Player;
 import org.apache.log4j.Logger;
 
@@ -28,20 +29,18 @@ public class RequestDispatcher {
     }
 
     /**
-     * Verteilt die Anfrage je nach requestTyp an unterschiedliche Ziele, welche die Anfrage auflösen
+     * INFO: Eventuell kann man die Responsesache nochmal aufspillten/verteilen
+     * Verteilt die Anfrage je nach requestTyp an unterschiedliche Ziele, welche die Anfrage auflösen und eine Response für den Client erstellen
      * @param messageType - Spezifiziert die Anfrage und unterscheidet zwischen z. B. Create, Update, Delete
      * @param message - Beinhaltet die Informationen der Anfrage
      */
     public void dispatch(MessageType messageType, String message) {
         RequestSerializer requestSerializer = RequestSerializer.getInstance();
-        RequestInformation requestInformation = requestSerializer.deserialize(message);
+        MessageInformation requestInformation = requestSerializer.deserialize(message);
+        MessageInformation responseInformation = requestSerializer.deserialize(message);
         switch(messageType) {
             case CREATE:
-                resolveCreateTarget(requestInformation);
-
-                //Antworte dem Client! - wieder Serializieren
-                //FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(clientid);
-                //fromServerResponseQueue.sendMessage("alles ok du sahnetörtchen");
+                responseInformation = resolveCreateTarget(requestInformation);
 
                 break;
             case DELETE:
@@ -52,18 +51,27 @@ public class RequestDispatcher {
 
                 break;
         }
+        String response = requestSerializer.serialize(responseInformation);
+        FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(requestInformation.getClientid()); //Wie soll hier die Queue heißen?
+        fromServerResponseQueue.sendMessage(response);
     }
 
     /**
      * Bearbeitet Anfragen des Typs "CREATE" und unterscheidet zwischen verschiedenen Anfragen, um neue Objekte zu erzeugen
-     * @param requestInformation - RequestInformation-DTO welches alle Informationen zum bearbeiten der Anfrage beinhaltet
+     * @param messageInformation - MessageInformation-DTO welches alle Informationen zum bearbeiten der Anfrage beinhaltet
      */
-    private void resolveCreateTarget (RequestInformation requestInformation) {
-        switch(requestInformation.getRequest()){
+    private MessageInformation resolveCreateTarget (MessageInformation messageInformation) {
+        MessageInformation responseInformation = new MessageInformation();
+        switch(messageInformation.getRequest()){
             case "PLAYER":
-                Player player = new Player(requestInformation.getClientid(), requestInformation.getAttributes().get("Playername"));
+                Player player = new Player(messageInformation.getAttributes().get("Playername"));
+                responseInformation.setClientid("basemodelID"); //muss hier noch eingezeigt werden
+                responseInformation.setRequest("OK-PLAYER");
+                break;
+            default:
+                break;
         }
-
+         return responseInformation;
     }
 
 }
