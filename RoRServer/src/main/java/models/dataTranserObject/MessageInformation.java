@@ -1,6 +1,4 @@
-package models.DataTranserObject;
-
-import com.google.gson.annotations.SerializedName;
+package models.dataTranserObject;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -7,13 +7,13 @@ import javax.jms.Message;
 import javax.jms.TextMessage;
 
 import communication.queue.sender.QueueSender;
-import models.DataTranserObject.MessageType;
-import models.Game.DummyGame;
+import models.dataTranserObject.MessageType;
+import models.game.DummyGame;
 
 import org.apache.log4j.Logger;
 
 import communication.session.SessionTopicSender;
-import HandleRequests.RequestDispatcher;
+import handleRequests.RequestDispatcher;
 
 // Allgemeine Queue für Clients, die ein Spiel oder Editor erstellen wollen
 public class FromClientRequestQueue extends QueueReceiver {

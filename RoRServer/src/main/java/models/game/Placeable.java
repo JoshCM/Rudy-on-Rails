@@ -1,4 +1,4 @@
-package models.Game;
+package models.game;
 
 public interface Placeable {
 

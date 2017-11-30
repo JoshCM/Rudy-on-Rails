@@ -1,6 +1,6 @@
 package launcher;
 
-import HandleRequests.RequestSerializer;
+import handleRequests.RequestSerializer;
 
 public class Main {
 	public static void main(String[] args) {

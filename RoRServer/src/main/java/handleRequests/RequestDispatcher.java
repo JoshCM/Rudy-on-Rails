@@ -1,9 +1,9 @@
-package HandleRequests;
+package handleRequests;
 
 import communication.queue.sender.FromServerResponseQueue;
-import models.DataTranserObject.MessageInformation;
-import models.DataTranserObject.MessageType;
-import models.Game.Player;
+import models.dataTranserObject.MessageInformation;
+import models.dataTranserObject.MessageType;
+import models.game.Player;
 import org.apache.log4j.Logger;
 
 
