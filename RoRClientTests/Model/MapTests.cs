@@ -4,7 +4,6 @@ using RoRClient.Model.Models;
 
 namespace RoRClientTests
 {
-    /*
     [TestClass]
     public class MapTests
     {
@@ -22,8 +21,7 @@ namespace RoRClientTests
                 }
             }
 
-            Assert.AreEqual(10, counter);
+            Assert.AreEqual(Map.MapSize * Map.MapSize, counter);
         }
     }
-    */
 }

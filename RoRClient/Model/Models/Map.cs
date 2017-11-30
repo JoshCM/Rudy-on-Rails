@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-    class Map : ModelBase
+    public class Map : ModelBase
     {
         //Map mit Squares gefüllt (Spielfeld)
 
-        const int mapSize = 25;
+        private const int mapSize = 25;
+        public static int MapSize => mapSize;
 
         Square[,] squares;
 
@@ -25,6 +26,7 @@ namespace RoRClient.Model.Models
                 squares = value;
             }
         }
+
 
         public Map () : base()
         {
