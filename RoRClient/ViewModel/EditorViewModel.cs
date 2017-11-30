@@ -10,7 +10,8 @@ using System.Collections.Generic;
 namespace RoRClient.ViewModel
 {
     /// <summary>
-    /// 
+    /// Hält alle ViewModels die placeableOnSquare sind, sowie die Squares der Map
+    /// und momentan noch die Map an sich
     /// </summary>
     class EditorViewModel : ViewModelBase
     {

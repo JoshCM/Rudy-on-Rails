@@ -10,8 +10,10 @@ namespace RoRClient.Model.Models
 {
     public class Square : ModelBase
     {
-        //Klasse für ein Feld, dass auf der Map liegt und eine Position hat.
-        //Auf dem Feld platzierte Objekte können auf die jeweilige Position zugreifen
+        /// <summary>
+        /// Klasse für ein Feld, dass auf der Map liegt und eine Position hat.
+        /// Auf dem Feld platzierte Objekte können auf die jeweilige Position zugreifen
+        /// </summary>
 
         public Square() : base()
         {

@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
+    /// <summary>
+    /// Knotenposition eines Schienenstücks
+    /// </summary>
     public enum RailSectionPosition
     {
-        //Knotenposition eines Schienenstücks
-
         NORTH, EAST, SOUTH, WEST
     };
 }

@@ -9,7 +9,9 @@ namespace RoRClient.Model.Models
 {
     public abstract class InteractiveGameObject : ModelBase
     {
-        //Abstrakte Klasse für alle Objekte, mit denen interagiert werden kann
+        /// <summary>
+        /// Abstrakte Klasse für alle Objekte, mit denen interagiert werden kann
+        /// </summary>
 
         private Square square;
         public Square Square

@@ -9,6 +9,9 @@ using System.Windows.Controls;
 
 namespace RoRClient.View
 {
+    /// <summary>
+    /// Oberklasse für alle UserControls, die Objekte auf dem Spielfeld anzeigen
+    /// </summary>
     public class CanvasUserControl : UserControl
     {
         public CanvasUserControl()

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModel
 {
+    /// <summary>
+    /// Hält die zugehörige Rail und die Position (SquarePosX, SquarePosY) des Rails
+    /// </summary>
     public class RailViewModel : CanvasViewModel
     {
         private Rail rail;
