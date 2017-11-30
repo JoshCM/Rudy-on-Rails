@@ -1,7 +1,7 @@
 package models;
 
-public interface Convertable {
+public interface Placeable {
 	
 	String getClassName();
-
+	
 }

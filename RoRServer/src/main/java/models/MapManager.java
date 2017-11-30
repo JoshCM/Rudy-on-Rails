@@ -20,7 +20,7 @@ public class MapManager {
 		
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(Placeable.class, new PlaceableDeserializer<Placeable>());
-		//builder.registerTypeAdapter(PlaceableOnSquare.class, new PlaceableDeserializer<PlaceableOnSquare>());
+		builder.registerTypeAdapter(PlaceableOnSquare.class, new PlaceableDeserializer<PlaceableOnSquare>());
 		
 		//builder.registerTypeAdapter(Placeable.class, new PlaceableDeserializer<Placeable>());
 		//builder.registerTypeHierarchyAdapter(Placeable.class, new PlaceableDeserializer<PlaceableOnSquare>());

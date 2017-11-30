@@ -26,7 +26,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 
 	@Override
 	public String getClassName() {
-		System.out.println("Returning className");
+		// TODO Auto-generated method stub
 		return className;
 	}
 	

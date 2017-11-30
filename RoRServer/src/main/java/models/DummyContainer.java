@@ -12,7 +12,8 @@ public class DummyContainer implements PlaceableOnSquare {
 
 	@Override
 	public String getClassName() {
-		return className;		
+		// TODO Auto-generated method stub
+		return className;
 	}
 
 	@Override

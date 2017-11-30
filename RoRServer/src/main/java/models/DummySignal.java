@@ -12,6 +12,7 @@ public class DummySignal extends InteractiveGameObject implements PlaceableOnRai
 
 	@Override
 	public String getClassName() {
+		// TODO Auto-generated method stub
 		return className;
 	}
 
