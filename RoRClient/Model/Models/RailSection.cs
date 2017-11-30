@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
+    /// <summary>
+    /// Klasse für ein Schienenstück mit "Eingang" und "Ausgang"
+    /// </summary>
     public class RailSection : ModelBase
     {
-        //Klasse für ein Schienenstück mit "Eingang" und "Ausgang"
         private RailSectionPosition node1;
         public RailSectionPosition Node1
         {
@@ -32,6 +34,10 @@ namespace RoRClient.Model.Models
             this.node2 = node2;
         }
 
+        /// <summary>
+        /// Gibt alle Nodes als Liste zurück
+        /// </summary>
+        /// <returns></returns>
         public List<RailSectionPosition> GetNodesAsList()
         {
             List<RailSectionPosition> positionList = new List<RailSectionPosition>();

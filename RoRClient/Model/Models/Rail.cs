@@ -8,13 +8,12 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
+    /// <summary>
+    /// Klasse für Schienen, die einem Feld (Square) zugeordnet sind
+    /// und ein Schienenstück (Gerade, Kurve) bzw. zwei Schienenstücke (Kreuzung, Weiche) besitzen
+    /// </summary>
     public class Rail : InteractiveGameObject, IPlaceableOnSquare
     {
-        //Klasse für Schienen, die einem Feld (Square) zugeordnet sind
-        //und ein Schienenstück (= Gerade, Kurve) bzw. zwei Schienenstücke (= Kreuzung, Weiche) besitzen
-
-        // ToDo: Das mit den IDs müssen ALLE Models bekommen, die durchs Netzwerk geschickt werden. Sonst doof. Alles ganz doof.
-
         #region Property Changed 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -66,19 +65,32 @@ namespace RoRClient.Model.Models
             }
         }
 
+        /// <summary>
+        /// Konstruktor für Geraden oder Kurven
+        /// </summary>
+        /// <param name="square">Das Square auf dem die Rail sein soll</param>
+        /// <param name="section">Die Section der Rail</param>
         public Rail(Square square, RailSection section) : base(square)
         {
-            //Konstruktor für Geraden oder Kurven
             this.section1 = section;
         }
 
+        /// <summary>
+        /// Konstruktor für Kreuzungen oder Weichen
+        /// </summary>
+        /// <param name="square">Das Square auf dem die Rail sein soll</param>
+        /// <param name="section1">Die erste RailSection</param>
+        /// <param name="section2">Die zweite RailSection</param>
         public Rail(Square square, RailSection section1, RailSection section2) : base(square)
         {
-            //Konstruktor für Kreuzungen oder Weichen
             this.section1 = section1;
             this.section2 = section2;
         }
 
+        /// <summary>
+        /// Setzt ein PlaceableOnSquare auf diese Rail
+        /// </summary>
+        /// <param name="placeableOnRail"></param>
         public void setPlaceableOnRail(IPlaceableOnRail placeableOnRail)
         {
             if (placeableOnRail == null)

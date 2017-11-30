@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModel.Helper
 {
-    // Summary: Notifies clients that a property value is changing, but includes extended event infomation
-    /* The following NotifyPropertyChanged Interface is employed when you wish to enforce the inclusion of old and
-     * new values. (Users must provide PropertyChangedExtendedEventArgs, PropertyChangedEventArgs are disallowed.) */
+    /// <summary>
+    /// Extended Klasse um beim PropertyChanged den alten und neuen Wert mitzugeben
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface INotifyPropertyChangedExtended<T>
     {
         event PropertyChangedExtendedEventHandler<T> PropertyChanged;

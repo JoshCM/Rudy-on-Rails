@@ -7,6 +7,9 @@ using System.Windows.Input;
 
 namespace RoRClient.ViewModel.Helper
 {
+    /// <summary>
+    /// Klasse zum nutzen von Commands (z.B. Buttons)
+    /// </summary>
     class ActionCommand : ICommand
     {
         private readonly Action<object> _exec;

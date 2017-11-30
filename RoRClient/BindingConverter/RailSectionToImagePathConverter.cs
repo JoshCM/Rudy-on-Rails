@@ -21,9 +21,10 @@ namespace RoRClient.BindingConverter
         {
             if (value != null)
             {
-                // TODO: beide sections zum converten nutzen
                 RailViewModel railViewModel = (RailViewModel)value;
                 Rail rail = railViewModel.Rail;
+
+                // Beide Sections (section1, section2) sollen zum converten genutzt werden
                 List<RailSectionPosition> positionList = rail.Section1.GetNodesAsList();
                 if (positionList.Contains(RailSectionPosition.NORTH) && positionList.Contains(RailSectionPosition.SOUTH))
                 {

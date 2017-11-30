@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
+    /// <summary>
+    /// Map mit Squares gefüllt (Spielfeld)
+    /// </summary>
     public class Map : ModelBase
     {
-        //Map mit Squares gefüllt (Spielfeld)
-
         private const int mapSize = 25;
         public static int MapSize => mapSize;
 
@@ -32,7 +33,8 @@ namespace RoRClient.Model.Models
         {
             squares = new Square[mapSize, mapSize];
             InitSquares();
-            // For testing purposes
+
+            // nur zum testen der GUI
             CreateRandomRailsForTest();
         }
 
@@ -52,6 +54,10 @@ namespace RoRClient.Model.Models
             }
         }
 
+        /// <summary>
+        /// (Testweise)
+        /// Erzeugt für zufällige Squares auf der Map eine Rail mit einer RailSection
+        /// </summary>
         private void CreateRandomRailsForTest()
         {
             for (int x = 0; x < mapSize; x++)
@@ -65,9 +71,14 @@ namespace RoRClient.Model.Models
             }
         }
 
+        /// <summary>
+        /// Getter für ein Square auf der Map
+        /// </summary>
+        /// <param name="x"> X-Position des Squares</param>
+        /// <param name="y"> Y-Position des Squares</param>
+        /// <returns></returns>
         public Square GetSquare (int x, int y)
         {
-            //Getter für ein Square auf der Map
             return this.squares[x, y];
         }
     }

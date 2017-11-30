@@ -9,7 +9,9 @@ namespace RoRClient.Model.Models
 {
     public abstract class InteractiveGameObject : ModelBase, INotifyPropertyChanged
     {
-        //Abstrakte Klasse für alle Objekte, mit denen interagiert werden kann
+        /// <summary>
+        /// Abstrakte Klasse für alle Objekte, mit denen interagiert werden kann
+        /// </summary>
 
         public event PropertyChangedEventHandler PropertyChanged;
         public virtual void OnPropertyChanged(string propertyName)
