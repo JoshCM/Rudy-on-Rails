@@ -5,10 +5,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	protected PlaceableOnRail placeableOnRail = null;
 	protected RailSection section1;
 	protected RailSection section2;
-	
-	// DISCRIMINATOR FIELD
     private final String className;
-	
 	
 	public Rail (Square square, RailSection section) {
 		super(square);

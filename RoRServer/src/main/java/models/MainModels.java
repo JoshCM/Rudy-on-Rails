@@ -9,7 +9,8 @@ public class MainModels {
 		
 		Map map = new Map();
 		map.getSquare(0, 0).setPlaceable(new Rail(map.getSquare(0, 0), RailSection.STRAIGHT_HORIZONTAL));
-		map.getSquare(0, 1).setPlaceable(new Container());
+		map.getSquare(0, 0).getPlaceableOnSquare().setPlaceableOnRail(new DummySignal(map.getSquare(0, 0)));
+		map.getSquare(0, 1).setPlaceable(new DummyContainer());
 		game.setMap(map);
 		game.saveMap("Map1");
 		

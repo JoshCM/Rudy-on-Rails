@@ -9,7 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 
-public class ConvertableDeserializer<T extends Convertable> implements JsonDeserializer<T>{
+public class PlaceableDeserializer<T extends Placeable> implements JsonDeserializer<T>{
 
 	private static final String CLASS_NAME = "className";
 	

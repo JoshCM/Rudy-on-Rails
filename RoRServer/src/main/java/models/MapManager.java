@@ -12,18 +12,28 @@ import com.google.gson.GsonBuilder;
 public class MapManager {
 
 	private Gson gson;
-	private Gson gson2;
+	// private Gson gson2;
 
 	public MapManager() {
-		// gson = new Gson();
-		gson = new GsonBuilder().registerTypeAdapter(Convertable.class, new ConvertableDeserializer<Convertable>()).setPrettyPrinting().create();
-		gson2 = new GsonBuilder().registerTypeAdapter(PlaceableOnSquare.class, new ConvertableDeserializer<PlaceableOnSquare>()).create();
+		
+		gson = new Gson();
+		
+		GsonBuilder builder = new GsonBuilder();
+		builder.registerTypeAdapter(Placeable.class, new PlaceableDeserializer<Placeable>());
+		//builder.registerTypeAdapter(PlaceableOnSquare.class, new PlaceableDeserializer<PlaceableOnSquare>());
+		
+		//builder.registerTypeAdapter(Placeable.class, new PlaceableDeserializer<Placeable>());
+		//builder.registerTypeHierarchyAdapter(Placeable.class, new PlaceableDeserializer<PlaceableOnSquare>());
+		//builder.registerTypeHierarchyAdapter(Placeable.class, new PlaceableDeserializer<PlaceableOnRail>());
+		//gson = new GsonBuilder().registerTypeAdapter(Placeable.class, new PlaceableDeserializer<Placeable>()).setPrettyPrinting().create();
+		//gson2 = new GsonBuilder().registerTypeAdapter(PlaceableOnSquare.class, new PlaceableDeserializer<PlaceableOnSquare>()).create();
+		gson = builder.setPrettyPrinting().create();
 	}
 
 	public Map loadMap(String mapName) {
 	    String jsonMap = readFromFile(mapName);
 	    System.out.println("Eingelesene Map: " + jsonMap);
-		Map map = gson2.fromJson(jsonMap, Map.class);
+		Map map = gson.fromJson(jsonMap, Map.class);
 		return map;
 	}
 	

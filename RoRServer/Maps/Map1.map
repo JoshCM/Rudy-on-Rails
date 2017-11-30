@@ -3,6 +3,10 @@
     [
       {
         "placeableOnSquare": {
+          "placeableOnRail": {
+            "className": "models.DummySignal",
+            "name": "SignalTest"
+          },
           "section1": {
             "node1": "EAST",
             "node2": "WEST"
@@ -14,7 +18,7 @@
       },
       {
         "placeableOnSquare": {
-          "className": "models.Container",
+          "className": "models.DummyContainer",
           "test": "Juliane"
         },
         "xIndex": 0,
