@@ -24,6 +24,12 @@ namespace RoRClient.ViewModel.Helper
             Type modelType = model.GetType();
             String viewModelTypeName = VIEWMODEL_TYPE_PREFIX + modelType.Name + VIEWMODEL_CLASS_SUFFIX;
             Type viewModelType = Type.GetType(viewModelTypeName);
+
+            if(viewModelType == null)
+            {
+                throw new TypeLoadException("There is no ViewModel for Model: " + modelType.Name);
+            }
+
             CanvasViewModel viewModel = (CanvasViewModel)Activator.CreateInstance(viewModelType, model);
             return viewModel;
         }

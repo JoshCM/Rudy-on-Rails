@@ -10,7 +10,7 @@ namespace RoRClientTests
     public class RailSectionToImagePathConverterTests
     {
         [TestMethod]
-        public void BindingConverterReturnsNorthSouthImage()
+        public void RailSectionToImagePathConverter_ReturnsNorthSouthImage()
         {
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
             RailViewModel railViewModel = CreateRailViewModel(RailSectionPosition.NORTH, RailSectionPosition.SOUTH);
@@ -19,7 +19,7 @@ namespace RoRClientTests
         }
 
         [TestMethod]
-        public void BindingConverterReturnsSouthNorthImage()
+        public void RailSectionToImagePathConverter_ReturnsSouthNorthImage()
         {
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
             RailViewModel railViewModel = CreateRailViewModel(RailSectionPosition.SOUTH, RailSectionPosition.NORTH);
@@ -28,7 +28,7 @@ namespace RoRClientTests
         }
 
         [TestMethod]
-        public void BindingConverterReturnsNorthEastImage()
+        public void RailSectionToImagePathConverter_ReturnsNorthEastImage()
         {
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
             RailViewModel railViewModel = CreateRailViewModel(RailSectionPosition.NORTH, RailSectionPosition.EAST);
@@ -37,7 +37,7 @@ namespace RoRClientTests
         }
 
         [TestMethod]
-        public void BindingConverterReturnsSouthEastImage()
+        public void RailSectionToImagePathConverter_ReturnsSouthEastImage()
         {
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
             RailViewModel railViewModel = CreateRailViewModel(RailSectionPosition.SOUTH, RailSectionPosition.EAST);
@@ -46,7 +46,7 @@ namespace RoRClientTests
         }
 
         [TestMethod]
-        public void BindingConverterReturnsSouthWestImage()
+        public void RailSectionToImagePathConverter_ReturnsSouthWestImage()
         {
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
             RailViewModel railViewModel = CreateRailViewModel(RailSectionPosition.SOUTH, RailSectionPosition.WEST);
@@ -55,7 +55,7 @@ namespace RoRClientTests
         }
 
         [TestMethod]
-        public void BindingConverterReturnsNorthWestImage()
+        public void RailSectionToImagePathConverter_ReturnsNorthWestImage()
         {
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
             RailViewModel railViewModel = CreateRailViewModel(RailSectionPosition.NORTH, RailSectionPosition.WEST);
@@ -64,7 +64,7 @@ namespace RoRClientTests
         }
 
         [TestMethod]
-        public void BindingConverterReturnsEmptyStringWithFalseRailSectionPositions()
+        public void RailSectionToImagePathConverter_ReturnsEmptyStringWithFalseRailSectionPositions()
         {
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
             RailViewModel railViewModel = CreateRailViewModel(RailSectionPosition.NORTH, RailSectionPosition.NORTH);

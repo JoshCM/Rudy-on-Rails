@@ -51,12 +51,12 @@
     <Compile Include="BindingConverter\RailSectionToImagePathConverterTests.cs" />
     <Compile Include="Model\MapTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\Helper\ViewModelFactoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModel\" />
     <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
