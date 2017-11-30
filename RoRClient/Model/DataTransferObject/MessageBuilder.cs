@@ -9,11 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.Model.Helper
+namespace RoRClient.Model.DataTransferObject
 {
 	static class MessageBuilder
 	{
-		public static IMessage build(MessageType messageType, Content content)
+		public static IMessage build(MessageType messageType, MessageInformation content)
 		{
 
 			ISession session = ClientConnection.GetInstance().Session;

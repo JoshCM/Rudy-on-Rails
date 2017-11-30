@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.Model.Models
+namespace RoRClient.Model.DataTransferObject
 {
 	enum RequestType
 	{
@@ -25,4 +25,5 @@ namespace RoRClient.Model.Models
         MAP_LOAD,
         GET_INITIAL_LOAD
 	}
+    
 }
