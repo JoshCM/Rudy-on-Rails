@@ -6,16 +6,14 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 
-import communication.queue.sender.FromServerResponseQueue;
 import communication.queue.sender.QueueSender;
+import models.DataTranserObject.MessageType;
 import models.Game.DummyGame;
 
 import org.apache.log4j.Logger;
 
-import com.google.gson.JsonObject;
-
 import communication.session.SessionTopicSender;
-import HandleRequests.RequestHandlerImpl;
+import HandleRequests.RequestDispatcher;
 
 // Allgemeine Queue für Clients, die ein Spiel oder Editor erstellen wollen
 public class FromClientRequestQueue extends QueueReceiver {
@@ -37,10 +35,12 @@ public class FromClientRequestQueue extends QueueReceiver {
 		TextMessage textMessage = (TextMessage) message;
 		try {
 			String command = message.getJMSType();
+			MessageType messageType = findMessageType(command);
+
 			log.info("ClientRequestReceiver.onMessage(): ... Message received [" + new Date().toString() + "]: "
 					+ textMessage.getText());
-			RequestHandlerImpl requestHandler = RequestHandlerImpl.getInstance();
-			requestHandler.handleRequest(command, textMessage.getText());
+			RequestDispatcher requestDispatcher = RequestDispatcher.getInstance();
+			requestDispatcher.dispatch(messageType, textMessage.getText());
 			QueueSender sender = new QueueSender(textMessage.getText());
 			String tT = "testTopic";
 			SessionTopicSender testTopic = new SessionTopicSender(tT);
@@ -61,30 +61,32 @@ public class FromClientRequestQueue extends QueueReceiver {
 	 * @param commandString welcher den JMSType als String angibt
 	 * @return passender MessageType der dem commandString entspricht
 	 */
-
 	public MessageType findMessageType(String commandString) {
 		MessageType command = null;
-        switch(commandString) {
-        case "CREATE":
-            command = MessageType.CREATE;
-            break;
-        case "READ":
-        	command = MessageType.READ;
-            break;
-        case "UPDATE":
-        	command = MessageType.UPDATE;
-            break;
-        case "DELETE":
-        	command = MessageType.DELETE;
-            break;
-        case "LEAVE":
-        	command = MessageType.LEAVE;
-            break;
-        case "ERROR":
-        	command = MessageType.ERROR;
-            break;
-        }
+		switch (commandString) {
+			case "CREATE":
+				command = MessageType.CREATE;
+				break;
+			case "READ":
+				command = MessageType.READ;
+				break;
+			case "UPDATE":
+				command = MessageType.UPDATE;
+				break;
+			case "DELETE":
+				command = MessageType.DELETE;
+				break;
+			case "LEAVE":
+				command = MessageType.LEAVE;
+				break;
+			case "ERROR":
+				command = MessageType.ERROR;
+				break;
+		}
 
-        return command;
+		return command;
 	}
+
+
+
 }
