@@ -19,7 +19,7 @@ namespace RoRClient.ViewModel.Editor
 
         public ToolbarViewModel()
         {
-            string[] paths = System.IO.Directory.GetFiles("../../Resources/Images/Tools");
+            string[] paths = System.IO.Directory.GetFiles("..\\..\\Resources\\Images\\Tools");
             foreach(string path in paths)
             {
                 toolItems.Add(new ToolItem(Path.GetFileNameWithoutExtension(path), path));
