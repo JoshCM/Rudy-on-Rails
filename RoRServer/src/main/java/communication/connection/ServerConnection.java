@@ -6,7 +6,7 @@ import javax.jms.Session;
 import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.apache.log4j.Logger;
 
-// Singleton für Server-Connection (beinhaltet Factory, Connection, Session)
+// Singleton für Server-Connection (beinhaltet Factory, Connection, session)
 public class ServerConnection {
 	
 	public static final String BROKER_URL = "vm://localhost";

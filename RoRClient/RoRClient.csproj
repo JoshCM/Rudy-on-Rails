@@ -73,11 +73,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Connections\ResponseHandler.cs" />
-    <Compile Include="Model\MessageHelper\Content.cs" />
-    <Compile Include="Model\MessageHelper\MessageBuilder.cs" />
-    <Compile Include="Model\Models\MessageType.cs" />
-    <Compile Include="Model\Models\RequestType.cs" />
+    <Compile Include="Model\DataTransferObject\MessageDeserializer.cs" />
+    <Compile Include="Model\DataTransferObject\MessageInformation.cs" />
+    <Compile Include="Model\DataTransferObject\MessageBuilder.cs" />
+    <Compile Include="Model\DataTransferObject\MessageType.cs" />
+    <Compile Include="Model\DataTransferObject\RequestType.cs" />
+    <Compile Include="Model\HandleResponse\ResponseDispatcher.cs" />
     <Compile Include="ViewModel\Helper\ActionCommand.cs" />
     <Compile Include="ViewModel\PlayerViewModel.cs" />
     <Page Include="MainWindow.xaml">

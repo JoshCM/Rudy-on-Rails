@@ -1,9 +1,7 @@
-package models.Session;
+package models.session;
 
-import com.sun.xml.bind.v2.TODO;
-import models.Editor.EditorSession;
+import models.editor.EditorSession;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 

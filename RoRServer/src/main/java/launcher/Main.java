@@ -1,12 +1,13 @@
 package launcher;
 
-import HandleRequests.RequestSerializer;
+import communication.broker.MessageBroker;
+import handleRequests.RequestSerializer;
 
 public class Main {
 	public static void main(String[] args) {
 		System.out.println("Broker wird gestartet");
 		testThings();
-		//MessageBroker.getInstance();
+		MessageBroker.getInstance();
 	}
 
 	public static void testThings() {

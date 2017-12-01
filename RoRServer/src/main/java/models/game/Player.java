@@ -1,6 +1,4 @@
-package models.Game;
-
-import java.util.UUID;
+package models.game;
 
 public class Player {
     private String name;

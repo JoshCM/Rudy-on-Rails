@@ -10,7 +10,7 @@ import communication.queue.sender.QueueSender;
 import org.apache.log4j.Logger;
 
 
-// Receiver für Client Requests und Spiel/Editor
+// Receiver für Client Requests und Spiel/editor
 public abstract class QueueReceiver extends QueueBase implements MessageListener {
 	
 	static Logger log = Logger.getLogger(QueueReceiver.class.getName());

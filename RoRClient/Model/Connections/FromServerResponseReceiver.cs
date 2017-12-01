@@ -1,12 +1,12 @@
 ﻿using Apache.NMS;
 using RoRClient.Model.Models;
-using RoRClient.Model.Helper;
+using RoRClient.Model.DataTransferObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RoRClient.Model.Handler;
+using RoRClient.Model.HandleResponse;
 
 namespace RoRClient.Model.Connections
 {
@@ -25,13 +25,51 @@ namespace RoRClient.Model.Connections
             messageConsumer = session.CreateConsumer(queue);
             messageConsumer.Listener += OnMessageReceived;
             Console.WriteLine("startet connection(queueReceiver)");
-            //connection.Start();
+      
         }
 
         public void OnMessageReceived(IMessage message)
         {
 			Console.WriteLine("from server: " + ((ITextMessage)message).Text);
-			ResponseHandler.getInstance().handle(message);
+
+            String messageTypeString = message.NMSType;
+            MessageType messageType = findMessageType(messageTypeString);
+            ITextMessage textMessage = message as ITextMessage;
+            ResponseDispatcher.getInstance().dispatch(messageType,textMessage);
+        }
+
+        /// <summary>
+        /// findet den passenden MessageType Enum für einen String
+        /// </summary>
+        /// <param name="messageTypeString"></param>
+        /// <returns></returns>
+        internal MessageType findMessageType(String messageTypeString)
+        {
+            switch (messageTypeString)
+            {
+                case "CREATERESPONSE":
+                    return MessageType.CREATERESPONSES;
+
+                case "ERRORRESPONSE":
+                    return MessageType.ERRORRESPONSES;
+
+                case "READRESPONSE":
+                    return MessageType.READRESPONSES;
+
+                case "UPDATERESPONSE":
+                    return MessageType.UPDATERESPONSES;
+
+                case "DELETE":
+                    return MessageType.DELETERESPONSES;
+
+                case "STATUSMESSAGE":
+                    return MessageType.STATUSMESSAGES;
+
+                default:
+                    throw new InvalidOperationException("Unrecognized comparison mode");
+
+            }
+
         }
     }
 }

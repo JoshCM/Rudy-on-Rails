@@ -1,6 +1,6 @@
-package models.Editor;
+package models.editor;
 
-import models.Game.Player;
+import models.game.Player;
 import communication.session.SessionTopicSender;
 import java.util.ArrayList;
 

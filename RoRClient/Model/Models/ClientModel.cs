@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RoRClient.Model.Helper;
 using RoRClient.Model.Connections;
 
 namespace RoRClient.Model.Models

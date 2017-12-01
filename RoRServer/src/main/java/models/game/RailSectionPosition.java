@@ -1,3 +1,3 @@
-package models.Game;
+package models.game;
 
 public enum RailSectionPosition {NORTH, EAST, SOUTH, WEST}

@@ -1,9 +1,9 @@
-package HandleRequests;
+package handleRequests;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import models.DataTranserObject.MessageInformation;
+import models.dataTranserObject.MessageInformation;
 
 public class RequestSerializer {
 
