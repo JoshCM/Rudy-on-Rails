@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModel.Helper
 {
-    class ViewModelBase : INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged
     {
         /* 
          * Standard-Basisklasse für ViewModels 

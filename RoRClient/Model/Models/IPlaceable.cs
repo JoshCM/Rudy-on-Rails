@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-    interface PlaceableOnRail : Placeable
+    /// <summary>
+    /// Interface für platzierbare Objekte
+    /// </summary>
+    public interface IPlaceable : IModel
     {
-        //Interface für Objekte, die auf einer Rail platziert werden
+
     }
 }

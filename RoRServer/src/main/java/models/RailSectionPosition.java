@@ -1,6 +1,6 @@
 package models;
 
 /**
- * Enum für die Knotenposition eines Schienenstücks
+ * Enum fuer die Knotenposition eines Schienenstuecks
  */
 public enum RailSectionPosition {NORTH, EAST, SOUTH, WEST}

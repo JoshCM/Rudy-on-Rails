@@ -4,6 +4,6 @@ package models;
  * Interface für platzierbare Objekte
  *
  */
-public interface Placeable {
+public interface Placeable extends Model {
 
 }

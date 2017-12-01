@@ -1,9 +1,9 @@
 package models;
 
 /**
- * Klasse für ein Schienenstück mit "Eingang" und "Ausgang"
+ * Klasse fuer ein Schienenstueck mit "Eingang" und "Ausgang"
  */
-public class RailSection {
+public class RailSection extends ModelBase {
 	// Geraden
 	public static final RailSection STRAIGHT_VERTICAL = new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH);
 	public static final RailSection STRAIGHT_HORIZONTAL = new RailSection(RailSectionPosition.EAST, RailSectionPosition.WEST);
