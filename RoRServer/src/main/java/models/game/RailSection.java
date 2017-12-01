@@ -1,5 +1,7 @@
 package models.game;
 
+import models.ModelBase;
+
 /**
  * Klasse fuer ein Schienenstueck mit "Eingang" und "Ausgang"
  */

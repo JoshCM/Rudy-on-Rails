@@ -9,7 +9,7 @@ import java.util.*;
 
 public class RequestDispatcher {
 
-    private static RequestDispatcher requestHandler = null;
+    private static RequestDispatcher requestHandler;
     private static Map<String, Runnable> requestToManagerMap = new HashMap<String, Runnable>(); // hier Runnable evtl durch Command (interface ersetzen)
 
     static Logger log = Logger.getLogger(RequestDispatcher.class.getName());
@@ -17,7 +17,7 @@ public class RequestDispatcher {
 
 
     private RequestDispatcher() {
-        requestHandler = new RequestDispatcher();
+        
     }
 
     public static RequestDispatcher getInstance() {
@@ -39,7 +39,6 @@ public class RequestDispatcher {
         MessageInformation responseInformation = requestSerializer.deserialize(message);
 
         createRequestToFunctionMap(request,requestInformation);
-
 
 
         String response = requestSerializer.serialize(responseInformation);

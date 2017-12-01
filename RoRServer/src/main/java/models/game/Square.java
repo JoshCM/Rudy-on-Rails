@@ -1,5 +1,7 @@
 package models.game;
 
+import models.ModelBase;
+
 /**
  * Klasse fuer ein Feld (Square), dass auf der Map liegt und eine Position hat.
  * Auf dem Feld platzierte Objekte koennen auf die jeweilige Position zugreifen.
