@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 namespace RoRClient.View
 {
-    public partial class MapView : Window
+    public partial class MapView : UserControl
     {
         public MapView()
         {

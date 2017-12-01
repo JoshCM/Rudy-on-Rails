@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:editor="clr-namespace:RoRClient.View.Editor"
+             xmlns:view="clr-namespace:RoRClient.View"
              mc:Ignorable="d" 
              HorizontalAlignment="Stretch"
 	VerticalAlignment="Stretch"
@@ -37,6 +38,7 @@
               Grid.ColumnSpan="2"
           Background="LightSeaGreen" >
             <!-- Darstellung der Map -->
+            <view:MapView />
         </Grid>
 
         <Grid Grid.Row="1"
