@@ -13,15 +13,16 @@ namespace RoRClient.Model.DataTransferObject
 {
 	static class MessageBuilder
 	{
-		public static IMessage build(MessageType messageType, MessageInformation content)
+		public static IMessage build(String messageType, MessageInformation content)
 		{
 
 			ISession session = ClientConnection.GetInstance().Session;
             String contentString = JsonConvert.SerializeObject(content);
             
             IMessage message = session.CreateTextMessage(contentString);
-			message.NMSType = messageType.ToString();
-			return message;
+            message.NMSType = messageType;
+
+            return message;
 		}
 	}
 }

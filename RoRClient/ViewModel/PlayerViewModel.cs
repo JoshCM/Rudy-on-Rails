@@ -41,7 +41,7 @@ namespace RoRClient.ViewModel
 		private void CreateNewPlayerCommand()
 		{
             MessageInformation messageInformation = new MessageInformation(RequestType.PLAYER, new Dictionary<string, string>() { { "testAttribut1", "1" }, { "testAttribut2", "2" } });
-            IMessage message = MessageBuilder.build(MessageType.CREATE,messageInformation) ;
+            IMessage message = MessageBuilder.build("CREATE_PLAYER", messageInformation) ;
 			ClientModel.getInstance().getFromClientRequestSender().SendMessage(message);
 		}
 
