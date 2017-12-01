@@ -4,6 +4,7 @@ import communication.queue.sender.FromServerResponseQueue;
 import models.DataTranserObject.MessageInformation;
 import models.DataTranserObject.MessageType;
 import models.Game.Player;
+import models.Session.EditorSessionManager;
 import org.apache.log4j.Logger;
 
 
@@ -38,6 +39,7 @@ public class RequestDispatcher {
         RequestSerializer requestSerializer = RequestSerializer.getInstance();
         MessageInformation requestInformation = requestSerializer.deserialize(message);
         MessageInformation responseInformation = requestSerializer.deserialize(message);
+
         switch(messageType) {
             case CREATE:
                 responseInformation = resolveCreateTarget(requestInformation);
