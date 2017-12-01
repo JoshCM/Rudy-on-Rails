@@ -11,7 +11,7 @@ namespace RoRClient.Model.Models
     /// </summary>
     public class Map : ModelBase
     {
-        private const int mapSize = 25;
+        private const int mapSize = 30;
         public static int MapSize => mapSize;
 
         Square[,] squares;

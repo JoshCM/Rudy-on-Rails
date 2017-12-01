@@ -13,11 +13,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace RoRClient.View
+namespace RoRClient.View.Editor
 {
-    public partial class MapView : UserControl
+    public partial class MapUserControl : UserControl
     {
-        public MapView()
+        public MapUserControl()
         {
             InitializeComponent();
         }

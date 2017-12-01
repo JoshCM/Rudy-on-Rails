@@ -15,14 +15,14 @@
     <Grid Name="ContentGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="8*" />
-            <RowDefinition Height="3*" />
+            <RowDefinition Height="9*" />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="9*" />
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="0" />
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Row="0"
@@ -38,7 +38,7 @@
               Grid.ColumnSpan="2"
           Background="LightSeaGreen" >
             <!-- Darstellung der Map -->
-            <view:MapView />
+            <editor:MapUserControl />
         </Grid>
 
         <Grid Grid.Row="1"
