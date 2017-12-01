@@ -1,0 +1,71 @@
+{
+  "squares": [
+    [
+      {
+        "placeableOnSquare": {
+          "placeableOnRail": {
+            "name": "SignalTest",
+            "className": "models.DummySignal",
+            "id": "f8e5467d-1d50-44e4-a033-94a9b0c1f9d9"
+          },
+          "section1": {
+            "node1": "EAST",
+            "node2": "WEST",
+            "id": "77738705-842d-4eef-babb-9a4112e22bdd"
+          },
+          "className": "models.Rail",
+          "id": "0b86b254-3f8f-4d5e-8b5f-591bb747aa74"
+        },
+        "xIndex": 0,
+        "yIndex": 0,
+        "id": "911dd0a4-c23f-483b-a2dc-5fb0b91a5771"
+      },
+      {
+        "xIndex": 0,
+        "yIndex": 1,
+        "id": "52467386-75ef-4580-9396-f52765e89887"
+      },
+      {
+        "xIndex": 0,
+        "yIndex": 2,
+        "id": "75e5b448-9ccc-48af-b90d-d4618ceed794"
+      }
+    ],
+    [
+      {
+        "xIndex": 1,
+        "yIndex": 0,
+        "id": "5b7c665a-b22f-4dea-8ce0-298c4700b65b"
+      },
+      {
+        "xIndex": 1,
+        "yIndex": 1,
+        "id": "d37cbd24-435f-461f-a516-f412a66ffdbc"
+      },
+      {
+        "xIndex": 1,
+        "yIndex": 2,
+        "id": "d97e5d09-bfad-4a3f-a973-996c08e7ed29"
+      }
+    ],
+    [
+      {
+        "xIndex": 2,
+        "yIndex": 0,
+        "id": "add57c11-ece7-4e4e-88c7-2a10dbfae93f"
+      },
+      {
+        "xIndex": 2,
+        "yIndex": 1,
+        "id": "6187256c-d12f-4bac-9018-c7a7ddaf12a0"
+      },
+      {
+        "xIndex": 2,
+        "yIndex": 2,
+        "id": "1732918d-f74b-4670-9a93-928e1f23b321"
+      }
+    ]
+  ],
+  "mapSize": 3,
+  "id": "70d9cbbb-2f04-42fe-80d3-1094637ff615"
+}

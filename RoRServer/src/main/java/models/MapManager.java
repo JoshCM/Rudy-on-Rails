@@ -9,6 +9,14 @@ import java.io.PrintWriter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+
+/**
+ * 
+ * @author Andreas Pöhler, Juliane Lies, Jakob Liskow
+ * Der MapManager kann für den Editor und das Spiel verwendet werden, um Maps zu laden/speichern.
+ *
+ */
+
 public class MapManager {
 
 	private Gson gsonLoader;
@@ -16,7 +24,7 @@ public class MapManager {
 	
 	public MapManager() {
 		
-		// Loader
+		// Loader: Hier werden die erforderlichen Adapter zum Deserialisieren für Gson bereitgestellt.
 		gsonLoader = new GsonBuilder()
 		.registerTypeAdapter(Placeable.class, new PlaceableDeserializer<Placeable>())
 		.registerTypeAdapter(PlaceableOnSquare.class, new PlaceableDeserializer<PlaceableOnSquare>())
@@ -28,6 +36,11 @@ public class MapManager {
 		
 	}
 
+	/**
+	 * Es wird eine Map über den gegebenen Dateinamen erstellt und zugegeben.
+	 * @param mapName Dateiname der Map
+	 * @return Gibt eine Map für ein Spiel zurück
+	 */
 	public Map loadMap(String mapName) {
 	    String jsonMap = readFromFile(mapName);
 	    System.out.println("Eingelesene Map: " + jsonMap);
@@ -35,12 +48,18 @@ public class MapManager {
 		return map;
 	}
 	
+	/**
+	 * Lies eine Datei über den gegebenen Namen ein und gibt ein JsonObjekt zurück
+	 * @param mapName: Dateiname der Map
+	 * @return Gibt ein JsonObjekt zurück
+	 * 
+	 */
 	private String readFromFile(String mapName){
 		
 		String jsonMap = "";	
 		BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader(mapName));
+            br = new BufferedReader(new FileReader("Maps/" + mapName + ".map"));
             String line;
             while ((line = br.readLine()) != null) {
                 jsonMap += line;
@@ -60,12 +79,22 @@ public class MapManager {
         return jsonMap;
 	}
 
+	/**
+	 * Speichert die übergebene Map unter dem übergebenen Namen
+	 * @param map: Das zu speichernde Map-Objekt
+	 * @param mapName: Der Name der Map für das Dateisystem
+	 */
 	public void saveMap(Map map, String mapName) {
 		String jsonMap = gsonSaver.toJson(map);
 		System.out.println("Gespeicherte Map: "+ jsonMap);
 		saveToFile(jsonMap, mapName);
 	}
 	
+	/**
+	 * Speichert das JsonObjekt im Dateisystem ab
+	 * @param jsonMap: Genereiertes JsonObjekt
+	 * @param mapName: Dateiname zum Speichern
+	 */ 
 	private void saveToFile(String jsonMap, String mapName){
 		try (PrintWriter out = new PrintWriter("Maps/"+ mapName + ".map")) {
 			out.println(jsonMap);
