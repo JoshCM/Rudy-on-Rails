@@ -257,6 +257,17 @@
     <Resource Include="Resources\Images\Tools\railstraight - Kopie2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\Images\railcurve_ne.png" />
+    <Resource Include="Resources\Images\railcurve_nw.png" />
+    <Resource Include="Resources\Images\railcurve_se.png" />
+    <Resource Include="Resources\Images\railcurve_sw.png" />
+    <Resource Include="Resources\Images\rail_ew.png" />
+    <Resource Include="Resources\Images\rail_ns.png" />
+    <Resource Include="Resources\Images\Tools\railcurve.png" />
+    <Resource Include="Resources\Images\Tools\railstraight.png" />
+    <Resource Include="Resources\Images\Tools\railcurve - Kopie.png" />
+    <Resource Include="Resources\Images\Tools\railstraight - Kopie.png" />
+    <Resource Include="Resources\Images\Tools\railstraight - Kopie2.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

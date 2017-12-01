@@ -16,7 +16,7 @@ namespace RoRClient.ViewModel.Editor
     class ToolbarViewModel : ViewModelBase
     {
         private string previewImagePath;
-
+        private const string IMAGE_FOLDER_PATH = "..\\..\\Resources\\Images\\Tools\\";
         public ToolbarViewModel()
         {
             string RunningPath = AppDomain.CurrentDomain.BaseDirectory;
