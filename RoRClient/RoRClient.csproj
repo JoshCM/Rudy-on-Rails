@@ -116,6 +116,9 @@
     </Compile>
     <Compile Include="ViewModel\Helper\ActionCommand.cs" />
     <Compile Include="ViewModel\Helper\ViewModelBase.cs" />
+    <Compile Include="View\Editor\AttributeSelectionUserControl.xaml.cs">
+      <DependentUpon>AttributeSelectionUserControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -137,6 +140,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EditorUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Editor\AttributeSelectionUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

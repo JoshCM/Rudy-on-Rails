@@ -41,16 +41,18 @@
 
         <Grid Grid.Row="1"
           Grid.Column="0"
+              Grid.RowSpan="2"
           Background="Violet" >
             <!-- Werkzeugleiste -->
             <editor:ToolbarUserControl />
         </Grid>
 
         <Grid Grid.Row="2"
-          Grid.Column="0"
-          Grid.ColumnSpan="3"
+          Grid.Column="1"
+          Grid.ColumnSpan="2"
           Background="Green" >
             <!-- Statusfenster oder so was -->
+            <editor:AttributeSelectionUserControl />
         </Grid>
 
 
