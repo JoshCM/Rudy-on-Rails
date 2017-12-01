@@ -119,7 +119,7 @@ fabric.properties
 
 ### Intellij Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
-# Anmerkung: Eventuell auskommentieren, wenn benötigt.
+# Anmerkung: Eventuell auskommentieren, wenn benï¿½tigt.
 *.iml
 modules.xml
 .idea/misc.xml
@@ -626,4 +626,6 @@ paket-files/
 # should be stored in the .pubxml.user file.
 
 # End of https://www.gitignore.io/api/git,java,macos,linux,gradle,python,windows,eclipse,intellij,visualstudio
-RoRServer/activemq-data/localhost/KahaDB/
+RoRServer/activemq-data/localhost/KahaDB/lock
+RoRServer/activemq-data/localhost/KahaDB/db.redo
+RoRServer/activemq-data/localhost/KahaDB/db.data

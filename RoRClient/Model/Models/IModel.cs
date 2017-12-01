@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 namespace RoRClient.Model.Models
 {
     /// <summary>
-    /// Knotenposition eines Schienenstücks
+    /// Interface für die ModelBase um eine eindeutige Identifikation zu halten
     /// </summary>
-    public enum RailSectionPosition
+    public interface IModel
     {
-        NORTH, EAST, SOUTH, WEST
-    };
+        Guid Id
+        {
+            get;
+        }
+    }
 }

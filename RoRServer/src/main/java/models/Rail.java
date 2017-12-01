@@ -1,8 +1,8 @@
 package models;
 
 /**
- * Klasse für Schienen, die einem Feld (Square) zugeordnet sind
- * und ein Schienenstück (= Gerade, Kurve) bzw. zwei Schienenstücke (= Kreuzung, Weiche) besitzen
+ * Klasse fuer Schienen, die einem Feld (Square) zugeordnet sind
+ * und ein Schienenstueck (= Gerade, Kurve) bzw. zwei Schienenstuecke (= Kreuzung, Weiche) besitzen
  */
 
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare {

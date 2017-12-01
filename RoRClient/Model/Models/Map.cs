@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-    class Map
+    /// <summary>
+    /// Map mit Squares gefüllt (Spielfeld)
+    /// </summary>
+    public class Map : ModelBase
     {
-        //Map mit Squares gefüllt (Spielfeld)
-
-        const int mapSize = 3;
+        private const int mapSize = 25;
+        public static int MapSize => mapSize;
 
         Square[,] squares;
 
@@ -26,26 +28,58 @@ namespace RoRClient.Model.Models
             }
         }
 
-        public Map ()
+
+        public Map () : base()
         {
             squares = new Square[mapSize, mapSize];
+            InitSquares();
 
-            //Jedes Square auf der Map braucht einen Index,
-            //um jedem Objekt, das auf einem Square platziert, ein eindeutiges Objekt zuzuordnen
-            for (int i = 0; i < mapSize; i++)
+            // nur zum testen der GUI
+            CreateRandomRailsForTest();
+        }
+
+        /// <summary>
+        /// Jedes Square auf der Map braucht einen Index,
+        /// um jedem Objekt, das auf einem Square platziert, ein eindeutiges Objekt zuzuordnen
+        /// </summary>
+        private void InitSquares()
+        {
+            for (int x = 0; x < mapSize; x++)
             {
-                for (int j = 0; j < mapSize; j++)
+                for (int y = 0; y < mapSize; y++)
                 {
-                    Square s = new Square(i, j);
-                    squares[i,j] = s;
+                    Square s = new Square(x, y);
+                    squares[x, y] = s;
                 }
             }
         }
 
-        public Square getSquare (int i, int j)
+        /// <summary>
+        /// (Testweise)
+        /// Erzeugt für zufällige Squares auf der Map eine Rail mit einer RailSection
+        /// </summary>
+        private void CreateRandomRailsForTest()
         {
-            //Getter für ein Square auf der Map
-            return this.squares[i,j];
+            for (int x = 0; x < mapSize; x++)
+            {
+                for (int y = 0; y < mapSize; y++)
+                {
+                    Random rand = new Random();
+                    Rail rail = new Rail(squares[x, y], new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+                    squares[x, y].PlaceableOnSquare = rail;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Getter für ein Square auf der Map
+        /// </summary>
+        /// <param name="x"> X-Position des Squares</param>
+        /// <param name="y"> Y-Position des Squares</param>
+        /// <returns></returns>
+        public Square GetSquare (int x, int y)
+        {
+            return this.squares[x, y];
         }
     }
 }
