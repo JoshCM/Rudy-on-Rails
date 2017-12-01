@@ -1,4 +1,4 @@
-﻿<Window x:Class="RoRClient.View.EditorView"
+﻿<Window x:Class="RoRClient.View.MapView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,10 +7,10 @@
         xmlns:vm="clr-namespace:RoRClient.ViewModel"
         xmlns:m="clr-namespace:RoRClient.Model.Models"
         xmlns:converter="clr-namespace:RoRClient.BindingConverter"
-        Title="EditorView" Height="600" Width="800"
+        Title="MapView" Height="600" Width="800"
         mc:Ignorable="d">
     <Window.DataContext>
-        <vm:EditorViewModel/>
+        <vm:MapViewModel/>
     </Window.DataContext>
     <Window.Resources>
         <converter:ObjectIsNullToBoolConverter  x:Key="ObjectIsNullToBoolConverter"/>

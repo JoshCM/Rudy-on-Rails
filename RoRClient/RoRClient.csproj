@@ -111,7 +111,7 @@
     <Compile Include="ViewModel\Helper\PropertyChangedExtendedEventArgs.cs" />
     <Compile Include="ViewModel\RailViewModel.cs" />
     <Compile Include="ViewModel\ViewConstants.cs" />
-    <Compile Include="ViewModel\EditorViewModel.cs" />
+    <Compile Include="ViewModel\MapViewModel.cs" />
     <Compile Include="View\CanvasUserControl.cs" />
     <Compile Include="View\RailUserControl.xaml.cs">
       <DependentUpon>RailUserControl.xaml</DependentUpon>
@@ -119,8 +119,8 @@
     <Compile Include="View\SquareUserControl.xaml.cs">
       <DependentUpon>SquareUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\EditorView.xaml.cs">
-      <DependentUpon>EditorView.xaml</DependentUpon>
+    <Compile Include="View\MapView.xaml.cs">
+      <DependentUpon>MapView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -142,7 +142,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\EditorView.xaml">
+    <Page Include="View\MapView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
