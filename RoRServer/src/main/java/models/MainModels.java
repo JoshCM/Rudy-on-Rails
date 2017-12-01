@@ -20,7 +20,7 @@ public class MainModels {
 		game.saveMap("Map1");
 		
 		DummyGame game1 = new DummyGame();
-		game1.loadMap("Maps/Map1.map");
+		game1.loadMap("Map1");
 		System.out.println(game1.getMap().getSquare(0, 0).getPlaceableOnSquare());
 		System.out.println(game1.getMap().getSquare(0, 1).getPlaceableOnSquare());
 		game1.saveMap("Map2");

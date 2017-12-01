@@ -19,6 +19,8 @@ import com.google.gson.GsonBuilder;
 
 public class MapManager {
 
+	private final String dir = "Maps/";
+	private final String ext = ".map";
 	private Gson gsonLoader;
 	private Gson gsonSaver;
 	
@@ -59,7 +61,7 @@ public class MapManager {
 		String jsonMap = "";	
 		BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader("Maps/" + mapName + ".map"));
+            br = new BufferedReader(new FileReader(dir +  mapName + ext));
             String line;
             while ((line = br.readLine()) != null) {
                 jsonMap += line;
@@ -96,7 +98,7 @@ public class MapManager {
 	 * @param mapName: Dateiname zum Speichern
 	 */ 
 	private void saveToFile(String jsonMap, String mapName){
-		try (PrintWriter out = new PrintWriter("Maps/"+ mapName + ".map")) {
+		try (PrintWriter out = new PrintWriter(dir + mapName + ext)) {
 			out.println(jsonMap);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
