@@ -1,11 +1,14 @@
 package models.game;
 
-public abstract class InteractiveGameObject {
+/**
+ * Abstrakte Klasse fuer alle Objekte, mit denen interagiert werden kann
+ *
+ */
+public abstract class InteractiveGameObject extends ModelBase {
 	protected Square square;
-	protected Rail rail;
 	
-	public InteractiveGameObject() {
-		
+	public InteractiveGameObject(Square square) {
+		this.square = square;
 		
 	}
 	

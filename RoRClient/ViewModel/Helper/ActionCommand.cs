@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,34 +7,37 @@ using System.Windows.Input;
 
 namespace RoRClient.ViewModel.Helper
 {
-	class ActionCommand : ICommand
-	{
-		private readonly Action<object> _exec;
-		private readonly Predicate<object> _canExec;
+    /// <summary>
+    /// Klasse zum nutzen von Commands (z.B. Buttons)
+    /// </summary>
+    class ActionCommand : ICommand
+    {
+        private readonly Action<object> _exec;
+        private readonly Predicate<object> _canExec;
 
-		public ActionCommand(Action<object> exec) : this(exec, null) { }
-		public ActionCommand(Action<object> exec, Predicate<object> canExec)
-		{
-			if (exec == null)
-			{
-				throw new ArgumentException("execute");
-			}
-			_exec = exec;
-			_canExec = canExec;
-		}
+        public ActionCommand(Action<object> exec) : this(exec, null) { }
+        public ActionCommand(Action<object> exec, Predicate<object> canExec)
+        {
+            if (exec == null)
+            {
+                throw new ArgumentException("execute");
+            }
+            _exec = exec;
+            _canExec = canExec;
+        }
 
-		public bool CanExecute(object param)
-		{
-			return _canExec == null ? true : _canExec(param);
-		}
-		public event EventHandler CanExecuteChanged
-		{
-			add { CommandManager.RequerySuggested += value; }
-			remove { CommandManager.RequerySuggested -= value; }
-		}
-		public void Execute(object param)
-		{
-			_exec(param);
-		}
-	}
+        public bool CanExecute(object param)
+        {
+            return _canExec == null ? true : _canExec(param);
+        }
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+        public void Execute(object param)
+        {
+            _exec(param);
+        }
+    }
 }
