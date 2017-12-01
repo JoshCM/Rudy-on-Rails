@@ -5,9 +5,5 @@ package models;
  *
  */
 public interface Placeable extends Model {
-
-	
-	String getClassName();
-	
 	
 }

@@ -4,59 +4,82 @@
       {
         "placeableOnSquare": {
           "placeableOnRail": {
+            "name": "SignalTest",
             "className": "models.DummySignal",
-            "name": "SignalTest"
+            "id": "3b23e486-8d54-431f-bb94-be415e3fe22a"
           },
           "section1": {
             "node1": "EAST",
-            "node2": "WEST"
+            "node2": "WEST",
+            "id": "00f8743a-b235-4502-8614-499531259890"
           },
-          "className": "models.Rail"
+          "className": "models.Rail",
+          "id": "6e65061d-b69c-4107-a2d1-681300d4900b"
         },
         "xIndex": 0,
-        "yIndex": 0
+        "yIndex": 0,
+        "id": "13ded2bd-f526-4d25-b60e-d691e277c506"
       },
       {
         "placeableOnSquare": {
-          "className": "models.DummyContainer",
-          "test": "Juliane"
+          "section1": {
+            "node1": "EAST",
+            "node2": "SOUTH",
+            "id": "9da4cd0c-35a2-40e6-a14c-ddb8694dbe3f"
+          },
+          "className": "models.Rail",
+          "id": "9978d28a-75aa-4e21-ba47-99a8481bae66"
         },
         "xIndex": 0,
-        "yIndex": 1
+        "yIndex": 1,
+        "id": "d47f554d-7dec-436e-b85c-280f1f40293c"
       },
       {
+        "placeableOnSquare": {
+          "test": "Juliane",
+          "className": "models.DummyContainer",
+          "id": "56f1eb79-6b66-4504-8d33-a64824c3e67c"
+        },
         "xIndex": 0,
-        "yIndex": 2
+        "yIndex": 2,
+        "id": "88cdd46b-8f9b-4045-b554-a6b60ed996cd"
       }
     ],
     [
       {
         "xIndex": 1,
-        "yIndex": 0
+        "yIndex": 0,
+        "id": "fabccdab-7948-47c8-8c98-e2cc2afa1825"
       },
       {
         "xIndex": 1,
-        "yIndex": 1
+        "yIndex": 1,
+        "id": "20d798a3-d3c9-41ac-9735-a54f29c000a0"
       },
       {
         "xIndex": 1,
-        "yIndex": 2
+        "yIndex": 2,
+        "id": "4b6352e4-f7ca-44f1-b092-57b1d795816a"
       }
     ],
     [
       {
         "xIndex": 2,
-        "yIndex": 0
+        "yIndex": 0,
+        "id": "18590ca5-170b-40e9-b51e-ba2886c74f73"
       },
       {
         "xIndex": 2,
-        "yIndex": 1
+        "yIndex": 1,
+        "id": "da349737-a8db-486e-923a-0c700c0fe89f"
       },
       {
         "xIndex": 2,
-        "yIndex": 2
+        "yIndex": 2,
+        "id": "a4ee9d44-4cb2-4f83-9336-a53c168e42f8"
       }
     ]
   ],
-  "mapSize": 3
+  "mapSize": 3,
+  "id": "2949904a-42eb-4d7b-81f8-d4f509e8ccc3"
 }

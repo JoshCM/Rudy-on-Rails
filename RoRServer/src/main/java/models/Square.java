@@ -16,9 +16,7 @@ public class Square extends ModelBase {
 	}
 	
 	public void setPlaceable(PlaceableOnSquare placeable) {
-		//if (placeableOnSquare == null ) {
-			this.placeableOnSquare = placeable;
-		//}
+		this.placeableOnSquare = placeable;
 	}
 	
 	public PlaceableOnSquare getPlaceableOnSquare(){

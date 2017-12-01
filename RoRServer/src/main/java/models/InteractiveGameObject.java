@@ -5,11 +5,17 @@ package models;
  *
  */
 public abstract class InteractiveGameObject extends ModelBase {
-	protected Square square;
 	
+	protected final String className;
+	transient protected Square square;
+    
 	public InteractiveGameObject(Square square) {
+		this.className = getClass().getName();
 		this.square = square;
-		
+	}
+	
+	public String getClassName() {
+		return className;
 	}
 	
 	

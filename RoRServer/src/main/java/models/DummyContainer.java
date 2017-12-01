@@ -1,19 +1,12 @@
 package models;
 
-public class DummyContainer implements PlaceableOnSquare {
-	
-	private final String className;
+public class DummyContainer extends InteractiveGameObject implements PlaceableOnSquare {
+
 	private String test;
 	
 	public DummyContainer() {
-		className = getClass().getName();
+		super(null);
 		test = "Juliane";
-	}
-
-	@Override
-	public String getClassName() {
-		// TODO Auto-generated method stub
-		return className;
 	}
 
 	@Override

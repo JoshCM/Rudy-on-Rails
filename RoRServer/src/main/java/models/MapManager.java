@@ -11,29 +11,27 @@ import com.google.gson.GsonBuilder;
 
 public class MapManager {
 
-	private Gson gson;
-	// private Gson gson2;
-
+	private Gson gsonLoader;
+	private Gson gsonSaver;
+	
 	public MapManager() {
 		
-		gson = new Gson();
+		// Loader
+		gsonLoader = new GsonBuilder()
+		.registerTypeAdapter(Placeable.class, new PlaceableDeserializer<Placeable>())
+		.registerTypeAdapter(PlaceableOnSquare.class, new PlaceableDeserializer<PlaceableOnSquare>())
+		.registerTypeAdapter(PlaceableOnRail.class, new PlaceableDeserializer<PlaceableOnRail>())
+		.setPrettyPrinting().create();
 		
-		GsonBuilder builder = new GsonBuilder();
-		builder.registerTypeAdapter(Placeable.class, new PlaceableDeserializer<Placeable>());
-		builder.registerTypeAdapter(PlaceableOnSquare.class, new PlaceableDeserializer<PlaceableOnSquare>());
+		// Saver
+		gsonSaver = new GsonBuilder().setPrettyPrinting().create();
 		
-		//builder.registerTypeAdapter(Placeable.class, new PlaceableDeserializer<Placeable>());
-		//builder.registerTypeHierarchyAdapter(Placeable.class, new PlaceableDeserializer<PlaceableOnSquare>());
-		//builder.registerTypeHierarchyAdapter(Placeable.class, new PlaceableDeserializer<PlaceableOnRail>());
-		//gson = new GsonBuilder().registerTypeAdapter(Placeable.class, new PlaceableDeserializer<Placeable>()).setPrettyPrinting().create();
-		//gson2 = new GsonBuilder().registerTypeAdapter(PlaceableOnSquare.class, new PlaceableDeserializer<PlaceableOnSquare>()).create();
-		gson = builder.setPrettyPrinting().create();
 	}
 
 	public Map loadMap(String mapName) {
 	    String jsonMap = readFromFile(mapName);
 	    System.out.println("Eingelesene Map: " + jsonMap);
-		Map map = gson.fromJson(jsonMap, Map.class);
+		Map map = gsonLoader.fromJson(jsonMap, Map.class);
 		return map;
 	}
 	
@@ -63,7 +61,7 @@ public class MapManager {
 	}
 
 	public void saveMap(Map map, String mapName) {
-		String jsonMap = gson.toJson(map);
+		String jsonMap = gsonSaver.toJson(map);
 		System.out.println("Gespeicherte Map: "+ jsonMap);
 		saveToFile(jsonMap, mapName);
 	}
