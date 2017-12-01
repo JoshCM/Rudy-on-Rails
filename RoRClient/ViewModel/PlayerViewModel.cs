@@ -1,6 +1,6 @@
 ﻿using Apache.NMS;
 using RoRClient.Model.Connections;
-using RoRClient.Model.Helper;
+using RoRClient.Model.DataTransferObject;
 using RoRClient.Model.Models;
 using RoRClient.ViewModel.Helper;
 using System;
@@ -40,8 +40,8 @@ namespace RoRClient.ViewModel
         //Beispiel wie eine Message versendet werden kann
 		private void CreateNewPlayerCommand()
 		{
-            Content content = new Content(RequestType.PLAYER, new Dictionary<string, string>() { { "testAttribut1", "1" }, { "testAttribut2", "2" } });
-            IMessage message = MessageBuilder.build(MessageType.CREATE,content) ;
+            MessageInformation messageInformation = new MessageInformation(RequestType.PLAYER, new Dictionary<string, string>() { { "testAttribut1", "1" }, { "testAttribut2", "2" } });
+            IMessage message = MessageBuilder.build(MessageType.CREATE,messageInformation) ;
 			ClientModel.getInstance().getFromClientRequestSender().SendMessage(message);
 		}
 

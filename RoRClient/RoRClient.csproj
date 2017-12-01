@@ -52,35 +52,9 @@
     <Reference Include="nunit.framework, Version=3.9.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.9.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="SharpVectors.Converters, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b532964b8548be77, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Converters.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectors.Core, Version=0.3.1.1588, Culture=neutral, PublicKeyToken=7407205e337c98ef, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectors.Css, Version=0.3.1.1590, Culture=neutral, PublicKeyToken=7a46e3f532fdb787, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Css.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectors.Dom, Version=0.3.1.1589, Culture=neutral, PublicKeyToken=517340b6277b1a7a, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Dom.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectors.Model, Version=0.3.1.1592, Culture=neutral, PublicKeyToken=2236cfc76b505845, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Model.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectors.Rendering.Gdi, Version=0.3.1.1595, Culture=neutral, PublicKeyToken=03902092284347e3, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Rendering.Gdi.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectors.Rendering.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d0902381100df30e, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Rendering.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpVectors.Runtime, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d16e717f0a981fb9, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpVectors.1.0\lib\net20\SharpVectors.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -99,29 +73,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
-    <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
-    <Compile Include="Model\Models\IModel.cs" />
-    <Compile Include="Model\Models\ModelBase.cs" />
-    <Compile Include="ViewModel\Helper\ViewModelFactory.cs" />
-    <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="ViewModel\CanvasViewModel.cs" />
+    <Compile Include="Model\DataTransferObject\MessageDeserializer.cs" />
+    <Compile Include="Model\DataTransferObject\MessageInformation.cs" />
+    <Compile Include="Model\DataTransferObject\MessageBuilder.cs" />
+    <Compile Include="Model\DataTransferObject\MessageType.cs" />
+    <Compile Include="Model\DataTransferObject\RequestType.cs" />
+    <Compile Include="Model\HandleResponse\ResponseDispatcher.cs" />
     <Compile Include="ViewModel\Helper\ActionCommand.cs" />
-    <Compile Include="ViewModel\Helper\INotifyPropertyChangedExtended.cs" />
-    <Compile Include="ViewModel\Helper\PropertyChangedExtendedEventArgs.cs" />
-    <Compile Include="ViewModel\RailViewModel.cs" />
-    <Compile Include="ViewModel\ViewConstants.cs" />
-    <Compile Include="ViewModel\MapViewModel.cs" />
-    <Compile Include="View\CanvasUserControl.cs" />
-    <Compile Include="View\RailUserControl.xaml.cs">
-      <DependentUpon>RailUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SquareUserControl.xaml.cs">
-      <DependentUpon>SquareUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\MapView.xaml.cs">
-      <DependentUpon>MapView.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="ViewModel\PlayerViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -134,38 +93,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\RailUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\SquareUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\MapView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Connections\ClientConnection.cs" />
     <Compile Include="Model\Connections\QueueBase.cs" />
-    <Compile Include="Model\Connections\QueueReceiver.cs" />
-    <Compile Include="Model\Connections\QueueSender.cs" />
+    <Compile Include="Model\Connections\FromServerResponseReceiver.cs" />
+    <Compile Include="Model\Connections\FromClientRequestSender.cs" />
     <Compile Include="Model\Models\ClientModel.cs" />
     <Compile Include="Model\Connections\TopicReceiver.cs" />
-    <Compile Include="Model\Helper\Command.cs" />
-    <Compile Include="Model\Helper\Serializer.cs" />
-    <Compile Include="Model\Models\DummyGame.cs" />
-    <Compile Include="Model\Models\InteractiveGameObject.cs" />
-    <Compile Include="Model\Models\Map.cs" />
-    <Compile Include="Model\Models\IPlaceable.cs" />
-    <Compile Include="Model\Models\IPlaceableOnRail.cs" />
-    <Compile Include="Model\Models\IPlaceableOnSquare.cs" />
-    <Compile Include="Model\Models\Rail.cs" />
-    <Compile Include="Model\Models\RailSection.cs" />
-    <Compile Include="Model\Models\RailSectionPosition.cs" />
-    <Compile Include="Model\Models\Square.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -194,14 +129,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Ressourcen\Images\railcurve_ne.png" />
-    <Resource Include="Ressourcen\Images\railcurve_nw.png" />
-    <Resource Include="Ressourcen\Images\railcurve_se.png" />
-    <Resource Include="Ressourcen\Images\railcurve_sw.png" />
-    <Resource Include="Ressourcen\Images\rail_ew.png" />
-    <Resource Include="Ressourcen\Images\rail_ns.png" />
+    <Folder Include="View\" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
