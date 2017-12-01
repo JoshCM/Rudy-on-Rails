@@ -232,18 +232,14 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Ressourcen\Images\railcurve_ne.png" />
-    <Resource Include="Ressourcen\Images\railcurve_nw.png" />
-    <Resource Include="Ressourcen\Images\railcurve_se.png" />
-    <Resource Include="Ressourcen\Images\railcurve_sw.png" />
-    <Resource Include="Ressourcen\Images\rail_ew.png" />
-    <Resource Include="Ressourcen\Images\rail_ns.png" />
+    <Resource Include="Resources\Images\railcurve_ne.png" />
+    <Resource Include="Resources\Images\railcurve_nw.png" />
+    <Resource Include="Resources\Images\railcurve_se.png" />
+    <Resource Include="Resources\Images\railcurve_sw.png" />
+    <Resource Include="Resources\Images\rail_ew.png" />
+    <Resource Include="Resources\Images\rail_ns.png" />
     <Resource Include="Resources\Images\Tools\railcurve.png" />
     <Resource Include="Resources\Images\Tools\railstraight.png" />
-    <Content Include="Resources\Images\rail_curve_v1.svg" />
-    <Content Include="Resources\Images\rail_straight_v1.svg" />
-    <Resource Include="Resources\Images\smiley.jpg" />
-    <Content Include="Resources\Images\test.svg" />
     <Resource Include="Resources\Images\Tools\railcurve - Kopie.png" />
     <Resource Include="Resources\Images\Tools\railstraight - Kopie.png" />
     <Resource Include="Resources\Images\Tools\railstraight - Kopie2.png" />
