@@ -96,6 +96,15 @@
     <Compile Include="Model\Helper\Command.cs" />
     <Compile Include="Model\Helper\Serializer.cs" />
     <Compile Include="Model\Models\DummyGame.cs" />
+    <Compile Include="Model\Models\InteractiveGameObject.cs" />
+    <Compile Include="Model\Models\Map.cs" />
+    <Compile Include="Model\Models\Placeable.cs" />
+    <Compile Include="Model\Models\PlaceableOnRail.cs" />
+    <Compile Include="Model\Models\PlaceableOnSquare.cs" />
+    <Compile Include="Model\Models\Rail.cs" />
+    <Compile Include="Model\Models\RailSection.cs" />
+    <Compile Include="Model\Models\RailSectionPosition.cs" />
+    <Compile Include="Model\Models\Square.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -1,5 +1,10 @@
 package models;
 
+/**
+ * Klasse für Schienen, die einem Feld (Square) zugeordnet sind
+ * und ein Schienenstück (= Gerade, Kurve) bzw. zwei Schienenstücke (= Kreuzung, Weiche) besitzen
+ */
+
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	
 	protected PlaceableOnRail placeableOnRail = null;
@@ -7,12 +12,19 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	protected RailSection section2;
     private final String className;
 	
-	public Rail (Square square, RailSection section) {
+	/**
+	 * Konstruktor für Geraden oder Kurven
+	 */
+	public Rail (Square square , RailSection section) {
 		super(square);
 		this.className = getClass().getName();
 		this.section1 = section;
 	}
 	
+	/**
+	 * 
+	 * Konstruktor für Kreuzungen oder Weichen
+	 */
 	public Rail (Square square, RailSection section1, RailSection section2) {
 		super(square);
 		this.className = getClass().getName();
@@ -21,7 +33,9 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	}
 	
 	public void setPlaceableOnRail (PlaceableOnRail placeableOnRail) {
-		this.placeableOnRail = placeableOnRail;
+		if(placeableOnRail == null){
+			this.placeableOnRail = placeableOnRail;
+		}
 	}
 
 	@Override

@@ -1,5 +1,9 @@
 package models;
 
+/**
+ * Klasse für ein Feld (Square), dass auf der Map liegt und eine Position hat.
+ * Auf dem Feld platzierte Objekte können auf die jeweilige Position zugreifen.
+ */
 public class Square {
 
 	private PlaceableOnSquare placeableOnSquare = null;
