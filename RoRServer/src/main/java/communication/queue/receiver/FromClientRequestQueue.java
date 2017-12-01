@@ -34,13 +34,12 @@ public class FromClientRequestQueue extends QueueReceiver {
 
 		TextMessage textMessage = (TextMessage) message;
 		try {
-			String command = message.getJMSType();
-			MessageType messageType = findMessageType(command);
+			String request = message.getJMSType();
 
 			log.info("ClientRequestReceiver.onMessage(): ... Message received [" + new Date().toString() + "]: "
 					+ textMessage.getText());
 			RequestDispatcher requestDispatcher = RequestDispatcher.getInstance();
-			requestDispatcher.dispatch(messageType, textMessage.getText());
+			requestDispatcher.dispatch(request, textMessage.getText());
 			QueueSender sender = new QueueSender(textMessage.getText());
 			String tT = "testTopic";
 			SessionTopicSender testTopic = new SessionTopicSender(tT);
@@ -54,37 +53,6 @@ public class FromClientRequestQueue extends QueueReceiver {
 
 
 
-	}
-
-	/**
-	 * sucht nach dem passenden MessageType
-	 * @param commandString welcher den JMSType als String angibt
-	 * @return passender MessageType der dem commandString entspricht
-	 */
-	public MessageType findMessageType(String commandString) {
-		MessageType command = null;
-		switch (commandString) {
-			case "CREATE":
-				command = MessageType.CREATE;
-				break;
-			case "READ":
-				command = MessageType.READ;
-				break;
-			case "UPDATE":
-				command = MessageType.UPDATE;
-				break;
-			case "DELETE":
-				command = MessageType.DELETE;
-				break;
-			case "LEAVE":
-				command = MessageType.LEAVE;
-				break;
-			case "ERROR":
-				command = MessageType.ERROR;
-				break;
-		}
-
-		return command;
 	}
 
 

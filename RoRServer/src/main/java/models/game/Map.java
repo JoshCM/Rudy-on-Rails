@@ -1,5 +1,7 @@
 package models.game;
 
+import models.ModelBase;
+
 /**
  * Klasse, die das Spielfeld darstellt und aus Feldern (Squares) besteht
  */
