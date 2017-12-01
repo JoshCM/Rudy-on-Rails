@@ -238,15 +238,25 @@
     <Resource Include="Ressourcen\Images\railcurve_sw.png" />
     <Resource Include="Ressourcen\Images\rail_ew.png" />
     <Resource Include="Ressourcen\Images\rail_ns.png" />
-    <Resource Include="Resources\Images\Tools\railcurve.png" />
-    <Resource Include="Resources\Images\Tools\railstraight.png" />
+    <Resource Include="Resources\Images\Tools\railcurve.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Tools\railstraight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Resources\Images\rail_curve_v1.svg" />
     <Content Include="Resources\Images\rail_straight_v1.svg" />
     <Resource Include="Resources\Images\smiley.jpg" />
     <Content Include="Resources\Images\test.svg" />
-    <Resource Include="Resources\Images\Tools\railcurve - Kopie.png" />
-    <Resource Include="Resources\Images\Tools\railstraight - Kopie.png" />
-    <Resource Include="Resources\Images\Tools\railstraight - Kopie2.png" />
+    <Resource Include="Resources\Images\Tools\railcurve - Kopie.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Tools\railstraight - Kopie.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Tools\railstraight - Kopie2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

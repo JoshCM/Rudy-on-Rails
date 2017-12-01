@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:RoRClient.ViewModel.Editor"
+             xmlns:vm="clr-namespace:RoRClient.ViewModel.Editor"
              mc:Ignorable="d" 
             
                           HorizontalAlignment="Stretch"
@@ -14,7 +14,7 @@
     Width="auto"
     Background="Beige" d:DesignHeight="813.443" d:DesignWidth="389.613">
     <UserControl.DataContext>
-        <local:ToolbarViewModel/>
+        <vm:ToolbarViewModel/>
     </UserControl.DataContext>
 
     <ItemsControl ItemsSource="{Binding ToolItems}" Margin="20">
