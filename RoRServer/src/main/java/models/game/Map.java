@@ -1,13 +1,18 @@
 package models.game;
 
-
-public class Map {
+/**
+ * Klasse, die das Spielfeld darstellt und aus Feldern (Squares) besteht
+ */
+public class Map extends ModelBase {
 	
-	private static Map map = null;
 	private Square squares [][];
 	private final int mapSize = 3;
 	
-	private Map() {
+	/**
+	 * Jedes Square auf der Map braucht einen Index,
+	 * um jedem Objekt, das auf einem Square platziert wird, ein eindeutiges Objekt zuzuordnen
+	 */
+	public Map() {
 		squares = new Square[mapSize][mapSize];
 		
 		for(int i= 0; i < mapSize; i++) {
@@ -16,13 +21,6 @@ public class Map {
 				squares[i][j] = s;
 			}
 		}
-	}
-	
-	public static Map getInstance() {
-		if (map == null) {
-			map = new Map();
-		}
-		return map;
 	}
 	
 	public Square getSquare(int i, int j) {

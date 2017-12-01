@@ -626,4 +626,6 @@ paket-files/
 # should be stored in the .pubxml.user file.
 
 # End of https://www.gitignore.io/api/git,java,macos,linux,gradle,python,windows,eclipse,intellij,visualstudio
-RoRServer/activemq-data/localhost/KahaDB/
+RoRServer/activemq-data/localhost/KahaDB/lock
+RoRServer/activemq-data/localhost/KahaDB/db.redo
+RoRServer/activemq-data/localhost/KahaDB/db.data

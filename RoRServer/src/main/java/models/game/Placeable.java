@@ -1,5 +1,9 @@
 package models.game;
 
-public interface Placeable {
+/**
+ * Interface für platzierbare Objekte
+ *
+ */
+public interface Placeable extends Model {
 
 }

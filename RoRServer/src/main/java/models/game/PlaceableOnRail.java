@@ -1,5 +1,8 @@
 package models.game;
 
-public interface PlaceableOnRail extends Placeable{
+/**
+ * Interface fuer Objekte, die auf einer Rail platziert werden
+ */
+public interface PlaceableOnRail extends Model, Placeable {
 
 }

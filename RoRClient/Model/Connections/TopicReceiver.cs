@@ -1,4 +1,4 @@
-﻿using Apache.NMS;
+﻿﻿using Apache.NMS;
 using Apache.NMS.ActiveMQ;
 using Apache.NMS.ActiveMQ.Commands;
 using RoRClient.Model.Models;
@@ -17,6 +17,7 @@ namespace RoRClient.Model.Connections
         protected ITopic topic;
         private IMessageConsumer messageConsumer;
         ISession session;
+
 
         public TopicReceiver(string topicName)
         {
