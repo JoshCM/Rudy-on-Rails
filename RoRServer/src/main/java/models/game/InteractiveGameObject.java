@@ -1,5 +1,7 @@
 package models.game;
 
+import models.ModelBase;
+
 /**
  * Abstrakte Klasse fuer alle Objekte, mit denen interagiert werden kann
  *

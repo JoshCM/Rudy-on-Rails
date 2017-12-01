@@ -2,15 +2,15 @@ package handleRequests;
 
 import communication.queue.sender.FromServerResponseQueue;
 import models.dataTranserObject.MessageInformation;
-import models.dataTranserObject.MessageType;
-import models.game.Player;
 import org.apache.log4j.Logger;
 
+import java.util.*;
 
-// Singleton
+
 public class RequestDispatcher {
 
     private static RequestDispatcher requestHandler = null;
+    private static Map<String, Runnable> requestToManagerMap = new HashMap<String, Runnable>(); // hier Runnable evtl durch Command (interface ersetzen)
 
     static Logger log = Logger.getLogger(RequestDispatcher.class.getName());
 
@@ -29,49 +29,40 @@ public class RequestDispatcher {
     }
 
     /**
-     * INFO: Eventuell kann man die Responsesache nochmal aufspillten/verteilen
+     * INFO: Eventuell kann man die Response-sache nochmal aufspillten/verteilen
      * Verteilt die Anfrage je nach requestTyp an unterschiedliche Ziele, welche die Anfrage auflösen und eine Response für den Client erstellen
-     * @param messageType - Spezifiziert die Anfrage und unterscheidet zwischen z. B. Create, Update, Delete
      * @param message - Beinhaltet die Informationen der Anfrage
      */
-    public void dispatch(MessageType messageType, String message) {
+    public void dispatch(String request, String message) {
         RequestSerializer requestSerializer = RequestSerializer.getInstance();
         MessageInformation requestInformation = requestSerializer.deserialize(message);
         MessageInformation responseInformation = requestSerializer.deserialize(message);
-        switch(messageType) {
-            case CREATE:
-                responseInformation = resolveCreateTarget(requestInformation);
 
-                break;
-            case DELETE:
-                //resolveDeleteTarget()
-                break;
-            case UPDATE:
-                //resolveUpdateTarget()
+        createRequestToFunctionMap(request,requestInformation);
 
-                break;
-        }
+
+
         String response = requestSerializer.serialize(responseInformation);
         FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(requestInformation.getClientid()); //Wie soll hier die Queue heißen?
         fromServerResponseQueue.sendMessage(response);
     }
 
-    /**
-     * Bearbeitet Anfragen des Typs "CREATE" und unterscheidet zwischen verschiedenen Anfragen, um neue Objekte zu erzeugen
-     * @param messageInformation - MessageInformation-DTO welches alle Informationen zum bearbeiten der Anfrage beinhaltet
-     */
-    private MessageInformation resolveCreateTarget (MessageInformation messageInformation) {
-        MessageInformation responseInformation = new MessageInformation();
-        switch(messageInformation.getRequest()){
-            case "PLAYER":
-                Player player = new Player(messageInformation.getAttributes().get("Playername"));
-                responseInformation.setClientid("basemodelID"); //muss hier noch eingezeigt werden
-                responseInformation.setRequest("OK-PLAYER");
-                break;
-            default:
-                break;
-        }
-         return responseInformation;
-    }
 
+    /**
+     * Mapped den ensprechenden request auf eine Funktion und führt diese aus
+     * @param request - Anfrage vom Client
+     * @param requestInformation - Attribute der Anfrage
+     */
+    private void createRequestToFunctionMap(String request, MessageInformation requestInformation) {
+        PlayerManager playerManager = new PlayerManager();
+        requestToManagerMap.get(request).run();
+        requestToManagerMap.put("CREATE_PLAYER", new Runnable() { //TO.DO am besten hier nur playerManager.create() in map legen
+            @Override
+            public void run() {
+                playerManager.create();
+            }
+        });
+        //requestToManagerMap.put("CREATE_MAP", funktionen);
+        //requestToManagerMap.put("CREATE_EDITOR", funktionen);
+    }
 }
