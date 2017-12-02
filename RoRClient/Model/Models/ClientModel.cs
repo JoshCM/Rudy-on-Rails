@@ -15,6 +15,7 @@ namespace RoRClient.Model.Models
         private FromServerResponseReceiver queueReceiver;
 		private Guid clientId;
 		private static ClientModel clientModel;
+        private TopicReceiver topic;
 
         private ClientModel(){
 			// Anmelden bei Queue, an die alle Clients ihre Anfragen schicken
@@ -25,6 +26,11 @@ namespace RoRClient.Model.Models
 			clientId = Guid.NewGuid();
 			Console.Write("Erstellt receiverQueue mit id:" + clientId.ToString());
 			queueReceiver = new FromServerResponseReceiver(clientId.ToString());
+            //initalen TopicReceiver erstellen zum test des EditorTopics
+            if (topic == null)
+            {
+                topic = new TopicReceiver("BaseModelID");
+            }
 		}
 
 		public static ClientModel getInstance()
