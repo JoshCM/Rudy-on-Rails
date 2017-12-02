@@ -2,6 +2,10 @@ package handleRequests;
 
 import communication.queue.sender.FromServerResponseQueue;
 import models.dataTranserObject.MessageInformation;
+import models.editor.EditorSession;
+import models.game.Player;
+import models.session.EditorSessionManager;
+
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
@@ -13,6 +17,7 @@ public class RequestDispatcher {
 
     private static RequestDispatcher requestHandler;
     private static Map<String, Runnable> requestHandlerMap = new HashMap<String, Runnable>(); // hier Runnable evtl durch Command (interface ersetzen)
+    private EditorSession editor;
 
     static Logger log = Logger.getLogger(RequestDispatcher.class.getName());
 
@@ -84,8 +89,53 @@ public class RequestDispatcher {
             }
         });
     }
-    
-    private void handleCREATE_PLAYER(MessageInformation messageInfo) {
-    	System.out.println("Ich wurde aufgerufen!");
+    /**
+     * Neue Session wird erstellt mit dem mitgegebenen Editornamen
+     * @param messageInfo
+     */
+    private void handleCREATE_EDITORSESSION(MessageInformation messageInfo) {
+    	editor=EditorSessionManager.getInstance().createNewEditorSession(messageInfo.getAttributes().get("Editorname"));
+    	//zum testen des Topics mit nur einem Client 
+    	//editor.getTopicSender().sendMessage(messageInfo.getAttributes().get("Editorname"));
+    	log.info("handleCREATE_EDITORSESSION(MessageInformation messageInfo): Ich wurde aufgerufen!");
     }
+    
+    private void handleCREATE_GAMESESSION(MessageInformation messageInfo) {
+    	log.info("handleCREATE_GAMESESSION(MessageInformation messageInfo): Ich wurde aufgerufen!");
+    }
+    /**
+     * Neuer Player wird erstellt und allen angemeldeten Clients mitgeteilt
+     * @param messageInfo
+     */
+    private void handleCREATE_PLAYER(MessageInformation messageInfo) {
+    	Player addPlayer=new Player(messageInfo.getAttributes().get("Playername"));
+    	editor=EditorSessionManager.getInstance().getEditorSession();
+    	editor.addPlayer(addPlayer);
+    	editor.getTopicSender().sendMessage("Neuer Player wurde hinzugefügt "+messageInfo.getAttributes().get("Playername"));
+    	log.info("handleCREATE_PLAYER(MessageInformation messageInfo): Ich wurde aufgerufen!");
+    }
+    
+    private void handleREAD_GAMESESSIONS(MessageInformation messageInfo) {
+    	log.info("handleCREATE_GAMESESSION(MessageInformation messageInfo): Ich wurde aufgerufen!");
+    }
+    
+    private void handleREAD_EDITORSESSIONS(MessageInformation messageInfo) {
+    	log.info("handleREAD_EDITORSESSIONS(MessageInformation messageInfo): Ich wurde aufgerufen!");
+    }
+    
+    private void handleJOIN_GAMESESSION(MessageInformation messageInfo) {
+    	log.info("handleUPDATE_JOIN_GAMESESSION(MessageInformation messageInfo): Ich wurde aufgerufen!");
+    }
+    
+    private void handleJOIN_EDITORSESSION(MessageInformation messageInfo) {
+    	log.info("handleUPDATE_JOIN_EDITORSESSION(MessageInformation messageInfo): Ich wurde aufgerufen!");
+    }
+    
+    
+    
+   
+    
+    
+    
+    
 }

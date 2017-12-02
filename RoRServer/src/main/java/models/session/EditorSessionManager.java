@@ -2,7 +2,9 @@ package models.session;
 
 import models.editor.EditorSession;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class EditorSessionManager {
@@ -31,10 +33,11 @@ public class EditorSessionManager {
         editorSessionMap.remove(UUID.randomUUID());
     }
     public EditorSession getEditorSession(){
-        EditorSession editorArray [];
+        EditorSession editor;
         if(!editorSessionMap.values().isEmpty() ) {
-            editorArray =  (EditorSession[]) editorSessionMap.values().toArray();
-            return editorArray[0];
+            editor =  (EditorSession) editorSessionMap.values().toArray()[0];
+            
+            return editor;
         }
         return null;
     }

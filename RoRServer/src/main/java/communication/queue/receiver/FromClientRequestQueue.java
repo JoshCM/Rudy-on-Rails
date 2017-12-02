@@ -40,11 +40,6 @@ public class FromClientRequestQueue extends QueueReceiver {
 					+ textMessage.getText());
 			RequestDispatcher requestDispatcher = RequestDispatcher.getInstance();
 			requestDispatcher.dispatch(request, textMessage.getText());
-			QueueSender sender = new QueueSender(textMessage.getText());
-			String tT = "testTopic";
-			SessionTopicSender testTopic = new SessionTopicSender(tT);
-			sender.sendMessage(tT);
-			testTopic.sendMessage("es hat hoffentlich geklappt!");
 		} catch (JMSException e) {
 			log.error(
 					"FromClientRequestQueue.onMessage(Message message) : QueueSender konnte Nachricht nicht verschicken");
