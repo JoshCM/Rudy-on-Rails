@@ -47,16 +47,16 @@ namespace RoRClient.Model.Connections
         {
             switch (messageTypeString)
             {
-                case "CREATERESPONSE":
+                case "CREATE":
                     return MessageType.CREATERESPONSES;
 
-                case "ERRORRESPONSE":
+                case "ERROR":
                     return MessageType.ERRORRESPONSES;
 
-                case "READRESPONSE":
+                case "READ":
                     return MessageType.READRESPONSES;
 
-                case "UPDATERESPONSE":
+                case "UPDATE":
                     return MessageType.UPDATERESPONSES;
 
                 case "DELETE":
