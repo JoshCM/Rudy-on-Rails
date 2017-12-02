@@ -12,7 +12,7 @@ public class Main {
 
 	public static void testThings() {
         System.out.println("Hier");
-        String msg = "{\"clientid\": \"12345\", \"request\": \"PLAYER\", \"attributes\": {\"Playername\": \"Joendhard Biffel\"}}";
+        String msg = "{\"clientId\": \"12345\", \"request\": \"PLAYER\", \"attributes\": {\"Playername\": \"Joendhard Biffel\"}}";
 		RequestSerializer rs = RequestSerializer.getInstance();
 		rs.deserialize(msg);
 		//System.out.println(ri.toString());

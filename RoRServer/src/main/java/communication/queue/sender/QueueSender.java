@@ -5,6 +5,8 @@ import javax.jms.MessageProducer;
 import javax.jms.TextMessage;
 
 import communication.queue.QueueBase;
+import models.dataTranserObject.MessageType;
+
 import org.apache.log4j.Logger;
 
 // QueueSender f√ºr Client Queues
@@ -37,6 +39,8 @@ public class QueueSender extends QueueBase {
 		try {
 			TextMessage textMessage;
 			textMessage = session.createTextMessage(message);
+			//MessageType hinzugefuegt, damit der FromServerResponseReceiver auf der Client Seite weiﬂ, um welche Art Nachricht es sich handelt
+			textMessage.setJMSType(MessageType.CREATE.toString());
 			publisher.send(textMessage);
 		} catch (JMSException e) {
 			log.error("QueueSender.sendMessage(String message) : message : "+message);
