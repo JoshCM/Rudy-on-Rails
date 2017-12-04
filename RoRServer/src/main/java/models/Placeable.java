@@ -5,5 +5,5 @@ package models;
  *
  */
 public interface Placeable extends Model {
-
+	
 }
