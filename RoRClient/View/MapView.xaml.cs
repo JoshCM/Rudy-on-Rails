@@ -15,9 +15,9 @@ using System.Windows.Shapes;
 
 namespace RoRClient.View
 {
-    public partial class EditorView : Window
+    public partial class MapView : Window
     {
-        public EditorView()
+        public MapView()
         {
             InitializeComponent();
         }

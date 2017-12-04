@@ -13,7 +13,7 @@ namespace RoRClient.ViewModel
     /// Hält alle ViewModels die placeableOnSquare sind, sowie die Squares der Map
     /// und momentan noch die Map an sich
     /// </summary>
-    class EditorViewModel : ViewModelBase
+    class MapViewModel : ViewModelBase
     {
         private Map testMap;
 
@@ -63,7 +63,7 @@ namespace RoRClient.ViewModel
             }
         }
 
-        public EditorViewModel()
+        public MapViewModel()
         {
             testMap = GenerateTestMap();
             MapWidth = testMap.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
