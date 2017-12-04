@@ -103,6 +103,11 @@
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
     <Compile Include="Model\Models\IModel.cs" />
     <Compile Include="Model\Models\ModelBase.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\Helper\ViewModelFactory.cs" />
     <Compile Include="ViewModel\Editor\CanvasViewModel.cs" />
     <Compile Include="ViewModel\Helper\INotifyPropertyChangedExtended.cs" />
@@ -205,11 +210,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -217,6 +217,7 @@
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -232,42 +233,18 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Ressourcen\Images\railcurve_ne.png" />
-    <Resource Include="Ressourcen\Images\railcurve_nw.png" />
-    <Resource Include="Ressourcen\Images\railcurve_se.png" />
-    <Resource Include="Ressourcen\Images\railcurve_sw.png" />
-    <Resource Include="Ressourcen\Images\rail_ew.png" />
-    <Resource Include="Ressourcen\Images\rail_ns.png" />
-    <Resource Include="Resources\Images\Tools\railcurve.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Images\Tools\railstraight.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Content Include="Resources\Images\rail_curve_v1.svg" />
-    <Content Include="Resources\Images\rail_straight_v1.svg" />
-    <Resource Include="Resources\Images\smiley.jpg" />
-    <Content Include="Resources\Images\test.svg" />
-    <Resource Include="Resources\Images\Tools\railcurve - Kopie.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Images\Tools\railstraight - Kopie.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Images\Tools\railstraight - Kopie2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Resources\Images\railcurve_ne.png" />
     <Resource Include="Resources\Images\railcurve_nw.png" />
     <Resource Include="Resources\Images\railcurve_se.png" />
     <Resource Include="Resources\Images\railcurve_sw.png" />
     <Resource Include="Resources\Images\rail_ew.png" />
     <Resource Include="Resources\Images\rail_ns.png" />
-    <Resource Include="Resources\Images\Tools\railcurve.png" />
-    <Resource Include="Resources\Images\Tools\railstraight.png" />
-    <Resource Include="Resources\Images\Tools\railcurve - Kopie.png" />
-    <Resource Include="Resources\Images\Tools\railstraight - Kopie.png" />
-    <Resource Include="Resources\Images\Tools\railstraight - Kopie2.png" />
+    <Resource Include="Resources\Images\Tools\railcurve_sw.png" />
+    <Resource Include="Resources\Images\Tools\rail_ew.png" />
+    <Resource Include="Resources\Images\Tools\rail_ns.png" />
+    <Resource Include="Resources\Images\Tools\railcurve_ne.png" />
+    <Resource Include="Resources\Images\Tools\railcurve_nw.png" />
+    <Resource Include="Resources\Images\Tools\railcurve_se.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

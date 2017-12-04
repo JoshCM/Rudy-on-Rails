@@ -39,6 +39,5 @@ namespace RoRClient.Model.Models
                 this.imagePath = value;
             }
         }
-
     }
 }
