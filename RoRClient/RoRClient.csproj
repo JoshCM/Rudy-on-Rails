@@ -119,6 +119,9 @@
     <Compile Include="View\Editor\RailUserControl.xaml.cs">
       <DependentUpon>RailUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Editor\SelectedToolUserControl.xaml.cs">
+      <DependentUpon>SelectedToolUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Editor\SquareUserControl.xaml.cs">
       <DependentUpon>SquareUserControl.xaml</DependentUpon>
     </Compile>
@@ -159,6 +162,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Editor\SelectedToolUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Editor\ToolbarUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

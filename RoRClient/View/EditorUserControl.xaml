@@ -4,18 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:editor="clr-namespace:RoRClient.View.Editor"
-             xmlns:view="clr-namespace:RoRClient.View"
+
              mc:Ignorable="d"
              HorizontalAlignment="Stretch"
 	VerticalAlignment="Stretch"
 	HorizontalContentAlignment="Stretch"
 	VerticalContentAlignment="Stretch"
-    Height="1080"
-    Width="1920">
+             d:DesignHeight="1050" d:DesignWidth="1680"
+            >
     <Grid Name="ContentGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="9*" />
+            <RowDefinition Height="7*" />
+            <RowDefinition Height="2*" />
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
 
@@ -36,20 +37,27 @@
         <Grid Grid.Row="1"
           Grid.Column="1"
               Grid.ColumnSpan="2"
+              Grid.RowSpan="2"
           Background="LightSeaGreen">
             <!-- Darstellung der Map -->
             <editor:MapUserControl />
         </Grid>
 
-        <Grid Grid.Row="1"
-          Grid.Column="0"
-              Grid.RowSpan="2"
-          Background="Violet">
+
+
+        <Grid Grid.Row="1" Grid.RowSpan="2" Grid.Column="0">
             <!-- Werkzeugleiste -->
             <editor:ToolbarUserControl />
         </Grid>
 
-        <Grid Grid.Row="2"
+        <Grid Grid.Row="3"
+          Grid.Column="0"
+          Background="Violet">
+            <!--Aktives Werkzeug -->
+            <editor:SelectedToolUserControl />
+        </Grid>
+
+        <Grid Grid.Row="3"
           Grid.Column="1"
           Grid.ColumnSpan="2"
           Background="Green">
