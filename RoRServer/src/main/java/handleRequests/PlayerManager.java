@@ -1,4 +1,4 @@
-package handleRequests;
+package HandleRequests;
 
 import models.dataTranserObject.MessageInformation;
 

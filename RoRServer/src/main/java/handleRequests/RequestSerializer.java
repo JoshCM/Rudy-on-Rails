@@ -1,4 +1,4 @@
-package handleRequests;
+package HandleRequests;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

@@ -7,5 +7,5 @@ import models.Model;
  *
  */
 public interface Placeable extends Model {
-
+	
 }

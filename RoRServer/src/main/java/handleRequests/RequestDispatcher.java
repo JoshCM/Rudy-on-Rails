@@ -1,4 +1,4 @@
-package handleRequests;
+package HandleRequests;
 
 import communication.queue.sender.FromServerResponseQueue;
 import models.dataTranserObject.MessageInformation;

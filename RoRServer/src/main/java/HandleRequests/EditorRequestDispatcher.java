@@ -1,4 +1,4 @@
-package handleRequests;
+package HandleRequests;
 
 public class EditorRequestDispatcher {
 }
