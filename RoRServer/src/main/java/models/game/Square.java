@@ -11,8 +11,9 @@ public class Square extends ModelBase {
 	private PlaceableOnSquare placeableOnSquare = null;
 	private int xIndex;
 	private int yIndex;
+	private Map map;
 	
-	public Square(int xIndex, int yIndex) {
+	public Square(Map map, int xIndex, int yIndex) {
 		this.xIndex = xIndex;
 		this.yIndex = yIndex;
 	}
@@ -64,4 +65,7 @@ public class Square extends ModelBase {
 		return true;
 	}
 	
+	public Map getMap() {
+		return map;
+	}
 }
