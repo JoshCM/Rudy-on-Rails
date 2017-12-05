@@ -12,7 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class RequestDispatcher {
-
+	private boolean isInitial = false;
 	private static RequestDispatcher requestHandler;
 
 	static Logger log = Logger.getLogger(RequestDispatcher.class.getName());
@@ -58,17 +58,20 @@ public class RequestDispatcher {
 	 */
 	public void dispatch(String request, String message) {
 		RequestSerializer requestSerializer = RequestSerializer.getInstance();
-		MessageInformation requestInformation = requestSerializer.deserialize(message);
-		MessageInformation responseInformation = requestSerializer.deserialize(message);
+		MessageInformation messageInformation = requestSerializer.deserialize(message);
 
 		// Wird wahrscheinlich gar nicht gebraucht
 		// createRequestToFunctionMap(request,requestInformation);
 
-		callMethodFromString("handle" + request, requestInformation);
+		callMethodFromString("handle" + request, messageInformation);
 
-		String response = requestSerializer.serialize(responseInformation);
-		FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(requestInformation.getClientid());
-		fromServerResponseQueue.sendMessage(response);
+		String response = requestSerializer.serialize(messageInformation);
+		if(isInitial){
+			FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(messageInformation.getClientid());
+			fromServerResponseQueue.sendMessage(response);
+		}else {
+			EditorSessionManager.getInstance().getEditorSession().getTopicSender().sendMessage("CreateEditorSession", response);
+		}
 	}
 
 	private void handleCREATE_GAMESESSION(MessageInformation messageInfo) {
@@ -81,11 +84,20 @@ public class RequestDispatcher {
 	 * @param messageInfo
 	 */
 	private void handleCreateEditorSession(MessageInformation messageInfo) {
-		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(messageInfo.getValueAsString("Editorname"));
+		EditorSession editorSession;
 		Player player = new Player(messageInfo.getValueAsString("Playername"));
-		editorSession.addPlayer(player);
-		editorSession.getTopicSender()
-				.sendMessage("EditorSessionCreated", messageInfo.getValueAsString("Playername"));
+
+		if(EditorSessionManager.getInstance().getEditorSession() == null){
+			editorSession = EditorSessionManager.getInstance().createNewEditorSession(messageInfo.getValueAsString("Editorname"));
+			editorSession.addPlayer(player);
+			messageInfo.putValue("Topicname", editorSession.getName());
+			isInitial = true;
+		}else{
+			editorSession = EditorSessionManager.getInstance().getEditorSession();
+			editorSession.addPlayer(player);
+			messageInfo.putValue("Playername", player.getName());
+			isInitial = false;
+		}
 
 		log.info("Called handleCreateEditorSession");
 	}

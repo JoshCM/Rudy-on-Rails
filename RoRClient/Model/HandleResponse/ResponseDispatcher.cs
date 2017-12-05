@@ -1,4 +1,5 @@
 ﻿using Apache.NMS;
+using RoRClient.Model.Connections;
 using RoRClient.Model.DataTransferObject;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace RoRClient.Model.HandleResponse
     class ResponseDispatcher
     {
         private static ResponseDispatcher responseDispatcher;
+        private TopicReceiver topic;
         private ResponseDispatcher()
         {
 
@@ -29,42 +31,18 @@ namespace RoRClient.Model.HandleResponse
         /// Aufgabe die Message zu "dispatchen" um zu entscheiden, was damit passieren soll, je nach MessageType
         /// </summary>
         /// <param name="message"></param>
-		internal void dispatch(MessageType messageType, ITextMessage textMessage)
+		internal void dispatch(string messageType, ITextMessage textMessage)
         {
            
             Console.WriteLine("ResponseHandler macht was");
             MessageInformation messageInformation= MessageDeserializer.getInstance().deserialize(textMessage.Text);
 
-            switch (messageType)
+            //initalen TopicReceiver erstellen zum test des EditorTopics
+            if(messageType == "")
+            if (topic == null)
             {
-                case MessageType.CREATERESPONSES:
-                   // resolveCreateResponses(messageInformation.request);
-                    break;
-
-                case MessageType.ERRORRESPONSES:
-          
-                    break;
-
-                case MessageType.READRESPONSES:
-  
-                    break;
-
-                case MessageType.UPDATERESPONSES:
-         
-                    break;
-
-                case MessageType.DELETERESPONSES:
-
-                    break;
-
-                case MessageType.STATUSMESSAGES:
-
-                    break;
-
-
-
+                topic = new TopicReceiver(messageInformation.GetAttribute("Topicname"));
             }
-
         }
 
         /// <summary>

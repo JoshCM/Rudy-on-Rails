@@ -43,24 +43,10 @@ public class EditorSession {
     public SessionTopicSender getTopicSender() {
         return topicSender;
     }
-
-	public void SendRailCreatedMessage(Rail rail) {
-		MessageInformation responseInfo = new MessageInformation();
-		responseInfo.putValue("railId", rail.getId());
-		responseInfo.putValue("railSectionId", rail.getSection().getId());
-		responseInfo.putValue("railSectionPositionNode1", rail.getSection().getNode1().ordinal());
-		responseInfo.putValue("railSectionPositionNode2", rail.getSection().getNode2().ordinal());
-		responseInfo.putValue("squareId", rail.getSquare().getId());
-		
-		RequestSerializer requestSerializer = RequestSerializer.getInstance();
-		String response = requestSerializer.serialize(responseInfo);
-		
-		topicSender.sendMessage("RailCreated", response);
-	}
 	
-	public void SendMessage(MessageInformation messageInfo) {
+	public void SendMessage(String messageType, MessageInformation messageInfo) {
 		RequestSerializer requestSerializer = RequestSerializer.getInstance();
 		String response = requestSerializer.serialize(messageInfo);
-		topicSender.sendMessage("RailCreated", response);
+		topicSender.sendMessage(messageType, response);
 	}
 }
