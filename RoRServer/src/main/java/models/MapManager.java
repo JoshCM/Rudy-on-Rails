@@ -24,7 +24,7 @@ import models.game.PlaceableOnSquare;
 
 public class MapManager {
 
-	private final String dir = "Maps/";
+	private final String dir = "resources/maps/";
 	private final String ext = ".map";
 	private Gson gsonLoader;
 	private Gson gsonSaver;

@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 // Singleton für Server-Connection (beinhaltet Factory, Connection, session)
 public class ServerConnection {
 	
-	public static final String BROKER_URL = "vm://localhost";
 	private static ServerConnection serverConnection = null;
 	private ActiveMQConnectionFactory factory;
 	private Connection connection;
