@@ -8,11 +8,15 @@ import models.session.EditorSessionManager;
 
 import org.apache.log4j.Logger;
 
+import com.google.gson.JsonObject;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RequestDispatcher {
-
+	private boolean isInitial = false;
 	private static RequestDispatcher requestHandler;
 
 	static Logger log = Logger.getLogger(RequestDispatcher.class.getName());
@@ -58,16 +62,18 @@ public class RequestDispatcher {
 	 */
 	public void dispatch(String request, String message) {
 		RequestSerializer requestSerializer = RequestSerializer.getInstance();
-		MessageInformation requestInformation = requestSerializer.deserialize(message);
-		MessageInformation responseInformation = requestSerializer.deserialize(message);
+		MessageInformation messageInformation = requestSerializer.deserialize(message);
 
 		// Wird wahrscheinlich gar nicht gebraucht
 		// createRequestToFunctionMap(request,requestInformation);
 
-		callMethodFromString("handle" + request, requestInformation);
+		callMethodFromString("handle" + request, messageInformation);
+	}
 
-		String response = requestSerializer.serialize(responseInformation);
-		FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(requestInformation.getClientid());
+	private void sendMessage(MessageInformation messageInformation) {
+		RequestSerializer requestSerializer = RequestSerializer.getInstance();
+		String response = requestSerializer.serialize(messageInformation);
+		FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(messageInformation.getClientid());
 		fromServerResponseQueue.sendMessage(response);
 	}
 
@@ -78,16 +84,41 @@ public class RequestDispatcher {
 	/**
 	 * Neuer Player wird erstellt und allen angemeldeten Clients mitgeteilt
 	 * 
-	 * @param messageInfo
+	 * @param messageInformation
 	 */
-	private void handleCreateEditorSession(MessageInformation messageInfo) {
-		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(messageInfo.getAttributes().get("Editorname"));
-		Player player = new Player(messageInfo.getAttributes().get("Playername"));
-		editorSession.addPlayer(player);
-		editorSession.getTopicSender()
-				.sendMessage("Neuer Player wurde hinzugefügt " + messageInfo.getAttributes().get("Playername"));
+	private void handleCreateEditorSession(MessageInformation messageInformation) {
+		EditorSession editorSession;
+		
+		MessageInformation responseInformation = new MessageInformation();
+		responseInformation.setClientid(messageInformation.getClientid());
+		Player player = new Player(messageInformation.getValueAsString("Playername"));
+
+		if (EditorSessionManager.getInstance().getEditorSession() == null) {
+			editorSession = EditorSessionManager.getInstance()
+					.createNewEditorSession(messageInformation.getValueAsString("Editorname"));
+			editorSession.addPlayer(player);
+			
+			responseInformation.putValue("Topicname", editorSession.getName());
+			responseInformation.putValue("Playername", player.getName());
+		} else {
+			editorSession = EditorSessionManager.getInstance().getEditorSession();
+			editorSession.addPlayer(player);
+			
+			responseInformation.putValue("Topicname", editorSession.getName());
+			List<JsonObject> players = new ArrayList<JsonObject>();
+			for(Player sessionPlayer : editorSession.getPlayers()) {
+				JsonObject json = new JsonObject();
+				json.addProperty("Id", sessionPlayer.getId().toString());
+				json.addProperty("Playername", sessionPlayer.getName());
+				players.add(json);
+			}
+			
+			responseInformation.putValue("Playerlist", players);
+		}
 
 		log.info("Called handleCreateEditorSession");
+
+		sendMessage(responseInformation);
 	}
 
 	private void handleREAD_GAMESESSIONS(MessageInformation messageInfo) {

@@ -1,5 +1,7 @@
 package models.game;
 
+import models.dataTranserObject.MessageInformation;
+
 /**
  * Klasse fuer Schienen, die einem Feld (Square) zugeordnet sind und ein
  * Schienenstueck (= Gerade, Kurve) bzw. zwei Schienenstuecke (= Kreuzung,
@@ -18,11 +20,26 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	public Rail(Square square, RailSection section) {
 		super(square);
 		this.section1 = section;
+
+		//SendCreatedRailMessage();
+	}
+	
+	private void SendCreatedRailMessage() {
+		MessageInformation messageInfo = new MessageInformation();
+		messageInfo.putValue("railId", getId());
+		messageInfo.putValue("railSectionId", section1.getId());
+		messageInfo.putValue("railSectionPositionNode1", section1.getNode1().ordinal());
+		messageInfo.putValue("railSectionPositionNode2", section1.getNode2().ordinal());
+		messageInfo.putValue("squareId", square.getId());
+		
+		square.getMap().getEditorSession().SendMessage("CreateRail", messageInfo);
 	}
 
-	/**
-	 * 
+	/***
 	 * Konstruktor für Kreuzungen oder Weichen
+	 * @param square
+	 * @param section1
+	 * @param section2
 	 */
 	public Rail(Square square, RailSection section1, RailSection section2) {
 		super(square);

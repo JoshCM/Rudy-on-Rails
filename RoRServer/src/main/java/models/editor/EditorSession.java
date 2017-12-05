@@ -1,9 +1,13 @@
 package models.editor;
 
+import models.dataTranserObject.MessageInformation;
 import models.game.Map;
 import models.game.Player;
+import models.game.Rail;
 import communication.session.SessionTopicSender;
 import java.util.ArrayList;
+
+import HandleRequests.RequestSerializer;
 
 //Erbt von BaseModel, die die ID generiert
 public class EditorSession {
@@ -17,7 +21,7 @@ public class EditorSession {
     public EditorSession(String name) {
         this.name = name;
         this.topicSender = new SessionTopicSender("BaseModelID");
-        map = new Map();
+        map = new Map(this);
     }
 
     public String getName() {
@@ -35,8 +39,19 @@ public class EditorSession {
     public Map getMap() {
     	return map;
     }
+    
+    // ToDo: Unmodifiable List zurückgeben
+    public ArrayList<Player> getPlayers(){
+    	return players;
+    }
 
     public SessionTopicSender getTopicSender() {
         return topicSender;
     }
+	
+	public void SendMessage(String messageType, MessageInformation messageInfo) {
+		RequestSerializer requestSerializer = RequestSerializer.getInstance();
+		String response = requestSerializer.serialize(messageInfo);
+		topicSender.sendMessage(messageType, response);
+	}
 }

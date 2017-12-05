@@ -14,7 +14,7 @@ public class DummyGame {
 	static Logger log = Logger.getLogger(DummyGame.class.getName());
 	
 	public DummyGame(){
-		map = new Map();
+		map = new Map(null);
 		mapManager = new MapManager();
 	}
 	
@@ -26,7 +26,7 @@ public class DummyGame {
 	}
 	
 	public void sendAction() {
-		sessionTopicSender.sendMessage("Connected to Topic");
+		sessionTopicSender.sendMessage("Message", "Connected to Topic");
 		log.info("DummyGame.sendAction()");
 	}
 

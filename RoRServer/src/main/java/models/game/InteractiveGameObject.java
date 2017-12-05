@@ -20,6 +20,7 @@ public abstract class InteractiveGameObject extends ModelBase {
 		return className;
 	}
 	
-	
-
+	public Square getSquare() {
+		return square;
+	}
 }

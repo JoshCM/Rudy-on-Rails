@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import models.editor.EditorSession;
 import models.game.Map;
 import models.game.Rail;
 import models.game.RailSection;
@@ -12,7 +13,7 @@ import models.game.RailSectionPosition;
 public class MapManagerTest {
 	
 	MapManager manager = new MapManager();
-	Map savedMap = new Map();
+	Map savedMap = new Map(null);
 	
 	@Test
 	public void mapManager_SavedAndLoadedMapAreEqual() {

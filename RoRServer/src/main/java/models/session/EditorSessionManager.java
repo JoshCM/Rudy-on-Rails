@@ -36,7 +36,6 @@ public class EditorSessionManager {
         EditorSession editor;
         if(!editorSessionMap.values().isEmpty() ) {
             editor =  (EditorSession) editorSessionMap.values().toArray()[0];
-            
             return editor;
         }
         return null;
