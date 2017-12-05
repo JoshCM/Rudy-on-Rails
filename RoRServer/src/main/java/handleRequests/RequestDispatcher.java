@@ -98,7 +98,7 @@ public class RequestDispatcher {
 			messageInfo.setAttributes("Playername", player.getName());
 			isInitial = false;
 		}
-		
+
 		log.info("Called handleCreateEditorSession");
 	}
 

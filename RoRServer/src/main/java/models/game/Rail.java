@@ -18,11 +18,16 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	public Rail(Square square, RailSection section) {
 		super(square);
 		this.section1 = section;
+		
+		// Hier jetzt Nachricht erstellen
+		square.getMap().getEditorSession().SendRailCreatedMessage(this);
 	}
 
-	/**
-	 * 
+	/***
 	 * Konstruktor für Kreuzungen oder Weichen
+	 * @param square
+	 * @param section1
+	 * @param section2
 	 */
 	public Rail(Square square, RailSection section1, RailSection section2) {
 		super(square);

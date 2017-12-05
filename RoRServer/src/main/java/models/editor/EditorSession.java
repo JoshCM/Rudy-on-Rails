@@ -1,7 +1,9 @@
 package models.editor;
 
+import models.dataTranserObject.MessageInformation;
 import models.game.Map;
 import models.game.Player;
+import models.game.Rail;
 import communication.session.SessionTopicSender;
 import java.util.ArrayList;
 
@@ -16,8 +18,8 @@ public class EditorSession {
 
     public EditorSession(String name) {
         this.name = name;
-        this.topicSender = new SessionTopicSender(name);
-        map = new Map();
+        this.topicSender = new SessionTopicSender("BaseModelID");
+        map = new Map(this);
     }
 
     public String getName() {
@@ -39,4 +41,8 @@ public class EditorSession {
     public SessionTopicSender getTopicSender() {
         return topicSender;
     }
+
+	public void SendRailCreatedMessage(Rail rail) {
+		// ToDo: Hier soll eine Nachricht an den Topic gesendet werden
+	}
 }

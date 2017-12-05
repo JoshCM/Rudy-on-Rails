@@ -14,7 +14,7 @@ public class DummyGame {
 	static Logger log = Logger.getLogger(DummyGame.class.getName());
 	
 	public DummyGame(){
-		map = new Map();
+		map = new Map(null);
 		mapManager = new MapManager();
 	}
 	
