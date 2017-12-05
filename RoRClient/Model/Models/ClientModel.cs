@@ -9,32 +9,19 @@ namespace RoRClient.Model.Models
 {
     class ClientModel
     {
-        //"tcp://172.26.38.104:61616"
-        public static string BROKER_URL = "tcp://localhost:8080";
         private FromClientRequestSender fromClientRequestSender;
         private FromServerResponseReceiver queueReceiver;
 		private Guid clientId;
-		private static ClientModel clientModel;
-        
 
-        private ClientModel(){
+        public ClientModel(){
 			// Anmelden bei Queue, an die alle Clients ihre Anfragen schicken
 			Console.Write("Anmelden bei ClientRequestQueue");
 			fromClientRequestSender = new FromClientRequestSender("ClientRequestQueue");
 
-			// Erstelle die eigene Queue, an die der Server etwas zurücksenden kannGuid id = Guid.NewGuid();
-			clientId = Guid.NewGuid();
+            // Erstelle die eigene Queue, an die der Server etwas zurücksenden kannGuid id = Guid.NewGuid();
+            clientId = ClientConnection.GetInstance().ClientId;
 			Console.Write("Erstellt receiverQueue mit id:" + clientId.ToString());
 			queueReceiver = new FromServerResponseReceiver(clientId.ToString());
-		}
-
-		public static ClientModel getInstance()
-		{
-			if (clientModel == null)
-			{
-				clientModel = new ClientModel();
-			}
-			return clientModel;
 		}
 
 		public FromClientRequestSender getFromClientRequestSender()
@@ -42,9 +29,12 @@ namespace RoRClient.Model.Models
 			return fromClientRequestSender;
 		}
 
-		public Guid getClientId()
-		{
-			return clientId;
-		}
+		public Guid ClientId
+        {
+            get
+            {
+                return clientId;
+            }
+        }
     }
 }

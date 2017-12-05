@@ -11,20 +11,11 @@ namespace RoRClient.Model.HandleResponse
 {
     class ResponseDispatcher
     {
-        private static ResponseDispatcher responseDispatcher;
         private TopicReceiver topic;
-        private ResponseDispatcher()
+
+        public ResponseDispatcher()
         {
 
-        }
-
-        public static ResponseDispatcher getInstance()
-        {
-            if (responseDispatcher == null)
-            {
-                responseDispatcher = new ResponseDispatcher();
-            }
-            return responseDispatcher;
         }
 
         /// <summary>
@@ -42,6 +33,10 @@ namespace RoRClient.Model.HandleResponse
                 {
                     topic = new TopicReceiver(messageInformation.GetValueAsString("Topicname"));
                 }
+
+                // EditorSession erstellen 
+                    // Player erstellen
+                // EditorViewModel wechseln
             }
         }
     }

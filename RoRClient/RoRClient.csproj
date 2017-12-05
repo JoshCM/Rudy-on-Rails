@@ -119,7 +119,6 @@
     <Compile Include="ViewModel\Helper\UIState.cs" />
     <Compile Include="ViewModel\Helper\ViewModelFactory.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="ViewModel\PlayerViewModel.cs" />
     <Compile Include="ViewModel\StartViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\Editor\CanvasViewModel.cs" />

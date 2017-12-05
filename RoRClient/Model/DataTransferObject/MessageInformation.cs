@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RoRClient.Model.Models;
 using Newtonsoft.Json.Linq;
+using RoRClient.Model.Connections;
 
 namespace RoRClient.Model.DataTransferObject
 {
@@ -16,7 +17,7 @@ namespace RoRClient.Model.DataTransferObject
 
         public MessageInformation(Dictionary<string, Object> attributes)
         {
-            clientId = ClientModel.getInstance().getClientId().ToString();
+            clientId = ClientConnection.GetInstance().ClientId.ToString();
             this.attributes = attributes;
         }
         

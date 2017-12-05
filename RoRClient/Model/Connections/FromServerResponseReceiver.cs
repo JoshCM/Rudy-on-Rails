@@ -12,6 +12,7 @@ namespace RoRClient.Model.Connections
 {
     class FromServerResponseReceiver : QueueBase
     {
+        private ResponseDispatcher responseDispatcher;
         private IMessageConsumer messageConsumer;
         private TopicReceiver topic;
 
@@ -22,6 +23,7 @@ namespace RoRClient.Model.Connections
 
         private void init()
         {
+            responseDispatcher = new ResponseDispatcher();
             Console.WriteLine("startet messageconsumer(queueReceiver)");
             messageConsumer = session.CreateConsumer(queue);
             messageConsumer.Listener += OnMessageReceived;
@@ -35,7 +37,7 @@ namespace RoRClient.Model.Connections
             Console.WriteLine("from server: " + textMessage.Text);
 
             string messageType = message.NMSType;
-            ResponseDispatcher.getInstance().dispatch(messageType, textMessage.Text);
+            responseDispatcher.dispatch(messageType, textMessage.Text);
         }
     }
 }
