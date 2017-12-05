@@ -1,5 +1,12 @@
 package communication.broker;
 import communication.queue.receiver.FromClientRequestQueue;
+import resources.PropertyManager;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.apache.activemq.broker.BrokerService;
 import org.apache.log4j.Logger;
 
@@ -7,15 +14,16 @@ import org.apache.log4j.Logger;
 // Singleton
 public class MessageBroker {
 	
+	
 	private static MessageBroker messageBroker = null;	
 	private BrokerService broker = null;
 	static Logger log = Logger.getLogger(MessageBroker.class.getName());
 	private static String clientRequestQueueName = "ClientRequestQueue";
 
-	private MessageBroker() {
+	private MessageBroker(){
 		broker = new BrokerService();
 	}
-	
+
 	public static MessageBroker getInstance() {
 		if (messageBroker == null) {
 			messageBroker = new MessageBroker();
@@ -27,10 +35,10 @@ public class MessageBroker {
 	
 	public void startBroker() {
 		try {
-			broker.addConnector("tcp://localhost:61616");
+			broker.addConnector(PropertyManager.getProperty("broker_url"));
 			broker.start();
 			FromClientRequestQueue clientRequestQueue = new FromClientRequestQueue(clientRequestQueueName);
-			log.info("MessageBroker.startBroker(): tcp://localhost:61616");
+			log.info("MessageBroker.startBroker(): " + PropertyManager.getProperty("broker_url"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

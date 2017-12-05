@@ -11,62 +11,33 @@ namespace RoRClient.Model.HandleResponse
 {
     class ResponseDispatcher
     {
-        private static ResponseDispatcher responseDispatcher;
         private TopicReceiver topic;
-        private ResponseDispatcher()
+
+        public ResponseDispatcher()
         {
 
-        }
-
-        public static ResponseDispatcher getInstance()
-        {
-            if (responseDispatcher == null)
-            {
-                responseDispatcher = new ResponseDispatcher();
-            }
-            return responseDispatcher;
         }
 
         /// <summary>
         /// Aufgabe die Message zu "dispatchen" um zu entscheiden, was damit passieren soll, je nach MessageType
         /// </summary>
         /// <param name="message"></param>
-		internal void dispatch(string messageType, ITextMessage textMessage)
+		internal void dispatch(string messageType, String content)
         {
-           
-            Console.WriteLine("ResponseHandler macht was");
-            MessageInformation messageInformation= MessageDeserializer.getInstance().deserialize(textMessage.Text);
+            MessageInformation messageInformation = MessageDeserializer.getInstance().deserialize(content);
 
-            //initalen TopicReceiver erstellen zum test des EditorTopics
-            if (topic == null)
+            if(messageType == "CreateEditorSession")
             {
-                topic = new TopicReceiver(messageInformation.GetValueAsString("Topicname"));
+                // initalen TopicReceiver erstellen zum test des EditorTopics
+                if (topic == null)
+                {
+                    topic = new TopicReceiver(messageInformation.GetValueAsString("Topicname"));
+                }
+
+                // EditorSession erstellen 
+                    // Player erstellen
+                // EditorViewModel wechseln
             }
         }
-
-        /// <summary>
-        /// Hier wird entschieden was bei einem bestimmten RequestTyps des MessageTyps CREATE gemacht wird
-        /// </summary>
-        void resolveCreateResponses(RequestType requestType)
-        {
-
-        }
-
-        void resolveErrorResponses(RequestType requestType)
-        {
-
-        }
-        void resolveUpdateResponses(RequestType requestType)
-        {
-
-        }
-        void resolveReadResponses(RequestType requestType)
-        {
-
-        }
-
-
-
-
     }
 }

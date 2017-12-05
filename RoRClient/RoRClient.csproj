@@ -116,8 +116,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Helper\UIState.cs" />
     <Compile Include="ViewModel\Helper\ViewModelFactory.cs" />
-    <Compile Include="ViewModel\PlayerViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\StartViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="ViewModel\Editor\CanvasViewModel.cs" />
     <Compile Include="ViewModel\Helper\INotifyPropertyChangedExtended.cs" />
@@ -153,9 +155,12 @@
       <DependentUpon>EditorUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\Helper\ActionCommand.cs" />
-    <Compile Include="ViewModel\Helper\ViewModelBase.cs" />
+    <Compile Include="ViewModel\Helper\ViewModelBaseH.cs" />
     <Compile Include="View\Editor\AttributeSelectionUserControl.xaml.cs">
       <DependentUpon>AttributeSelectionUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StartView.xaml.cs">
+      <DependentUpon>StartView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -194,6 +199,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Editor\MapUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

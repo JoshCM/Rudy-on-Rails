@@ -34,18 +34,16 @@ public class QueueSender extends QueueBase {
 		}
 	}
 
-	public void sendMessage(String message) {
+	public void sendMessage(String messageType, String message) {
 
 		try {
 			TextMessage textMessage;
 			textMessage = session.createTextMessage(message);
-			//MessageType hinzugefuegt, damit der FromServerResponseReceiver auf der Client Seite weiﬂ, um welche Art Nachricht es sich handelt
-			textMessage.setJMSType(MessageType.CREATE.toString());
+			textMessage.setJMSType(messageType);
 			publisher.send(textMessage);
 		} catch (JMSException e) {
 			log.error("QueueSender.sendMessage(String message) : message : "+message);
 			e.printStackTrace();
 		}
-
 	}
 }
