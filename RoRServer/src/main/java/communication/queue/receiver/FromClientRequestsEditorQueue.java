@@ -7,13 +7,15 @@ import javax.jms.Message;
 import javax.jms.TextMessage;
 
 import HandleRequests.EditorRequestDispatcher;
+import models.editor.EditorSession;
 
 public class FromClientRequestsEditorQueue extends QueueReceiver {
 
 	private EditorRequestDispatcher editorRequestDispatcher;
 
-	public FromClientRequestsEditorQueue(String queueName) {
+	public FromClientRequestsEditorQueue(String queueName, EditorSession editorSession) {
 		super(queueName);
+		editorRequestDispatcher = new EditorRequestDispatcher(editorSession);
 	}
 	
 	@Override
@@ -26,13 +28,12 @@ public class FromClientRequestsEditorQueue extends QueueReceiver {
 
 			log.info("FromClientRequestsEditorQueue.onMessage(): ... Message received [" + new Date().toString() + "]: "
 					+ textMessage.getText());
+			
 			editorRequestDispatcher.dispatch(request, textMessage.getText());
 		} catch (JMSException e) {
 			log.error(
 					"FromClientRequestsEditorQueue.onMessage(Message message) : QueueSender konnte Nachricht nicht verschicken");
 			e.printStackTrace();
 		}
-		
-		
 	}
 }
