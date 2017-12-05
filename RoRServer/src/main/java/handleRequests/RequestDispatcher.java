@@ -84,25 +84,27 @@ public class RequestDispatcher {
 	/**
 	 * Neuer Player wird erstellt und allen angemeldeten Clients mitgeteilt
 	 * 
-	 * @param messageInfo
+	 * @param messageInformation
 	 */
-	private void handleCreateEditorSession(MessageInformation messageInfo) {
+	private void handleCreateEditorSession(MessageInformation messageInformation) {
 		EditorSession editorSession;
 		
-		MessageInformation responseInfo = new MessageInformation();
-		Player player = new Player(messageInfo.getValueAsString("Playername"));
+		MessageInformation responseInformation = new MessageInformation();
+		responseInformation.setClientid(messageInformation.getClientid());
+		Player player = new Player(messageInformation.getValueAsString("Playername"));
 
 		if (EditorSessionManager.getInstance().getEditorSession() == null) {
 			editorSession = EditorSessionManager.getInstance()
-					.createNewEditorSession(messageInfo.getValueAsString("Editorname"));
+					.createNewEditorSession(messageInformation.getValueAsString("Editorname"));
 			editorSession.addPlayer(player);
 			
-			responseInfo.putValue("Topicname", editorSession.getName());
-			responseInfo.putValue("Playername", player.getName());
+			responseInformation.putValue("Topicname", editorSession.getName());
+			responseInformation.putValue("Playername", player.getName());
 		} else {
 			editorSession = EditorSessionManager.getInstance().getEditorSession();
 			editorSession.addPlayer(player);
 			
+			responseInformation.putValue("Topicname", editorSession.getName());
 			List<JsonObject> players = new ArrayList<JsonObject>();
 			for(Player sessionPlayer : editorSession.getPlayers()) {
 				JsonObject json = new JsonObject();
@@ -111,12 +113,12 @@ public class RequestDispatcher {
 				players.add(json);
 			}
 			
-			responseInfo.putValue("Playerlist", players);
+			responseInformation.putValue("Playerlist", players);
 		}
 
 		log.info("Called handleCreateEditorSession");
 
-		sendMessage(responseInfo);
+		sendMessage(responseInformation);
 	}
 
 	private void handleREAD_GAMESESSIONS(MessageInformation messageInfo) {

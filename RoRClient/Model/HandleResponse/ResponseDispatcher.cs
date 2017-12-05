@@ -38,10 +38,9 @@ namespace RoRClient.Model.HandleResponse
             MessageInformation messageInformation= MessageDeserializer.getInstance().deserialize(textMessage.Text);
 
             //initalen TopicReceiver erstellen zum test des EditorTopics
-            if(messageType == "")
             if (topic == null)
             {
-                topic = new TopicReceiver(messageInformation.GetAttribute("Topicname"));
+                topic = new TopicReceiver(messageInformation.GetValueAsString("Topicname"));
             }
         }
 

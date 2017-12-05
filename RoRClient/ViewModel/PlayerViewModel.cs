@@ -40,7 +40,7 @@ namespace RoRClient.ViewModel
         //Beispiel wie eine Message versendet werden kann
 		private void SendCreateEditorSessionCommand()
 		{
-            MessageInformation messageInformation = new MessageInformation(new Dictionary<string, string>() { { "Playername", "Heinz" }, {"Editorname", "Editor1"} });
+            MessageInformation messageInformation = new MessageInformation(new Dictionary<string, object>() { { "Playername", "Heinz" }, {"Editorname", "Editor1"} });
             IMessage message = MessageBuilder.build("CreateEditorSession", messageInformation) ;
 			ClientModel.getInstance().getFromClientRequestSender().SendMessage(message);
 		}
