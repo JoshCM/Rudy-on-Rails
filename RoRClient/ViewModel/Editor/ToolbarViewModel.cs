@@ -80,6 +80,7 @@ namespace RoRClient.ViewModel.Editor
                 if (selectedTool != value)
                 {
                     selectedTool = value;
+                    Console.WriteLine(selectedTool.ImagePath);
                     OnPropertyChanged("SelectedTool");
                 }
             }
