@@ -26,7 +26,7 @@ public class DummyGame {
 	}
 	
 	public void sendAction() {
-		sessionTopicSender.sendMessage("Connected to Topic");
+		sessionTopicSender.sendMessage("Message", "Connected to Topic");
 		log.info("DummyGame.sendAction()");
 	}
 

@@ -7,6 +7,8 @@ import models.game.Rail;
 import communication.session.SessionTopicSender;
 import java.util.ArrayList;
 
+import HandleRequests.RequestSerializer;
+
 //Erbt von BaseModel, die die ID generiert
 public class EditorSession {
 
@@ -43,6 +45,22 @@ public class EditorSession {
     }
 
 	public void SendRailCreatedMessage(Rail rail) {
-		// ToDo: Hier soll eine Nachricht an den Topic gesendet werden
+		MessageInformation responseInfo = new MessageInformation();
+		responseInfo.putValue("railId", rail.getId());
+		responseInfo.putValue("railSectionId", rail.getSection().getId());
+		responseInfo.putValue("railSectionPositionNode1", rail.getSection().getNode1().ordinal());
+		responseInfo.putValue("railSectionPositionNode2", rail.getSection().getNode2().ordinal());
+		responseInfo.putValue("squareId", rail.getSquare().getId());
+		
+		RequestSerializer requestSerializer = RequestSerializer.getInstance();
+		String response = requestSerializer.serialize(responseInfo);
+		
+		topicSender.sendMessage("RailCreated", response);
+	}
+	
+	public void SendMessage(MessageInformation messageInfo) {
+		RequestSerializer requestSerializer = RequestSerializer.getInstance();
+		String response = requestSerializer.serialize(messageInfo);
+		topicSender.sendMessage("RailCreated", response);
 	}
 }

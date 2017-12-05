@@ -6,6 +6,8 @@ import models.ModelBase;
  * Klasse fuer ein Schienenstueck mit "Eingang" und "Ausgang"
  */
 public class RailSection extends ModelBase {
+	private Rail rail;
+	
 	// Geraden
 	public static final RailSection STRAIGHT_VERTICAL = new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH);
 	public static final RailSection STRAIGHT_HORIZONTAL = new RailSection(RailSectionPosition.EAST, RailSectionPosition.WEST);
@@ -19,8 +21,8 @@ public class RailSection extends ModelBase {
 	private RailSectionPosition node1;
 	private RailSectionPosition node2;
 	
-	public RailSection(){
-		
+	public RailSection(Rail rail) {
+		this.rail = rail;
 	}
 	
 	public RailSection(RailSectionPosition node1, RailSectionPosition node2) {
@@ -53,6 +55,15 @@ public class RailSection extends ModelBase {
 		return true;
 	}
 	
+	public Rail getRail() {
+		return rail;
+	}
 	
-
+	public RailSectionPosition getNode1() {
+		return node1;
+	}
+	
+	public RailSectionPosition getNode2() {
+		return node2;
+	}
 }

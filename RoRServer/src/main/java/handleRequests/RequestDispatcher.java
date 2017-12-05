@@ -81,11 +81,11 @@ public class RequestDispatcher {
 	 * @param messageInfo
 	 */
 	private void handleCreateEditorSession(MessageInformation messageInfo) {
-		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(messageInfo.getAttributes().get("Editorname"));
-		Player player = new Player(messageInfo.getAttributes().get("Playername"));
+		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(messageInfo.getValueAsString("Editorname"));
+		Player player = new Player(messageInfo.getValueAsString("Playername"));
 		editorSession.addPlayer(player);
 		editorSession.getTopicSender()
-				.sendMessage("Neuer Player wurde hinzugefügt " + messageInfo.getAttributes().get("Playername"));
+				.sendMessage("EditorSessionCreated", messageInfo.getValueAsString("Playername"));
 
 		log.info("Called handleCreateEditorSession");
 	}
