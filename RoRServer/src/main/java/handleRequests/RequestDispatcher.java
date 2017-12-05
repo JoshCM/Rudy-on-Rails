@@ -8,8 +8,12 @@ import models.session.EditorSessionManager;
 
 import org.apache.log4j.Logger;
 
+import com.google.gson.JsonObject;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RequestDispatcher {
 	private boolean isInitial = false;
@@ -64,14 +68,13 @@ public class RequestDispatcher {
 		// createRequestToFunctionMap(request,requestInformation);
 
 		callMethodFromString("handle" + request, messageInformation);
+	}
 
+	private void sendMessage(MessageInformation messageInformation) {
+		RequestSerializer requestSerializer = RequestSerializer.getInstance();
 		String response = requestSerializer.serialize(messageInformation);
-		if(isInitial){
-			FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(messageInformation.getClientid());
-			fromServerResponseQueue.sendMessage(response);
-		}else {
-			EditorSessionManager.getInstance().getEditorSession().getTopicSender().sendMessage("CreateEditorSession", response);
-		}
+		FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(messageInformation.getClientid());
+		fromServerResponseQueue.sendMessage(response);
 	}
 
 	private void handleCREATE_GAMESESSION(MessageInformation messageInfo) {
@@ -85,21 +88,35 @@ public class RequestDispatcher {
 	 */
 	private void handleCreateEditorSession(MessageInformation messageInfo) {
 		EditorSession editorSession;
+		
+		MessageInformation responseInfo = new MessageInformation();
 		Player player = new Player(messageInfo.getValueAsString("Playername"));
 
-		if(EditorSessionManager.getInstance().getEditorSession() == null){
-			editorSession = EditorSessionManager.getInstance().createNewEditorSession(messageInfo.getValueAsString("Editorname"));
+		if (EditorSessionManager.getInstance().getEditorSession() == null) {
+			editorSession = EditorSessionManager.getInstance()
+					.createNewEditorSession(messageInfo.getValueAsString("Editorname"));
 			editorSession.addPlayer(player);
-			messageInfo.putValue("Topicname", editorSession.getName());
-			isInitial = true;
-		}else{
+			
+			responseInfo.putValue("Topicname", editorSession.getName());
+			responseInfo.putValue("Playername", player.getName());
+		} else {
 			editorSession = EditorSessionManager.getInstance().getEditorSession();
 			editorSession.addPlayer(player);
-			messageInfo.putValue("Playername", player.getName());
-			isInitial = false;
+			
+			List<JsonObject> players = new ArrayList<JsonObject>();
+			for(Player sessionPlayer : editorSession.getPlayers()) {
+				JsonObject json = new JsonObject();
+				json.addProperty("Id", sessionPlayer.getId().toString());
+				json.addProperty("Playername", sessionPlayer.getName());
+				players.add(json);
+			}
+			
+			responseInfo.putValue("Playerlist", players);
 		}
 
 		log.info("Called handleCreateEditorSession");
+
+		sendMessage(responseInfo);
 	}
 
 	private void handleREAD_GAMESESSIONS(MessageInformation messageInfo) {

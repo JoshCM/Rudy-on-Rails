@@ -39,6 +39,11 @@ public class EditorSession {
     public Map getMap() {
     	return map;
     }
+    
+    // ToDo: Unmodifiable List zurückgeben
+    public ArrayList<Player> getPlayers(){
+    	return players;
+    }
 
     public SessionTopicSender getTopicSender() {
         return topicSender;
