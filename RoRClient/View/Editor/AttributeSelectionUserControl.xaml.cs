@@ -1,5 +1,4 @@
-﻿using RoRClient.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,13 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RoRClient.View
+namespace RoRClient.View.Editor
 {
-    public partial class MapView : Window
+    /// <summary>
+    /// Interaktionslogik für AttributeSelectionUserControl.xaml
+    /// </summary>
+    public partial class AttributeSelectionUserControl : UserControl
     {
-        public MapView()
+        public AttributeSelectionUserControl()
         {
             InitializeComponent();
         }

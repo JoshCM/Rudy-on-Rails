@@ -111,25 +111,51 @@
     <Compile Include="Model\HandleResponse\ResponseDispatcher.cs" />
     <Compile Include="Model\Models\IModel.cs" />
     <Compile Include="Model\Models\ModelBase.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\Helper\ViewModelFactory.cs" />
     <Compile Include="ViewModel\PlayerViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="ViewModel\CanvasViewModel.cs" />
-    <Compile Include="ViewModel\Helper\ActionCommand.cs" />
+    <Compile Include="ViewModel\Editor\CanvasViewModel.cs" />
     <Compile Include="ViewModel\Helper\INotifyPropertyChangedExtended.cs" />
     <Compile Include="ViewModel\Helper\PropertyChangedExtendedEventArgs.cs" />
-    <Compile Include="ViewModel\RailViewModel.cs" />
+    <Compile Include="ViewModel\Editor\RailViewModel.cs" />
     <Compile Include="ViewModel\ViewConstants.cs" />
-    <Compile Include="ViewModel\MapViewModel.cs" />
+    <Compile Include="ViewModel\Editor\MapViewModel.cs" />
     <Compile Include="View\CanvasUserControl.cs" />
-    <Compile Include="View\RailUserControl.xaml.cs">
+    <Compile Include="View\Editor\RailUserControl.xaml.cs">
       <DependentUpon>RailUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\SquareUserControl.xaml.cs">
+    <Compile Include="View\Editor\SquareUserControl.xaml.cs">
       <DependentUpon>SquareUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MapView.xaml.cs">
-      <DependentUpon>MapView.xaml</DependentUpon>
+    <Compile Include="View\Editor\MapUserControl.xaml.cs">
+      <DependentUpon>MapUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EditorModels\Werkzeug.cs" />
+    <Compile Include="Model\Models\ToolItem.cs" />
+    <Compile Include="ViewModel\EditorViewModel.cs" />
+    <Compile Include="ViewModel\Editor\ToolbarViewModel.cs" />
+    <Compile Include="ViewModel\Helper\DelegateCommand.cs" />
+    <Compile Include="ViewModel\Helper\EditorCommands.cs" />
+    <Compile Include="ViewModel\Helper\Exit.cs" />
+    <Compile Include="ViewModel\Helper\ObservableObjectBaseClass.cs" />
+    <Compile Include="View\Editor\ToolbarUserControl.xaml.cs">
+      <DependentUpon>ToolbarUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Editor\TopMenuUserControl.xaml.cs">
+      <DependentUpon>TopMenuUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditorUserControl.xaml.cs">
+      <DependentUpon>EditorUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Helper\ActionCommand.cs" />
+    <Compile Include="ViewModel\Helper\ViewModelBase.cs" />
+    <Compile Include="View\Editor\AttributeSelectionUserControl.xaml.cs">
+      <DependentUpon>AttributeSelectionUserControl.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -143,15 +169,31 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\RailUserControl.xaml">
+    <Page Include="View\Editor\ToolbarUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SquareUserControl.xaml">
+    <Page Include="View\Editor\TopMenuUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MapView.xaml">
+    <Page Include="View\EditorUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Editor\AttributeSelectionUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Editor\RailUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Editor\SquareUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Editor\MapUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -173,11 +215,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -185,6 +222,7 @@
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -200,12 +238,18 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Ressourcen\Images\railcurve_ne.png" />
-    <Resource Include="Ressourcen\Images\railcurve_nw.png" />
-    <Resource Include="Ressourcen\Images\railcurve_se.png" />
-    <Resource Include="Ressourcen\Images\railcurve_sw.png" />
-    <Resource Include="Ressourcen\Images\rail_ew.png" />
-    <Resource Include="Ressourcen\Images\rail_ns.png" />
+    <Resource Include="Resources\Images\railcurve_ne.png" />
+    <Resource Include="Resources\Images\railcurve_nw.png" />
+    <Resource Include="Resources\Images\railcurve_se.png" />
+    <Resource Include="Resources\Images\railcurve_sw.png" />
+    <Resource Include="Resources\Images\rail_ew.png" />
+    <Resource Include="Resources\Images\rail_ns.png" />
+    <Resource Include="Resources\Images\Tools\railcurve_sw.png" />
+    <Resource Include="Resources\Images\Tools\rail_ew.png" />
+    <Resource Include="Resources\Images\Tools\rail_ns.png" />
+    <Resource Include="Resources\Images\Tools\railcurve_ne.png" />
+    <Resource Include="Resources\Images\Tools\railcurve_nw.png" />
+    <Resource Include="Resources\Images\Tools\railcurve_se.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

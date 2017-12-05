@@ -7,37 +7,36 @@ using System.Windows.Input;
 
 namespace RoRClient.ViewModel.Helper
 {
-    /// <summary>
-    /// Klasse zum nutzen von Commands (z.B. Buttons)
-    /// </summary>
     class ActionCommand : ICommand
     {
-        private readonly Action<object> _exec;
-        private readonly Predicate<object> _canExec;
+        private readonly Action<object> exec;
+        private readonly Predicate<object> canExec;
 
         public ActionCommand(Action<object> exec) : this(exec, null) { }
         public ActionCommand(Action<object> exec, Predicate<object> canExec)
         {
             if (exec == null)
             {
-                throw new ArgumentException("execute");
+                throw new ArgumentNullException("execute");
             }
-            _exec = exec;
-            _canExec = canExec;
+            this.exec = exec;
+            this.canExec = canExec;
         }
 
         public bool CanExecute(object param)
         {
-            return _canExec == null ? true : _canExec(param);
+            return canExec == null ? true : canExec(param);
         }
+
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
+
         public void Execute(object param)
         {
-            _exec(param);
+            exec(param);
         }
     }
 }

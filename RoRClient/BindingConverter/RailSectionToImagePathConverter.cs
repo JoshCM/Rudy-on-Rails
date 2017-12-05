@@ -16,7 +16,7 @@ namespace RoRClient.BindingConverter
     /// </summary>
     public class RailSectionToImagePathConverter : IValueConverter
     {
-        private const string IMAGE_FOLDER_PATH = "..\\..\\Ressourcen\\Images\\";
+        private const string IMAGE_FOLDER_PATH = "..\\..\\Resources\\Images\\";
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value != null)

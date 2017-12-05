@@ -23,7 +23,6 @@ namespace RoRClient.Model.Connections
 
         public ISession Session
         {
-
             get
             {
                 return session;
