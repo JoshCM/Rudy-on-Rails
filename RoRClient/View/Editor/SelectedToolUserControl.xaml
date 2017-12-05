@@ -3,9 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:RoRClient.View.Editor"
+             xmlns:vm="clr-namespace:RoRClient.ViewModel.Editor"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300">
+    <UserControl.DataContext>
+        <vm:ToolbarViewModel/>
+    </UserControl.DataContext>
     <Grid Background="Gray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -25,13 +28,14 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
 
-        <Rectangle Grid.ColumnSpan="3" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Stroke="Black">
+        <Rectangle Grid.ColumnSpan="3" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Stroke="Black" DataContext="{Binding SelectedTool}">
             <Rectangle.Fill>
-                <ImageBrush ImageSource="/RoRClient;component/Resources/Images/rail_ew.png"/>
+                <ImageBrush ImageSource="{Binding ImagePath}"/>
             </Rectangle.Fill>
         </Rectangle>
+
         <Button Content="Drehen" Grid.Column="5" Grid.Row="1"/>
-        <Button Content="Auswahl entf" Grid.Column="5" Grid.Row="3"/>
+        <Label Content="{Binding ID}" Grid.Column="5" Grid.Row="3" DataContext="{Binding SelectedTool}"/>
 
     </Grid>
 

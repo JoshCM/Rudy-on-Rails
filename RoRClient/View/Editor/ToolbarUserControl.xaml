@@ -18,7 +18,7 @@
     </UserControl.DataContext>
 
 
-    <ListView ItemsSource="{Binding ToolItems}" x:Name="ToolbarListView" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="auto">
+    <ListView ItemsSource="{Binding ToolItems}" SelectedItem="{Binding SelectedTool}" x:Name="ToolbarListView" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="auto">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <UniformGrid Columns="2" Rows="5" Margin="15"/>
