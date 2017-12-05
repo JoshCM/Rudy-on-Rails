@@ -1,4 +1,4 @@
-﻿using RoRClient.Model.Models;
+﻿using RoRClient.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,19 +11,14 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
-namespace RoRClient
+namespace RoRClient.View.Editor
 {
-    /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public partial class MapUserControl : UserControl
     {
-        public MainWindow()
-        {           
+        public MapUserControl()
+        {
             InitializeComponent();
         }
     }

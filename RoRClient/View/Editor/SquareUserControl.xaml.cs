@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace RoRClient.View
+namespace RoRClient.View.Editor
 {
     public partial class SquareUserControl : CanvasUserControl
     {

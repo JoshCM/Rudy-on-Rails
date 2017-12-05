@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="RoRClient.View.EditorUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:editor="clr-namespace:RoRClient.View.Editor"
+             xmlns:view="clr-namespace:RoRClient.View"
+             mc:Ignorable="d"
+             HorizontalAlignment="Stretch"
+	VerticalAlignment="Stretch"
+	HorizontalContentAlignment="Stretch"
+	VerticalContentAlignment="Stretch"
+    Height="1080"
+    Width="1920">
+    <Grid Name="ContentGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="9*" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="0" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0"
+          Grid.Column="0"
+              Grid.ColumnSpan="3"
+          Background="Red">
+            <!-- Menü oben -->
+            <editor:TopMenuUserControl />
+        </Grid>
+
+        <Grid Grid.Row="1"
+          Grid.Column="1"
+              Grid.ColumnSpan="2"
+          Background="LightSeaGreen">
+            <!-- Darstellung der Map -->
+            <editor:MapUserControl />
+        </Grid>
+
+        <Grid Grid.Row="1"
+          Grid.Column="0"
+              Grid.RowSpan="2"
+          Background="Violet">
+            <!-- Werkzeugleiste -->
+            <editor:ToolbarUserControl />
+        </Grid>
+
+        <Grid Grid.Row="2"
+          Grid.Column="1"
+          Grid.ColumnSpan="2"
+          Background="Green">
+            <!-- Statusfenster oder so was -->
+            <editor:AttributeSelectionUserControl />
+        </Grid>
+    </Grid>
+</UserControl>

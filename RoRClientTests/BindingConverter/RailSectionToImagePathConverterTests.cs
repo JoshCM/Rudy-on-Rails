@@ -15,7 +15,7 @@ namespace RoRClientTests
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
             RailSection section = new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH);
             string result = (string)converter.Convert(section, typeof(string), null, null);
-            Assert.AreEqual("..\\..\\Ressourcen\\Images\\rail_ns.png", result);
+            Assert.AreEqual("..\\..\\Resources\\Images\\rail_ns.png", result);
         }
 
         [TestMethod]
@@ -24,7 +24,7 @@ namespace RoRClientTests
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
             RailSection section = new RailSection(RailSectionPosition.SOUTH, RailSectionPosition.NORTH);
             string result = (string)converter.Convert(section, typeof(string), null, null);
-            Assert.AreEqual("..\\..\\Ressourcen\\Images\\rail_ns.png", result);
+            Assert.AreEqual("..\\..\\Resources\\Images\\rail_ns.png", result);
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace RoRClientTests
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
             RailSection section = new RailSection(RailSectionPosition.NORTH, RailSectionPosition.EAST);
             string result = (string)converter.Convert(section, typeof(string), null, null);
-            Assert.AreEqual("..\\..\\Ressourcen\\Images\\railcurve_ne.png", result);
+            Assert.AreEqual("..\\..\\Resources\\Images\\railcurve_ne.png", result);
         }
 
         [TestMethod]
@@ -42,7 +42,7 @@ namespace RoRClientTests
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
             RailSection section = new RailSection(RailSectionPosition.SOUTH, RailSectionPosition.EAST);
             string result = (string)converter.Convert(section, typeof(string), null, null);
-            Assert.AreEqual("..\\..\\Ressourcen\\Images\\railcurve_se.png", result);
+            Assert.AreEqual("..\\..\\Resources\\Images\\railcurve_se.png", result);
         }
 
         [TestMethod]
@@ -51,7 +51,7 @@ namespace RoRClientTests
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
             RailSection section = new RailSection(RailSectionPosition.SOUTH, RailSectionPosition.WEST);
             string result = (string)converter.Convert(section, typeof(string), null, null);
-            Assert.AreEqual("..\\..\\Ressourcen\\Images\\railcurve_sw.png", result);
+            Assert.AreEqual("..\\..\\Resources\\Images\\railcurve_sw.png", result);
         }
 
         [TestMethod]
@@ -60,7 +60,7 @@ namespace RoRClientTests
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
             RailSection section = new RailSection(RailSectionPosition.NORTH, RailSectionPosition.WEST);
             string result = (string)converter.Convert(section, typeof(string), null, null);
-            Assert.AreEqual("..\\..\\Ressourcen\\Images\\railcurve_nw.png", result);
+            Assert.AreEqual("..\\..\\Resources\\Images\\railcurve_nw.png", result);
         }
 
         [TestMethod]
@@ -69,7 +69,7 @@ namespace RoRClientTests
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
             RailSection section = new RailSection(RailSectionPosition.NORTH, RailSectionPosition.NORTH);
             string result = (string)converter.Convert(section, typeof(string), null, null);
-            Assert.AreEqual("..\\..\\Ressourcen\\Images\\dummy.png", result);
+            Assert.AreEqual("..\\..\\Resources\\Images\\dummy.png", result);
         }
 
         [TestMethod]
@@ -77,7 +77,7 @@ namespace RoRClientTests
         {
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
             string result = (string)converter.Convert(null, typeof(string), null, null);
-            Assert.AreEqual("..\\..\\Ressourcen\\Images\\dummy.png", result);
+            Assert.AreEqual("..\\..\\Resources\\Images\\dummy.png", result);
         }
 
     }

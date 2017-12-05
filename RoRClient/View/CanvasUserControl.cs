@@ -1,4 +1,5 @@
-﻿using RoRClient.ViewModel;
+﻿using RoRClient.View.Editor;
+using RoRClient.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
