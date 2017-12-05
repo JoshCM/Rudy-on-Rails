@@ -4,17 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:vm="clr-namespace:RoRClient.ViewModel"
+        xmlns:v ="clr-namespace:RoRClient.View"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-	<Window.DataContext>
-		<vm:PlayerViewModel/>
-	</Window.DataContext>
-    <Grid>
-        <Button x:Name="button" Command="{Binding CreateEditorSessionCommand}" Content="Create Player" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
-        <Label x:Name="label" Content="hier sollte die client-id kommen" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="177">
-            <Label.Background>
-                <ImageBrush/>
-            </Label.Background>
-        </Label>
-    </Grid>
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate x:Name="EditorTemplate" DataType="{x:Type vm:EditorViewModel}">
+            <v:EditorUserControl/>
+        </DataTemplate>
+        <DataTemplate x:Name="StartTemplate" DataType="{x:Type vm:StartViewModel}">
+            <v:StartView/>
+        </DataTemplate>
+    </Window.Resources>
+
+    
+    <DockPanel>
+        <!--<Button DockPanel.Dock="Top" x:Name="button2" Content="Go to Editor View" Click="go_to_Editor"/>-->
+        <ContentControl Content="{Binding CurrentViewModel}"/>
+    </DockPanel>
+
 </Window>

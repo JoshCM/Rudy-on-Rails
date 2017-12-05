@@ -44,19 +44,5 @@ namespace RoRClient.ViewModel
             IMessage message = MessageBuilder.build("CreateEditorSession", messageInformation) ;
 			ClientModel.getInstance().getFromClientRequestSender().SendMessage(message);
 		}
-
-		private String playerLabel;
-		public String PlayerLabel
-		{
-			get { return playerLabel; }
-			set
-			{
-				if (playerLabel != value)
-				{
-					playerLabel = value;
-					OnPropertyChanged("PlayerLabel");
-				}
-			}
-		}
 	}
 }
