@@ -70,11 +70,11 @@ public class RequestDispatcher {
 		callMethodFromString("handle" + request, messageInformation);
 	}
 
-	private void sendMessage(MessageInformation messageInformation) {
+	private void sendMessage(String messageType, MessageInformation messageInformation) {
 		RequestSerializer requestSerializer = RequestSerializer.getInstance();
 		String response = requestSerializer.serialize(messageInformation);
 		FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(messageInformation.getClientid());
-		fromServerResponseQueue.sendMessage(response);
+		fromServerResponseQueue.sendMessage(messageType, response);
 	}
 
 	private void handleCREATE_GAMESESSION(MessageInformation messageInfo) {
@@ -100,6 +100,8 @@ public class RequestDispatcher {
 			
 			responseInformation.putValue("Topicname", editorSession.getName());
 			responseInformation.putValue("Playername", player.getName());
+			
+			sendMessage("CreateEditorSession", responseInformation);
 		} else {
 			editorSession = EditorSessionManager.getInstance().getEditorSession();
 			editorSession.addPlayer(player);
@@ -114,11 +116,11 @@ public class RequestDispatcher {
 			}
 			
 			responseInformation.putValue("Playerlist", players);
+			
+			sendMessage("JoinEditorSession", responseInformation);
 		}
 
 		log.info("Called handleCreateEditorSession");
-
-		sendMessage(responseInformation);
 	}
 
 	private void handleREAD_GAMESESSIONS(MessageInformation messageInfo) {

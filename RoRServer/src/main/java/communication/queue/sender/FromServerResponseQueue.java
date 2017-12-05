@@ -14,9 +14,4 @@ public class FromServerResponseQueue extends QueueSender{
     protected void createQueue() {
     	super.createQueue();
     }
-
-    @Override
-    public void sendMessage(String message) {
-    	super.sendMessage(message);
-    }
 }
