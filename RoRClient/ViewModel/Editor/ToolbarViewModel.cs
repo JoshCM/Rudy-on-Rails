@@ -13,9 +13,8 @@ using System.Reflection;
 
 namespace RoRClient.ViewModel.Editor
 {
-    class ToolbarViewModel : ViewModelBase
+    public class ToolbarViewModel : ViewModelBase
     {
-        private string previewImagePath;
         private const string IMAGE_FOLDER_PATH = "..\\..\\Resources\\Images\\Tools\\";
 
         public ToolbarViewModel()
@@ -57,17 +56,22 @@ namespace RoRClient.ViewModel.Editor
             }
         }
 
-        public string PreviewImagePath
+        private ToolItem selectedTool;
+
+        public ToolItem SelectedTool
         {
-            get { return previewImagePath; }
+            get { return selectedTool; }
             set
             {
-                if (previewImagePath != value)
+                if (selectedTool != value)
                 {
-                    previewImagePath = value;
-                    OnPropertyChanged("PreviewImagePath");
+                    selectedTool = value;
+                    Console.WriteLine(selectedTool);
+                    OnPropertyChanged("SelectedTool");
                 }
             }
         }
+
+
     }
 }

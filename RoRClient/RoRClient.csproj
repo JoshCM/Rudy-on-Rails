@@ -101,8 +101,8 @@
     </ApplicationDefinition>
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
-    <Compile Include="Model\Connections\FromClientRequestSender.cs" />
     <Compile Include="Model\Connections\FromServerResponseReceiver.cs" />
+    <Compile Include="Model\Connections\QueueSender.cs" />
     <Compile Include="Model\DataTransferObject\MessageBuilder.cs" />
     <Compile Include="Model\DataTransferObject\MessageDeserializer.cs" />
     <Compile Include="Model\DataTransferObject\MessageInformation.cs" />
@@ -132,6 +132,9 @@
     <Compile Include="View\CanvasUserControl.cs" />
     <Compile Include="View\Editor\RailUserControl.xaml.cs">
       <DependentUpon>RailUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Editor\SelectedToolUserControl.xaml.cs">
+      <DependentUpon>SelectedToolUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Editor\SquareUserControl.xaml.cs">
       <DependentUpon>SquareUserControl.xaml</DependentUpon>
@@ -176,6 +179,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Editor\SelectedToolUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Editor\ToolbarUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

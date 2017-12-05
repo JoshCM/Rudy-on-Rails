@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-    class ToolItem
+    public class ToolItem
     {
         private string id;
         private string imagePath;

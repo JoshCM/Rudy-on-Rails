@@ -31,20 +31,15 @@ namespace RoRClient.Model.HandleResponse
 
             if(messageType == "CreateEditorSession")
             {
-                // initalen TopicReceiver erstellen zum test des EditorTopics
-                if (topic == null)
-                {
-                    topic = new TopicReceiver(messageInformation.GetValueAsString("Topicname"));
-                }
+                EditorSession editorSession = EditorSession.GetInstance();
+                editorSession.Name = messageInformation.GetValueAsString("Editorname");
+                editorSession.Init(messageInformation.GetValueAsString("Topicname"));
 
-                EditorSession.GetInstance().Name = messageInformation.GetValueAsString("Editorname");
-                Player player = new Player(Guid.Parse(messageInformation.GetValueAsString("Playerid")), messageInformation.GetValueAsString("Playername"));
-                EditorSession.GetInstance().AddPlayer(player);
+                Guid playerId = Guid.Parse(messageInformation.GetValueAsString("Playerid"));
+                string playerName = messageInformation.GetValueAsString("Playername");
+                Player player = new Player(playerId, playerName);
+                editorSession.AddPlayer(player);
                 clientModel.Conncected = true;
-
-                // EditorSession erstellen 
-                    // Player erstellen
-                // EditorViewModel wechseln
             }
         }
     }

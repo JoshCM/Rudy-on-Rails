@@ -14,12 +14,18 @@ namespace RoRClient.Model.Models.Editor
         private Map map;
         private ObservableCollection<Player> players = new ObservableCollection<Player>();
         private static EditorSession editorSession;
-        private QueueSender sender = new QueueSender(GetInstance().Name);
+        private QueueSender sender;
+        private TopicReceiver topicReceiver;
 
         private EditorSession()
         {
             
-            
+        }
+
+        public void Init(string topicName)
+        {
+            sender = new QueueSender(topicName);
+            topicReceiver = new TopicReceiver(topicName);
         }
 
         public static EditorSession GetInstance()
