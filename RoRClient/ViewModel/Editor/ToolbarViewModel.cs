@@ -69,5 +69,18 @@ namespace RoRClient.ViewModel.Editor
                 }
             }
         }
+
+        private ToolItem selectedTool;
+
+        public ToolItem SelectedTool
+        {
+            get { return selectedTool; }
+            set
+            {
+                selectedTool = value;
+                Console.WriteLine(selectedTool);
+                OnPropertyChanged();
+            }
+        }
     }
 }

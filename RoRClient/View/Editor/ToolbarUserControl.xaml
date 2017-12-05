@@ -17,18 +17,22 @@
         <vm:ToolbarViewModel/>
     </UserControl.DataContext>
 
-    <ItemsControl ItemsSource="{Binding ToolItems}" Margin="20">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <Button Height="100" Width="100" Margin="10">
-                    <Image Source="{Binding ImagePath}"/>
-                </Button>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
+
+    <ListView ItemsSource="{Binding ToolItems}" x:Name="ToolbarListView" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="auto">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <WrapPanel/>
+                <UniformGrid Columns="2" Rows="5" Margin="15"/>
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
-    </ItemsControl>
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <StackPanel>
+                    <Image Source="{Binding ImagePath}" Width="80" Height="80"/>
+                    <Label Content="{Binding ID}"></Label>
+                </StackPanel>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+
+
 </UserControl>
