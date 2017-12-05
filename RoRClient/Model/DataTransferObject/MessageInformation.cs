@@ -18,5 +18,13 @@ namespace RoRClient.Model.DataTransferObject
             clientId = ClientModel.getInstance().getClientId().ToString();
             this.attributes = attributes;
         }
+        public String GetAttribute(String key)
+        {
+            if (attributes.ContainsKey(key))
+            {
+                return attributes[key];
+            }
+            return null;
+        }
     }
 }

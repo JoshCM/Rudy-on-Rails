@@ -16,7 +16,7 @@ public class EditorSession {
 
     public EditorSession(String name) {
         this.name = name;
-        this.topicSender = new SessionTopicSender("BaseModelID");
+        this.topicSender = new SessionTopicSender(name);
         map = new Map();
     }
 

@@ -13,6 +13,7 @@ namespace RoRClient.Model.Connections
     class FromServerResponseReceiver : QueueBase
     {
         private IMessageConsumer messageConsumer;
+        private TopicReceiver topic;
 
         public FromServerResponseReceiver(string queueName) : base(queueName)
         {
@@ -36,6 +37,7 @@ namespace RoRClient.Model.Connections
             MessageType messageType = findMessageType(messageTypeString);
             ITextMessage textMessage = message as ITextMessage;
             ResponseDispatcher.getInstance().dispatch(messageType,textMessage);
+            
         }
 
         /// <summary>

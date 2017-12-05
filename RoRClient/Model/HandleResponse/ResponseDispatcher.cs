@@ -1,4 +1,5 @@
 ﻿using Apache.NMS;
+using RoRClient.Model.Connections;
 using RoRClient.Model.DataTransferObject;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace RoRClient.Model.HandleResponse
     class ResponseDispatcher
     {
         private static ResponseDispatcher responseDispatcher;
+        private TopicReceiver topic;
         private ResponseDispatcher()
         {
 
@@ -34,6 +36,12 @@ namespace RoRClient.Model.HandleResponse
            
             Console.WriteLine("ResponseHandler macht was");
             MessageInformation messageInformation= MessageDeserializer.getInstance().deserialize(textMessage.Text);
+
+            //initalen TopicReceiver erstellen zum test des EditorTopics
+            if (topic == null)
+            {
+                topic = new TopicReceiver(messageInformation.GetAttribute("Topicname"));
+            }
 
             switch (messageType)
             {

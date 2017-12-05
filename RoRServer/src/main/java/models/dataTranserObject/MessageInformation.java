@@ -33,7 +33,7 @@ public class MessageInformation {
         this.clientId = clientId;
     }
 
-    public void setAttributes(Map<String, String> attributes) {
-        this.attributes = attributes;
+    public void setAttributes(String key, String value) {
+        this.attributes.put(key, value);
     }
 }
