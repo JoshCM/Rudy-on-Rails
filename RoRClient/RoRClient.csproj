@@ -109,8 +109,10 @@
     <Compile Include="Model\DataTransferObject\MessageType.cs" />
     <Compile Include="Model\DataTransferObject\RequestType.cs" />
     <Compile Include="Model\HandleResponse\ResponseDispatcher.cs" />
+    <Compile Include="Model\Models\Editor\EditorSession.cs" />
     <Compile Include="Model\Models\IModel.cs" />
     <Compile Include="Model\Models\ModelBase.cs" />
+    <Compile Include="Model\Models\Player.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

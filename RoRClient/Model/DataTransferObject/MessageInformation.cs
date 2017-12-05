@@ -15,10 +15,15 @@ namespace RoRClient.Model.DataTransferObject
         public readonly String clientId;
         public Dictionary<string, Object> attributes;
 
-        public MessageInformation(Dictionary<string, Object> attributes)
+        public MessageInformation()
         {
             clientId = ClientConnection.GetInstance().ClientId.ToString();
-            this.attributes = attributes;
+            attributes = new Dictionary<string, object>();
+        }
+
+        public void PutValue(string key, object value)
+        {
+            attributes.Add(key, value);
         }
         
         public String GetValueAsString(string key)

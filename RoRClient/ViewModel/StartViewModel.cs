@@ -4,6 +4,7 @@ using RoRClient.Model.Models;
 using RoRClient.ViewModel.Helper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ using System.Windows.Input;
 
 namespace RoRClient.ViewModel
 {
-   class StartViewModel:ViewModelBase
+    class StartViewModel : ViewModelBase
     {
         public UIState uiState;
         private ClientModel clientModel;
@@ -20,6 +21,8 @@ namespace RoRClient.ViewModel
         {
             clientModel = new ClientModel();
             this.uiState = uiState;
+
+            clientModel.PropertyChanged += OnClientModelChanged;
         }
 
         private ICommand start2EditorCmd;
@@ -27,7 +30,7 @@ namespace RoRClient.ViewModel
         {
             get
             {
-                if(start2EditorCmd == null)
+                if (start2EditorCmd == null)
                 {
                     start2EditorCmd = new ActionCommand(e => { uiState.State = "editor"; });
                 }
@@ -50,7 +53,9 @@ namespace RoRClient.ViewModel
 
         private void SendCreateEditorSessionCommand()
         {
-            MessageInformation messageInformation = new MessageInformation(new Dictionary<string, object>() { { "Playername", "Heinz" }, { "Editorname", "Editor1" } });
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("Playername", "Heinz");
+            messageInformation.PutValue("Editorname", "Editor1");
             IMessage message = MessageBuilder.build("CreateEditorSession", messageInformation);
             clientModel.getFromClientRequestSender().SendMessage(message);
         }
@@ -60,6 +65,17 @@ namespace RoRClient.ViewModel
             get
             {
                 return clientModel;
+            }
+        }
+
+        private void OnClientModelChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "Connected")
+            {
+                if (clientModel.Conncected)
+                {
+                    uiState.State = "editor";
+                }
             }
         }
     }

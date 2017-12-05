@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models
 {
-    class Player
+    public class Player: ModelBase
     {
-        public Player(string name)
+        public Player(Guid id, string name)
         {
             this.name = name;
+            this.id = id;
         }
 
         private string name;
