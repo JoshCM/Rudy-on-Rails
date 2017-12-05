@@ -9,6 +9,11 @@ namespace RoRClient.ViewModel
 {
     class EditorViewModel : ViewModelBase
     {
+        private UIState uiState;
 
+        public EditorViewModel(UIState uistate)
+        {
+            this.uiState = uiState;
+        }
     }
 }

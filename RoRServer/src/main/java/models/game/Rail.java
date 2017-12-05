@@ -21,7 +21,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		super(square);
 		this.section1 = section;
 
-		SendCreatedRailMessage();
+		//SendCreatedRailMessage();
 	}
 	
 	private void SendCreatedRailMessage() {
