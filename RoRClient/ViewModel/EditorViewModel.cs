@@ -11,7 +11,7 @@ namespace RoRClient.ViewModel
     {
         private UIState uiState;
 
-        public EditorViewModel(UIState uistate)
+        public EditorViewModel(UIState uiState)
         {
             this.uiState = uiState;
         }
