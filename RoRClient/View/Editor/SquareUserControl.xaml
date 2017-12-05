@@ -20,6 +20,7 @@
             Height="{Binding SquareDim, ElementName=squareUserControl}"
             Fill="BROWN"
             Stroke="WHITE"
-            StrokeThickness="1" />
+            StrokeThickness="1"
+            MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
     </Canvas>
 </local:CanvasUserControl>

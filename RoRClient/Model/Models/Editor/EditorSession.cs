@@ -14,17 +14,17 @@ namespace RoRClient.Model.Models.Editor
         private Map map;
         private ObservableCollection<Player> players = new ObservableCollection<Player>();
         private static EditorSession editorSession;
-        private QueueSender sender;
+        private QueueSender queueSender;
         private TopicReceiver topicReceiver;
 
         private EditorSession()
         {
-            
+            map = new Map();
         }
 
         public void Init(string topicName)
         {
-            sender = new QueueSender(topicName);
+            queueSender = new QueueSender(topicName);
             topicReceiver = new TopicReceiver(topicName);
         }
 
@@ -81,5 +81,12 @@ namespace RoRClient.Model.Models.Editor
             players.Remove(player);
         }
 
+        public QueueSender QueueSender
+        {
+            get
+            {
+                return queueSender;
+            }
+        }
     }
 }

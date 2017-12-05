@@ -59,8 +59,9 @@ namespace RoRClient.Model.Models
         /// </summary>
         /// <param name="square">Das Square auf dem die Rail sein soll</param>
         /// <param name="section">Die Section der Rail</param>
-        public Rail(Square square, RailSection section) : base(square)
+        public Rail(Guid id, Square square, RailSection section) : base(square)
         {
+            this.id = id;
             this.section1 = section;
         }
 

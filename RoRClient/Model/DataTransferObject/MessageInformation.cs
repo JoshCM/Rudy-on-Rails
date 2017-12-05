@@ -10,10 +10,18 @@ using RoRClient.Model.Connections;
 namespace RoRClient.Model.DataTransferObject
 {
     //Klasse für den Inhalt der Messages an den Server (folgt dem Schema: ClientId, Request, Attributes)
-    class MessageInformation
+    public class MessageInformation
     {
         public readonly String clientId;
         public Dictionary<string, Object> attributes;
+
+        public Dictionary<string, Object> Attributes
+        {
+            get
+            {
+                return attributes;
+            }
+        }
 
         public MessageInformation()
         {
@@ -33,7 +41,13 @@ namespace RoRClient.Model.DataTransferObject
 
         public int GetValueAsInt(string key)
         {
-            return (int)attributes[key];
+            object obj = attributes[key];
+            if(obj.GetType() == typeof(double))
+            {
+                return Convert.ToInt32(obj);
+            }
+            string temp = obj.GetType().ToString();
+            return Convert.ToInt32(obj);
         }
 
         public double GetValueAsDouble(string key)

@@ -21,16 +21,19 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		super(square);
 		this.section1 = section;
 
-		//SendCreatedRailMessage();
+		SendCreatedRailMessage();
 	}
 	
 	private void SendCreatedRailMessage() {
 		MessageInformation messageInfo = new MessageInformation();
 		messageInfo.putValue("railId", getId());
 		messageInfo.putValue("railSectionId", section1.getId());
-		messageInfo.putValue("railSectionPositionNode1", section1.getNode1().ordinal());
-		messageInfo.putValue("railSectionPositionNode2", section1.getNode2().ordinal());
+		messageInfo.putValue("railSectionPositionNode1", section1.getNode1().toString());
+		messageInfo.putValue("railSectionPositionNode2", section1.getNode2().toString());
 		messageInfo.putValue("squareId", square.getId());
+		// ToDo: Später haben wir die richtigen SquareIds im Client, im Moment noch nicht!! 
+		messageInfo.putValue("xPos", square.getXIndex());
+		messageInfo.putValue("yPos", square.getYIndex());
 		
 		square.getMap().getEditorSession().SendMessage("CreateRail", messageInfo);
 	}

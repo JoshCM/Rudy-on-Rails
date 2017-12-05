@@ -56,8 +56,7 @@ namespace RoRClient.ViewModel
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("Playername", "Heinz");
             messageInformation.PutValue("Editorname", "Editor1");
-            IMessage message = MessageBuilder.build("CreateEditorSession", messageInformation);
-            clientModel.getFromClientRequestSender().SendMessage(message);
+            clientModel.getFromClientRequestSender().SendMessage("CreateEditorSession", messageInformation);
         }
 
         public ClientModel ClientModel

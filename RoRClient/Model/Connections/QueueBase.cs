@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Connections
 {
-    class QueueBase
+    public class QueueBase
     {
         protected ISession session;
         protected string queueName;
@@ -20,11 +20,6 @@ namespace RoRClient.Model.Connections
             this.queueName = queueName;
             session = ClientConnection.GetInstance().Session;
             queue = new ActiveMQQueue(queueName);
-            
         }
-
-        
-            
-        
     }
 }

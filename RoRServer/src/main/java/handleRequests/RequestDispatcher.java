@@ -99,8 +99,8 @@ public class RequestDispatcher {
 			editorSession.addPlayer(player);
 			
 			responseInformation.putValue("Topicname", editorSession.getName());
-			responseInformation.putValue("Playername", player.getName());
 			responseInformation.putValue("Editorname", editorSession.getName());
+			responseInformation.putValue("Playername", player.getName());		
 			responseInformation.putValue("Playerid", player.getId().toString());
 			sendMessage("CreateEditorSession", responseInformation);
 		} else {
@@ -108,6 +108,7 @@ public class RequestDispatcher {
 			editorSession.addPlayer(player);
 			
 			responseInformation.putValue("Topicname", editorSession.getName());
+			responseInformation.putValue("Editorname", editorSession.getName());
 			List<JsonObject> players = new ArrayList<JsonObject>();
 			for(Player sessionPlayer : editorSession.getPlayers()) {
 				JsonObject json = new JsonObject();

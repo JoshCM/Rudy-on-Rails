@@ -38,7 +38,6 @@ namespace RoRClient.View.Editor
             }
         }
         public static readonly DependencyProperty ToolbarViewModelProperty = DependencyProperty.Register("ToolbarViewModel", typeof(ToolbarViewModel), typeof(SelectedToolUserControl), new UIPropertyMetadata(null));
-
     }
 
 }

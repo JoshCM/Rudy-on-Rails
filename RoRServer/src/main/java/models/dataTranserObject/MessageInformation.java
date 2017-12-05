@@ -31,11 +31,16 @@ public class MessageInformation {
     }
     
     public String getValueAsString(String key) {
-    	return (String)attributes.get(key);
+    	return String.valueOf(attributes.get(key));
     }
     
     public int getValueAsInt(String key) {
-    	return (int)attributes.get(key);
+    	Object obj = attributes.get(key);
+    	if(obj instanceof Double) {
+    		Double objAsDouble = (Double)obj;
+    		return objAsDouble.intValue();
+    	}
+    	return (int)obj;
     }
     
     public double getValueAsDouble(String key) {

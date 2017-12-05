@@ -41,6 +41,15 @@ namespace RoRClient.Model.HandleResponse
                 editorSession.AddPlayer(player);
                 clientModel.Conncected = true;
             }
+            else if(messageType == "JoinEditorSession")
+            {
+                EditorSession editorSession = EditorSession.GetInstance();
+                editorSession.Name = messageInformation.GetValueAsString("Editorname");
+                editorSession.Init(messageInformation.GetValueAsString("Topicname"));
+
+                // ToDo: Hier noch die Liste von PlayerIds bearbeiten und Player erstellen!
+                clientModel.Conncected = true;
+            }
         }
     }
 }

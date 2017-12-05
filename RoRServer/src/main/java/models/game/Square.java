@@ -14,6 +14,7 @@ public class Square extends ModelBase {
 	private Map map;
 	
 	public Square(Map map, int xIndex, int yIndex) {
+		this.map = map;
 		this.xIndex = xIndex;
 		this.yIndex = yIndex;
 	}

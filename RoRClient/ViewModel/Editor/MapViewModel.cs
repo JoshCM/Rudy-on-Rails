@@ -6,6 +6,9 @@ using System.ComponentModel;
 using System.Windows.Input;
 using System.Linq;
 using System.Collections.Generic;
+using RoRClient.Model.Models.Editor;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace RoRClient.ViewModel
 {
@@ -15,7 +18,7 @@ namespace RoRClient.ViewModel
     /// </summary>
     class MapViewModel : ViewModelBase
     {
-        private Map testMap;
+        private Map map;
 
         private ObservableCollection<Square> squares = new ObservableCollection<Square>();
         public ObservableCollection<Square> Squares
@@ -65,9 +68,10 @@ namespace RoRClient.ViewModel
 
         public MapViewModel()
         {
-            testMap = GenerateTestMap();
-            MapWidth = testMap.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
-            MapHeight = testMap.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+            map = EditorSession.GetInstance().Map;
+            InitSquares();
+            MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
+            MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
         }
 
         /// <summary>
@@ -75,9 +79,8 @@ namespace RoRClient.ViewModel
         /// Später wird die Map dann über den Server geschickt.
         /// </summary>
         /// <returns>TestMap</returns>
-        private Map GenerateTestMap()
+        private void InitSquares()
         {
-            Map map = new Map();
             foreach (Square square in map.Squares)
             {
                 squares.Add(square);
@@ -91,8 +94,6 @@ namespace RoRClient.ViewModel
                     rail.PropertyChanged += OnRailPropertyChanged;
                 }
             }
-
-            return map;
         }
 
         private ICommand createRandomRailsCommand;
@@ -127,7 +128,7 @@ namespace RoRClient.ViewModel
                     railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.SOUTH));
                     railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.NORTH));
 
-                    Rail rail = new Rail(square, railSections[rand.Next(railSections.Count)]);
+                    Rail rail = new Rail(Guid.NewGuid(), square, railSections[rand.Next(railSections.Count)]);
                     square.PlaceableOnSquare = rail;
                 }
             }
@@ -186,7 +187,9 @@ namespace RoRClient.ViewModel
                 {
                     ViewModelFactory factory = new ViewModelFactory();
                     CanvasViewModel viewModel = factory.CreateViewModelForModel(square.PlaceableOnSquare);
-                    placeableOnSquareCollection.Add(viewModel);
+
+                    // ToDo: Das muss doch auch ohne den Dispatcher gehen...
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => placeableOnSquareCollection.Add(viewModel)));
                 }
             }
         }

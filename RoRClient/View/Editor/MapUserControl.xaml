@@ -26,7 +26,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type m:Square}">
                             <Canvas>
-                                <ve:SquareUserControl X="{Binding PosX}" Y="{Binding PosY}"/>
+                                <ve:SquareUserControl X="{Binding PosX}" Y="{Binding PosY}" ToolItem="{Binding Path=DataContext.SelectedTool, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
