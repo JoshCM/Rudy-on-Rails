@@ -1,5 +1,6 @@
 package models.editor;
 
+import models.game.Map;
 import models.game.Player;
 import communication.session.SessionTopicSender;
 import java.util.ArrayList;
@@ -9,12 +10,14 @@ public class EditorSession {
 
     private String name;
     private ArrayList<Player> players = new ArrayList<>();
+    private Map map;
 
     private SessionTopicSender topicSender;
 
     public EditorSession(String name) {
         this.name = name;
         this.topicSender = new SessionTopicSender("BaseModelID");
+        map = new Map();
     }
 
     public String getName() {
@@ -27,6 +30,10 @@ public class EditorSession {
 
     public void removePlayer(Player player){
         this.players.remove(player);
+    }
+    
+    public Map getMap() {
+    	return map;
     }
 
     public SessionTopicSender getTopicSender() {

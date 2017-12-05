@@ -16,7 +16,8 @@ namespace RoRClient.Model.Connections
         protected IConnectionFactory connectionFactory;
         protected ISession session;
 
-        public static string BROKER_URL = "tcp://172.26.39.100:61616";
+        //public static string BROKER_URL = "tcp://172.26.39.100:61616";
+        public static string BROKER_URL = "tcp://localhost:61616";
         private static ClientConnection instance;
 
 

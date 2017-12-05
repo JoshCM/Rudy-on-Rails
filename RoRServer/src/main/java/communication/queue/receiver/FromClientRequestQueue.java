@@ -45,11 +45,5 @@ public class FromClientRequestQueue extends QueueReceiver {
 					"FromClientRequestQueue.onMessage(Message message) : QueueSender konnte Nachricht nicht verschicken");
 			e.printStackTrace();
 		}
-
-
-
 	}
-
-
-
 }

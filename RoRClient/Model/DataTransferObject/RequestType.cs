@@ -17,7 +17,6 @@ namespace RoRClient.Model.DataTransferObject
 		LEAVE_GAMESESSION,
 		LEAVE_EDITORSESSION,
 		PLAYERSTATUS,
-
         CREATE,
         UPDATE,
         DELETE,

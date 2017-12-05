@@ -24,24 +24,24 @@ namespace RoRClient.ViewModel
 			}
 		}
 
-		private ICommand createPlayerCommand;
-		public ICommand CreatePlayerCommand
+		private ICommand createEditorSessionCommand;
+		public ICommand CreateEditorSessionCommand
 		{
 			get
 			{
-				if (createPlayerCommand == null)
+				if (createEditorSessionCommand == null)
 				{
-					createPlayerCommand = new ActionCommand(param => CreateNewPlayerCommand());
+					createEditorSessionCommand = new ActionCommand(param => SendCreateEditorSessionCommand());
 				}
-				return createPlayerCommand;
+				return createEditorSessionCommand;
 			}
 		}
 
         //Beispiel wie eine Message versendet werden kann
-		private void CreateNewPlayerCommand()
+		private void SendCreateEditorSessionCommand()
 		{
-            MessageInformation messageInformation = new MessageInformation(RequestType.PLAYER, new Dictionary<string, string>() { { "Playername", "Heinz" },  });
-            IMessage message = MessageBuilder.build("CREATE_PLAYER", messageInformation) ;
+            MessageInformation messageInformation = new MessageInformation(new Dictionary<string, string>() { { "Playername", "Heinz" }, {"Editorname", "Editor1"} });
+            IMessage message = MessageBuilder.build("CreateEditorSession", messageInformation) ;
 			ClientModel.getInstance().getFromClientRequestSender().SendMessage(message);
 		}
 

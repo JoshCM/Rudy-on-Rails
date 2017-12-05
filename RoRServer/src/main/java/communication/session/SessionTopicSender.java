@@ -21,7 +21,6 @@ public class SessionTopicSender {
 	}
 	
 	public void sendMessage(String message) {
-		
 		try {
 			TextMessage textMessage;
 			textMessage = session.createTextMessage(message);
@@ -29,11 +28,9 @@ public class SessionTopicSender {
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 	private void createTopic() {
-
 		try {
 
 			session = ServerConnection.getInstance().getSession();

@@ -10,7 +10,7 @@
 		<vm:PlayerViewModel/>
 	</Window.DataContext>
 	<Grid>
-		<Button x:Name="button" Command="{Binding CreatePlayerCommand}" Content="Create Player" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="button" Command="{Binding CreateEditorSessionCommand}" Content="Create Player" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
 		<Label x:Name="label" Content="hier sollte die client-id kommen" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="177">
 			<Label.Background>
 				<ImageBrush/>

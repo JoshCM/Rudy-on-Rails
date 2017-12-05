@@ -11,9 +11,6 @@ public class MessageBroker {
 	private BrokerService broker = null;
 	static Logger log = Logger.getLogger(MessageBroker.class.getName());
 	private static String clientRequestQueueName = "ClientRequestQueue";
-	 
-
-
 
 	private MessageBroker() {
 		broker = new BrokerService();

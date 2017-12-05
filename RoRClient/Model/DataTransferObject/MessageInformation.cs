@@ -11,13 +11,11 @@ namespace RoRClient.Model.DataTransferObject
     class MessageInformation
     {
         public readonly String clientId;
-        public String request;
         public Dictionary<String, String> attributes;
 
-        public MessageInformation(RequestType request, Dictionary<String, String> attributes)
+        public MessageInformation(Dictionary<String, String> attributes)
         {
             clientId = ClientModel.getInstance().getClientId().ToString();
-            this.request = request.ToString();
             this.attributes = attributes;
         }
     }
