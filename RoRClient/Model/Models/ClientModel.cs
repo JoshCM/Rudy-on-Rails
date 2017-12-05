@@ -9,7 +9,7 @@ namespace RoRClient.Model.Models
 {
     class ClientModel : ModelBase
     {
-        private FromClientRequestSender fromClientRequestSender;
+        private QueueSender fromClientRequestSender;
         private FromServerResponseReceiver queueReceiver;
 		private Guid clientId;
         private bool connected;
@@ -17,7 +17,7 @@ namespace RoRClient.Model.Models
         public ClientModel(){
 			// Anmelden bei Queue, an die alle Clients ihre Anfragen schicken
 			Console.Write("Anmelden bei ClientRequestQueue");
-			fromClientRequestSender = new FromClientRequestSender("ClientRequestQueue");
+			fromClientRequestSender = new QueueSender("ClientRequestQueue");
 
             // Erstelle die eigene Queue, an die der Server etwas zurücksenden kannGuid id = Guid.NewGuid();
             clientId = ClientConnection.GetInstance().ClientId;
@@ -25,7 +25,7 @@ namespace RoRClient.Model.Models
 			queueReceiver = new FromServerResponseReceiver(clientId.ToString(),this);
 		}
 
-		public FromClientRequestSender getFromClientRequestSender()
+		public QueueSender getFromClientRequestSender()
 		{
 			return fromClientRequestSender;
 		}

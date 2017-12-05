@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RoRClient.Model.Connections;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace RoRClient.Model.Models.Editor
         private Map map;
         private ObservableCollection<Player> players = new ObservableCollection<Player>();
         private static EditorSession editorSession;
+        private QueueSender sender = new QueueSender(GetInstance().Name);
 
         private EditorSession()
         {
