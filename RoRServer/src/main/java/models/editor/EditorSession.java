@@ -4,6 +4,8 @@ import models.dataTranserObject.MessageInformation;
 import models.game.Map;
 import models.game.Player;
 import models.game.Rail;
+import models.session.EditorSessionManager;
+import communication.queue.receiver.FromClientRequestsEditorQueue;
 import communication.session.SessionTopicSender;
 import java.util.ArrayList;
 
@@ -17,10 +19,12 @@ public class EditorSession {
     private Map map;
 
     private SessionTopicSender topicSender;
+    private FromClientRequestsEditorQueue notInitalReceiver;
 
     public EditorSession(String name) {
         this.name = name;
         this.topicSender = new SessionTopicSender(name);
+        this.notInitalReceiver=new FromClientRequestsEditorQueue(name);
         map = new Map(this);
     }
 
