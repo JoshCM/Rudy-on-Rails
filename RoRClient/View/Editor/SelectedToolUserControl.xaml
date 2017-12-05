@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:RoRClient.ViewModel.Editor"
+             x:Name="selectedToolUserControl"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300">
     <Grid Background="Gray">
@@ -25,10 +26,10 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
 
-        <Image Grid.ColumnSpan="3" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Source="{Binding ToolbarViewModel.SelectedTool.ImagePath, ElementName=SelectedToolUserControl}" />
+        <Image Grid.ColumnSpan="3" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Source="{Binding ToolbarViewModel.SelectedTool.ImagePath, ElementName=selectedToolUserControl}" />
 
         <Button Content="Drehen" Grid.Column="5" Grid.Row="1"/>
-        <Label Content="{Binding ID}" Grid.Column="5" Grid.Row="3" DataContext="{Binding SelectedTool}"/>
+        <Label Content="{Binding ToolbarViewModel.SelectedTool.ID, ElementName=selectedToolUserControl}" Grid.Column="5" Grid.Row="3"/>
 
     </Grid>
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RoRClient.ViewModel.Editor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +25,20 @@ namespace RoRClient.View.Editor
         {
             InitializeComponent();
         }
+        public ToolbarViewModel ToolbarViewModel
+        {
+            get
+            {
+                return (ToolbarViewModel)GetValue(ToolbarViewModelProperty);
+            }
+            set
+            {
+                Console.WriteLine(value);
+                SetValue(ToolbarViewModelProperty, value);
+            }
+        }
+        public static readonly DependencyProperty ToolbarViewModelProperty = DependencyProperty.Register("ToolbarViewModel", typeof(ToolbarViewModel), typeof(SelectedToolUserControl), new UIPropertyMetadata(null));
+
     }
+
 }

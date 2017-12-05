@@ -4,14 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:editor="clr-namespace:RoRClient.View.Editor"
-
              mc:Ignorable="d"
              HorizontalAlignment="Stretch"
-	VerticalAlignment="Stretch"
-	HorizontalContentAlignment="Stretch"
-	VerticalContentAlignment="Stretch"
+	        VerticalAlignment="Stretch"
+	        HorizontalContentAlignment="Stretch"
+	        VerticalContentAlignment="Stretch"
              d:DesignHeight="1050" d:DesignWidth="1680"
             >
+    
     <Grid Name="ContentGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -47,14 +47,14 @@
 
         <Grid Grid.Row="1" Grid.RowSpan="2" Grid.Column="0">
             <!-- Werkzeugleiste -->
-            <editor:ToolbarUserControl />
+            <editor:ToolbarUserControl x:Name="ToolbarUserControlName"/>
         </Grid>
 
         <Grid Grid.Row="3"
           Grid.Column="0"
           Background="Violet">
             <!--Aktives Werkzeug -->
-            <editor:SelectedToolUserControl />
+            <editor:SelectedToolUserControl ToolbarViewModel="{Binding ElementName=ToolbarUserControlName, Path=DataContext}"/>
         </Grid>
 
         <Grid Grid.Row="3"
