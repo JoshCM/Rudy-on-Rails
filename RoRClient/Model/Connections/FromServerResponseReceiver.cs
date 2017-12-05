@@ -15,15 +15,17 @@ namespace RoRClient.Model.Connections
         private ResponseDispatcher responseDispatcher;
         private IMessageConsumer messageConsumer;
         private TopicReceiver topic;
+        private ClientModel clientModel;
 
-        public FromServerResponseReceiver(string queueName) : base(queueName)
+        public FromServerResponseReceiver(string queueName, ClientModel clientModel) : base(queueName)
         {
+            this.clientModel = clientModel;
             init();
         }
 
         private void init()
         {
-            responseDispatcher = new ResponseDispatcher();
+            responseDispatcher = new ResponseDispatcher(clientModel);
             Console.WriteLine("startet messageconsumer(queueReceiver)");
             messageConsumer = session.CreateConsumer(queue);
             messageConsumer.Listener += OnMessageReceived;

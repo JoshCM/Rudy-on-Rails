@@ -1,6 +1,8 @@
 ﻿using Apache.NMS;
 using RoRClient.Model.Connections;
 using RoRClient.Model.DataTransferObject;
+using RoRClient.Model.Models;
+using RoRClient.Model.Models.Editor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +14,11 @@ namespace RoRClient.Model.HandleResponse
     class ResponseDispatcher
     {
         private TopicReceiver topic;
+        private ClientModel clientModel;
 
-        public ResponseDispatcher()
+        public ResponseDispatcher(ClientModel clientModel)
         {
-
+            this.clientModel = clientModel;
         }
 
         /// <summary>
@@ -33,6 +36,11 @@ namespace RoRClient.Model.HandleResponse
                 {
                     topic = new TopicReceiver(messageInformation.GetValueAsString("Topicname"));
                 }
+
+                EditorSession.GetInstance().Name = messageInformation.GetValueAsString("Editorname");
+                Player player = new Player(Guid.Parse(messageInformation.GetValueAsString("Playerid")), messageInformation.GetValueAsString("Playername"));
+                EditorSession.GetInstance().AddPlayer(player);
+                clientModel.Conncected = true;
 
                 // EditorSession erstellen 
                     // Player erstellen

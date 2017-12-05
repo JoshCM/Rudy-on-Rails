@@ -7,16 +7,26 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Models.Editor
 {
-    class EditorSession : ModelBase
+    public class EditorSession : ModelBase
     {
         private string name;
         private Map map;
         private ObservableCollection<Player> players = new ObservableCollection<Player>();
+        private static EditorSession editorSession;
 
-        public EditorSession(string name)
+        private EditorSession()
         {
-            this.name = name;
-            this.map = new Map();
+            
+            
+        }
+
+        public static EditorSession GetInstance()
+        {
+            if(editorSession == null)
+            {
+                editorSession = new EditorSession();
+            }
+            return editorSession;
         }
 
         public string Name
@@ -24,6 +34,11 @@ namespace RoRClient.Model.Models.Editor
             get
             {
                 return name;
+            }
+            set
+            {
+                name = value;
+
             }
         }
 
@@ -33,6 +48,11 @@ namespace RoRClient.Model.Models.Editor
             {
                 return map;
             }
+            set
+            {
+                map = value;
+            }
+            
         }
 
         public ObservableCollection<Player> Players
@@ -52,5 +72,6 @@ namespace RoRClient.Model.Models.Editor
         {
             players.Remove(player);
         }
+
     }
 }

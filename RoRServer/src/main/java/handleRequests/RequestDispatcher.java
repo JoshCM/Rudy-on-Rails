@@ -100,7 +100,8 @@ public class RequestDispatcher {
 			
 			responseInformation.putValue("Topicname", editorSession.getName());
 			responseInformation.putValue("Playername", player.getName());
-			
+			responseInformation.putValue("Editorname", editorSession.getName());
+			responseInformation.putValue("Playerid", player.getId().toString());
 			sendMessage("CreateEditorSession", responseInformation);
 		} else {
 			editorSession = EditorSessionManager.getInstance().getEditorSession();

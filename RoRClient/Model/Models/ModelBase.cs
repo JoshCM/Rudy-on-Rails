@@ -36,7 +36,7 @@ namespace RoRClient.Model.Models
             id = Guid.NewGuid();
         }
 
-        private Guid id;
+        protected Guid id;
         public Guid Id
         {
             get
