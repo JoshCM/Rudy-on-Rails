@@ -67,7 +67,7 @@ namespace RoRClient.ViewModel.Editor
                 {
                     selectedTool = value;
                     Console.WriteLine(selectedTool);
-                    OnPropertyChanged();
+                    OnPropertyChanged("SelectedTool");
                 }
             }
         }

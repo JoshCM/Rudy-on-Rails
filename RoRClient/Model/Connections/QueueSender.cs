@@ -1,6 +1,7 @@
 ﻿using Apache.NMS;
 using Apache.NMS.ActiveMQ;
 using Apache.NMS.ActiveMQ.Commands;
+using RoRClient.Model.DataTransferObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Model.Connections
 {
-    class QueueSender : QueueBase
+    public class QueueSender : QueueBase
     {
         private IMessageProducer messageProducer;
 
@@ -20,12 +21,17 @@ namespace RoRClient.Model.Connections
             //connection.Start();
         }
 
-        public void SendMessage(string text)
+        public void SendMessage(string messageType, MessageInformation messageInformation)
+        {
+            IMessage message = MessageBuilder.build(messageType, messageInformation);
+            SendMessage(message);
+        }
+
+        private void SendMessage(IMessage message)
         {
             try
             {
                 Console.WriteLine("sendet message(queueSender)");
-                IMessage message = session.CreateTextMessage(text);
                 messageProducer.Send(message);
             }
             catch (Exception e)

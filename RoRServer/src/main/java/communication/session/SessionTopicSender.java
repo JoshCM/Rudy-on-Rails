@@ -20,20 +20,18 @@ public class SessionTopicSender {
 		createTopic();
 	}
 	
-	public void sendMessage(String message) {
-		
+	public void sendMessage(String messageType, String message) {
 		try {
 			TextMessage textMessage;
 			textMessage = session.createTextMessage(message);
+			textMessage.setJMSType(messageType);
 			publisher.send(textMessage);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 	private void createTopic() {
-
 		try {
 
 			session = ServerConnection.getInstance().getSession();

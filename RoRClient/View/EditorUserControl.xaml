@@ -6,13 +6,13 @@
              xmlns:editor="clr-namespace:RoRClient.View.Editor"
              mc:Ignorable="d"
              HorizontalAlignment="Stretch"
-	        VerticalAlignment="Stretch"
-	        HorizontalContentAlignment="Stretch"
-	        VerticalContentAlignment="Stretch"
+             VerticalAlignment="Stretch"
+             HorizontalContentAlignment="Stretch"
+             VerticalContentAlignment="Stretch"
              d:DesignHeight="1050" d:DesignWidth="1680"
-            >
+             >
     
-    <Grid Name="ContentGrid">
+    <Grid x:Name="ContentGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="7*" />
@@ -26,41 +26,32 @@
             <ColumnDefinition Width="0" />
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Row="0"
-          Grid.Column="0"
-              Grid.ColumnSpan="3"
-          Background="Red">
-            <!-- Menü oben -->
-            <editor:TopMenuUserControl />
-        </Grid>
 
-        <Grid Grid.Row="1"
-          Grid.Column="1"
-              Grid.ColumnSpan="2"
-              Grid.RowSpan="2"
-          Background="LightSeaGreen">
-            <!-- Darstellung der Map -->
-            <editor:MapUserControl />
-        </Grid>
+        <!-- Menü oben -->
+        <editor:TopMenuUserControl Grid.Row="0"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="3"/>
 
+        <!-- Darstellung der Map -->
+        <editor:MapUserControl Grid.Row="1"
+                               Grid.Column="1"
+                               Grid.ColumnSpan="2"
+                               Grid.RowSpan="2"/>
 
-
-        <Grid Grid.Row="1" Grid.RowSpan="2" Grid.Column="0">
-            <!-- Werkzeugleiste -->
-            <editor:ToolbarUserControl x:Name="ToolbarUserControlName"/>
-        </Grid>
+        <!-- Werkzeugleiste -->
+        <editor:ToolbarUserControl x:Name="ToolbarUserControlName" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"/>
 
         <Grid Grid.Row="3"
-          Grid.Column="0"
-          Background="Violet">
+              Grid.Column="0"
+              Background="Violet">
             <!--Aktives Werkzeug -->
             <editor:SelectedToolUserControl ToolbarViewModel="{Binding ElementName=ToolbarUserControlName, Path=DataContext}"/>
         </Grid>
 
         <Grid Grid.Row="3"
-          Grid.Column="1"
-          Grid.ColumnSpan="2"
-          Background="Green">
+              Grid.Column="1"
+              Grid.ColumnSpan="2"
+              Background="Green">
             <!-- Statusfenster oder so was -->
             <editor:AttributeSelectionUserControl />
         </Grid>

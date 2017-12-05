@@ -11,7 +11,7 @@ namespace RoRClient.Model.Models
     /// </summary>
     public class Map : ModelBase
     {
-        private const int mapSize = 30;
+        private const int mapSize = 3;
         public static int MapSize => mapSize;
 
         Square[,] squares;
@@ -35,7 +35,7 @@ namespace RoRClient.Model.Models
             InitSquares();
 
             // nur zum testen der GUI
-            CreateRandomRailsForTest();
+            //CreateRandomRailsForTest();
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace RoRClient.Model.Models
                 for (int y = 0; y < mapSize; y++)
                 {
                     Random rand = new Random();
-                    Rail rail = new Rail(squares[x, y], new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+                    Rail rail = new Rail(Guid.NewGuid(), squares[x, y], new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
                     squares[x, y].PlaceableOnSquare = rail;
                 }
             }

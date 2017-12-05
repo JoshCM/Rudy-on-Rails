@@ -1,5 +1,9 @@
 package models;
 
+import models.game.InteractiveGameObject;
+import models.game.PlaceableOnRail;
+import models.game.Square;
+
 public class DummySignal extends InteractiveGameObject implements PlaceableOnRail {
 
     private String name = "SignalTest";

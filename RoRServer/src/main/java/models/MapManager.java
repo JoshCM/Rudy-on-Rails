@@ -9,6 +9,11 @@ import java.io.PrintWriter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import models.game.Map;
+import models.game.Placeable;
+import models.game.PlaceableOnRail;
+import models.game.PlaceableOnSquare;
+
 
 /**
  * 
@@ -19,7 +24,7 @@ import com.google.gson.GsonBuilder;
 
 public class MapManager {
 
-	private final String dir = "Maps/";
+	private final String dir = "resources/maps/";
 	private final String ext = ".map";
 	private Gson gsonLoader;
 	private Gson gsonSaver;

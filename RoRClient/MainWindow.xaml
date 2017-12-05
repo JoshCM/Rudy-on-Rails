@@ -3,8 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:controls="clr-namespace:RoRClient.View"
+		xmlns:vm="clr-namespace:RoRClient.ViewModel"
+        xmlns:v ="clr-namespace:RoRClient.View"
         mc:Ignorable="d"
-        Title="Rudi on Rails" Height="1050" Width="1680" WindowState="Normal">
-    <controls:EditorUserControl />
+        Title="MainWindow" Height="350" Width="525">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate x:Name="EditorTemplate" DataType="{x:Type vm:EditorViewModel}">
+            <v:EditorUserControl/>
+        </DataTemplate>
+        <DataTemplate x:Name="StartTemplate" DataType="{x:Type vm:StartViewModel}">
+            <v:StartView/>
+        </DataTemplate>
+    </Window.Resources>
+
+    
+    <DockPanel>
+        <!--<Button DockPanel.Dock="Top" x:Name="button2" Content="Go to Editor View" Click="go_to_Editor"/>-->
+        <ContentControl Content="{Binding CurrentViewModel}"/>
+    </DockPanel>
+
 </Window>

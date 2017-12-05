@@ -1,4 +1,6 @@
 ﻿using RoRClient.Model.Models;
+using RoRClient.ViewModel;
+using RoRClient.ViewModel.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +25,15 @@ namespace RoRClient
     public partial class MainWindow : Window
     {
         public MainWindow()
-        {           
+        {
             InitializeComponent();
         }
+        /*
+        private void go_to_Editor(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Hallo i Bims!");
+            DataContext = new EditorViewModel();
+        }
+        */
     }
 }

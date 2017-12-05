@@ -1,10 +1,10 @@
 package communication.session;
 import javax.jms.Message;
 
-import communication.queue.QueueReceiver;
-import models.DummyGame;
+import communication.queue.receiver.QueueReceiver;
+import models.game.DummyGame;
 
-// Queue für das Spiel/Editor
+// Queue für das Spiel/editor
 public class SessionQueueReceiver extends QueueReceiver {
 	
 	DummyGame game;

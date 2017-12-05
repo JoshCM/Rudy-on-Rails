@@ -15,14 +15,15 @@ namespace RoRClient.Model.Connections
         protected IConnection connection;
         protected IConnectionFactory connectionFactory;
         protected ISession session;
+        private Guid clientId;
 
+        //public static string BROKER_URL = "tcp://172.26.39.100:61616";
         public static string BROKER_URL = "tcp://localhost:61616";
         private static ClientConnection instance;
 
 
         public ISession Session
         {
-
             get
             {
                 return session;
@@ -30,15 +31,14 @@ namespace RoRClient.Model.Connections
         }
         private ClientConnection()
         {
-            
-            //Console.WriteLine("erstellt connection(base)");
-            //connectionFactory = new ConnectionFactory(BROKER_URL);
-            //connection = connectionFactory.CreateConnection();
-            //Console.WriteLine("startet Session(base)");
-            //session = connection.CreateSession(AcknowledgementMode.AutoAcknowledge);
-            //Console.WriteLine("startet queue(base)");
-            //connection.Start();
-
+            clientId = Guid.NewGuid();
+            Console.WriteLine("erstellt connection(base)");
+            connectionFactory = new ConnectionFactory(BROKER_URL);
+            connection = connectionFactory.CreateConnection();
+            Console.WriteLine("startet Session(base)");
+            session = connection.CreateSession(AcknowledgementMode.AutoAcknowledge);
+            Console.WriteLine("startet queue(base)");
+            connection.Start();
         }
 
         public static ClientConnection GetInstance()
@@ -55,5 +55,12 @@ namespace RoRClient.Model.Connections
             connection.Close();
         }
 
+        public Guid ClientId
+        {
+            get
+            {
+                return clientId;
+            }
+        }
     }
 }
