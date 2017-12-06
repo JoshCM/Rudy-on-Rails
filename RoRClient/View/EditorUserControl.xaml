@@ -36,7 +36,8 @@
         <editor:MapUserControl Grid.Row="1"
                                Grid.Column="1"
                                Grid.ColumnSpan="2"
-                               Grid.RowSpan="2"/>
+                               Grid.RowSpan="2"
+							   SelectedTool="{Binding ElementName=ToolbarUserControlName, Path=DataContext.SelectedTool}"/>
 
         <!-- Werkzeugleiste -->
         <editor:ToolbarUserControl x:Name="ToolbarUserControlName" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"/>

@@ -3,6 +3,7 @@ using RoRClient.Model.Models;
 using RoRClient.Model.Models.Editor;
 using RoRClient.ViewModel;
 using RoRClient.ViewModel.Helper;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -29,18 +30,18 @@ namespace RoRClient.View.Editor
             }
         }
 
-        public ToolItem ToolItem
-        {
+        public RailSection RailSection
+		{
             get
             {
-                return (ToolItem)GetValue(ToolItemProperty);
+                return (RailSection)GetValue(RailSectionProperty);
             }
             set
             {
-                SetValue(ToolItemProperty, value);
+                SetValue(RailSectionProperty, value);
             }
         }
-        public static readonly DependencyProperty ToolItemProperty = DependencyProperty.Register("ToolItem", typeof(ToolItem), typeof(SquareUserControl), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty RailSectionProperty = DependencyProperty.Register("RailSection", typeof(RailSection), typeof(SquareUserControl), new UIPropertyMetadata(null));
 
         private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -56,10 +57,9 @@ namespace RoRClient.View.Editor
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("xPos", xPos);
             messageInformation.PutValue("yPos", yPos);
-            messageInformation.PutValue("railSectionPositionNode1", RailSectionPosition.NORTH.ToString());
-            messageInformation.PutValue("railSectionPositionNode2", RailSectionPosition.SOUTH.ToString());
-
-            editorSession.QueueSender.SendMessage("CreateRail", messageInformation);
+            messageInformation.PutValue("railSectionPositionNode1", RailSection.Node1.ToString());
+            messageInformation.PutValue("railSectionPositionNode2", RailSection.Node2.ToString());
+			editorSession.QueueSender.SendMessage("CreateRail", messageInformation);
         }
     }
 }

@@ -18,9 +18,9 @@ public class MapManagerTest {
 	@Test
 	public void mapManager_SavedAndLoadedMapAreEqual() {
 		
-		RailSection section = new RailSection(RailSectionPosition.EAST, RailSectionPosition.WEST);
+		RailSection section1 = new RailSection(RailSectionPosition.EAST, RailSectionPosition.WEST);
 		DummySignal signal = new DummySignal(savedMap.getSquare(0, 0));
-		savedMap.getSquare(0, 0).setPlaceable(new Rail(savedMap.getSquare(0, 0), section));
+		savedMap.getSquare(0, 0).setPlaceable(new Rail(savedMap.getSquare(0, 0), section1, null));
 		savedMap.getSquare(0, 0).getPlaceableOnSquare().setPlaceableOnRail(signal);
 		
 		

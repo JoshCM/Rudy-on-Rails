@@ -14,7 +14,7 @@ namespace RoRClientTests.ViewModel.Helper
         {
             ViewModelFactory viewModelFactory = new ViewModelFactory();
             Square square = new Square(0, 0);
-            Rail rail = new Rail(square, new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+            Rail rail = new Rail(Guid.NewGuid(), square, new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
 
             RailViewModel railViewModel = (RailViewModel)viewModelFactory.CreateViewModelForModel(rail);
 

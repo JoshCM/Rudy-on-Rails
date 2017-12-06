@@ -7,12 +7,12 @@
                      mc:Ignorable="d" 
                      x:Name="squareUserControl"
                      xmlns:vm="clr-namespace:RoRClient.ViewModel"
+					 xmlns:vme="clr-namespace:RoRClient.ViewModel.Editor"
                      xmlns:m="clr-namespace:RoRClient.Model.Models"
                      Canvas.Top="{Binding RealY, ElementName=squareUserControl}"
                      Canvas.Left="{Binding RealX, ElementName=squareUserControl}"
                      >
-
-    <Canvas Width="{Binding SquareDim, ElementName=squareUserControl}"
+	<Canvas Width="{Binding SquareDim, ElementName=squareUserControl}"
             Height="{Binding SquareDim, ElementName=squareUserControl}">
 
         <Rectangle

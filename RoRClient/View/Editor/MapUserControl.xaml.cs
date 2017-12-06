@@ -1,4 +1,5 @@
-﻿using RoRClient.ViewModel;
+﻿using RoRClient.Model.Models;
+using RoRClient.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,5 +22,19 @@ namespace RoRClient.View.Editor
         {
             InitializeComponent();
         }
-    }
+
+		public ToolItem SelectedTool
+		{
+			get
+			{
+				return (ToolItem)GetValue(SelectedToolProperty);
+			}
+			set
+			{
+				SetValue(SelectedToolProperty, value);
+			}
+		}
+		public static readonly DependencyProperty SelectedToolProperty = DependencyProperty.Register("SelectedTool", typeof(ToolItem), typeof(MapUserControl), new UIPropertyMetadata(null));
+
+	}
 }

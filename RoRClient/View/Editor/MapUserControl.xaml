@@ -7,16 +7,18 @@
         xmlns:ve="clr-namespace:RoRClient.View.Editor"
         xmlns:vm="clr-namespace:RoRClient.ViewModel"
         xmlns:m="clr-namespace:RoRClient.Model.Models"
+		x:Name="mapUserControl"
         xmlns:converter="clr-namespace:RoRClient.BindingConverter"
         mc:Ignorable="d">
     <UserControl.DataContext>
-        <vm:MapViewModel/>
-    </UserControl.DataContext>
-    <UserControl.Resources>
-        <converter:ObjectIsNullToBoolConverter  x:Key="ObjectIsNullToBoolConverter"/>
-    </UserControl.Resources>
+		<vm:MapViewModel/>
+	</UserControl.DataContext>
+	<UserControl.Resources>
+		<converter:ObjectIsNullToBoolConverter  x:Key="ObjectIsNullToBoolConverter"/>
+		<converter:ImagePathToRailSectionConverter x:Key="ImagePathToRailSectionConverter"/>
+	</UserControl.Resources>
 
-    <DockPanel>
+	<DockPanel>
         <Button DockPanel.Dock="Top" Height="50" Command="{Binding CreateRandomRailsCommand}">
             Lösche alle Schienen und setzen zufällig neue zum Test
         </Button>
@@ -26,7 +28,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type m:Square}">
                             <Canvas>
-                                <ve:SquareUserControl X="{Binding PosX}" Y="{Binding PosY}" ToolItem="{Binding Path=DataContext.SelectedTool, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}"/>
+								<ve:SquareUserControl X="{Binding PosX}" Y="{Binding PosY}" RailSection="{Binding SelectedTool.ImagePath, ElementName=mapUserControl , Mode=OneWay, Converter={StaticResource ImagePathToRailSectionConverter}}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
