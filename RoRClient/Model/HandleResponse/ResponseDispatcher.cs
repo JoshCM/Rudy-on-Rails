@@ -13,7 +13,6 @@ namespace RoRClient.Model.HandleResponse
 {
     class ResponseDispatcher
     {
-        private TopicReceiver topic;
         private ClientModel clientModel;
 
         public ResponseDispatcher(ClientModel clientModel)

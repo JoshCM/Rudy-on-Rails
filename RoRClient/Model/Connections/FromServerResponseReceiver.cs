@@ -14,7 +14,6 @@ namespace RoRClient.Model.Connections
     {
         private ResponseDispatcher responseDispatcher;
         private IMessageConsumer messageConsumer;
-        private TopicReceiver topic;
         private ClientModel clientModel;
 
         public FromServerResponseReceiver(string queueName, ClientModel clientModel) : base(queueName)
