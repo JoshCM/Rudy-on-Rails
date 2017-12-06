@@ -3,11 +3,8 @@ import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.TextMessage;
-
-import communication.queue.QueueBase;
-import models.dataTranserObject.MessageType;
-
 import org.apache.log4j.Logger;
+import communication.queue.QueueBase;
 
 // QueueSender für Client Queues
 public class QueueSender extends QueueBase {

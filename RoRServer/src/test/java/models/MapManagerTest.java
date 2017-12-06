@@ -1,10 +1,7 @@
 package models;
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
-
-import models.editor.EditorSession;
 import models.game.Map;
 import models.game.Rail;
 import models.game.RailSection;

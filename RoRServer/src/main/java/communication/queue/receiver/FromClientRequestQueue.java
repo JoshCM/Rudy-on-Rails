@@ -6,20 +6,13 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 
-import communication.queue.sender.QueueSender;
-import models.dataTranserObject.MessageType;
-import models.game.DummyGame;
-
 import org.apache.log4j.Logger;
-
-import communication.session.SessionTopicSender;
 import HandleRequests.RequestDispatcher;
 
 // Allgemeine Queue für Clients, die ein Spiel oder editor erstellen wollen
 public class FromClientRequestQueue extends QueueReceiver {
 
 	static Logger log = Logger.getLogger(FromClientRequestQueue.class.getName());
-	private DummyGame game;
 
 	public FromClientRequestQueue(String queueName) {
 		super(queueName);

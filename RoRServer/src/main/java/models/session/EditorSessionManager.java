@@ -1,11 +1,8 @@
 package models.session;
 
-import models.editor.EditorSession;
-
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
+import models.editor.EditorSession;
 
 public class EditorSessionManager {
 

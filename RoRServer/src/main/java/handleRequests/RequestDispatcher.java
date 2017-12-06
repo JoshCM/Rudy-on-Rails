@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RequestDispatcher {
-	private boolean isInitial = false;
 	private static RequestDispatcher requestHandler;
 
 	static Logger log = Logger.getLogger(RequestDispatcher.class.getName());
@@ -77,10 +76,6 @@ public class RequestDispatcher {
 		fromServerResponseQueue.sendMessage(messageType, response);
 	}
 
-	private void handleCREATE_GAMESESSION(MessageInformation messageInfo) {
-		log.info("handleCREATE_GAMESESSION(MessageInformation messageInfo): Ich wurde aufgerufen!");
-	}
-
 	/**
 	 * Neuer Player wird erstellt und allen angemeldeten Clients mitgeteilt
 	 * 
@@ -123,21 +118,5 @@ public class RequestDispatcher {
 		}
 
 		log.info("Called handleCreateEditorSession");
-	}
-
-	private void handleREAD_GAMESESSIONS(MessageInformation messageInfo) {
-		log.info("handleCREATE_GAMESESSION(MessageInformation messageInfo): Ich wurde aufgerufen!");
-	}
-
-	private void handleREAD_EDITORSESSIONS(MessageInformation messageInfo) {
-		log.info("handleREAD_EDITORSESSIONS(MessageInformation messageInfo): Ich wurde aufgerufen!");
-	}
-
-	private void handleJOIN_GAMESESSION(MessageInformation messageInfo) {
-		log.info("handleUPDATE_JOIN_GAMESESSION(MessageInformation messageInfo): Ich wurde aufgerufen!");
-	}
-
-	private void handleJOIN_EDITORSESSION(MessageInformation messageInfo) {
-		log.info("handleUPDATE_JOIN_EDITORSESSION(MessageInformation messageInfo): Ich wurde aufgerufen!");
 	}
 }

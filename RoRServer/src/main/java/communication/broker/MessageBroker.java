@@ -1,14 +1,8 @@
 package communication.broker;
-import communication.queue.receiver.FromClientRequestQueue;
-import resources.PropertyManager;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Properties;
-
 import org.apache.activemq.broker.BrokerService;
 import org.apache.log4j.Logger;
+import communication.queue.receiver.FromClientRequestQueue;
+import resources.PropertyManager;
 
 
 // Singleton
