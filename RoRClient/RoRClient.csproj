@@ -143,11 +143,9 @@
     <Compile Include="View\Editor\MapUserControl.xaml.cs">
       <DependentUpon>MapUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\EditorModels\Werkzeug.cs" />
     <Compile Include="Model\Models\ToolItem.cs" />
     <Compile Include="ViewModel\EditorViewModel.cs" />
     <Compile Include="ViewModel\Editor\ToolbarViewModel.cs" />
-    <Compile Include="ViewModel\Helper\DelegateCommand.cs" />
     <Compile Include="ViewModel\Helper\EditorCommands.cs" />
     <Compile Include="ViewModel\Helper\Exit.cs" />
     <Compile Include="ViewModel\Helper\ObservableObjectBaseClass.cs" />

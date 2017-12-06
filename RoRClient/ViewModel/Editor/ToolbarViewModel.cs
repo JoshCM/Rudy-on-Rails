@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RoRClient.Model.EditorModels;
 using RoRClient.ViewModel.Helper;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
