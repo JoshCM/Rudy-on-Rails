@@ -21,6 +21,11 @@ public class EditorSession extends RoRSession {
 		map = new Map(this);
 	}
 	
+	public void setup() {
+		super.setup();
+		queueReceiver.setup();
+	}
+	
 	public void addPlayer(Player player) {
 		this.players.add(player);
 	}

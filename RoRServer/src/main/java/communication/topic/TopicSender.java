@@ -18,7 +18,6 @@ public class TopicSender {
 	
 	public TopicSender(String topicName) {
 		this.topicName = topicName;
-		createTopic();
 	}
 	
 	public void sendMessage(String messageType, MessageInformation messageInformation) {
@@ -33,7 +32,7 @@ public class TopicSender {
 		}
 	}
 
-	private void createTopic() {
+	public void setup() {
 		try {
 			session = ServerConnection.getInstance().getSession();
 			topic = session.createTopic(topicName);

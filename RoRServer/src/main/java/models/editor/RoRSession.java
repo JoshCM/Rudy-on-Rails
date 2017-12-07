@@ -4,7 +4,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import communication.MessageInformation;
 import communication.topic.TopicSender;
 
-public class RoRSession {
+public abstract class RoRSession {
 	private String name;
 	private TopicSender topicSender;
 	
@@ -14,7 +14,6 @@ public class RoRSession {
 	public RoRSession(String name) {
 		this.name = name;
 		this.topicSender = new TopicSender(name);
-		StartSendMessageThread();
 	}
 	
 	public String getName() {
@@ -26,8 +25,13 @@ public class RoRSession {
 			messagesToSendQueue.add(messageInformation);
 		}
 	}
+			
+	public void setup() {
+		topicSender.setup();
+		startSendMessageThread();
+	}
 	
-	public void StartSendMessageThread() {
+	private void startSendMessageThread() {
 		sendMessageThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -46,5 +50,19 @@ public class RoRSession {
 			}
 		});
 		sendMessageThread.start();
+	}
+	
+	public MessageInformation getFirstFoundMessageInformationForMessageType(String messageType) {
+		Object[] messages;
+		messages = messagesToSendQueue.toArray();
+
+		for(Object obj : messages) {
+			MessageInformation messageInfo = (MessageInformation)obj;
+			if(messageInfo.getMessageType().equals(messageType)) {
+				return messageInfo;
+			}
+		};
+		
+		return null;
 	}
 }

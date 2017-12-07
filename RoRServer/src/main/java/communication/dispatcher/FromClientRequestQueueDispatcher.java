@@ -56,6 +56,7 @@ public class FromClientRequestQueueDispatcher {
 		RequestSerializer requestSerializer = RequestSerializer.getInstance();
 		String response = requestSerializer.serialize(messageInformation);
 		QueueSender queueSender = new QueueSender(messageInformation.getClientid());
+		queueSender.setup();
 		queueSender.sendMessage(messageType, response);
 	}
 
@@ -73,6 +74,7 @@ public class FromClientRequestQueueDispatcher {
 		if (EditorSessionManager.getInstance().getEditorSession() == null) {
 			editorSession = EditorSessionManager.getInstance()
 					.createNewEditorSession(messageInformation.getValueAsString("Editorname"));
+			editorSession.setup();
 			Player player = new Player(editorSession, messageInformation.getValueAsString("Playername"));
 			editorSession.addPlayer(player);
 			
