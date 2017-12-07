@@ -1,7 +1,9 @@
-﻿using RoRClient.Communication.DataTransferObject;
+﻿using Newtonsoft.Json.Linq;
+using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Editor;
 using RoRClient.Models.Game;
 using System;
+using System.Collections.Generic;
 
 namespace RoRClient.Communication.Dispatcher
 {
@@ -37,10 +39,20 @@ namespace RoRClient.Communication.Dispatcher
             else if(messageType == "JoinEditorSession")
             {
                 EditorSession editorSession = EditorSession.GetInstance();
-                editorSession.Name = messageInformation.GetValueAsString("editorName");
-                editorSession.Init(messageInformation.GetValueAsString("topicName"));
+                string editorName = messageInformation.GetValueAsString("editorName");
+                editorSession.Name = editorName;
+                string topicName = messageInformation.GetValueAsString("topicName");
+                editorSession.Init(topicName);
 
-                // ToDo: Hier noch die Liste von PlayerIds bearbeiten und Player erstellen!
+                List<JObject> playersList = messageInformation.GetValueAsJObjectList("playerList");
+                foreach(JObject obj in playersList)
+                {
+                    Guid playerId = Guid.Parse(obj.GetValue("playerId").ToString());
+                    string playerName = obj.GetValue("playerName").ToString();
+                    Player player = new Player(playerId, playerName);
+                    editorSession.AddPlayer(player);
+                }
+
                 clientModel.Connected = true;
             }
         }

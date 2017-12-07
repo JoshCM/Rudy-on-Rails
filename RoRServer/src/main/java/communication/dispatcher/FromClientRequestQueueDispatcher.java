@@ -58,7 +58,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 			List<JsonObject> players = new ArrayList<JsonObject>();
 			for(Player sessionPlayer : editorSession.getPlayers()) {
 				JsonObject json = new JsonObject();
-				json.addProperty("id", sessionPlayer.getId().toString());
+				json.addProperty("playerId", sessionPlayer.getId().toString());
 				json.addProperty("playerName", sessionPlayer.getName());
 				players.add(json);
 			}

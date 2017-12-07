@@ -92,9 +92,10 @@ namespace RoRClient.Communication.DataTransferObject
             return (bool)_attributes[key];
         }
 
-        public JObject GetValueAsJsonObject(string key)
+        public List<JObject> GetValueAsJObjectList(string key)
         {
-            return JObject.Parse(GetValueAsString(key));
+            JArray array = (JArray)_attributes[key];
+            return array.ToObject<List<JObject>>();
         }
     }
 }
