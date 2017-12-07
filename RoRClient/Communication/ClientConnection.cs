@@ -18,7 +18,7 @@ namespace RoRClient.Communication
         private Guid clientId;
 
         //public static string BROKER_URL = "tcp://172.26.39.100:61616";
-        public static string BROKER_URL = "tcp://localhost:61616";
+        public static string BROKER_URL = Properties.Settings.Default.BrokerUrl;
         private static ClientConnection instance;
 
 

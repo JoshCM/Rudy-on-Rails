@@ -2,7 +2,6 @@
 using System;
 using RoRClient.Views.Editor.Helper;
 using RoRClient.Models.Game;
-using System.IO;
 
 namespace RoRClientTests.Views.Editor.Helper
 {

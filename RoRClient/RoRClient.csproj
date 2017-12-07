@@ -101,6 +101,7 @@
     </ApplicationDefinition>
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
+    <Compile Include="Communication\Dispatcher\DispatcherBase.cs" />
     <Compile Include="Communication\Queue\FromServerResponseQueueReceiver.cs" />
     <Compile Include="Communication\Queue\QueueSender.cs" />
     <Compile Include="Communication\DataTransferObject\MessageBuilder.cs" />
@@ -265,6 +266,7 @@
     <Resource Include="Resources\Images\Tools\railcurve_ne.png" />
     <Resource Include="Resources\Images\Tools\railcurve_nw.png" />
     <Resource Include="Resources\Images\Tools\railcurve_se.png" />
+    <Resource Include="Resources\Images\dummy.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

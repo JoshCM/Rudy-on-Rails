@@ -7,8 +7,6 @@ import models.editor.EditorSessionManager;
 import models.game.Player;
 import org.apache.log4j.Logger;
 import com.google.gson.JsonObject;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +58,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 			List<JsonObject> players = new ArrayList<JsonObject>();
 			for(Player sessionPlayer : editorSession.getPlayers()) {
 				JsonObject json = new JsonObject();
-				json.addProperty("id", sessionPlayer.getId().toString());
+				json.addProperty("playerId", sessionPlayer.getId().toString());
 				json.addProperty("playerName", sessionPlayer.getName());
 				players.add(json);
 			}
