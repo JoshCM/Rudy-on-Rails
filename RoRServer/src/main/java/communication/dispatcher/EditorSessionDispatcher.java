@@ -8,23 +8,25 @@ import models.game.RailSection;
 import models.game.RailSectionPosition;
 import models.game.Square;
 
-public class EditorSessionDispatcher {
+public class EditorSessionDispatcher extends DispatcherBase {
 	private EditorSession editorSession;
 	
 	public EditorSessionDispatcher(EditorSession editorSession) {
 		this.editorSession = editorSession;
 	}
 	
+	/*
 	public void dispatch(String request, String message) {
 		RequestSerializer requestSerializer = RequestSerializer.getInstance();
 		MessageInformation messageInformation = requestSerializer.deserialize(message);
 
 		if(request.equals("CreateRail")) {
-			CreateRail(messageInformation);
+			handleCreateRail(messageInformation);
 		}
 	}
+	*/
 	
-	private void CreateRail(MessageInformation mi) {
+	public void handleCreateRail(MessageInformation mi) {
 		int xPos = mi.getValueAsInt("xPos");
 		int yPos = mi.getValueAsInt("yPos");
 		RailSectionPosition railSectionPositionNode1 = RailSectionPosition.valueOf(mi.getValueAsString("railSectionPositionNode1"));
