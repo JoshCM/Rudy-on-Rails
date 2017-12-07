@@ -1,21 +1,7 @@
-﻿using RoRClient.Model.Models;
-using RoRClient.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RoRClient.ViewModels.Editor;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace RoRClient.View.Editor
+namespace RoRClient.Views.Editor
 {
     /// <summary>
     /// Interaktionslogik für RailUserControl.xaml

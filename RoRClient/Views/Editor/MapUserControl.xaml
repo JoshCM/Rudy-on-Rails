@@ -1,12 +1,11 @@
-﻿<UserControl x:Class="RoRClient.View.Editor.MapUserControl"
+﻿<UserControl x:Class="RoRClient.Views.Editor.MapUserControl"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:v="clr-namespace:RoRClient.View"
-        xmlns:ve="clr-namespace:RoRClient.View.Editor"
-        xmlns:vm="clr-namespace:RoRClient.ViewModel"
-        xmlns:m="clr-namespace:RoRClient.Model.Models"
+        xmlns:ve="clr-namespace:RoRClient.Views.Editor"
+        xmlns:vm="clr-namespace:RoRClient.ViewModels.Editor"
+        xmlns:m="clr-namespace:RoRClient.Models.Game"
 		x:Name="mapUserControl"
         xmlns:converter="clr-namespace:RoRClient.BindingConverter"
         mc:Ignorable="d">
@@ -14,9 +13,8 @@
 		<vm:MapViewModel/>
 	</UserControl.DataContext>
 	<UserControl.Resources>
-		<converter:ObjectIsNullToBoolConverter  x:Key="ObjectIsNullToBoolConverter"/>
-		<converter:ImagePathToRailSectionConverter x:Key="ImagePathToRailSectionConverter"/>
-	</UserControl.Resources>
+        <converter:ObjectIsNullToBoolConverter  x:Key="ObjectIsNullToBoolConverter"/>
+    </UserControl.Resources>
 
 	<DockPanel>
         <Button DockPanel.Dock="Top" Height="50" Command="{Binding CreateRandomRailsCommand}">
@@ -28,7 +26,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type m:Square}">
                             <Canvas>
-								<ve:SquareUserControl X="{Binding PosX}" Y="{Binding PosY}" RailSection="{Binding SelectedTool.ImagePath, ElementName=mapUserControl , Mode=OneWay, Converter={StaticResource ImagePathToRailSectionConverter}}"/>
+								<ve:SquareUserControl X="{Binding PosX}" Y="{Binding PosY}" ToolName="{Binding SelectedTool.Name, ElementName=mapUserControl}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

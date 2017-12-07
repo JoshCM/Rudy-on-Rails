@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.Model.Connections
+namespace RoRClient.Communication.Queue
 {
     public class QueueBase
     {

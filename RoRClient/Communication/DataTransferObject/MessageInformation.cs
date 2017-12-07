@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoRClient.Model.Models;
 using Newtonsoft.Json.Linq;
-using RoRClient.Model.Connections;
 
-namespace RoRClient.Model.DataTransferObject
+namespace RoRClient.Communication.DataTransferObject
 {
     //Klasse für den Inhalt der Messages an den Server (folgt dem Schema: ClientId, Request, Attributes)
     public class MessageInformation

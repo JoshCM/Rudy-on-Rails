@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.ViewModel
+namespace RoRClient.ViewModels
 {
     /// <summary>
     /// Base Klasse für ViewModels, damit alle das INotifyPropertyChanged Interface besitzen

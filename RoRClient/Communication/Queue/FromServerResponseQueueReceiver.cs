@@ -1,14 +1,9 @@
 ﻿using Apache.NMS;
-using RoRClient.Model.Models;
-using RoRClient.Model.DataTransferObject;
+using RoRClient.Communication.Dispatcher;
+using RoRClient.Models.Game;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoRClient.Model.HandleResponse;
 
-namespace RoRClient.Model.Connections
+namespace RoRClient.Communication.Queue
 {
     class FromServerResponseReceiver : QueueBase
     {

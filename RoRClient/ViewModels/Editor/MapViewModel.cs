@@ -1,16 +1,18 @@
-﻿using RoRClient.Model.Models;
-using RoRClient.ViewModel.Helper;
+﻿using RoRClient.Models.Game;
+using RoRClient.ViewModels.Helper;
+using RoRClient.Models.Editor;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using System.Linq;
 using System.Collections.Generic;
-using RoRClient.Model.Models.Editor;
 using System.Windows;
 using System.Windows.Threading;
+using RoRClient.ViewModels.Commands;
+using RoRClient.Models.Base;
 
-namespace RoRClient.ViewModel
+namespace RoRClient.ViewModels.Editor
 {
     /// <summary>
     /// Hält alle ViewModels die placeableOnSquare sind, sowie die Squares der Map

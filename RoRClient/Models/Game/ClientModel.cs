@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoRClient.Model.Connections;
+using RoRClient.Models.Base;
+using RoRClient.Communication.Queue;
+using RoRClient.Communication;
 
-namespace RoRClient.Model.Models
+namespace RoRClient.Models.Game
 {
     class ClientModel : ModelBase
     {

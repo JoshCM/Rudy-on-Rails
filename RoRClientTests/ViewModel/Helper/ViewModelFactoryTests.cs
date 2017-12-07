@@ -1,8 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RoRClient.ViewModel.Helper;
-using RoRClient.Model.Models;
-using RoRClient.ViewModel;
+using RoRClient.ViewModels.Helper;
+using RoRClient.Models.Game;
+using RoRClient.ViewModels.Editor;
+using RoRClient.ViewModels;
 
 namespace RoRClientTests.ViewModel.Helper
 {

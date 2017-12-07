@@ -99,7 +99,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BindingConverter\ImagePathToRailSectionConverter.cs" />
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
     <Compile Include="Communication\Queue\FromServerResponseQueueReceiver.cs" />
@@ -129,6 +128,7 @@
     <Compile Include="ViewModels\ViewConstants.cs" />
     <Compile Include="ViewModels\Editor\MapViewModel.cs" />
     <Compile Include="Views\CanvasUserControl.cs" />
+    <Compile Include="Views\Editor\Helper\ToolConverter.cs" />
     <Compile Include="Views\Editor\RailUserControl.xaml.cs">
       <DependentUpon>RailUserControl.xaml</DependentUpon>
     </Compile>

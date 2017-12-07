@@ -1,12 +1,7 @@
-﻿using RoRClient.ViewModel.Helper;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using RoRClient.Models.Base;
 
-namespace RoRClient.Model.Models
+namespace RoRClient.Models.Game
 {
     public class Square : ModelBase
     {

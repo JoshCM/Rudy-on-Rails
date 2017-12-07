@@ -1,14 +1,12 @@
 ﻿using Apache.NMS;
-using Apache.NMS.ActiveMQ;
-using Apache.NMS.ActiveMQ.Commands;
-using RoRClient.Model.DataTransferObject;
+using RoRClient.Communication.DataTransferObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.Model.Connections
+namespace RoRClient.Communication.Queue
 {
     public class QueueSender : QueueBase
     {

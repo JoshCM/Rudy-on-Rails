@@ -1,15 +1,9 @@
-﻿using Apache.NMS;
-using RoRClient.Model.Connections;
-using RoRClient.Model.DataTransferObject;
-using RoRClient.Model.Models;
-using RoRClient.Model.Models.Editor;
+﻿using RoRClient.Communication.DataTransferObject;
+using RoRClient.Models.Editor;
+using RoRClient.Models.Game;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RoRClient.Model.HandleResponse
+namespace RoRClient.Communication.Dispatcher
 {
     class ResponseDispatcher
     {
