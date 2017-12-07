@@ -6,7 +6,9 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
 
+import communication.MessageInformation;
 import communication.ServerConnection;
+import communication.dispatcher.RequestSerializer;
 
 public class TopicSender {
 	private Session session;
@@ -19,10 +21,11 @@ public class TopicSender {
 		createTopic();
 	}
 	
-	public void sendMessage(String messageType, String message) {
+	public void sendMessage(String messageType, MessageInformation messageInformation) {
 		try {
-			TextMessage textMessage;
-			textMessage = session.createTextMessage(message);
+			RequestSerializer requestSerializer = RequestSerializer.getInstance();
+			String content = requestSerializer.serialize(messageInformation);
+			TextMessage textMessage = session.createTextMessage(content);
 			textMessage.setJMSType(messageType);
 			publisher.send(textMessage);
 		} catch (JMSException e) {

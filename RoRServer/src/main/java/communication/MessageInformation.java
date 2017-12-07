@@ -5,17 +5,21 @@ import java.util.Map;
 
 public class MessageInformation {
     private String clientId;
+    private String messageType;
     private Map<String, Object> attributes = new HashMap<String, Object>();
 
     public MessageInformation(){}
 
-    public MessageInformation(String clientid, HashMap<String, Object> attributes) {
-        this.clientId = clientid;
-        this.attributes = attributes;
+    public MessageInformation(String messageType) {
+        this.messageType = messageType;
     }
 
     public String getClientid() {
         return clientId;
+    }
+    
+    public String getMessageType() {
+    	return messageType;
     }
 
     public String toString() {
