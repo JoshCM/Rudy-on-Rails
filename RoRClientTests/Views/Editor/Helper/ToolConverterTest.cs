@@ -1,19 +1,31 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoRClient.Views.Editor;
+using RoRClient.Views.Editor.Helper;
+using RoRClient.Models.Game;
+using System.IO;
 
 namespace RoRClientTests.Views.Editor.Helper
 {
     [TestClass]
-    class ToolConverterTest
+    public class ToolConverterTest
     {
         [TestMethod]
-        public void ToolConvert_ConvertStringToRailSection()
+        public void ToolConvert_ConvertStraightRailNameToRailSection()
         {
+            String toolName = "rail_ew";
+            RailSection railSection = new RailSection(RailSectionPosition.EAST, RailSectionPosition.WEST);
+            Assert.AreEqual(railSection.Node1, ToolConverter.convertToRailSection(toolName).Node1);
+            Assert.AreEqual(railSection.Node2, ToolConverter.convertToRailSection(toolName).Node2);
+
+        }
+
+        [TestMethod]
+        public void ToolConvert_ConvertCurveRailNameToRailSection()
+        {
+            String toolName = "railcurve_nw";
+            RailSection railSection = new RailSection(RailSectionPosition.NORTH, RailSectionPosition.WEST);
+            Assert.AreEqual(railSection.Node1, ToolConverter.convertToRailSection(toolName).Node1);
+            Assert.AreEqual(railSection.Node2, ToolConverter.convertToRailSection(toolName).Node2);
         }
     }
 }
