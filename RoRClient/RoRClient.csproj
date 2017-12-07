@@ -111,6 +111,8 @@
     <Compile Include="Models\Editor\EditorSession.cs" />
     <Compile Include="Models\Base\IModel.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
+    <Compile Include="Models\Game\Cart.cs" />
+    <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Player.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
