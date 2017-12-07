@@ -28,7 +28,7 @@ namespace RoRClientTests.ViewModel.Helper
         public void ViewModelFactory_ThrowsTypeLoadExceptionWithFalseModel()
         {
             ViewModelFactory viewModelFactory = new ViewModelFactory();
-            Square square = new Square(0, 0);
+            Player square = new Player(new Guid(), "testplayer");
 
             CanvasViewModel canvasViewModel = (CanvasViewModel)viewModelFactory.CreateViewModelForModel(square);
         }

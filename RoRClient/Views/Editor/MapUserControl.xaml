@@ -22,11 +22,11 @@
         </Button>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Bottom">
             <Canvas x:Name="thisCanvas" Background="Brown" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
-                <ItemsControl ItemsSource="{Binding Squares}">
+                <ItemsControl ItemsSource="{Binding SquareViewModels}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type m:Square}">
+                        <DataTemplate DataType="{x:Type vm:SquareViewModel}">
                             <Canvas>
-								<ve:SquareUserControl X="{Binding PosX}" Y="{Binding PosY}" ToolName="{Binding SelectedTool.Name, ElementName=mapUserControl}"/>
+                                <ve:SquareUserControl X="{Binding SquarePosX}" Y="{Binding SquarePosY}" SquareViewModel="{Binding}" ToolName="{Binding SelectedTool.Name, ElementName=mapUserControl}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

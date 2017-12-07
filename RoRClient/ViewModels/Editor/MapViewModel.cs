@@ -22,12 +22,12 @@ namespace RoRClient.ViewModels.Editor
     {
         private Map map;
 
-        private ObservableCollection<Square> squares = new ObservableCollection<Square>();
-        public ObservableCollection<Square> Squares
+        private ObservableCollection<SquareViewModel> squareViewModels = new ObservableCollection<SquareViewModel>();
+        public ObservableCollection<SquareViewModel> SquareViewModels
         {
             get
             {
-                return squares;
+                return squareViewModels;
             }
         }
 
@@ -85,7 +85,8 @@ namespace RoRClient.ViewModels.Editor
         {
             foreach (Square square in map.Squares)
             {
-                squares.Add(square);
+                SquareViewModel squareViewModel = new SquareViewModel(square);
+                squareViewModels.Add(squareViewModel);
                 square.PropertyChanged += OnSquarePropertyChanged;
 
                 if (square.PlaceableOnSquare != null && square.PlaceableOnSquare.GetType() == typeof(Rail))
@@ -117,9 +118,9 @@ namespace RoRClient.ViewModels.Editor
         private void CreateRandomRails()
         {
             Random rand = new Random();
-            foreach (Square square in Squares)
+            foreach (SquareViewModel squareViewModel in squareViewModels)
             {
-                square.PlaceableOnSquare = null;
+                squareViewModel.Square.PlaceableOnSquare = null;
                 if(rand.Next(3) == 0)
                 {
                     List<RailSection> railSections = new List<RailSection>();
@@ -130,8 +131,8 @@ namespace RoRClient.ViewModels.Editor
                     railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.SOUTH));
                     railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.NORTH));
 
-                    Rail rail = new Rail(Guid.NewGuid(), square, railSections[rand.Next(railSections.Count)]);
-                    square.PlaceableOnSquare = rail;
+                    Rail rail = new Rail(Guid.NewGuid(), squareViewModel.Square, railSections[rand.Next(railSections.Count)]);
+                    squareViewModel.Square.PlaceableOnSquare = rail;
                 }
             }
         }
@@ -139,9 +140,9 @@ namespace RoRClient.ViewModels.Editor
         private void ChangeRailSectionsFromActiveRails()
         {
             Random rand = new Random();
-            foreach (Square square in Squares)
+            foreach (SquareViewModel squareViewModel in squareViewModels)
             {
-                if(square.PlaceableOnSquare != null)
+                if(squareViewModel.Square.PlaceableOnSquare != null)
                 {
                     List<RailSection> railSections = new List<RailSection>();
                     railSections.Add(new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
@@ -151,7 +152,7 @@ namespace RoRClient.ViewModels.Editor
                     railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.SOUTH));
                     railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.NORTH));
 
-                    Rail rail = (Rail)square.PlaceableOnSquare;
+                    Rail rail = (Rail)squareViewModel.Square.PlaceableOnSquare;
                     rail.Section1 = railSections[rand.Next(railSections.Count)];
                 }
             }
