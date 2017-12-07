@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoRClient.Model.Models;
 using Newtonsoft.Json.Linq;
 using RoRClient.Model.Connections;
 
@@ -12,7 +8,8 @@ namespace RoRClient.Model.DataTransferObject
     //Klasse für den Inhalt der Messages an den Server (folgt dem Schema: ClientId, Request, Attributes)
     public class MessageInformation
     {
-        private readonly String _clientId;
+        private readonly string _clientId;
+        private string _messageId;
         private Dictionary<string, Object> _attributes;
       
         /// <summary>
@@ -29,6 +26,22 @@ namespace RoRClient.Model.DataTransferObject
         /// <summary>
         /// Klein geschriebene Property, damit Server das richtig deserialisieren kann
         /// </summary>
+        public String messageId
+        {
+            get
+            {
+                return _messageId;
+            }
+        }
+
+        public Guid MessageIdAsGuid()
+        {
+            return Guid.Parse(_messageId);
+        }
+
+        /// <summary>
+        /// Klein geschriebene Property, damit Server das richtig deserialisieren kann
+        /// </summary>
         public Dictionary<string, Object> attributes
         {
             get
@@ -40,6 +53,7 @@ namespace RoRClient.Model.DataTransferObject
         public MessageInformation()
         {
             _clientId = ClientConnection.GetInstance().ClientId.ToString();
+            _messageId = Guid.NewGuid().ToString();
             _attributes = new Dictionary<string, object>();
         }
 

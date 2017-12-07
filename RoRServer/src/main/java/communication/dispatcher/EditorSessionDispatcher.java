@@ -35,7 +35,7 @@ public class EditorSessionDispatcher extends DispatcherBase {
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(xPos, yPos);
 		
-		Rail rail = new Rail(square, new RailSection(railSectionPositionNode1, railSectionPositionNode2));
+		Rail rail = new Rail(square, RailSectionPosition.NORTH, RailSectionPosition.SOUTH);
 		square.setPlaceable(rail);
 	}
 }

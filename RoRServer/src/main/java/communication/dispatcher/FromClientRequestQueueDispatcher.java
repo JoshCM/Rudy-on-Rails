@@ -19,6 +19,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		RequestSerializer requestSerializer = RequestSerializer.getInstance();
 		String response = requestSerializer.serialize(messageInformation);
 		QueueSender queueSender = new QueueSender(messageInformation.getClientid());
+		queueSender.setup();
 		queueSender.sendMessage(messageType, response);
 	}
 
@@ -32,11 +33,12 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		
 		MessageInformation responseInformation = new MessageInformation();
 		responseInformation.setClientid(messageInformation.getClientid());
-		Player player = new Player(messageInformation.getValueAsString("Playername"));
 
 		if (EditorSessionManager.getInstance().getEditorSession() == null) {
 			editorSession = EditorSessionManager.getInstance()
 					.createNewEditorSession(messageInformation.getValueAsString("Editorname"));
+			editorSession.setup();
+			Player player = new Player(editorSession, messageInformation.getValueAsString("Playername"));
 			editorSession.addPlayer(player);
 			
 			responseInformation.putValue("Topicname", editorSession.getName());
@@ -46,6 +48,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 			sendMessage("CreateEditorSession", responseInformation);
 		} else {
 			editorSession = EditorSessionManager.getInstance().getEditorSession();
+			Player player = new Player(editorSession, messageInformation.getValueAsString("Playername"));
 			editorSession.addPlayer(player);
 			
 			responseInformation.putValue("Topicname", editorSession.getName());

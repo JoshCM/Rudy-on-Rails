@@ -23,11 +23,6 @@ public class DummyGame {
 		log.info("DummyGame.DummyGame(String sessionName) : sessionName"+sessionName);
 	}
 	
-	public void sendAction() {
-		sessionTopicSender.sendMessage("Message", "Connected to Topic");
-		log.info("DummyGame.sendAction()");
-	}
-
 	public void setMap(Map map){
 		this.map = map;
 	}

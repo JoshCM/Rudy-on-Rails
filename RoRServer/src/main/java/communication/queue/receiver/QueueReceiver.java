@@ -18,9 +18,7 @@ public abstract class QueueReceiver extends QueueBase implements MessageListener
 
 	public QueueReceiver(String queueName) {
 		super.queueName = queueName;
-		this.createQueue();
 	}
-	
 
 	@Override
 	public void onMessage(Message message) {
@@ -34,9 +32,8 @@ public abstract class QueueReceiver extends QueueBase implements MessageListener
 		}		
 	}
 	
-	protected void createQueue() {
-		
-		super.createQueue();
+	public void setup() {
+		super.setup();
 		
 		try {
 			consumer = session.createConsumer(queue);
@@ -48,11 +45,4 @@ public abstract class QueueReceiver extends QueueBase implements MessageListener
 			e.printStackTrace();
 		}
 	}
-	
-	public QueueSender createNewQueueSender(String queueName) {
-		return new QueueSender(queueName);
-	}
-	
-	
-
 }
