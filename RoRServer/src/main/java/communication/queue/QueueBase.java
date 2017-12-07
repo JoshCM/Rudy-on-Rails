@@ -12,7 +12,7 @@ public abstract class QueueBase {
 	protected Queue queue;
 	protected String queueName;
 
-	protected void createQueue() {
+	public void setup() {
 	
 		try {
 			
