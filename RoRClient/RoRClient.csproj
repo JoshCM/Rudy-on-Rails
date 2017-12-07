@@ -101,6 +101,7 @@
     </ApplicationDefinition>
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
+    <Compile Include="Communication\Dispatcher\DispatcherBase.cs" />
     <Compile Include="Communication\Queue\FromServerResponseQueueReceiver.cs" />
     <Compile Include="Communication\Queue\QueueSender.cs" />
     <Compile Include="Communication\DataTransferObject\MessageBuilder.cs" />
