@@ -41,7 +41,7 @@ namespace RoRClient.Model.Connections
         {
             ITextMessage textMessage = message as ITextMessage;
             string messageType = message.NMSType;
-            MessageInformation messageInformation = MessageDeserializer.getInstance().deserialize(textMessage.Text);
+            MessageInformation messageInformation = MessageDeserializer.getInstance().Deserialize(textMessage.Text);
 
             if(messageType == "CreateRail")
             {

@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace RoRClient.ViewModel
 {
-    class MainWindowViewModel:ViewModelBase
+    class MainViewModel : ViewModelBase
     {
         Dictionary<string, ViewModelBase> viewmodels = new Dictionary<string, ViewModelBase>();
         private UIState uiState = new UIState();
@@ -31,7 +31,7 @@ namespace RoRClient.ViewModel
         {
             CurrentViewModel = viewmodels[args.Statename];
         }
-        public MainWindowViewModel()
+        public MainViewModel()
         {
             viewmodels.Add("start", new StartViewModel(uiState));
             viewmodels.Add("editor", new EditorViewModel(uiState));

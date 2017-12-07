@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModel.Helper
 {
-    public class ViewModelBaseH : INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged
     {
         /* 
          * Standard-Basisklasse für ViewModels 
@@ -16,7 +16,6 @@ namespace RoRClient.ViewModel.Helper
          */
 
         public event PropertyChangedEventHandler PropertyChanged;
-
 
         //[CallerMemberName] erlaubt uns im ViewModel OnPropertyChanged();  
         //anstatt von OnPropertyChanged("SomeProperty"); zu schreiben 

@@ -9,7 +9,7 @@ namespace RoRClient.ViewModel.Helper
 {
     public static class EditorCommands
     {
-        private static ICommand exit = new Exit();
+        private static ICommand exit = new ExitCommand();
         public static ICommand Exit { get { return exit; } }
     }
 }

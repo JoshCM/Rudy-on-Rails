@@ -12,36 +12,50 @@ namespace RoRClient.Model.DataTransferObject
     //Klasse für den Inhalt der Messages an den Server (folgt dem Schema: ClientId, Request, Attributes)
     public class MessageInformation
     {
-        public readonly String clientId;
-        public Dictionary<string, Object> attributes;
-
-        public Dictionary<string, Object> Attributes
+        private readonly String _clientId;
+        private Dictionary<string, Object> _attributes;
+      
+        /// <summary>
+        /// Klein geschriebene Property, damit Server das richtig deserialisieren kann
+        /// </summary>
+        public String clientId
         {
             get
             {
-                return attributes;
+                return _clientId;
+            }
+        }
+
+        /// <summary>
+        /// Klein geschriebene Property, damit Server das richtig deserialisieren kann
+        /// </summary>
+        public Dictionary<string, Object> attributes
+        {
+            get
+            {
+                return _attributes;
             }
         }
 
         public MessageInformation()
         {
-            clientId = ClientConnection.GetInstance().ClientId.ToString();
-            attributes = new Dictionary<string, object>();
+            _clientId = ClientConnection.GetInstance().ClientId.ToString();
+            _attributes = new Dictionary<string, object>();
         }
 
         public void PutValue(string key, object value)
         {
-            attributes.Add(key, value);
+            _attributes.Add(key, value);
         }
         
         public String GetValueAsString(string key)
         {
-            return (string)attributes[key];
+            return (string)_attributes[key];
         }
 
         public int GetValueAsInt(string key)
         {
-            object obj = attributes[key];
+            object obj = _attributes[key];
             if(obj.GetType() == typeof(double))
             {
                 return Convert.ToInt32(obj);
@@ -52,12 +66,12 @@ namespace RoRClient.Model.DataTransferObject
 
         public double GetValueAsDouble(string key)
         {
-            return (double)attributes[key];
+            return (double)_attributes[key];
         }
 
         public bool GetValueAsBool(string key)
         {
-            return (bool)attributes[key];
+            return (bool)_attributes[key];
         }
 
         public JObject GetValueAsJsonObject(string key)

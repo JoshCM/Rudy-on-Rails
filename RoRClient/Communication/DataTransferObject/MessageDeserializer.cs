@@ -27,19 +27,16 @@ namespace RoRClient.Model.DataTransferObject
             return messageDeserializer;
         }
 
-
         /// <summary>
         /// hier soll die empfangene Textmessage(ein String) zu einem MessageInformation Objekt deserialisiert werden
         /// </summary>
         /// <param name="textMessage"></param>
         /// <returns></returns>
-        internal MessageInformation deserialize(String textMessage)
+        internal MessageInformation Deserialize(String textMessage)
         {
             MessageInformation messageInformation = JsonConvert.DeserializeObject<MessageInformation>(textMessage);
 
             return messageInformation;
-        }
-        
+        } 
     }
-    
 }

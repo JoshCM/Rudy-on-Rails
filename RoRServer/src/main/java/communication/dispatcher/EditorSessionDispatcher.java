@@ -1,6 +1,6 @@
 package communication.dispatcher;
 
-import models.dataTranserObject.MessageInformation;
+import communication.MessageInformation;
 import models.editor.EditorSession;
 import models.game.Map;
 import models.game.Rail;

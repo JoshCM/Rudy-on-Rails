@@ -4,7 +4,7 @@ using System.Windows.Input;
 
 namespace RoRClient.ViewModel.Helper
 {
-    internal class Exit : ICommand
+    internal class ExitCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
 

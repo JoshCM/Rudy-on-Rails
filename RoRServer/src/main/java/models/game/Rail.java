@@ -1,6 +1,6 @@
 package models.game;
 
-import models.dataTranserObject.MessageInformation;
+import communication.MessageInformation;
 
 /**
  * Klasse fuer Schienen, die einem Feld (Square) zugeordnet sind und ein

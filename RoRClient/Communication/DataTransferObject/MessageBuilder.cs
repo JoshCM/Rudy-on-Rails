@@ -15,7 +15,6 @@ namespace RoRClient.Model.DataTransferObject
 	{
 		public static IMessage build(String messageType, MessageInformation content)
 		{
-
 			ISession session = ClientConnection.GetInstance().Session;
             String contentString = JsonConvert.SerializeObject(content);
             

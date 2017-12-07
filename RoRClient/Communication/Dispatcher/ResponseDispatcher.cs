@@ -26,7 +26,7 @@ namespace RoRClient.Model.HandleResponse
         /// <param name="message"></param>
 		internal void dispatch(string messageType, String content)
         {
-            MessageInformation messageInformation = MessageDeserializer.getInstance().deserialize(content);
+            MessageInformation messageInformation = MessageDeserializer.getInstance().Deserialize(content);
 
             if(messageType == "CreateEditorSession")
             {

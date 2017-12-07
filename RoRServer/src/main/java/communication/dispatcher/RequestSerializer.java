@@ -1,7 +1,8 @@
 package communication.dispatcher;
 
 import com.google.gson.Gson;
-import models.dataTranserObject.MessageInformation;
+
+import communication.MessageInformation;
 
 public class RequestSerializer {
     private static RequestSerializer requestSerializer = null;

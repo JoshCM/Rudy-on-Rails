@@ -102,71 +102,68 @@
     <Compile Include="BindingConverter\ImagePathToRailSectionConverter.cs" />
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
-    <Compile Include="Model\Connections\FromServerResponseReceiver.cs" />
-    <Compile Include="Model\Connections\QueueSender.cs" />
-    <Compile Include="Model\DataTransferObject\MessageBuilder.cs" />
-    <Compile Include="Model\DataTransferObject\MessageDeserializer.cs" />
-    <Compile Include="Model\DataTransferObject\MessageInformation.cs" />
-    <Compile Include="Model\DataTransferObject\MessageType.cs" />
-    <Compile Include="Model\DataTransferObject\RequestType.cs" />
-    <Compile Include="Model\HandleResponse\ResponseDispatcher.cs" />
-    <Compile Include="Model\Models\Editor\EditorSession.cs" />
-    <Compile Include="Model\Models\IModel.cs" />
-    <Compile Include="Model\Models\ModelBase.cs" />
-    <Compile Include="Model\Models\Player.cs" />
+    <Compile Include="Communication\Queue\FromServerResponseQueueReceiver.cs" />
+    <Compile Include="Communication\Queue\QueueSender.cs" />
+    <Compile Include="Communication\DataTransferObject\MessageBuilder.cs" />
+    <Compile Include="Communication\DataTransferObject\MessageDeserializer.cs" />
+    <Compile Include="Communication\DataTransferObject\MessageInformation.cs" />
+    <Compile Include="Communication\Dispatcher\ResponseDispatcher.cs" />
+    <Compile Include="Models\Editor\EditorSession.cs" />
+    <Compile Include="Models\Base\IModel.cs" />
+    <Compile Include="Models\Base\ModelBase.cs" />
+    <Compile Include="Models\Game\Player.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\Helper\UIState.cs" />
-    <Compile Include="ViewModel\Helper\ViewModelFactory.cs" />
-    <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="ViewModel\StartViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="ViewModel\Editor\CanvasViewModel.cs" />
-    <Compile Include="ViewModel\Helper\INotifyPropertyChangedExtended.cs" />
-    <Compile Include="ViewModel\Helper\PropertyChangedExtendedEventArgs.cs" />
-    <Compile Include="ViewModel\Editor\RailViewModel.cs" />
-    <Compile Include="ViewModel\ViewConstants.cs" />
-    <Compile Include="ViewModel\Editor\MapViewModel.cs" />
-    <Compile Include="View\CanvasUserControl.cs" />
-    <Compile Include="View\Editor\RailUserControl.xaml.cs">
+    <Compile Include="ViewModels\Helper\UIState.cs" />
+    <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\Lobby\StartViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\CanvasViewModel.cs" />
+    <Compile Include="ViewModels\Helper\INotifyPropertyChangedExtended.cs" />
+    <Compile Include="ViewModels\Helper\PropertyChangedExtendedEventArgs.cs" />
+    <Compile Include="ViewModels\Editor\RailViewModel.cs" />
+    <Compile Include="ViewModels\ViewConstants.cs" />
+    <Compile Include="ViewModels\Editor\MapViewModel.cs" />
+    <Compile Include="Views\CanvasUserControl.cs" />
+    <Compile Include="Views\Editor\RailUserControl.xaml.cs">
       <DependentUpon>RailUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Editor\SelectedToolUserControl.xaml.cs">
+    <Compile Include="Views\Editor\SelectedToolUserControl.xaml.cs">
       <DependentUpon>SelectedToolUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Editor\SquareUserControl.xaml.cs">
+    <Compile Include="Views\Editor\SquareUserControl.xaml.cs">
       <DependentUpon>SquareUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Editor\MapUserControl.xaml.cs">
+    <Compile Include="Views\Editor\MapUserControl.xaml.cs">
       <DependentUpon>MapUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Models\ToolItem.cs" />
-    <Compile Include="ViewModel\EditorViewModel.cs" />
-    <Compile Include="ViewModel\Editor\ToolbarViewModel.cs" />
-    <Compile Include="ViewModel\Helper\EditorCommands.cs" />
-    <Compile Include="ViewModel\Helper\Exit.cs" />
-    <Compile Include="ViewModel\Helper\ObservableObjectBaseClass.cs" />
-    <Compile Include="View\Editor\ToolbarUserControl.xaml.cs">
+    <Compile Include="ViewModels\Editor\ToolItem.cs" />
+    <Compile Include="ViewModels\Editor\EditorViewModel.cs" />
+    <Compile Include="ViewModels\Editor\ToolbarViewModel.cs" />
+    <Compile Include="ViewModels\Commands\EditorCommands.cs" />
+    <Compile Include="ViewModels\Commands\ExitCommand.cs" />
+    <Compile Include="Views\Editor\ToolbarUserControl.xaml.cs">
       <DependentUpon>ToolbarUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Editor\TopMenuUserControl.xaml.cs">
+    <Compile Include="Views\Editor\TopMenuUserControl.xaml.cs">
       <DependentUpon>TopMenuUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\EditorUserControl.xaml.cs">
+    <Compile Include="Views\Editor\EditorUserControl.xaml.cs">
       <DependentUpon>EditorUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\Helper\ActionCommand.cs" />
-    <Compile Include="ViewModel\Helper\ViewModelBaseH.cs" />
-    <Compile Include="View\Editor\AttributeSelectionUserControl.xaml.cs">
+    <Compile Include="ViewModels\Commands\ActionCommand.cs" />
+    <Compile Include="ViewModels\Helper\ViewModelBase.cs" />
+    <Compile Include="Views\Editor\AttributeSelectionUserControl.xaml.cs">
       <DependentUpon>AttributeSelectionUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StartView.xaml.cs">
+    <Compile Include="Views\Lobby\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -174,61 +171,61 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\Editor\SelectedToolUserControl.xaml">
+    <Page Include="Views\Editor\SelectedToolUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Editor\ToolbarUserControl.xaml">
+    <Page Include="Views\Editor\ToolbarUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Editor\TopMenuUserControl.xaml">
+    <Page Include="Views\Editor\TopMenuUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\EditorUserControl.xaml">
+    <Page Include="Views\Editor\EditorUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Editor\AttributeSelectionUserControl.xaml">
+    <Page Include="Views\Editor\AttributeSelectionUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Editor\RailUserControl.xaml">
+    <Page Include="Views\Editor\RailUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Editor\SquareUserControl.xaml">
+    <Page Include="Views\Editor\SquareUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Editor\MapUserControl.xaml">
+    <Page Include="Views\Editor\MapUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\StartView.xaml">
+    <Page Include="Views\Lobby\StartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Connections\ClientConnection.cs" />
-    <Compile Include="Model\Connections\QueueBase.cs" />
-    <Compile Include="Model\Models\ClientModel.cs" />
-    <Compile Include="Model\Connections\TopicReceiver.cs" />
-    <Compile Include="Model\Models\InteractiveGameObject.cs" />
-    <Compile Include="Model\Models\Map.cs" />
-    <Compile Include="Model\Models\IPlaceable.cs" />
-    <Compile Include="Model\Models\IPlaceableOnRail.cs" />
-    <Compile Include="Model\Models\IPlaceableOnSquare.cs" />
-    <Compile Include="Model\Models\Rail.cs" />
-    <Compile Include="Model\Models\RailSection.cs" />
-    <Compile Include="Model\Models\RailSectionPosition.cs" />
-    <Compile Include="Model\Models\Square.cs" />
+    <Compile Include="Communication\ClientConnection.cs" />
+    <Compile Include="Communication\Queue\QueueBase.cs" />
+    <Compile Include="Models\Game\ClientModel.cs" />
+    <Compile Include="Communication\Topic\TopicReceiver.cs" />
+    <Compile Include="Models\Game\InteractiveGameObject.cs" />
+    <Compile Include="Models\Game\Map.cs" />
+    <Compile Include="Models\Game\IPlaceable.cs" />
+    <Compile Include="Models\Game\IPlaceableOnRail.cs" />
+    <Compile Include="Models\Game\IPlaceableOnSquare.cs" />
+    <Compile Include="Models\Game\Rail.cs" />
+    <Compile Include="Models\Game\RailSection.cs" />
+    <Compile Include="Models\Game\RailSectionPosition.cs" />
+    <Compile Include="Models\Game\Square.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

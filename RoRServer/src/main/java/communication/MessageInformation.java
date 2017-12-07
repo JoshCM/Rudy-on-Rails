@@ -1,4 +1,4 @@
-package models.dataTranserObject;
+package communication;
 
 import java.util.HashMap;
 import java.util.Map;

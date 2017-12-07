@@ -1,4 +1,7 @@
-﻿using System;
+﻿using RoRClient.Model.Models;
+using RoRClient.ViewModel;
+using RoRClient.ViewModel.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,14 +16,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RoRClient.View
+namespace RoRClient
 {
     /// <summary>
-    /// Interaktionslogik für UserControl1.xaml
+    /// Interaktionslogik für MainView.xaml
     /// </summary>
-    public partial class StartView: UserControl
+    public partial class MainView : Window
     {
-        public StartView()
+        public MainView()
         {
             InitializeComponent();
         }

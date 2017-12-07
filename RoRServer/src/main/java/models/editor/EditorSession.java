@@ -1,10 +1,10 @@
 package models.editor;
 
-import models.dataTranserObject.MessageInformation;
 import models.game.Map;
 import models.game.Player;
 import communication.queue.receiver.FromClientRequestsEditorQueueReceiver;
 import communication.topic.TopicSender;
+import communication.MessageInformation;
 import communication.dispatcher.RequestSerializer;
 
 import java.util.ArrayList;

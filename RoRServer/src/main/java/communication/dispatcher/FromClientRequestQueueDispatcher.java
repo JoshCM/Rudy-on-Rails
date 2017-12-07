@@ -1,7 +1,7 @@
 package communication.dispatcher;
 
+import communication.MessageInformation;
 import communication.queue.sender.QueueSender;
-import models.dataTranserObject.MessageInformation;
 import models.editor.EditorSession;
 import models.editor.EditorSessionManager;
 import models.game.Player;
