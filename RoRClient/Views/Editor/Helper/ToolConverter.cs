@@ -3,7 +3,7 @@ using System;
 
 namespace RoRClient.Views.Editor.Helper
 {
-    class ToolConverter
+    public class ToolConverter
     {
         /// <summary>
         /// Erzeugt aus einem definierten Namen eine Railsection mit zwei RailSectionPositions
