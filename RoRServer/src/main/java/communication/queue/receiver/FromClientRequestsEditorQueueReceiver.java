@@ -5,17 +5,16 @@ import java.util.Date;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
-
-import HandleRequests.EditorRequestDispatcher;
+import communication.dispatcher.EditorSessionDispatcher;
 import models.editor.EditorSession;
 
-public class FromClientRequestsEditorQueue extends QueueReceiver {
+public class FromClientRequestsEditorQueueReceiver extends QueueReceiver {
 
-	private EditorRequestDispatcher editorRequestDispatcher;
+	private EditorSessionDispatcher editorRequestDispatcher;
 
-	public FromClientRequestsEditorQueue(String queueName, EditorSession editorSession) {
+	public FromClientRequestsEditorQueueReceiver(String queueName, EditorSession editorSession) {
 		super(queueName);
-		editorRequestDispatcher = new EditorRequestDispatcher(editorSession);
+		editorRequestDispatcher = new EditorSessionDispatcher(editorSession);
 	}
 	
 	@Override

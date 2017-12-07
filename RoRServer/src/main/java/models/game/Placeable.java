@@ -1,6 +1,6 @@
 package models.game;
 
-import models.Model;
+import models.base.Model;
 
 /**
  * Interface für platzierbare Objekte

@@ -1,28 +1,19 @@
-package HandleRequests;
+package communication.dispatcher;
 
-import communication.queue.sender.FromServerResponseQueue;
+import communication.queue.sender.QueueSender;
 import models.dataTranserObject.MessageInformation;
 import models.editor.EditorSession;
+import models.editor.EditorSessionManager;
 import models.game.Player;
-import models.session.EditorSessionManager;
-
 import org.apache.log4j.Logger;
-
 import com.google.gson.JsonObject;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequestDispatcher {
-	private static RequestDispatcher requestHandler;
-
-	static Logger log = Logger.getLogger(RequestDispatcher.class.getName());
-
-	private RequestDispatcher() {
-
-	}
+public class FromClientRequestQueueDispatcher {
+	private Logger log = Logger.getLogger(FromClientRequestQueueDispatcher.class.getName());
 
 	private void callMethodFromString(String method, MessageInformation messageInfo) {
 		try {
@@ -42,15 +33,7 @@ public class RequestDispatcher {
 			e.printStackTrace();
 		}
 	}
-
-	public static RequestDispatcher getInstance() {
-		if (requestHandler == null) {
-			requestHandler = new RequestDispatcher();
-		}
-
-		return requestHandler;
-	}
-
+	
 	/**
 	 * INFO: Eventuell kann man die Response-sache nochmal aufspillten/verteilen
 	 * Verteilt die Anfrage je nach requestTyp an unterschiedliche Ziele, welche die
@@ -72,8 +55,8 @@ public class RequestDispatcher {
 	private void sendMessage(String messageType, MessageInformation messageInformation) {
 		RequestSerializer requestSerializer = RequestSerializer.getInstance();
 		String response = requestSerializer.serialize(messageInformation);
-		FromServerResponseQueue fromServerResponseQueue = new FromServerResponseQueue(messageInformation.getClientid());
-		fromServerResponseQueue.sendMessage(messageType, response);
+		QueueSender queueSender = new QueueSender(messageInformation.getClientid());
+		queueSender.sendMessage(messageType, response);
 	}
 
 	/**

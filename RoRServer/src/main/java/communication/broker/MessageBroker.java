@@ -1,18 +1,17 @@
 package communication.broker;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.log4j.Logger;
-import communication.queue.receiver.FromClientRequestQueue;
+import communication.queue.receiver.FromClientRequestQueueReceiver;
 import resources.PropertyManager;
 
 
 // Singleton
 public class MessageBroker {
-	
-	
 	private static MessageBroker messageBroker = null;	
 	private BrokerService broker = null;
 	static Logger log = Logger.getLogger(MessageBroker.class.getName());
-	private static String clientRequestQueueName = "ClientRequestQueue";
+	private static String CLIENT_REQUEST_QUEUE_NAME = "ClientRequestQueue";
+	private FromClientRequestQueueReceiver fromClientRequestQueueReceiver;
 
 	private MessageBroker(){
 		broker = new BrokerService();
@@ -31,17 +30,13 @@ public class MessageBroker {
 		try {
 			broker.addConnector(PropertyManager.getProperty("broker_url"));
 			broker.start();
-			FromClientRequestQueue clientRequestQueue = new FromClientRequestQueue(clientRequestQueueName);
+			fromClientRequestQueueReceiver = new FromClientRequestQueueReceiver(CLIENT_REQUEST_QUEUE_NAME);
 			log.info("MessageBroker.startBroker(): " + PropertyManager.getProperty("broker_url"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	public String getClientRequestQueueName() {
-		return clientRequestQueueName;
-	}
-
-	public void setClientRequestQueueName(String clientRequestQueueName) {
-		this.clientRequestQueueName = clientRequestQueueName;
+		return CLIENT_REQUEST_QUEUE_NAME;
 	}
 }

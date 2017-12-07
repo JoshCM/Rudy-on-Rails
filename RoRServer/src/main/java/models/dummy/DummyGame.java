@@ -1,16 +1,16 @@
-package models.game;
+package models.dummy;
 
 import org.apache.log4j.Logger;
-import communication.session.SessionQueueReceiver;
-import communication.session.SessionTopicSender;
-import models.MapManager;
+
+import communication.topic.TopicSender;
+import models.game.Map;
+import persistent.MapManager;
 
 public class DummyGame {
-	
+	// ToDo: Wird das hier noch gebraucht?
 	private Map map;
 	private MapManager mapManager;
-	SessionQueueReceiver sessionQueueReceiver;
-	SessionTopicSender sessionTopicSender;
+	TopicSender sessionTopicSender;
 	static Logger log = Logger.getLogger(DummyGame.class.getName());
 	
 	public DummyGame(){
@@ -19,10 +19,8 @@ public class DummyGame {
 	}
 	
 	public DummyGame(String sessionName) {
-		sessionQueueReceiver = new SessionQueueReceiver(sessionName);
-		sessionTopicSender = new SessionTopicSender(sessionName);
+		sessionTopicSender = new TopicSender(sessionName);
 		log.info("DummyGame.DummyGame(String sessionName) : sessionName"+sessionName);
-		sessionQueueReceiver.setGame(this);
 	}
 	
 	public void sendAction() {
@@ -45,6 +43,4 @@ public class DummyGame {
 	public Map getMap() {
 		return map;
 	}
-	
-
 }

@@ -7,15 +7,19 @@ import javax.jms.Message;
 import javax.jms.TextMessage;
 
 import org.apache.log4j.Logger;
-import HandleRequests.RequestDispatcher;
 
-// Allgemeine Queue für Clients, die ein Spiel oder editor erstellen wollen
-public class FromClientRequestQueue extends QueueReceiver {
+import communication.dispatcher.FromClientRequestQueueDispatcher;
 
-	static Logger log = Logger.getLogger(FromClientRequestQueue.class.getName());
+/**
+ *  Allgemeine Queue für Clients, die eine GameSession oder EditorSession erstellen wollen
+ */
+public class FromClientRequestQueueReceiver extends QueueReceiver {
+	private Logger log = Logger.getLogger(FromClientRequestQueueReceiver.class.getName());
+	private FromClientRequestQueueDispatcher requestDispatcher;
 
-	public FromClientRequestQueue(String queueName) {
+	public FromClientRequestQueueReceiver(String queueName) {
 		super(queueName);
+		requestDispatcher = new FromClientRequestQueueDispatcher();
 	}
 
 	@Override
@@ -31,11 +35,9 @@ public class FromClientRequestQueue extends QueueReceiver {
 
 			log.info("ClientRequestReceiver.onMessage(): ... Message received [" + new Date().toString() + "]: "
 					+ textMessage.getText());
-			RequestDispatcher requestDispatcher = RequestDispatcher.getInstance();
 			requestDispatcher.dispatch(request, textMessage.getText());
 		} catch (JMSException e) {
-			log.error(
-					"FromClientRequestQueue.onMessage(Message message) : QueueSender konnte Nachricht nicht verschicken");
+			log.error("FromClientRequestQueue.onMessage() : QueueSender konnte Nachricht nicht verschicken");
 			e.printStackTrace();
 		}
 	}

@@ -1,4 +1,4 @@
-package models;
+package models.dummy;
 
 import models.game.InteractiveGameObject;
 import models.game.PlaceableOnRail;

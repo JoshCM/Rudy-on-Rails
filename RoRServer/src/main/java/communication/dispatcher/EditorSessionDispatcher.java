@@ -1,4 +1,4 @@
-package HandleRequests;
+package communication.dispatcher;
 
 import models.dataTranserObject.MessageInformation;
 import models.editor.EditorSession;
@@ -8,10 +8,10 @@ import models.game.RailSection;
 import models.game.RailSectionPosition;
 import models.game.Square;
 
-public class EditorRequestDispatcher {
+public class EditorSessionDispatcher {
 	private EditorSession editorSession;
 	
-	public EditorRequestDispatcher(EditorSession editorSession) {
+	public EditorSessionDispatcher(EditorSession editorSession) {
 		this.editorSession = editorSession;
 	}
 	

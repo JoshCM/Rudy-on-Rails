@@ -27,7 +27,6 @@ public class QueueSender extends QueueBase {
 		} catch (JMSException e) {
 			log.error("QueueSender.createQueue(): kann keinen Producer erstellen");
 			e.printStackTrace();
-			
 		}
 	}
 

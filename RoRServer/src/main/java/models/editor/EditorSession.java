@@ -3,11 +3,11 @@ package models.editor;
 import models.dataTranserObject.MessageInformation;
 import models.game.Map;
 import models.game.Player;
-import communication.queue.receiver.FromClientRequestsEditorQueue;
-import communication.session.SessionTopicSender;
-import java.util.ArrayList;
+import communication.queue.receiver.FromClientRequestsEditorQueueReceiver;
+import communication.topic.TopicSender;
+import communication.dispatcher.RequestSerializer;
 
-import HandleRequests.RequestSerializer;
+import java.util.ArrayList;
 
 //Erbt von BaseModel, die die ID generiert
 public class EditorSession {
@@ -16,13 +16,13 @@ public class EditorSession {
     private ArrayList<Player> players = new ArrayList<>();
     private Map map;
 
-    private SessionTopicSender topicSender;
-    private FromClientRequestsEditorQueue queueReceiver;
+    private TopicSender topicSender;
+    private FromClientRequestsEditorQueueReceiver queueReceiver;
 
     public EditorSession(String name) {
         this.name = name;
-        this.topicSender = new SessionTopicSender(name);
-        this.queueReceiver = new FromClientRequestsEditorQueue(name, this);
+        this.topicSender = new TopicSender(name);
+        this.queueReceiver = new FromClientRequestsEditorQueueReceiver(name, this);
         map = new Map(this);
     }
 
@@ -47,7 +47,7 @@ public class EditorSession {
     	return players;
     }
 
-    public SessionTopicSender getTopicSender() {
+    public TopicSender getTopicSender() {
         return topicSender;
     }
 	

@@ -1,11 +1,14 @@
-package models;
+package models.persistent;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+
+import models.dummy.DummySignal;
 import models.game.Map;
 import models.game.Rail;
 import models.game.RailSection;
 import models.game.RailSectionPosition;
+import persistent.MapManager;
 
 public class MapManagerTest {
 	

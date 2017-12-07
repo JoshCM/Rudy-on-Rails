@@ -3,7 +3,7 @@ import javax.jms.JMSException;
 import javax.jms.Queue;
 import javax.jms.Session;
 
-import communication.connection.ServerConnection;
+import communication.ServerConnection;
 
 public abstract class QueueBase {
 	

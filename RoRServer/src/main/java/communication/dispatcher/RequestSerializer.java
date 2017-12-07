@@ -1,15 +1,11 @@
-package HandleRequests;
+package communication.dispatcher;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import models.dataTranserObject.MessageInformation;
 
 public class RequestSerializer {
-
     private static RequestSerializer requestSerializer = null;
     private Gson gson = new Gson();
-
 
     private RequestSerializer() {}
 
@@ -27,8 +23,6 @@ public class RequestSerializer {
      */
     public MessageInformation deserialize(String msg) {
         MessageInformation messageInformation = null;
-
-        JsonObject jsonObject = gson.fromJson(msg, JsonElement.class).getAsJsonObject();
         messageInformation = gson.fromJson(msg, MessageInformation.class);
 
         return messageInformation;

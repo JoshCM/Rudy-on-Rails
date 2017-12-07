@@ -1,6 +1,6 @@
 package models.game;
 
-import models.ModelBase;
+import models.base.ModelBase;
 
 public class Player extends ModelBase {
 

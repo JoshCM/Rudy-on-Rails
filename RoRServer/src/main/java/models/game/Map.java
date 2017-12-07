@@ -1,6 +1,6 @@
 package models.game;
 
-import models.ModelBase;
+import models.base.ModelBase;
 import models.editor.EditorSession;
 
 import java.util.Arrays;

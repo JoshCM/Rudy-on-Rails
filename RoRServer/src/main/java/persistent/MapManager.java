@@ -1,4 +1,4 @@
-package models;
+package persistent;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -30,7 +30,6 @@ public class MapManager {
 	private Gson gsonSaver;
 	
 	public MapManager() {
-		
 		// Loader: Hier werden die erforderlichen Adapter zum Deserialisieren für Gson bereitgestellt.
 		gsonLoader = new GsonBuilder()
 		.registerTypeAdapter(Placeable.class, new PlaceableDeserializer<Placeable>())
@@ -40,7 +39,6 @@ public class MapManager {
 		
 		// Saver
 		gsonSaver = new GsonBuilder().setPrettyPrinting().create();
-		
 	}
 
 	/**
@@ -110,5 +108,4 @@ public class MapManager {
 			e.printStackTrace();
 		}
 	}
-
 }

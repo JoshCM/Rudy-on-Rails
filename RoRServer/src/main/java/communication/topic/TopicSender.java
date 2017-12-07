@@ -1,4 +1,4 @@
-package communication.session;
+package communication.topic;
 import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
@@ -6,16 +6,15 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
 
-import communication.connection.ServerConnection;
+import communication.ServerConnection;
 
-public class SessionTopicSender {
-
+public class TopicSender {
 	private Session session;
 	private MessageProducer publisher;
 	private Topic topic;
 	private String topicName;
 	
-	public SessionTopicSender(String topicName) {
+	public TopicSender(String topicName) {
 		this.topicName = topicName;
 		createTopic();
 	}
@@ -33,12 +32,10 @@ public class SessionTopicSender {
 
 	private void createTopic() {
 		try {
-
 			session = ServerConnection.getInstance().getSession();
 			topic = session.createTopic(topicName);
 			publisher = session.createProducer(topic);
 			publisher.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
-			
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
