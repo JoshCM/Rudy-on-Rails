@@ -50,6 +50,11 @@ namespace RoRClient.Model.DataTransferObject
             }
         }
 
+        public MessageInformation(string messageType)
+        {
+            
+        }
+
         public MessageInformation()
         {
             _clientId = ClientConnection.GetInstance().ClientId.ToString();

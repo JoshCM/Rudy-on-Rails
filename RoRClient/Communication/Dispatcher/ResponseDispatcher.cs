@@ -31,11 +31,11 @@ namespace RoRClient.Model.HandleResponse
             if(messageType == "CreateEditorSession")
             {
                 EditorSession editorSession = EditorSession.GetInstance();
-                editorSession.Name = messageInformation.GetValueAsString("Editorname");
-                editorSession.Init(messageInformation.GetValueAsString("Topicname"));
+                editorSession.Name = messageInformation.GetValueAsString("editorName");
+                editorSession.Init(messageInformation.GetValueAsString("topicName"));
 
-                Guid playerId = Guid.Parse(messageInformation.GetValueAsString("Playerid"));
-                string playerName = messageInformation.GetValueAsString("Playername");
+                Guid playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
+                string playerName = messageInformation.GetValueAsString("playerName");
                 Player player = new Player(playerId, playerName);
                 editorSession.AddPlayer(player);
                 clientModel.Connected = true;
@@ -43,8 +43,8 @@ namespace RoRClient.Model.HandleResponse
             else if(messageType == "JoinEditorSession")
             {
                 EditorSession editorSession = EditorSession.GetInstance();
-                editorSession.Name = messageInformation.GetValueAsString("Editorname");
-                editorSession.Init(messageInformation.GetValueAsString("Topicname"));
+                editorSession.Name = messageInformation.GetValueAsString("editorName");
+                editorSession.Init(messageInformation.GetValueAsString("topicName"));
 
                 // ToDo: Hier noch die Liste von PlayerIds bearbeiten und Player erstellen!
                 clientModel.Connected = true;

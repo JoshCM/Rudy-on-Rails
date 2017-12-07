@@ -54,8 +54,8 @@ namespace RoRClient.ViewModel
         private void SendCreateEditorSessionCommand()
         {
             MessageInformation messageInformation = new MessageInformation();
-            messageInformation.PutValue("Playername", "Heinz");
-            messageInformation.PutValue("Editorname", "Editor1");
+            messageInformation.PutValue("playerName", "Heinz");
+            messageInformation.PutValue("editorName", "Editor1");
             clientModel.getFromClientRequestSender().SendMessage("CreateEditorSession", messageInformation);
         }
 
