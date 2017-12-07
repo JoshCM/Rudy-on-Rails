@@ -11,7 +11,7 @@
                      Canvas.Top="{Binding RealY, ElementName=squareUserControl}"
                      Canvas.Left="{Binding RealX, ElementName=squareUserControl}"
                      >
-	<Canvas Width="{Binding SquareDim, ElementName=squareUserControl}"
+    <Canvas Width="{Binding SquareDim, ElementName=squareUserControl}"
             Height="{Binding SquareDim, ElementName=squareUserControl}">
 
         <Rectangle
@@ -19,7 +19,10 @@
             Height="{Binding SquareDim, ElementName=squareUserControl}"
             Fill="BROWN"
             Stroke="WHITE"
-            StrokeThickness="1"
-            MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+            StrokeThickness="1">
+            <Rectangle.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding CreateRailCommand}"/>
+            </Rectangle.InputBindings>
+        </Rectangle>
     </Canvas>
 </local:CanvasUserControl>
