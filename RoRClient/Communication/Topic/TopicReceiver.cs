@@ -29,7 +29,7 @@ namespace RoRClient.Model.Connections
 
         private void StartConnection()
         {
-            session=ClientConnection.GetInstance().Session; 
+            session = ClientConnection.GetInstance().Session; 
             topic = new ActiveMQTopic(topicName);
             Console.WriteLine("startet messageconsumer (topicReceiver)");
             messageConsumer = session.CreateConsumer(topic);

@@ -71,7 +71,7 @@ namespace RoRClient.ViewModel
         {
             if(e.PropertyName == "Connected")
             {
-                if (clientModel.Conncected)
+                if (clientModel.Connected)
                 {
                     uiState.State = "editor";
                 }

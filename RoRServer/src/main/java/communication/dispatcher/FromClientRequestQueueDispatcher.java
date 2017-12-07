@@ -69,7 +69,10 @@ public class FromClientRequestQueueDispatcher {
 		
 		MessageInformation responseInformation = new MessageInformation();
 		responseInformation.setClientid(messageInformation.getClientid());
-		Player player = new Player(messageInformation.getValueAsString("Playername"));
+		Player player = new Player(messageInformation.
+
+
+				getValueAsString("Playername"));
 
 		if (EditorSessionManager.getInstance().getEditorSession() == null) {
 			editorSession = EditorSessionManager.getInstance()

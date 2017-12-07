@@ -38,7 +38,7 @@ namespace RoRClient.Model.HandleResponse
                 string playerName = messageInformation.GetValueAsString("Playername");
                 Player player = new Player(playerId, playerName);
                 editorSession.AddPlayer(player);
-                clientModel.Conncected = true;
+                clientModel.Connected = true;
             }
             else if(messageType == "JoinEditorSession")
             {
@@ -47,7 +47,7 @@ namespace RoRClient.Model.HandleResponse
                 editorSession.Init(messageInformation.GetValueAsString("Topicname"));
 
                 // ToDo: Hier noch die Liste von PlayerIds bearbeiten und Player erstellen!
-                clientModel.Conncected = true;
+                clientModel.Connected = true;
             }
         }
     }
