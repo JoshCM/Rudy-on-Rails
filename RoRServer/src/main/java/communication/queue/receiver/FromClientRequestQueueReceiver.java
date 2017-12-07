@@ -19,6 +19,7 @@ public class FromClientRequestQueueReceiver extends QueueReceiver {
 
 	public FromClientRequestQueueReceiver(String queueName) {
 		super(queueName);
+		setup();
 		requestDispatcher = new FromClientRequestQueueDispatcher();
 	}
 

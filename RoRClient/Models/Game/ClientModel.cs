@@ -36,7 +36,7 @@ namespace RoRClient.Models.Game
             }
         }
 
-        public bool Conncected
+        public bool Connected
         {
             get
             {

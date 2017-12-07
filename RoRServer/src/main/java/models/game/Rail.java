@@ -1,6 +1,7 @@
 package models.game;
 
 import communication.MessageInformation;
+import models.editor.RoRSession;
 
 /**
  * Klasse fuer Schienen, die einem Feld (Square) zugeordnet sind und ein
@@ -17,15 +18,15 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	/**
 	 * Konstruktor für Geraden oder Kurven
 	 */
-	public Rail(Square square, RailSection section) {
+	public Rail(Square square, RailSectionPosition node1, RailSectionPosition node2) {
 		super(square);
-		this.section1 = section;
+		this.section1 = new RailSection(this, node1, node2);
 
 		SendCreatedRailMessage();
 	}
 	
 	private void SendCreatedRailMessage() {
-		MessageInformation messageInfo = new MessageInformation();
+		MessageInformation messageInfo = new MessageInformation("CreateRail");
 		messageInfo.putValue("railId", getId());
 		messageInfo.putValue("railSectionId", section1.getId());
 		messageInfo.putValue("railSectionPositionNode1", section1.getNode1().toString());
@@ -35,19 +36,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		messageInfo.putValue("xPos", square.getXIndex());
 		messageInfo.putValue("yPos", square.getYIndex());
 		
-		square.getMap().getEditorSession().SendMessage("CreateRail", messageInfo);
-	}
-
-	/***
-	 * Konstruktor für Kreuzungen oder Weichen
-	 * @param square
-	 * @param section1
-	 * @param section2
-	 */
-	public Rail(Square square, RailSection section1, RailSection section2) {
-		super(square);
-		this.section1 = section1;
-		this.section2 = section2;
+		addMessage(messageInfo);
 	}
 
 	public void setPlaceableOnRail(PlaceableOnRail placeableOnRail) {

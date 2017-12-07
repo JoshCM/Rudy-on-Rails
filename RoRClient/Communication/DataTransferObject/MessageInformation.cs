@@ -7,7 +7,8 @@ namespace RoRClient.Communication.DataTransferObject
     //Klasse für den Inhalt der Messages an den Server (folgt dem Schema: ClientId, Request, Attributes)
     public class MessageInformation
     {
-        private readonly String _clientId;
+        private readonly string _clientId;
+        private string _messageId;
         private Dictionary<string, Object> _attributes;
       
         /// <summary>
@@ -24,6 +25,22 @@ namespace RoRClient.Communication.DataTransferObject
         /// <summary>
         /// Klein geschriebene Property, damit Server das richtig deserialisieren kann
         /// </summary>
+        public String messageId
+        {
+            get
+            {
+                return _messageId;
+            }
+        }
+
+        public Guid MessageIdAsGuid()
+        {
+            return Guid.Parse(_messageId);
+        }
+
+        /// <summary>
+        /// Klein geschriebene Property, damit Server das richtig deserialisieren kann
+        /// </summary>
         public Dictionary<string, Object> attributes
         {
             get
@@ -32,9 +49,15 @@ namespace RoRClient.Communication.DataTransferObject
             }
         }
 
+        public MessageInformation(string messageType)
+        {
+            
+        }
+
         public MessageInformation()
         {
             _clientId = ClientConnection.GetInstance().ClientId.ToString();
+            _messageId = Guid.NewGuid().ToString();
             _attributes = new Dictionary<string, object>();
         }
 

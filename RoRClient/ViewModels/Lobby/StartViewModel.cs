@@ -49,8 +49,8 @@ namespace RoRClient.ViewModels.Lobby
         private void SendCreateEditorSessionCommand()
         {
             MessageInformation messageInformation = new MessageInformation();
-            messageInformation.PutValue("Playername", "Heinz");
-            messageInformation.PutValue("Editorname", "Editor1");
+            messageInformation.PutValue("playerName", "Heinz");
+            messageInformation.PutValue("editorName", "Editor1");
             clientModel.getFromClientRequestSender().SendMessage("CreateEditorSession", messageInformation);
         }
 
@@ -66,7 +66,7 @@ namespace RoRClient.ViewModels.Lobby
         {
             if(e.PropertyName == "Connected")
             {
-                if (clientModel.Conncected)
+                if (clientModel.Connected)
                 {
                     uiState.State = "editor";
                 }

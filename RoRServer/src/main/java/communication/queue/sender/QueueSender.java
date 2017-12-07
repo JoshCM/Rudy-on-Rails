@@ -14,12 +14,11 @@ public class QueueSender extends QueueBase {
 
 	public QueueSender(String queueName) {
 		super.queueName = queueName;
-		this.createQueue();
+		this.setup();
 	}
 
-	protected void createQueue() {
-
-		super.createQueue();
+	public void setup() {
+		super.setup();
 
 		try {
 			publisher = session.createProducer(queue);
