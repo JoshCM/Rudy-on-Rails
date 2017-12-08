@@ -1,6 +1,7 @@
 ﻿using System;
 using RoRClient.Commands.Base;
 using RoRClient.Communication.DataTransferObject;
+using RoRClient.Models.Editor;
 
 namespace RoRClient.Communication.Dispatcher
 {
@@ -31,7 +32,7 @@ namespace RoRClient.Communication.Dispatcher
             try
             {
                 Type commandType = Type.GetType(pathToCommand);
-                ICommand command = (ICommand)Activator.CreateInstance(commandType, message);
+                ICommand command = (ICommand)Activator.CreateInstance(commandType, EditorSession.GetInstance(), message);
                 command.Execute();
             }
             catch(FormatException)

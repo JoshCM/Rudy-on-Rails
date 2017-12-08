@@ -3,6 +3,7 @@ using RoRClient.Communication.Topic;
 using RoRClient.Models.Base;
 using RoRClient.Models.Game;
 using System.Collections.ObjectModel;
+using RoRClient.Communication.Dispatcher;
 
 namespace RoRClient.Models.Editor
 {
@@ -23,7 +24,7 @@ namespace RoRClient.Models.Editor
         public void Init(string topicName)
         {
             queueSender = new QueueSender(topicName);
-            topicReceiver = new TopicReceiver(topicName);
+            topicReceiver = new TopicReceiver(topicName, new TopicEditorDispatcher());
         }
 
         public static EditorSession GetInstance()

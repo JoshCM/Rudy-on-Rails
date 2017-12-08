@@ -20,11 +20,13 @@ namespace RoRClient.Communication.Topic
         protected ITopic topic;
         private IMessageConsumer messageConsumer;
         ISession session;
+        TopicDispatcherBase dispatcher;
 
 
-        public TopicReceiver(string topicName)
+        public TopicReceiver(string topicName, TopicDispatcherBase dispatcher)
         {
             this.topicName = topicName;
+            this.dispatcher = dispatcher;
             StartConnection();
         }
 
@@ -43,28 +45,9 @@ namespace RoRClient.Communication.Topic
             ITextMessage textMessage = message as ITextMessage;
             string messageType = message.NMSType;
             MessageInformation messageInformation = MessageDeserializer.getInstance().Deserialize(textMessage.Text);
-
-            TopicEditorDispatcher dispatcher = new TopicEditorDispatcher();
             dispatcher.Dispatch(messageType, messageInformation);
 
-            /*
-            if(messageType == "CreateRail")
-            {
-                Guid railId = Guid.Parse(messageInformation.GetValueAsString("railId"));
-                int xPos = messageInformation.GetValueAsInt("xPos");
-                int yPos = messageInformation.GetValueAsInt("yPos");
-                RailSectionPosition node1 = (RailSectionPosition)Enum.Parse(typeof(RailSectionPosition), messageInformation.GetValueAsString("railSectionPositionNode1"));
-                RailSectionPosition node2 = (RailSectionPosition)Enum.Parse(typeof(RailSectionPosition), messageInformation.GetValueAsString("railSectionPositionNode2"));
-                EditorSession editorSession = EditorSession.GetInstance();
-                Square square = editorSession.Map.GetSquare(xPos, yPos);
-                Rail rail = new Rail(railId, square, new RailSection(node1, node2));
-                square.PlaceableOnSquare = rail;
-            }
-            */
-
             Console.WriteLine("Folgende Änderung am Game erhalten: " + textMessage.Text+"(topicReceiver)");
-
-            // ToDo: Dispatcher 
         }
     }
 }

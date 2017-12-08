@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Communication.Dispatcher
 {
-    class TopicGameDispatcher
+    class TopicGameDispatcher : TopicDispatcherBase
     {
-
+        public TopicGameDispatcher()
+        {
+            COMMAND_TYPE_PREFIX = "RoRClient.Commands.Game.";
+        }
     }
 }
