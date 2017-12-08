@@ -23,6 +23,7 @@ public class QueueReceiver extends QueueBase implements MessageListener {
 
 	public QueueReceiver(String queueName, DispatcherBase dispatcher) {
 		super.queueName = queueName;
+		this.dispatcher = dispatcher;
 	}
 
 	@Override

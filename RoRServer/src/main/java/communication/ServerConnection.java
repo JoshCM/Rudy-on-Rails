@@ -6,7 +6,11 @@ import javax.jms.Session;
 import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.apache.log4j.Logger;
 
-// Singleton für Server-Connection (beinhaltet Factory, Connection, session)
+/**
+ * Die ServerConnection kümmert sich um den Verbindungsaufbau zum BrokerService
+ * Wenn ein Receiver oder Sender für Queue/Topic angelegt wird, dann wird die Connection und die Session
+ * aus dieser Klasse verwendet, damit für den ganzen Server nur jeweils eine Connection und eine Session genutzt werden
+ */
 public class ServerConnection {
 	
 	private static ServerConnection serverConnection = null;
@@ -38,6 +42,10 @@ public class ServerConnection {
 		return connection;
 	}
 	
+	/**
+	 * Schließt die Verbindung von connection und session
+	 * @throws JMSException
+	 */
 	public void closeConnectionAndSession() throws JMSException {
 		connection.close();
 		session.close();

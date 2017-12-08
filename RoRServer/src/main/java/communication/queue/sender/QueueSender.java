@@ -6,7 +6,9 @@ import javax.jms.TextMessage;
 import org.apache.log4j.Logger;
 import communication.queue.QueueBase;
 
-// QueueSender für Client Queues
+/**
+ * Hiermit können Nachrichten an eine (ActiveMQ)Queue geschickt werden
+ */
 public class QueueSender extends QueueBase {
 
 	private MessageProducer publisher;
@@ -30,7 +32,6 @@ public class QueueSender extends QueueBase {
 	}
 
 	public void sendMessage(String messageType, String message) {
-
 		try {
 			TextMessage textMessage;
 			textMessage = session.createTextMessage(message);
