@@ -31,5 +31,14 @@ namespace RoRClient.Properties {
                 return ((string)(this["BrokerUrl"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\Resources\\Images\\Tools\\")]
+        public string ImageFolderPath {
+            get {
+                return ((string)(this["ImageFolderPath"]));
+            }
+        }
     }
 }
