@@ -25,7 +25,6 @@ namespace RoRClient.Models.Session
             topicReceiver = new TopicReceiver(topicName, new TopicEditorDispatcher());
         }
 
-
         public static EditorSession GetInstance()
         {
             if(editorSession == null)
@@ -34,7 +33,5 @@ namespace RoRClient.Models.Session
             }
             return editorSession;
         }
-
-        
     }
 }
