@@ -9,11 +9,11 @@ namespace RoRClient.Communication.Dispatcher
 {
     class ResponseDispatcher
     {
-        private ClientModel clientModel;
+        private LobbyModel lobbyModel;
 
-        public ResponseDispatcher(ClientModel clientModel)
+        public ResponseDispatcher(LobbyModel lobbyModel)
         {
-            this.clientModel = clientModel;
+            this.lobbyModel = lobbyModel;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace RoRClient.Communication.Dispatcher
                 string playerName = messageInformation.GetValueAsString("playerName");
                 Player player = new Player(playerId, playerName);
                 editorSession.AddPlayer(player);
-                clientModel.Connected = true;
+                lobbyModel.Connected = true;
             }
             else if(messageType == "JoinEditorSession")
             {
@@ -53,7 +53,7 @@ namespace RoRClient.Communication.Dispatcher
                     editorSession.AddPlayer(player);
                 }
 
-                clientModel.Connected = true;
+                lobbyModel.Connected = true;
             }
         }
     }

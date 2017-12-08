@@ -5,14 +5,14 @@ using RoRClient.Communication;
 
 namespace RoRClient.Models.Game
 {
-    class ClientModel : ModelBase
+    class LobbyModel : ModelBase
     {
         private QueueSender fromClientRequestSender;
         private FromServerResponseReceiver queueReceiver;
 		private Guid clientId;
         private bool connected;
 
-        public ClientModel() {
+        public LobbyModel() {
 			
 		}
 

@@ -9,17 +9,17 @@ namespace RoRClient.Communication.Queue
     {
         private ResponseDispatcher responseDispatcher;
         private IMessageConsumer messageConsumer;
-        private ClientModel clientModel;
+        private LobbyModel lobbyModel;
 
-        public FromServerResponseReceiver(string queueName, ClientModel clientModel) : base(queueName)
+        public FromServerResponseReceiver(string queueName, LobbyModel lobbyModel) : base(queueName)
         {
-            this.clientModel = clientModel;
+            this.lobbyModel = lobbyModel;
             init();
         }
 
         private void init()
         {
-            responseDispatcher = new ResponseDispatcher(clientModel);
+            responseDispatcher = new ResponseDispatcher(lobbyModel);
             Console.WriteLine("startet messageconsumer(queueReceiver)");
             messageConsumer = session.CreateConsumer(queue);
             messageConsumer.Listener += OnMessageReceived;
