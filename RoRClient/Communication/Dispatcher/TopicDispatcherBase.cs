@@ -1,21 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RoRClient.Commands.Base;
+using RoRClient.Communication.DataTransferObject;
 
 namespace RoRClient.Communication.Dispatcher
 {
     class TopicDispatcherBase
     {
-        protected const string COMMAND_TYPE_PREFIX = "";
+        protected string COMMAND_TYPE_PREFIX = "";
         protected const string COMMAND_CLASS_SUFFIX = "Command";
-        protected const string CREATE = "Create";
-        protected const string UPDATE = "Update";
-        protected const string DELETE = "Delete";
+        protected const string CREATE = "Create.";
+        protected const string UPDATE = "Update.";
+        protected const string DELETE = "Delete.";
         
-        public void Dispatch(string request, string message)
+        public void Dispatch(string request, MessageInformation message)
         {
             string pathToCommand = "";
 
@@ -35,7 +32,7 @@ namespace RoRClient.Communication.Dispatcher
             {
                 Type commandType = Type.GetType(pathToCommand);
                 ICommand command = (ICommand)Activator.CreateInstance(commandType, message);
-                command.execute();
+                command.Execute();
             }
             catch(FormatException)
             {

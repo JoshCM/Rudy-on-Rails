@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RoRClient.Communication.Dispatcher;
 
 namespace RoRClient.Communication.Topic
 {
@@ -43,6 +44,10 @@ namespace RoRClient.Communication.Topic
             string messageType = message.NMSType;
             MessageInformation messageInformation = MessageDeserializer.getInstance().Deserialize(textMessage.Text);
 
+            TopicEditorDispatcher dispatcher = new TopicEditorDispatcher();
+            dispatcher.Dispatch(messageType, messageInformation);
+
+            /*
             if(messageType == "CreateRail")
             {
                 Guid railId = Guid.Parse(messageInformation.GetValueAsString("railId"));
@@ -55,6 +60,7 @@ namespace RoRClient.Communication.Topic
                 Rail rail = new Rail(railId, square, new RailSection(node1, node2));
                 square.PlaceableOnSquare = rail;
             }
+            */
 
             Console.WriteLine("Folgende Änderung am Game erhalten: " + textMessage.Text+"(topicReceiver)");
 
