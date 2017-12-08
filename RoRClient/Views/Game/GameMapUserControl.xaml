@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:RoRClient.Views.Game"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Background="White">
-    <Grid>
-            
-    </Grid>
+
+
 </UserControl>

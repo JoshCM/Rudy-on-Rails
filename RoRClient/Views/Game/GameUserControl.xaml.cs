@@ -23,8 +23,12 @@ namespace RoRClient.Views.Game
         public GameUserControl()
         {
             InitializeComponent();
-            GameStatusUserControl u2 = new GameStatusUserControl();
-            cc.Content = u2;
+
+        }
+
+        private void GameMenuUserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -24,5 +24,10 @@ namespace RoRClient.Views.Game
         {
             InitializeComponent();
         }
+
+        private void GameMiniMapUserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

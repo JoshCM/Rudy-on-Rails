@@ -163,14 +163,23 @@
     <Compile Include="Views\Editor\Window2.xaml.cs">
       <DependentUpon>Window2.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\GameInteractionUserControl.xaml.cs">
+      <DependentUpon>GameInteractionUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\GameMapUserControl.xaml.cs">
       <DependentUpon>GameMapUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\GameMenuUserControl.xaml.cs">
       <DependentUpon>GameMenuUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\GameMiniMapUserControl.xaml.cs">
+      <DependentUpon>GameMiniMapUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\GameStatusUserControl.xaml.cs">
       <DependentUpon>GameStatusUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\GameTrainSpeedUserControl.xaml.cs">
+      <DependentUpon>GameTrainSpeedUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\GameUserControl.xaml.cs">
       <DependentUpon>GameUserControl.xaml</DependentUpon>
@@ -185,6 +194,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Game\GameInteractionUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Game\GameMapUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -193,7 +206,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Game\GameMiniMapUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Game\GameStatusUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\GameTrainSpeedUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
