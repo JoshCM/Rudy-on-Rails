@@ -14,11 +14,9 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	private Logger log = Logger.getLogger(FromClientRequestQueueDispatcher.class.getName());
 
 	private void sendMessage(String messageType, MessageInformation messageInformation) {
-		RequestSerializer requestSerializer = RequestSerializer.getInstance();
-		String response = requestSerializer.serialize(messageInformation);
 		QueueSender queueSender = new QueueSender(messageInformation.getClientid());
 		queueSender.setup();
-		queueSender.sendMessage(messageType, response);
+		queueSender.sendMessage(messageType, messageInformation);
 	}
 
 	/**

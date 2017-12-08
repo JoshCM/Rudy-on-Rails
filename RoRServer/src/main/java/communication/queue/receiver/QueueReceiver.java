@@ -12,12 +12,11 @@ import communication.queue.QueueBase;
 import org.apache.log4j.Logger;
 
 /**
- * Hier werden Nachrichten aus einer (ActiveMQ)Queue entgegengenommen und an den entsprechenden Dispatcher weitergeleitet
+ * Base-Klasse für alle spezifischen QueueReceiver
  */
 public class QueueReceiver extends QueueBase implements MessageListener {
-	
-	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
-	
+	protected Logger log = Logger.getLogger(QueueReceiver.class.getName());
+
 	private MessageConsumer consumer;
 	private DispatcherBase dispatcher;
 
@@ -50,10 +49,7 @@ public class QueueReceiver extends QueueBase implements MessageListener {
 		try {
 			consumer = session.createConsumer(queue);
 			consumer.setMessageListener(this);
-			
-			
 			log.info("Waiting for Messages on Queue " + queueName + " :");
-			
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}

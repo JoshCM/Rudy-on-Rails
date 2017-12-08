@@ -1,7 +1,6 @@
 package models.game;
 
 import communication.MessageInformation;
-import models.editor.RoRSession;
 
 /**
  * Klasse fuer Schienen, die einem Feld (Square) zugeordnet sind und ein
