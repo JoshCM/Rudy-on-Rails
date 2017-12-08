@@ -11,6 +11,8 @@ public class RailSection extends ModelBase {
 	private Rail rail;
 	private RailSectionPosition node1;
 	private RailSectionPosition node2;
+	
+	// TODO: hier muss placeableOnSquareSection
 
 	public RailSection(Rail rail, RailSectionPosition node1, RailSectionPosition node2) {
 		super(rail.getRoRSession());

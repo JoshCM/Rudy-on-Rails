@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import communication.queue.receiver.QueueReceiver;
 import models.game.Map;
 import models.game.Rail;
-import models.game.RailSection;
 import models.game.RailSectionPosition;
 
 public class MainModels {
@@ -17,7 +16,8 @@ public class MainModels {
 		
 		Map map = new Map(null);
 		map.getSquare(0, 0).setPlaceable(new Rail(map.getSquare(0, 0), RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
-		map.getSquare(0, 0).getPlaceableOnSquare().setPlaceableOnRail(new DummySignal(map.getSquare(0, 0)));
+		Rail rail = (Rail) map.getSquare(0, 0).getPlaceableOnSquare();
+		rail.setPlaceableOnRail(new DummySignal(map.getSquare(0, 0)));
 		map.getSquare(0, 1).setPlaceable(new Rail(map.getSquare(0, 1), RailSectionPosition.NORTH, RailSectionPosition.EAST));
 		map.getSquare(0, 2).setPlaceable(new DummyContainer());
 		map.getSquare(1, 1).setPlaceable(new Rail(map.getSquare(1, 1), RailSectionPosition.NORTH, RailSectionPosition.SOUTH));

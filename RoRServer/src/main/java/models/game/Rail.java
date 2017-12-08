@@ -10,6 +10,7 @@ import communication.MessageInformation;
 
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 
+	// muss hier raus und eine Ebene tiefer(RailSection)
 	protected PlaceableOnRail placeableOnRail = null;
 	protected RailSection section1;
 	protected RailSection section2;

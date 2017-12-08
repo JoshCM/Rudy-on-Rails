@@ -5,5 +5,5 @@ package models.game;
  */
 public interface PlaceableOnSquare extends Placeable {
 
-	void setPlaceableOnRail(PlaceableOnRail placeableOnRail);
+	
 }
