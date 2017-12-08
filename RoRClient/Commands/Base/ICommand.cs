@@ -8,6 +8,6 @@ namespace RoRClient.Commands.Base
     /// </summary>
     public interface ICommand
     {
-        void execute();
+        void Execute();
     }
 }
