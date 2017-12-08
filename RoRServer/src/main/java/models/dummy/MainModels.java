@@ -1,11 +1,15 @@
 package models.dummy;
 
+import org.apache.log4j.Logger;
+
+import communication.queue.receiver.QueueReceiver;
 import models.game.Map;
 import models.game.Rail;
 import models.game.RailSection;
 import models.game.RailSectionPosition;
 
 public class MainModels {
+	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
 	
 	public static void main(String [] args) {
 		DummyGame game = new DummyGame();
@@ -24,8 +28,8 @@ public class MainModels {
 		game.saveMap("Map1");
 		
 		game1.loadMap("Map1");
-		System.out.println(game1.getMap().getSquare(0, 0).getPlaceableOnSquare());
-		System.out.println(game1.getMap().getSquare(0, 1).getPlaceableOnSquare());
+		log.info(game1.getMap().getSquare(0, 0).getPlaceableOnSquare());
+		log.info(game1.getMap().getSquare(0, 1).getPlaceableOnSquare());
 		game1.saveMap("Map2");
 	}
 }

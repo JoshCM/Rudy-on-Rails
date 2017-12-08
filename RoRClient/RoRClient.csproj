@@ -101,13 +101,15 @@
     </ApplicationDefinition>
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
+    <Compile Include="Communication\Dispatcher\EditorSessionDispatcher.cs" />
     <Compile Include="Communication\Dispatcher\DispatcherBase.cs" />
+    <Compile Include="Communication\Dispatcher\GameSessionDispatcher.cs" />
     <Compile Include="Communication\Queue\FromServerResponseQueueReceiver.cs" />
     <Compile Include="Communication\Queue\QueueSender.cs" />
     <Compile Include="Communication\DataTransferObject\MessageBuilder.cs" />
     <Compile Include="Communication\DataTransferObject\MessageDeserializer.cs" />
     <Compile Include="Communication\DataTransferObject\MessageInformation.cs" />
-    <Compile Include="Communication\Dispatcher\ResponseDispatcher.cs" />
+    <Compile Include="Communication\Dispatcher\FromServerResponseQueueDispatcher.cs" />
     <Compile Include="Models\Editor\EditorSession.cs" />
     <Compile Include="Models\Base\IModel.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
