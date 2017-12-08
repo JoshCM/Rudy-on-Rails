@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="RoRClient.Views.Editor.EditorUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:editor="clr-namespace:RoRClient.Views.Editor"
+             mc:Ignorable="d"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
+             HorizontalContentAlignment="Stretch"
+             VerticalContentAlignment="Stretch"
+             d:DesignHeight="1050" d:DesignWidth="1680"
+             >
+    
+    <Grid x:Name="ContentGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="7*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="0" />
+        </Grid.ColumnDefinitions>
+
+
+        <!-- Menü oben -->
+        <editor:TopMenuUserControl Grid.Row="0"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="3"/>
+
+        <!-- Darstellung der Map -->
+        <editor:MapUserControl Grid.Row="1"
+                               Grid.Column="1"
+                               Grid.ColumnSpan="2"
+                               Grid.RowSpan="2"
+							   SelectedTool="{Binding ElementName=ToolbarUserControlName, Path=DataContext.SelectedTool}"/>
+
+        <!-- Werkzeugleiste -->
+        <editor:ToolbarUserControl x:Name="ToolbarUserControlName" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"/>
+
+        <Grid Grid.Row="3"
+              Grid.Column="0"
+              Background="Violet">
+            <!--Aktives Werkzeug -->
+            <editor:SelectedToolUserControl ToolbarViewModel="{Binding ElementName=ToolbarUserControlName, Path=DataContext}"/>
+        </Grid>
+
+        <Grid Grid.Row="3"
+              Grid.Column="1"
+              Grid.ColumnSpan="2"
+              Background="Green">
+            <!-- Statusfenster oder so was -->
+            <editor:AttributeSelectionUserControl />
+        </Grid>
+    </Grid>
+</UserControl>

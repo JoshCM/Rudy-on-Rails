@@ -1,0 +1,30 @@
+﻿<Window x:Class="RoRClient.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vm="clr-namespace:RoRClient.ViewModels"
+        xmlns:vme="clr-namespace:RoRClient.ViewModels.Editor"
+        xmlns:ve ="clr-namespace:RoRClient.Views.Editor"
+        xmlns:vl ="clr-namespace:RoRClient.Views.Lobby"
+        xmlns:vml="clr-namespace:RoRClient.ViewModels.Lobby"
+        mc:Ignorable="d"
+        Title="MainView" Height="350" Width="525">
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate x:Name="EditorTemplate" DataType="{x:Type vme:EditorViewModel}">
+            <ve:EditorUserControl/>
+        </DataTemplate>
+        <DataTemplate x:Name="StartTemplate" DataType="{x:Type vml:StartViewModel}">
+            <vl:StartView/>
+        </DataTemplate>
+    </Window.Resources>
+
+
+    <DockPanel>
+        <!--<Button DockPanel.Dock="Top" x:Name="button2" Content="Go to Editor View" Click="go_to_Editor"/>-->
+        <ContentControl Content="{Binding CurrentViewModel}"/>
+    </DockPanel>
+</Window>
