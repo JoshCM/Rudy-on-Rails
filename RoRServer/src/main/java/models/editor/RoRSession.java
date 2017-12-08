@@ -2,10 +2,16 @@ package models.editor;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 import communication.MessageInformation;
+import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicSender;
 
+/**
+ * Oberklasse von EditorSession und GameSession
+ * 
+ */
 public abstract class RoRSession {
 	private String name;
+	protected QueueReceiver queueReceiver;
 	private TopicSender topicSender;
 	
 	private Thread sendMessageThread;
@@ -28,6 +34,7 @@ public abstract class RoRSession {
 			
 	public void setup() {
 		topicSender.setup();
+		queueReceiver.setup();
 		startSendMessageThread();
 	}
 	

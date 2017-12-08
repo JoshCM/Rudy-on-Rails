@@ -5,7 +5,7 @@ using RoRClient.Models.Game;
 using RoRClient.ViewModels.Editor;
 using RoRClient.ViewModels;
 
-namespace RoRClientTests.ViewModel.Helper
+namespace RoRClientTests.ViewModels.Helper
 {
     [TestClass]
     public class ViewModelFactoryTests

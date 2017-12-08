@@ -1,23 +1,28 @@
 package models.editor;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import communication.dispatcher.EditorSessionDispatcher;
+import communication.queue.receiver.QueueReceiver;
 import models.game.Map;
 import models.game.Player;
-import communication.queue.receiver.FromClientRequestsEditorQueueReceiver;
-import communication.topic.TopicSender;
-import communication.MessageInformation;
-import communication.dispatcher.RequestSerializer;
 
-import java.util.ArrayList;
-
+/**
+ * Oberklasse vom Editor-Modus. 
+ * Hält die Map und die Liste von verbundenen Playern
+ * Erhält über einen QueueReceiver Anfragen von Clients, die mit der EditorSession verbunden sind
+ */
 public class EditorSession extends RoRSession {
 	private ArrayList<Player> players = new ArrayList<>();
 	private Map map;
-	
-	private FromClientRequestsEditorQueueReceiver queueReceiver;
 
 	public EditorSession(String name) {
 		super(name);
-		queueReceiver = new FromClientRequestsEditorQueueReceiver(name, this);
+		
+		EditorSessionDispatcher dispatcher = new EditorSessionDispatcher(this);
+		this.queueReceiver = new QueueReceiver(name, dispatcher);
 		map = new Map(this);
 	}
 	
@@ -38,8 +43,7 @@ public class EditorSession extends RoRSession {
 		return map;
 	}
 
-	// ToDo: Unmodifiable List zurückgeben
-	public ArrayList<Player> getPlayers() {
-		return players;
+	public List<Player> getPlayers() {
+		return Collections.unmodifiableList(players);
 	}
 }

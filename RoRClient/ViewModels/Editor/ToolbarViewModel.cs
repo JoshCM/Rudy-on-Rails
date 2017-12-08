@@ -6,21 +6,31 @@ namespace RoRClient.ViewModels.Editor
 {
     public class ToolbarViewModel : ViewModelBase
     {
-        private const string IMAGE_FOLDER_PATH = "..\\..\\Resources\\Images\\Tools\\";
+        private string imageFolderPath = Properties.Settings.Default.ImageFolderPath;
 
         public ToolbarViewModel()
         {
+            //GenerateToolbarItemsFromFolder();
             CreateToolbarItems();
+        }
+
+        public ToolbarViewModel(string path, bool generate)
+        {
+            imageFolderPath = path;
+            if (generate)
+                GenerateToolbarItemsFromFolder();
+            else
+                CreateToolbarItems();
         }
 
         private void CreateToolbarItems()
         {
-            toolItems.Add(new ToolItem("rail_ns", IMAGE_FOLDER_PATH + "rail_ns.png"));
-            toolItems.Add(new ToolItem("rail_ew", IMAGE_FOLDER_PATH + "rail_ew.png"));
-            toolItems.Add(new ToolItem("railcurve_se", IMAGE_FOLDER_PATH + "railcurve_se.png"));
-            toolItems.Add(new ToolItem("railcurve_sw", IMAGE_FOLDER_PATH + "railcurve_sw.png"));
-            toolItems.Add(new ToolItem("railcurve_ne", IMAGE_FOLDER_PATH + "railcurve_ne.png"));
-            toolItems.Add(new ToolItem("railcurve_nw", IMAGE_FOLDER_PATH + "railcurve_nw.png"));
+            toolItems.Add(new ToolItem("rail_ns", imageFolderPath + "rail_ns.png"));
+            toolItems.Add(new ToolItem("rail_ew", imageFolderPath + "rail_ew.png"));
+            toolItems.Add(new ToolItem("railcurve_se", imageFolderPath + "railcurve_se.png"));
+            toolItems.Add(new ToolItem("railcurve_sw", imageFolderPath + "railcurve_sw.png"));
+            toolItems.Add(new ToolItem("railcurve_ne", imageFolderPath + "railcurve_ne.png"));
+            toolItems.Add(new ToolItem("railcurve_nw", imageFolderPath + "railcurve_nw.png"));
         }
 
         /// <summary>
@@ -29,12 +39,12 @@ namespace RoRClient.ViewModels.Editor
         private void GenerateToolbarItemsFromFolder()
         {
             string RunningPath = AppDomain.CurrentDomain.BaseDirectory;
-            string path = Path.GetFullPath(Path.Combine(RunningPath, @"..\..\")) + IMAGE_FOLDER_PATH;
+            string path = Path.GetFullPath(Path.Combine(RunningPath, @"..\..\")) + imageFolderPath;
 
             string[] files = Directory.GetFiles(path);
             foreach (string file in files)
             {
-                toolItems.Add(new ToolItem(Path.GetFileName(file), file));
+                toolItems.Add(new ToolItem(Path.GetFileName(file).TrimEnd(".png".ToCharArray()), file));
             }
         }
 

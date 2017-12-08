@@ -47,7 +47,7 @@ namespace RoRClient.Communication
             }
             catch(NMSConnectionException e)
             {
-                Console.Write("Es konnte keine Verbindung zum Server aufgebaut werden. Programm fährt fort ohne Verbindung.");
+                Console.Write("Es konnte keine Verbindung zum Server aufgebaut werden. Programm fährt fort ohne Verbindung. (ExceptionMessage: {0})", e);
             }
         }
 

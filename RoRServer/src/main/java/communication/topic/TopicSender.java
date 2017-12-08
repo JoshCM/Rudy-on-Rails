@@ -10,6 +10,10 @@ import communication.MessageInformation;
 import communication.ServerConnection;
 import communication.dispatcher.RequestSerializer;
 
+/**
+ * Über den TopicSender können Nachrichten an einen Topic gesendet werden mithilfe eines MessageTypes und einem 
+ * MessageInformation-Objekt
+ */
 public class TopicSender {
 	private Session session;
 	private MessageProducer publisher;

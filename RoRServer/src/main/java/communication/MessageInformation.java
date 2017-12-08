@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * DTO, das serialisiert in einer Nachricht mitgesendet wird. Hier stehen nachrichtspezifischen
+ * Informationen der Nachricht drin.
+ */
 public class MessageInformation {
     private String clientId;
     private String messageType;
