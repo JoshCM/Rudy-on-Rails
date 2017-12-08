@@ -41,6 +41,9 @@ public class QueueReceiver extends QueueBase implements MessageListener {
 		}	
 	}
 	
+	/**
+	 * Erzeugt den Consumer und dessen Listener
+	 */
 	public void setup() {
 		super.setup();
 		
@@ -48,7 +51,8 @@ public class QueueReceiver extends QueueBase implements MessageListener {
 			consumer = session.createConsumer(queue);
 			consumer.setMessageListener(this);
 			
-			System.out.println("Waiting for Messages on Queue " + queueName + " :");
+			
+			log.info("Waiting for Messages on Queue " + queueName + " :");
 			
 		} catch (JMSException e) {
 			e.printStackTrace();
