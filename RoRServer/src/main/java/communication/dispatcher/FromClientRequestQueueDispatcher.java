@@ -20,52 +20,65 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	}
 
 	/**
-	 * Neuer Player wird erstellt und allen angemeldeten Clients mitgeteilt
+	 * Neue EditorSession wird erstellt und dem Client mitgeteilt
+	 * Ist schon eine EditorSession offen, dann werden diesem Client alle Infos zur EditorSession 
+	 * sowie alle bereits existierenden Player-Informationen zugesendet
+	 * 
+	 * Dies soll später getrennt laufen: CreateEditorSession ODER ReadEditorSession + JoinEditorSession
 	 * 
 	 * @param messageInformation
 	 */
 	public void handleCreateEditorSession(MessageInformation messageInformation) {
 		EditorSession editorSession;
 
-
 		if (EditorSessionManager.getInstance().getEditorSession() == null) {
-			MessageInformation responseInformation = new MessageInformation("CreateEditorSession");
-			responseInformation.setClientid(messageInformation.getClientid());
-			
-			editorSession = EditorSessionManager.getInstance()
-					.createNewEditorSession(messageInformation.getValueAsString("Editorname"));
-			editorSession.setup();
-			Player player = new Player(editorSession, messageInformation.getValueAsString("Playername"));
-			editorSession.addPlayer(player);
-			
-			responseInformation.putValue("topicName", editorSession.getName());
-			responseInformation.putValue("editorName", editorSession.getName());
-			responseInformation.putValue("playerName", player.getName());		
-			responseInformation.putValue("playerId", player.getId().toString());
-			sendMessage("CreateEditorSession", responseInformation);
+			createEditorSessionAndSendResponse(messageInformation);
 		} else {
-			MessageInformation responseInformation = new MessageInformation("JoinEditorSession");
-			responseInformation.setClientid(messageInformation.getClientid());
-			
-			editorSession = EditorSessionManager.getInstance().getEditorSession();
-			Player player = new Player(editorSession, messageInformation.getValueAsString("Playername"));
-			editorSession.addPlayer(player);
-			
-			responseInformation.putValue("topicName", editorSession.getName());
-			responseInformation.putValue("editorName", editorSession.getName());
-			List<JsonObject> players = new ArrayList<JsonObject>();
-			for(Player sessionPlayer : editorSession.getPlayers()) {
-				JsonObject json = new JsonObject();
-				json.addProperty("playerId", sessionPlayer.getId().toString());
-				json.addProperty("playerName", sessionPlayer.getName());
-				players.add(json);
-			}
-			
-			responseInformation.putValue("playerList", players);
-			
-			sendMessage("JoinEditorSession", responseInformation);
+			joinEditorSessionAndSendResponse(messageInformation);
 		}
 
 		log.info("Called handleCreateEditorSession");
+	}
+
+	private void joinEditorSessionAndSendResponse(MessageInformation messageInformation) {
+		EditorSession editorSession;
+		MessageInformation responseInformation = new MessageInformation("JoinEditorSession");
+		responseInformation.setClientid(messageInformation.getClientid());
+		
+		editorSession = EditorSessionManager.getInstance().getEditorSession();
+		Player player = new Player(editorSession, messageInformation.getValueAsString("Playername"));
+		editorSession.addPlayer(player);
+		
+		responseInformation.putValue("topicName", editorSession.getName());
+		responseInformation.putValue("editorName", editorSession.getName());
+		List<JsonObject> players = new ArrayList<JsonObject>();
+		for(Player sessionPlayer : editorSession.getPlayers()) {
+			JsonObject json = new JsonObject();
+			json.addProperty("playerId", sessionPlayer.getId().toString());
+			json.addProperty("playerName", sessionPlayer.getName());
+			players.add(json);
+		}
+		
+		responseInformation.putValue("playerList", players);
+		
+		sendMessage("JoinEditorSession", responseInformation);
+	}
+
+	private void createEditorSessionAndSendResponse(MessageInformation messageInformation) {
+		EditorSession editorSession;
+		MessageInformation responseInformation = new MessageInformation("CreateEditorSession");
+		responseInformation.setClientid(messageInformation.getClientid());
+		
+		editorSession = EditorSessionManager.getInstance()
+				.createNewEditorSession(messageInformation.getValueAsString("Editorname"));
+		editorSession.setup();
+		Player player = new Player(editorSession, messageInformation.getValueAsString("Playername"));
+		editorSession.addPlayer(player);
+		
+		responseInformation.putValue("topicName", editorSession.getName());
+		responseInformation.putValue("editorName", editorSession.getName());
+		responseInformation.putValue("playerName", player.getName());		
+		responseInformation.putValue("playerId", player.getId().toString());
+		sendMessage("CreateEditorSession", responseInformation);
 	}
 }
