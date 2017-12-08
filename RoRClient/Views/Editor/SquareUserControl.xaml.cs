@@ -1,14 +1,14 @@
-﻿using RoRClient.Model.DataTransferObject;
-using RoRClient.Model.Models;
-using RoRClient.Model.Models.Editor;
-using RoRClient.ViewModel;
-using RoRClient.ViewModel.Helper;
+﻿using RoRClient.Communication.DataTransferObject;
+using RoRClient.Models.Editor;
+using RoRClient.Models.Game;
+using RoRClient.ViewModels.Commands;
+using RoRClient.ViewModels.Editor;
+using RoRClient.Views.Editor.Helper;
 using System;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace RoRClient.View.Editor
+namespace RoRClient.Views.Editor
 {
     public partial class SquareUserControl : CanvasUserControl
     {
@@ -17,49 +17,41 @@ namespace RoRClient.View.Editor
             InitializeComponent();
         }
 
-        private ICommand createSelectedPlaceableOnSquareCommand;
-        public ICommand CreateSelectedPlaceableOnSquareCommand
+        public SquareViewModel SquareViewModel
         {
             get
             {
-                if (createSelectedPlaceableOnSquareCommand == null)
-                {
-                    createSelectedPlaceableOnSquareCommand = new ActionCommand(e => { CreateRailCommand(); });
-                }
-                return createSelectedPlaceableOnSquareCommand;
-            }
-        }
-
-        public RailSection RailSection
-		{
-            get
-            {
-                return (RailSection)GetValue(RailSectionProperty);
+                return (SquareViewModel)GetValue(SquareViewModelProperty);
             }
             set
             {
-                SetValue(RailSectionProperty, value);
+                SetValue(SquareViewModelProperty, value);
             }
         }
-        public static readonly DependencyProperty RailSectionProperty = DependencyProperty.Register("RailSection", typeof(RailSection), typeof(SquareUserControl), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty SquareViewModelProperty = DependencyProperty.Register("SquareViewModel", typeof(SquareViewModel), typeof(SquareUserControl), new UIPropertyMetadata(null, OnSquareViewModelChanged));
 
-        private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private static void OnSquareViewModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CreateRailCommand();
+            SquareUserControl squareUserControl = (SquareUserControl)d;
+            squareUserControl.DataContext = squareUserControl.SquareViewModel;
         }
 
-        private void CreateRailCommand()
+        public String ToolName
+		{
+            get
+            {
+                return (String)GetValue(ToolNameProperty);
+            }
+            set
+            {
+                SetValue(ToolNameProperty, value);
+            }
+        }
+        public static readonly DependencyProperty ToolNameProperty = DependencyProperty.Register("ToolName", typeof(String), typeof(SquareUserControl), new UIPropertyMetadata(null, OnToolNameChanged));
+        private static void OnToolNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            int xPos = X;
-            int yPos = Y;
-            EditorSession editorSession = EditorSession.GetInstance();
-
-            MessageInformation messageInformation = new MessageInformation();
-            messageInformation.PutValue("xPos", xPos);
-            messageInformation.PutValue("yPos", yPos);
-            messageInformation.PutValue("railSectionPositionNode1", RailSection.Node1.ToString());
-            messageInformation.PutValue("railSectionPositionNode2", RailSection.Node2.ToString());
-			editorSession.QueueSender.SendMessage("CreateRail", messageInformation);
+            SquareUserControl squareUserControl = (SquareUserControl)d;
+            squareUserControl.SquareViewModel.ToolName = squareUserControl.ToolName;
         }
     }
 }

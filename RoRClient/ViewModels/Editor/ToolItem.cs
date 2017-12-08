@@ -1,31 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RoRClient.Model.Models
+﻿namespace RoRClient.ViewModels.Editor
 {
     public class ToolItem
     {
-        private string id;
+        private string name;
         private string imagePath;
 
-        public ToolItem(string id, string imagePath)
+        public ToolItem(string name, string imagePath)
         {
-            this.id = id;
+            this.name = name;
             this.imagePath = imagePath;
         }
 
-        public string ID
+        public string Name
         {
             get
             {
-                return this.id;
+                return this.name;
             }
             set
             {
-                this.id = value;
+                this.name = value;
             }
         }
         public string ImagePath

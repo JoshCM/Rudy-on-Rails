@@ -1,15 +1,9 @@
-﻿using Apache.NMS;
-using RoRClient.Model.DataTransferObject;
-using RoRClient.Model.Models;
-using RoRClient.ViewModel.Helper;
-using System;
+﻿using RoRClient.ViewModels.Editor;
+using RoRClient.ViewModels.Helper;
+using RoRClient.ViewModels.Lobby;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
-namespace RoRClient.ViewModel
+namespace RoRClient.ViewModels
 {
     class MainViewModel : ViewModelBase
     {

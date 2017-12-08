@@ -1,8 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RoRClient.BindingConverter;
-using RoRClient.Model.Models;
-using RoRClient.ViewModel;
+using RoRClient.Models.Game;
 
 namespace RoRClientTests
 {

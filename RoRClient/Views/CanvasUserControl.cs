@@ -1,14 +1,9 @@
-﻿using RoRClient.View.Editor;
-using RoRClient.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RoRClient.Views.Editor;
+using RoRClient.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace RoRClient.View
+namespace RoRClient.Views
 {
     /// <summary>
     /// Oberklasse für alle UserControls, die Objekte auf dem Spielfeld anzeigen

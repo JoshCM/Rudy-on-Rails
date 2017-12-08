@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace RoRClient.ViewModel.Helper
+namespace RoRClient.ViewModels.Commands
 {
     internal class ExitCommand : ICommand
     {

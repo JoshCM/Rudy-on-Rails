@@ -1,20 +1,8 @@
-﻿using RoRClient.ViewModel.Editor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RoRClient.ViewModels.Editor;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace RoRClient.View.Editor
+namespace RoRClient.Views.Editor
 {
     /// <summary>
     /// Interaktionslogik für SelectedToolUserControl.xaml
@@ -33,7 +21,6 @@ namespace RoRClient.View.Editor
             }
             set
             {
-                Console.WriteLine(value);
                 SetValue(ToolbarViewModelProperty, value);
             }
         }

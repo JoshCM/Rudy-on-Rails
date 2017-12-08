@@ -1,10 +1,7 @@
-﻿using System;
+﻿using RoRClient.Models.Base;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RoRClient.Model.Models
+namespace RoRClient.Models.Game
 {
     /// <summary>
     /// Klasse für ein Schienenstück mit "Eingang" und "Ausgang"

@@ -1,5 +1,4 @@
-﻿using RoRClient.Model.Models;
-using RoRClient.ViewModel;
+﻿using RoRClient.Models.Game;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

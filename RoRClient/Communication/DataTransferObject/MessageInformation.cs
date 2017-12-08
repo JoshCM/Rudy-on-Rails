@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using RoRClient.Model.Connections;
 
-namespace RoRClient.Model.DataTransferObject
+namespace RoRClient.Communication.DataTransferObject
 {
     //Klasse für den Inhalt der Messages an den Server (folgt dem Schema: ClientId, Request, Attributes)
     public class MessageInformation
@@ -93,9 +92,10 @@ namespace RoRClient.Model.DataTransferObject
             return (bool)_attributes[key];
         }
 
-        public JObject GetValueAsJsonObject(string key)
+        public List<JObject> GetValueAsJObjectList(string key)
         {
-            return JObject.Parse(GetValueAsString(key));
+            JArray array = (JArray)_attributes[key];
+            return array.ToObject<List<JObject>>();
         }
     }
 }

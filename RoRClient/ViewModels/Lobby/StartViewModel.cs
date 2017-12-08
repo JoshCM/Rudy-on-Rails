@@ -1,16 +1,11 @@
-﻿using Apache.NMS;
-using RoRClient.Model.DataTransferObject;
-using RoRClient.Model.Models;
-using RoRClient.ViewModel.Helper;
-using System;
-using System.Collections.Generic;
+﻿using RoRClient.Communication.DataTransferObject;
+using RoRClient.Models.Game;
+using RoRClient.ViewModels.Commands;
+using RoRClient.ViewModels.Helper;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace RoRClient.ViewModel
+namespace RoRClient.ViewModels.Lobby
 {
     class StartViewModel : ViewModelBase
     {

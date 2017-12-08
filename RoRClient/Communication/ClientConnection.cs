@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.Model.Connections
+namespace RoRClient.Communication
 {
     class ClientConnection
     {
@@ -18,9 +18,8 @@ namespace RoRClient.Model.Connections
         private Guid clientId;
 
         //public static string BROKER_URL = "tcp://172.26.39.100:61616";
-        public static string BROKER_URL = "tcp://localhost:61616";
+        public static string BROKER_URL = Properties.Settings.Default.BrokerUrl;
         private static ClientConnection instance;
-
 
         public ISession Session
         {
@@ -34,11 +33,23 @@ namespace RoRClient.Model.Connections
             clientId = Guid.NewGuid();
             Console.WriteLine("erstellt connection(base)");
             connectionFactory = new ConnectionFactory(BROKER_URL);
-            connection = connectionFactory.CreateConnection();
-            Console.WriteLine("startet Session(base)");
-            session = connection.CreateSession(AcknowledgementMode.AutoAcknowledge);
-            Console.WriteLine("startet queue(base)");
-            connection.Start();
+            Setup();
+        }
+
+        public void Setup()
+        {
+            try
+            {
+                connection = connectionFactory.CreateConnection();
+                Console.WriteLine("startet Session(base)");
+                session = connection.CreateSession(AcknowledgementMode.AutoAcknowledge);
+                Console.WriteLine("startet queue(base)");
+                connection.Start();
+            }
+            catch(NMSConnectionException e)
+            {
+                Console.Write("Es konnte keine Verbindung zum Server aufgebaut werden. Programm fährt fort ohne Verbindung.");
+            }
         }
 
         public static ClientConnection GetInstance()

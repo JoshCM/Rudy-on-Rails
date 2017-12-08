@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RoRClient.Models.Base;
 
-namespace RoRClient.Model.Models
+namespace RoRClient.Models.Game
 {
     /// <summary>
     /// Interface für platzierbare Objekte

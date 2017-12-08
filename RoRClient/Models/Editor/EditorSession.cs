@@ -1,12 +1,10 @@
-﻿using RoRClient.Model.Connections;
-using System;
-using System.Collections.Generic;
+﻿using RoRClient.Communication.Queue;
+using RoRClient.Communication.Topic;
+using RoRClient.Models.Base;
+using RoRClient.Models.Game;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RoRClient.Model.Models.Editor
+namespace RoRClient.Models.Editor
 {
     public class EditorSession : ModelBase
     {

@@ -1,11 +1,11 @@
-﻿using RoRClient.ViewModel.Helper;
+﻿using RoRClient.ViewModels.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.ViewModel
+namespace RoRClient.ViewModels.Editor
 {
     class EditorViewModel : ViewModelBase
     {

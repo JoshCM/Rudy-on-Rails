@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoRClient.ViewModel.Helper;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
-using RoRClient.Model.Models;
 using System.IO;
-using System.Reflection;
 
-namespace RoRClient.ViewModel.Editor
+namespace RoRClient.ViewModels.Editor
 {
     public class ToolbarViewModel : ViewModelBase
     {

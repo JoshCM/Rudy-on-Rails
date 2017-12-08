@@ -1,8 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RoRClient.ViewModel.Helper;
-using RoRClient.Model.Models;
-using RoRClient.ViewModel;
+using RoRClient.ViewModels.Helper;
+using RoRClient.Models.Game;
+using RoRClient.ViewModels.Editor;
+using RoRClient.ViewModels;
 
 namespace RoRClientTests.ViewModel.Helper
 {
@@ -27,7 +28,7 @@ namespace RoRClientTests.ViewModel.Helper
         public void ViewModelFactory_ThrowsTypeLoadExceptionWithFalseModel()
         {
             ViewModelFactory viewModelFactory = new ViewModelFactory();
-            Square square = new Square(0, 0);
+            Player square = new Player(new Guid(), "testplayer");
 
             CanvasViewModel canvasViewModel = (CanvasViewModel)viewModelFactory.CreateViewModelForModel(square);
         }

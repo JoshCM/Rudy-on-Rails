@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.ViewModel
+namespace RoRClient.ViewModels
 {
     /// <summary>
     /// Hier kommen alle Konstanten hin, die die Views betreffen
