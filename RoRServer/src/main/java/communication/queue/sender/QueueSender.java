@@ -4,10 +4,13 @@ import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.TextMessage;
 import org.apache.log4j.Logger;
+
+import communication.MessageInformation;
+import communication.dispatcher.RequestSerializer;
 import communication.queue.QueueBase;
 
 /**
- * Hiermit können Nachrichten an eine (ActiveMQ)Queue geschickt werden
+ * Über den QueueSender können Nachrichten mit messageType und einer MessageInformation an eine (ActiveMQ)Queue gesendet werden.
  */
 public class QueueSender extends QueueBase {
 
@@ -31,14 +34,17 @@ public class QueueSender extends QueueBase {
 		}
 	}
 
-	public void sendMessage(String messageType, String message) {
+	public void sendMessage(String messageType, MessageInformation messageInformation) {
+		RequestSerializer requestSerializer = RequestSerializer.getInstance();
+		String content = requestSerializer.serialize(messageInformation);
+		
 		try {
 			TextMessage textMessage;
-			textMessage = session.createTextMessage(message);
+			textMessage = session.createTextMessage(content);
 			textMessage.setJMSType(messageType);
 			publisher.send(textMessage);
 		} catch (JMSException e) {
-			log.error("QueueSender.sendMessage(String message) : message : "+message);
+			log.error("QueueSender.sendMessage(String message) : message : " + content);
 			e.printStackTrace();
 		}
 	}
