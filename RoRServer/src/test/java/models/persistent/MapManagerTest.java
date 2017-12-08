@@ -14,7 +14,7 @@ import persistent.MapManager;
 public class MapManagerTest {
 	
 	MapManager manager = new MapManager();
-	Map savedMap = new Map(new EditorSession("unit_test"));
+	Map savedMap = new Map("test");
 	
 	/*
 	@Test

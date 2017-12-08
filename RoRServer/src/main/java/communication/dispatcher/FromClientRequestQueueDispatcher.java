@@ -47,7 +47,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		responseInformation.setClientid(messageInformation.getClientid());
 		
 		editorSession = EditorSessionManager.getInstance().getEditorSession();
-		Player player = new Player(editorSession, messageInformation.getValueAsString("Playername"));
+		Player player = new Player(editorSession.getName(), messageInformation.getValueAsString("playerName"));
 		editorSession.addPlayer(player);
 		
 		responseInformation.putValue("topicName", editorSession.getName());
@@ -71,9 +71,9 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		responseInformation.setClientid(messageInformation.getClientid());
 		
 		editorSession = EditorSessionManager.getInstance()
-				.createNewEditorSession(messageInformation.getValueAsString("Editorname"));
+				.createNewEditorSession(messageInformation.getValueAsString("editorName"));
 		editorSession.setup();
-		Player player = new Player(editorSession, messageInformation.getValueAsString("Playername"));
+		Player player = new Player(editorSession.getName(), messageInformation.getValueAsString("playerName"));
 		editorSession.addPlayer(player);
 		
 		responseInformation.putValue("topicName", editorSession.getName());

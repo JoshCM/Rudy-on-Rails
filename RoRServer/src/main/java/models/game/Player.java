@@ -6,8 +6,8 @@ import models.session.RoRSession;
 public class Player extends ModelBase {
     private String name;
 
-    public Player(RoRSession session, String name) {
-    	super(session);
+    public Player(String sessionName, String name) {
+    	super(sessionName);
         this.name = name;
     }
 
