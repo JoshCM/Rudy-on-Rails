@@ -13,6 +13,9 @@ using RoRClient.Communication.Dispatcher;
 
 namespace RoRClient.Communication.Topic
 {
+    /// <summary>
+    /// Annahme der Messages für Game/Editor
+    /// </summary>
     class TopicReceiver
     {
        
@@ -45,6 +48,7 @@ namespace RoRClient.Communication.Topic
             ITextMessage textMessage = message as ITextMessage;
             string messageType = message.NMSType;
             MessageInformation messageInformation = MessageDeserializer.getInstance().Deserialize(textMessage.Text);
+            // Der Dispatcher (Game/Editor) wird bei Erstellung mitgegeben
             dispatcher.Dispatch(messageType, messageInformation);
 
             Console.WriteLine("Folgende Änderung am Game erhalten: " + textMessage.Text+"(topicReceiver)");
