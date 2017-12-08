@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Communication.Dispatcher
 {
-    class EditorSessionDispatcher : QueueDispatcherBase
+    class TopicEditorDispatcher : TopicDispatcherBase
     {
-
+        public TopicEditorDispatcher()
+        {
+            COMMAND_TYPE_PREFIX = "RoRClient.Commands.Editor.";
+        }
     }
 }
