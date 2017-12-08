@@ -21,7 +21,6 @@ namespace RoRClient.Communication
         public static string BROKER_URL = Properties.Settings.Default.BrokerUrl;
         private static ClientConnection instance;
 
-
         public ISession Session
         {
             get
@@ -34,11 +33,23 @@ namespace RoRClient.Communication
             clientId = Guid.NewGuid();
             Console.WriteLine("erstellt connection(base)");
             connectionFactory = new ConnectionFactory(BROKER_URL);
-            connection = connectionFactory.CreateConnection();
-            Console.WriteLine("startet Session(base)");
-            session = connection.CreateSession(AcknowledgementMode.AutoAcknowledge);
-            Console.WriteLine("startet queue(base)");
-            connection.Start();
+            Setup();
+        }
+
+        public void Setup()
+        {
+            try
+            {
+                connection = connectionFactory.CreateConnection();
+                Console.WriteLine("startet Session(base)");
+                session = connection.CreateSession(AcknowledgementMode.AutoAcknowledge);
+                Console.WriteLine("startet queue(base)");
+                connection.Start();
+            }
+            catch(NMSConnectionException e)
+            {
+                Console.Write("Es konnte keine Verbindung zum Server aufgebaut werden. Programm fährt fort ohne Verbindung.");
+            }
         }
 
         public static ClientConnection GetInstance()

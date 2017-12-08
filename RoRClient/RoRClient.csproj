@@ -217,7 +217,7 @@
   <ItemGroup>
     <Compile Include="Communication\ClientConnection.cs" />
     <Compile Include="Communication\Queue\QueueBase.cs" />
-    <Compile Include="Models\Game\ClientModel.cs" />
+    <Compile Include="Models\Lobby\LobbyModel.cs" />
     <Compile Include="Communication\Topic\TopicReceiver.cs" />
     <Compile Include="Models\Game\InteractiveGameObject.cs" />
     <Compile Include="Models\Game\Map.cs" />
