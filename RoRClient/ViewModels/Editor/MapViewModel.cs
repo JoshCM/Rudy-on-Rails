@@ -18,7 +18,7 @@ namespace RoRClient.ViewModels.Editor
     /// Hält alle ViewModels die placeableOnSquare sind, sowie die Squares der Map
     /// und momentan noch die Map an sich
     /// </summary>
-    class MapViewModel : ViewModelBase
+    public class MapViewModel : ViewModelBase
     {
         private Map map;
 
