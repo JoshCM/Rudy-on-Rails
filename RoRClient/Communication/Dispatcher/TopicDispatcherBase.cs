@@ -5,8 +5,12 @@ using RoRClient.Models.Editor;
 
 namespace RoRClient.Communication.Dispatcher
 {
+    /// <summary>
+    /// Klasse zum Verarbeiten der Messages des Topic-Receivers
+    /// </summary>
     class TopicDispatcherBase
     {
+        // COMMAND_TYPE ist entweder Editor oder Game (siehe Unterklassen)
         protected string COMMAND_TYPE_PREFIX = "";
         protected const string COMMAND_CLASS_SUFFIX = "Command";
         protected const string CREATE = "Create.";
@@ -15,6 +19,7 @@ namespace RoRClient.Communication.Dispatcher
         
         public void Dispatch(string request, MessageInformation message)
         {
+            // Gibt den kompletten Pfad zum Command an
             string pathToCommand = "";
 
             if (request.StartsWith("Create"))
@@ -32,6 +37,8 @@ namespace RoRClient.Communication.Dispatcher
             try
             {
                 Type commandType = Type.GetType(pathToCommand);
+                // nach commandType müssen die genauen Parameter für den Konstruktor mitgegeben werden (siehe CommandBase)
+                // Die EditorSession muss noch durch Session (Game oder Editor) ersetzt werden
                 ICommand command = (ICommand)Activator.CreateInstance(commandType, EditorSession.GetInstance(), message);
                 command.Execute();
             }
