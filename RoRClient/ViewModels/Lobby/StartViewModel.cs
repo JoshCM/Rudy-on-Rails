@@ -48,6 +48,7 @@ namespace RoRClient.ViewModels.Lobby
 
         private void SendCreateEditorSessionCommand()
         {
+            lobbyModel.StartConnection();
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("playerName", "Heinz");
             messageInformation.PutValue("editorName", "Editor1");
