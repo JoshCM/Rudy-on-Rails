@@ -23,11 +23,11 @@ namespace RoRClient.Commands.Editor.Create
 
         public CreateRailCommand(EditorSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
-            Guid railId = Guid.Parse(messageInformation.GetValueAsString("railId"));
-            int xPos = messageInformation.GetValueAsInt("xPos");
-            int yPos = messageInformation.GetValueAsInt("yPos");
-            RailSectionPosition node1 = (RailSectionPosition)Enum.Parse(typeof(RailSectionPosition), messageInformation.GetValueAsString("railSectionPositionNode1"));
-            RailSectionPosition node2 = (RailSectionPosition)Enum.Parse(typeof(RailSectionPosition), messageInformation.GetValueAsString("railSectionPositionNode2"));
+            railId = Guid.Parse(messageInformation.GetValueAsString("railId"));
+            xPos = messageInformation.GetValueAsInt("xPos");
+            yPos = messageInformation.GetValueAsInt("yPos");
+            node1 = (RailSectionPosition)Enum.Parse(typeof(RailSectionPosition), messageInformation.GetValueAsString("railSectionPositionNode1"));
+            node2 = (RailSectionPosition)Enum.Parse(typeof(RailSectionPosition), messageInformation.GetValueAsString("railSectionPositionNode2"));
             
         }
 

@@ -8,7 +8,7 @@ using RoRClient.Communication.DataTransferObject;
 
 namespace RoRClient.Communication.Dispatcher
 {
-    class DispatcherBase
+    class QueueDispatcherBase
     {
         /// <summary>
         /// Dummymethode für Funktionszuweisungen von ServerResponses
