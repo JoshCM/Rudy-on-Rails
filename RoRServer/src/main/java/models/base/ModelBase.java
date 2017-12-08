@@ -7,6 +7,7 @@ import models.editor.RoRSession;
 
 /**
  * Base-Klasse für alle Models, damit alle Models eine Id und die zugehörige RoRSession kennen
+ * Die RoRSession wird aktuell gebraucht, damit die Models Änderungen an den Client geben können über die Methode addMessage()
  */
 public abstract class ModelBase implements Model {
 	private UUID id;

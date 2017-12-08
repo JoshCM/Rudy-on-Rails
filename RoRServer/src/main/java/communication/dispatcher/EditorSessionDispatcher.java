@@ -1,7 +1,11 @@
 package communication.dispatcher;
 
+import java.lang.reflect.InvocationTargetException;
+
+import commands.CommandCreator;
 import commands.base.Command;
 import communication.MessageInformation;
+import exceptions.InvalidModelOperationException;
 import models.editor.EditorSession;
 import models.editor.RoRSession;
 import models.game.Map;
@@ -19,14 +23,6 @@ public class EditorSessionDispatcher extends DispatcherBase {
 		this.editorSession = editorSession;
 	}
 
-	/*
-	 * public void dispatch(String request, String message) { RequestSerializer
-	 * requestSerializer = RequestSerializer.getInstance(); MessageInformation
-	 * messageInformation = requestSerializer.deserialize(message);
-	 * 
-	 * if(request.equals("CreateRail")) { handleCreateRail(messageInformation); } }
-	 */
-
 	@Override
 	public void dispatch(String messageType, String message) {
 		RequestSerializer requestSerializer = RequestSerializer.getInstance();
@@ -36,14 +32,15 @@ public class EditorSessionDispatcher extends DispatcherBase {
 	}
 
 	private void executeCommandForMessageType(String messageType, MessageInformation messageInformation) {
+		String commandName = COMMAND_PACKAGE_NAME + messageType + COMMAND_SUFFIX;
+		Command command = null;
+		
 		try {
-			Class<?> cls = Class.forName(COMMAND_PACKAGE_NAME + messageType + COMMAND_SUFFIX);
-			Command command = (Command) cls.getConstructor(RoRSession.class, MessageInformation.class)
-					.newInstance(editorSession, messageInformation);
-			// Hier könnte man den Command noch irgendwo speichern, wenn man das will
+			command = CommandCreator.createCommandForName(commandName, editorSession, messageInformation);
 			command.execute();
+		} catch (InvalidModelOperationException e) {
+			e.printStackTrace();
 		} catch (Exception e) {
-			// Do something meaningful here
 			e.printStackTrace();
 		}
 	}
