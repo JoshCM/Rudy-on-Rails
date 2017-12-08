@@ -7,7 +7,7 @@ namespace RoRClient.Communication.Queue
 {
     class FromServerResponseReceiver : QueueBase
     {
-        private ResponseDispatcher responseDispatcher;
+        private FromServerResponseQueueDispatcher responseDispatcher;
         private IMessageConsumer messageConsumer;
         private LobbyModel lobbyModel;
 
@@ -19,7 +19,7 @@ namespace RoRClient.Communication.Queue
 
         private void init()
         {
-            responseDispatcher = new ResponseDispatcher(lobbyModel);
+            responseDispatcher = new FromServerResponseQueueDispatcher(lobbyModel);
             Console.WriteLine("startet messageconsumer(queueReceiver)");
             messageConsumer = session.CreateConsumer(queue);
             messageConsumer.Listener += OnMessageReceived;
@@ -33,7 +33,7 @@ namespace RoRClient.Communication.Queue
             Console.WriteLine("from server: " + textMessage.Text);
 
             string messageType = message.NMSType;
-            responseDispatcher.dispatch(messageType, textMessage.Text);
+            responseDispatcher.Dispatch(messageType, textMessage.Text);
         }
     }
 }

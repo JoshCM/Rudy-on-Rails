@@ -6,9 +6,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import communication.queue.receiver.QueueReceiver;
 import models.game.Map;
 import models.game.Placeable;
 import models.game.PlaceableOnRail;
@@ -24,6 +27,7 @@ import models.game.PlaceableOnSquare;
 
 public class MapManager {
 
+	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
 	private final String dir = "resources/maps/";
 	private final String ext = ".map";
 	private Gson gsonLoader;
@@ -48,7 +52,7 @@ public class MapManager {
 	 */
 	public Map loadMap(String mapName) {
 	    String jsonMap = readFromFile(mapName);
-	    System.out.println("Eingelesene Map: " + jsonMap);
+	    log.info("Eingelesene Map: " + jsonMap);
 		Map map = gsonLoader.fromJson(jsonMap, Map.class);
 		return map;
 	}
@@ -91,7 +95,7 @@ public class MapManager {
 	 */
 	public void saveMap(Map map, String mapName) {
 		String jsonMap = gsonSaver.toJson(map);
-		System.out.println("Gespeicherte Map: "+ jsonMap);
+		log.info("Gespeicherte Map: "+ jsonMap);
 		saveToFile(jsonMap, mapName);
 	}
 	
