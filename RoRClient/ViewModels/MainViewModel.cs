@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace RoRClient.ViewModels
 {
+    /// <summary>
+    /// Hält das momentane ViewModel und kann es austauschen (UIState)
+    /// </summary>
     class MainViewModel : ViewModelBase
     {
         Dictionary<string, ViewModelBase> viewmodels = new Dictionary<string, ViewModelBase>();
@@ -21,7 +24,7 @@ namespace RoRClient.ViewModels
             }
         }
 
-        private void changeToView(object sender, UiChangedEventArgs args)
+        private void ChangeToView(object sender, UiChangedEventArgs args)
         {
             CurrentViewModel = viewmodels[args.Statename];
         }
@@ -30,7 +33,7 @@ namespace RoRClient.ViewModels
             viewmodels.Add("start", new StartViewModel(uiState));
             viewmodels.Add("editor", new EditorViewModel(uiState));
 
-            uiState.OnUiStateChanged += changeToView;
+            uiState.OnUiStateChanged += ChangeToView;
 
             CurrentViewModel = viewmodels["start"];
         }
