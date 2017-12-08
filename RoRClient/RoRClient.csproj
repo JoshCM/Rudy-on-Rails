@@ -111,8 +111,8 @@
     <Compile Include="Communication\DataTransferObject\MessageDeserializer.cs" />
     <Compile Include="Communication\DataTransferObject\MessageInformation.cs" />
     <Compile Include="Communication\Dispatcher\FromServerResponseQueueDispatcher.cs" />
-	<Compile Include="Communication\Dispatcher\EditorSessionDispatcher.cs" />
-	<Compile Include="Communication\Dispatcher\GameSessionDispatcher.cs" />
+    <Compile Include="Communication\Dispatcher\EditorSessionDispatcher.cs" />
+    <Compile Include="Communication\Dispatcher\GameSessionDispatcher.cs" />
     <Compile Include="Models\Editor\EditorSession.cs" />
     <Compile Include="Models\Base\IModel.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
@@ -258,7 +258,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\Game\" />
+    <Folder Include="Commands\Editor\Delete\" />
+    <Folder Include="Commands\Editor\Update\" />
+    <Folder Include="Commands\Game\Create\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\railcurve_ne.png" />
