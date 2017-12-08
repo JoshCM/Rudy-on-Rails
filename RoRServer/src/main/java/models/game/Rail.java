@@ -7,7 +7,6 @@ import communication.MessageInformation;
  * Schienenstueck (= Gerade, Kurve) bzw. zwei Schienenstuecke (= Kreuzung,
  * Weiche) besitzen
  */
-
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 
 	// muss hier raus und eine Ebene tiefer(RailSection)
