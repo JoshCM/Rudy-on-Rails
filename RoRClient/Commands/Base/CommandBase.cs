@@ -21,9 +21,6 @@ namespace RoRClient.Commands.Base
             this.session = session;
         }
 
-        public void Execute()
-        {
-
-        }
+        public abstract void Execute();
     }
 }

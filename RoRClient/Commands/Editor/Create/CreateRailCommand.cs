@@ -11,7 +11,7 @@ using RoRClient.Models.Game;
 namespace RoRClient.Commands.Editor.Create
 
 {
-    public class CreateRailCommand : CommandBase, ICommand
+    public class CreateRailCommand : CommandBase
     {
 
         private Guid railId;
@@ -31,7 +31,7 @@ namespace RoRClient.Commands.Editor.Create
             
         }
 
-        public new void Execute()
+        public override void Execute()
         {
             EditorSession editorSession = EditorSession.GetInstance();
             Square square = editorSession.Map.GetSquare(xPos, yPos);
