@@ -68,8 +68,7 @@ public abstract class RoRSession {
 			if(messageInfo.getMessageType().equals(messageType)) {
 				return messageInfo;
 			}
-		};
-		
+		}
 		return null;
 	}
 }

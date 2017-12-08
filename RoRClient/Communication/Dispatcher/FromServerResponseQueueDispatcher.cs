@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace RoRClient.Communication.Dispatcher
 {
-    class FromServerResponseQueueDispatcher : DispatcherBase
+    class FromServerResponseQueueDispatcher : QueueDispatcherBase
     {
         private LobbyModel lobbyModel;
 
@@ -48,24 +48,5 @@ namespace RoRClient.Communication.Dispatcher
 
             lobbyModel.Connected = true;
         }
-
-        /// <summary>
-        /// Aufgabe die Message zu "dispatchen" um zu entscheiden, was damit passieren soll, je nach MessageType
-        /// </summary>
-        /// <param name="message"></param>
-		/*internal void Dispatch(string request, string message)
-        {
-            MessageInformation messageInformation = MessageDeserializer.getInstance().Deserialize(message);
-
-            if(request == "CreateEditorSession")
-            {
-                CreateEditorSession(messageInformation);
-            }
-            else if(request == "JoinEditorSession")
-            {
-                JoinEditorSession(messageInformation);
-            }
-        }
-        */
     }
 }
