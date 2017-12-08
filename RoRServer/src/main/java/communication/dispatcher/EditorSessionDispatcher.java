@@ -1,17 +1,10 @@
 package communication.dispatcher;
 
-import java.lang.reflect.InvocationTargetException;
-
 import commands.CommandCreator;
 import commands.base.Command;
 import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
 import models.editor.EditorSession;
-import models.editor.RoRSession;
-import models.game.Map;
-import models.game.Rail;
-import models.game.RailSectionPosition;
-import models.game.Square;
 
 public class EditorSessionDispatcher extends DispatcherBase {
 	private final static String COMMAND_PACKAGE_NAME = "commands.editor.";
@@ -31,6 +24,11 @@ public class EditorSessionDispatcher extends DispatcherBase {
 		executeCommandForMessageType(messageType, messageInformation);
 	}
 
+	/**
+	 * Erzeugt einen neuen Command für den hereingegebenen messageType und führt ihn aus
+	 * @param messageType
+	 * @param messageInformation
+	 */
 	private void executeCommandForMessageType(String messageType, MessageInformation messageInformation) {
 		String commandName = COMMAND_PACKAGE_NAME + messageType + COMMAND_SUFFIX;
 		Command command = null;
