@@ -5,8 +5,8 @@ import java.util.UUID;
 import org.junit.Test;
 
 import communication.MessageInformation;
-import models.editor.EditorSession;
-import models.editor.EditorSessionManager;
+import models.session.EditorSession;
+import models.session.EditorSessionManager;
 
 public class RailTests {
 

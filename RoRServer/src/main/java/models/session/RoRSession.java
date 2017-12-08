@@ -1,9 +1,14 @@
-package models.editor;
+package models.session;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicSender;
+import models.game.Map;
+import models.game.Player;
 
 /**
  * Oberklasse von EditorSession und GameSession
@@ -11,6 +16,9 @@ import communication.topic.TopicSender;
  */
 public abstract class RoRSession {
 	private String name;
+	private ArrayList<Player> players = new ArrayList<>();
+	private Map map;
+	
 	protected QueueReceiver queueReceiver;
 	private TopicSender topicSender;
 	
@@ -20,6 +28,7 @@ public abstract class RoRSession {
 	public RoRSession(String name) {
 		this.name = name;
 		this.topicSender = new TopicSender(name);
+		map = new Map(this);
 	}
 	
 	public String getName() {
@@ -70,5 +79,21 @@ public abstract class RoRSession {
 			}
 		}
 		return null;
+	}
+	
+	public void addPlayer(Player player) {
+		this.players.add(player);
+	}
+
+	public void removePlayer(Player player) {
+		this.players.remove(player);
+	}
+
+	public Map getMap() {
+		return map;
+	}
+
+	public List<Player> getPlayers() {
+		return Collections.unmodifiableList(players);
 	}
 }

@@ -20,6 +20,7 @@ namespace RoRClient.Models.Editor
         private QueueSender queueSender;
         private TopicReceiver topicReceiver;
 
+        // TODO: versuchen das das hier nicht mehr singelton ist
         private EditorSession()
         {
             map = new Map();

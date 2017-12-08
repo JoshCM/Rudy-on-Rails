@@ -1,7 +1,7 @@
 package models.game;
 
 import models.base.ModelBase;
-import models.editor.RoRSession;
+import models.session.RoRSession;
 
 /**
  * Abstrakte Klasse fuer alle Objekte, mit denen interagiert werden kann

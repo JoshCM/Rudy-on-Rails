@@ -2,12 +2,12 @@ package commands.editor;
 
 import commands.base.CommandBase;
 import communication.MessageInformation;
-import models.editor.EditorSession;
-import models.editor.RoRSession;
 import models.game.Map;
 import models.game.Rail;
 import models.game.RailSectionPosition;
 import models.game.Square;
+import models.session.EditorSession;
+import models.session.RoRSession;
 
 public class CreateRailCommand extends CommandBase {
 	private int xPos;

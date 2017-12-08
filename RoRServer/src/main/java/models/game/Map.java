@@ -1,8 +1,8 @@
 package models.game;
 
 import models.base.ModelBase;
-import models.editor.EditorSession;
-import models.editor.RoRSession;
+import models.session.EditorSession;
+import models.session.RoRSession;
 
 import java.util.Arrays;
 

@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import commands.base.Command;
 import communication.MessageInformation;
-import models.editor.RoRSession;
+import models.session.RoRSession;
 
 public class CommandCreator {
 	public static Command createCommandForName(String commandName, RoRSession session,

@@ -4,11 +4,11 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import models.dummy.DummySignal;
-import models.editor.EditorSession;
 import models.game.Map;
 import models.game.Rail;
 import models.game.RailSection;
 import models.game.RailSectionPosition;
+import models.session.EditorSession;
 import persistent.MapManager;
 
 public class MapManagerTest {
