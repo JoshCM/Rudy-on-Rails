@@ -13,15 +13,44 @@ namespace RoRClientTests.ViewModels.Editor
     [TestClass]
     public class MapViewModelTest
     {
-        [TestMethod]
-        public void MapViewModel_InitializeTest()
+        Map map;
+        Rail expectedRail;
+        EditorSession editorSession;
+        MapViewModel mapViewModel;
+
+        [TestInitialize]
+        public void TestInitialize()
         {
-            Map map = EditorSession.GetInstance().Map;
-            Rail expectedRail = new Rail(new Guid(), map.GetSquare(0, 0), new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+            mapViewModel = new MapViewModel();
+            editorSession = EditorSession.GetInstance();
+            map = editorSession.Map;
+        }
+
+        /* Kann erst genutzt werden wenn der Dispatcher-Thread der Application der Collection nicht mehr adden muss
+        [TestMethod]
+        public void MapViewModel_PlaceableOnSquareCollectionInitializedTest()
+        {
+            expectedRail = new Rail(new Guid(), map.GetSquare(0, 0), new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
             map.GetSquare(0, 0).PlaceableOnSquare = expectedRail;
-            MapViewModel mapViewModel = new MapViewModel();
+            
             RailViewModel railViewModel = (RailViewModel)mapViewModel.PlaceableOnSquareCollection[0];
             Assert.AreSame(expectedRail, railViewModel.Rail);
+        }
+        */
+        [TestMethod]
+        public void MapViewModel_SquareViewModelsInitializedTest()
+        {
+            Assert.AreEqual(map.Squares.Length, mapViewModel.SquareViewModels.Count);
+            foreach(SquareViewModel squareViewModel in mapViewModel.SquareViewModels)
+            {
+                foreach(Square square in map.Squares) {
+                    if (squareViewModel.Square.Equals(square))
+                    {
+                        Assert.AreEqual(squareViewModel.SquarePosX, square.PosX);
+                        Assert.AreEqual(squareViewModel.SquarePosY, square.PosY);
+                    }
+                }
+            }
         }
     }
 }
