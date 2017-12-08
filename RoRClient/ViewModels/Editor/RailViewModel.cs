@@ -1,11 +1,11 @@
-﻿using RoRClient.Model.Models;
+﻿using RoRClient.Models.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.ViewModel
+namespace RoRClient.ViewModels.Editor
 {
     /// <summary>
     /// Hält die zugehörige Rail und die Position (SquarePosX, SquarePosY) des Rails

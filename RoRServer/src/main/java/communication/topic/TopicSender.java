@@ -6,8 +6,14 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
 
+import communication.MessageInformation;
 import communication.ServerConnection;
+import communication.dispatcher.RequestSerializer;
 
+/**
+ * Über den TopicSender können Nachrichten an einen Topic gesendet werden mithilfe eines MessageTypes und einem 
+ * MessageInformation-Objekt
+ */
 public class TopicSender {
 	private Session session;
 	private MessageProducer publisher;
@@ -16,13 +22,13 @@ public class TopicSender {
 	
 	public TopicSender(String topicName) {
 		this.topicName = topicName;
-		createTopic();
 	}
 	
-	public void sendMessage(String messageType, String message) {
+	public void sendMessage(String messageType, MessageInformation messageInformation) {
 		try {
-			TextMessage textMessage;
-			textMessage = session.createTextMessage(message);
+			RequestSerializer requestSerializer = RequestSerializer.getInstance();
+			String content = requestSerializer.serialize(messageInformation);
+			TextMessage textMessage = session.createTextMessage(content);
 			textMessage.setJMSType(messageType);
 			publisher.send(textMessage);
 		} catch (JMSException e) {
@@ -30,7 +36,7 @@ public class TopicSender {
 		}
 	}
 
-	private void createTopic() {
+	public void setup() {
 		try {
 			session = ServerConnection.getInstance().getSession();
 			topic = session.createTopic(topicName);

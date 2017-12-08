@@ -2,6 +2,7 @@ package models.game;
 
 import models.base.ModelBase;
 import models.editor.EditorSession;
+import models.editor.RoRSession;
 
 import java.util.Arrays;
 
@@ -10,8 +11,6 @@ import java.util.Arrays;
  * Klasse, die das Spielfeld darstellt und aus Feldern (Squares) besteht
  */
 public class Map extends ModelBase {
-	
-	private EditorSession editorSession;
 	private Square squares [][];
 	private final int mapSize = 3;
 	
@@ -19,8 +18,8 @@ public class Map extends ModelBase {
 	 * Jedes Square auf der Map braucht einen Index,
 	 * um jedem Objekt, das auf einem Square platziert wird, ein eindeutiges Objekt zuzuordnen
 	 */
-	public Map(EditorSession editorSession) {
-		this.editorSession = editorSession;
+	public Map(RoRSession session) {
+		super(session);
 		
 		squares = new Square[mapSize][mapSize];
 		
@@ -68,9 +67,5 @@ public class Map extends ModelBase {
 		result = prime * result + mapSize;
 		result = prime * result + Arrays.deepHashCode(squares);
 		return result;
-	}
-	
-	public EditorSession getEditorSession() {
-		return editorSession;
 	}
 }

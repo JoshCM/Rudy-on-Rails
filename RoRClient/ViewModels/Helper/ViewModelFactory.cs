@@ -1,15 +1,11 @@
-﻿using RoRClient.Model.Models;
+﻿using RoRClient.Models.Base;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RoRClient.ViewModel.Helper
+namespace RoRClient.ViewModels.Helper
 {
     public class ViewModelFactory
     {
-        private const string VIEWMODEL_TYPE_PREFIX = "RoRClient.ViewModel.";
+        private const string VIEWMODEL_TYPE_PREFIX = "RoRClient.ViewModels.Editor.";
         private const string VIEWMODEL_CLASS_SUFFIX = "ViewModel";
 
         /// <summary>

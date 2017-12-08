@@ -1,16 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Apache.NMS;
-using Apache.NMS.ActiveMQ.Commands;
-using RoRClient.Model.Connections;
-using RoRClient.Model.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RoRClient.Model.DataTransferObject
+namespace RoRClient.Communication.DataTransferObject
 {
+    /// <summary>
+    /// Kann anhand eines Strings(messageType) und einer MessageInformation(content)
+    /// eine IMessage mit NMSType erzeugen
+    /// </summary>
 	static class MessageBuilder
 	{
 		public static IMessage build(String messageType, MessageInformation content)

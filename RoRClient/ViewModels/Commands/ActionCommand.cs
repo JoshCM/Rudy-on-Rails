@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace RoRClient.ViewModel.Helper
+namespace RoRClient.ViewModels.Commands
 {
     class ActionCommand : ICommand
     {

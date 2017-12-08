@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RoRClient.ViewModel.Helper
+namespace RoRClient.ViewModels.Helper
 {
     class UiChangedEventArgs : EventArgs
     {

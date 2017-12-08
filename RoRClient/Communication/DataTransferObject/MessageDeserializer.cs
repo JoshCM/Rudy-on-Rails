@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RoRClient.Model.DataTransferObject;
 using Newtonsoft.Json;
 
-namespace RoRClient.Model.DataTransferObject
+namespace RoRClient.Communication.DataTransferObject
 {
     class MessageDeserializer
     {

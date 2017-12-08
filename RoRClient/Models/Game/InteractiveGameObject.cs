@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RoRClient.Models.Base;
 
-namespace RoRClient.Model.Models
+namespace RoRClient.Models.Game
 {
     public abstract class InteractiveGameObject : ModelBase
     {

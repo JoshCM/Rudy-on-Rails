@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RoRClient.Model.Models
+namespace RoRClient.Models.Base
 {
     /// <summary>
     /// Interface für die ModelBase um eine eindeutige Identifikation zu halten

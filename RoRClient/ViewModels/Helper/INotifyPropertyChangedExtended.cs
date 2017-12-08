@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RoRClient.ViewModel.Helper
+﻿namespace RoRClient.ViewModels.Helper
 {
     /// <summary>
     /// Extended Klasse um beim PropertyChanged den alten und neuen Wert mitzugeben

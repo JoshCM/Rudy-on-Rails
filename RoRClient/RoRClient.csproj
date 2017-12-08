@@ -99,15 +99,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BindingConverter\ImagePathToRailSectionConverter.cs" />
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
+    <Compile Include="Commands\Base\CommandBase.cs" />
+    <Compile Include="Commands\Base\ICommand.cs" />
+    <Compile Include="Commands\Editor\Create\CreateRailCommand.cs" />
+    <Compile Include="Communication\Dispatcher\DispatcherBase.cs" />
     <Compile Include="Communication\Queue\FromServerResponseQueueReceiver.cs" />
     <Compile Include="Communication\Queue\QueueSender.cs" />
     <Compile Include="Communication\DataTransferObject\MessageBuilder.cs" />
     <Compile Include="Communication\DataTransferObject\MessageDeserializer.cs" />
     <Compile Include="Communication\DataTransferObject\MessageInformation.cs" />
-    <Compile Include="Communication\Dispatcher\ResponseDispatcher.cs" />
+    <Compile Include="Communication\Dispatcher\FromServerResponseQueueDispatcher.cs" />
+	<Compile Include="Communication\Dispatcher\EditorSessionDispatcher.cs" />
+	<Compile Include="Communication\Dispatcher\GameSessionDispatcher.cs" />
     <Compile Include="Models\Editor\EditorSession.cs" />
     <Compile Include="Models\Base\IModel.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
@@ -121,6 +126,7 @@
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Lobby\StartViewModel.cs" />
+    <Compile Include="ViewModels\Editor\SquareViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\CanvasViewModel.cs" />
     <Compile Include="ViewModels\Helper\INotifyPropertyChangedExtended.cs" />
@@ -129,6 +135,7 @@
     <Compile Include="ViewModels\ViewConstants.cs" />
     <Compile Include="ViewModels\Editor\MapViewModel.cs" />
     <Compile Include="Views\CanvasUserControl.cs" />
+    <Compile Include="Views\Editor\Helper\ToolConverter.cs" />
     <Compile Include="Views\Editor\RailUserControl.xaml.cs">
       <DependentUpon>RailUserControl.xaml</DependentUpon>
     </Compile>
@@ -278,7 +285,7 @@
   <ItemGroup>
     <Compile Include="Communication\ClientConnection.cs" />
     <Compile Include="Communication\Queue\QueueBase.cs" />
-    <Compile Include="Models\Game\ClientModel.cs" />
+    <Compile Include="Models\Lobby\LobbyModel.cs" />
     <Compile Include="Communication\Topic\TopicReceiver.cs" />
     <Compile Include="Models\Game\InteractiveGameObject.cs" />
     <Compile Include="Models\Game\Map.cs" />
@@ -313,7 +320,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Commands\Game\" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\railcurve_ne.png" />
     <Resource Include="Resources\Images\railcurve_nw.png" />
@@ -327,6 +336,7 @@
     <Resource Include="Resources\Images\Tools\railcurve_ne.png" />
     <Resource Include="Resources\Images\Tools\railcurve_nw.png" />
     <Resource Include="Resources\Images\Tools\railcurve_se.png" />
+    <Resource Include="Resources\Images\dummy.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

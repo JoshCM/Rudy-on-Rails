@@ -1,17 +1,20 @@
 package communication.broker;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.log4j.Logger;
-import communication.queue.receiver.FromClientRequestQueueReceiver;
+import communication.dispatcher.FromClientRequestQueueDispatcher;
+import communication.queue.receiver.QueueReceiver;
 import resources.PropertyManager;
 
-
-// Singleton
+/**
+ * Hier wird der BrokerService gestartet, an den sich die Clients verbinden können
+ * Dazu wird hier der Receiver für die ClientRequestQueue gehalten
+ */
 public class MessageBroker {
 	private static MessageBroker messageBroker = null;	
 	private BrokerService broker = null;
 	static Logger log = Logger.getLogger(MessageBroker.class.getName());
 	private static String CLIENT_REQUEST_QUEUE_NAME = "ClientRequestQueue";
-	private FromClientRequestQueueReceiver fromClientRequestQueueReceiver;
+	private QueueReceiver fromClientRequestQueueReceiver;
 
 	private MessageBroker(){
 		broker = new BrokerService();
@@ -30,7 +33,9 @@ public class MessageBroker {
 		try {
 			broker.addConnector(PropertyManager.getProperty("broker_url"));
 			broker.start();
-			fromClientRequestQueueReceiver = new FromClientRequestQueueReceiver(CLIENT_REQUEST_QUEUE_NAME);
+			FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+			fromClientRequestQueueReceiver = new QueueReceiver(CLIENT_REQUEST_QUEUE_NAME, dispatcher);
+			fromClientRequestQueueReceiver.setup();
 			log.info("MessageBroker.startBroker(): " + PropertyManager.getProperty("broker_url"));
 		} catch (Exception e) {
 			e.printStackTrace();

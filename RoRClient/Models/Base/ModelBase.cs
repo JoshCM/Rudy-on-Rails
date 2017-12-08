@@ -1,12 +1,8 @@
-﻿using RoRClient.ViewModel.Helper;
+﻿using RoRClient.ViewModels.Helper;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RoRClient.Model.Models
+namespace RoRClient.Models.Base
 {
     public abstract class ModelBase : IModel, INotifyPropertyChanged
     {

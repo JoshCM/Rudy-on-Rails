@@ -1,16 +1,16 @@
 ﻿﻿using Apache.NMS;
 using Apache.NMS.ActiveMQ;
 using Apache.NMS.ActiveMQ.Commands;
-using RoRClient.Model.DataTransferObject;
-using RoRClient.Model.Models;
-using RoRClient.Model.Models.Editor;
+using RoRClient.Communication.DataTransferObject;
+using RoRClient.Models.Editor;
+using RoRClient.Models.Game;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.Model.Connections
+namespace RoRClient.Communication.Topic
 {
     class TopicReceiver
     {
@@ -29,7 +29,7 @@ namespace RoRClient.Model.Connections
 
         private void StartConnection()
         {
-            session=ClientConnection.GetInstance().Session; 
+            session = ClientConnection.GetInstance().Session; 
             topic = new ActiveMQTopic(topicName);
             Console.WriteLine("startet messageconsumer (topicReceiver)");
             messageConsumer = session.CreateConsumer(topic);

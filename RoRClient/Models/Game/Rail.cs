@@ -1,12 +1,6 @@
-﻿using RoRClient.ViewModel.Helper;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
-namespace RoRClient.Model.Models
+namespace RoRClient.Models.Game
 {
     /// <summary>
     /// Klasse für Schienen, die einem Feld (Square) zugeordnet sind

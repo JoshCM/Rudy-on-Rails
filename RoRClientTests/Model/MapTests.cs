@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RoRClient.Model.Models;
+using RoRClient.Models.Game;
 
 namespace RoRClientTests
 {

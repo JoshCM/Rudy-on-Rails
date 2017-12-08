@@ -11,11 +11,4 @@ public class DummyContainer extends InteractiveGameObject implements PlaceableOn
 		super(null);
 		test = "Juliane";
 	}
-
-	@Override
-	public void setPlaceableOnRail(PlaceableOnRail placeableOnRail) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

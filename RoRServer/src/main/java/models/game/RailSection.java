@@ -1,35 +1,33 @@
 package models.game;
 
+import exceptions.InvalidModelOperationException;
 import models.base.ModelBase;
+import models.editor.RoRSession;
 
 /**
- * Klasse fuer ein Schienenstueck mit "Eingang" und "Ausgang"
+ * Klasse für ein Schienenstueck mit "Eingang" und "Ausgang"
  */
 public class RailSection extends ModelBase {
 	private Rail rail;
-	
-	// Geraden
-	public static final RailSection STRAIGHT_VERTICAL = new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH);
-	public static final RailSection STRAIGHT_HORIZONTAL = new RailSection(RailSectionPosition.EAST, RailSectionPosition.WEST);
-	
-	// Kurven
-	public static final RailSection CURVE_NE = new RailSection(RailSectionPosition.NORTH, RailSectionPosition.EAST);
-	public static final RailSection CURVE_ES = new RailSection(RailSectionPosition.EAST, RailSectionPosition.SOUTH);
-	public static final RailSection CURVE_SW = new RailSection(RailSectionPosition.SOUTH, RailSectionPosition.WEST);
-	public static final RailSection CURVE_WN = new RailSection(RailSectionPosition.WEST, RailSectionPosition.NORTH);
-	
 	private RailSectionPosition node1;
 	private RailSectionPosition node2;
 	
-	public RailSection(Rail rail) {
+	// TODO: hier muss placeableOnSquareSection
+
+	public RailSection(Rail rail, RailSectionPosition node1, RailSectionPosition node2) {
+		super(rail.getRoRSession());
+
+		if (node1 == node2) {
+			throw new InvalidModelOperationException(
+					"RailSectionPositions are equal; node1: " + node1.toString() + ", node2: " + node2.toString());
+		}
+
 		this.rail = rail;
-	}
-	
-	public RailSection(RailSectionPosition node1, RailSectionPosition node2) {
 		this.node1 = node1;
 		this.node2 = node2;
 	}
 
+	// ToDo: Braucht man hashCode und equals wirklich?
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -54,15 +52,15 @@ public class RailSection extends ModelBase {
 			return false;
 		return true;
 	}
-	
+
 	public Rail getRail() {
 		return rail;
 	}
-	
+
 	public RailSectionPosition getNode1() {
 		return node1;
 	}
-	
+
 	public RailSectionPosition getNode2() {
 		return node2;
 	}

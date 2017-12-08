@@ -1,28 +1,23 @@
-﻿using Apache.NMS;
-using RoRClient.Model.DataTransferObject;
-using RoRClient.Model.Models;
-using RoRClient.ViewModel.Helper;
-using System;
-using System.Collections.Generic;
+﻿using RoRClient.Communication.DataTransferObject;
+using RoRClient.Models.Game;
+using RoRClient.ViewModels.Commands;
+using RoRClient.ViewModels.Helper;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace RoRClient.ViewModel
+namespace RoRClient.ViewModels.Lobby
 {
     class StartViewModel : ViewModelBase
     {
         public UIState uiState;
-        private ClientModel clientModel;
+        private LobbyModel lobbyModel;
 
         public StartViewModel(UIState uiState)
         {
-            clientModel = new ClientModel();
+            lobbyModel = new LobbyModel();
             this.uiState = uiState;
 
-            clientModel.PropertyChanged += OnClientModelChanged;
+            lobbyModel.PropertyChanged += OnClientModelChanged;
         }
 
         private ICommand start2EditorCmd;
@@ -53,17 +48,18 @@ namespace RoRClient.ViewModel
 
         private void SendCreateEditorSessionCommand()
         {
+            lobbyModel.StartConnection();
             MessageInformation messageInformation = new MessageInformation();
-            messageInformation.PutValue("Playername", "Heinz");
-            messageInformation.PutValue("Editorname", "Editor1");
-            clientModel.getFromClientRequestSender().SendMessage("CreateEditorSession", messageInformation);
+            messageInformation.PutValue("playerName", "Heinz");
+            messageInformation.PutValue("editorName", "Editor1");
+            lobbyModel.getFromClientRequestSender().SendMessage("CreateEditorSession", messageInformation);
         }
 
-        public ClientModel ClientModel
+        public LobbyModel LobbyModel
         {
             get
             {
-                return clientModel;
+                return lobbyModel;
             }
         }
 
@@ -71,7 +67,7 @@ namespace RoRClient.ViewModel
         {
             if(e.PropertyName == "Connected")
             {
-                if (clientModel.Conncected)
+                if (lobbyModel.Connected)
                 {
                     uiState.State = "editor";
                 }
