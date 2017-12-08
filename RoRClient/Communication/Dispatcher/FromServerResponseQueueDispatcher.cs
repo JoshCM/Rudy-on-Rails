@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using RoRClient.Communication.DataTransferObject;
-using RoRClient.Models.Editor;
+using RoRClient.Models.Session;
 using RoRClient.Models.Game;
 using System;
 using System.Collections.Generic;

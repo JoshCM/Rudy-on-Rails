@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RoRClient.Models.Editor;
+using RoRClient.Models.Session;
 using RoRClient.Models.Game;
 using RoRClient.ViewModels.Editor;
 using System;

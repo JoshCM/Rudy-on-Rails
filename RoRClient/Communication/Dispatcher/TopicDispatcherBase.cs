@@ -1,14 +1,14 @@
 ﻿using System;
 using RoRClient.Commands.Base;
 using RoRClient.Communication.DataTransferObject;
-using RoRClient.Models.Editor;
+using RoRClient.Models.Session;
 
 namespace RoRClient.Communication.Dispatcher
 {
     /// <summary>
     /// Klasse zum Verarbeiten der Messages des Topic-Receivers
     /// </summary>
-    class TopicDispatcherBase
+    public class TopicDispatcherBase
     {
         // COMMAND_TYPE ist entweder Editor oder Game (siehe Unterklassen)
         protected string COMMAND_TYPE_PREFIX = "";

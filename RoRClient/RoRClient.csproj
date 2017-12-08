@@ -116,10 +116,12 @@
     <Compile Include="Communication\Dispatcher\FromServerResponseQueueDispatcher.cs" />
     <Compile Include="Communication\Dispatcher\EditorSessionDispatcher.cs" />
     <Compile Include="Communication\Dispatcher\GameSessionDispatcher.cs" />
-    <Compile Include="Models\Editor\EditorSession.cs" />
+    <Compile Include="Models\Session\EditorSession.cs" />
     <Compile Include="Models\Base\IModel.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
     <Compile Include="Models\Game\Player.cs" />
+    <Compile Include="Models\Session\GameSession.cs" />
+    <Compile Include="Models\Session\RoRSession.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

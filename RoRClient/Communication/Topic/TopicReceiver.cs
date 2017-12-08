@@ -2,7 +2,7 @@
 using Apache.NMS.ActiveMQ;
 using Apache.NMS.ActiveMQ.Commands;
 using RoRClient.Communication.DataTransferObject;
-using RoRClient.Models.Editor;
+using RoRClient.Models.Session;
 using RoRClient.Models.Game;
 using System;
 using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace RoRClient.Communication.Topic
     /// <summary>
     /// Annahme der Messages für Game/Editor
     /// </summary>
-    class TopicReceiver
+    public class TopicReceiver
     {
        
         protected string topicName;

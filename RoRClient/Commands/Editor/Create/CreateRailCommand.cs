@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RoRClient.Commands.Base;
-using RoRClient.Models.Editor;
+using RoRClient.Models.Session;
 using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Game;
 
@@ -31,7 +31,7 @@ namespace RoRClient.Commands.Editor.Create
             
         }
 
-        public void Execute()
+        public new void Execute()
         {
             EditorSession editorSession = EditorSession.GetInstance();
             Square square = editorSession.Map.GetSquare(xPos, yPos);

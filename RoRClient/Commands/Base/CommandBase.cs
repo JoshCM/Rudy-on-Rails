@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RoRClient.Models.Editor;
+using RoRClient.Models.Session;
 using RoRClient.Communication.DataTransferObject;
 
 namespace RoRClient.Commands.Base
@@ -23,7 +23,7 @@ namespace RoRClient.Commands.Base
 
         public void Execute()
         {
-            throw new NotImplementedException();
+
         }
     }
 }

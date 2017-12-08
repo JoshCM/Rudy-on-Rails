@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Communication.Dispatcher
 {
-    class TopicEditorDispatcher : TopicDispatcherBase
+    public class TopicEditorDispatcher : TopicDispatcherBase
     {
         public TopicEditorDispatcher()
         {

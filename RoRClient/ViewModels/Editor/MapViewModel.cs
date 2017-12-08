@@ -1,6 +1,6 @@
 ﻿using RoRClient.Models.Game;
 using RoRClient.ViewModels.Helper;
-using RoRClient.Models.Editor;
+using RoRClient.Models.Session;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
