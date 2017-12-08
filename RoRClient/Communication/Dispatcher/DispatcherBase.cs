@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using RoRClient.Communication.DataTransferObject;
 
 namespace RoRClient.Communication.Dispatcher
 {
@@ -14,11 +15,16 @@ namespace RoRClient.Communication.Dispatcher
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="methodName"></param>
-        public void CallMethodFromString<T>(String methodName) where T : new()
+        public void CallMethodFromString(string methodName, MessageInformation messageInformation)
         {
-            T instance = new T();
-            MethodInfo method = typeof(T).GetMethod(methodName);
-            method.Invoke(instance, null);
+            MethodInfo method = this.GetType().GetMethod(methodName);
+            method.Invoke(this, new[] {messageInformation});
+        }
+
+        public void Dispatch(string request, string message)
+        {
+            MessageInformation messageInformation = MessageDeserializer.getInstance().Deserialize(message);
+            CallMethodFromString("handle" + request, messageInformation);
         }
     }
 }
