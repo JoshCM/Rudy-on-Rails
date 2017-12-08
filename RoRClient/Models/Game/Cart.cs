@@ -1,4 +1,4 @@
-﻿using RoRClient.Model.Models;
+﻿using RoRClient.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,6 @@ namespace RoRClient.Models.Game
         public Cart(Guid id, Square square) : base(square)
         {
             this.id = id;
-
         }
     }
 }
