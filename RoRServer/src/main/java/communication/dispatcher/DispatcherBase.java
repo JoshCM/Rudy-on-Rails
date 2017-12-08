@@ -19,13 +19,13 @@ public abstract class DispatcherBase {
 
 	}
 
-	private void callMethodFromString(String method, MessageInformation messageInfo) {
+	private void callMethodFromString(String methodName, MessageInformation messageInfo) {
 		try {
 			Class params[] = new Class[1];
 			params[0] = MessageInformation.class;
 			Object paramsObj[] = new Object[1];
 			paramsObj[0] = messageInfo;
-			Method thisMethod = this.getClass().getDeclaredMethod(method, params);
+			Method thisMethod = this.getClass().getDeclaredMethod(methodName, params);
 			thisMethod.invoke(this, paramsObj);
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();

@@ -104,7 +104,10 @@
     <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateRailCommand.cs" />
-    <Compile Include="Communication\Dispatcher\DispatcherBase.cs" />
+    <Compile Include="Communication\Dispatcher\QueueDispatcherBase.cs" />
+    <Compile Include="Communication\Dispatcher\TopicDispatcherBase.cs" />
+    <Compile Include="Communication\Dispatcher\TopicEditorDispatcher.cs" />
+    <Compile Include="Communication\Dispatcher\TopicGameDispatcher.cs" />
     <Compile Include="Communication\Queue\FromServerResponseQueueReceiver.cs" />
     <Compile Include="Communication\Queue\QueueSender.cs" />
     <Compile Include="Communication\DataTransferObject\MessageBuilder.cs" />
