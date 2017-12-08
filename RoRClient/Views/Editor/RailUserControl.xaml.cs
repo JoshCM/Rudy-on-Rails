@@ -3,9 +3,6 @@ using System.Windows;
 
 namespace RoRClient.Views.Editor
 {
-    /// <summary>
-    /// Interaktionslogik für RailUserControl.xaml
-    /// </summary>
     public partial class RailUserControl : CanvasUserControl
     {
         public RailUserControl()

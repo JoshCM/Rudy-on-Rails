@@ -2,9 +2,10 @@ package models.game;
 
 import java.util.UUID;
 import org.junit.Test;
-import models.editor.EditorSession;
-import models.editor.EditorSessionManager;
+
 import exceptions.InvalidModelOperationException;
+import models.session.EditorSession;
+import models.session.EditorSessionManager;
 
 public class RailSectionTests {
 	@Test(expected = InvalidModelOperationException.class)

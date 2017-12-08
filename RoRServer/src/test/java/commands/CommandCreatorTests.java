@@ -10,9 +10,9 @@ import org.junit.Test;
 import commands.base.Command;
 import commands.editor.CreateRailCommand;
 import communication.MessageInformation;
-import models.editor.EditorSessionManager;
-import models.editor.RoRSession;
 import models.game.RailSectionPosition;
+import models.session.EditorSessionManager;
+import models.session.RoRSession;
 
 public class CommandCreatorTests {
 	@Test

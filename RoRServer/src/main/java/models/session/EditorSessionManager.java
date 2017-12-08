@@ -1,4 +1,4 @@
-package models.editor;
+package models.session;
 
 import java.util.HashMap;
 import java.util.UUID;

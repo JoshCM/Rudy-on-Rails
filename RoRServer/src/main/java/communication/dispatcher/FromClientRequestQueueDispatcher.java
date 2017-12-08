@@ -2,9 +2,10 @@ package communication.dispatcher;
 
 import communication.MessageInformation;
 import communication.queue.sender.QueueSender;
-import models.editor.EditorSession;
-import models.editor.EditorSessionManager;
 import models.game.Player;
+import models.session.EditorSession;
+import models.session.EditorSessionManager;
+
 import org.apache.log4j.Logger;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;

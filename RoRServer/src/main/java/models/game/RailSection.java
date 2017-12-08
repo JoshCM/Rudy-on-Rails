@@ -2,7 +2,6 @@ package models.game;
 
 import exceptions.InvalidModelOperationException;
 import models.base.ModelBase;
-import models.editor.RoRSession;
 
 /**
  * Klasse für ein Schienenstueck mit "Eingang" und "Ausgang"
@@ -27,7 +26,6 @@ public class RailSection extends ModelBase {
 		this.node2 = node2;
 	}
 
-	// ToDo: Braucht man hashCode und equals wirklich?
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -4,9 +4,6 @@ using System.Windows.Controls;
 
 namespace RoRClient.Views.Editor
 {
-    /// <summary>
-    /// Interaktionslogik für SelectedToolUserControl.xaml
-    /// </summary>
     public partial class SelectedToolUserControl : UserControl
     {
         public SelectedToolUserControl()

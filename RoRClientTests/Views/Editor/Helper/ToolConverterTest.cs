@@ -13,8 +13,8 @@ namespace RoRClientTests.Views.Editor.Helper
         {
             String toolName = "rail_ew";
             RailSection railSection = new RailSection(RailSectionPosition.EAST, RailSectionPosition.WEST);
-            Assert.AreEqual(railSection.Node1, ToolConverter.convertToRailSection(toolName).Node1);
-            Assert.AreEqual(railSection.Node2, ToolConverter.convertToRailSection(toolName).Node2);
+            Assert.AreEqual(railSection.Node1, ToolConverter.ConvertToRailSection(toolName).Node1);
+            Assert.AreEqual(railSection.Node2, ToolConverter.ConvertToRailSection(toolName).Node2);
 
         }
 
@@ -23,8 +23,8 @@ namespace RoRClientTests.Views.Editor.Helper
         {
             String toolName = "railcurve_nw";
             RailSection railSection = new RailSection(RailSectionPosition.NORTH, RailSectionPosition.WEST);
-            Assert.AreEqual(railSection.Node1, ToolConverter.convertToRailSection(toolName).Node1);
-            Assert.AreEqual(railSection.Node2, ToolConverter.convertToRailSection(toolName).Node2);
+            Assert.AreEqual(railSection.Node1, ToolConverter.ConvertToRailSection(toolName).Node1);
+            Assert.AreEqual(railSection.Node2, ToolConverter.ConvertToRailSection(toolName).Node2);
         }
     }
 }

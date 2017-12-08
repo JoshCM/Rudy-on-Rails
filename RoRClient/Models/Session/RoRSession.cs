@@ -24,7 +24,6 @@ namespace RoRClient.Models.Session
             map = new Map();
         }
 
-
         public string Name
         {
             get

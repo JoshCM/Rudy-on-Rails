@@ -3,7 +3,7 @@ package models.base;
 import java.util.UUID;
 
 import communication.MessageInformation;
-import models.editor.RoRSession;
+import models.session.RoRSession;
 
 /**
  * Base-Klasse für alle Models, damit alle Models eine Id und die zugehörige RoRSession kennen

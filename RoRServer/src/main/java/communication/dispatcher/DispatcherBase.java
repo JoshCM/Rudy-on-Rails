@@ -8,7 +8,7 @@ import java.util.Map;
 import commands.base.Command;
 import commands.editor.CreateRailCommand;
 import communication.MessageInformation;
-import models.editor.RoRSession;
+import models.session.RoRSession;
 
 /**
  * Base-Klasse für alle spezifischen Dispatcher. Hier ist die grundsätzliche Verteilungslogik 

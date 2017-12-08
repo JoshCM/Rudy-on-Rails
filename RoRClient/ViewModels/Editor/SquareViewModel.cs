@@ -65,7 +65,7 @@ namespace RoRClient.ViewModels.Editor
             int xPos = square.PosX;
             int yPos = square.PosY;
             EditorSession editorSession = EditorSession.GetInstance();
-            RailSection railSection = ToolConverter.convertToRailSection(ToolName);
+            RailSection railSection = ToolConverter.ConvertToRailSection(ToolName);
 
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("xPos", xPos);
