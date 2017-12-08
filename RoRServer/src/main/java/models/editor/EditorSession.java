@@ -1,23 +1,22 @@
 package models.editor;
 
+import java.util.ArrayList;
+import communication.dispatcher.EditorSessionDispatcher;
+import communication.queue.receiver.QueueReceiver;
 import models.game.Map;
 import models.game.Player;
-import communication.queue.receiver.FromClientRequestsEditorQueueReceiver;
-import communication.topic.TopicSender;
-import communication.MessageInformation;
-import communication.dispatcher.RequestSerializer;
-
-import java.util.ArrayList;
 
 public class EditorSession extends RoRSession {
 	private ArrayList<Player> players = new ArrayList<>();
 	private Map map;
 	
-	private FromClientRequestsEditorQueueReceiver queueReceiver;
+	private QueueReceiver queueReceiver;
 
 	public EditorSession(String name) {
 		super(name);
-		queueReceiver = new FromClientRequestsEditorQueueReceiver(name, this);
+		
+		EditorSessionDispatcher dispatcher = new EditorSessionDispatcher(this);
+		queueReceiver = new QueueReceiver(name, dispatcher);
 		map = new Map(this);
 	}
 	
