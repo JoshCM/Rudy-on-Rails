@@ -4,7 +4,6 @@ import models.base.ModelBase;
 import models.editor.RoRSession;
 
 public class Player extends ModelBase {
-
     private String name;
 
     public Player(RoRSession session, String name) {
