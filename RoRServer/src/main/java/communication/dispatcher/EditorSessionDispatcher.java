@@ -24,6 +24,11 @@ public class EditorSessionDispatcher extends DispatcherBase {
 		executeCommandForMessageType(messageType, messageInformation);
 	}
 
+	/**
+	 * Erzeugt einen neuen Command für den hereingegebenen messageType und führt ihn aus
+	 * @param messageType
+	 * @param messageInformation
+	 */
 	private void executeCommandForMessageType(String messageType, MessageInformation messageInformation) {
 		String commandName = COMMAND_PACKAGE_NAME + messageType + COMMAND_SUFFIX;
 		Command command = null;
