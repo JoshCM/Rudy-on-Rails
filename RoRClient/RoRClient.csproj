@@ -110,7 +110,9 @@
     <Compile Include="Communication\DataTransferObject\MessageBuilder.cs" />
     <Compile Include="Communication\DataTransferObject\MessageDeserializer.cs" />
     <Compile Include="Communication\DataTransferObject\MessageInformation.cs" />
-    <Compile Include="Communication\Dispatcher\ResponseDispatcher.cs" />
+    <Compile Include="Communication\Dispatcher\FromServerResponseQueueDispatcher.cs" />
+	<Compile Include="Communication\Dispatcher\EditorSessionDispatcher.cs" />
+	<Compile Include="Communication\Dispatcher\GameSessionDispatcher.cs" />
     <Compile Include="Models\Editor\EditorSession.cs" />
     <Compile Include="Models\Base\IModel.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
