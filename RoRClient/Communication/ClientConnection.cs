@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Communication
 {
+    /// <summary>
+    /// Sorgt dafür das es nur eine Session und eine Connection pro Client gibt
+    /// Hält eine Connection, eine Session, eine Session und eine ConnectionFactory
+    /// </summary>
     class ClientConnection
     {
 
@@ -35,6 +39,9 @@ namespace RoRClient.Communication
             Setup();
         }
 
+        /// <summary>
+        /// Setzt eine von der ConnectionFactory gebaute Connection und eine daraus erzeugte Session
+        /// </summary>
         public void Setup()
         {
             try

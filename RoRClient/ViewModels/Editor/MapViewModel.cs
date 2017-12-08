@@ -192,6 +192,7 @@ namespace RoRClient.ViewModels.Editor
                     CanvasViewModel viewModel = factory.CreateViewModelForModel(square.PlaceableOnSquare);
 
                     // ToDo: Das muss doch auch ohne den Dispatcher gehen...
+                    // placeableOnSquareCollection.Add(viewModel); wirft eine UnsupportedException
                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => placeableOnSquareCollection.Add(viewModel)));
                 }
             }
