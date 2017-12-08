@@ -6,6 +6,10 @@ using System.Collections.ObjectModel;
 
 namespace RoRClient.Models.Editor
 {
+    /// <summary>
+    /// Hält alle nötigen Informationen für eine Session im Editor
+    /// Initialisiert einen QueueSender und einen TopiReceiver
+    /// </summary>
     public class EditorSession : ModelBase
     {
         private string name;
