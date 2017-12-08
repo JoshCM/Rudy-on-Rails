@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Der PropertyManager wird genutzt, um Konstanten aus der config.properties zu laden
+ */
 public class PropertyManager {
 
 	private final static String PROPERTIES_PATH = "src\\main\\java\\resources\\config.properties";
