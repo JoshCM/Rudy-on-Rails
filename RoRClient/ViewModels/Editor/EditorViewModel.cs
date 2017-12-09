@@ -10,10 +10,30 @@ namespace RoRClient.ViewModels.Editor
     class EditorViewModel : ViewModelBase
     {
         private UIState uiState;
+        private MapViewModel mapViewModel;
+        private ToolbarViewModel toolbarViewModel;
+
+        public MapViewModel MapViewModel
+        {
+            get
+            {
+                return mapViewModel;
+            }
+        }
+
+        public ToolbarViewModel ToolbarViewModel
+        {
+            get
+            {
+                return toolbarViewModel;
+            }
+        }
 
         public EditorViewModel(UIState uiState)
         {
             this.uiState = uiState;
+            toolbarViewModel = new ToolbarViewModel();
+            mapViewModel = new MapViewModel(toolbarViewModel);
         }
     }
 }

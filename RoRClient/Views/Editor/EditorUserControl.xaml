@@ -37,16 +37,16 @@
                                Grid.Column="1"
                                Grid.ColumnSpan="2"
                                Grid.RowSpan="2"
-							   SelectedTool="{Binding ElementName=ToolbarUserControlName, Path=DataContext.SelectedTool}"/>
+                               DataContext="{Binding MapViewModel}"/>
 
         <!-- Werkzeugleiste -->
-        <editor:ToolbarUserControl x:Name="ToolbarUserControlName" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"/>
+        <editor:ToolbarUserControl DataContext="{Binding ToolbarViewModel}" x:Name="ToolbarUserControlName" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"/>
 
         <Grid Grid.Row="3"
               Grid.Column="0"
               Background="Violet">
             <!--Aktives Werkzeug -->
-            <editor:SelectedToolUserControl ToolbarViewModel="{Binding ElementName=ToolbarUserControlName, Path=DataContext}"/>
+            <editor:SelectedToolUserControl/>
         </Grid>
 
         <Grid Grid.Row="3"

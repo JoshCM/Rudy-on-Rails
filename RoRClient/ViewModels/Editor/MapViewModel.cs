@@ -22,6 +22,7 @@ namespace RoRClient.ViewModels.Editor
     public class MapViewModel : ViewModelBase
     {
         private TaskFactory taskFactory;
+        private ToolbarViewModel toolbarViewModel;
 
         private Map map;
 
@@ -71,8 +72,10 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
-        public MapViewModel()
+        public MapViewModel(ToolbarViewModel toolbarViewModel)
         {
+            this.toolbarViewModel = toolbarViewModel;
+            toolbarViewModel.PropertyChanged += OnToolbarViewModelChanges;
             taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             map = EditorSession.GetInstance().Map;
             InitSquares();
@@ -89,7 +92,7 @@ namespace RoRClient.ViewModels.Editor
         {
             foreach (Square square in map.Squares)
             {
-                SquareViewModel squareViewModel = new SquareViewModel(square);
+                SquareViewModel squareViewModel = new SquareViewModel(square, toolbarViewModel);
                 squareViewModels.Add(squareViewModel);
                 square.PropertyChanged += OnSquarePropertyChanged;
 
@@ -197,6 +200,13 @@ namespace RoRClient.ViewModels.Editor
 
                     taskFactory.StartNew(() => placeableOnSquareCollection.Add(viewModel));
                 }
+            }
+        }
+        private void OnToolbarViewModelChanges(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "SelectedToolItem")
+            {
+                
             }
         }
     }

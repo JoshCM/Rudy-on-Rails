@@ -9,18 +9,5 @@ namespace RoRClient.Views.Editor
         {
             InitializeComponent();
         }
-
-        public RailViewModel RailViewModel
-        {
-            get
-            {
-                return (RailViewModel)GetValue(RailViewModelProperty);
-            }
-            set
-            {
-                SetValue(RailViewModelProperty, value);
-            }
-        }
-        public static readonly DependencyProperty RailViewModelProperty = DependencyProperty.Register("RailViewModel", typeof(RailViewModel), typeof(RailUserControl), new UIPropertyMetadata(null));
     }
 }
