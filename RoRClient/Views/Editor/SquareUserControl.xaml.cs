@@ -28,13 +28,7 @@ namespace RoRClient.Views.Editor
                 SetValue(SquareViewModelProperty, value);
             }
         }
-        public static readonly DependencyProperty SquareViewModelProperty = DependencyProperty.Register("SquareViewModel", typeof(SquareViewModel), typeof(SquareUserControl), new UIPropertyMetadata(null, OnSquareViewModelChanged));
-
-        private static void OnSquareViewModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            SquareUserControl squareUserControl = (SquareUserControl)d;
-            squareUserControl.DataContext = squareUserControl.SquareViewModel;
-        }
+        public static readonly DependencyProperty SquareViewModelProperty = DependencyProperty.Register("SquareViewModel", typeof(SquareViewModel), typeof(SquareUserControl), new UIPropertyMetadata(null));
 
         public String ToolName
 		{

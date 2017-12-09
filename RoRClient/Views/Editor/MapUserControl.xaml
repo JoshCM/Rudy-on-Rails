@@ -26,7 +26,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type vm:SquareViewModel}">
                             <Canvas>
-                                <ve:SquareUserControl X="{Binding SquarePosX}" Y="{Binding SquarePosY}" SquareViewModel="{Binding}" ToolName="{Binding SelectedTool.Name, ElementName=mapUserControl}"/>
+                                <ve:SquareUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}" SquareViewModel="{Binding}" ToolName="{Binding SelectedTool.Name, ElementName=mapUserControl}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -35,7 +35,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type vm:RailViewModel}">
                             <Canvas>
-                                <ve:RailUserControl X="{Binding SquarePosX}" Y="{Binding SquarePosY}" RailViewModel="{Binding}"/>
+                                <ve:RailUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}" RailViewModel="{Binding}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
