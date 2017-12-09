@@ -12,7 +12,7 @@ public class MessageQueue {
 	private static MessageQueue instance;
 	
 	private MessageQueue() {
-		setup();
+		
 	}
 	
 	public static MessageQueue getInstance() {
