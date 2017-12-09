@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Threading;
 using RoRClient.ViewModels.Commands;
 using RoRClient.Models.Base;
+using System.Threading.Tasks;
 
 namespace RoRClient.ViewModels.Editor
 {
@@ -20,6 +21,8 @@ namespace RoRClient.ViewModels.Editor
     /// </summary>
     public class MapViewModel : ViewModelBase
     {
+        private TaskFactory taskFactory;
+
         private Map map;
 
         private ObservableCollection<SquareViewModel> squareViewModels = new ObservableCollection<SquareViewModel>();
@@ -70,6 +73,7 @@ namespace RoRClient.ViewModels.Editor
 
         public MapViewModel()
         {
+            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             map = EditorSession.GetInstance().Map;
             InitSquares();
             MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
@@ -191,9 +195,7 @@ namespace RoRClient.ViewModels.Editor
                     ViewModelFactory factory = new ViewModelFactory();
                     CanvasViewModel viewModel = factory.CreateViewModelForModel(square.PlaceableOnSquare);
 
-                    // ToDo: Das muss doch auch ohne den Dispatcher gehen...
-                    // placeableOnSquareCollection.Add(viewModel); wirft eine UnsupportedException
-                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => placeableOnSquareCollection.Add(viewModel)));
+                    taskFactory.StartNew(() => placeableOnSquareCollection.Add(viewModel));
                 }
             }
         }
