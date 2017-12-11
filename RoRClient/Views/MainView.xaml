@@ -15,10 +15,10 @@
     </Window.DataContext>
     <Window.Resources>
         <DataTemplate x:Name="EditorTemplate" DataType="{x:Type vme:EditorViewModel}">
-            <ve:EditorUserControl/>
+            <ve:EditorUserControl DataContext="{Binding}"/>
         </DataTemplate>
         <DataTemplate x:Name="StartTemplate" DataType="{x:Type vml:StartViewModel}">
-            <vl:StartView/>
+            <vl:StartView DataContext="{Binding}"/>
         </DataTemplate>
     </Window.Resources>
 

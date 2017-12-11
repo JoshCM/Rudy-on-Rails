@@ -16,42 +16,5 @@ namespace RoRClient.Views.Editor
         {
             InitializeComponent();
         }
-
-        public SquareViewModel SquareViewModel
-        {
-            get
-            {
-                return (SquareViewModel)GetValue(SquareViewModelProperty);
-            }
-            set
-            {
-                SetValue(SquareViewModelProperty, value);
-            }
-        }
-        public static readonly DependencyProperty SquareViewModelProperty = DependencyProperty.Register("SquareViewModel", typeof(SquareViewModel), typeof(SquareUserControl), new UIPropertyMetadata(null, OnSquareViewModelChanged));
-
-        private static void OnSquareViewModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            SquareUserControl squareUserControl = (SquareUserControl)d;
-            squareUserControl.DataContext = squareUserControl.SquareViewModel;
-        }
-
-        public String ToolName
-		{
-            get
-            {
-                return (String)GetValue(ToolNameProperty);
-            }
-            set
-            {
-                SetValue(ToolNameProperty, value);
-            }
-        }
-        public static readonly DependencyProperty ToolNameProperty = DependencyProperty.Register("ToolName", typeof(String), typeof(SquareUserControl), new UIPropertyMetadata(null, OnToolNameChanged));
-        private static void OnToolNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            SquareUserControl squareUserControl = (SquareUserControl)d;
-            squareUserControl.SquareViewModel.ToolName = squareUserControl.ToolName;
-        }
     }
 }

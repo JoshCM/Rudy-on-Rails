@@ -13,9 +13,6 @@
     Height="auto"
     Width="auto"
     Background="Beige" d:DesignHeight="813.443" d:DesignWidth="389.613">
-    <UserControl.DataContext>
-        <vm:ToolbarViewModel/>
-    </UserControl.DataContext>
 
     <ListView ItemsSource="{Binding ToolItems}" SelectedItem="{Binding SelectedTool, UpdateSourceTrigger=PropertyChanged}" x:Name="ToolbarListView" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="auto">
         <ItemsControl.ItemsPanel>

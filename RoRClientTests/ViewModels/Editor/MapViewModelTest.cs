@@ -21,7 +21,7 @@ namespace RoRClientTests.ViewModels.Editor
         [TestInitialize]
         public void TestInitialize()
         {
-            mapViewModel = new MapViewModel();
+            mapViewModel = new MapViewModel(new ToolbarViewModel());
             editorSession = EditorSession.GetInstance();
             map = editorSession.Map;
         }
