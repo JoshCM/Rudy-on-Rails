@@ -8,7 +8,7 @@ public class DummyContainer extends InteractiveGameObject implements PlaceableOn
 	private String test;
 	
 	public DummyContainer() {
-		super(null);
+		super("blubb", null);
 		test = "Juliane";
 	}
 }

@@ -29,7 +29,7 @@ public class CreateRailCommand extends CommandBase {
 		EditorSession editorSession = (EditorSession)session;
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(xPos, yPos);
-		Rail rail = new Rail(square, railSectionPositionNode1, railSectionPositionNode2);
+		Rail rail = new Rail(session.getName(), square, railSectionPositionNode1, railSectionPositionNode2);
 		square.setPlaceable(rail);
 	}
 }

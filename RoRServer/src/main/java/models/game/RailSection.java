@@ -1,5 +1,7 @@
 package models.game;
 
+import java.util.UUID;
+
 import exceptions.InvalidModelOperationException;
 import models.base.ModelBase;
 
@@ -7,21 +9,21 @@ import models.base.ModelBase;
  * Klasse für ein Schienenstueck mit "Eingang" und "Ausgang"
  */
 public class RailSection extends ModelBase {
-	private Rail rail;
+	private UUID railId;
 	private RailSectionPosition node1;
 	private RailSectionPosition node2;
 	
 	// TODO: hier muss placeableOnSquareSection
 
-	public RailSection(Rail rail, RailSectionPosition node1, RailSectionPosition node2) {
-		super(rail.getRoRSession());
-
+	public RailSection(String sessionName, UUID railId, RailSectionPosition node1, RailSectionPosition node2) {
+		super(sessionName);
+		
 		if (node1 == node2) {
 			throw new InvalidModelOperationException(
 					"RailSectionPositions are equal; node1: " + node1.toString() + ", node2: " + node2.toString());
 		}
 
-		this.rail = rail;
+		this.railId = railId;
 		this.node1 = node1;
 		this.node2 = node2;
 	}
@@ -51,8 +53,8 @@ public class RailSection extends ModelBase {
 		return true;
 	}
 
-	public Rail getRail() {
-		return rail;
+	public UUID getId() {
+		return railId;
 	}
 
 	public RailSectionPosition getNode1() {

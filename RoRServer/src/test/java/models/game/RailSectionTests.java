@@ -18,6 +18,6 @@ public class RailSectionTests {
 		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		new Rail(square, node1, node2);
+		new Rail(editorSession.getName(), square, node1, node2);
 	}
 }
