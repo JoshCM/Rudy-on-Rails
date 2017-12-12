@@ -338,6 +338,7 @@
     <Resource Include="Resources\Images\Tools\railcurve_se.png" />
     <Resource Include="Resources\Images\dummy.png" />
     <Resource Include="Resources\Images\game_minimap_dummy.png" />
+    <Resource Include="Resources\Images\game_map_dummy.jpg" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

@@ -5,47 +5,35 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RoRClient.Views.Game"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Background="AntiqueWhite">
-    <Grid>
-        <Grid x:Name="ContentGrid" Margin="10" RenderTransformOrigin="0.52,0.362">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+             d:DesignHeight="100" d:DesignWidth="150" BorderBrush="Black" >
+
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Column="0" Grid.Row="0" Content="Geisterzug" FontSize="5" Margin="2"/>
+        <Button Grid.Column="1" Grid.Row="0" Content="Sensoren" FontSize="5" Margin="2"/>
+        <Button Grid.Column="2" Grid.Row="0" Content="Tausch" FontSize="5" Margin="2" />
 
 
+        <ComboBox Grid.Row="1" Grid.ColumnSpan="3" FontSize="5" Margin="2" >
+            <ComboBoxItem>Skript 1</ComboBoxItem>
+            <ComboBoxItem IsSelected="True">Skript 2</ComboBoxItem>
+            <ComboBoxItem>Skript 3</ComboBoxItem>
+        </ComboBox>
 
-            <Button Grid.Column="0" Grid.Row="0" Content="Geisterzug" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"/>
-            <Button Grid.Column="1" Grid.Row="0" Content="Sensoren" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"/>
-            <Button Grid.Column="2" Grid.Row="0" Content="Tausch" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"/>
-
-
-            <ComboBox Grid.Row="1" Grid.ColumnSpan="3" Margin="5">
-                <ComboBoxItem>Skript 1</ComboBoxItem>
-                <ComboBoxItem IsSelected="True">Skript 2</ComboBoxItem>
-                <ComboBoxItem>Skript 3</ComboBoxItem>
-            </ComboBox>
-
-            <TextBox Grid.ColumnSpan="2" Grid.Row="3" Grid.RowSpan="2" HorizontalAlignment="Left" Height="45" TextWrapping="Wrap" Text="Text" VerticalAlignment="Top" Width="187" Margin="0,0,0,-1" />
-            <Button Grid.Column="2" Grid.Row="3" Content="Speichern" Margin="0,0,-14,0" />
-            <Button Grid.Column="2" Grid.Row="4" Content="Auswählen" Margin="0,0,-14,1" />
-
-
-
-
-        </Grid>
-
-
-
-
+        <TextBox Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="2" FontSize="5" TextWrapping="Wrap" Text="Text" VerticalAlignment="Top" Height="45" Margin="2" />
+        <Button Grid.Column="2" Grid.Row="2" Content="Speichern" FontSize="5" Margin="1,2,1,1" Background="#FF171515" BorderBrush="#FF171515" Foreground="White" />
+        <Button Grid.Column="2" Grid.Row="3" Content="Auswählen" FontSize="5" Margin="1,1,1,2" Background="#FF171515" BorderBrush="#FF171515" Foreground="White"/>
 
     </Grid>
 </UserControl>

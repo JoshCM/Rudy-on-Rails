@@ -6,7 +6,7 @@
              xmlns:gamemenu="clr-namespace:RoRClient.Views.Game"
              mc:Ignorable="d" 
              d:DesignHeight="80" d:DesignWidth="300" >
-    <Grid x:Name="ContentGridMenu">
+    <Grid x:Name="ContentGridMenu" Margin="2">
         <Grid.RowDefinitions>
             <RowDefinition MinHeight="80" />
         </Grid.RowDefinitions>

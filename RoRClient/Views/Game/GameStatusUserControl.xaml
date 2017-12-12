@@ -5,8 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RoRClient.Views.Game"
              mc:Ignorable="d" 
-             d:DesignHeight="40" d:DesignWidth="30" Background="LightPink">
-    <Grid>
-            
-    </Grid>
+             d:DesignHeight="20" d:DesignWidth="300">
+    <StackPanel Orientation="Horizontal" >
+        <Label Content="14 Kohle | 5 Gold" FontSize="6" Margin="5,0" MinWidth="50" Width="79" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Label Content="Waggons: 5 gelagert | 3 beladen | 1 leer" FontSize="6" Margin="5,0" MinWidth="150" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Content="4 Punkte" FontSize="6"  Margin="5,0" MinWidth="50" Width="38" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+    </StackPanel>
 </UserControl>
