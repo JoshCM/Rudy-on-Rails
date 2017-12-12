@@ -16,7 +16,6 @@ namespace RoRClient.Communication.Queue
         {
             Console.WriteLine("startet messageproducer(queueSender)");
             messageProducer = session.CreateProducer(queue);
-            //connection.Start();
         }
 
         public void SendMessage(string messageType, MessageInformation messageInformation)

@@ -2,14 +2,14 @@ package models.dummy;
 
 import models.game.InteractiveGameObject;
 import models.game.PlaceableOnRail;
+import models.game.PlaceableOnSquare;
 import models.game.Square;
 
 public class DummySignal extends InteractiveGameObject implements PlaceableOnRail {
 
-    private String name = "SignalTest";
-	
+    private String name = "SignalTest";    
 	public DummySignal(Square square) {
-		super(square);
+		super("blubb", square);
 	}
 
 	@Override
@@ -35,6 +35,5 @@ public class DummySignal extends InteractiveGameObject implements PlaceableOnRai
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
-	}
-	
+	}	
 }

@@ -1,36 +1,39 @@
-package models.editor;
+package communication.topic;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
-import communication.MessageInformation;
-import communication.topic.TopicSender;
 
-public abstract class RoRSession {
-	private String name;
+import communication.MessageEnvelope;
+import communication.MessageInformation;
+
+public class MessageQueue {
 	private TopicSender topicSender;
-	
 	private Thread sendMessageThread;
-	private ConcurrentLinkedQueue<MessageInformation> messagesToSendQueue = new ConcurrentLinkedQueue<>();
+	private ConcurrentLinkedQueue<MessageEnvelope> messagesToSendQueue = new ConcurrentLinkedQueue<>();
+	private static MessageQueue instance;
 	
-	public RoRSession(String name) {
-		this.name = name;
-		this.topicSender = new TopicSender(name);
+	private MessageQueue() {
+		
 	}
 	
-	public String getName() {
-		return name;
-	}
-	
-	public void addMessage(MessageInformation messageInformation) {
-		if(messageInformation != null) {
-			messagesToSendQueue.add(messageInformation);
+	public static MessageQueue getInstance() {
+		if(instance == null) {
+			instance = new MessageQueue();
 		}
+		return instance;
 	}
-			
+	
 	public void setup() {
+		topicSender = new TopicSender();
 		topicSender.setup();
 		startSendMessageThread();
 	}
 	
+	public void addMessage(MessageEnvelope messageEnvelope) {
+		if(messageEnvelope != null) {
+			messagesToSendQueue.add(messageEnvelope);
+		}
+	}	
+
 	private void startSendMessageThread() {
 		sendMessageThread = new Thread(new Runnable() {
 			@Override
@@ -38,9 +41,7 @@ public abstract class RoRSession {
 				while(true) {
 					try {
 						if(messagesToSendQueue.peek() != null) {
-							MessageInformation messageInformation = messagesToSendQueue.poll();
-							String messageType = messageInformation.getMessageType();
-							topicSender.sendMessage(messageType, messageInformation);
+							topicSender.sendMessage(messagesToSendQueue.poll());
 						}
 						Thread.sleep(50);
 					} catch (InterruptedException e) {
@@ -61,8 +62,7 @@ public abstract class RoRSession {
 			if(messageInfo.getMessageType().equals(messageType)) {
 				return messageInfo;
 			}
-		};
-		
+		}
 		return null;
 	}
 }

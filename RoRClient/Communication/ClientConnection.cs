@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Communication
 {
+    /// <summary>
+    /// Sorgt dafür das es nur eine Session und eine Connection pro Client gibt
+    /// Hält eine Connection, eine Session, eine Session und eine ConnectionFactory
+    /// </summary>
     class ClientConnection
     {
 
@@ -17,7 +21,6 @@ namespace RoRClient.Communication
         protected ISession session;
         private Guid clientId;
 
-        //public static string BROKER_URL = "tcp://172.26.39.100:61616";
         public static string BROKER_URL = Properties.Settings.Default.BrokerUrl;
         private static ClientConnection instance;
 
@@ -36,6 +39,9 @@ namespace RoRClient.Communication
             Setup();
         }
 
+        /// <summary>
+        /// Setzt eine von der ConnectionFactory gebaute Connection und eine daraus erzeugte Session
+        /// </summary>
         public void Setup()
         {
             try
@@ -48,7 +54,7 @@ namespace RoRClient.Communication
             }
             catch(NMSConnectionException e)
             {
-                Console.Write("Es konnte keine Verbindung zum Server aufgebaut werden. Programm fährt fort ohne Verbindung.");
+                Console.Write("Es konnte keine Verbindung zum Server aufgebaut werden. Programm fährt fort ohne Verbindung. (ExceptionMessage: {0})", e);
             }
         }
 

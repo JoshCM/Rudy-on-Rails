@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Communication.Queue
 {
+    /// <summary>
+    /// Oberklasse für alle Queues
+    /// </summary>
     public class QueueBase
     {
         protected ISession session;

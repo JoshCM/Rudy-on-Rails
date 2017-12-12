@@ -14,12 +14,11 @@ public class DummyGame {
 	static Logger log = Logger.getLogger(DummyGame.class.getName());
 	
 	public DummyGame(){
-		map = new Map(null);
+		map = new Map("blubb");
 		mapManager = new MapManager();
 	}
 	
 	public DummyGame(String sessionName) {
-		sessionTopicSender = new TopicSender(sessionName);
 		log.info("DummyGame.DummyGame(String sessionName) : sessionName"+sessionName);
 	}
 	

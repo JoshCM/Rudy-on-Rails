@@ -3,14 +3,17 @@ using System;
 
 namespace RoRClient.Views.Editor.Helper
 {
+    /// <summary>
+    /// Stellt Methoden zur Konvertierung von Tools (z.B. verschiedene Rails) bereit
+    /// </summary>
     public class ToolConverter
     {
         /// <summary>
         /// Erzeugt aus einem definierten Namen eine Railsection mit zwei RailSectionPositions
         /// </summary>
         /// <param name="toolName">Name des selectedTool</param>
-        /// <returns></returns>
-        public static RailSection convertToRailSection(String toolName)
+        /// <returns>Railsection</returns>
+        public static RailSection ConvertToRailSection(String toolName)
         {
             RailSectionPosition node1;
             RailSectionPosition node2;

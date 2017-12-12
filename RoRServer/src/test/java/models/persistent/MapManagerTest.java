@@ -8,25 +8,25 @@ import models.game.Map;
 import models.game.Rail;
 import models.game.RailSection;
 import models.game.RailSectionPosition;
+import models.session.EditorSession;
 import persistent.MapManager;
 
 public class MapManagerTest {
 	
 	MapManager manager = new MapManager();
-	Map savedMap = new Map(null);
+	Map savedMap = new Map("test");
 	
 	@Test
 	public void mapManager_SavedAndLoadedMapAreEqual() {
 		
 		DummySignal signal = new DummySignal(savedMap.getSquare(0, 0));
-		savedMap.getSquare(0, 0).setPlaceable(new Rail(null, RailSectionPosition.NORTH, RailSectionPosition.WEST));
-		savedMap.getSquare(0, 0).getPlaceableOnSquare().setPlaceableOnRail(signal);
+		savedMap.getSquare(0, 0).setPlaceable(new Rail("TestSession", savedMap.getSquare(0, 0), RailSectionPosition.NORTH, RailSectionPosition.WEST));
+		((Rail)savedMap.getSquare(0, 0).getPlaceableOnSquare()).setPlaceableOnRail(signal);
 		
-		manager.saveMap(savedMap, "testMap");
-		Map loadedMap = manager.loadMap("testMap");
+		String mapAsJson = manager.convertMapToJson(savedMap);
+		Map loadedMap = manager.convertJsonToMap(mapAsJson);
 
 		assertEquals(savedMap, loadedMap);
-	
 	}
 	
 	/*

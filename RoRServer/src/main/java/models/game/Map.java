@@ -1,8 +1,8 @@
 package models.game;
 
 import models.base.ModelBase;
-import models.editor.EditorSession;
-import models.editor.RoRSession;
+import models.session.EditorSession;
+import models.session.RoRSession;
 
 import java.util.Arrays;
 
@@ -18,14 +18,13 @@ public class Map extends ModelBase {
 	 * Jedes Square auf der Map braucht einen Index,
 	 * um jedem Objekt, das auf einem Square platziert wird, ein eindeutiges Objekt zuzuordnen
 	 */
-	public Map(RoRSession session) {
-		super(session);
-		
+	public Map(String sessionName) {
+		super(sessionName);
 		squares = new Square[mapSize][mapSize];
 		
 		for(int i= 0; i < mapSize; i++) {
 			for(int j = 0; j < mapSize; j++) {
-				Square s = new Square(this, i, j);
+				Square s = new Square(sessionName, this, i, j);
 				squares[i][j] = s;
 			}
 		}

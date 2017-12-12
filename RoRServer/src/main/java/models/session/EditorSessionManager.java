@@ -1,8 +1,12 @@
-package models.editor;
+package models.session;
 
 import java.util.HashMap;
 import java.util.UUID;
 
+/**
+ * Hier werden alle EditorSessions erzeugt und gehalten
+ * EditorSessions dürfen ausschließlich über diesen Manager erzeugt werden!
+ */
 public class EditorSessionManager {
 
     private static EditorSessionManager editorSessionManager;

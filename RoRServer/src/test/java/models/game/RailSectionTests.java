@@ -2,9 +2,10 @@ package models.game;
 
 import java.util.UUID;
 import org.junit.Test;
-import models.editor.EditorSession;
-import models.editor.EditorSessionManager;
+
 import exceptions.InvalidModelOperationException;
+import models.session.EditorSession;
+import models.session.EditorSessionManager;
 
 public class RailSectionTests {
 	@Test(expected = InvalidModelOperationException.class)
@@ -17,6 +18,6 @@ public class RailSectionTests {
 		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		new Rail(square, node1, node2);
+		new Rail(editorSession.getName(), square, node1, node2);
 	}
 }

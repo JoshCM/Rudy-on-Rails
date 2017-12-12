@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace RoRClient.Views.Lobby
 {
-    /// <summary>
-    /// Interaktionslogik für StartView.xaml
-    /// </summary>
     public partial class StartView : UserControl
     {
         public StartView()

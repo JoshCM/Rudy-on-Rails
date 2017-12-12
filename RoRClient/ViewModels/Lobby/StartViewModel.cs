@@ -10,14 +10,14 @@ namespace RoRClient.ViewModels.Lobby
     class StartViewModel : ViewModelBase
     {
         public UIState uiState;
-        private ClientModel clientModel;
+        private LobbyModel lobbyModel;
 
         public StartViewModel(UIState uiState)
         {
-            clientModel = new ClientModel();
+            lobbyModel = new LobbyModel();
             this.uiState = uiState;
 
-            clientModel.PropertyChanged += OnClientModelChanged;
+            lobbyModel.PropertyChanged += OnClientModelChanged;
         }
 
         private ICommand start2EditorCmd;
@@ -48,17 +48,18 @@ namespace RoRClient.ViewModels.Lobby
 
         private void SendCreateEditorSessionCommand()
         {
+            lobbyModel.StartConnection();
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("playerName", "Heinz");
             messageInformation.PutValue("editorName", "Editor1");
-            clientModel.getFromClientRequestSender().SendMessage("CreateEditorSession", messageInformation);
+            lobbyModel.getFromClientRequestSender().SendMessage("CreateEditorSession", messageInformation);
         }
 
-        public ClientModel ClientModel
+        public LobbyModel LobbyModel
         {
             get
             {
-                return clientModel;
+                return lobbyModel;
             }
         }
 
@@ -66,7 +67,7 @@ namespace RoRClient.ViewModels.Lobby
         {
             if(e.PropertyName == "Connected")
             {
-                if (clientModel.Connected)
+                if (lobbyModel.Connected)
                 {
                     uiState.State = "editor";
                 }
