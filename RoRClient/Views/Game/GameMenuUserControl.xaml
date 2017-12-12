@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:gamemenu="clr-namespace:RoRClient.Views.Game"
              mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="300" Background="Beige">
+             d:DesignHeight="80" d:DesignWidth="300" >
     <Grid x:Name="ContentGridMenu">
         <Grid.RowDefinitions>
             <RowDefinition MinHeight="80" />
@@ -19,7 +19,7 @@
 
         <gamemenu:GameMiniMapUserControl Grid.Row="0"
                                    Grid.Column="0"
-                                   Grid.ColumnSpan="1" Loaded="GameMiniMapUserControl_Loaded"/>
+                                   Grid.ColumnSpan="1"/>
 
         <gamemenu:GameInteractionUserControl Grid.Row="0"
                                    Grid.Column="1"

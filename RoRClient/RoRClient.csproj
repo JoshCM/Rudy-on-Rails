@@ -111,8 +111,8 @@
     <Compile Include="Communication\DataTransferObject\MessageDeserializer.cs" />
     <Compile Include="Communication\DataTransferObject\MessageInformation.cs" />
     <Compile Include="Communication\Dispatcher\FromServerResponseQueueDispatcher.cs" />
-	<Compile Include="Communication\Dispatcher\EditorSessionDispatcher.cs" />
-	<Compile Include="Communication\Dispatcher\GameSessionDispatcher.cs" />
+    <Compile Include="Communication\Dispatcher\EditorSessionDispatcher.cs" />
+    <Compile Include="Communication\Dispatcher\GameSessionDispatcher.cs" />
     <Compile Include="Models\Editor\EditorSession.cs" />
     <Compile Include="Models\Base\IModel.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
@@ -337,6 +337,7 @@
     <Resource Include="Resources\Images\Tools\railcurve_nw.png" />
     <Resource Include="Resources\Images\Tools\railcurve_se.png" />
     <Resource Include="Resources\Images\dummy.png" />
+    <Resource Include="Resources\Images\game_minimap_dummy.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
