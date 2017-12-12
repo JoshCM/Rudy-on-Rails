@@ -37,15 +37,6 @@
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="80" VerticalAlignment="Top" Width="98" Margin="202,0,0,0" Grid.Row="2"/>
 
 
-
-
-
-
-
-
-
-
-
         <!-- <game:GameStatusUserControl Content="Dock=Status" DockPanel.Dock="Top" /> 
          
         <UserControl Content="Dock=Map" DockPanel.Dock="Bottom" />

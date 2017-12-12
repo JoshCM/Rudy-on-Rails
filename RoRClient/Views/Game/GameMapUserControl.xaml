@@ -6,7 +6,10 @@
              xmlns:local="clr-namespace:RoRClient.Views.Game"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="300">
-    <Image Source="/RoRClient;component/Resources/Images/game_map_dummy.jpg" Stretch="Fill"/>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <Image Source="/RoRClient;component/Resources/Images/game_map_dummy.jpg" Stretch="Fill"/>
+    </ScrollViewer>
+    
 
 
 </UserControl>
