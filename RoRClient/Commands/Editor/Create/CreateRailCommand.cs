@@ -20,7 +20,6 @@ namespace RoRClient.Commands.Editor.Create
         private RailSectionPosition node1;
         private RailSectionPosition node2;
 
-
         public CreateRailCommand(EditorSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             railId = Guid.Parse(messageInformation.GetValueAsString("railId"));
@@ -28,7 +27,6 @@ namespace RoRClient.Commands.Editor.Create
             yPos = messageInformation.GetValueAsInt("yPos");
             node1 = (RailSectionPosition)Enum.Parse(typeof(RailSectionPosition), messageInformation.GetValueAsString("railSectionPositionNode1"));
             node2 = (RailSectionPosition)Enum.Parse(typeof(RailSectionPosition), messageInformation.GetValueAsString("railSectionPositionNode2"));
-            
         }
 
         public override void Execute()

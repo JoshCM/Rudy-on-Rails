@@ -49,7 +49,10 @@ namespace RoRClient.ViewModels.Editor
                 return createRailCommand;
             }
         }
-
+        
+        /// <summary>
+        /// Sendet einen Anfrage-Command an den Server, der dort eine Rail erstellen soll
+        /// </summary>
         private void SendCreateRailCommand()
         {
             int xPos = square.PosX;

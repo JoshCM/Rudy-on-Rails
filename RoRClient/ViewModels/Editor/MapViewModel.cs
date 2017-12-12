@@ -75,7 +75,6 @@ namespace RoRClient.ViewModels.Editor
         public MapViewModel(ToolbarViewModel toolbarViewModel)
         {
             this.toolbarViewModel = toolbarViewModel;
-            toolbarViewModel.PropertyChanged += OnToolbarViewModelChanges;
             taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             map = EditorSession.GetInstance().Map;
             InitSquares();
@@ -200,13 +199,6 @@ namespace RoRClient.ViewModels.Editor
 
                     taskFactory.StartNew(() => placeableOnSquareCollection.Add(viewModel));
                 }
-            }
-        }
-        private void OnToolbarViewModelChanges(object sender, PropertyChangedEventArgs e)
-        {
-            if(e.PropertyName == "SelectedToolItem")
-            {
-                
             }
         }
     }
