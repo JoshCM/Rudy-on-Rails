@@ -42,6 +42,6 @@ public class Loco extends InteractiveGameObject implements PlaceableOnRail  {
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
 		
-		addMessage(messageInfo);
+		notifyChange(messageInfo);
 	}
 }
