@@ -20,6 +20,7 @@ namespace RoRClient.ViewModels.Lobby
             lobbyModel.PropertyChanged += OnClientModelChanged;
         }
 
+        // Muss noch ersetzt werden durch CreateGameSessionCommand
         private ICommand start2GameCmd;
         public ICommand StartToGameCommand
         {
