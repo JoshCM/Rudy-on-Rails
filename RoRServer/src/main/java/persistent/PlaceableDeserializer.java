@@ -14,6 +14,9 @@ import com.google.gson.JsonPrimitive;
 import communication.queue.receiver.QueueReceiver;
 import models.game.Placeable;
 
+/**
+ * Deserializer, der für Placeables genutzt wird, damit sie mit dem richtigen Typ (z.B. Rail) deserialisiert werden
+ */
 public class PlaceableDeserializer<T extends Placeable> implements JsonDeserializer<T>{
 
 	static Logger log = Logger.getLogger(QueueReceiver.class.getName());

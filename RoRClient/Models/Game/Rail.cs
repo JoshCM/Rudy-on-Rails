@@ -8,11 +8,9 @@ namespace RoRClient.Models.Game
     /// </summary>
     public class Rail : InteractiveGameObject, IPlaceableOnSquare
     {
-        //Klasse für Schienen, die einem Feld (Square) zugeordnet sind
-        //und ein Schienenstück (= Gerade, Kurve) bzw. zwei Schienenstücke (= Kreuzung, Weiche) besitzen
-
         protected IPlaceableOnRail placeableOnRail = null;
         private RailSection section1;
+        private RailSection section2;
         public RailSection Section1
         {
             get
@@ -30,7 +28,6 @@ namespace RoRClient.Models.Game
             }
         }
 
-        private RailSection section2;
         public RailSection Section2
         {
             get

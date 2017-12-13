@@ -9,6 +9,8 @@ namespace RoRClient.Models.Game
     public class RailSection : ModelBase
     {
         private RailSectionPosition node1;
+        private RailSectionPosition node2;
+
         public RailSectionPosition Node1
         {
             get
@@ -16,7 +18,6 @@ namespace RoRClient.Models.Game
                 return node1;
             }
         }
-        private RailSectionPosition node2;
         public RailSectionPosition Node2
         {
             get

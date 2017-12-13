@@ -1,5 +1,5 @@
 ﻿using RoRClient.Communication.DataTransferObject;
-using RoRClient.Models.Editor;
+using RoRClient.Models.Session;
 using RoRClient.Models.Game;
 using RoRClient.ViewModels.Commands;
 using RoRClient.Views.Editor.Helper;
@@ -15,10 +15,11 @@ namespace RoRClient.ViewModels.Editor
     public class SquareViewModel : CanvasViewModel
     {
         private Square square;
-        private String toolName;
+        private ToolbarViewModel toolbarViewModel;
 
-        public SquareViewModel(Square square) : base(square.Id)
+        public SquareViewModel(Square square, ToolbarViewModel toolbarViewModel) : base(square.Id)
         {
+            this.toolbarViewModel = toolbarViewModel;
             this.square = square;
             this.SquarePosX = square.PosX;
             this.SquarePosY = square.PosY;
@@ -35,17 +36,6 @@ namespace RoRClient.ViewModels.Editor
                 square = value;
             }
         }
-        public String ToolName
-        {
-            get
-            {
-                return toolName;
-            }
-            set
-            {
-                toolName = value;
-            }
-        }
 
         private ICommand createRailCommand;
         public ICommand CreateRailCommand
@@ -59,13 +49,16 @@ namespace RoRClient.ViewModels.Editor
                 return createRailCommand;
             }
         }
-
+        
+        /// <summary>
+        /// Sendet einen Anfrage-Command an den Server, der dort eine Rail erstellen soll
+        /// </summary>
         private void SendCreateRailCommand()
         {
             int xPos = square.PosX;
             int yPos = square.PosY;
             EditorSession editorSession = EditorSession.GetInstance();
-            RailSection railSection = ToolConverter.convertToRailSection(ToolName);
+            RailSection railSection = ToolConverter.ConvertToRailSection(toolbarViewModel.SelectedTool.Name);
 
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("xPos", xPos);

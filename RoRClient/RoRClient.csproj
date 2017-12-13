@@ -104,7 +104,10 @@
     <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateRailCommand.cs" />
-    <Compile Include="Communication\Dispatcher\DispatcherBase.cs" />
+    <Compile Include="Communication\Dispatcher\QueueDispatcherBase.cs" />
+    <Compile Include="Communication\Dispatcher\TopicDispatcherBase.cs" />
+    <Compile Include="Communication\Dispatcher\TopicEditorDispatcher.cs" />
+    <Compile Include="Communication\Dispatcher\TopicGameDispatcher.cs" />
     <Compile Include="Communication\Queue\FromServerResponseQueueReceiver.cs" />
     <Compile Include="Communication\Queue\QueueSender.cs" />
     <Compile Include="Communication\DataTransferObject\MessageBuilder.cs" />
@@ -113,10 +116,12 @@
     <Compile Include="Communication\Dispatcher\FromServerResponseQueueDispatcher.cs" />
     <Compile Include="Communication\Dispatcher\EditorSessionDispatcher.cs" />
     <Compile Include="Communication\Dispatcher\GameSessionDispatcher.cs" />
-    <Compile Include="Models\Editor\EditorSession.cs" />
     <Compile Include="Models\Base\IModel.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
     <Compile Include="Models\Game\Player.cs" />
+    <Compile Include="Models\Session\EditorSession.cs" />
+    <Compile Include="Models\Session\GameSession.cs" />
+    <Compile Include="Models\Session\RoRSession.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -321,7 +326,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\Game\" />
+    <Folder Include="Commands\Editor\Delete\" />
+    <Folder Include="Commands\Editor\Update\" />
+    <Folder Include="Commands\Game\Create\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\railcurve_ne.png" />

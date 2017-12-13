@@ -8,7 +8,7 @@ import java.util.Map;
 import commands.base.Command;
 import commands.editor.CreateRailCommand;
 import communication.MessageInformation;
-import models.editor.RoRSession;
+import models.session.RoRSession;
 
 /**
  * Base-Klasse für alle spezifischen Dispatcher. Hier ist die grundsätzliche Verteilungslogik 
@@ -19,13 +19,13 @@ public abstract class DispatcherBase {
 
 	}
 
-	private void callMethodFromString(String method, MessageInformation messageInfo) {
+	private void callMethodFromString(String methodName, MessageInformation messageInfo) {
 		try {
 			Class params[] = new Class[1];
 			params[0] = MessageInformation.class;
 			Object paramsObj[] = new Object[1];
 			paramsObj[0] = messageInfo;
-			Method thisMethod = this.getClass().getDeclaredMethod(method, params);
+			Method thisMethod = this.getClass().getDeclaredMethod(methodName, params);
 			thisMethod.invoke(this, paramsObj);
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();

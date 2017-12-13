@@ -28,7 +28,7 @@ import models.game.PlaceableOnSquare;
 public class MapManager {
 
 	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
-	private final String dir = "resources/maps/";
+	private final static String OUTPUT_DIR_PATH = "maps\\";
 	private final String ext = ".map";
 	private Gson gsonLoader;
 	private Gson gsonSaver;
@@ -53,7 +53,7 @@ public class MapManager {
 	public Map loadMap(String mapName) {
 	    String jsonMap = readFromFile(mapName);
 	    log.info("Eingelesene Map: " + jsonMap);
-		Map map = gsonLoader.fromJson(jsonMap, Map.class);
+		Map map = convertJsonToMap(jsonMap);
 		return map;
 	}
 	
@@ -68,7 +68,7 @@ public class MapManager {
 		String jsonMap = "";	
 		BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader(dir +  mapName + ext));
+            br = new BufferedReader(new FileReader(OUTPUT_DIR_PATH +  mapName + ext));
             String line;
             while ((line = br.readLine()) != null) {
                 jsonMap += line;
@@ -94,9 +94,19 @@ public class MapManager {
 	 * @param mapName: Der Name der Map für das Dateisystem
 	 */
 	public void saveMap(Map map, String mapName) {
-		String jsonMap = gsonSaver.toJson(map);
+		String jsonMap = convertMapToJson(map);
 		log.info("Gespeicherte Map: "+ jsonMap);
 		saveToFile(jsonMap, mapName);
+	}
+	
+	public String convertMapToJson(Map map) {
+		String jsonMap = gsonSaver.toJson(map);
+		return jsonMap;
+	}
+	
+	public Map convertJsonToMap(String mapAsJson) {
+		Map map = gsonLoader.fromJson(mapAsJson, Map.class);
+		return map;
 	}
 	
 	/**
@@ -105,8 +115,10 @@ public class MapManager {
 	 * @param mapName: Dateiname zum Speichern
 	 */ 
 	private void saveToFile(String jsonMap, String mapName){
-		try (PrintWriter out = new PrintWriter(dir + mapName + ext)) {
+		try (PrintWriter out = new PrintWriter(OUTPUT_DIR_PATH + mapName + ext)) {
 			out.println(jsonMap);
+			out.flush();
+			out.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

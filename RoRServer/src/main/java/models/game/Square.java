@@ -7,15 +7,12 @@ import models.base.ModelBase;
  * Auf dem Feld platzierte Objekte koennen auf die jeweilige Position zugreifen.
  */
 public class Square extends ModelBase {
-
 	private PlaceableOnSquare placeableOnSquare = null;
 	private int xIndex;
 	private int yIndex;
-	private Map map;
 	
-	public Square(Map map, int xIndex, int yIndex) {
-		super(map.getRoRSession());
-		this.map = map;
+	public Square(String sessionName, Map map, int xIndex, int yIndex) {
+		super(sessionName);
 		this.xIndex = xIndex;
 		this.yIndex = yIndex;
 	}
@@ -65,9 +62,5 @@ public class Square extends ModelBase {
 		if (yIndex != other.yIndex)
 			return false;
 		return true;
-	}
-	
-	public Map getMap() {
-		return map;
 	}
 }

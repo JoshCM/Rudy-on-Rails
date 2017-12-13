@@ -3,19 +3,21 @@ using RoRClient.Models.Base;
 
 namespace RoRClient.Models.Game
 {
+    /// <summary>
+    /// Klasse für ein Feld, dass auf der Map liegt und eine Position hat.
+    /// Auf dem Feld platzierte Objekte können auf die jeweilige Position zugreifen
+    /// </summary>
     public class Square : ModelBase
     {
-        /// <summary>
-        /// Klasse für ein Feld, dass auf der Map liegt und eine Position hat.
-        /// Auf dem Feld platzierte Objekte können auf die jeweilige Position zugreifen
-        /// </summary>
+        IPlaceableOnSquare placeableOnSquare = null;
+        private int posX;
+        private int posY;
 
         public Square() : base()
         {
 
         }
 
-        private int posX;
         public int PosX
         {
             get
@@ -32,8 +34,6 @@ namespace RoRClient.Models.Game
                 }
             }
         }
-
-        private int posY;
 
         public int PosY
         {
@@ -58,7 +58,6 @@ namespace RoRClient.Models.Game
             this.posY = yPos;
         }
 
-        IPlaceableOnSquare placeableOnSquare = null;
         public IPlaceableOnSquare PlaceableOnSquare
         {
             get

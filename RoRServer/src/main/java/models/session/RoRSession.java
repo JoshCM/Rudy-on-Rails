@@ -1,33 +1,36 @@
-package models.editor;
+package models.session;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import communication.dispatcher.EditorSessionDispatcher;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
+import communication.topic.TopicSender;
 import models.game.Map;
 import models.game.Player;
 
 /**
- * Oberklasse vom Editor-Modus. 
- * Hält die Map und die Liste von verbundenen Playern
- * Erhält über einen QueueReceiver Anfragen von Clients, die mit der EditorSession verbunden sind
+ * Oberklasse von EditorSession und GameSession
+ * 
  */
-public class EditorSession extends RoRSession {
+public abstract class RoRSession {
+	private String name;
 	private ArrayList<Player> players = new ArrayList<>();
 	private Map map;
-
-	public EditorSession(String name) {
-		super(name);
-		
-		EditorSessionDispatcher dispatcher = new EditorSessionDispatcher(this);
-		this.queueReceiver = new QueueReceiver(name, dispatcher);
-		map = new Map(this);
+	
+	protected QueueReceiver queueReceiver;
+	
+	public RoRSession(String name) {
+		this.name = name;
+		map = new Map(name);
 	}
 	
+	public String getName() {
+		return name;
+	}
+		
 	public void setup() {
-		super.setup();
 		queueReceiver.setup();
 	}
 	

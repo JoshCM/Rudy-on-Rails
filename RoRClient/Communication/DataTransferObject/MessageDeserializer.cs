@@ -27,7 +27,7 @@ namespace RoRClient.Communication.DataTransferObject
         }
 
         /// <summary>
-        /// hier soll die empfangene Textmessage(ein String) zu einem MessageInformation Objekt deserialisiert werden
+        /// Die empfangene Textmessage(ein String) wird zu einem MessageInformation Objekt deserialisiert
         /// </summary>
         /// <param name="textMessage"></param>
         /// <returns></returns>

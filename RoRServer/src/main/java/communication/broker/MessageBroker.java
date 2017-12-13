@@ -13,7 +13,7 @@ public class MessageBroker {
 	private static MessageBroker messageBroker = null;	
 	private BrokerService broker = null;
 	static Logger log = Logger.getLogger(MessageBroker.class.getName());
-	private static String CLIENT_REQUEST_QUEUE_NAME = "ClientRequestQueue";
+	private final static String CLIENT_REQUEST_QUEUE_NAME = PropertyManager.getProperty("client_request_queue_name");
 	private QueueReceiver fromClientRequestQueueReceiver;
 
 	private MessageBroker(){

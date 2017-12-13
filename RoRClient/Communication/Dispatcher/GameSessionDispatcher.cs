@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Communication.Dispatcher
 {
-    class GameSessionDispatcher : DispatcherBase
+    class GameSessionDispatcher : QueueDispatcherBase
     {
 
     }
