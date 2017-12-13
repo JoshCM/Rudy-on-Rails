@@ -21,5 +21,16 @@
                 <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
             </Image.InputBindings>
         </Image>
+        <Popup Name="quickNavigation" Placement="Mouse">
+            <StackPanel Orientation="Horizontal" >
+                <Button Click="Hide_Click">
+                    <Image Source="/RoRClient;component/Resources/Images/rotate_right.png" ></Image>
+                </Button>
+                <Button Click="Hide_Click">
+                    <Image Source="/RoRClient;component/Resources/Images/rotate_left.png" Height="282" Width="270"></Image>
+                </Button>
+               
+            </StackPanel>
+        </Popup>
     </Canvas>
 </v:CanvasUserControl>
