@@ -23,12 +23,15 @@ public class GameSession extends RoRSession{
 		
 	}
 	
+	/**
+	 * startet den Thread der für das Ticking verantwortlich ist 
+	 * und ruft die tick()-Methode der Ticker-Klasse auf
+	 */
 	private void startTicking() {
 		tickingThread = new Thread() {
 			@Override
 			public void run() {
 				while(!stopped) {
-					
 					if(lastTimeUpdatedInNanoSeconds != 0)
 						ticker.tick(System.nanoTime() - lastTimeUpdatedInNanoSeconds);
 					lastTimeUpdatedInNanoSeconds = System.nanoTime();
@@ -44,20 +47,35 @@ public class GameSession extends RoRSession{
 		
 	}
 	
+	/**
+	 * stoppt den TickingThread
+	 */
 	public void stop() {
 		this.stopped = true;
 	}
 	
+	/**
+	 * Fügt dem Ticker neue TickableGameObject hinzu
+	 * @param tgo
+	 */
 	public void add(TickableGameObject tgo) {
 		ticker.addObserver(tgo);
 	}
 	
+	/**
+	 * Fügt dem Ticker eine Collection von TickableGameObjects hinzu
+	 * @param tgos
+	 */
 	public void addAll(TickableGameObject...tgos ) {
 		for(TickableGameObject tgo : tgos) {
 			ticker.addObserver(tgo);
 		}
 	}
 	
+	/**
+	 * Entfernt ein TickableGameObject  aus der Liste der Ticker-Observer
+	 * @param tgo
+	 */
 	public void remove(TickableGameObject tgo) {
 		ticker.deleteObserver(tgo);
 	}

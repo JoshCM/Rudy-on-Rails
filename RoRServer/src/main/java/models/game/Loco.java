@@ -21,6 +21,10 @@ public class Loco extends TickableGameObject implements PlaceableOnRail  {
 		this.setCarts(new ArrayList<Cart>());
 	}
 	
+	/**
+	 * steuert das spezifische verhalten der Lok 
+	 * beim eintreten eines Ticks
+	 */
 	@Override
 	public void specificUpdate() {
 		// TODO Auto-generated method stub
