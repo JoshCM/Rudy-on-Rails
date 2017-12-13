@@ -10,6 +10,7 @@ namespace RoRClient.ViewModels
     /// </summary>
     public class CanvasViewModel : ViewModelBase
     {
+
         public CanvasViewModel(Guid modelId)
         {
             id = modelId;
@@ -74,30 +75,35 @@ namespace RoRClient.ViewModels
             }
         }
 
-        // EditorObject (Rail etc.) ausgewählt
+        // EditorObject (Rail etc.) ausgewählt + Quicknavigation anzeigen (sollte noch umbenannt werden)
         public void SelectInteractiveGameObject()
         {
+            if (IsQuickNavigationVisible)
+            {
+                Console.WriteLine("Quicknavigation deaktiviert");
+                IsQuickNavigationVisible = false;
+            }
+            else
+            {
+                Console.WriteLine("Quicknavigation aktiviert");
+                IsQuickNavigationVisible = true;
+            }
             Console.WriteLine("Selected ViewModel: " + this.ToString() + " / ID: " +  this.Id);
         }
 
-        // Quicknavigation
-        private ICommand showQuickNavigationCommand;
-        public ICommand ShowQuickNavigationCommand
+        private Boolean isQuickNavigationVisible;
+        public Boolean IsQuickNavigationVisible
         {
-            get {
-                if (showQuickNavigationCommand == null)
-                {
-                    showQuickNavigationCommand = new ActionCommand(param => ShowQuickNavigation());
-                }
-                return showQuickNavigationCommand;
+            get
+            {
+                return isQuickNavigationVisible;
+            }
+            set
+            {
+                isQuickNavigationVisible = value;
+                OnPropertyChanged("IsQuickNavigationVisible");
             }
         }
-
-        private void ShowQuickNavigation()
-        {
-            Console.WriteLine("Quicknavigation");
-        }
-
 
     }
 }
