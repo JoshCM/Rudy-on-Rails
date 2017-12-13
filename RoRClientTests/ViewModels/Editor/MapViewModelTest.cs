@@ -21,7 +21,7 @@ namespace RoRClientTests.ViewModels.Editor
         [TestInitialize]
         public void TestInitialize()
         {
-            mapViewModel = new MapViewModel();
+            mapViewModel = new MapViewModel(new ToolbarViewModel());
             editorSession = EditorSession.GetInstance();
             map = editorSession.Map;
         }
@@ -36,7 +36,7 @@ namespace RoRClientTests.ViewModels.Editor
             RailViewModel railViewModel = (RailViewModel)mapViewModel.PlaceableOnSquareCollection[0];
             Assert.AreSame(expectedRail, railViewModel.Rail);
         }
-        */
+       
         [TestMethod]
         public void MapViewModel_SquareViewModelsInitializedTest()
         {
@@ -52,5 +52,6 @@ namespace RoRClientTests.ViewModels.Editor
                 }
             }
         }
+        */
     }
 }

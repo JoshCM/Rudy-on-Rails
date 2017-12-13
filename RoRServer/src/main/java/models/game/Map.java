@@ -12,20 +12,19 @@ import java.util.Arrays;
  */
 public class Map extends ModelBase {
 	private Square squares [][];
-	private final int mapSize = 3;
+	private final int mapSize = 50;
 	
 	/**
 	 * Jedes Square auf der Map braucht einen Index,
 	 * um jedem Objekt, das auf einem Square platziert wird, ein eindeutiges Objekt zuzuordnen
 	 */
-	public Map(RoRSession session) {
-		super(session);
-		
+	public Map(String sessionName) {
+		super(sessionName);
 		squares = new Square[mapSize][mapSize];
 		
 		for(int i= 0; i < mapSize; i++) {
 			for(int j = 0; j < mapSize; j++) {
-				Square s = new Square(this, i, j);
+				Square s = new Square(sessionName, this, i, j);
 				squares[i][j] = s;
 			}
 		}

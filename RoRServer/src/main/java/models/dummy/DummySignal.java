@@ -9,8 +9,7 @@ public class DummySignal extends InteractiveGameObject implements PlaceableOnRai
 
     private String name = "SignalTest";    
 	public DummySignal(Square square) {
-		super(square);
-		this.square = square;
+		super("blubb", square);
 	}
 
 	@Override

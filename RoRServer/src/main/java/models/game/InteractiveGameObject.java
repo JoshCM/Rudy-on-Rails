@@ -1,5 +1,7 @@
 package models.game;
 
+import java.util.UUID;
+
 import models.base.ModelBase;
 import models.session.RoRSession;
 
@@ -9,19 +11,31 @@ import models.session.RoRSession;
  */
 public abstract class InteractiveGameObject extends ModelBase {
 	protected final String className;
-	transient protected Square square;
+	private int xPos; // So lange, bis nur noch die id ausreicht
+	private int yPos; // So lange, bis nur noch die id ausreicht
+	private UUID squareId;
     
-	public InteractiveGameObject(Square square) {
-		super(square.getRoRSession());
+	public InteractiveGameObject(String sessionName, Square square) {
+		super(sessionName);
 		this.className = getClass().getName();
-		this.square = square;
+		this.xPos = square.getXIndex();
+		this.yPos = square.getYIndex();
+		this.squareId = square.getId();
 	}
 	
 	public String getClassName() {
 		return className;
 	}
 	
-	public Square getSquare() {
-		return square;
+	public int getXPos() {
+		return xPos;
+	}
+	
+	public int getYPos() {
+		return yPos;
+	}
+	
+	public UUID getSquareId() {
+		return squareId;
 	}
 }
