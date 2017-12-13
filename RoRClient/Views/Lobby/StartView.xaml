@@ -6,18 +6,27 @@
              xmlns:local="clr-namespace:RoRClient.Views"
              xmlns:vm ="clr-namespace:RoRClient.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Grid.Row="0">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
+             d:DesignHeight="900" d:DesignWidth="1600">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-        </Grid.RowDefinitions>
-        <Button Grid.Row="0" x:Name="editorButton" Command="{Binding CreateEditorSessionCommand}" Content="Hier gehts zum Editor"/>
+        <RowDefinition Height="1*" />
+        <RowDefinition Height="1*" />
+        <RowDefinition Height="1*" />
+        <RowDefinition Height="1*" />
+        <RowDefinition Height="1*" />
+    </Grid.RowDefinitions>
+
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="1*" />
+    </Grid.ColumnDefinitions>
+        
+    <Button Grid.Row="3" Grid.Column="2" x:Name="editorButton" Command="{Binding CreateEditorSessionCommand}" Content="Hier gehts zum Editor"/>
         <!-- Binding muss noch eingerichtet werden -->
-        <Button Grid.Row="1" x:Name="gameButton" Command="{Binding CreateGameSessionCommand}" Content="Hier gehts zum Dampf-Modus"/>
+        <Button Grid.Row="2" Grid.Column="2" x:Name="gameButton" Command="{Binding CreateGameSessionCommand}" Content="Hier gehts zum Dampf-Modus"/>
     </Grid>
 
 </UserControl>
