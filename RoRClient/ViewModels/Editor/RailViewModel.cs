@@ -1,9 +1,11 @@
 ﻿using RoRClient.Models.Game;
+using RoRClient.ViewModels.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace RoRClient.ViewModels.Editor
 {
@@ -26,6 +28,24 @@ namespace RoRClient.ViewModels.Editor
             {
                 return rail;
             }
+        }
+
+        private ICommand selectRailCommand;
+        public ICommand SelectRailCommand
+        {
+            get
+            {
+                if (selectRailCommand == null)
+                {
+                    selectRailCommand = new ActionCommand(param => SelectRail());
+                }
+                return selectRailCommand;
+            }
+        }
+
+        private void SelectRail()
+        {
+            Console.WriteLine("Rail selected");
         }
     }
 }

@@ -14,6 +14,13 @@
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=railUserControl}"
             Height="{Binding SquareDim, ElementName=railUserControl}">
+        <Rectangle
+            Width="{Binding SquareDim, ElementName=railUserControl}"
+            Height="{Binding SquareDim, ElementName=railUserControl}">
+            <Rectangle.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectRailCommand}"></MouseBinding>
+            </Rectangle.InputBindings>
+        </Rectangle>
         <Image Width="{Binding SquareDim, ElementName=railUserControl}" Height="{Binding SquareDim, ElementName=railUserControl}" Source="{Binding Rail.Section1, Mode=OneWay, Converter={StaticResource RailSectionToImagePathConverter}}"/>
     </Canvas>
 </v:CanvasUserControl>
