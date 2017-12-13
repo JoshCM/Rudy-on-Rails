@@ -22,10 +22,18 @@ public class Loco extends InteractiveGameObject implements PlaceableOnRail  {
 	public Loco(String sessionName, Square square) {
 		super(sessionName,square);
 		this.setCarts(new ArrayList<Cart>());
+		
+		//TODO: Wenn Zug Richtung implementiert ist, muss der Wagon so initialisiert werden, dass er ein Feld hinter der Lok steht 
+		this.addCart(new Cart(sessionName,square));
+		
 		this.rail = (Rail)square.getPlaceableOnSquare();
 		SendCreatedLocoMessage();
 	}
 
+	public void addCart(Cart cart) {
+		this.carts.add(cart);
+		
+	}
 	public ArrayList<Cart> getCarts() {
 		return carts;
 	}
@@ -34,11 +42,15 @@ public class Loco extends InteractiveGameObject implements PlaceableOnRail  {
 		this.carts = carts;
 	}
 
+	public Rail getRail() {
+		return this.rail;
+	}
+
 	private void SendCreatedLocoMessage() {
 		MessageInformation messageInfo = new MessageInformation("CreateLoco");
 		messageInfo.putValue("locoId", getId());
 		messageInfo.putValue("squareId", getSquareId());
-		messageInfo.putValue("railId", rail.getId());
+		//messageInfo.putValue("railId", rail.getId());
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
 		
