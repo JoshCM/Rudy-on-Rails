@@ -5,6 +5,8 @@ import communication.queue.sender.QueueSender;
 import models.game.Player;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
+import models.session.GameSession;
+import models.session.GameSessionManager;
 
 import org.apache.log4j.Logger;
 import com.google.gson.JsonObject;
@@ -25,8 +27,6 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	 * Ist schon eine EditorSession offen, dann werden diesem Client alle Infos zur EditorSession 
 	 * sowie alle bereits existierenden Player-Informationen zugesendet
 	 * 
-	 * Dies soll spÃ¤ter getrennt laufen: CreateEditorSession ODER ReadEditorSession + JoinEditorSession
-	 * 
 	 * @param messageInformation
 	 */
 	public void handleCreateEditorSession(MessageInformation messageInformation) {
@@ -40,7 +40,12 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 
 		log.info("Called handleCreateEditorSession");
 	}
-
+	/**
+	 * Es gibt schon einen Editor mit mind. einem Player. Diesem wird ein neuer Player hinzugefuegt und eine Response 
+	 * wird für den Client zusammengesetzt.
+	 * 
+	 * @param messageInformation
+	 */
 	private void joinEditorSessionAndSendResponse(MessageInformation messageInformation) {
 		EditorSession editorSession;
 		MessageInformation responseInformation = new MessageInformation("JoinEditorSession");
@@ -64,7 +69,56 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		
 		sendMessage("JoinEditorSession", responseInformation);
 	}
+	
+	/**
+	 * Neue GameSession wird erstellt und dem Client mitgeteilt
+	 * Ist schon eine GameSession offen, dann werden diesem Client alle Infos zur GameSession 
+	 * sowie alle bereits existierenden Player-Informationen zugesendet
+	 * 
+	 * @param messageInformation
+	 */
+	public void handleCreateGameSession(MessageInformation messageInformation) {
 
+		if (GameSessionManager.getInstance().getGameSession() == null) {
+			createGameSessionAndSendResponse(messageInformation);
+		} else {
+			joinGameSessionAndSendResponse(messageInformation);
+		}
+
+		log.info("Called handleCreateGameSession");
+	}
+	/**
+	 * Es gibt schon einen Game mit mind. einem Player. Diesem wird ein neuer Player hinzugefuegt und eine Response 
+	 * wird für den Client zusammengesetzt.
+	 * @param messageInformation
+	 */
+	private void joinGameSessionAndSendResponse(MessageInformation messageInformation) {
+		GameSession gameSession;
+		MessageInformation responseInformation = new MessageInformation("JoinGameSession");
+		responseInformation.setClientid(messageInformation.getClientid());
+		
+		gameSession = GameSessionManager.getInstance().getGameSession();
+		Player player = new Player(gameSession.getName(), messageInformation.getValueAsString("playerName"));
+		gameSession.addPlayer(player);
+		
+		responseInformation.putValue("topicName", gameSession.getName());
+		responseInformation.putValue("gameName", gameSession.getName());
+		List<JsonObject> players = new ArrayList<JsonObject>();
+		for(Player sessionPlayer : gameSession.getPlayers()) {
+			JsonObject json = new JsonObject();
+			json.addProperty("playerId", sessionPlayer.getId().toString());
+			json.addProperty("playerName", sessionPlayer.getName());
+			players.add(json);
+		}
+		
+		responseInformation.putValue("playerList", players);
+		
+		sendMessage("JoinGameSession", responseInformation);
+	}
+	/**
+	 * EditorSession mit einem Player wird erstellt und Antwortnachricht wird zusammengesetzt
+	 * @param messageInformation
+	 */
 	private void createEditorSessionAndSendResponse(MessageInformation messageInformation) {
 		EditorSession editorSession;
 		MessageInformation responseInformation = new MessageInformation("CreateEditorSession");
@@ -81,5 +135,27 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		responseInformation.putValue("playerName", player.getName());		
 		responseInformation.putValue("playerId", player.getId().toString());
 		sendMessage("CreateEditorSession", responseInformation);
+	}
+	
+	/**
+	 * GameSession mit einem Player wird erstellt und Antwortnachricht wird zusammengesetzt
+	 * @param messageInformation
+	 */
+	private void createGameSessionAndSendResponse(MessageInformation messageInformation) {
+		GameSession gameSession;
+		MessageInformation responseInformation = new MessageInformation("CreateGameSession");
+		responseInformation.setClientid(messageInformation.getClientid());
+		
+		gameSession = GameSessionManager.getInstance()
+				.createNewGameSession(messageInformation.getValueAsString("gameName"));
+		gameSession.setup();
+		Player player = new Player(gameSession.getName(), messageInformation.getValueAsString("playerName"));
+		gameSession.addPlayer(player);
+		
+		responseInformation.putValue("topicName", gameSession.getName());
+		responseInformation.putValue("gameName", gameSession.getName());
+		responseInformation.putValue("playerName", player.getName());		
+		responseInformation.putValue("playerId", player.getId().toString());
+		sendMessage("CreateGameSession", responseInformation);
 	}
 }
