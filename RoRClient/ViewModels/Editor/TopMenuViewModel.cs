@@ -1,11 +1,15 @@
 ﻿using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
+using RoRClient.Views.Editor.Helper;
+using RoRClient.Views.Popup;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace RoRClient.ViewModels.Editor
@@ -32,7 +36,7 @@ namespace RoRClient.ViewModels.Editor
             {
                 if (saveMapCommand == null)
                 {
-                    saveMapCommand = new ActionCommand(param => SendSaveMapMessage());
+                    saveMapCommand = new ActionCommand(param => SaveMap());
                 }
                 return saveMapCommand;
             }
@@ -42,7 +46,6 @@ namespace RoRClient.ViewModels.Editor
         {
             if(EditorSession.GetInstance().Map.Name == "")
             {
-                // ToDo: Hier sollte ein Name abgefragt werden!
                 SendSaveNewMapMessage();
             }
             else
@@ -53,13 +56,19 @@ namespace RoRClient.ViewModels.Editor
 
         private void SendSaveNewMapMessage()
         {
-            // ToDo: Wo kommt der Name her?
-            string newMapName = "NeueMap";
+            string newMapName = PopupCreator.AskUserToInputString("Bitte gib einen Namen für die Map ein.").Trim();
 
-            EditorSession editorSession = EditorSession.GetInstance();
-            MessageInformation messageInformation = new MessageInformation();
-            messageInformation.PutValue("name", newMapName);
-            editorSession.QueueSender.SendMessage("SaveNewMap", messageInformation);
+            if (RegexValidator.IsValidFilename(newMapName))
+            {
+                EditorSession editorSession = EditorSession.GetInstance();
+                MessageInformation messageInformation = new MessageInformation();
+                messageInformation.PutValue("name", newMapName);
+                editorSession.QueueSender.SendMessage("SaveNewMap", messageInformation);
+            }
+            else
+            {
+                MessageBox.Show("Ungültiger Filename du Opfer!");
+            }
         }
 
         private void SendSaveMapMessage()
