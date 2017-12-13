@@ -20,15 +20,6 @@
             <Image.InputBindings>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
             </Image.InputBindings>
-            <Image.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Command="Cut">
-                        <MenuItem.Icon>
-                            <Image Source="https://d30y9cdsu7xlg0.cloudfront.net/png/8336-200.png" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                </ContextMenu>
-            </Image.ContextMenu>
         </Image>
     </Canvas>
 </v:CanvasUserControl>
