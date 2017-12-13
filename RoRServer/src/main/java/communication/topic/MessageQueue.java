@@ -1,43 +1,41 @@
-package models.editor;
+package communication.topic;
 
+import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import communication.MessageInformation;
-import communication.queue.receiver.QueueReceiver;
-import communication.topic.TopicSender;
 
-/**
- * Oberklasse von EditorSession und GameSession
- * 
- */
-public abstract class RoRSession {
-	private String name;
-	protected QueueReceiver queueReceiver;
+import communication.MessageEnvelope;
+import communication.MessageInformation;
+
+public class MessageQueue implements Observer {
 	private TopicSender topicSender;
-	
 	private Thread sendMessageThread;
-	private ConcurrentLinkedQueue<MessageInformation> messagesToSendQueue = new ConcurrentLinkedQueue<>();
+	private ConcurrentLinkedQueue<MessageEnvelope> messagesToSendQueue = new ConcurrentLinkedQueue<>();
+	private static MessageQueue instance;
 	
-	public RoRSession(String name) {
-		this.name = name;
-		this.topicSender = new TopicSender(name);
+	private MessageQueue() {
+		
 	}
 	
-	public String getName() {
-		return name;
-	}
-	
-	public void addMessage(MessageInformation messageInformation) {
-		if(messageInformation != null) {
-			messagesToSendQueue.add(messageInformation);
+	public static MessageQueue getInstance() {
+		if(instance == null) {
+			instance = new MessageQueue();
 		}
+		return instance;
 	}
-			
+	
 	public void setup() {
+		topicSender = new TopicSender();
 		topicSender.setup();
-		queueReceiver.setup();
 		startSendMessageThread();
 	}
 	
+	private void addMessage(MessageEnvelope messageEnvelope) {
+		if(messageEnvelope != null) {
+			messagesToSendQueue.add(messageEnvelope);
+		}
+	}	
+
 	private void startSendMessageThread() {
 		sendMessageThread = new Thread(new Runnable() {
 			@Override
@@ -45,9 +43,7 @@ public abstract class RoRSession {
 				while(true) {
 					try {
 						if(messagesToSendQueue.peek() != null) {
-							MessageInformation messageInformation = messagesToSendQueue.poll();
-							String messageType = messageInformation.getMessageType();
-							topicSender.sendMessage(messageType, messageInformation);
+							topicSender.sendMessage(messagesToSendQueue.poll());
 						}
 						Thread.sleep(50);
 					} catch (InterruptedException e) {
@@ -68,8 +64,13 @@ public abstract class RoRSession {
 			if(messageInfo.getMessageType().equals(messageType)) {
 				return messageInfo;
 			}
-		};
-		
+		}
 		return null;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		MessageEnvelope messageEnvelope = (MessageEnvelope) arg;
+		addMessage(messageEnvelope);
 	}
 }

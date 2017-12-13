@@ -4,6 +4,10 @@ using System.ComponentModel;
 
 namespace RoRClient.Models.Base
 {
+    /// <summary>
+    /// Abstrakte Klasse für alle Models
+    /// Stellt den PropertyChangedEventHandler bereit
+    /// </summary>
     public abstract class ModelBase : IModel, INotifyPropertyChanged
     {
         #region PropertyChanged

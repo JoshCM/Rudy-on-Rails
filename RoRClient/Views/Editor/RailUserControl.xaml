@@ -14,6 +14,6 @@
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=railUserControl}"
             Height="{Binding SquareDim, ElementName=railUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=railUserControl}" Height="{Binding SquareDim, ElementName=railUserControl}" Source="{Binding RailViewModel.Rail.Section1, ElementName=railUserControl, Mode=OneWay, Converter={StaticResource RailSectionToImagePathConverter}}"/>
+        <Image Width="{Binding SquareDim, ElementName=railUserControl}" Height="{Binding SquareDim, ElementName=railUserControl}" Source="{Binding Rail.Section1, Mode=OneWay, Converter={StaticResource RailSectionToImagePathConverter}}"/>
     </Canvas>
 </v:CanvasUserControl>

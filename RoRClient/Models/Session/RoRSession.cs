@@ -1,38 +1,27 @@
-﻿using RoRClient.Communication.Queue;
-using RoRClient.Communication.Topic;
-using RoRClient.Models.Base;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using RoRClient.Models.Game;
 using System.Collections.ObjectModel;
+using RoRClient.Communication.Queue;
+using RoRClient.Models.Base;
+using RoRClient.Communication.Topic;
 
-namespace RoRClient.Models.Editor
+namespace RoRClient.Models.Session
 {
-    public class EditorSession : ModelBase
+    public class RoRSession : ModelBase
     {
-        private string name;
-        private Map map;
-        private ObservableCollection<Player> players = new ObservableCollection<Player>();
-        private static EditorSession editorSession;
-        private QueueSender queueSender;
-        private TopicReceiver topicReceiver;
+        protected string name;
+        protected Map map;
+        protected ObservableCollection<Player> players = new ObservableCollection<Player>();
+        protected QueueSender queueSender;
+        protected TopicReceiver topicReceiver;
 
-        private EditorSession()
+        public RoRSession()
         {
             map = new Map();
-        }
-
-        public void Init(string topicName)
-        {
-            queueSender = new QueueSender(topicName);
-            topicReceiver = new TopicReceiver(topicName);
-        }
-
-        public static EditorSession GetInstance()
-        {
-            if(editorSession == null)
-            {
-                editorSession = new EditorSession();
-            }
-            return editorSession;
         }
 
         public string Name
@@ -48,6 +37,11 @@ namespace RoRClient.Models.Editor
             }
         }
 
+        public void Init(string topicName)
+        {
+            queueSender = new QueueSender(topicName);
+        }
+
         public Map Map
         {
             get
@@ -58,7 +52,7 @@ namespace RoRClient.Models.Editor
             {
                 map = value;
             }
-            
+
         }
 
         public ObservableCollection<Player> Players
@@ -87,4 +81,6 @@ namespace RoRClient.Models.Editor
             }
         }
     }
+
+
 }

@@ -7,7 +7,6 @@ import communication.MessageInformation;
  * Schienenstueck (= Gerade, Kurve) bzw. zwei Schienenstuecke (= Kreuzung,
  * Weiche) besitzen
  */
-
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 
 	// muss hier raus und eine Ebene tiefer(RailSection)
@@ -18,31 +17,29 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	/**
 	 * Konstruktor für Geraden oder Kurven
 	 */
-	public Rail(Square square, RailSectionPosition node1, RailSectionPosition node2) {
-		super(square);
-		this.section1 = new RailSection(this, node1, node2);
+	public Rail(String sessionName, Square square, RailSectionPosition node1, RailSectionPosition node2) {
+		super(sessionName, square);
+		this.section1 = new RailSection(sessionName, getId(), node1, node2);
 
-		SendCreatedRailMessage();
+		notifyCreatedRail();
 	}
 	
-	private void SendCreatedRailMessage() {
+	private void notifyCreatedRail() {
 		MessageInformation messageInfo = new MessageInformation("CreateRail");
 		messageInfo.putValue("railId", getId());
 		messageInfo.putValue("railSectionId", section1.getId());
 		messageInfo.putValue("railSectionPositionNode1", section1.getNode1().toString());
 		messageInfo.putValue("railSectionPositionNode2", section1.getNode2().toString());
-		messageInfo.putValue("squareId", square.getId());
-		// ToDo: Später haben wir die richtigen SquareIds im Client, im Moment noch nicht!! 
-		messageInfo.putValue("xPos", square.getXIndex());
-		messageInfo.putValue("yPos", square.getYIndex());
+		messageInfo.putValue("squareId", getSquareId());
+		// TODO: Später haben wir die richtigen SquareIds im Client, im Moment noch nicht!! 
+		messageInfo.putValue("xPos", getXPos());
+		messageInfo.putValue("yPos", getYPos());
 		
-		addMessage(messageInfo);
+		notifyChange(messageInfo);
 	}
 
 	public void setPlaceableOnRail(PlaceableOnRail placeableOnRail) {
-		
 		this.placeableOnRail = placeableOnRail;
-
 	}
 
 	public RailSection getSection() {
@@ -85,6 +82,4 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 			return false;
 		return true;
 	}
-	
-
 }

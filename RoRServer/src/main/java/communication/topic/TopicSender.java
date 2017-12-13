@@ -6,6 +6,7 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
 
+import communication.MessageEnvelope;
 import communication.MessageInformation;
 import communication.ServerConnection;
 import communication.dispatcher.RequestSerializer;
@@ -17,20 +18,21 @@ import communication.dispatcher.RequestSerializer;
 public class TopicSender {
 	private Session session;
 	private MessageProducer publisher;
-	private Topic topic;
-	private String topicName;
 	
-	public TopicSender(String topicName) {
-		this.topicName = topicName;
+	public TopicSender() {
+
 	}
 	
-	public void sendMessage(String messageType, MessageInformation messageInformation) {
+	public void sendMessage(MessageEnvelope messageEnvelope) {
 		try {
 			RequestSerializer requestSerializer = RequestSerializer.getInstance();
-			String content = requestSerializer.serialize(messageInformation);
+			String content = requestSerializer.serialize(messageEnvelope.getMessageInformation());
 			TextMessage textMessage = session.createTextMessage(content);
-			textMessage.setJMSType(messageType);
-			publisher.send(textMessage);
+			textMessage.setJMSType(messageEnvelope.getMessageType());
+			Topic topic = session.createTopic(messageEnvelope.getTopicName());
+			publisher = session.createProducer(topic);
+			publisher.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+			publisher.send(topic, textMessage);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
@@ -39,9 +41,6 @@ public class TopicSender {
 	public void setup() {
 		try {
 			session = ServerConnection.getInstance().getSession();
-			topic = session.createTopic(topicName);
-			publisher = session.createProducer(topic);
-			publisher.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}

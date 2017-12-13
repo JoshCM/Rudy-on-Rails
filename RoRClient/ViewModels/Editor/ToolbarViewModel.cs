@@ -31,6 +31,7 @@ namespace RoRClient.ViewModels.Editor
             toolItems.Add(new ToolItem("railcurve_sw", imageFolderPath + "railcurve_sw.png"));
             toolItems.Add(new ToolItem("railcurve_ne", imageFolderPath + "railcurve_ne.png"));
             toolItems.Add(new ToolItem("railcurve_nw", imageFolderPath + "railcurve_nw.png"));
+            selectedTool = toolItems[0];
         }
 
         /// <summary>
@@ -44,7 +45,10 @@ namespace RoRClient.ViewModels.Editor
             string[] files = Directory.GetFiles(path);
             foreach (string file in files)
             {
-                toolItems.Add(new ToolItem(Path.GetFileName(file).TrimEnd(".png".ToCharArray()), file));
+                if (file.EndsWith(".png"))
+                {
+                    toolItems.Add(new ToolItem(Path.GetFileName(file).TrimEnd(".png".ToCharArray()), file));
+                }
             }
         }
 
