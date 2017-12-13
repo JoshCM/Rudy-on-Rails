@@ -22,6 +22,12 @@ public abstract class ModelBase extends Observable implements Model{
 		this.id = UUID.randomUUID();
 		this.sessionName = sessionName;
 	}
+	
+	public ModelBase(String sessionName, UUID id) {
+		this.addObserver(MessageQueue.getInstance());
+		this.id = id;
+		this.sessionName = sessionName;
+	}
 
 	public UUID getId() {
 		return id;

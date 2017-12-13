@@ -1,14 +1,15 @@
 package models.game;
 
 import java.util.List;
+import java.util.UUID;
 
 import communication.MessageInformation;
 
 public class Trainstation extends InteractiveGameObject implements PlaceableOnSquare {
 
 	private List<Rail> trainstationRails;
-	public Trainstation(String sessionName, Square square, List<Rail> trainstationRails) {
-		super(sessionName, square);
+	public Trainstation(String sessionName, Square square, List<Rail> trainstationRails, UUID id) {
+		super(sessionName, square, id);
 		this.trainstationRails = trainstationRails;
 		
 		notifyCreatedTrainstation();

@@ -2,6 +2,7 @@ package commands.editor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import commands.base.CommandBase;
 import communication.MessageInformation;
@@ -42,14 +43,18 @@ public class CreateTrainstationCommand extends CommandBase {
 			Square squareMid = map.getSquare(square.getXIndex() + 1, square.getYIndex());
 			Square squareBottom = map.getSquare(square.getXIndex() + 1, square.getYIndex() + 1);
 
+			UUID trainstationId = UUID.randomUUID();
 			// Rails werden erstellt und auf die jeweiligen Squares gesetzt
 			Rail railTop = new Rail(session.getName(), squareTop, railSectionPositionNode1, railSectionPositionNode2);
 			squareTop.setPlaceable(railTop);
+			railTop.setTrainstationId(trainstationId);
 			Rail railMid = new Rail(session.getName(), squareMid, railSectionPositionNode1, railSectionPositionNode2);
 			squareMid.setPlaceable(railMid);
+			railMid.setTrainstationId(trainstationId);
 			Rail railBottom = new Rail(session.getName(), squareBottom, railSectionPositionNode1,
 					railSectionPositionNode2);
 			squareBottom.setPlaceable(railBottom);
+			railBottom.setTrainstationId(trainstationId);
 
 			// Liste der Rails wird gefüllt
 			List<Rail> trainstationRails = new ArrayList<Rail>();
@@ -58,7 +63,7 @@ public class CreateTrainstationCommand extends CommandBase {
 			trainstationRails.add(railBottom);
 			
 			// Trainstation wird erzeugt und auf Square gesetzt
-			Trainstation trainstation = new Trainstation(session.getName(), square, trainstationRails);
+			Trainstation trainstation = new Trainstation(session.getName(), square, trainstationRails, trainstationId);
 			square.setPlaceable(trainstation);
 		}
 	}
