@@ -8,6 +8,8 @@
         xmlns:ve ="clr-namespace:RoRClient.Views.Editor"
         xmlns:vl ="clr-namespace:RoRClient.Views.Lobby"
         xmlns:vml="clr-namespace:RoRClient.ViewModels.Lobby"
+        xmlns:vmg="clr-namespace:RoRClient.ViewModels.Game"
+        xmlns:vg ="clr-namespace:RoRClient.Views.Game"
         mc:Ignorable="d"
         Title="MainView" Height="350" Width="525">
     <Window.DataContext>
@@ -19,6 +21,9 @@
         </DataTemplate>
         <DataTemplate x:Name="StartTemplate" DataType="{x:Type vml:StartViewModel}">
             <vl:StartView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="GameTemplate" DataType="{x:Type vmg:GameViewModel}">
+            <vg:GameUserControl DataContext="{Binding}"/>
         </DataTemplate>
     </Window.Resources>
 
