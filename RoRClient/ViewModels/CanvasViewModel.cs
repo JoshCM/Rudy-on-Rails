@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RoRClient.ViewModels.Commands;
+using System;
+using System.Windows.Input;
 
 namespace RoRClient.ViewModels
 {
@@ -56,6 +58,26 @@ namespace RoRClient.ViewModels
                     OnPropertyChanged("SquarePosY");
                 }
             }
+        }
+
+        // Auswählen/Selektieren von ViewModels
+        private ICommand selectInteractiveGameObjectCommand;
+        public ICommand SelectInteractiveGameObjectCommand
+        {
+            get
+            {
+                if (selectInteractiveGameObjectCommand == null)
+                {
+                    selectInteractiveGameObjectCommand = new ActionCommand(param => SelectInteractiveGameObject());
+                }
+                return selectInteractiveGameObjectCommand;
+            }
+        }
+
+        // EditorObject (Rail etc.) ausgewählt
+        public void SelectInteractiveGameObject()
+        {
+            Console.WriteLine("Selected ViewModel: " + this.ToString() + " / ID: " +  this.Id);
         }
     }
 }

@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="RoRClient.Views.Game.GameUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:game="clr-namespace:RoRClient.Views.Game"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" Background="Gray">
+
+    <Grid x:Name="ContentGrid" Margin="1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="200" />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+        </Grid.ColumnDefinitions>
+
+
+        <game:GameStatusUserControl Grid.Row="0"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="1"/>
+
+        <game:GameMapUserControl Grid.Row="1"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="1"/>
+
+
+        <game:GameMenuUserControl Grid.Row="2"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="1"/>
+        <Border BorderBrush="Black" BorderThickness="2" Height="300" Grid.RowSpan="3" Width="300"/>
+        <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" Height="203" VerticalAlignment="Top" Width="300" Grid.Row="1" Grid.RowSpan="2"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="80" VerticalAlignment="Top" Width="100" Grid.Row="2"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="80" VerticalAlignment="Top" Width="102" Margin="100,0,0,0" Grid.Row="2"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="80" VerticalAlignment="Top" Width="98" Margin="202,0,0,0" Grid.Row="2"/>
+
+
+        <!-- <game:GameStatusUserControl Content="Dock=Status" DockPanel.Dock="Top" /> 
+         
+        <UserControl Content="Dock=Map" DockPanel.Dock="Bottom" />
+        <UserControl Content="Menu=True" />-->
+
+
+    </Grid>
+</UserControl>

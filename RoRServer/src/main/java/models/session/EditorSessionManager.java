@@ -27,7 +27,7 @@ public class EditorSessionManager {
      */
     public EditorSession createNewEditorSession(String editorName){
         EditorSession editorSession = new EditorSession(editorName);
-        editorSessionMap.put(editorSession.getMap().getId(), editorSession);
+        editorSessionMap.put(UUID.randomUUID(), editorSession);
         return editorSession;
     }
     /**
@@ -35,7 +35,7 @@ public class EditorSessionManager {
      * @param editorSession
      */
     public void removeEditorSession(EditorSession editorSession){
-        editorSessionMap.remove(editorSession.getMap().getId());
+        editorSessionMap.remove(UUID.randomUUID());
     }
     
     //aktuell wird immer die erste EditorSession in der HashMap zurueckgegeben

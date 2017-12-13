@@ -18,7 +18,7 @@ namespace RoRClient.Communication.Dispatcher
 
         public void handleCreateEditorSession(MessageInformation messageInformation)
         {
-            GameSession editorSession = GameSession.GetInstance();
+            EditorSession editorSession = EditorSession.GetInstance();
             editorSession.Name = messageInformation.GetValueAsString("editorName");
             editorSession.Init(messageInformation.GetValueAsString("topicName"));
 
@@ -31,7 +31,7 @@ namespace RoRClient.Communication.Dispatcher
 
         public void handleJoinEditorSession(MessageInformation messageInformation)
         {
-            GameSession editorSession = GameSession.GetInstance();
+            EditorSession editorSession = EditorSession.GetInstance();
             string editorName = messageInformation.GetValueAsString("editorName");
             editorSession.Name = editorName;
             string topicName = messageInformation.GetValueAsString("topicName");
