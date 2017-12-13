@@ -29,23 +29,5 @@ namespace RoRClient.ViewModels.Editor
                 return rail;
             }
         }
-
-        private ICommand selectRailCommand;
-        public ICommand SelectRailCommand
-        {
-            get
-            {
-                if (selectRailCommand == null)
-                {
-                    selectRailCommand = new ActionCommand(param => SelectRail());
-                }
-                return selectRailCommand;
-            }
-        }
-
-        private void SelectRail()
-        {
-            Console.WriteLine("Rail selected");
-        }
     }
 }

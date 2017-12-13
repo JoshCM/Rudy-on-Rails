@@ -14,13 +14,21 @@
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=railUserControl}"
             Height="{Binding SquareDim, ElementName=railUserControl}">
-        <Rectangle
-            Width="{Binding SquareDim, ElementName=railUserControl}"
-            Height="{Binding SquareDim, ElementName=railUserControl}">
-            <Rectangle.InputBindings>
-                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectRailCommand}"></MouseBinding>
-            </Rectangle.InputBindings>
-        </Rectangle>
-        <Image Width="{Binding SquareDim, ElementName=railUserControl}" Height="{Binding SquareDim, ElementName=railUserControl}" Source="{Binding Rail.Section1, Mode=OneWay, Converter={StaticResource RailSectionToImagePathConverter}}"/>
+        <Image Width="{Binding SquareDim, ElementName=railUserControl}" 
+               Height="{Binding SquareDim, ElementName=railUserControl}" 
+               Source="{Binding Rail.Section1, Mode=OneWay, Converter={StaticResource RailSectionToImagePathConverter}}">
+            <Image.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+            </Image.InputBindings>
+            <Image.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="Cut">
+                        <MenuItem.Icon>
+                            <Image Source="https://d30y9cdsu7xlg0.cloudfront.net/png/8336-200.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </Image.ContextMenu>
+        </Image>
     </Canvas>
 </v:CanvasUserControl>
