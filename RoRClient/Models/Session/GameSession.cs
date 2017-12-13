@@ -10,13 +10,13 @@ namespace RoRClient.Models.Session
 {
     public class GameSession : RoRSession
     {
-        private GameSession session = null;
+        private static GameSession session = null;
         private GameSession() : base()
         {
             
         }
 
-        public GameSession getInstance()
+        public static GameSession GetInstance()
         {
             if (session == null)
             {
