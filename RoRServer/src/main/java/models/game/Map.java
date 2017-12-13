@@ -44,7 +44,7 @@ public class Map extends ModelBase {
 	
 	private void notifyChangedName() {
 		MessageInformation messageInformation = new MessageInformation("UpdateNameOfMap");
-		messageInformation.putValue("name", name);
+		messageInformation.putValue("mapName", name);
 		notifyChange(messageInformation);
 	}
 	

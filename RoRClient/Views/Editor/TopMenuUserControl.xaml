@@ -19,8 +19,8 @@
             <Separator />
             <MenuItem Header="_Open..." />
             <Separator />
-            <MenuItem Header="_Save" />
-            <MenuItem Header="_Save As..." />
+            <MenuItem Header="_Save" Command="{Binding SaveMapCommand}"/>
+            <MenuItem Header="_Save As..." Command="{Binding SaveNewMapCommand}"/>
             <Separator />
             <MenuItem Header="_Exit" Command="{x:Static cmd:EditorCommands.Exit}" />
         </MenuItem>

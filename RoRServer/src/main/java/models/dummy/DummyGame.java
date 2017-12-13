@@ -23,14 +23,6 @@ public class DummyGame {
 		this.map = map;
 	}
 	
-	public void saveMap(String mapName){
-		MapManager.saveMap(map, mapName);
-	}
-	
-	public void loadMap(String mapName){
-		map = MapManager.loadMap(mapName);
-	}
-	
 	public Map getMap() {
 		return map;
 	}

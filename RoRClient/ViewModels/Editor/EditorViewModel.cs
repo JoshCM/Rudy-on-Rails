@@ -43,6 +43,7 @@ namespace RoRClient.ViewModels.Editor
             this.uiState = uiState;
             toolbarViewModel = new ToolbarViewModel();
             mapViewModel = new MapViewModel(toolbarViewModel);
+            topMenuViewModel = new TopMenuViewModel();
         }
     }
 }

@@ -25,6 +25,32 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
+        private ICommand saveMapCommand;
+        public ICommand SaveMapCommand
+        {
+            get
+            {
+                if (saveMapCommand == null)
+                {
+                    saveMapCommand = new ActionCommand(param => SendSaveMapMessage());
+                }
+                return saveMapCommand;
+            }
+        }
+
+        private void SaveMap()
+        {
+            if(EditorSession.GetInstance().Map.Name == "")
+            {
+                // ToDo: Hier sollte ein Name abgefragt werden!
+                SendSaveNewMapMessage();
+            }
+            else
+            {
+                SendSaveMapMessage();
+            }
+        }
+
         private void SendSaveNewMapMessage()
         {
             // ToDo: Wo kommt der Name her?
@@ -34,6 +60,12 @@ namespace RoRClient.ViewModels.Editor
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("name", newMapName);
             editorSession.QueueSender.SendMessage("SaveNewMap", messageInformation);
+        }
+
+        private void SendSaveMapMessage()
+        {
+            EditorSession editorSession = EditorSession.GetInstance();
+            editorSession.QueueSender.SendMessage("SaveMap", new MessageInformation());
         }
     }
 }

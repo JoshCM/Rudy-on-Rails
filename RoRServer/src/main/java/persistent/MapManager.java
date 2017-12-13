@@ -91,10 +91,10 @@ public class MapManager {
 	 * @param mapName:
 	 *            Der Name der Map für das Dateisystem
 	 */
-	public static void saveMap(Map map, String mapName) {
+	public static void saveMap(Map map) {
 		String jsonMap = convertMapToJson(map);
 		log.info("Gespeicherte Map: " + jsonMap);
-		saveToFile(jsonMap, mapName);
+		saveToFile(jsonMap, map.getName());
 	}
 
 	public static String convertMapToJson(Map map) {
