@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <Button Grid.Row="0" x:Name="editorButton" Command="{Binding CreateEditorSessionCommand}" Content="Hier gehts zum Editor"/>
         <!-- Binding muss noch eingerichtet werden -->
-        <Button Grid.Row="1" x:Name="gameButton" Command="{Binding StartToGameCommand}" Content="Hier gehts zum Dampf-Modus"/>
+        <Button Grid.Row="1" x:Name="gameButton" Command="{Binding CreateGameSessionCommand}" Content="Hier gehts zum Dampf-Modus"/>
     </Grid>
 
 </UserControl>
