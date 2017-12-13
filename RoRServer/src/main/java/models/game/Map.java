@@ -11,6 +11,7 @@ import java.util.Arrays;
  * Klasse, die das Spielfeld darstellt und aus Feldern (Squares) besteht
  */
 public class Map extends ModelBase {
+	private String name;
 	private Square squares [][];
 	private final int mapSize = 50;
 	
@@ -28,6 +29,16 @@ public class Map extends ModelBase {
 				squares[i][j] = s;
 			}
 		}
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void ChangeName(String name) {
+		this.name = name;
+		
+		
 	}
 	
 	public Square getSquare(int i, int j) {

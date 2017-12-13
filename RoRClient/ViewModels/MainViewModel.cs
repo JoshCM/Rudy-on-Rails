@@ -28,6 +28,7 @@ namespace RoRClient.ViewModels
         {
             CurrentViewModel = viewmodels[args.Statename];
         }
+
         public MainViewModel()
         {
             viewmodels.Add("start", new StartViewModel(uiState));

@@ -6,11 +6,11 @@
              xmlns:cmd="clr-namespace:RoRClient.ViewModels.Commands"
              mc:Ignorable="d" 
              HorizontalAlignment="Stretch"
-	VerticalAlignment="Stretch"
-	HorizontalContentAlignment="Stretch"
-	VerticalContentAlignment="Stretch"
-    Height="auto"
-    Width="auto"
+             VerticalAlignment="Stretch"
+             HorizontalContentAlignment="Stretch"
+             VerticalContentAlignment="Stretch"
+             Height="auto"
+             Width="auto"
              d:DesignWidth="1920"
              Background="Aquamarine">
     <Menu IsMainMenu="True">
@@ -31,5 +31,4 @@
         <MenuItem Header="_Hier könnte Ihre Werbung stehen" />
         <MenuItem Header="_Eigener Exit Button" Command="{x:Static cmd:EditorCommands.Exit}" />
     </Menu>
-
 </UserControl>

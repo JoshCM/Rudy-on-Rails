@@ -30,7 +30,8 @@
         <!-- Menü oben -->
         <editor:TopMenuUserControl Grid.Row="0"
                                    Grid.Column="0"
-                                   Grid.ColumnSpan="3"/>
+                                   Grid.ColumnSpan="3"
+                                   DataContext="{Binding TopMenuViewModel}"/>
 
         <!-- Darstellung der Map -->
         <editor:MapUserControl Grid.Row="1"

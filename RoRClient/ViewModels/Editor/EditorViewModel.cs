@@ -12,6 +12,7 @@ namespace RoRClient.ViewModels.Editor
         private UIState uiState;
         private MapViewModel mapViewModel;
         private ToolbarViewModel toolbarViewModel;
+        private TopMenuViewModel topMenuViewModel;
 
         public MapViewModel MapViewModel
         {
@@ -26,6 +27,14 @@ namespace RoRClient.ViewModels.Editor
             get
             {
                 return toolbarViewModel;
+            }
+        }
+
+        public TopMenuViewModel TopMenuViewModel
+        {
+            get
+            {
+                return topMenuViewModel;
             }
         }
 
