@@ -15,8 +15,9 @@ public class Loco extends InteractiveGameObject implements PlaceableOnRail  {
 	 * Konstruktor
 	 * @param square auf dem die Lok steht wird mitgegeben
 	 */
-	public Loco(Square square) {
-		super(square);
+
+	public Loco(String sessionName, Square square) {
+		super(sessionName,square);
 		this.setCarts(new ArrayList<Cart>());
 	}
 
