@@ -1,11 +1,13 @@
 package communication.topic;
 
+import java.util.Observable;
+import java.util.Observer;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import communication.MessageEnvelope;
 import communication.MessageInformation;
 
-public class MessageQueue {
+public class MessageQueue implements Observer {
 	private TopicSender topicSender;
 	private Thread sendMessageThread;
 	private ConcurrentLinkedQueue<MessageEnvelope> messagesToSendQueue = new ConcurrentLinkedQueue<>();
@@ -28,7 +30,7 @@ public class MessageQueue {
 		startSendMessageThread();
 	}
 	
-	public void addMessage(MessageEnvelope messageEnvelope) {
+	private void addMessage(MessageEnvelope messageEnvelope) {
 		if(messageEnvelope != null) {
 			messagesToSendQueue.add(messageEnvelope);
 		}
@@ -64,5 +66,11 @@ public class MessageQueue {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		MessageEnvelope messageEnvelope = (MessageEnvelope) arg;
+		addMessage(messageEnvelope);
 	}
 }

@@ -1,5 +1,6 @@
 package models.base;
 
+import java.util.Observable;
 import java.util.UUID;
 
 import communication.MessageEnvelope;
@@ -12,11 +13,12 @@ import models.session.RoRSession;
  * RoRSession kennen Die RoRSession wird aktuell gebraucht, damit die Models
  * Änderungen an den Client geben können über die Methode addMessage()
  */
-public abstract class ModelBase implements Model {
+public abstract class ModelBase extends Observable implements Model{
 	private UUID id;
 	private String sessionName;
 
 	public ModelBase(String sessionName) {
+		this.addObserver(MessageQueue.getInstance());
 		this.id = UUID.randomUUID();
 		this.sessionName = sessionName;
 	}
@@ -31,9 +33,11 @@ public abstract class ModelBase implements Model {
 	 * 
 	 * @param messageInformation
 	 */
-	protected void addMessage(MessageInformation messageInformation) {
+	protected void notifyChange(MessageInformation messageInformation) {
 		MessageEnvelope messageEnvelope = new MessageEnvelope(sessionName, messageInformation.getMessageType(),
 				messageInformation);
-		MessageQueue.getInstance().addMessage(messageEnvelope);
+		
+		setChanged();
+		notifyObservers(messageEnvelope);
 	}
 }
