@@ -19,17 +19,21 @@
                Source="{Binding Rail.Section1, Mode=OneWay, Converter={StaticResource RailSectionToImagePathConverter}}">
             <Image.InputBindings>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding ShowQuickNavigationCommand}"></MouseBinding>
             </Image.InputBindings>
         </Image>
-        <Popup Name="quickNavigation" Placement="Mouse">
+        <Popup Name="quickNavigation" Placement="Mouse" >
             <StackPanel Orientation="Horizontal" >
-                <Button Click="Hide_Click">
-                    <Image Source="/RoRClient;component/Resources/Images/rotate_right.png" ></Image>
+                <Button Margin="5">
+                    <Image Source="/RoRClient;component/Resources/Images/rotate_right.png" Height="260" Width="260"></Image>
                 </Button>
-                <Button Click="Hide_Click">
-                    <Image Source="/RoRClient;component/Resources/Images/rotate_left.png" Height="282" Width="270"></Image>
+                <Button Margin="5">
+                    <Image Source="/RoRClient;component/Resources/Images/rotate_left.png" Height="260" Width="260"></Image>
                 </Button>
-               
+                <Button Margin="5">
+                    <Image Source="/RoRClient;component/Resources/Images/delete.png" Height="260" Width="260" ></Image>
+                </Button>
+
             </StackPanel>
         </Popup>
     </Canvas>

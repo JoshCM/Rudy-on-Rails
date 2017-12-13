@@ -79,5 +79,25 @@ namespace RoRClient.ViewModels
         {
             Console.WriteLine("Selected ViewModel: " + this.ToString() + " / ID: " +  this.Id);
         }
+
+        // Quicknavigation
+        private ICommand showQuickNavigationCommand;
+        public ICommand ShowQuickNavigationCommand
+        {
+            get {
+                if (showQuickNavigationCommand == null)
+                {
+                    showQuickNavigationCommand = new ActionCommand(param => ShowQuickNavigation());
+                }
+                return showQuickNavigationCommand;
+            }
+        }
+
+        private void ShowQuickNavigation()
+        {
+            Console.WriteLine("Quicknavigation");
+        }
+
+
     }
 }
