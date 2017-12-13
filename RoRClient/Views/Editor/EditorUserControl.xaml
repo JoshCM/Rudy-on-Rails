@@ -11,6 +11,9 @@
              VerticalContentAlignment="Stretch"
              d:DesignHeight="1050" d:DesignWidth="1680"
              >
+    <UserControl.InputBindings>
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding TopMenuViewModel.SaveMapCommand}"/>
+    </UserControl.InputBindings>
     
     <Grid x:Name="ContentGrid">
         <Grid.RowDefinitions>
@@ -25,7 +28,6 @@
             <ColumnDefinition Width="10*" />
             <ColumnDefinition Width="0" />
         </Grid.ColumnDefinitions>
-
 
         <!-- Menü oben -->
         <editor:TopMenuUserControl Grid.Row="0"

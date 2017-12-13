@@ -4,15 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RoRClient.Views.Popup"
-        x:Name="thisPopup"
-        mc:Ignorable="d"
-        Title="AskUserForStringPopup" Height="150" Width="300">
-    <DockPanel Margin="15" >
-        <TextBlock Text="{Binding Message, Mode=TwoWay, ElementName=thisPopup}" Padding="5" DockPanel.Dock="Top"/>
-        <TextBox x:Name="ResponseTextBox" Text="{Binding InputText, Mode=TwoWay, ElementName=thisPopup}" DockPanel.Dock="Top"/>
+        x:Name="ThisPopup"
+        mc:Ignorable="d" WindowStyle="None"
+        Title="AskUserForStringPopup" Height="120" Width="300" 
+        FocusManager.FocusedElement="{Binding ElementName=ResponseTextBox}"
+        KeyDown="ThisPopup_KeyDown">
+    <StackPanel Margin="15" >
+        <TextBlock Text="{Binding Message, Mode=TwoWay, ElementName=ThisPopup}" Padding="5"/>
+        <TextBox x:Name="ResponseTextBox" Text="{Binding InputText, Mode=TwoWay, ElementName=ThisPopup}" />
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
             <Button Content="Speichern" Click="OkButton_Click"/>
             <Button Content="Abbrechen" Click="CancelButton_Click"/>
         </StackPanel>
-    </DockPanel>
+    </StackPanel>
 </Window>
