@@ -1,6 +1,7 @@
 package commands.editor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import models.session.RoRSession;
 public class CreateTrainstationCommand extends CommandBase {
 	private int xPos;
 	private int yPos;
+	private final static int TRAINSTATION_MARGIN = 1;
 
 	public CreateTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
@@ -30,56 +32,62 @@ public class CreateTrainstationCommand extends CommandBase {
 	public void execute() {
 		EditorSession editorSession = (EditorSession) session;
 		Map map = editorSession.getMap();
-		Square square = map.getSquare(xPos, yPos);
+		Square trainstationSquare = map.getSquare(xPos, yPos);
 
-		if (!validate(map, square)) {
+		if (!validate(map, trainstationSquare)) {
 			throw new InvalidModelOperationException("Trainstation konnte nicht angelegt werden");
 		} else {
-			// TODO: das geht noch schöner (besser ausgelagert)
-			// Railsection und Squares werden als Variable gehalten
-			RailSectionPosition railSectionPositionNode1 = RailSectionPosition.NORTH;
-			RailSectionPosition railSectionPositionNode2 = RailSectionPosition.SOUTH;
-			Square squareTop = map.getSquare(square.getXIndex() + 1, square.getYIndex() - 1);
-			Square squareMid = map.getSquare(square.getXIndex() + 1, square.getYIndex());
-			Square squareBottom = map.getSquare(square.getXIndex() + 1, square.getYIndex() + 1);
-
+			// generiere UUID für Trainstation
 			UUID trainstationId = UUID.randomUUID();
-			// Rails werden erstellt und auf die jeweiligen Squares gesetzt
-			Rail railTop = new Rail(session.getName(), squareTop, railSectionPositionNode1, railSectionPositionNode2);
-			squareTop.setPlaceable(railTop);
-			railTop.setTrainstationId(trainstationId);
-			Rail railMid = new Rail(session.getName(), squareMid, railSectionPositionNode1, railSectionPositionNode2);
-			squareMid.setPlaceable(railMid);
-			railMid.setTrainstationId(trainstationId);
-			Rail railBottom = new Rail(session.getName(), squareBottom, railSectionPositionNode1,
-					railSectionPositionNode2);
-			squareBottom.setPlaceable(railBottom);
-			railBottom.setTrainstationId(trainstationId);
-
-			// Liste der Rails wird gefüllt
-			List<Rail> trainstationRails = new ArrayList<Rail>();
-			trainstationRails.add(railTop);
-			trainstationRails.add(railMid);
-			trainstationRails.add(railBottom);
-			
 			// Trainstation wird erzeugt und auf Square gesetzt
-			Trainstation trainstation = new Trainstation(session.getName(), square, trainstationRails, trainstationId);
-			square.setPlaceable(trainstation);
+			Trainstation trainstation = new Trainstation(session.getName(), trainstationSquare, createTrainstationRails(map, trainstationSquare, trainstationId), trainstationId);
+			trainstationSquare.setPlaceable(trainstation);
 		}
+	}
+
+	private List<Rail> createTrainstationRails(Map map, Square square, UUID trainstationId) {
+		List<Rail> trainstationRails = new ArrayList<Rail>();
+
+		// Railsection werden erstellt
+		RailSectionPosition railSectionPositionNode1 = RailSectionPosition.NORTH;
+		RailSectionPosition railSectionPositionNode2 = RailSectionPosition.SOUTH;
+		
+		// Squares für die Rails der Trainstation werden erstellt
+		Square squareTop = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN,
+				square.getYIndex() - TRAINSTATION_MARGIN);
+		Square squareMid = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN, square.getYIndex());
+		Square squareBottom = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN,
+				square.getYIndex() + TRAINSTATION_MARGIN);
+		
+		// Squares werden in eine Liste geschrieben
+		List<Square> trainstationRailSquares = Arrays.asList(squareTop, squareMid, squareBottom);
+
+		// Rails werden erstellt und auf die jeweiligen Squares gesetzt
+		for(int i = 0; i < 3; i++) {
+			Square trainstationRailSquare = trainstationRailSquares.get(i);
+			Rail rail = new Rail(session.getName(), trainstationRailSquare, railSectionPositionNode1, railSectionPositionNode2);
+			trainstationRailSquare.setPlaceable(rail);
+			rail.setTrainstationId(trainstationId);
+			trainstationRails.add(rail);
+		}
+		
+		return trainstationRails;
 	}
 
 	private boolean validate(Map map, Square square) {
 		// Square für Trainstation ist vorhanden
 		if (square != null) {
-			// Square für Trainstation ist belegt 
+			// Square für Trainstation ist belegt
 			if (square.getPlaceableOnSquare() != null) {
 				return false;
 			}
 		} else {
 			return false;
 		}
-		// Square für Trainstation ist weit genug weg vom oberen, unteren und rechten Rand
-		if (square.getYIndex() > 0 && square.getYIndex() < map.getSquares().length - 1 && square.getXIndex() < map.getSquares().length - 1) {
+		// Square für Trainstation ist weit genug weg vom oberen, unteren und rechten
+		// Rand
+		if (square.getYIndex() > 0 && square.getYIndex() < map.getSquares().length - 1
+				&& square.getXIndex() < map.getSquares().length - 1) {
 			// Iteriert über die Squares für die möglichen Rails der Trainstation
 			for (int i = -1; i <= 1; i++) {
 				Square possibleRailSquare = map.getSquare(square.getXIndex() + 1, square.getYIndex() + i);
@@ -93,7 +101,7 @@ public class CreateTrainstationCommand extends CommandBase {
 					return false;
 				}
 			}
-		}else {
+		} else {
 			return false;
 		}
 		return true;

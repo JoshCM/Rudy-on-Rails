@@ -119,6 +119,7 @@
     <Compile Include="Models\Base\IModel.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
     <Compile Include="Models\Game\Player.cs" />
+    <Compile Include="Models\Game\Trainstation.cs" />
     <Compile Include="Models\Session\EditorSession.cs" />
     <Compile Include="Models\Session\GameSession.cs" />
     <Compile Include="Models\Session\RoRSession.cs" />
@@ -281,6 +282,7 @@
     <Resource Include="Resources\Images\Tools\railcurve_nw.png" />
     <Resource Include="Resources\Images\Tools\railcurve_se.png" />
     <Resource Include="Resources\Images\dummy.png" />
+    <Resource Include="Resources\Images\Tools\trainstation_building.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

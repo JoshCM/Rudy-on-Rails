@@ -23,6 +23,7 @@ public abstract class ModelBase extends Observable implements Model{
 		this.sessionName = sessionName;
 	}
 	
+	// Konstruktur um eine vordefinierte UUID zu setzen
 	public ModelBase(String sessionName, UUID id) {
 		this.addObserver(MessageQueue.getInstance());
 		this.id = id;
