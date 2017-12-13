@@ -6,7 +6,6 @@ import models.game.Loco;
 import models.game.Map;
 import models.game.Rail;
 import models.game.Square;
-import models.session.EditorSession;
 import models.session.GameSession;
 import models.session.RoRSession;
 

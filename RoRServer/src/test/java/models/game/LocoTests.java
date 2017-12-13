@@ -1,7 +1,6 @@
 package models.game;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.UUID;
 
@@ -13,6 +12,9 @@ import models.session.GameSessionManager;
 
 public class LocoTests {
 	
+	/**
+	 * Besitzt die erzeugte Loco initial ein Cart?
+	 */
 	@Test
 	public void LocoHasInitialCart() {
 		int squarePosX = 0;
@@ -25,9 +27,11 @@ public class LocoTests {
 		
 		assertEquals(1, loco.getCarts().size());
 
-	
 	}
 	
+	/**
+	 * Findet die Loco die Rail, auf der sie steht?
+	 */
 	@Test
 	public void LocoFindsRailItStandsOn() {
 		int squarePosX = 0;

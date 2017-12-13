@@ -7,7 +7,7 @@ import communication.MessageInformation;
 /**
  * 
  * @author Isabel Rott, Michelle Le
- * Klasse für eine Lok, zu der eine Reihe von Wagons gehoert
+ * Klasse fuer eine Lok, zu der eine Liste von Carts gehoert
  */
 public class Loco extends InteractiveGameObject implements PlaceableOnRail  {
 
@@ -15,10 +15,9 @@ public class Loco extends InteractiveGameObject implements PlaceableOnRail  {
 	private Rail rail;
 	
 	/**
-	 * Konstruktor
+	 * Konstruktor einer Lok
 	 * @param square auf dem die Lok steht wird mitgegeben
 	 */
-
 	public Loco(String sessionName, Square square) {
 		super(sessionName,square);
 		this.setCarts(new ArrayList<Cart>());
@@ -30,10 +29,15 @@ public class Loco extends InteractiveGameObject implements PlaceableOnRail  {
 		SendCreatedLocoMessage();
 	}
 
+	/**
+	 * Fuege Carts zur Liste der Loco hinzu
+	 * @param cart
+	 */
 	public void addCart(Cart cart) {
 		this.carts.add(cart);
 		
 	}
+	
 	public ArrayList<Cart> getCarts() {
 		return carts;
 	}
@@ -42,6 +46,10 @@ public class Loco extends InteractiveGameObject implements PlaceableOnRail  {
 		this.carts = carts;
 	}
 
+	/**
+	 * Finde die Rail, auf der die Loco steht
+	 * @return rail
+	 */
 	public Rail getRail() {
 		return this.rail;
 	}
