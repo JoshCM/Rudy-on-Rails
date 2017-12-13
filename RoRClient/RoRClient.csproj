@@ -129,6 +129,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\Game\GameViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

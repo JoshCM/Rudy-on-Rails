@@ -20,16 +20,16 @@ namespace RoRClient.ViewModels.Lobby
             lobbyModel.PropertyChanged += OnClientModelChanged;
         }
 
-        private ICommand start2EditorCmd;
-        public ICommand StartToEditorCommand
+        private ICommand start2GameCmd;
+        public ICommand StartToGameCommand
         {
             get
             {
-                if (start2EditorCmd == null)
+                if (start2GameCmd == null)
                 {
-                    start2EditorCmd = new ActionCommand(e => { uiState.State = "editor"; });
+                    start2GameCmd = new ActionCommand(e => { uiState.State = "game"; });
                 }
-                return start2EditorCmd;
+                return start2GameCmd;
             }
         }
 
