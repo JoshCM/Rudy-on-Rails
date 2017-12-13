@@ -1,5 +1,10 @@
 package models.session;
 
-public class Ticker {
+import java.util.Observable;
 
+public class Ticker extends Observable{
+	public void tick(long timeDelta){
+		setChanged();
+		notifyObservers(timeDelta);
+	}
 }

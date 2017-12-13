@@ -20,19 +20,21 @@ public class Loco extends TickableGameObject implements PlaceableOnRail  {
 		super(sessionName,square);
 		this.setCarts(new ArrayList<Cart>());
 	}
-
+	
+	@Override
+	public void specificUpdate() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	//Getter und Setter
 	public ArrayList<Cart> getCarts() {
 		return carts;
 	}
 
 	public void setCarts(ArrayList<Cart> carts) {
 		this.carts = carts;
-	}
-
-	@Override
-	public void specificUpdate() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
