@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RoRClient.Views.Game"
         mc:Ignorable="d"
         Title="Window1" Height="900" Width="1600">
- 
+    <!-- ToDo: DELETE Wofür gibt's das Window hier? -->
     <Grid>
         <local:GameUserControl />
         

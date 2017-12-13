@@ -47,7 +47,8 @@
 
 
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="5">
-            <!--<Button DockPanel.Dock="Top" x:Name="button2" Content="Go to Editor View" Click="go_to_Editor"/>-->
+            <!-- TODO: Kann das hier weg!?
+            <Button DockPanel.Dock="Top" x:Name="button2" Content="Go to Editor View" Click="go_to_Editor"/>-->
             <ContentControl Content="{Binding CurrentViewModel}"/>
         </Grid>
 

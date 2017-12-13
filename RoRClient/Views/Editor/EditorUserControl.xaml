@@ -9,9 +9,8 @@
              VerticalAlignment="Stretch"
              HorizontalContentAlignment="Stretch"
              VerticalContentAlignment="Stretch"
-             d:DesignHeight="1050" d:DesignWidth="1680"
-             >
-    
+             d:DesignHeight="1050" d:DesignWidth="1680">
+
     <Grid x:Name="ContentGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -30,23 +29,24 @@
         <!-- Menü oben -->
         <editor:TopMenuUserControl Grid.Row="0"
                                    Grid.Column="0"
-                                   Grid.ColumnSpan="3"/>
+                                   Grid.ColumnSpan="3" />
 
         <!-- Darstellung der Map -->
         <editor:MapUserControl Grid.Row="1"
                                Grid.Column="1"
                                Grid.ColumnSpan="2"
                                Grid.RowSpan="2"
-                               DataContext="{Binding MapViewModel}"/>
+                               DataContext="{Binding MapViewModel}" />
 
         <!-- Werkzeugleiste -->
-        <editor:ToolbarUserControl DataContext="{Binding ToolbarViewModel}" x:Name="ToolbarUserControlName" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"/>
+        <editor:ToolbarUserControl DataContext="{Binding ToolbarViewModel}" x:Name="ToolbarUserControlName"
+                                   Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" />
 
         <Grid Grid.Row="3"
               Grid.Column="0"
               Background="Violet">
             <!--Aktives Werkzeug -->
-            <editor:SelectedToolUserControl/>
+            <editor:SelectedToolUserControl />
         </Grid>
 
         <Grid Grid.Row="3"

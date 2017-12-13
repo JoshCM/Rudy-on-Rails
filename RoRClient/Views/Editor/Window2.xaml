@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RoRClient.Views.Editor"
         mc:Ignorable="d"
-        Title="Window2" Height="300" Width="300">
+        Title="Window2" Height="900" Width="1600">
+    <!-- ToDo: Wofür gibt's das Window hier? -->
     <Grid>
         <local:EditorUserControl />
     </Grid>

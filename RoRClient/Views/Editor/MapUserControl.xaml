@@ -8,13 +8,14 @@
         xmlns:m="clr-namespace:RoRClient.Models.Game"
 		x:Name="mapUserControl"
         xmlns:converter="clr-namespace:RoRClient.BindingConverter"
-        mc:Ignorable="d">
+        mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="1200">
 
 	<UserControl.Resources>
         <converter:ObjectIsNullToBoolConverter  x:Key="ObjectIsNullToBoolConverter"/>
     </UserControl.Resources>
 
 	<DockPanel>
+        <!-- ToDo: TestButton entfernen!? -->
         <Button DockPanel.Dock="Top" Height="50" Command="{Binding CreateRandomRailsCommand}">
             Lösche alle Schienen und setzen zufällig neue zum Test
         </Button>
