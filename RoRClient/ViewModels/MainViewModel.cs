@@ -32,6 +32,7 @@ namespace RoRClient.ViewModels
         {
             viewmodels.Add("start", new StartViewModel(uiState));
             viewmodels.Add("editor", new EditorViewModel(uiState));
+            //viewmodels.Add("game", new GameViewModel(uiState));
 
             uiState.OnUiStateChanged += ChangeToView;
 

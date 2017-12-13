@@ -3,6 +3,11 @@ package models.session;
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
 
+/**
+ * Oberklasse vom Game-Modus. 
+ * Haelt die Map und die Liste von verbundenen Playern
+ * Erhaelt ueber einen QueueReceiver Anfragen von Clients, die mit der GameSession verbunden sind
+ */
 public class GameSession extends RoRSession{
 	public GameSession(String name) {
 		super(name);

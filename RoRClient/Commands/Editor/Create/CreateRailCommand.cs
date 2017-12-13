@@ -20,7 +20,7 @@ namespace RoRClient.Commands.Editor.Create
         private RailSectionPosition node1;
         private RailSectionPosition node2;
 
-        public CreateRailCommand(EditorSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        public CreateRailCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             railId = Guid.Parse(messageInformation.GetValueAsString("railId"));
             xPos = messageInformation.GetValueAsInt("xPos");
@@ -31,7 +31,7 @@ namespace RoRClient.Commands.Editor.Create
 
         public override void Execute()
         {
-            EditorSession editorSession = EditorSession.GetInstance();
+            GameSession editorSession = GameSession.GetInstance();
             Square square = editorSession.Map.GetSquare(xPos, yPos);
             Rail rail = new Rail(railId, square, new RailSection(node1, node2));
             square.PlaceableOnSquare = rail;
