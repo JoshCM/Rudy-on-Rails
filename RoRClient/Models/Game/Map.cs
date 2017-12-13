@@ -52,6 +52,27 @@ namespace RoRClient.Models.Game
         }
 
         /// <summary>
+        /// Gibt ein placableOnSquare für eine ID zurück
+        /// </summary>
+        /// <param name="railId"></param>
+        /// <returns></returns>
+        public IPlaceableOnSquare GetPlaceableById(Guid railId)
+        {
+            foreach(Square square in squares)
+            {
+                IPlaceableOnSquare placeableOnSquare = square.PlaceableOnSquare;
+                if (placeableOnSquare != null)
+                {
+                    if (placeableOnSquare.Id.Equals(railId))
+                    {
+                        return placeableOnSquare;
+                    }
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
         /// (Testweise)
         /// Erzeugt für zufällige Squares auf der Map eine Rail mit einer RailSection
         /// </summary>

@@ -10,8 +10,8 @@ namespace RoRClient.ViewModels.Editor
 
         public ToolbarViewModel()
         {
-            //GenerateToolbarItemsFromFolder();
-            CreateToolbarItems();
+            GenerateToolbarItemsFromFolder();
+            //CreateToolbarItems();
         }
 
         public ToolbarViewModel(string path, bool generate)
