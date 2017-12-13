@@ -118,8 +118,6 @@
     <Compile Include="Communication\Dispatcher\GameSessionDispatcher.cs" />
     <Compile Include="Models\Base\IModel.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
-    <Compile Include="Models\Game\Cart.cs" />
-    <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Player.cs" />
     <Compile Include="Models\Session\EditorSession.cs" />
     <Compile Include="Models\Session\GameSession.cs" />
@@ -129,6 +127,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

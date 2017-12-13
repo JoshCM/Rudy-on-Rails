@@ -6,6 +6,8 @@ import models.session.RoRSession;
 
 import java.util.Arrays;
 
+import communication.MessageInformation;
+
 
 /**
  * Klasse, die das Spielfeld darstellt und aus Feldern (Squares) besteht
@@ -37,8 +39,13 @@ public class Map extends ModelBase {
 	
 	public void ChangeName(String name) {
 		this.name = name;
-		
-		
+		notifyChangedName();
+	}
+	
+	private void notifyChangedName() {
+		MessageInformation messageInformation = new MessageInformation("UpdateNameOfMap");
+		messageInformation.putValue("name", name);
+		notifyChange(messageInformation);
 	}
 	
 	public Square getSquare(int i, int j) {

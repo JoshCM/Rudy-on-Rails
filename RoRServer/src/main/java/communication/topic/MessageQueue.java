@@ -6,8 +6,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import communication.MessageEnvelope;
 import communication.MessageInformation;
+import models.base.ModelObserver;
+import models.base.ObservableModel;
 
-public class MessageQueue implements Observer {
+public class MessageQueue implements ModelObserver {
 	private TopicSender topicSender;
 	private Thread sendMessageThread;
 	private ConcurrentLinkedQueue<MessageEnvelope> messagesToSendQueue = new ConcurrentLinkedQueue<>();
@@ -69,7 +71,7 @@ public class MessageQueue implements Observer {
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(ObservableModel observable, Object arg) {
 		MessageEnvelope messageEnvelope = (MessageEnvelope) arg;
 		addMessage(messageEnvelope);
 	}
