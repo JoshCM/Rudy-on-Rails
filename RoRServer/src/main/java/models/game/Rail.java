@@ -1,5 +1,7 @@
 package models.game;
 
+import java.util.UUID;
+
 import communication.MessageInformation;
 
 /**
@@ -13,6 +15,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	protected PlaceableOnRail placeableOnRail = null;
 	protected RailSection section1;
 	protected RailSection section2;
+	private UUID trainstationId;
 
 	/**
 	 * Konstruktor für Geraden oder Kurven
@@ -27,6 +30,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	private void notifyCreatedRail() {
 		MessageInformation messageInfo = new MessageInformation("CreateRail");
 		messageInfo.putValue("railId", getId());
+		messageInfo.putValue("trainstationId", getTrainstationId());
 		messageInfo.putValue("railSectionId", section1.getId());
 		messageInfo.putValue("railSectionPositionNode1", section1.getNode1().toString());
 		messageInfo.putValue("railSectionPositionNode2", section1.getNode2().toString());
@@ -45,7 +49,15 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	public RailSection getSection() {
 		return section1;
 	}
-
+	
+	public UUID getTrainstationId() {
+		return trainstationId;
+	}
+	
+	public void setTrainstationId(UUID trainstationId) {
+		this.trainstationId = trainstationId;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
