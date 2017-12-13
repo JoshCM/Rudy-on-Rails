@@ -12,12 +12,10 @@ namespace RoRClient.Commands.Editor.Delete
 {
     public class DeletePlaceableCommand : CommandBase
     {
-
-        private Guid squareId;
         private int xPos;
         private int yPos;
 
-        public DeletePlaceableCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        public DeletePlaceableCommand(EditorSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
@@ -25,7 +23,7 @@ namespace RoRClient.Commands.Editor.Delete
 
         public override void Execute()
         {
-            GameSession editorSession = GameSession.GetInstance();
+            EditorSession editorSession = EditorSession.GetInstance();
             Square square = editorSession.Map.GetSquare(xPos, yPos);
             square.PlaceableOnSquare = null;
         }

@@ -189,7 +189,7 @@ namespace RoRClient.ViewModels.Editor
 
                     if (result != null)
                     {
-                        placeableOnSquareCollection.Remove(result);
+                        taskFactory.StartNew(() => placeableOnSquareCollection.Remove(result));
                     }
                 }
                 else

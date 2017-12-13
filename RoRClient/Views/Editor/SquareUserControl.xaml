@@ -22,7 +22,6 @@
             StrokeThickness="1">
             <Rectangle.InputBindings>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding CreateRailCommand}"/>
-                <MouseBinding MouseAction="RightClick" Command="{Binding DeletePlaceableOnSquareCommand}"/>
             </Rectangle.InputBindings>
         </Rectangle>
     </Canvas>

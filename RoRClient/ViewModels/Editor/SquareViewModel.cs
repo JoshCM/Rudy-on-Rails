@@ -69,35 +69,5 @@ namespace RoRClient.ViewModels.Editor
             // TODO: Message sollte mithilfe CommandManager oder so geschickt werden
             editorSession.QueueSender.SendMessage("CreateRail", messageInformation);
         }
-
-        private ICommand deletePlaceableOnSquareCommand;
-        public ICommand DeletePlaceableOnSquareCommand
-        {
-            get
-            {
-                if (deletePlaceableOnSquareCommand == null)
-                {
-                    deletePlaceableOnSquareCommand = new ActionCommand(param => SendDeletePlaceableOnSquareCommand());
-                }
-                return deletePlaceableOnSquareCommand;
-            }
-        }
-
-        private void SendDeletePlaceableOnSquareCommand()
-        {
-            int xPos = square.PosX;
-            int yPos = square.PosY;
-            RoRSession editorSession = EditorSession.GetInstance();
-            RailSection railSection = ToolConverter.ConvertToRailSection(toolbarViewModel.SelectedTool.Name);
-
-            MessageInformation messageInformation = new MessageInformation();
-            messageInformation.PutValue("xPos", xPos);
-            messageInformation.PutValue("yPos", yPos);
-            messageInformation.PutValue("railSectionPositionNode1", railSection.Node1.ToString());
-            messageInformation.PutValue("railSectionPositionNode2", railSection.Node2.ToString());
-
-            // TODO: Message sollte mithilfe CommandManager oder so geschickt werden
-            editorSession.QueueSender.SendMessage("DeletePlaceable", messageInformation);
-        }
     }
 }

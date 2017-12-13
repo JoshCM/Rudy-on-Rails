@@ -1,4 +1,7 @@
-﻿using RoRClient.ViewModels.Commands;
+﻿using RoRClient.Communication.DataTransferObject;
+using RoRClient.Models.Game;
+using RoRClient.Models.Session;
+using RoRClient.ViewModels.Commands;
 using System;
 using System.Windows.Input;
 
@@ -78,6 +81,35 @@ namespace RoRClient.ViewModels
         public void SelectInteractiveGameObject()
         {
             Console.WriteLine("Selected ViewModel: " + this.ToString() + " / ID: " +  this.Id);
+        }
+
+
+        private ICommand deletePlaceableOnSquareCommand;
+        public ICommand DeletePlaceableOnSquareCommand
+        {
+            get
+            {
+                if (deletePlaceableOnSquareCommand == null)
+                {
+                    deletePlaceableOnSquareCommand = new ActionCommand(param => SendDeletePlaceableOnSquareCommand());
+                }
+                return deletePlaceableOnSquareCommand;
+            }
+        }
+
+        private void SendDeletePlaceableOnSquareCommand()
+        {
+
+            int xPos = squarePosX;
+            int yPos = squarePosY;
+            RoRSession editorSession = EditorSession.GetInstance();
+
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("xPos", xPos);
+            messageInformation.PutValue("yPos", yPos);
+
+            // TODO: Message sollte mithilfe CommandManager oder so geschickt werden
+            editorSession.QueueSender.SendMessage("DeletePlaceable", messageInformation);
         }
     }
 }

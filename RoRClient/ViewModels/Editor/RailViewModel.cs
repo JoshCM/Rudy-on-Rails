@@ -1,5 +1,8 @@
-﻿using RoRClient.Models.Game;
+﻿using RoRClient.Communication.DataTransferObject;
+using RoRClient.Models.Game;
+using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
+using RoRClient.Views.Editor.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
