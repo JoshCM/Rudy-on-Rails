@@ -76,7 +76,7 @@ namespace RoRClient.ViewModels.Editor
         {
             this.toolbarViewModel = toolbarViewModel;
             taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
-            map = EditorSession.GetInstance().Map;
+            map = GameSession.GetInstance().Map;
             InitSquares();
             MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
             MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;

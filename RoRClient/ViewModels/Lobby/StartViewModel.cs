@@ -55,6 +55,32 @@ namespace RoRClient.ViewModels.Lobby
             lobbyModel.getFromClientRequestSender().SendMessage("CreateEditorSession", messageInformation);
         }
 
+
+        private ICommand createGameSessionCommand;
+        public ICommand CreateGameSessionCommand
+        {
+            get
+            {
+                if (createGameSessionCommand == null)
+                {
+                    createGameSessionCommand = new ActionCommand(param => SendCreateGameSessionCommand());
+                }
+                return createGameSessionCommand;
+            }
+        }
+
+        private void SendCreateGameSessionCommand()
+        {
+            lobbyModel.StartConnection();
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("playerName", "Heinz");
+            messageInformation.PutValue("gameName", "Game1");
+            lobbyModel.getFromClientRequestSender().SendMessage("CreateGameSession", messageInformation);
+        }
+
+
+
+
         public LobbyModel LobbyModel
         {
             get
@@ -65,13 +91,21 @@ namespace RoRClient.ViewModels.Lobby
 
         private void OnClientModelChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == "Connected")
+            if(e.PropertyName == "Connected_Editor")
             {
-                if (lobbyModel.Connected)
+                if (lobbyModel.Connected_Editor)
                 {
                     uiState.State = "editor";
                 }
             }
+            if (e.PropertyName == "Connected_Game")
+            {
+                if (lobbyModel.Connected_Game)
+                {
+                    uiState.State = "game";
+                }
+            }
         }
+
     }
 }
