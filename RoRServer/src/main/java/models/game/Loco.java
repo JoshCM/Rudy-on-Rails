@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author Isabel Rott, Michelle Le
  * Klasse für eine Lok, zu der eine Reihe von Wagons gehoert
  */
-public class Loco extends InteractiveGameObject implements PlaceableOnRail  {
+public class Loco extends TickableGameObject implements PlaceableOnRail  {
 
 	private ArrayList<Cart> carts;
 	
@@ -27,6 +27,12 @@ public class Loco extends InteractiveGameObject implements PlaceableOnRail  {
 
 	public void setCarts(ArrayList<Cart> carts) {
 		this.carts = carts;
+	}
+
+	@Override
+	public void specificUpdate() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -9,5 +9,6 @@ public class GameSession extends RoRSession{
 		
 		GameSessionDispatcher dispatcher = new GameSessionDispatcher(this);
 		this.queueReceiver = new QueueReceiver(name, dispatcher);
+		
 	}
 }
