@@ -10,25 +10,26 @@ namespace RoRClient.Models.Session
 {
     public class GameSession : RoRSession
     {
-        private GameSession session = null;
+        private static GameSession gameSession = null;
+
         private GameSession() : base()
         {
             
-        }
-
-        public GameSession getInstance()
-        {
-            if (session == null)
-            {
-                session = new GameSession();
-            }
-            return session;
         }
 
         public new void Init(string topicName)
         {
             base.Init(topicName);
             topicReceiver = new TopicReceiver(topicName, new TopicGameDispatcher());
+        }
+
+        public static GameSession GetInstance()
+        {
+            if (gameSession == null)
+            {
+                gameSession = new GameSession();
+            }
+            return gameSession;
         }
     }
 }

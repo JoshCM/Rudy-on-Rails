@@ -104,6 +104,7 @@
     <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateRailCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateLocoCommand.cs" />
     <Compile Include="Communication\Dispatcher\QueueDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicEditorDispatcher.cs" />
@@ -267,7 +268,6 @@
   <ItemGroup>
     <Folder Include="Commands\Editor\Delete\" />
     <Folder Include="Commands\Editor\Update\" />
-    <Folder Include="Commands\Game\Create\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\railcurve_ne.png" />

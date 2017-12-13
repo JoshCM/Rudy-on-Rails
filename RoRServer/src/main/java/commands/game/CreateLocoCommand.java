@@ -1,4 +1,4 @@
-package commands.editor;
+package commands.game;
 
 import commands.base.CommandBase;
 import communication.MessageInformation;
