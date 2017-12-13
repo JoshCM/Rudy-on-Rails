@@ -116,7 +116,6 @@
     <Compile Include="Communication\Dispatcher\FromServerResponseQueueDispatcher.cs" />
     <Compile Include="Communication\Dispatcher\EditorSessionDispatcher.cs" />
     <Compile Include="Communication\Dispatcher\GameSessionDispatcher.cs" />
-    <Compile Include="Models\Editor\EditorSession.cs" />
     <Compile Include="Models\Base\IModel.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
     <Compile Include="Models\Game\Cart.cs" />
@@ -184,9 +183,6 @@
     <Compile Include="Views\Game\GameMapUserControl.xaml.cs">
       <DependentUpon>GameMapUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Game\GameMenuUserControl.xaml.cs">
-      <DependentUpon>GameMenuUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Game\GameMiniMapUserControl.xaml.cs">
       <DependentUpon>GameMiniMapUserControl.xaml</DependentUpon>
     </Compile>
@@ -214,10 +210,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Game\GameMapUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Game\GameMenuUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
