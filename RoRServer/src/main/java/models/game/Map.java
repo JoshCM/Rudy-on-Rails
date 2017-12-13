@@ -12,7 +12,7 @@ import java.util.Arrays;
  */
 public class Map extends ModelBase {
 	private Square squares [][];
-	private final int mapSize = 3;
+	private final int mapSize = 50;
 	
 	/**
 	 * Jedes Square auf der Map braucht einen Index,
