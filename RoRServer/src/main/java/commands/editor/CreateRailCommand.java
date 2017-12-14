@@ -18,7 +18,7 @@ import models.session.RoRSession;
 public class CreateRailCommand extends CommandBase {
 	private int xPos;
 	private int yPos;
-	private List<LinkedTreeMap> railSectionData;
+	private List<JsonObject> railSectionData;
 
 	public CreateRailCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
@@ -33,8 +33,8 @@ public class CreateRailCommand extends CommandBase {
 		EditorSession editorSession = (EditorSession) session;
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(xPos, yPos);
-		RailSectionPosition node1 = RailSectionPosition.valueOf(railSectionData.get(0).get("node1").toString());
-		RailSectionPosition node2 = RailSectionPosition.valueOf(railSectionData.get(0).get("node2").toString());
+		RailSectionPosition node1 = RailSectionPosition.valueOf(railSectionData.get(0).get("node1").getAsString());
+		RailSectionPosition node2 = RailSectionPosition.valueOf(railSectionData.get(0).get("node2").getAsString());
 		Rail rail = new Rail(session.getName(), square, node1, node2);
 		square.setPlaceable(rail);
 	}
