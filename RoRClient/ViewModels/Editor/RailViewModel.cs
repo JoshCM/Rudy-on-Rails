@@ -1,4 +1,6 @@
-﻿using RoRClient.Models.Game;
+﻿using RoRClient.Communication.DataTransferObject;
+using RoRClient.Models.Game;
+using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,24 @@ namespace RoRClient.ViewModels.Editor
             {
                 return rail;
             }
+        }
+
+        public void SendRotateRightRailCommand()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("xPos", rail.Square.PosX);
+            messageInformation.PutValue("yPos", rail.Square.PosY);
+            messageInformation.PutValue("right", true);
+            EditorSession.GetInstance().QueueSender.SendMessage("RotateRail", messageInformation);
+        }
+
+        public void SendRotateLeftRailCommand()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("xPos", rail.Square.PosX);
+            messageInformation.PutValue("yPos", rail.Square.PosY);
+            messageInformation.PutValue("right", false);
+            EditorSession.GetInstance().QueueSender.SendMessage("RotateRail", messageInformation);
         }
     }
 }
