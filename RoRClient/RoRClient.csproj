@@ -131,6 +131,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\Game\GameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TrainstationViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
@@ -180,9 +181,72 @@
     <Compile Include="Views\Editor\AttributeSelectionUserControl.xaml.cs">
       <DependentUpon>AttributeSelectionUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Editor\Window2.xaml.cs">
+      <DependentUpon>Window2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\GameInteractionUserControl.xaml.cs">
+      <DependentUpon>GameInteractionUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\GameMapUserControl.xaml.cs">
+      <DependentUpon>GameMapUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\GameMenuUserControl.xaml.cs">
+      <DependentUpon>GameMenuUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\GameMiniMapUserControl.xaml.cs">
+      <DependentUpon>GameMiniMapUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\GameStatusUserControl.xaml.cs">
+      <DependentUpon>GameStatusUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\GameTrainSpeedUserControl.xaml.cs">
+      <DependentUpon>GameTrainSpeedUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\GameUserControl.xaml.cs">
+      <DependentUpon>GameUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Lobby\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\Editor\Window2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\GameInteractionUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\GameMapUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\GameMenuUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\GameMiniMapUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\GameStatusUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\GameTrainSpeedUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\GameUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\Window1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Editor\TrainstationUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -294,6 +358,11 @@
     <Resource Include="Resources\Images\Tools\railcurve_se.png" />
     <Resource Include="Resources\Images\dummy.png" />
     <Resource Include="Resources\Images\Tools\trainstation.png" />
+    <Resource Include="Resources\Images\game_minimap_dummy.png" />
+    <Resource Include="Resources\Images\game_map_dummy.jpg" />
+    <Resource Include="Resources\Images\rotate_right.png" />
+    <Resource Include="Resources\Images\rotate_left.png" />
+    <Resource Include="Resources\Images\delete.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
