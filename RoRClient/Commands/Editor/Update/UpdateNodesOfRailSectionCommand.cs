@@ -37,7 +37,7 @@ namespace RoRClient.Commands.Editor.Update
 
             RailSection railSection = rail.RailSections.Where(x => x.Id == railSectionId).First();
             rail.RailSections.Remove(railSection);
-            rail.RailSections.Add(new RailSection(railSectionId, node1, node2));
+            rail.AddRailSection(new RailSection(railSectionId, node1, node2));
         }
     }
 }

@@ -37,5 +37,11 @@ namespace RoRClient.Models.Game
 
             this.square = square;
         }
+
+        public void AddRailSection(RailSection railSection)
+        {
+            railSections.Add(railSection);
+            NotifyPropertyChanged("RailSections");
+        }
     }
 }
