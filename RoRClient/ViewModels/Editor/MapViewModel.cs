@@ -118,6 +118,7 @@ namespace RoRClient.ViewModels.Editor
             foreach (Square square in map.Squares)
             {
                 SquareViewModel squareViewModel = new SquareViewModel(square, toolbarViewModel);
+                squareViewModel.MapViewModel = this;
                 squareViewModels.Add(squareViewModel);
                 square.PropertyChanged += OnSquarePropertyChanged;
 
@@ -225,7 +226,7 @@ namespace RoRClient.ViewModels.Editor
         /// <summary>
         /// Binding für MapUserControl
         /// </summary>
-        private Boolean isQuickNavigationVisible;
+        private Boolean isQuickNavigationVisible = false;
         public Boolean IsQuickNavigationVisible
         {
             get
@@ -310,6 +311,9 @@ namespace RoRClient.ViewModels.Editor
         private void Delete()
         {
             SelectedCanvasViewModel.Delete();
+
+            // Quicknavigation nach dem Löschen nicht mehr anzeigen
+            IsQuickNavigationVisible = false;
         }
 
     }
