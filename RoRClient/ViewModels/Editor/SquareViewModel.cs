@@ -69,5 +69,20 @@ namespace RoRClient.ViewModels.Editor
             // TODO: Message sollte mithilfe CommandManager oder so geschickt werden
             editorSession.QueueSender.SendMessage("CreateRail", messageInformation);
         }
+
+        public override void RotateLeft()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RotateRight()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Delete()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

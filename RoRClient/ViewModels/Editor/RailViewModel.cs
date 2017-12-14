@@ -29,5 +29,23 @@ namespace RoRClient.ViewModels.Editor
                 return rail;
             }
         }
+
+        public override void Delete()
+        {
+            // Zu implementieren
+            Console.WriteLine("DELETE");
+        }
+
+        public override void RotateLeft()
+        {
+            // Zu implementieren
+            Console.WriteLine("ROTATE LEFT");
+        }
+
+        public override void RotateRight()
+        {
+            // Zu implementieren
+            Console.WriteLine("ROTATE RIGHT");
+        }
     }
 }
