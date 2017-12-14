@@ -17,7 +17,7 @@ namespace RoRClientTests.ViewModels.Helper
             Square square = new Square(0, 0);
             Rail rail = new Rail(Guid.NewGuid(), square, new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
 
-            RailViewModel railViewModel = (RailViewModel)viewModelFactory.CreateViewModelForModel(rail);
+            RailViewModel railViewModel = (RailViewModel)viewModelFactory.CreateViewModelForModel(rail, null);
 
             Assert.IsNotNull(railViewModel);
             Assert.AreEqual(rail, railViewModel.Rail);
@@ -30,7 +30,7 @@ namespace RoRClientTests.ViewModels.Helper
             ViewModelFactory viewModelFactory = new ViewModelFactory();
             Player square = new Player(new Guid(), "testplayer");
 
-            CanvasViewModel canvasViewModel = (CanvasViewModel)viewModelFactory.CreateViewModelForModel(square);
+            CanvasViewModel canvasViewModel = (CanvasViewModel)viewModelFactory.CreateViewModelForModel(square, null);
         }
     }
 }

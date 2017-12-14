@@ -1,7 +1,8 @@
-﻿using RoRClient.Communication.DataTransferObject;
-using RoRClient.Models.Game;
+﻿using RoRClient.ViewModels.Commands;
+using RoRClient.ViewModels.Editor;
 using RoRClient.Models.Session;
-using RoRClient.ViewModels.Commands;
+using RoRClient.Models.Game;
+﻿using RoRClient.Communication.DataTransferObject;
 using System;
 using System.Windows.Input;
 
@@ -11,8 +12,22 @@ namespace RoRClient.ViewModels
     /// Diese Klasse wird als Base-Klasse für alle ViewModels verwendet, die auf einem Canvas angezeigt werden.
     /// Dazu gehören zum Beispiel Squares und Rails. 
     /// </summary>
-    public class CanvasViewModel : ViewModelBase
+    public abstract class CanvasViewModel : ViewModelBase
     {
+
+        private MapViewModel mapViewModel;
+        public MapViewModel MapViewModel
+        {
+            get
+            {
+                return mapViewModel;
+            }
+            set
+            {
+                mapViewModel = value;
+            }
+        }
+
         public CanvasViewModel(Guid modelId)
         {
             id = modelId;
@@ -77,11 +92,44 @@ namespace RoRClient.ViewModels
             }
         }
 
-        // EditorObject (Rail etc.) ausgewählt
+        // EditorObject (Rail etc.) ausgewählt + Quicknavigation anzeigen (sollte noch umbenannt werden)
         public void SelectInteractiveGameObject()
         {
-            Console.WriteLine("Selected ViewModel: " + this.ToString() + " / ID: " +  this.Id);
+            // Neues CanvasViewModel im MapViewModel merken
+            MapViewModel.SelectedCanvasViewModel = this;
+            // Initial das vorherige CanvasViewModel auf das Neue setzen
+            if (MapViewModel.PreviousSelectedCanvasViewModel == null)
+            {
+                MapViewModel.PreviousSelectedCanvasViewModel = this;
+                Console.WriteLine("1. Mal");
+            }
+            // Anzeigen der Quicknavigation
+            MapViewModel.SwitchQuickNavigationForCanvasViewModel();
+
+            // Danach das CanvasViewModel als vorheriges CanvasViewModel merken, wenn es sich geänder hat
+            if (this != MapViewModel.PreviousSelectedCanvasViewModel)
+            {
+                MapViewModel.PreviousSelectedCanvasViewModel = this;
+                Console.WriteLine("Model hat sich geändert!");
+
+            }
+           
         }
+
+        /// <summary>
+        /// Methode zum Rotieren eines CanvasViewModel nach links / Muss in der jeweiligen Unterklasse überschrieben werden
+        /// </summary>
+        public abstract void RotateLeft();
+
+        /// <summary>
+        /// Methode zum Rotieren eines CanvasViewModel nach rechts / Muss in der jeweiligen Unterklasse überschrieben werden
+        /// </summary>
+        public abstract void RotateRight();
+
+        /// <summary>
+        /// Methode zum Löschen eines CanvasViewModel / Muss in der jeweiligen Unterklasse überschrieben werden
+        /// </summary>
+        public abstract void Delete();
 
 
         private ICommand deletePlaceableOnSquareCommand;
