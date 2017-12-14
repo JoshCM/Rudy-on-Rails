@@ -342,6 +342,9 @@ namespace RoRClient.ViewModels.Editor
         private void Delete()
         {
             SelectedCanvasViewModel.Delete();
+
+            // Quicknavigation nach dem Löschen nicht mehr anzeigen
+            IsQuickNavigationVisible = false;
         }
 
     }
