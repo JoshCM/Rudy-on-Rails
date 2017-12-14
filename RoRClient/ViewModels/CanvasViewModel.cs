@@ -101,7 +101,7 @@ namespace RoRClient.ViewModels
                 Console.WriteLine("1. Mal");
             }
             // Anzeigen der Quicknavigation
-            MapViewModel.setQuickNavigationForCanvasViewModel();
+            MapViewModel.SwitchQuickNavigationForCanvasViewModel();
 
             // Danach das CanvasViewModel als vorheriges CanvasViewModel merken, wenn es sich geänder hat
             if (this != MapViewModel.PreviousSelectedCanvasViewModel)

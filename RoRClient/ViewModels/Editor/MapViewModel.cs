@@ -229,7 +229,7 @@ namespace RoRClient.ViewModels.Editor
         }
 
         // EditorObject (Rail etc.) ausgewählt + Quicknavigation anzeigen (sollte noch umbenannt werden)
-        public void setQuickNavigationForCanvasViewModel()
+        public void SwitchQuickNavigationForCanvasViewModel()
         {
             // Falls ein anderes CanvasViewModel angeklickt wurde
             if (previusSelectCanvasViewModel != selectedCanvasViewModel) {
