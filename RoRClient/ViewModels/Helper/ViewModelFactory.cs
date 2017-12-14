@@ -1,4 +1,5 @@
 ﻿using RoRClient.Models.Base;
+using RoRClient.ViewModels.Editor;
 using System;
 
 namespace RoRClient.ViewModels.Helper
@@ -15,7 +16,7 @@ namespace RoRClient.ViewModels.Helper
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Konkretes ViewModel zu einem Model</returns>
-        public CanvasViewModel CreateViewModelForModel(IModel model)
+        public CanvasViewModel CreateViewModelForModel(IModel model, MapViewModel mapViewModel)
         {
             Type modelType = model.GetType();
             String viewModelTypeName = VIEWMODEL_TYPE_PREFIX + modelType.Name + VIEWMODEL_CLASS_SUFFIX;
@@ -27,6 +28,7 @@ namespace RoRClient.ViewModels.Helper
             }
 
             CanvasViewModel viewModel = (CanvasViewModel)Activator.CreateInstance(viewModelType, model);
+            viewModel.MapViewModel = mapViewModel;
             return viewModel;
         }
     }
