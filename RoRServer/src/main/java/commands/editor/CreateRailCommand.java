@@ -1,5 +1,11 @@
 package commands.editor;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.JsonObject;
+import com.google.gson.internal.LinkedTreeMap;
+
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import models.game.Map;
@@ -12,24 +18,24 @@ import models.session.RoRSession;
 public class CreateRailCommand extends CommandBase {
 	private int xPos;
 	private int yPos;
-	private RailSectionPosition railSectionPositionNode1;
-	private RailSectionPosition railSectionPositionNode2;
-	
+	private List<LinkedTreeMap> railSectionData;
+
 	public CreateRailCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
-		
+
 		xPos = messageInfo.getValueAsInt("xPos");
 		yPos = messageInfo.getValueAsInt("yPos");
-		railSectionPositionNode1 = RailSectionPosition.valueOf(messageInfo.getValueAsString("railSectionPositionNode1"));
-		railSectionPositionNode2 = RailSectionPosition.valueOf(messageInfo.getValueAsString("railSectionPositionNode2"));
+		railSectionData = messageInfo.getValueAsList("railSections");
 	}
 
 	@Override
 	public void execute() {
-		EditorSession editorSession = (EditorSession)session;
+		EditorSession editorSession = (EditorSession) session;
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(xPos, yPos);
-		Rail rail = new Rail(session.getName(), square, railSectionPositionNode1, railSectionPositionNode2);
+		RailSectionPosition node1 = RailSectionPosition.valueOf(railSectionData.get(0).get("node1").toString());
+		RailSectionPosition node2 = RailSectionPosition.valueOf(railSectionData.get(0).get("node2").toString());
+		Rail rail = new Rail(session.getName(), square, node1, node2);
 		square.setPlaceable(rail);
 	}
 }
