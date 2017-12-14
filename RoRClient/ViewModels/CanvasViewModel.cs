@@ -1,4 +1,5 @@
 ﻿using RoRClient.ViewModels.Commands;
+using RoRClient.ViewModels.Editor;
 using System;
 using System.Windows.Input;
 
@@ -10,6 +11,19 @@ namespace RoRClient.ViewModels
     /// </summary>
     public class CanvasViewModel : ViewModelBase
     {
+
+        private MapViewModel mapViewModel;
+        public MapViewModel MapViewModel
+        {
+            get
+            {
+                return mapViewModel;
+            }
+            set
+            {
+                mapViewModel = value;
+            }
+        }
 
         public CanvasViewModel(Guid modelId)
         {
@@ -78,32 +92,25 @@ namespace RoRClient.ViewModels
         // EditorObject (Rail etc.) ausgewählt + Quicknavigation anzeigen (sollte noch umbenannt werden)
         public void SelectInteractiveGameObject()
         {
-            if (IsQuickNavigationVisible)
+            // Neues CanvasViewModel im MapViewModel merken
+            MapViewModel.SelectedCanvasViewModel = this;
+            // Initial das vorherige CanvasViewModel auf das Neue setzen
+            if (MapViewModel.PreviousSelectedCanvasViewModel == null)
             {
-                Console.WriteLine("Quicknavigation deaktiviert");
-                IsQuickNavigationVisible = false;
+                MapViewModel.PreviousSelectedCanvasViewModel = this;
+                Console.WriteLine("1. Mal");
             }
-            else
-            {
-                Console.WriteLine("Quicknavigation aktiviert");
-                IsQuickNavigationVisible = true;
-            }
-            Console.WriteLine("Selected ViewModel: " + this.ToString() + " / ID: " +  this.Id);
-        }
+            // Anzeigen der Quicknavigation
+            MapViewModel.setQuickNavigationForCanvasViewModel();
 
-        private Boolean isQuickNavigationVisible;
-        public Boolean IsQuickNavigationVisible
-        {
-            get
+            // Danach das CanvasViewModel als vorheriges CanvasViewModel merken, wenn es sich geänder hat
+            if (this != MapViewModel.PreviousSelectedCanvasViewModel)
             {
-                return isQuickNavigationVisible;
-            }
-            set
-            {
-                isQuickNavigationVisible = value;
-                OnPropertyChanged("IsQuickNavigationVisible");
-            }
-        }
+                MapViewModel.PreviousSelectedCanvasViewModel = this;
+                Console.WriteLine("Model hat sich geändert!");
 
+            }
+           
+        }
     }
 }

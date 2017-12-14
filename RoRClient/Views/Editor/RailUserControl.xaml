@@ -21,26 +21,5 @@
                 <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
             </Image.InputBindings>
         </Image>
-        <Popup Name="quickNavigation" IsOpen="{Binding IsQuickNavigationVisible}" Placement="Mouse" >
-            <StackPanel Orientation="Horizontal" >
-                <Button Margin="5">
-                    <Image 
-                        Source="/RoRClient;component/Resources/Images/rotate_right.png" 
-                        Height="{Binding SquareDim, ElementName=railUserControl}"  
-                        Width="{Binding SquareDim, ElementName=railUserControl}" ></Image>
-                </Button>
-                <Button Margin="5">
-                    <Image Source="/RoRClient;component/Resources/Images/rotate_left.png" 
-                        Height="{Binding SquareDim, ElementName=railUserControl}"  
-                        Width="{Binding SquareDim, ElementName=railUserControl}" ></Image>
-                </Button>
-                <Button Margin="5">
-                    <Image Source="/RoRClient;component/Resources/Images/delete.png"
-                        Height="{Binding SquareDim, ElementName=railUserControl}"  
-                        Width="{Binding SquareDim, ElementName=railUserControl}" ></Image>
-                </Button>
-
-            </StackPanel>
-        </Popup>
     </Canvas>
 </v:CanvasUserControl>

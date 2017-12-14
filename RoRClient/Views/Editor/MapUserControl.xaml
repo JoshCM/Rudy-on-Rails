@@ -38,6 +38,29 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+
+                <Popup Name="quickNavigation" IsOpen="{Binding IsQuickNavigationVisible}" Placement="Mouse" >
+                    <StackPanel Orientation="Horizontal" >
+                        <Button>
+                            <Image 
+                        Source="/RoRClient;component/Resources/Images/rotate_right.png" 
+                        Height="20"  
+                        Width="20" ></Image>
+                        </Button>
+                        <Button>
+                            <Image Source="/RoRClient;component/Resources/Images/rotate_left.png" 
+                        Height="20"
+                        Width="20"></Image>
+                        </Button>
+                        <Button>
+                            <Image Source="/RoRClient;component/Resources/Images/delete.png"
+                        Height="20" 
+                        Width="20" ></Image>
+                        </Button>
+
+                    </StackPanel>
+                </Popup>
+
             </Canvas>
         </ScrollViewer>
     </DockPanel>
