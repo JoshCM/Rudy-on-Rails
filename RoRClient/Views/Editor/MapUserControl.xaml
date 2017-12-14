@@ -21,22 +21,27 @@
         <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Bottom">
             <Canvas x:Name="thisCanvas" Background="Brown" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
                 <ItemsControl ItemsSource="{Binding SquareViewModels}">
-                    <ItemsControl.ItemTemplate>
+                    <ItemsControl.Resources>
                         <DataTemplate DataType="{x:Type vm:SquareViewModel}">
                             <Canvas>
                                 <ve:SquareUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
+                    </ItemsControl.Resources>
                 </ItemsControl>
                 <ItemsControl ItemsSource="{Binding PlaceableOnSquareCollection}">
-                    <ItemsControl.ItemTemplate>
+                    <ItemsControl.Resources>
                         <DataTemplate DataType="{x:Type vm:RailViewModel}">
                             <Canvas>
                                 <ve:RailUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type vm:TrainstationViewModel}">
+                            <Canvas>
+                                <ve:TrainstationUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
                 </ItemsControl>
             </Canvas>
         </ScrollViewer>

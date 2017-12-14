@@ -3,9 +3,9 @@ using System.Windows;
 
 namespace RoRClient.Views.Editor
 {
-    public partial class RailUserControl : CanvasUserControl
+    public partial class TrainstationUserControl : CanvasUserControl
     {
-        public RailUserControl()
+        public TrainstationUserControl()
         {
             InitializeComponent();
         }

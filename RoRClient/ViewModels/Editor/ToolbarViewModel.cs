@@ -47,7 +47,7 @@ namespace RoRClient.ViewModels.Editor
             {
                 if (file.EndsWith(".png"))
                 {
-                    toolItems.Add(new ToolItem(Path.GetFileName(file).TrimEnd(".png".ToCharArray()), file));
+                    toolItems.Add(new ToolItem(Path.GetFileName(file).Split('.')[0], file));
                 }
             }
         }

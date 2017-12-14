@@ -16,7 +16,7 @@ namespace RoRClient.Commands.Editor.Create
         Guid trainstationId;
         private int xPos;
         private int yPos;
-        List<Rail> trainstationRails;
+        List<Rail> trainstationRails = new List<Rail>();
 
         public CreateTrainstationCommand(EditorSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {

@@ -37,19 +37,37 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
-        private ICommand createRailCommand;
-        public ICommand CreateRailCommand
+        private ICommand createPlaceableOnSquareCommand;
+        public ICommand CreatePlaceableOnSquareCommand
         {
             get
             {
-                if (createRailCommand == null)
+                if (createPlaceableOnSquareCommand == null)
                 {
-                    createRailCommand = new ActionCommand(param => SendCreateRailCommand());
+                    createPlaceableOnSquareCommand = new ActionCommand(param => SendCreatePlaceableOnSquareCommand());
                 }
-                return createRailCommand;
+                return createPlaceableOnSquareCommand;
             }
         }
         
+        /// <summary>
+        /// Wählt die richtige SendMethode für das ausgewählte Tool
+        /// </summary>
+        private void SendCreatePlaceableOnSquareCommand()
+        {
+            if (toolbarViewModel.SelectedTool != null)
+            {
+                if (toolbarViewModel.SelectedTool.Name.Contains("rail"))
+                {
+                    SendCreateRailCommand();
+                }
+                else if (toolbarViewModel.SelectedTool.Name.Contains("trainstation"))
+                {
+                    SendCreateTrainstationCommand();
+                }
+            }
+        }
+
         /// <summary>
         /// Sendet einen Anfrage-Command an den Server, der dort eine Rail erstellen soll
         /// </summary>
@@ -66,8 +84,23 @@ namespace RoRClient.ViewModels.Editor
             messageInformation.PutValue("railSectionPositionNode1", railSection.Node1.ToString());
             messageInformation.PutValue("railSectionPositionNode2", railSection.Node2.ToString());
 
-            // TODO: Message sollte mithilfe CommandManager oder so geschickt werden
             editorSession.QueueSender.SendMessage("CreateRail", messageInformation);
+        }
+
+        /// <summary>
+        /// Sendet eine Anfrage an den Server der eine Trainstation setzen soll
+        /// </summary>
+        private void SendCreateTrainstationCommand()
+        {
+            int xPos = square.PosX;
+            int yPos = square.PosY;
+            EditorSession editorSession = EditorSession.GetInstance();
+
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("xPos", xPos);
+            messageInformation.PutValue("yPos", yPos);
+
+            editorSession.QueueSender.SendMessage("CreateTrainstation", messageInformation);
         }
     }
 }
