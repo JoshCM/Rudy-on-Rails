@@ -50,14 +50,20 @@ namespace RoRClient.ViewModels.Editor
 
         public override void RotateLeft()
         {
-            // Zu implementieren
-            Console.WriteLine("ROTATE LEFT");
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("xPos", rail.Square.PosX);
+            messageInformation.PutValue("yPos", rail.Square.PosY);
+            messageInformation.PutValue("right", false);
+            EditorSession.GetInstance().QueueSender.SendMessage("RotateRail", messageInformation);
         }
 
         public override void RotateRight()
         {
-            // Zu implementieren
-            Console.WriteLine("ROTATE RIGHT");
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("xPos", rail.Square.PosX);
+            messageInformation.PutValue("yPos", rail.Square.PosY);
+            messageInformation.PutValue("right", true);
+            EditorSession.GetInstance().QueueSender.SendMessage("RotateRail", messageInformation);
         }
     }
 }

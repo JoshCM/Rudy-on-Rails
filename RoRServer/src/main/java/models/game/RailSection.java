@@ -2,6 +2,7 @@ package models.game;
 
 import java.util.UUID;
 
+import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
 import models.base.ModelBase;
 
@@ -9,13 +10,16 @@ import models.base.ModelBase;
  * Klasse für ein Schienenstueck mit "Eingang" und "Ausgang"
  */
 public class RailSection extends ModelBase {
+	private UUID squareId;
+	private int squareXPos;
+	private int squareYPos;
 	private UUID railId;
 	private RailSectionPosition node1;
 	private RailSectionPosition node2;
 	
 	// TODO: hier muss placeableOnSquareSection
 
-	public RailSection(String sessionName, UUID railId, RailSectionPosition node1, RailSectionPosition node2) {
+	public RailSection(String sessionName, Rail rail, RailSectionPosition node1, RailSectionPosition node2) {
 		super(sessionName);
 		
 		if (node1 == node2) {
@@ -23,7 +27,10 @@ public class RailSection extends ModelBase {
 					"RailSectionPositions are equal; node1: " + node1.toString() + ", node2: " + node2.toString());
 		}
 
-		this.railId = railId;
+		this.railId = rail.getId();
+		this.squareId = rail.getSquareId();
+		this.squareXPos = rail.getXPos();
+		this.squareYPos = rail.getYPos();
 		this.node1 = node1;
 		this.node2 = node2;
 	}
@@ -63,5 +70,43 @@ public class RailSection extends ModelBase {
 
 	public RailSectionPosition getNode2() {
 		return node2;
+	}
+
+	/**
+	 * Rotiert die RailSectionPositions. 
+	 * Rechtsherum z.B. North zu East
+	 * @param right Rechts herum (true) oder links herum (false)
+	 */
+	public void rotate(boolean right) {
+		node1 = rotateRailSectionPosition(node1, right);
+		node2 = rotateRailSectionPosition(node2, right);
+		
+		notifyNodesUpdated();
+	}
+	
+	private void notifyNodesUpdated() {
+		MessageInformation messageInformation = new MessageInformation("UpdateNodesOfRailSection");
+		messageInformation.putValue("squareId", squareId);
+		messageInformation.putValue("xPos", squareXPos);
+		messageInformation.putValue("yPos", squareYPos);
+		messageInformation.putValue("railSectionId", getId().toString());
+		messageInformation.putValue("node1", node1.toString());
+		messageInformation.putValue("node2", node2.toString());
+		notifyChange(messageInformation);
+	}
+	
+	private RailSectionPosition rotateRailSectionPosition(RailSectionPosition railSectionPosition, boolean right) {
+		int newIndex;
+		
+		if(right) {
+			newIndex = ((railSectionPosition.ordinal() + 1) % RailSectionPosition.values().length);
+		} else {
+			newIndex = ((railSectionPosition.ordinal() - 1) % RailSectionPosition.values().length);
+			if(newIndex < 0) {
+				newIndex += RailSectionPosition.values().length;
+			}
+		}
+		
+		return RailSectionPosition.values()[newIndex];
 	}
 }

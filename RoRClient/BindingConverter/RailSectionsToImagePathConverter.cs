@@ -14,14 +14,15 @@ namespace RoRClient.BindingConverter
     /// Wird genutzt, um bei einem RailViewModel zu entscheiden, um welchen Schienentyp es sich handelt und gibt dann den Pfad zum passenden
     /// Bild zurück
     /// </summary>
-    public class RailSectionToImagePathConverter : IValueConverter
+    public class RailSectionsToImagePathConverter : IValueConverter
     {
         private const string IMAGE_FOLDER_PATH = "..\\..\\Resources\\Images\\";
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value != null)
             {
-                RailSection railSection = (RailSection)value;
+                ObservableCollection<RailSection> railSections = (ObservableCollection<RailSection>)value;
+                RailSection railSection = railSections.First();
                 List<RailSectionPosition> positionList = railSection.GetNodesAsList();
 
                 if (positionList.Contains(RailSectionPosition.NORTH) && positionList.Contains(RailSectionPosition.SOUTH))
