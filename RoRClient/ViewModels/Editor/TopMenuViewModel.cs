@@ -58,6 +58,12 @@ namespace RoRClient.ViewModels.Editor
         {
             string newMapName = PopupCreator.AskUserToInputString("Bitte gib einen Namen für die Map ein.").Trim();
 
+            // Fenster wurde über Abbrechen geschlossen
+            if(newMapName == "")
+            {
+                return;
+            }
+
             if (RegexValidator.IsValidFilename(newMapName))
             {
                 EditorSession editorSession = EditorSession.GetInstance();
