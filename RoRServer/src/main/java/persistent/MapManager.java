@@ -1,6 +1,7 @@
 package persistent;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -116,6 +117,13 @@ public class MapManager {
 	 *            Dateiname zum Speichern
 	 */
 	private static void saveToFile(String jsonMap, String mapName) {
+		
+		// erzeugt den maps-Ordner wenn er noch nicht existiert
+		File mapsDir = new File(OUTPUT_DIR_PATH);
+		if(!mapsDir.exists()) {
+			mapsDir.mkdir();
+		}
+		
 		try (PrintWriter out = new PrintWriter(OUTPUT_DIR_PATH + mapName + ext)) {
 			out.println(jsonMap);
 			out.flush();

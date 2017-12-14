@@ -19,5 +19,13 @@ namespace RoRClient.Models.Game
             this.id = id;
             this.trainstationRails = trainstationRails;
         }
+
+        public List<Rail> TrainstationRails
+        {
+            get
+            {
+                return trainstationRails;
+            }
+        }
     }
 }
