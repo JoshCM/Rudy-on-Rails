@@ -1,4 +1,5 @@
 ﻿using RoRClient.Models.Base;
+using System;
 using System.Collections.Generic;
 
 namespace RoRClient.Models.Game
@@ -26,8 +27,9 @@ namespace RoRClient.Models.Game
             }
         }
 
-        public RailSection (RailSectionPosition node1, RailSectionPosition node2) : base()
+        public RailSection (Guid id, RailSectionPosition node1, RailSectionPosition node2) : base()
         {
+            this.id = id;
             this.node1 = node1;
             this.node2 = node2;
         }

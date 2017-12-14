@@ -3,9 +3,12 @@ package commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.junit.Test;
+
+import com.google.gson.JsonObject;
 
 import commands.base.Command;
 import commands.editor.CreateRailCommand;
@@ -21,8 +24,7 @@ public class CommandCreatorTests {
 		MessageInformation messageInformation = new MessageInformation();
 		messageInformation.putValue("xPos", 0);
 		messageInformation.putValue("yPos", 0);
-		messageInformation.putValue("railSectionPositionNode1", RailSectionPosition.NORTH.toString());
-		messageInformation.putValue("railSectionPositionNode2", RailSectionPosition.SOUTH.toString());
+		messageInformation.putValue("railSections", new ArrayList<JsonObject>());
 		
 		RoRSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		CreateRailCommand command = new CreateRailCommand(session, messageInformation);

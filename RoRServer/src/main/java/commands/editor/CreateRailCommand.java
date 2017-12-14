@@ -1,9 +1,16 @@
 package commands.editor;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.JsonObject;
+import com.google.gson.internal.LinkedTreeMap;
+
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import models.game.Map;
 import models.game.Rail;
+import models.game.RailSection;
 import models.game.RailSectionPosition;
 import models.game.Square;
 import models.session.EditorSession;
@@ -12,24 +19,31 @@ import models.session.RoRSession;
 public class CreateRailCommand extends CommandBase {
 	private int xPos;
 	private int yPos;
-	private RailSectionPosition railSectionPositionNode1;
-	private RailSectionPosition railSectionPositionNode2;
-	
+	private List<JsonObject> railSectionData;
+
 	public CreateRailCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
-		
+
 		xPos = messageInfo.getValueAsInt("xPos");
 		yPos = messageInfo.getValueAsInt("yPos");
-		railSectionPositionNode1 = RailSectionPosition.valueOf(messageInfo.getValueAsString("railSectionPositionNode1"));
-		railSectionPositionNode2 = RailSectionPosition.valueOf(messageInfo.getValueAsString("railSectionPositionNode2"));
+		railSectionData = messageInfo.getValueAsList("railSections");
 	}
 
 	@Override
 	public void execute() {
-		EditorSession editorSession = (EditorSession)session;
+		EditorSession editorSession = (EditorSession) session;
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(xPos, yPos);
-		Rail rail = new Rail(session.getName(), square, railSectionPositionNode1, railSectionPositionNode2);
+		
+		List<RailSectionPosition> railSectionPositions = new ArrayList<RailSectionPosition>();
+		for(JsonObject json : railSectionData) {
+			RailSectionPosition node1 = RailSectionPosition.valueOf(json.get("node1").getAsString());
+			RailSectionPosition node2 = RailSectionPosition.valueOf(json.get("node2").getAsString());
+			railSectionPositions.add(node1);
+			railSectionPositions.add(node2);
+		}
+		
+		Rail rail = new Rail(session.getName(), square, railSectionPositions);
 		square.setPlaceable(rail);
 	}
 }

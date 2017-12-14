@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Newtonsoft.Json.Linq;
 
 namespace RoRClient.ViewModels.Editor
 {
@@ -81,8 +82,14 @@ namespace RoRClient.ViewModels.Editor
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("xPos", xPos);
             messageInformation.PutValue("yPos", yPos);
-            messageInformation.PutValue("railSectionPositionNode1", railSection.Node1.ToString());
-            messageInformation.PutValue("railSectionPositionNode2", railSection.Node2.ToString());
+
+            List<JObject> railSections = new List<JObject>();
+            JObject railSectionObject = new JObject();
+            railSectionObject.Add("node1", railSection.Node1.ToString());
+            railSectionObject.Add("node2", railSection.Node2.ToString());
+            railSections.Add(railSectionObject);
+
+            messageInformation.PutValue("railSections", railSections);
 
             editorSession.QueueSender.SendMessage("CreateRail", messageInformation);
         }

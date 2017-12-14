@@ -1,6 +1,10 @@
 package models.persistent;
 
 import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import models.dummy.DummySignal;
@@ -17,7 +21,10 @@ public class MapManagerTest {
 	public void mapManager_SavedAndLoadedMapAreEqual() {
 		
 		DummySignal signal = new DummySignal(savedMap.getSquare(0, 0));
-		savedMap.getSquare(0, 0).setPlaceable(new Rail("TestSession", savedMap.getSquare(0, 0), RailSectionPosition.NORTH, RailSectionPosition.WEST));
+		List<RailSectionPosition> railSectionPositions = new ArrayList<>();
+		railSectionPositions.add(RailSectionPosition.NORTH);
+		railSectionPositions.add(RailSectionPosition.WEST);
+		savedMap.getSquare(0, 0).setPlaceable(new Rail("TestSession", savedMap.getSquare(0, 0), railSectionPositions));
 		((Rail)savedMap.getSquare(0, 0).getPlaceableOnSquare()).setPlaceableOnRail(signal);
 		
 		String mapAsJson = MapManager.convertMapToJson(savedMap);

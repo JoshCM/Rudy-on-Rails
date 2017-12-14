@@ -14,10 +14,7 @@
         <converter:ObjectIsNullToBoolConverter  x:Key="ObjectIsNullToBoolConverter"/>
     </UserControl.Resources>
 
-	<DockPanel>
-        <Button DockPanel.Dock="Top" Height="50" Command="{Binding CreateRandomRailsCommand}">
-            Lösche alle Schienen und setzen zufällig neue zum Test
-        </Button>
+    <DockPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Bottom">
             <Canvas x:Name="thisCanvas" Background="Brown" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
                 <ItemsControl ItemsSource="{Binding SquareViewModels}">
