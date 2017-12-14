@@ -84,14 +84,14 @@ public class Map extends ModelBase {
 		return result;
 	}
 
-	public PlaceableOnSquare getPlacableById(UUID railId) {
+	public PlaceableOnSquare getPlaceableById(UUID railId) {
 		for(Square[] squares : getSquares())
         {
 			for(Square square : squares) {
 				PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
 	            if (placeableOnSquare != null)
 	            {
-	                if (placeableOnSquare.getId() == railId)
+	                if (placeableOnSquare.getId().equals(railId))
 	                {
 	                    return placeableOnSquare;
 	                }

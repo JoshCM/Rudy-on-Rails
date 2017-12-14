@@ -41,16 +41,13 @@ namespace RoRClient.ViewModels.Editor
             messageInformation.PutValue("xPos", trainstation.Square.PosX);
             messageInformation.PutValue("yPos", trainstation.Square.PosY);
 
-            List<JObject> railJObjects = new List<JObject>();
+            List<Guid> railGuids = new List<Guid>();
             // Iteriert über alle TrainstationRails
             foreach (Rail trainstationRail in trainstation.TrainstationRails)
             {
-                // JSONObject der TrainstationRail
-                JObject railJObject = new JObject();
-                railJObject.Add("railId", trainstationRail.Id);
-                railJObjects.Add(railJObject);
+                railGuids.Add(trainstationRail.Id);
             }
-            messageInformation.PutValue("trainstationRails", railJObjects);
+            messageInformation.PutValue("trainstationRailIds", railGuids);
             
             editorSession.QueueSender.SendMessage("DeleteTrainstation", messageInformation);
             Console.WriteLine("DELETE TRAINSTATION");

@@ -1,5 +1,6 @@
 package models.game;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,9 +45,9 @@ public class TrainstationTests {
 		Assert.assertEquals(Trainstation.class, square.getPlaceableOnSquare().getClass());
 		List<UUID> railIds = ((Trainstation)square.getPlaceableOnSquare()).getTrainstationRailIds();
 		for(UUID railId : railIds) {
-			Rail rail = (Rail)session.getMap().getPlacableById(railId);
-			Assert.assertEquals(RailSectionPosition.NORTH, rail.getSection().getNode1());
-			Assert.assertEquals(RailSectionPosition.SOUTH, rail.getSection().getNode2());
+			Rail rail = (Rail)session.getMap().getPlaceableById(railId);
+			Assert.assertEquals(RailSectionPosition.NORTH, rail.getFirstSection().getNode1());
+			Assert.assertEquals(RailSectionPosition.SOUTH, rail.getFirstSection().getNode2());
 		}
 		Assert.assertEquals(3, railIds.size());
 	}
@@ -79,7 +80,7 @@ public class TrainstationTests {
 		// setzen der rail die die exception verursacht
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Square square = session.getMap().getSquare(1, 0);
-		square.setPlaceable(new Rail(session.getName(),square,RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+		square.setPlaceable(new Rail(session.getName(),square,Arrays.asList(RailSectionPosition.NORTH, RailSectionPosition.SOUTH)));
 
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
 		
@@ -102,7 +103,7 @@ public class TrainstationTests {
 		// setzen der rail die die exception verursacht
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Square square = session.getMap().getSquare(1, 1);
-		square.setPlaceable(new Rail(session.getName(),square,RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+		square.setPlaceable(new Rail(session.getName(),square,Arrays.asList(RailSectionPosition.NORTH, RailSectionPosition.SOUTH)));
 
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
 		
@@ -125,7 +126,7 @@ public class TrainstationTests {
 		// setzen der rail die die exception verursacht
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Square square = session.getMap().getSquare(1, 2);
-		square.setPlaceable(new Rail(session.getName(),square,RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+		square.setPlaceable(new Rail(session.getName(),square,Arrays.asList(RailSectionPosition.NORTH, RailSectionPosition.SOUTH)));
 
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
 		

@@ -51,6 +51,7 @@ public class CreateTrainstationCommand extends CommandBase {
 		// Railsection werden erstellt
 		RailSectionPosition railSectionPositionNode1 = RailSectionPosition.NORTH;
 		RailSectionPosition railSectionPositionNode2 = RailSectionPosition.SOUTH;
+		List<RailSectionPosition> railSectionPositions = Arrays.asList(railSectionPositionNode1, railSectionPositionNode2);
 		
 		// Squares für die Rails der Trainstation werden erstellt
 		Square squareTop = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN,
@@ -65,7 +66,7 @@ public class CreateTrainstationCommand extends CommandBase {
 		// Rails werden erstellt und auf die jeweiligen Squares gesetzt
 		for(int i = 0; i < 3; i++) {
 			Square trainstationRailSquare = trainstationRailSquares.get(i);
-			Rail rail = new Rail(session.getName(), trainstationRailSquare, railSectionPositionNode1, railSectionPositionNode2);
+			Rail rail = new Rail(session.getName(), trainstationRailSquare, railSectionPositions);
 			trainstationRailSquare.setPlaceable(rail);
 			rail.setTrainstationId(trainstationId);
 			trainstationRailIds.add(rail.getId());
