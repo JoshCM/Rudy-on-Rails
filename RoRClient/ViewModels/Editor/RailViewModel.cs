@@ -45,7 +45,6 @@ namespace RoRClient.ViewModels.Editor
 
             // TODO: Message sollte mithilfe CommandManager oder so geschickt werden
             editorSession.QueueSender.SendMessage("DeletePlaceable", messageInformation);
-            Console.WriteLine("DELETE");
         }
 
         public override void RotateLeft()
