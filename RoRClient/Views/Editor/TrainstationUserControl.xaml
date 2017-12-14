@@ -10,6 +10,10 @@
                      Canvas.Left="{Binding RealX, ElementName=trainstationUserControl}">
     <Canvas Width="{Binding SquareDim, ElementName=trainstationUserControl}"
             Height="{Binding SquareDim, ElementName=trainstationUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=trainstationUserControl}" Height="{Binding SquareDim, ElementName=trainstationUserControl}" Source="pack://application:,,,/Resources/Images/Tools/trainstation.png"/>
+        <Image Width="{Binding SquareDim, ElementName=trainstationUserControl}" Height="{Binding SquareDim, ElementName=trainstationUserControl}" Source="pack://application:,,,/Resources/Images/Tools/trainstation.png">
+            <Image.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+            </Image.InputBindings>
+        </Image>
     </Canvas>
 </v:CanvasUserControl>
