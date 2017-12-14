@@ -72,6 +72,11 @@ public class RailSection extends ModelBase {
 		return node2;
 	}
 
+	/**
+	 * Rotiert die RailSectionPositions. 
+	 * Rechtsherum z.B. North zu East
+	 * @param right Rechts herum (true) oder links herum (false)
+	 */
 	public void rotate(boolean right) {
 		node1 = rotateRailSectionPosition(node1, right);
 		node2 = rotateRailSectionPosition(node2, right);
