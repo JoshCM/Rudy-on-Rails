@@ -11,19 +11,19 @@ import communication.MessageInformation;
 import models.game.Map;
 import models.game.Rail;
 import models.game.Square;
+import models.game.Trainstation;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
 public class DeleteTrainstationCommand extends CommandBase{
 
-	int trainstationXPos;
+	UUID id;
 	int trainstationYPos;
 	List<UUID> trainstationRailIds = new ArrayList<UUID>();
 	
 	public DeleteTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
-		this.trainstationXPos = messageInfo.getValueAsInt("xPos");
-		this.trainstationYPos = messageInfo.getValueAsInt("yPos");
+		this.id = messageInfo.getValueAsUUID("id");
 		for(String railIdString : messageInfo.<String>getValueAsObjectList("trainstationRailIds")) {
 			UUID railId = UUID.fromString(railIdString);
 			trainstationRailIds.add(railId);
@@ -36,7 +36,8 @@ public class DeleteTrainstationCommand extends CommandBase{
 		Map map = editorSession.getMap();
 		
 		// remove trainstation
-		Square trainstationSquare = map.getSquare(trainstationXPos, trainstationYPos);
+		Trainstation trainstation = (Trainstation) map.getPlaceableById(id);
+		Square trainstationSquare = map.getSquare(trainstation.getXPos(), trainstation.getYPos());
 		trainstationSquare.deletePlaceable();
 		
 		// remove trainstationRails
