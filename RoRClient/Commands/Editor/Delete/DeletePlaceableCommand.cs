@@ -15,7 +15,7 @@ namespace RoRClient.Commands.Editor.Delete
         private int xPos;
         private int yPos;
         /// <summary>
-        /// Nachricht wird ausgelesen
+        /// Daten werden ausgelesen und zugewiesen
         /// </summary>
         /// <param name="session"></param>
         /// <param name="messageInformation"></param>
