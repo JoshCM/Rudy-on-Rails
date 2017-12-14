@@ -2,6 +2,7 @@ package models.game;
 
 import java.util.UUID;
 
+import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
 import models.base.ModelBase;
 
@@ -68,6 +69,17 @@ public class RailSection extends ModelBase {
 	public void rotate(boolean right) {
 		node1 = rotateRailSectionPosition(node1, right);
 		node2 = rotateRailSectionPosition(node2, right);
+		
+		notifyNodesUpdated();
+	}
+	
+	private void notifyNodesUpdated() {
+		MessageInformation messageInformation = new MessageInformation("UpdateNodesOfRailSection");
+		messageInformation.putValue("railId", railId.toString());
+		messageInformation.putValue("railSectionId", getId().toString());
+		messageInformation.putValue("node1", node1.toString());
+		messageInformation.putValue("node2", node2.toString());
+		notifyChange(messageInformation);
 	}
 	
 	private RailSectionPosition rotateRailSectionPosition(RailSectionPosition railSectionPosition, boolean right) {
