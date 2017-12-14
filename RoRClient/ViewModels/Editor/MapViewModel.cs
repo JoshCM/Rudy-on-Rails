@@ -24,6 +24,32 @@ namespace RoRClient.ViewModels.Editor
         private TaskFactory taskFactory;
         private ToolbarViewModel toolbarViewModel;
 
+        private CanvasViewModel previusSelectCanvasViewModel;
+        public CanvasViewModel PreviousSelectedCanvasViewModel
+        {
+            get
+            {
+                return previusSelectCanvasViewModel;
+            }
+            set
+            {
+                previusSelectCanvasViewModel = value;
+            }
+        }
+
+        private CanvasViewModel selectedCanvasViewModel;
+        public CanvasViewModel SelectedCanvasViewModel
+        {
+            get
+            {
+                return selectedCanvasViewModel;
+            }
+            set
+            {
+                selectedCanvasViewModel = value;
+            }
+        }
+
         private Map map;
 
         private ObservableCollection<SquareViewModel> squareViewModels = new ObservableCollection<SquareViewModel>();
@@ -195,11 +221,52 @@ namespace RoRClient.ViewModels.Editor
                 else
                 {
                     ViewModelFactory factory = new ViewModelFactory();
-                    CanvasViewModel viewModel = factory.CreateViewModelForModel(square.PlaceableOnSquare);
+                    CanvasViewModel viewModel = factory.CreateViewModelForModel(square.PlaceableOnSquare, this);
 
                     taskFactory.StartNew(() => placeableOnSquareCollection.Add(viewModel));
                 }
             }
         }
+
+        // EditorObject (Rail etc.) ausgewählt + Quicknavigation anzeigen (sollte noch umbenannt werden)
+        public void SwitchQuickNavigationForCanvasViewModel()
+        {
+            // Falls ein anderes CanvasViewModel angeklickt wurde
+            if (previusSelectCanvasViewModel != selectedCanvasViewModel) {
+                IsQuickNavigationVisible = false;
+                Console.WriteLine("Neues CanvasViewModel wurde angeklickt");
+            }
+
+            if (IsQuickNavigationVisible)
+            {
+                Console.WriteLine("Quicknavigation deaktiviert");
+                IsQuickNavigationVisible = false;
+
+            }
+            else
+            {
+                Console.WriteLine("Quicknavigation aktiviert");
+                IsQuickNavigationVisible = true;
+            }
+
+            Console.WriteLine("Selected ViewModel: " + SelectedCanvasViewModel.ToString() + " / ID: " + SelectedCanvasViewModel.Id);
+        }
+
+        // Binding für MapUserControl
+        private Boolean isQuickNavigationVisible;
+        public Boolean IsQuickNavigationVisible
+        {
+            get
+            {
+                return isQuickNavigationVisible;
+            }
+            set
+            {
+                isQuickNavigationVisible = value;
+                OnPropertyChanged("IsQuickNavigationVisible");
+            }
+        }
+
+
     }
 }
