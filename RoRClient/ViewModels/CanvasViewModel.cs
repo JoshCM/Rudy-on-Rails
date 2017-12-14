@@ -9,7 +9,7 @@ namespace RoRClient.ViewModels
     /// Diese Klasse wird als Base-Klasse für alle ViewModels verwendet, die auf einem Canvas angezeigt werden.
     /// Dazu gehören zum Beispiel Squares und Rails. 
     /// </summary>
-    public class CanvasViewModel : ViewModelBase
+    public abstract class CanvasViewModel : ViewModelBase
     {
 
         private MapViewModel mapViewModel;
@@ -112,5 +112,20 @@ namespace RoRClient.ViewModels
             }
            
         }
+
+        /// <summary>
+        /// Methode zum Rotieren eines CanvasViewModel nach links / Muss in der jeweiligen Unterklasse überschrieben werden
+        /// </summary>
+        public abstract void RotateLeft();
+
+        /// <summary>
+        /// Methode zum Rotieren eines CanvasViewModel nach rechts / Muss in der jeweiligen Unterklasse überschrieben werden
+        /// </summary>
+        public abstract void RotateRight();
+
+        /// <summary>
+        /// Methode zum Löschen eines CanvasViewModel / Muss in der jeweiligen Unterklasse überschrieben werden
+        /// </summary>
+        public abstract void Delete();
     }
 }
