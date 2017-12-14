@@ -2,6 +2,7 @@
 using RoRClient.Models.Game;
 using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
+using RoRClient.Views.Editor.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,21 +33,36 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
-        public void SendRotateRightRailCommand()
+        public override void Delete()
         {
+            int xPos = this.SquarePosX;
+            int yPos = this.SquarePosY;
+            RoRSession editorSession = EditorSession.GetInstance();
+
             MessageInformation messageInformation = new MessageInformation();
-            messageInformation.PutValue("xPos", rail.Square.PosX);
-            messageInformation.PutValue("yPos", rail.Square.PosY);
-            messageInformation.PutValue("right", true);
-            EditorSession.GetInstance().QueueSender.SendMessage("RotateRail", messageInformation);
+            messageInformation.PutValue("xPos", xPos);
+            messageInformation.PutValue("yPos", yPos);
+
+            // TODO: Message sollte mithilfe CommandManager oder so geschickt werden
+            editorSession.QueueSender.SendMessage("DeletePlaceable", messageInformation);
+            Console.WriteLine("DELETE");
         }
 
-        public void SendRotateLeftRailCommand()
+        public override void RotateLeft()
         {
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("xPos", rail.Square.PosX);
             messageInformation.PutValue("yPos", rail.Square.PosY);
             messageInformation.PutValue("right", false);
+            EditorSession.GetInstance().QueueSender.SendMessage("RotateRail", messageInformation);
+        }
+
+        public override void RotateRight()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("xPos", rail.Square.PosX);
+            messageInformation.PutValue("yPos", rail.Square.PosY);
+            messageInformation.PutValue("right", true);
             EditorSession.GetInstance().QueueSender.SendMessage("RotateRail", messageInformation);
         }
     }

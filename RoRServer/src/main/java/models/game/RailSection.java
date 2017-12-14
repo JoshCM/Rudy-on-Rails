@@ -83,7 +83,7 @@ public class RailSection extends ModelBase {
 		MessageInformation messageInformation = new MessageInformation("UpdateNodesOfRailSection");
 		messageInformation.putValue("squareId", squareId);
 		messageInformation.putValue("xPos", squareXPos);
-		messageInformation.putValue("xPos", squareYPos);
+		messageInformation.putValue("yPos", squareYPos);
 		messageInformation.putValue("railSectionId", getId().toString());
 		messageInformation.putValue("node1", node1.toString());
 		messageInformation.putValue("node2", node2.toString());

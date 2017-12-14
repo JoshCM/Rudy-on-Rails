@@ -19,6 +19,7 @@
                Source="{Binding Rail.RailSections, Mode=OneWay, Converter={StaticResource RailSectionsToImagePathConverter}}">
             <Image.InputBindings>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+                <MouseBinding MouseAction="RightClick" Command="{Binding DeletePlaceableOnSquareCommand}"></MouseBinding>
             </Image.InputBindings>
         </Image>
     </Canvas>

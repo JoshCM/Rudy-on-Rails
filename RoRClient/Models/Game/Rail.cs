@@ -11,6 +11,7 @@ namespace RoRClient.Models.Game
     public class Rail : InteractiveGameObject, IPlaceableOnSquare
     {
         protected IPlaceableOnRail placeableOnRail = null;
+        private Square square;
         private ObservableCollection<RailSection> railSections = new ObservableCollection<RailSection>();
         public ObservableCollection<RailSection> RailSections
         {
@@ -28,9 +29,13 @@ namespace RoRClient.Models.Game
         public Rail(Guid id, Square square, List<RailSection> railSections) : base(square)
         {
             this.id = id;
-            foreach(RailSection section in railSections){
+
+            foreach (RailSection section in railSections)
+            {
                 this.railSections.Add(section);
             }
+
+            this.square = square;
         }
     }
 }
