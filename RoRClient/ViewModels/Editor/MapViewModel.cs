@@ -118,6 +118,7 @@ namespace RoRClient.ViewModels.Editor
             foreach (Square square in map.Squares)
             {
                 SquareViewModel squareViewModel = new SquareViewModel(square, toolbarViewModel);
+                squareViewModel.MapViewModel = this;
                 squareViewModels.Add(squareViewModel);
                 square.PropertyChanged += OnSquarePropertyChanged;
 
@@ -257,7 +258,7 @@ namespace RoRClient.ViewModels.Editor
         /// <summary>
         /// Binding für MapUserControl
         /// </summary>
-        private Boolean isQuickNavigationVisible;
+        private Boolean isQuickNavigationVisible = false;
         public Boolean IsQuickNavigationVisible
         {
             get

@@ -55,6 +55,9 @@ namespace RoRClient.ViewModels.Editor
         /// </summary>
         private void SendCreateRailCommand()
         {
+            // Quick-Navigation von einem möglich vorherigen angeklicken CanvasViewModel ausblenden
+            MapViewModel.IsQuickNavigationVisible = false;
+
             int xPos = square.PosX;
             int yPos = square.PosY;
             EditorSession editorSession = EditorSession.GetInstance();
