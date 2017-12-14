@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Models.Game
 {
+    /// <summary>
+    /// Klasse für Trainstations die einem Square zugeordnet sind
+    /// und eine Liste von Rails die zu der Trainstation gehören
+    /// </summary>
     public class Trainstation : InteractiveGameObject, IPlaceableOnSquare
     {
         private List<Rail> trainstationRails;
