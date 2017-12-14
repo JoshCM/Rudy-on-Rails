@@ -42,6 +42,10 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
+        /// <summary>
+        /// Wenn die Map schon einen Namen hat, dann wird ein einfacher SaveMapCommand geschickt
+        /// Wenn nicht, dann wird der User nach einem Namen gefragt
+        /// </summary>
         private void SaveMap()
         {
             if(EditorSession.GetInstance().Map.Name == "")
@@ -54,6 +58,10 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
+        /// <summary>
+        /// Fragt den User über ein Popup, welchen Namen die Map nach dem Speichern bekommen soll
+        /// Sendet anschließend den Comand dafür an den Server
+        /// </summary>
         private void SendSaveNewMapMessage()
         {
             string newMapName = PopupCreator.AskUserToInputString("Bitte gib einen Namen für die Map ein.").Trim();
