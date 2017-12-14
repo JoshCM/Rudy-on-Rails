@@ -11,6 +11,7 @@ namespace RoRClient.Models.Game
         protected IPlaceableOnRail placeableOnRail = null;
         private RailSection section1;
         private RailSection section2;
+        private Square square;
         public RailSection Section1
         {
             get
@@ -54,6 +55,7 @@ namespace RoRClient.Models.Game
         {
             this.id = id;
             this.section1 = section;
+            this.square = square;
         }
 
         /// <summary>
@@ -66,6 +68,7 @@ namespace RoRClient.Models.Game
         {
             this.section1 = section1;
             this.section2 = section2;
+            this.square = square;
         }
 
         /// <summary>

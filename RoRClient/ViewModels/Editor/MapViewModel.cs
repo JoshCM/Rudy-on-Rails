@@ -233,7 +233,7 @@ namespace RoRClient.ViewModels.Editor
 
                     if (result != null)
                     {
-                        placeableOnSquareCollection.Remove(result);
+                        taskFactory.StartNew(() => placeableOnSquareCollection.Remove(result));
                     }
                 }
                 else
@@ -246,7 +246,9 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
-        // EditorObject (Rail etc.) ausgewählt + Quicknavigation anzeigen (sollte noch umbenannt werden)
+        /// <summary>
+        /// EditorObject (Rail etc.) ausgewählt + Quicknavigation anzeigen
+        /// </summary>
         public void SwitchQuickNavigationForCanvasViewModel()
         {
             // Falls ein anderes CanvasViewModel angeklickt wurde
@@ -270,7 +272,9 @@ namespace RoRClient.ViewModels.Editor
             Console.WriteLine("Selected ViewModel: " + SelectedCanvasViewModel.ToString() + " / ID: " + SelectedCanvasViewModel.Id);
         }
 
-        // Binding für MapUserControl
+        /// <summary>
+        /// Binding für MapUserControl
+        /// </summary>
         private Boolean isQuickNavigationVisible;
         public Boolean IsQuickNavigationVisible
         {
@@ -285,6 +289,78 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
+        /// <summary>
+        /// Command für RotateRight erstellen
+        /// </summary>
+        private ICommand rotateRightCommand;
+        public ICommand RotateRightCommand
+        {
+            get
+            {
+                if (rotateRightCommand == null)
+                {
+                    rotateRightCommand = new ActionCommand(param => RotateRight());
+                }
+
+                return rotateRightCommand;
+            }
+        }
+
+        /// <summary>
+        /// Das aktuell ausgewählte CanvasViewModel nach rechts rotieren
+        /// </summary>
+        private void RotateRight()
+        {
+            SelectedCanvasViewModel.RotateRight();
+        }
+
+        /// <summary>
+        /// Command für RotateLeft erstellen
+        /// </summary>
+        private ICommand rotateLeftCommand;
+        public ICommand RotateLeftCommand
+        {
+            get
+            {
+                if (rotateLeftCommand == null)
+                {
+                    rotateLeftCommand = new ActionCommand(param => RotateLeft());
+                }
+                return rotateLeftCommand;
+            }
+        }
+
+        /// <summary>
+        /// Das aktuell ausgewählte CanvasViewModel nach links rotieren
+        /// </summary>
+        private void RotateLeft()
+        {
+            SelectedCanvasViewModel.RotateLeft();
+        }
+
+        /// <summary>
+        /// Command für Delete erstellen
+        /// </summary>
+        private ICommand deleteCommand;
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (deleteCommand == null)
+                {
+                    deleteCommand = new ActionCommand(param => Delete());
+                }
+                return deleteCommand;
+            }
+        }
+
+        /// <summary>
+        /// Das aktuell ausgewählte CanvasViewModel löschen
+        /// </summary>
+        private void Delete()
+        {
+            SelectedCanvasViewModel.Delete();
+        }
 
     }
 }

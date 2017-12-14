@@ -4,11 +4,14 @@ import models.base.ModelBase;
 import java.util.Arrays;
 import java.util.UUID;
 
+import communication.MessageInformation;
+
 
 /**
  * Klasse, die das Spielfeld darstellt und aus Feldern (Squares) besteht
  */
 public class Map extends ModelBase {
+	private String name;
 	private Square squares [][];
 	private final int mapSize = 50;
 	
@@ -26,6 +29,21 @@ public class Map extends ModelBase {
 				squares[i][j] = s;
 			}
 		}
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void ChangeName(String name) {
+		this.name = name;
+		notifyChangedName();
+	}
+	
+	private void notifyChangedName() {
+		MessageInformation messageInformation = new MessageInformation("UpdateNameOfMap");
+		messageInformation.putValue("mapName", name);
+		notifyChange(messageInformation);
 	}
 	
 	public Square getSquare(int i, int j) {

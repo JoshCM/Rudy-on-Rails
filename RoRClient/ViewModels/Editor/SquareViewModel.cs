@@ -102,5 +102,20 @@ namespace RoRClient.ViewModels.Editor
 
             editorSession.QueueSender.SendMessage("CreateTrainstation", messageInformation);
         }
+
+        public override void RotateLeft()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RotateRight()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Delete()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

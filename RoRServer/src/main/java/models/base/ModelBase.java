@@ -12,7 +12,7 @@ import communication.topic.MessageQueue;
  * RoRSession kennen Die RoRSession wird aktuell gebraucht, damit die Models
  * Änderungen an den Client geben können über die Methode addMessage()
  */
-public abstract class ModelBase extends Observable implements Model{
+public abstract class ModelBase extends ObservableModel implements Model{
 	private UUID id;
 	private String sessionName;
 
@@ -42,8 +42,7 @@ public abstract class ModelBase extends Observable implements Model{
 	protected void notifyChange(MessageInformation messageInformation) {
 		MessageEnvelope messageEnvelope = new MessageEnvelope(sessionName, messageInformation.getMessageType(),
 				messageInformation);
-		
-		setChanged();
+
 		notifyObservers(messageEnvelope);
 	}
 }
