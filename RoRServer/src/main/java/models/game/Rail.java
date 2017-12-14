@@ -21,11 +21,14 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	/**
 	 * Konstruktor für Geraden oder Kurven
 	 */
-	public Rail(String sessionName, Square square, RailSectionPosition node1, RailSectionPosition node2) {
+	public Rail(String sessionName, Square square, List<RailSectionPosition> railSectionPositions) {
 		super(sessionName, square);
+		
 		railSections = new ArrayList<RailSection>();
-		RailSection section = new RailSection(sessionName, getId(), node1, node2); 
-		railSections.add(section);
+		for(int i = 0; i < railSectionPositions.size(); i += 2) {
+			RailSection section = new RailSection(sessionName, getId(), railSectionPositions.get(i), railSectionPositions.get(i + 1));
+			railSections.add(section);
+		}
 
 		notifyCreatedRail();
 	}

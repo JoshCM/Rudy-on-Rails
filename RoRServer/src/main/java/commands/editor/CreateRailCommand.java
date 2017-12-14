@@ -10,6 +10,7 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import models.game.Map;
 import models.game.Rail;
+import models.game.RailSection;
 import models.game.RailSectionPosition;
 import models.game.Square;
 import models.session.EditorSession;
@@ -33,9 +34,16 @@ public class CreateRailCommand extends CommandBase {
 		EditorSession editorSession = (EditorSession) session;
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(xPos, yPos);
-		RailSectionPosition node1 = RailSectionPosition.valueOf(railSectionData.get(0).get("node1").getAsString());
-		RailSectionPosition node2 = RailSectionPosition.valueOf(railSectionData.get(0).get("node2").getAsString());
-		Rail rail = new Rail(session.getName(), square, node1, node2);
+		
+		List<RailSectionPosition> railSectionPositions = new ArrayList<RailSectionPosition>();
+		for(JsonObject json : railSectionData) {
+			RailSectionPosition node1 = RailSectionPosition.valueOf(json.get("node1").getAsString());
+			RailSectionPosition node2 = RailSectionPosition.valueOf(json.get("node2").getAsString());
+			railSectionPositions.add(node1);
+			railSectionPositions.add(node2);
+		}
+		
+		Rail rail = new Rail(session.getName(), square, railSectionPositions);
 		square.setPlaceable(rail);
 	}
 }
