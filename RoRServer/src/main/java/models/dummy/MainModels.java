@@ -6,6 +6,7 @@ import communication.queue.receiver.QueueReceiver;
 import models.game.Map;
 import models.game.Rail;
 import models.game.RailSectionPosition;
+import persistent.MapManager;
 
 public class MainModels {
 	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
@@ -25,11 +26,11 @@ public class MainModels {
 		map.getSquare(2, 1).setPlaceable(new Rail("blubb", map.getSquare(1, 1), RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
 		
 		game.setMap(map);
-		game.saveMap("Map1");
+		MapManager.saveMap(map);
 		
-		game1.loadMap("Map1");
+		map = MapManager.loadMap("Map1");
 		log.info(game1.getMap().getSquare(0, 0).getPlaceableOnSquare());
 		log.info(game1.getMap().getSquare(0, 1).getPlaceableOnSquare());
-		game1.saveMap("Map2");
+		MapManager.saveMap(map);
 	}
 }

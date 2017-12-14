@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace RoRClient.ViewModels.Editor
 {
@@ -12,6 +13,7 @@ namespace RoRClient.ViewModels.Editor
         private UIState uiState;
         private MapViewModel mapViewModel;
         private ToolbarViewModel toolbarViewModel;
+        private TopMenuViewModel topMenuViewModel;
 
         public MapViewModel MapViewModel
         {
@@ -29,11 +31,20 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
+        public TopMenuViewModel TopMenuViewModel
+        {
+            get
+            {
+                return topMenuViewModel;
+            }
+        }
+
         public EditorViewModel(UIState uiState)
         {
             this.uiState = uiState;
             toolbarViewModel = new ToolbarViewModel();
             mapViewModel = new MapViewModel(toolbarViewModel);
+            topMenuViewModel = new TopMenuViewModel();
         }
     }
 }

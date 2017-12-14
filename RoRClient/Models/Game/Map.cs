@@ -11,7 +11,24 @@ namespace RoRClient.Models.Game
         private const int mapSize = 50;
         public static int MapSize => mapSize;
 
-        Square[,] squares;
+        private string name = "";
+        private Square[,] squares;
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                if(name != value)
+                {
+                    name = value;
+                    NotifyPropertyChanged("Name");
+                }
+            }
+        }
 
         public Square[,] Squares
         {
@@ -24,7 +41,6 @@ namespace RoRClient.Models.Game
                 squares = value;
             }
         }
-
 
         public Map () : base()
         {
