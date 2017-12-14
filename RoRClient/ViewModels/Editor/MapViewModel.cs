@@ -275,14 +275,17 @@ namespace RoRClient.ViewModels.Editor
         /// Command für RotateRight erstellen
         /// </summary>
         private ICommand rotateRightCommand;
-        public ICommand RotateRightCommand()
+        public ICommand RotateRightCommand
         {
-            if (rotateRightCommand == null)
+            get
             {
-                rotateRightCommand = new ActionCommand(param => RotateRight());
-            }
+                if (rotateRightCommand == null)
+                {
+                    rotateRightCommand = new ActionCommand(param => RotateRight());
+                }
 
-            return rotateRightCommand;
+                return rotateRightCommand;
+            }
         }
 
         /// <summary>
@@ -297,14 +300,16 @@ namespace RoRClient.ViewModels.Editor
         /// Command für RotateLeft erstellen
         /// </summary>
         private ICommand rotateLeftCommand;
-        public ICommand RotateLeftCommand()
+        public ICommand RotateLeftCommand
         {
-            if (rotateLeftCommand == null)
+            get
             {
-                rotateLeftCommand = new ActionCommand(param => RotateLeft());
+                if (rotateLeftCommand == null)
+                {
+                    rotateLeftCommand = new ActionCommand(param => RotateLeft());
+                }
+                return rotateLeftCommand;
             }
-
-            return rotateLeftCommand;
         }
 
         /// <summary>
@@ -319,14 +324,16 @@ namespace RoRClient.ViewModels.Editor
         /// Command für Delete erstellen
         /// </summary>
         private ICommand deleteCommand;
-        public ICommand DeleteCommand()
+        public ICommand DeleteCommand
         {
-            if (deleteCommand == null)
+            get
             {
-                deleteCommand = new ActionCommand(param => Delete());
+                if (deleteCommand == null)
+                {
+                    deleteCommand = new ActionCommand(param => Delete());
+                }
+                return deleteCommand;
             }
-
-            return deleteCommand;
         }
 
         /// <summary>
