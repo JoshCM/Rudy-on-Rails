@@ -1,4 +1,5 @@
 ﻿using RoRClient.ViewModels.Commands;
+using RoRClient.ViewModels.Editor;
 using System;
 using System.Windows.Input;
 
@@ -10,6 +11,20 @@ namespace RoRClient.ViewModels
     /// </summary>
     public class CanvasViewModel : ViewModelBase
     {
+
+        private MapViewModel mapViewModel;
+        public MapViewModel MapViewModel
+        {
+            get
+            {
+                return mapViewModel;
+            }
+            set
+            {
+                mapViewModel = value;
+            }
+        }
+
         public CanvasViewModel(Guid modelId)
         {
             id = modelId;
@@ -74,10 +89,28 @@ namespace RoRClient.ViewModels
             }
         }
 
-        // EditorObject (Rail etc.) ausgewählt
+        // EditorObject (Rail etc.) ausgewählt + Quicknavigation anzeigen (sollte noch umbenannt werden)
         public void SelectInteractiveGameObject()
         {
-            Console.WriteLine("Selected ViewModel: " + this.ToString() + " / ID: " +  this.Id);
+            // Neues CanvasViewModel im MapViewModel merken
+            MapViewModel.SelectedCanvasViewModel = this;
+            // Initial das vorherige CanvasViewModel auf das Neue setzen
+            if (MapViewModel.PreviousSelectedCanvasViewModel == null)
+            {
+                MapViewModel.PreviousSelectedCanvasViewModel = this;
+                Console.WriteLine("1. Mal");
+            }
+            // Anzeigen der Quicknavigation
+            MapViewModel.SwitchQuickNavigationForCanvasViewModel();
+
+            // Danach das CanvasViewModel als vorheriges CanvasViewModel merken, wenn es sich geänder hat
+            if (this != MapViewModel.PreviousSelectedCanvasViewModel)
+            {
+                MapViewModel.PreviousSelectedCanvasViewModel = this;
+                Console.WriteLine("Model hat sich geändert!");
+
+            }
+           
         }
     }
 }

@@ -6,8 +6,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import communication.MessageEnvelope;
 import communication.MessageInformation;
+import models.base.ModelObserver;
+import models.base.ObservableModel;
 
-public class MessageQueue implements Observer {
+public class MessageQueue implements ModelObserver {
 	private TopicSender topicSender;
 	private Thread sendMessageThread;
 	private ConcurrentLinkedQueue<MessageEnvelope> messagesToSendQueue = new ConcurrentLinkedQueue<>();
@@ -55,12 +57,17 @@ public class MessageQueue implements Observer {
 		sendMessageThread.start();
 	}
 	
+	/**
+	 * Wird für UnitTests genutzt, um zu überprüfen, ob auch alle wichtigen Informationen in der Nachricht stehen
+	 * @param messageType
+	 * @return
+	 */
 	public MessageInformation getFirstFoundMessageInformationForMessageType(String messageType) {
 		Object[] messages;
 		messages = messagesToSendQueue.toArray();
 
 		for(Object obj : messages) {
-			MessageInformation messageInfo = (MessageInformation)obj;
+			MessageInformation messageInfo = ((MessageEnvelope)obj).getMessageInformation();
 			if(messageInfo.getMessageType().equals(messageType)) {
 				return messageInfo;
 			}
@@ -69,7 +76,7 @@ public class MessageQueue implements Observer {
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(ObservableModel observable, Object arg) {
 		MessageEnvelope messageEnvelope = (MessageEnvelope) arg;
 		addMessage(messageEnvelope);
 	}
