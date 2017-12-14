@@ -95,6 +95,8 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	}
 
 	public void rotate(boolean right) {
-		
+		for(RailSection section : railSections) {
+			section.rotate(right);
+		}
 	}
 }

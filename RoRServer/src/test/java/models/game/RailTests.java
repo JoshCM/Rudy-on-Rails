@@ -60,4 +60,42 @@ public class RailTests {
 		assertEquals(rail.getYPos(), yPos);
 		assertEquals(rail.getSquareId(), squareId);
 	}
+	
+	@Test
+	public void RailRotatesRight() {
+		Rail rail = createCrossRail();
+		rail.rotate(true);
+		
+		assertEquals(RailSectionPosition.EAST, rail.getFirstSection().getNode1());
+		assertEquals(RailSectionPosition.WEST, rail.getFirstSection().getNode2());
+	}
+	
+	@Test
+	public void RailRotatesLeft() {
+		Rail rail = createCrossRail();
+		rail.rotate(false);
+		
+		assertEquals(RailSectionPosition.WEST, rail.getFirstSection().getNode1());
+		assertEquals(RailSectionPosition.EAST, rail.getFirstSection().getNode2());
+	}
+	
+	private Rail createCrossRail() {
+		RailSectionPosition node1 = RailSectionPosition.NORTH;
+		RailSectionPosition node2 = RailSectionPosition.SOUTH;
+		RailSectionPosition node3 = RailSectionPosition.WEST;
+		RailSectionPosition node4 = RailSectionPosition.EAST;
+		List<RailSectionPosition> railSectionPositions = new ArrayList<>();
+		railSectionPositions.add(node1);
+		railSectionPositions.add(node2);
+		railSectionPositions.add(node3);
+		railSectionPositions.add(node4);
+		int squarePosX = 0;
+		int squarePosY = 0;
+		
+		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
+		Map map = editorSession.getMap();
+		Square square = map.getSquare(squarePosX, squarePosY);
+		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions);
+		return rail;
+	}
 }

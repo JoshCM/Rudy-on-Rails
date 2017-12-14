@@ -1,5 +1,7 @@
 package models.game;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -25,5 +27,53 @@ public class RailSectionTests {
 		Square square = map.getSquare(squarePosX, squarePosY);
 		
 		new Rail(editorSession.getName(), square, railSectionPositions);
+	}
+	
+	@Test
+	public void RailSectionNORTHSOUTHRotatesRight() {
+		RailSectionPosition node1 = RailSectionPosition.NORTH;
+		RailSectionPosition node2 = RailSectionPosition.SOUTH;
+		RailSection section = new RailSection("test", UUID.randomUUID(), node1, node2);
+		
+		section.rotate(true);
+		
+		assertEquals(RailSectionPosition.EAST, section.getNode1());
+		assertEquals(RailSectionPosition.WEST, section.getNode2());
+	}
+	
+	@Test
+	public void RailSectionEASTWESTRotatesRight() {
+		RailSectionPosition node1 = RailSectionPosition.EAST;
+		RailSectionPosition node2 = RailSectionPosition.WEST;
+		RailSection section = new RailSection("test", UUID.randomUUID(), node1, node2);
+		
+		section.rotate(true);
+		
+		assertEquals(RailSectionPosition.SOUTH, section.getNode1());
+		assertEquals(RailSectionPosition.NORTH, section.getNode2());
+	}
+	
+	@Test
+	public void RailSectionNORTHSOUTHRotatesLeft() {
+		RailSectionPosition node1 = RailSectionPosition.NORTH;
+		RailSectionPosition node2 = RailSectionPosition.SOUTH;
+		RailSection section = new RailSection("test", UUID.randomUUID(), node1, node2);
+		
+		section.rotate(false);
+		
+		assertEquals(RailSectionPosition.WEST, section.getNode1());
+		assertEquals(RailSectionPosition.EAST, section.getNode2());
+	}
+	
+	@Test
+	public void RailSectionEASTWESTRotatesLeft() {
+		RailSectionPosition node1 = RailSectionPosition.EAST;
+		RailSectionPosition node2 = RailSectionPosition.WEST;
+		RailSection section = new RailSection("test", UUID.randomUUID(), node1, node2);
+		
+		section.rotate(false);
+		
+		assertEquals(RailSectionPosition.NORTH, section.getNode1());
+		assertEquals(RailSectionPosition.SOUTH, section.getNode2());
 	}
 }

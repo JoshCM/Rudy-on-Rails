@@ -64,4 +64,24 @@ public class RailSection extends ModelBase {
 	public RailSectionPosition getNode2() {
 		return node2;
 	}
+
+	public void rotate(boolean right) {
+		node1 = rotateRailSectionPosition(node1, right);
+		node2 = rotateRailSectionPosition(node2, right);
+	}
+	
+	private RailSectionPosition rotateRailSectionPosition(RailSectionPosition railSectionPosition, boolean right) {
+		int newIndex;
+		
+		if(right) {
+			newIndex = ((railSectionPosition.ordinal() + 1) % RailSectionPosition.values().length);
+		} else {
+			newIndex = ((railSectionPosition.ordinal() - 1) % RailSectionPosition.values().length);
+			if(newIndex < 0) {
+				newIndex += RailSectionPosition.values().length;
+			}
+		}
+		
+		return RailSectionPosition.values()[newIndex];
+	}
 }
