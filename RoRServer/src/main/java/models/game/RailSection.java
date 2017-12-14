@@ -10,13 +10,16 @@ import models.base.ModelBase;
  * Klasse für ein Schienenstueck mit "Eingang" und "Ausgang"
  */
 public class RailSection extends ModelBase {
+	private UUID squareId;
+	private int squareXPos;
+	private int squareYPos;
 	private UUID railId;
 	private RailSectionPosition node1;
 	private RailSectionPosition node2;
 	
 	// TODO: hier muss placeableOnSquareSection
 
-	public RailSection(String sessionName, UUID railId, RailSectionPosition node1, RailSectionPosition node2) {
+	public RailSection(String sessionName, Rail rail, RailSectionPosition node1, RailSectionPosition node2) {
 		super(sessionName);
 		
 		if (node1 == node2) {
@@ -24,7 +27,10 @@ public class RailSection extends ModelBase {
 					"RailSectionPositions are equal; node1: " + node1.toString() + ", node2: " + node2.toString());
 		}
 
-		this.railId = railId;
+		this.railId = rail.getId();
+		this.squareId = rail.getSquareId();
+		this.squareXPos = rail.getXPos();
+		this.squareYPos = rail.getYPos();
 		this.node1 = node1;
 		this.node2 = node2;
 	}
@@ -75,7 +81,9 @@ public class RailSection extends ModelBase {
 	
 	private void notifyNodesUpdated() {
 		MessageInformation messageInformation = new MessageInformation("UpdateNodesOfRailSection");
-		messageInformation.putValue("railId", railId.toString());
+		messageInformation.putValue("squareId", squareId);
+		messageInformation.putValue("xPos", squareXPos);
+		messageInformation.putValue("xPos", squareYPos);
 		messageInformation.putValue("railSectionId", getId().toString());
 		messageInformation.putValue("node1", node1.toString());
 		messageInformation.putValue("node2", node2.toString());

@@ -26,7 +26,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		
 		railSections = new ArrayList<RailSection>();
 		for(int i = 0; i < railSectionPositions.size(); i += 2) {
-			RailSection section = new RailSection(sessionName, getId(), railSectionPositions.get(i), railSectionPositions.get(i + 1));
+			RailSection section = new RailSection(sessionName, this, railSectionPositions.get(i), railSectionPositions.get(i + 1));
 			railSections.add(section);
 		}
 

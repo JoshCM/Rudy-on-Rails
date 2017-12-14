@@ -29,11 +29,26 @@ public class RailSectionTests {
 		new Rail(editorSession.getName(), square, railSectionPositions);
 	}
 	
+	private Rail createTestRail(RailSectionPosition node1, RailSectionPosition node2) {
+		List<RailSectionPosition> railSectionPositions = new ArrayList<>();
+		railSectionPositions.add(node1);
+		railSectionPositions.add(node2);
+		int squarePosX = 0;
+		int squarePosY = 0;
+		
+		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
+		Map map = editorSession.getMap();
+		Square square = map.getSquare(squarePosX, squarePosY);
+		
+		return new Rail(editorSession.getName(), square, railSectionPositions);
+	}
+	
 	@Test
 	public void RailSectionNORTHSOUTHRotatesRight() {
 		RailSectionPosition node1 = RailSectionPosition.NORTH;
 		RailSectionPosition node2 = RailSectionPosition.SOUTH;
-		RailSection section = new RailSection("test", UUID.randomUUID(), node1, node2);
+		Rail rail = createTestRail(node1, node2);
+		RailSection section = new RailSection("test", rail, node1, node2);
 		
 		section.rotate(true);
 		
@@ -45,7 +60,8 @@ public class RailSectionTests {
 	public void RailSectionEASTWESTRotatesRight() {
 		RailSectionPosition node1 = RailSectionPosition.EAST;
 		RailSectionPosition node2 = RailSectionPosition.WEST;
-		RailSection section = new RailSection("test", UUID.randomUUID(), node1, node2);
+		Rail rail = createTestRail(node1, node2);
+		RailSection section = new RailSection("test", rail, node1, node2);
 		
 		section.rotate(true);
 		
@@ -57,7 +73,8 @@ public class RailSectionTests {
 	public void RailSectionNORTHSOUTHRotatesLeft() {
 		RailSectionPosition node1 = RailSectionPosition.NORTH;
 		RailSectionPosition node2 = RailSectionPosition.SOUTH;
-		RailSection section = new RailSection("test", UUID.randomUUID(), node1, node2);
+		Rail rail = createTestRail(node1, node2);
+		RailSection section = new RailSection("test", rail, node1, node2);
 		
 		section.rotate(false);
 		
@@ -69,7 +86,8 @@ public class RailSectionTests {
 	public void RailSectionEASTWESTRotatesLeft() {
 		RailSectionPosition node1 = RailSectionPosition.EAST;
 		RailSectionPosition node2 = RailSectionPosition.WEST;
-		RailSection section = new RailSection("test", UUID.randomUUID(), node1, node2);
+		Rail rail = createTestRail(node1, node2);
+		RailSection section = new RailSection("test", rail, node1, node2);
 		
 		section.rotate(false);
 		
