@@ -100,6 +100,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
+    <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
     <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />

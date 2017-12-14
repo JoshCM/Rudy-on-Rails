@@ -1,5 +1,10 @@
 package models.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gson.JsonObject;
+
 import communication.MessageInformation;
 
 /**
@@ -11,15 +16,16 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 
 	// muss hier raus und eine Ebene tiefer(RailSection)
 	protected PlaceableOnRail placeableOnRail = null;
-	protected RailSection section1;
-	protected RailSection section2;
+	protected List<RailSection> railSections;
 
 	/**
 	 * Konstruktor für Geraden oder Kurven
 	 */
 	public Rail(String sessionName, Square square, RailSectionPosition node1, RailSectionPosition node2) {
 		super(sessionName, square);
-		this.section1 = new RailSection(sessionName, getId(), node1, node2);
+		railSections = new ArrayList<RailSection>();
+		RailSection section = new RailSection(sessionName, getId(), node1, node2); 
+		railSections.add(section);
 
 		notifyCreatedRail();
 	}
@@ -27,13 +33,21 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	private void notifyCreatedRail() {
 		MessageInformation messageInfo = new MessageInformation("CreateRail");
 		messageInfo.putValue("railId", getId());
-		messageInfo.putValue("railSectionId", section1.getId());
-		messageInfo.putValue("railSectionPositionNode1", section1.getNode1().toString());
-		messageInfo.putValue("railSectionPositionNode2", section1.getNode2().toString());
+		
 		messageInfo.putValue("squareId", getSquareId());
 		// TODO: Später haben wir die richtigen SquareIds im Client, im Moment noch nicht!! 
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
+		
+		List<JsonObject> railSectionJsons = new ArrayList<JsonObject>();
+		for(RailSection section : railSections) {
+			JsonObject json = new JsonObject();
+			json.addProperty("railSectionId", section.getId().toString());
+			json.addProperty("node1", section.getNode1().toString());
+			json.addProperty("node2", section.getNode2().toString());
+			railSectionJsons.add(json);
+		}
+		messageInfo.putValue("railSections", railSectionJsons);
 		
 		notifyChange(messageInfo);
 	}
@@ -42,8 +56,8 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		this.placeableOnRail = placeableOnRail;
 	}
 
-	public RailSection getSection() {
-		return section1;
+	public RailSection getFirstSection() {
+		return railSections.get(0);
 	}
 
 	@Override
@@ -51,8 +65,11 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((placeableOnRail == null) ? 0 : placeableOnRail.hashCode());
-		result = prime * result + ((section1 == null) ? 0 : section1.hashCode());
-		result = prime * result + ((section2 == null) ? 0 : section2.hashCode());
+		
+		for(RailSection section : railSections) {
+			result = prime * result + ((section == null) ? 0 : section.hashCode());
+		}
+		
 		return result;
 	}
 
@@ -70,16 +87,11 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 				return false;
 		} else if (!placeableOnRail.equals(other.placeableOnRail))
 			return false;
-		if (section1 == null) {
-			if (other.section1 != null)
-				return false;
-		} else if (!section1.equals(other.section1))
-			return false;
-		if (section2 == null) {
-			if (other.section2 != null)
-				return false;
-		} else if (!section2.equals(other.section2))
-			return false;
+	
 		return true;
+	}
+
+	public void rotate(boolean right) {
+		
 	}
 }

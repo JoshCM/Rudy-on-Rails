@@ -49,7 +49,7 @@ namespace RoRClient.Views.Editor.Helper
                     node2 = new RailSectionPosition();
                     break;
             }
-            return new RailSection(node1, node2);
+            return new RailSection(Guid.NewGuid(), node1, node2);
         }
     }
 }
