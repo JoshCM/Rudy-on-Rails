@@ -57,12 +57,17 @@ public class MessageQueue implements ModelObserver {
 		sendMessageThread.start();
 	}
 	
+	/**
+	 * Wird für UnitTests genutzt, um zu überprüfen, ob auch alle wichtigen Informationen in der Nachricht stehen
+	 * @param messageType
+	 * @return
+	 */
 	public MessageInformation getFirstFoundMessageInformationForMessageType(String messageType) {
 		Object[] messages;
 		messages = messagesToSendQueue.toArray();
 
 		for(Object obj : messages) {
-			MessageInformation messageInfo = (MessageInformation)obj;
+			MessageInformation messageInfo = ((MessageEnvelope)obj).getMessageInformation();
 			if(messageInfo.getMessageType().equals(messageType)) {
 				return messageInfo;
 			}
