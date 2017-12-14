@@ -14,13 +14,19 @@ namespace RoRClient.Commands.Editor.Delete
     {
         private int xPos;
         private int yPos;
-
+        /// <summary>
+        /// Nachricht wird ausgelesen
+        /// </summary>
+        /// <param name="session"></param>
+        /// <param name="messageInformation"></param>
         public DeletePlaceableCommand(EditorSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
         }
-
+        /// <summary>
+        /// Square wird genommen und gelöscht
+        /// </summary>
         public override void Execute()
         {
             EditorSession editorSession = EditorSession.GetInstance();
