@@ -10,10 +10,10 @@ import communication.MessageInformation;
 
 public class Trainstation extends InteractiveGameObject implements PlaceableOnSquare {
 
-	private List<Rail> trainstationRails;
-	public Trainstation(String sessionName, Square square, List<Rail> trainstationRails, UUID id) {
+	private List<UUID> trainstationRailIds;
+	public Trainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id) {
 		super(sessionName, square, id);
-		this.trainstationRails = trainstationRails;
+		this.trainstationRailIds = trainstationRailIds;
 		
 		notifyCreatedTrainstation();
 	}
@@ -25,9 +25,9 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		messageInfo.putValue("yPos", getYPos());
 		
 		List<JsonObject> rails = new ArrayList<JsonObject>();
-		for(Rail rail : trainstationRails) {
+		for(UUID railId : getTrainstationRailIds()) {
 			JsonObject json = new JsonObject();
-			json.addProperty("railId", rail.getId().toString());
+			json.addProperty("railId", railId.toString());
 			rails.add(json);
 		}
 		
@@ -36,7 +36,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		notifyChange(messageInfo);
 	}
 
-	public List<Rail> getTrainstationRails() {
-		return trainstationRails;
+	public List<UUID> getTrainstationRailIds() {
+		return trainstationRailIds;
 	}
 }

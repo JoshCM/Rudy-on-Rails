@@ -6,7 +6,6 @@ import java.util.UUID;
 import communication.MessageEnvelope;
 import communication.MessageInformation;
 import communication.topic.MessageQueue;
-import models.session.RoRSession;
 
 /**
  * Base-Klasse für alle Models, damit alle Models eine Id und die zugehörige

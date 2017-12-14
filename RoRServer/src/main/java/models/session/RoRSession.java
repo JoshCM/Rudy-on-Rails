@@ -3,10 +3,7 @@ package models.session;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
-import communication.topic.TopicSender;
 import models.game.Map;
 import models.game.Player;
 

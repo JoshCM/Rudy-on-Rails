@@ -3,7 +3,6 @@ package models.game;
 import java.util.UUID;
 
 import models.base.ModelBase;
-import models.session.RoRSession;
 
 /**
  * Abstrakte Klasse fuer alle Objekte, mit denen interagiert werden kann

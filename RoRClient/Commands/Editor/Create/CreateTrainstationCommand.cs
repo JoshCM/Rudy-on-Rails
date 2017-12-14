@@ -24,6 +24,7 @@ namespace RoRClient.Commands.Editor.Create
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
 
+            // über railids rails nutzen
             List<JObject> rails = messageInformation.GetValueAsJObjectList("trainstationRails");
             foreach (JObject obj in rails)
             {

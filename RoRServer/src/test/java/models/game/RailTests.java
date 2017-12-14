@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import java.util.UUID;
 import org.junit.Test;
 
-import communication.MessageInformation;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
 

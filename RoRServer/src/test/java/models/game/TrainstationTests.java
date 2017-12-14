@@ -42,12 +42,13 @@ public class TrainstationTests {
 		Square square = session.getMap().getSquare(0, 1);
 		Assert.assertNotNull(square.getPlaceableOnSquare());
 		Assert.assertEquals(Trainstation.class, square.getPlaceableOnSquare().getClass());
-		List<Rail> rails = ((Trainstation)square.getPlaceableOnSquare()).getTrainstationRails();
-		for(Rail rail : rails) {
+		List<UUID> railIds = ((Trainstation)square.getPlaceableOnSquare()).getTrainstationRailIds();
+		for(UUID railId : railIds) {
+			Rail rail = (Rail)session.getMap().getPlacableById(railId);
 			Assert.assertEquals(RailSectionPosition.NORTH, rail.getSection().getNode1());
 			Assert.assertEquals(RailSectionPosition.SOUTH, rail.getSection().getNode2());
 		}
-		Assert.assertEquals(3, rails.size());
+		Assert.assertEquals(3, railIds.size());
 	}
 	
 	@Test(expected = InvalidModelOperationException.class)

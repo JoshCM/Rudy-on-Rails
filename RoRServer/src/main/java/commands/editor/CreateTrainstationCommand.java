@@ -45,8 +45,8 @@ public class CreateTrainstationCommand extends CommandBase {
 		}
 	}
 
-	private List<Rail> createTrainstationRails(Map map, Square square, UUID trainstationId) {
-		List<Rail> trainstationRails = new ArrayList<Rail>();
+	private List<UUID> createTrainstationRails(Map map, Square square, UUID trainstationId) {
+		List<UUID> trainstationRailIds = new ArrayList<UUID>();
 
 		// Railsection werden erstellt
 		RailSectionPosition railSectionPositionNode1 = RailSectionPosition.NORTH;
@@ -68,41 +68,56 @@ public class CreateTrainstationCommand extends CommandBase {
 			Rail rail = new Rail(session.getName(), trainstationRailSquare, railSectionPositionNode1, railSectionPositionNode2);
 			trainstationRailSquare.setPlaceable(rail);
 			rail.setTrainstationId(trainstationId);
-			trainstationRails.add(rail);
+			trainstationRailIds.add(rail.getId());
 		}
 		
-		return trainstationRails;
+		return trainstationRailIds;
 	}
-
+	
 	private boolean validate(Map map, Square square) {
-		// Square für Trainstation ist vorhanden
+		if(!validatePossibleTrainstation(map, square))
+			return false;
+		if(!validateWindowEdges(map, square))
+			return false;
+		if(!validatePossibleRails(map, square))
+			return false;		
+		return true;
+	}
+	
+	private boolean validatePossibleTrainstation(Map map, Square square) {
 		if (square != null) {
-			// Square für Trainstation ist belegt
 			if (square.getPlaceableOnSquare() != null) {
 				return false;
 			}
 		} else {
 			return false;
 		}
-		// Square für Trainstation ist weit genug weg vom oberen, unteren und rechten
-		// Rand
-		if (square.getYIndex() > 0 && square.getYIndex() < map.getSquares().length - 1
-				&& square.getXIndex() < map.getSquares().length - 1) {
-			// Iteriert über die Squares für die möglichen Rails der Trainstation
-			for (int i = -1; i <= 1; i++) {
-				Square possibleRailSquare = map.getSquare(square.getXIndex() + 1, square.getYIndex() + i);
-				// Square für Rail ist vorhanden
-				if (possibleRailSquare != null) {
-					// Square für Rail ist belegt
-					if (possibleRailSquare.getPlaceableOnSquare() != null) {
-						return false;
-					}
-				} else {
+		return true;
+	}
+
+	private boolean validateWindowEdges(Map map, Square square) {
+		if(square.getYIndex() == 0)
+			return false;
+		if(square.getYIndex() == map.getSquares().length - 1)
+			return false;
+		if(square.getXIndex() == map.getSquares().length - 1)
+			return false;
+		return true;
+	}
+	
+	private boolean validatePossibleRails(Map map, Square square) {
+		// Iteriert über die Squares für die möglichen Rails der Trainstation
+		for (int i = -1; i <= 1; i++) {
+			Square possibleRailSquare = map.getSquare(square.getXIndex() + 1, square.getYIndex() + i);
+			// Square für Rail ist vorhanden
+			if (possibleRailSquare != null) {
+				// Square für Rail ist belegt
+				if (possibleRailSquare.getPlaceableOnSquare() != null) {
 					return false;
 				}
+			} else {
+				return false;
 			}
-		} else {
-			return false;
 		}
 		return true;
 	}
