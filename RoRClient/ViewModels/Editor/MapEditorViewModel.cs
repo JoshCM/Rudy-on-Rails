@@ -136,7 +136,7 @@ namespace RoRClient.ViewModels.Editor
                             break;
                         case "Trainstation":
                             Trainstation trainstation = (Trainstation)square.PlaceableOnSquare;
-                            TrainstationViewModel trainstationViewModel = new TrainstationViewModel(trainstation);
+                            TrainstationEditorViewModel trainstationViewModel = new TrainstationEditorViewModel(trainstation);
                             placeableOnSquareCollection.Add(trainstationViewModel);
                             trainstation.PropertyChanged += OnTrainstationPropertyChanged;
                             break;

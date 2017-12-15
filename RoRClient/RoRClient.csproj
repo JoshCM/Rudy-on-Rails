@@ -144,7 +144,7 @@
     <Compile Include="ViewModels\Game\SquareGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
     <Compile Include="ViewModels\Game\RailGameViewModel.cs" />
-    <Compile Include="ViewModels\Editor\TrainstationViewModel.cs" />
+    <Compile Include="ViewModels\Editor\TrainstationEditorViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -160,8 +160,8 @@
     <Compile Include="Views\CanvasUserControl.cs" />
     <Compile Include="Views\Editor\Helper\RegexValidator.cs" />
     <Compile Include="Views\Editor\Helper\ToolConverter.cs" />
-    <Compile Include="Views\Editor\TrainstationUserControl.xaml.cs">
-      <DependentUpon>TrainstationUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Editor\TrainstationEditorUserControl.xaml.cs">
+      <DependentUpon>TrainstationEditorUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Editor\RailEditorUserControl.xaml.cs">
       <DependentUpon>RailEditorUserControl.xaml</DependentUpon>
@@ -257,7 +257,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Editor\TrainstationUserControl.xaml">
+    <Page Include="Views\Editor\TrainstationEditorUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -352,9 +352,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\Game\Create\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Images\railcurve_ne.png" />
     <Resource Include="Resources\Images\railcurve_nw.png" />
