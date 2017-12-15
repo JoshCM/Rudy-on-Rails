@@ -12,7 +12,7 @@ using RoRClient.Communication.DataTransferObject;
 
 namespace RoRClient.Models.Session
 {
-    public class RoRSession : ModelBase
+    public class RoRSession
     {
         protected string name;
         protected Map map;

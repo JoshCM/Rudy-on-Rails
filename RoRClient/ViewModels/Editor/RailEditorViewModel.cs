@@ -15,10 +15,10 @@ namespace RoRClient.ViewModels.Editor
     /// <summary>
     /// Hält die zugehörige Rail und die Position (SquarePosX, SquarePosY) des Rails
     /// </summary>
-    public class RailViewModel : CanvasViewModel
+    public class RailEditorViewModel : CanvasEditorViewModel
     {
         private Rail rail;
-        public RailViewModel(Rail rail) : base(rail.Id)
+        public RailEditorViewModel(Rail rail) : base(rail.Id)
         {
             this.rail = rail;
             this.SquarePosX = rail.Square.PosX;
