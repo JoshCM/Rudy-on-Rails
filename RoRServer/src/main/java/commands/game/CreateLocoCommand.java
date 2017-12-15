@@ -11,7 +11,11 @@ import models.game.Rail;
 import models.game.Square;
 import models.session.GameSession;
 import models.session.RoRSession;
-
+/**
+ * 
+ * @author Isabel Rott, Michelle Le
+ * Command für das Erstellen einer Lok
+ */
 public class CreateLocoCommand extends CommandBase {
 
 	private int xPos;

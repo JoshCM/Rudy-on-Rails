@@ -86,6 +86,10 @@ namespace RoRClient.Communication.Dispatcher
             //TODO: hier soll ein Create Loco Command angestoßen werden
         }
 
+        /// <summary>
+        /// Methode, die eine Message an den Server schicken soll, dass eine Lok für den jeweiligen Player erstellt werden soll
+        /// </summary>
+        /// <param name="playerId"></param> playerId des Players, dem die Lok zugeordnet werden soll
         private void SendCreateLocoCommand(Guid playerId)
         {
             MessageInformation messageInformation = new MessageInformation();
@@ -95,7 +99,7 @@ namespace RoRClient.Communication.Dispatcher
             messageInformation.PutValue("xPos", xPos);
             messageInformation.PutValue("yPos", yPos);
             messageInformation.PutValue("playerId", playerId);
-           // lobbyModel.getFromClientRequestSender().SendMessage("CreateLoco", messageInformation);
+        
             GameSession gameSession = GameSession.GetInstance();
             gameSession.QueueSender.SendMessage("CreateLoco", messageInformation);
         }
