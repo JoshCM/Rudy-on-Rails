@@ -26,7 +26,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	/**
 	 * Konstruktor für Geraden oder Kurven
 	 */
-	public Rail(String sessionName, Square square, List<RailSectionPosition> railSectionPositions) {
+	public Rail(String sessionName, Square square, List<Compass> railSectionPositions) {
 		super(sessionName, square);
 		
 		railSections = new ArrayList<RailSection>();
@@ -40,7 +40,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	 * @param sessionName
 	 * @param railSectionPositions
 	 */
-	private void createRailSectionsForRailSectionPositions(String sessionName, List<RailSectionPosition> railSectionPositions) {
+	private void createRailSectionsForRailSectionPositions(String sessionName, List<Compass> railSectionPositions) {
 		for(int i = 0; i < railSectionPositions.size(); i += 2) {
 			RailSection section = new RailSection(sessionName, this, railSectionPositions.get(i), railSectionPositions.get(i + 1));
 			railSections.add(section);

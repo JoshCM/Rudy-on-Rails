@@ -46,8 +46,8 @@ public class TrainstationTests {
 		List<UUID> railIds = ((Trainstation)square.getPlaceableOnSquare()).getTrainstationRailIds();
 		for(UUID railId : railIds) {
 			Rail rail = (Rail)session.getMap().getPlaceableById(railId);
-			Assert.assertEquals(RailSectionPosition.NORTH, rail.getFirstSection().getNode1());
-			Assert.assertEquals(RailSectionPosition.SOUTH, rail.getFirstSection().getNode2());
+			Assert.assertEquals(Compass.NORTH, rail.getFirstSection().getNode1());
+			Assert.assertEquals(Compass.SOUTH, rail.getFirstSection().getNode2());
 		}
 		Assert.assertEquals(3, railIds.size());
 	}
@@ -80,7 +80,7 @@ public class TrainstationTests {
 		// setzen der rail die die exception verursacht
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Square square = session.getMap().getSquare(1, 0);
-		square.setPlaceable(new Rail(session.getName(),square,Arrays.asList(RailSectionPosition.NORTH, RailSectionPosition.SOUTH)));
+		square.setPlaceable(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
 		
@@ -103,7 +103,7 @@ public class TrainstationTests {
 		// setzen der rail die die exception verursacht
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Square square = session.getMap().getSquare(1, 1);
-		square.setPlaceable(new Rail(session.getName(),square,Arrays.asList(RailSectionPosition.NORTH, RailSectionPosition.SOUTH)));
+		square.setPlaceable(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
 		
@@ -126,7 +126,7 @@ public class TrainstationTests {
 		// setzen der rail die die exception verursacht
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Square square = session.getMap().getSquare(1, 2);
-		square.setPlaceable(new Rail(session.getName(),square,Arrays.asList(RailSectionPosition.NORTH, RailSectionPosition.SOUTH)));
+		square.setPlaceable(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
 		

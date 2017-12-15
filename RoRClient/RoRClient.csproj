@@ -324,7 +324,7 @@
     <Compile Include="Models\Game\IPlaceableOnSquare.cs" />
     <Compile Include="Models\Game\Rail.cs" />
     <Compile Include="Models\Game\RailSection.cs" />
-    <Compile Include="Models\Game\RailSectionPosition.cs" />
+    <Compile Include="Models\Game\Compass.cs" />
     <Compile Include="Models\Game\Square.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -351,8 +351,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\Editor\Update\" />
-    <Folder Include="Commands\Editor\Delete\" />
     <Folder Include="Commands\Game\Create\" />
   </ItemGroup>
   <ItemGroup>

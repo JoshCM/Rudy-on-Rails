@@ -106,6 +106,7 @@ namespace RoRClient.ViewModels.Editor
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("xPos", xPos);
             messageInformation.PutValue("yPos", yPos);
+            messageInformation.PutValue("alignment", Compass.EAST.ToString());
 
             editorSession.QueueSender.SendMessage("CreateTrainstation", messageInformation);
         }

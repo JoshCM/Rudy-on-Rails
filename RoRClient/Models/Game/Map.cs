@@ -100,7 +100,7 @@ namespace RoRClient.Models.Game
                 for (int y = 0; y < mapSize; y++)
                 {
                     Random rand = new Random();
-                    RailSection section = new RailSection(Guid.NewGuid(), RailSectionPosition.NORTH, RailSectionPosition.SOUTH);
+                    RailSection section = new RailSection(Guid.NewGuid(), Compass.NORTH, Compass.SOUTH);
                     List<RailSection> railSections = new List<RailSection>();
                     railSections.Add(section);
                     Rail rail = new Rail(Guid.NewGuid(), squares[x, y], railSections);

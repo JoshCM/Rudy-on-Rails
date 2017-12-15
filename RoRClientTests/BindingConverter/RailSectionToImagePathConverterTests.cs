@@ -12,7 +12,7 @@ namespace RoRClientTests
         public void RailSectionToImagePathConverter_ReturnsNorthSouthImage()
         {
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
-            RailSection section = new RailSection(Guid.NewGuid(), RailSectionPosition.NORTH, RailSectionPosition.SOUTH);
+            RailSection section = new RailSection(Guid.NewGuid(), Compass.NORTH, Compass.SOUTH);
             string result = (string)converter.Convert(section, typeof(string), null, null);
             Assert.AreEqual("..\\..\\Resources\\Images\\rail_ns.png", result);
         }
@@ -21,7 +21,7 @@ namespace RoRClientTests
         public void RailSectionToImagePathConverter_ReturnsSouthNorthImage()
         {
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
-            RailSection section = new RailSection(Guid.NewGuid(), RailSectionPosition.SOUTH, RailSectionPosition.NORTH);
+            RailSection section = new RailSection(Guid.NewGuid(), Compass.SOUTH, Compass.NORTH);
             string result = (string)converter.Convert(section, typeof(string), null, null);
             Assert.AreEqual("..\\..\\Resources\\Images\\rail_ns.png", result);
         }
@@ -30,7 +30,7 @@ namespace RoRClientTests
         public void RailSectionToImagePathConverter_ReturnsNorthEastImage()
         {
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
-            RailSection section = new RailSection(Guid.NewGuid(), RailSectionPosition.NORTH, RailSectionPosition.EAST);
+            RailSection section = new RailSection(Guid.NewGuid(), Compass.NORTH, Compass.EAST);
             string result = (string)converter.Convert(section, typeof(string), null, null);
             Assert.AreEqual("..\\..\\Resources\\Images\\railcurve_ne.png", result);
         }
@@ -39,7 +39,7 @@ namespace RoRClientTests
         public void RailSectionToImagePathConverter_ReturnsSouthEastImage()
         {
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
-            RailSection section = new RailSection(Guid.NewGuid(), RailSectionPosition.SOUTH, RailSectionPosition.EAST);
+            RailSection section = new RailSection(Guid.NewGuid(), Compass.SOUTH, Compass.EAST);
             string result = (string)converter.Convert(section, typeof(string), null, null);
             Assert.AreEqual("..\\..\\Resources\\Images\\railcurve_se.png", result);
         }
@@ -48,7 +48,7 @@ namespace RoRClientTests
         public void RailSectionToImagePathConverter_ReturnsSouthWestImage()
         {
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
-            RailSection section = new RailSection(Guid.NewGuid(), RailSectionPosition.SOUTH, RailSectionPosition.WEST);
+            RailSection section = new RailSection(Guid.NewGuid(), Compass.SOUTH, Compass.WEST);
             string result = (string)converter.Convert(section, typeof(string), null, null);
             Assert.AreEqual("..\\..\\Resources\\Images\\railcurve_sw.png", result);
         }
@@ -57,7 +57,7 @@ namespace RoRClientTests
         public void RailSectionToImagePathConverter_ReturnsNorthWestImage()
         {
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
-            RailSection section = new RailSection(Guid.NewGuid(), RailSectionPosition.NORTH, RailSectionPosition.WEST);
+            RailSection section = new RailSection(Guid.NewGuid(), Compass.NORTH, Compass.WEST);
             string result = (string)converter.Convert(section, typeof(string), null, null);
             Assert.AreEqual("..\\..\\Resources\\Images\\railcurve_nw.png", result);
         }
@@ -66,7 +66,7 @@ namespace RoRClientTests
         public void RailSectionToImagePathConverter_ReturnsDummyImageWithFalseRailSectionPositions()
         {
             RailSectionToImagePathConverter converter = new RailSectionToImagePathConverter();
-            RailSection section = new RailSection(Guid.NewGuid(), RailSectionPosition.NORTH, RailSectionPosition.NORTH);
+            RailSection section = new RailSection(Guid.NewGuid(), Compass.NORTH, Compass.NORTH);
             string result = (string)converter.Convert(section, typeof(string), null, null);
             Assert.AreEqual("..\\..\\Resources\\Images\\dummy.png", result);
         }

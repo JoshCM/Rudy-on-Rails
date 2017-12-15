@@ -10,7 +10,7 @@ import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
 import models.game.Map;
 import models.game.Rail;
-import models.game.RailSectionPosition;
+import models.game.Compass;
 import models.game.Square;
 import models.game.Trainstation;
 import models.session.EditorSession;
@@ -19,6 +19,7 @@ import models.session.RoRSession;
 public class CreateTrainstationCommand extends CommandBase {
 	private int xPos;
 	private int yPos;
+	private Compass alignment;
 	private final static int TRAINSTATION_MARGIN = 1;
 
 	public CreateTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
@@ -26,6 +27,7 @@ public class CreateTrainstationCommand extends CommandBase {
 
 		xPos = messageInfo.getValueAsInt("xPos");
 		yPos = messageInfo.getValueAsInt("yPos");
+		alignment = Compass.valueOf(messageInfo.getValueAsString("alignment"));
 	}
 
 	@Override
@@ -40,7 +42,7 @@ public class CreateTrainstationCommand extends CommandBase {
 			// generiere UUID für Trainstation
 			UUID trainstationId = UUID.randomUUID();
 			// Trainstation wird erzeugt und auf Square gesetzt
-			Trainstation trainstation = new Trainstation(session.getName(), trainstationSquare, createTrainstationRails(map, trainstationSquare, trainstationId), trainstationId);
+			Trainstation trainstation = new Trainstation(session.getName(), trainstationSquare, createTrainstationRails(map, trainstationSquare, trainstationId), trainstationId, alignment);
 			trainstationSquare.setPlaceable(trainstation);
 		}
 	}
@@ -49,9 +51,9 @@ public class CreateTrainstationCommand extends CommandBase {
 		List<UUID> trainstationRailIds = new ArrayList<UUID>();
 
 		// Railsection werden erstellt
-		RailSectionPosition railSectionPositionNode1 = RailSectionPosition.NORTH;
-		RailSectionPosition railSectionPositionNode2 = RailSectionPosition.SOUTH;
-		List<RailSectionPosition> railSectionPositions = Arrays.asList(railSectionPositionNode1, railSectionPositionNode2);
+		Compass railSectionPositionNode1 = Compass.NORTH;
+		Compass railSectionPositionNode2 = Compass.SOUTH;
+		List<Compass> railSectionPositions = Arrays.asList(railSectionPositionNode1, railSectionPositionNode2);
 		
 		// Squares für die Rails der Trainstation werden erstellt
 		Square squareTop = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN,

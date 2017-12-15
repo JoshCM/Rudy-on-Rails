@@ -9,17 +9,17 @@ namespace RoRClient.Models.Game
     /// </summary>
     public class RailSection : ModelBase
     {
-        private RailSectionPosition node1;
-        private RailSectionPosition node2;
+        private Compass node1;
+        private Compass node2;
 
-        public RailSectionPosition Node1
+        public Compass Node1
         {
             get
             {
                 return node1;
             }
         }
-        public RailSectionPosition Node2
+        public Compass Node2
         {
             get
             {
@@ -27,7 +27,7 @@ namespace RoRClient.Models.Game
             }
         }
 
-        public RailSection (Guid id, RailSectionPosition node1, RailSectionPosition node2) : base()
+        public RailSection (Guid id, Compass node1, Compass node2) : base()
         {
             this.id = id;
             this.node1 = node1;
@@ -38,9 +38,9 @@ namespace RoRClient.Models.Game
         /// Gibt alle Nodes als Liste zurück
         /// </summary>
         /// <returns></returns>
-        public List<RailSectionPosition> GetNodesAsList()
+        public List<Compass> GetNodesAsList()
         {
-            List<RailSectionPosition> positionList = new List<RailSectionPosition>();
+            List<Compass> positionList = new List<Compass>();
             positionList.Add(node1);
             positionList.Add(node2);
             return positionList;

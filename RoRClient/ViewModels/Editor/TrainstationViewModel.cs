@@ -47,7 +47,7 @@ namespace RoRClient.ViewModels.Editor
                 railGuids.Add(trainstationRail.Id);
             }
             messageInformation.PutValue("trainstationRailIds", railGuids);
-            
+
             editorSession.QueueSender.SendMessage("DeleteTrainstation", messageInformation);
             Console.WriteLine("DELETE TRAINSTATION");
         }
@@ -57,7 +57,8 @@ namespace RoRClient.ViewModels.Editor
 			MessageInformation messageInformation = new MessageInformation();
 			messageInformation.PutValue("id", trainstation.Id);
 			messageInformation.PutValue("right", false);
-			EditorSession.GetInstance().QueueSender.SendMessage("RotateTrainstation", messageInformation);
+            messageInformation.PutValue("alignment", Compass.EAST.ToString());
+            EditorSession.GetInstance().QueueSender.SendMessage("RotateTrainstation", messageInformation);
 		}
 
         public override void RotateRight()

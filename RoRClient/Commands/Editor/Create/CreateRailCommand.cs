@@ -29,8 +29,8 @@ namespace RoRClient.Commands.Editor.Create
             foreach (JObject obj in railSectionList)
             {
                 Guid railSectionId = Guid.Parse(obj.GetValue("railSectionId").ToString());
-                RailSectionPosition node1 = (RailSectionPosition)Enum.Parse(typeof(RailSectionPosition), obj.GetValue("node1").ToString());
-                RailSectionPosition node2 = (RailSectionPosition)Enum.Parse(typeof(RailSectionPosition), obj.GetValue("node2").ToString());
+                Compass node1 = (Compass)Enum.Parse(typeof(Compass), obj.GetValue("node1").ToString());
+                Compass node2 = (Compass)Enum.Parse(typeof(Compass), obj.GetValue("node2").ToString());
                 RailSection section = new RailSection(railSectionId, node1, node2);
                 railSections.Add(section);
             }

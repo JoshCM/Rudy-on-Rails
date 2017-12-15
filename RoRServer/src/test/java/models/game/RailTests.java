@@ -16,9 +16,9 @@ public class RailTests {
 
 	@Test
 	public void RailIsCreatedWithRightValues() {
-		RailSectionPosition node1 = RailSectionPosition.NORTH;
-		RailSectionPosition node2 = RailSectionPosition.SOUTH;
-		List<RailSectionPosition> railSectionPositions = new ArrayList<>();
+		Compass node1 = Compass.NORTH;
+		Compass node2 = Compass.SOUTH;
+		List<Compass> railSectionPositions = new ArrayList<>();
 		railSectionPositions.add(node1);
 		railSectionPositions.add(node2);
 		int squarePosX = 0;
@@ -35,9 +35,9 @@ public class RailTests {
 	
 	@Test
 	public void RailCreatesMessageAfterCreation() {
-		RailSectionPosition node1 = RailSectionPosition.NORTH;
-		RailSectionPosition node2 = RailSectionPosition.SOUTH;
-		List<RailSectionPosition> railSectionPositions = new ArrayList<>();
+		Compass node1 = Compass.NORTH;
+		Compass node2 = Compass.SOUTH;
+		List<Compass> railSectionPositions = new ArrayList<>();
 		railSectionPositions.add(node1);
 		railSectionPositions.add(node2);
 		int squarePosX = 0;
@@ -66,8 +66,8 @@ public class RailTests {
 		Rail rail = createCrossRail();
 		rail.rotate(true);
 		
-		assertEquals(RailSectionPosition.EAST, rail.getFirstSection().getNode1());
-		assertEquals(RailSectionPosition.WEST, rail.getFirstSection().getNode2());
+		assertEquals(Compass.EAST, rail.getFirstSection().getNode1());
+		assertEquals(Compass.WEST, rail.getFirstSection().getNode2());
 	}
 	
 	@Test
@@ -75,16 +75,16 @@ public class RailTests {
 		Rail rail = createCrossRail();
 		rail.rotate(false);
 		
-		assertEquals(RailSectionPosition.WEST, rail.getFirstSection().getNode1());
-		assertEquals(RailSectionPosition.EAST, rail.getFirstSection().getNode2());
+		assertEquals(Compass.WEST, rail.getFirstSection().getNode1());
+		assertEquals(Compass.EAST, rail.getFirstSection().getNode2());
 	}
 	
 	private Rail createCrossRail() {
-		RailSectionPosition node1 = RailSectionPosition.NORTH;
-		RailSectionPosition node2 = RailSectionPosition.SOUTH;
-		RailSectionPosition node3 = RailSectionPosition.WEST;
-		RailSectionPosition node4 = RailSectionPosition.EAST;
-		List<RailSectionPosition> railSectionPositions = new ArrayList<>();
+		Compass node1 = Compass.NORTH;
+		Compass node2 = Compass.SOUTH;
+		Compass node3 = Compass.WEST;
+		Compass node4 = Compass.EAST;
+		List<Compass> railSectionPositions = new ArrayList<>();
 		railSectionPositions.add(node1);
 		railSectionPositions.add(node2);
 		railSectionPositions.add(node3);

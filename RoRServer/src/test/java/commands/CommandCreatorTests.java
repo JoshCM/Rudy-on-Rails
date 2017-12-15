@@ -14,7 +14,7 @@ import commands.base.Command;
 import commands.editor.CreateRailCommand;
 import commands.editor.CreateTrainstationCommand;
 import communication.MessageInformation;
-import models.game.RailSectionPosition;
+import models.game.Compass;
 import models.session.EditorSessionManager;
 import models.session.RoRSession;
 

@@ -100,4 +100,16 @@ public class Map extends ModelBase {
         }
         return null;
 	}
+	
+	public Square getSquareById(UUID id) {
+		for(Square[] squares : getSquares())
+        {
+			for(Square square : squares) {
+				if(square.getId().equals(id)) {
+					return square;
+				}
+			}
+        }
+        return null;
+	}
 }
