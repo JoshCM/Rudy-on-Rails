@@ -13,14 +13,16 @@ public class Loco extends InteractiveGameObject implements PlaceableOnRail  {
 
 	private ArrayList<Cart> carts;
 	private Rail rail;
+	private Player player;
 	
 	/**
 	 * Konstruktor einer Lok
 	 * @param square auf dem die Lok steht wird mitgegeben
 	 */
-	public Loco(String sessionName, Square square) {
+	public Loco(String sessionName, Square square, Player player) {
 		super(sessionName,square);
 		this.setCarts(new ArrayList<Cart>());
+		this.player = player;
 		
 		//TODO: Wenn Zug Richtung implementiert ist, muss der Wagon so initialisiert werden, dass er ein Feld hinter der Lok steht 
 		this.addCart(new Cart(sessionName,square));
@@ -62,6 +64,7 @@ public class Loco extends InteractiveGameObject implements PlaceableOnRail  {
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
 		
+		System.out.println("LOCO WURDE ERSTELLT; NACHRICHT WIRD ZURÜCKGESCHICKT");
 		notifyChange(messageInfo);
 	}
 }

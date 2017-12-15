@@ -60,6 +60,9 @@ namespace RoRClient.Communication.Dispatcher
             Player player = new Player(playerId, playerName);
             gameSession.AddPlayer(player);
             lobbyModel.Connected_Game = true;
+
+            //TODO: hier soll ein Create Loco Command angestoßen werden
+            SendCreateLocoCommand(playerId);
         }
 
         public void handleJoinGameSession(MessageInformation messageInformation)
@@ -80,6 +83,21 @@ namespace RoRClient.Communication.Dispatcher
             }
 
             lobbyModel.Connected_Game = true;
+            //TODO: hier soll ein Create Loco Command angestoßen werden
+        }
+
+        private void SendCreateLocoCommand(Guid playerId)
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            int xPos = 0;
+            int yPos = 0;
+
+            messageInformation.PutValue("xPos", xPos);
+            messageInformation.PutValue("yPos", yPos);
+            messageInformation.PutValue("playerId", playerId);
+           // lobbyModel.getFromClientRequestSender().SendMessage("CreateLoco", messageInformation);
+            GameSession gameSession = GameSession.GetInstance();
+            gameSession.QueueSender.SendMessage("CreateLoco", messageInformation);
         }
     }
 }

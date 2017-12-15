@@ -19,11 +19,13 @@ public class LocoTests {
 	public void LocoHasInitialCart() {
 		int squarePosX = 0;
 		int squarePosY = 0;
-		
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString());
+		Player player = new Player(gameSession.getName(),"Hans");
+		
+		
 		Map map = gameSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Loco loco = new Loco(gameSession.getName(), square);
+		Loco loco = new Loco(gameSession.getName(), square,player);
 		
 		assertEquals(1, loco.getCarts().size());
 
@@ -40,12 +42,13 @@ public class LocoTests {
 		RailSectionPosition node2 = RailSectionPosition.SOUTH;
 		
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString());
+		Player player = new Player(gameSession.getName(),"Hans");
 		Map map = gameSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
 		Rail rail = new Rail(gameSession.getName(), square, node1, node2);
 
 		square.setPlaceable(rail);
-		Loco loco = new Loco(gameSession.getName(), square);
+		Loco loco = new Loco(gameSession.getName(), square,player);
 		
 		assertEquals(rail,loco.getRail());
 		

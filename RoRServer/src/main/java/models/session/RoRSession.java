@@ -3,6 +3,7 @@ package models.session;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
@@ -48,5 +49,16 @@ public abstract class RoRSession {
 
 	public List<Player> getPlayers() {
 		return Collections.unmodifiableList(players);
+	}
+	
+	public Player findPlayer(UUID playerId) {
+		for (Player actPlayer: players) {
+			if(actPlayer.getId().equals(playerId)) {
+				return actPlayer;
+			}
+		}
+		
+		return null;
+			
 	}
 }
