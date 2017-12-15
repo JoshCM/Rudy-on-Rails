@@ -7,27 +7,14 @@
              xmlns:vm ="clr-namespace:RoRClient.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600" Background="BlanchedAlmond">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="PlayerName"/>
+            <TextBox Text="{Binding LobbyModel.PlayerName}" Width="200"/>
+        </StackPanel>
         
         <Button Grid.Row="3" Grid.Column="2" x:Name="editorButton" Command="{Binding SwitchToJoinEditorLobbyView}" Content="Hier gehts zum Editor"/>
         <!-- Binding muss noch eingerichtet werden -->
         <Button Grid.Row="1" x:Name="gameButton" Command="{Binding CreateGameSessionCommand}" Content="Hier gehts zum Dampf-Modus"/>
-    </Grid>
-
+    </StackPanel>
 </UserControl>

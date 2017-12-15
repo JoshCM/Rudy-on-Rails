@@ -8,10 +8,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600" Background="BlanchedAlmond">
     <DockPanel>
-        <ListBox Height="500" x:Name="editorSessionListBox" DockPanel.Dock="Top" ItemsSource="{Binding LobbyModel.EditorSessionInfos}">
+        <ListBox Height="500" x:Name="editorSessionListBox" DockPanel.Dock="Top" ItemsSource="{Binding LobbyModel.EditorSessionInfos}" SelectedItem="{Binding Path=SelectedEditorSessionInfo, Mode=TwoWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Margin" Value="10,10,0,0"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <StackPanel.InputBindings>
+                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                          AncestorType={x:Type UserControl}}, Path=DataContext.JoinEditorSessionCommand}"/>
+                        </StackPanel.InputBindings>
                         <TextBlock Text="{Binding Name}" />
                         <TextBlock Text="{Binding AmountOfPlayers}"/>
                     </StackPanel>

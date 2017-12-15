@@ -1,5 +1,6 @@
 ﻿using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Game;
+using RoRClient.Models.Lobby;
 using RoRClient.ViewModels.Commands;
 using RoRClient.ViewModels.Helper;
 using System;
@@ -16,6 +17,7 @@ namespace RoRClient.ViewModels.Lobby
     {
         private UIState uiState;
         private LobbyModel lobbyModel;
+        private EditorSessionInfo selectedEditorSessionInfo;
 
         public JoinEditorLobbyViewModel(UIState uiState, LobbyModel lobbyModel)
         {
@@ -24,6 +26,22 @@ namespace RoRClient.ViewModels.Lobby
 
             lobbyModel.PropertyChanged += OnClientModelChanged;
             uiState.OnUiStateChanged += OnUiStateChanged;
+        }
+
+        public EditorSessionInfo SelectedEditorSessionInfo
+        {
+            get
+            {
+                return selectedEditorSessionInfo;
+            }
+            set
+            {
+                if(selectedEditorSessionInfo != value)
+                {
+                    selectedEditorSessionInfo = value;
+                    OnPropertyChanged("SelectedEditorSessionInfo");
+                }
+            }
         }
 
         public LobbyModel LobbyModel
@@ -60,10 +78,13 @@ namespace RoRClient.ViewModels.Lobby
         /// </summary>
         private void SendJoinEditorSessionCommand()
         {
-            MessageInformation messageInformation = new MessageInformation();
-            messageInformation.PutValue("playerName", "Heinz");
-            messageInformation.PutValue("editorName", "Editor1");
-            lobbyModel.getFromClientRequestSender().SendMessage("JoinEditorSession", messageInformation);
+            if(selectedEditorSessionInfo != null)
+            {
+                MessageInformation messageInformation = new MessageInformation();
+                messageInformation.PutValue("playerName", lobbyModel.PlayerName);
+                messageInformation.PutValue("editorName", selectedEditorSessionInfo.Name);
+                lobbyModel.getFromClientRequestSender().SendMessage("JoinEditorSession", messageInformation);
+            }
         }
 
         /// <summary>

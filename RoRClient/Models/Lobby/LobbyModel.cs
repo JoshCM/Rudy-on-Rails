@@ -12,7 +12,10 @@ namespace RoRClient.Models.Game
     class LobbyModel : ModelBase
     {
         private TaskFactory taskFactory;
+
         private ObservableCollection<EditorSessionInfo> editorSessionInfos = new ObservableCollection<EditorSessionInfo>();
+        private string playerName = "Fresh Meat";
+
         private QueueSender fromClientRequestSender;
         private FromServerResponseReceiver queueReceiver;
 		private Guid clientId;
@@ -21,6 +24,22 @@ namespace RoRClient.Models.Game
 
         public LobbyModel() {
             taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        public string PlayerName
+        {
+            get
+            {
+                return playerName;
+            }
+            set
+            {
+                if(playerName != value)
+                {
+                    playerName = value;
+                    NotifyPropertyChanged("PlayerName");
+                }
+            }
         }
     
         public ObservableCollection<EditorSessionInfo> EditorSessionInfos
