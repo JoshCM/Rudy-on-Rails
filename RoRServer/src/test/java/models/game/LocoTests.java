@@ -40,17 +40,17 @@ public class LocoTests {
 	public void LocoFindsRailItStandsOn() {
 		int squarePosX = 0;
 		int squarePosY = 0;
-		RailSectionPosition node1 = RailSectionPosition.NORTH;
-		RailSectionPosition node2 = RailSectionPosition.SOUTH;
-		List<RailSectionPosition> railSectionPositions = new ArrayList<>();
-		railSectionPositions.add(node1);
-		railSectionPositions.add(node2);
+		Direction node1 = Direction.NORTH;
+		Direction node2 = Direction.SOUTH;
+		List<Direction> directions = new ArrayList<>();
+		directions.add(node1);
+		directions.add(node2);
 		
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString());
 		Player player = new Player(gameSession.getName(),"Hans");
 		Map map = gameSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Rail rail = new Rail(gameSession.getName(), square, railSectionPositions);
+		Rail rail = new Rail(gameSession.getName(), square, directions);
 
 		square.setPlaceable(rail);
 		Loco loco = new Loco(gameSession.getName(), square,player);

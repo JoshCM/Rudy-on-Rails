@@ -11,11 +11,13 @@ public class Square extends ModelBase {
 	private PlaceableOnSquare placeableOnSquare = null;
 	private int xIndex;
 	private int yIndex;
+	private Map map;
 	
 	public Square(String sessionName, Map map, int xIndex, int yIndex) {
 		super(sessionName);
 		this.xIndex = xIndex;
 		this.yIndex = yIndex;
+		this.map = map;
 	}
 	
 	public void deletePlaceable() {
@@ -46,6 +48,10 @@ public class Square extends ModelBase {
 	
 	public int getYIndex(){
 		return yIndex;
+	}
+
+	public Map getMap(){
+		return this.map;
 	}
 
 	@Override
