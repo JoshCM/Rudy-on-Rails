@@ -20,7 +20,7 @@ public abstract class TickableGameObject extends InteractiveGameObject implement
 	
 	@Override
 	public void update(ObservableModel o, Object arg) {
-		// reagiert auf die Tick Änderung und ruft die specificUpdate-Methode auf
+		// reagiert auf die Tick ï¿½nderung und ruft die specificUpdate-Methode auf
 		timeDeltaInNanoSeconds = (long)arg;
 		this.specificUpdate();
 	}
