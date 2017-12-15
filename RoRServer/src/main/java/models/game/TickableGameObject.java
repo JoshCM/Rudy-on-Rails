@@ -3,7 +3,10 @@ package models.game;
 import java.util.Observable;
 import java.util.Observer;
 
-public abstract class TickableGameObject extends InteractiveGameObject implements Observer{
+import models.base.ModelObserver;
+import models.base.ObservableModel;
+
+public abstract class TickableGameObject extends InteractiveGameObject implements ModelObserver{
 	
 	private long timeDeltaInNanoSeconds;
 	
@@ -16,7 +19,7 @@ public abstract class TickableGameObject extends InteractiveGameObject implement
 	
 	
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(ObservableModel o, Object arg) {
 		// reagiert auf die Tick Änderung und ruft die specificUpdate-Methode auf
 		timeDeltaInNanoSeconds = (long)arg;
 		this.specificUpdate();
