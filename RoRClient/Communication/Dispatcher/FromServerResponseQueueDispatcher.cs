@@ -60,6 +60,9 @@ namespace RoRClient.Communication.Dispatcher
             Player player = new Player(playerId, playerName);
             gameSession.AddPlayer(player);
             lobbyModel.Connected_Game = true;
+
+            //TODO: hier soll ein Create Loco Command angestoßen werden
+            SendCreateLocoCommand(playerId);
         }
 
         public void handleJoinGameSession(MessageInformation messageInformation)
@@ -80,6 +83,25 @@ namespace RoRClient.Communication.Dispatcher
             }
 
             lobbyModel.Connected_Game = true;
+            //TODO: hier soll ein Create Loco Command angestoßen werden
+        }
+
+        /// <summary>
+        /// Methode, die eine Message an den Server schicken soll, dass eine Lok für den jeweiligen Player erstellt werden soll
+        /// </summary>
+        /// <param name="playerId"></param> playerId des Players, dem die Lok zugeordnet werden soll
+        private void SendCreateLocoCommand(Guid playerId)
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            int xPos = 0;
+            int yPos = 0;
+
+            messageInformation.PutValue("xPos", xPos);
+            messageInformation.PutValue("yPos", yPos);
+            messageInformation.PutValue("playerId", playerId);
+        
+            GameSession gameSession = GameSession.GetInstance();
+            gameSession.QueueSender.SendMessage("CreateLoco", messageInformation);
         }
     }
 }

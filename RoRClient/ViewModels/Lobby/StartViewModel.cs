@@ -85,8 +85,11 @@ namespace RoRClient.ViewModels.Lobby
             messageInformation.PutValue("playerName", "Heinz");
             messageInformation.PutValue("gameName", "Game1");
             lobbyModel.getFromClientRequestSender().SendMessage("CreateGameSession", messageInformation);
+  
+
         }
 
+       
 
 
 

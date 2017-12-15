@@ -158,4 +158,17 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		responseInformation.putValue("playerId", player.getId().toString());
 		sendMessage("CreateGameSession", responseInformation);
 	}
+	
+	
+	/**
+	 * Sobald ein Player der GameSession gejoined ist, soll eine Loco erstellt werden, die dem Player zugeordnet ist
+	 * @param messageInformation
+	 */
+	/*
+	private void handleCreateLoco(MessageInformation messageInformation) {
+		
+		System.out.println("MESSAGE LOCO WURDE EMPFANGEN: " +messageInformation.);
+		
+	}
+	*/
 }
