@@ -8,7 +8,7 @@ import models.base.ObservableModel;
 
 public abstract class TickableGameObject extends InteractiveGameObject implements ModelObserver{
 	
-	private long timeDeltaInNanoSeconds;
+	protected long timeDeltaInNanoSeconds;//Zeit zwischen den Ticks
 	
 	public TickableGameObject(String sessionName, Square square) {
 		super(sessionName, square);

@@ -11,9 +11,12 @@ import communication.MessageInformation;
  */
 public class Loco extends TickableGameObject implements PlaceableOnRail  {
 
+	private final long SEC_IN_NANO= 1000000000;
 	private ArrayList<Cart> carts;
 	private Rail rail;
 	private Player player;
+	private long timeDeltaCounter;//Summe der Zeit zwischen den Ticks
+	private int speed;
 	
 	/**
 	 * Konstruktor einer Lok
@@ -47,12 +50,29 @@ public class Loco extends TickableGameObject implements PlaceableOnRail  {
 	 */
 	@Override
 	public void specificUpdate() {
-		// TODO Auto-generated method stub
+		this.timeDeltaCounter += timeDeltaInNanoSeconds;
 		
+		if(this.timeDeltaCounter >= SEC_IN_NANO/speed*timeDeltaInNanoSeconds) {
+			
+		}
+	}
+	private void SendCreatedLocoMessage() {
+		MessageInformation messageInfo = new MessageInformation("CreateLoco");
+		messageInfo.putValue("locoId", getId());
+		messageInfo.putValue("squareId", getSquareId());
+		//messageInfo.putValue("railId", rail.getId());
+		messageInfo.putValue("xPos", getXPos());
+		messageInfo.putValue("yPos", getYPos());
+		
+		System.out.println("LOCO WURDE ERSTELLT; NACHRICHT WIRD ZUR�CKGESCHICKT");
+		notifyChange(messageInfo);
 	}
 	
-	
 	//Getter und Setter
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+	
 	public ArrayList<Cart> getCarts() {
 		return carts;
 	}
@@ -68,16 +88,9 @@ public class Loco extends TickableGameObject implements PlaceableOnRail  {
 	public Rail getRail() {
 		return this.rail;
 	}
-
-	private void SendCreatedLocoMessage() {
-		MessageInformation messageInfo = new MessageInformation("CreateLoco");
-		messageInfo.putValue("locoId", getId());
-		messageInfo.putValue("squareId", getSquareId());
-		//messageInfo.putValue("railId", rail.getId());
-		messageInfo.putValue("xPos", getXPos());
-		messageInfo.putValue("yPos", getYPos());
-		
-		System.out.println("LOCO WURDE ERSTELLT; NACHRICHT WIRD ZUR�CKGESCHICKT");
-		notifyChange(messageInfo);
+	public int getSpeed() {
+		return this.speed;
 	}
+
+
 }
