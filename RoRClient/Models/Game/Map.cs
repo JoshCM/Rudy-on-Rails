@@ -9,7 +9,7 @@ namespace RoRClient.Models.Game
     /// </summary>
     public class Map : ModelBase
     {
-        private const int mapSize = 3;
+        private const int mapSize = 50;
         public static int MapSize => mapSize;
 
         private string name = "";
