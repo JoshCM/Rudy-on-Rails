@@ -84,7 +84,7 @@ namespace RoRClient.Models.Session
 
         public void loadDefaultMapAtStartup()
         {
-            QueueSender.SendMessage("LoadMap", new MessageInformation());
+            QueueSender.SendMessage("LoadDefaultMap", new MessageInformation());
         }
     }
 
