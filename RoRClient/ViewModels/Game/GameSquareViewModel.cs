@@ -13,6 +13,8 @@ namespace RoRClient.ViewModels.Game
         public GameSquareViewModel(Square square): base(square.Id)
         {
             this.square = square;
+            this.SquarePosX = square.PosX;
+            this.SquarePosY = square.PosY;
         }
     }
 }

@@ -8,23 +8,20 @@
              d:DesignHeight="900" d:DesignWidth="1600"
              xmlns:vg="clr-namespace:RoRClient.Views.Game"
              xmlns:game="clr-namespace:RoRClient.ViewModels.Game">
-    <ScrollViewer HorizontalScrollBarVisibility="Auto">
-        <Canvas Background="White" x:Name="MapCanvas">
-
-            <ItemsControl ItemsSource="{Binding SquareViewModels}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type game:GameSquareViewModel}">
-                        <Canvas>
-                            <vg:GameSquareUserControl DataContext="{Binding}" X="{Binding SquarePosX}"
-                                                  Y="{Binding SquarePosY}" />
-                        </Canvas>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-
-
-        </Canvas>
-    </ScrollViewer>
-
-
+    <DockPanel>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Bottom">
+            <Canvas Background="White" x:Name="MapCanvas" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
+                <ItemsControl ItemsSource="{Binding SquareViewModels}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type game:GameSquareViewModel}">
+                            <Canvas>
+                                <vg:GameSquareUserControl DataContext="{Binding}" X="{Binding SquarePosX}"
+                                                          Y="{Binding SquarePosY}" />
+                            </Canvas>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Canvas>
+        </ScrollViewer>
+    </DockPanel>
 </UserControl>
