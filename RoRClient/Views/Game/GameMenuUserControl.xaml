@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="RoRClient.Views.Game.GameMenuUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:gamemenu="clr-namespace:RoRClient.Views.Game"
+             mc:Ignorable="d" 
+             d:DesignHeight="80" d:DesignWidth="300" >
+    <Grid x:Name="ContentGridMenu" Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="80" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+
+        <gamemenu:GameMiniMapUserControl Grid.Row="0"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="1"/>
+
+        <gamemenu:GameInteractionUserControl Grid.Row="0"
+                                   Grid.Column="1"
+                                   Grid.ColumnSpan="1"/>
+
+
+        <gamemenu:GameTrainSpeedUserControl Grid.Row="0"
+                                   Grid.Column="2"
+                                   Grid.ColumnSpan="1"/>
+        
+ 
+    </Grid>
+</UserControl>

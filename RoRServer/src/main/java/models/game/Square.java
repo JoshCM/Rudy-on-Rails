@@ -1,5 +1,6 @@
 package models.game;
 
+import communication.MessageInformation;
 import models.base.ModelBase;
 
 /**
@@ -15,6 +16,20 @@ public class Square extends ModelBase {
 		super(sessionName);
 		this.xIndex = xIndex;
 		this.yIndex = yIndex;
+	}
+	
+	public void deletePlaceable() {
+		this.placeableOnSquare = null;
+		notifyDeletePlaceable();
+	}
+	
+	private void notifyDeletePlaceable() {
+		MessageInformation messageInfo = new MessageInformation("DeletePlaceable");
+		// TODO: Später haben wir die richtigen SquareIds im Client, im Moment noch nicht!!!
+		messageInfo.putValue("xPos", this.getXIndex());
+		messageInfo.putValue("yPos", this.getYIndex());
+		
+		notifyChange(messageInfo);
 	}
 	
 	public void setPlaceable(PlaceableOnSquare placeable) {

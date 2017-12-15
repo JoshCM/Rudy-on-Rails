@@ -14,10 +14,7 @@
         <converter:ObjectIsNullToBoolConverter  x:Key="ObjectIsNullToBoolConverter"/>
     </UserControl.Resources>
 
-	<DockPanel>
-        <Button DockPanel.Dock="Top" Height="50" Command="{Binding CreateRandomRailsCommand}">
-            Lösche alle Schienen und setzen zufällig neue zum Test
-        </Button>
+    <DockPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Bottom">
             <Canvas x:Name="thisCanvas" Background="Brown" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
                 <ItemsControl ItemsSource="{Binding SquareViewModels}">
@@ -38,6 +35,34 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+
+                <Popup Name="quickNavigation" IsOpen="{Binding IsQuickNavigationVisible}" Placement="Mouse" >
+                    <StackPanel Orientation="Horizontal" >
+                        <Button Command="{Binding RotateRightCommand}">
+                            <Image
+                                Source="/RoRClient;component/Resources/Images/rotate_right.png" 
+                                Height="20"  
+                                Width="20" >
+                            </Image>
+                        </Button>
+                        <Button Command="{Binding RotateLeftCommand}">
+                            <Image 
+                                Source="/RoRClient;component/Resources/Images/rotate_left.png" 
+                                Height="20"
+                                Width="20">
+                            </Image>
+                        </Button>
+                        <Button  Command="{Binding DeleteCommand}">
+                            <Image 
+                                Source="/RoRClient;component/Resources/Images/delete.png"
+                                Height="20" 
+                                Width="20" >
+                            </Image>
+                        </Button>
+
+                    </StackPanel>
+                </Popup>
+
             </Canvas>
         </ScrollViewer>
     </DockPanel>

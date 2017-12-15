@@ -4,6 +4,7 @@ using RoRClient.ViewModels.Helper;
 using RoRClient.Models.Game;
 using RoRClient.ViewModels.Editor;
 using RoRClient.ViewModels;
+using System.Collections.Generic;
 
 namespace RoRClientTests.ViewModels.Helper
 {
@@ -15,9 +16,11 @@ namespace RoRClientTests.ViewModels.Helper
         {
             ViewModelFactory viewModelFactory = new ViewModelFactory();
             Square square = new Square(0, 0);
-            Rail rail = new Rail(Guid.NewGuid(), square, new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+            List<RailSection> railSections = new List<RailSection>();
+            railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+            Rail rail = new Rail(Guid.NewGuid(), square, railSections);
 
-            RailViewModel railViewModel = (RailViewModel)viewModelFactory.CreateViewModelForModel(rail);
+            RailViewModel railViewModel = (RailViewModel)viewModelFactory.CreateViewModelForModel(rail, null);
 
             Assert.IsNotNull(railViewModel);
             Assert.AreEqual(rail, railViewModel.Rail);
@@ -30,7 +33,7 @@ namespace RoRClientTests.ViewModels.Helper
             ViewModelFactory viewModelFactory = new ViewModelFactory();
             Player square = new Player(new Guid(), "testplayer");
 
-            CanvasViewModel canvasViewModel = (CanvasViewModel)viewModelFactory.CreateViewModelForModel(square);
+            CanvasViewModel canvasViewModel = (CanvasViewModel)viewModelFactory.CreateViewModelForModel(square, null);
         }
     }
 }

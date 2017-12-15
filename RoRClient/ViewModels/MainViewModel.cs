@@ -2,6 +2,7 @@
 using RoRClient.ViewModels.Helper;
 using RoRClient.ViewModels.Lobby;
 using System.Collections.Generic;
+using RoRClient.ViewModels.Game;
 
 namespace RoRClient.ViewModels
 {
@@ -28,11 +29,18 @@ namespace RoRClient.ViewModels
         {
             CurrentViewModel = viewmodels[args.Statename];
         }
+
         public MainViewModel()
         {
+            // Lobby / Startscreen zu ViewModels (Dictionary) hinzufügen
             viewmodels.Add("start", new StartViewModel(uiState));
+
+            // Editor-Modus zu ViewModels (Dictionary) hinzufügen
             viewmodels.Add("editor", new EditorViewModel(uiState));
             //viewmodels.Add("game", new GameViewModel(uiState));
+
+            // Dampf-Modus zu ViewModels (Dictionary) hinzufügen
+            viewmodels.Add("game", new GameViewModel(uiState));
 
             uiState.OnUiStateChanged += ChangeToView;
 

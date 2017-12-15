@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Newtonsoft.Json.Linq;
 
 namespace RoRClient.ViewModels.Editor
 {
@@ -55,19 +56,43 @@ namespace RoRClient.ViewModels.Editor
         /// </summary>
         private void SendCreateRailCommand()
         {
+            // Quick-Navigation von einem möglich vorherigen angeklicken CanvasViewModel ausblenden
+            MapViewModel.IsQuickNavigationVisible = false;
+
             int xPos = square.PosX;
             int yPos = square.PosY;
-            GameSession editorSession = GameSession.GetInstance();
+            EditorSession editorSession = EditorSession.GetInstance();
             RailSection railSection = ToolConverter.ConvertToRailSection(toolbarViewModel.SelectedTool.Name);
 
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("xPos", xPos);
             messageInformation.PutValue("yPos", yPos);
-            messageInformation.PutValue("railSectionPositionNode1", railSection.Node1.ToString());
-            messageInformation.PutValue("railSectionPositionNode2", railSection.Node2.ToString());
+
+            List<JObject> railSections = new List<JObject>();
+            JObject railSectionObject = new JObject();
+            railSectionObject.Add("node1", railSection.Node1.ToString());
+            railSectionObject.Add("node2", railSection.Node2.ToString());
+            railSections.Add(railSectionObject);
+
+            messageInformation.PutValue("railSections", railSections);
 
             // TODO: Message sollte mithilfe CommandManager oder so geschickt werden
             editorSession.QueueSender.SendMessage("CreateRail", messageInformation);
+        }
+
+        public override void RotateLeft()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void RotateRight()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Delete()
+        {
+            throw new NotImplementedException();
         }
     }
 }

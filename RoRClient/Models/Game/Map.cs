@@ -1,5 +1,6 @@
 ﻿using RoRClient.Models.Base;
 using System;
+using System.Collections.Generic;
 
 namespace RoRClient.Models.Game
 {
@@ -11,7 +12,24 @@ namespace RoRClient.Models.Game
         private const int mapSize = 50;
         public static int MapSize => mapSize;
 
-        Square[,] squares;
+        private string name = "";
+        private Square[,] squares;
+
+        public string Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                if(name != value)
+                {
+                    name = value;
+                    NotifyPropertyChanged("Name");
+                }
+            }
+        }
 
         public Square[,] Squares
         {
@@ -24,7 +42,6 @@ namespace RoRClient.Models.Game
                 squares = value;
             }
         }
-
 
         public Map () : base()
         {
@@ -62,7 +79,10 @@ namespace RoRClient.Models.Game
                 for (int y = 0; y < mapSize; y++)
                 {
                     Random rand = new Random();
-                    Rail rail = new Rail(Guid.NewGuid(), squares[x, y], new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+                    RailSection section = new RailSection(Guid.NewGuid(), RailSectionPosition.NORTH, RailSectionPosition.SOUTH);
+                    List<RailSection> railSections = new List<RailSection>();
+                    railSections.Add(section);
+                    Rail rail = new Rail(Guid.NewGuid(), squares[x, y], railSections);
                     squares[x, y].PlaceableOnSquare = rail;
                 }
             }
