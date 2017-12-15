@@ -130,7 +130,7 @@ namespace RoRClient.ViewModels.Editor
                     {
                         case "Rail":
                             Rail rail = (Rail)square.PlaceableOnSquare;
-                            RailViewModel railViewModel = new RailViewModel(rail);
+                            RailEditorViewModel railViewModel = new RailEditorViewModel(rail);
                             placeableOnSquareCollection.Add(railViewModel);
                             rail.PropertyChanged += OnRailPropertyChanged;
                             break;

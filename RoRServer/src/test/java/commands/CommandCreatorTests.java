@@ -47,6 +47,7 @@ public class CommandCreatorTests {
 		MessageInformation messageInformation = new MessageInformation();
 		messageInformation.putValue("xPos", 0);
 		messageInformation.putValue("yPos", 1);
+		messageInformation.putValue("alignment", Compass.NORTH.toString());
 		
 		RoRSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);

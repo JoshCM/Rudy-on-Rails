@@ -23,6 +23,7 @@ public class TrainstationTests {
 		MessageInformation messageInformation = new MessageInformation();
 		messageInformation.putValue("xPos", 0);
 		messageInformation.putValue("yPos", 1);
+		messageInformation.putValue("alignment", Compass.EAST.toString());
 		
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
@@ -57,6 +58,7 @@ public class TrainstationTests {
 		MessageInformation messageInformation = new MessageInformation();
 		messageInformation.putValue("xPos", 0);
 		messageInformation.putValue("yPos", 0);
+		messageInformation.putValue("alignment", Compass.EAST.toString());
 		
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
@@ -76,6 +78,7 @@ public class TrainstationTests {
 		MessageInformation messageInformation = new MessageInformation();
 		messageInformation.putValue("xPos", 0);
 		messageInformation.putValue("yPos", 1);
+		messageInformation.putValue("alignment", Compass.EAST.toString());
 		
 		// setzen der rail die die exception verursacht
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
@@ -99,6 +102,7 @@ public class TrainstationTests {
 		MessageInformation messageInformation = new MessageInformation();
 		messageInformation.putValue("xPos", 0);
 		messageInformation.putValue("yPos", 1);
+		messageInformation.putValue("alignment", Compass.EAST.toString());
 		
 		// setzen der rail die die exception verursacht
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
@@ -122,6 +126,7 @@ public class TrainstationTests {
 		MessageInformation messageInformation = new MessageInformation();
 		messageInformation.putValue("xPos", 0);
 		messageInformation.putValue("yPos", 1);
+		messageInformation.putValue("alignment", Compass.EAST.toString());
 		
 		// setzen der rail die die exception verursacht
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
