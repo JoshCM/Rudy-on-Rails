@@ -11,6 +11,9 @@ using Newtonsoft.Json.Linq;
 
 namespace RoRClient.Commands.Base
 {
+    /// <summary>
+    /// Basis-Klasse für CreateRailCommand: Wird für Game und Editor gleichermaßen genutzt
+    /// </summary>
     public class CreateRailCommandBase : CommandBase
     {
         protected Guid railId;
