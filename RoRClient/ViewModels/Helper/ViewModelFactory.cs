@@ -38,7 +38,7 @@ namespace RoRClient.ViewModels.Helper
         public GameCanvasViewModel CreateGameViewModelForModel(IModel model, GameMapViewModel mapViewModel)
         {
             Type modelType = model.GetType();
-            String viewModelTypeName = VIEWMODEL_TYPE_PREFIX + modelType.Name + VIEWMODEL_CLASS_SUFFIX;
+            String viewModelTypeName = GAMEVIEWMODEL_TYPE_PREFIX + modelType.Name + GAMEVIEWMODEL_CLASS_SUFFIX;
             Type viewModelType = Type.GetType(viewModelTypeName);
 
             if (viewModelType == null)

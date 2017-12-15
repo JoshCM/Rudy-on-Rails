@@ -95,7 +95,7 @@ namespace RoRClient.ViewModels.Game
                 SquareGameViewModel squareViewModel = new SquareGameViewModel(square);
                 squareViewModel.MapViewModel = this;
                 squareViewModels.Add(squareViewModel);
-                //square.PropertyChanged += OnSquarePropertyChanged;
+                square.PropertyChanged += OnSquarePropertyChanged;
             }
         }
 
