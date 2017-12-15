@@ -53,7 +53,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail  {
 		this.timeDeltaCounter += timeDeltaInNanoSeconds;
 		
 		if(this.timeDeltaCounter >= SEC_IN_NANO/speed*timeDeltaInNanoSeconds) {
-			
+			timeDeltaCounter = 0;
 		}
 	}
 	private void SendCreatedLocoMessage() {
