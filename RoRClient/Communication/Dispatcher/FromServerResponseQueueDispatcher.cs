@@ -58,6 +58,10 @@ namespace RoRClient.Communication.Dispatcher
             Guid playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             string playerName = messageInformation.GetValueAsString("playerName");
             Player player = new Player(playerId, playerName);
+            // Load DefaultMap
+            String JSONMap = messageInformation.GetValueAsString("map");
+            Map map = null;
+            gameSession.Map = map;
             gameSession.AddPlayer(player);
             lobbyModel.Connected_Game = true;
         }

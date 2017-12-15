@@ -156,6 +156,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		responseInformation.putValue("gameName", gameSession.getName());
 		responseInformation.putValue("playerName", player.getName());		
 		responseInformation.putValue("playerId", player.getId().toString());
+		responseInformation.putValue("map", gameSession.getMap());
 		sendMessage("CreateGameSession", responseInformation);
 	}
 }
