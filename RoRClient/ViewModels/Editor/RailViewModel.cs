@@ -65,5 +65,18 @@ namespace RoRClient.ViewModels.Editor
             messageInformation.PutValue("right", true);
             EditorSession.GetInstance().QueueSender.SendMessage("RotateRail", messageInformation);
         }
+
+        //TODO: Baustelle
+        public override void Move()
+        {
+            this.Delete();
+            RoRSession editorSession = EditorSession.GetInstance();
+
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("xPos", this.SquarePosX);
+            messageInformation.PutValue("yPos", this.SquarePosY);
+            messageInformation.PutValue("raildId", MapViewModel.SelectedCanvasViewModel.Id);
+            EditorSession.GetInstance().QueueSender.SendMessage("CreateRail", messageInformation);
+        }
     }
 }

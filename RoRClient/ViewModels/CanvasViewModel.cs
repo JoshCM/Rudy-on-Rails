@@ -131,5 +131,9 @@ namespace RoRClient.ViewModels
         /// </summary>
         public abstract void Delete();
 
+        /// <summary>
+        /// Methode zum Verschieben eines CanvasModels / Muss in der jeweiligen Unterklasse überschrieben werden
+        /// </summary>
+        public abstract void Move();
     }
 }

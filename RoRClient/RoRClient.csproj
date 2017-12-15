@@ -341,8 +341,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\Editor\Update\" />
-    <Folder Include="Commands\Editor\Delete\" />
     <Folder Include="Commands\Game\Create\" />
   </ItemGroup>
   <ItemGroup>
@@ -364,6 +362,7 @@
     <Resource Include="Resources\Images\rotate_right.png" />
     <Resource Include="Resources\Images\rotate_left.png" />
     <Resource Include="Resources\Images\delete.png" />
+    <Resource Include="Resources\Images\move.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

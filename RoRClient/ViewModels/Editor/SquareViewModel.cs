@@ -54,7 +54,7 @@ namespace RoRClient.ViewModels.Editor
         /// <summary>
         /// Sendet einen Anfrage-Command an den Server, der dort eine Rail erstellen soll
         /// </summary>
-        private void SendCreateRailCommand()
+        private void SendCreateRailCommand(String railId = null)
         {
             // Quick-Navigation von einem möglich vorherigen angeklicken CanvasViewModel ausblenden
             MapViewModel.IsQuickNavigationVisible = false;
@@ -76,6 +76,11 @@ namespace RoRClient.ViewModels.Editor
 
             messageInformation.PutValue("railSections", railSections);
 
+            // Ist für Move-Methode notwendig, Server checkt ob railId vorhanden ist
+            if (railId != null)
+            {
+                messageInformation.PutValue("railId", railId);
+            }
             // TODO: Message sollte mithilfe CommandManager oder so geschickt werden
             editorSession.QueueSender.SendMessage("CreateRail", messageInformation);
         }
@@ -91,6 +96,11 @@ namespace RoRClient.ViewModels.Editor
         }
 
         public override void Delete()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Move()
         {
             throw new NotImplementedException();
         }

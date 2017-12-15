@@ -316,5 +316,31 @@ namespace RoRClient.ViewModels.Editor
             IsQuickNavigationVisible = false;
         }
 
+        /// <summary>
+        /// Command für Move erstellen
+        /// </summary>
+        private ICommand moveCommand;
+        public ICommand MoveCommand
+        {
+            get
+            {
+                if (moveCommand == null)
+                {
+                    moveCommand = new ActionCommand(param => Move());
+                }
+                return moveCommand;
+            }
+        }
+
+        /// <summary>
+        /// Das aktuell ausgewählte CanvasViewModel verschieben
+        /// </summary>
+        private void Move()
+        {
+            SelectedCanvasViewModel.Move();
+
+            // Quicknavigation nach dem Verschieben nicht mehr anzeigen
+            IsQuickNavigationVisible = false;
+        }
     }
 }
