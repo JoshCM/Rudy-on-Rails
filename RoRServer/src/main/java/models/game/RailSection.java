@@ -84,6 +84,11 @@ public class RailSection extends ModelBase {
 		notifyNodesUpdated();
 	}
 	
+	public void rotate(boolean right, boolean notYet) {
+		node1 = rotateRailSectionPosition(node1, right);
+		node2 = rotateRailSectionPosition(node2, right);
+	}
+	
 	private void notifyNodesUpdated() {
 		MessageInformation messageInformation = new MessageInformation("UpdateNodesOfRailSection");
 		messageInformation.putValue("squareId", squareId);

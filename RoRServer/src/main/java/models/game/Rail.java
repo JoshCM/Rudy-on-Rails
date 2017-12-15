@@ -34,6 +34,15 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		notifyCreatedRail();
 	}
 	
+	public Rail(String sessionName, Square square, List<Compass> railSectionPositions, UUID id) {
+		super(sessionName, square, id);
+		
+		square.setPlaceable(this);
+		railSections = new ArrayList<RailSection>();
+		createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
+		notifyCreatedRail();
+	}
+	
 	/**
 	 * Erstellt für die hereingegebenen RailSectionPositions die jeweiligen RailSections
 	 * Dabei werden für jede RailSection immer zwei RailSectionPositions benötigt
@@ -123,6 +132,12 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	public void rotate(boolean right) {
 		for(RailSection section : railSections) {
 			section.rotate(right);
+		}
+	}
+	
+	public void rotate(boolean right, boolean notYet) {
+		for(RailSection section : railSections) {
+			section.rotate(right, notYet);
 		}
 	}
 }

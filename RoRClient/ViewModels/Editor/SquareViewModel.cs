@@ -68,7 +68,6 @@ namespace RoRClient.ViewModels.Editor
                         SendCreateTrainstationCommand();
                     }
                 }
-
             }   
         }
 
