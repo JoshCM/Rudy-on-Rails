@@ -47,7 +47,7 @@ public class MessageQueue implements ModelObserver {
 						if(messagesToSendQueue.peek() != null) {
 							topicSender.sendMessage(messagesToSendQueue.poll());
 						}
-						Thread.sleep(50);
+						Thread.sleep(1);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

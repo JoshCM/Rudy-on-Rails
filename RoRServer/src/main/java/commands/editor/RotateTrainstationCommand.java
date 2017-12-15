@@ -25,7 +25,7 @@ public class RotateTrainstationCommand extends CommandBase{
 
 	@Override
 	public void execute() {
-		if(trainstation.validRotation(right))
+		if(trainstation.validateRotation(right))
 			trainstation.rotate(right);
 	}
 

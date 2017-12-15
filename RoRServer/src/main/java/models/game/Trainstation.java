@@ -9,6 +9,7 @@ import java.util.UUID;
 import com.google.gson.JsonObject;
 
 import communication.MessageInformation;
+import models.Geometry;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
 
@@ -16,16 +17,16 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 	private List<UUID> trainstationRailIds;
 	private Compass alignment;
-	private String sessionName;
 	
 	private final int CLOCKWISE = 90;
 	private final int COUNTER_CLOCKWISE = -90;
+	EditorSession editorSession;
 	
 	public Trainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment) {
 		super(sessionName, square, id);
 		this.trainstationRailIds = trainstationRailIds;
 		this.alignment = alignment;
-		this.sessionName = sessionName;
+		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getSessionName());
 		notifyCreatedTrainstation();
 	}
 	
@@ -55,7 +56,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	 */
 	public List<Rail> getTrainstationRails(){
 		List<Rail> trainstationRails = new ArrayList<Rail>();
-		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(sessionName);
+		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getSessionName());
 		for(UUID railId : trainstationRailIds) {
 			trainstationRails.add((Rail) editorSession.getMap().getPlaceableById(railId));
 		}
@@ -88,13 +89,12 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	 * @param right Uhrzeigersinn/Gegen Uhrzeigersinn
 	 */
 	private void rotateTrainstationRail(Rail trainstationRail, Square oldRailSquare, Square newRailSquare, boolean right) {
-		
 		// rotate der Rail ohne notify
 		Rail tempRail = trainstationRail;
 		tempRail.rotate(right, right);
 		
 		// bekomme sessionname für neue Rail
-		String sessionName = EditorSessionManager.getInstance().getEditorSession().getName();
+		String sessionName = editorSession.getName();
 		
 		// nehme section1 von RailSection
 		RailSection sectionOne = tempRail.getFirstSection();
@@ -128,29 +128,13 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		notifyTrainstationAlignmentUpdated();
 	}
 
-	/**
-	 * Rotiert eine Koordinate um einen definierten Punkt
-	 * @param x Koordinate X
-	 * @param y Koordinate Y
-	 * @param alpha Winkel um den gedreht wird
-	 * @param centerX Koordinate X des defnierten Mittelpunkts
-	 * @param centerY Koordinate Y des defnierten Mittelpunkts
-	 * @return Koordinate mit X, Y
-	 */
-	private Coordinate rotate(double x, double y, double alpha, double centerX, double centerY) {
-		alpha = Math.toRadians(alpha);		
-		double rotatedX = centerX + (x - centerX) * Math.cos(alpha) - (y - centerY) * Math.sin(alpha);
-		double rotatedY = centerY + (x - centerX) * Math.sin(alpha) + (y - centerY) * Math.cos(alpha);
-		return new Coordinate((int)Math.round(rotatedX), (int)Math.round(rotatedY));
-	}
+	
 	
 	/**
 	 * Rotiert die Trainstation und alle zugehörigen Rails
 	 * @param right Uhrzeigersinn/Gegen Uhrzeigersinn
 	 */
-	public void rotate(boolean right) {
-		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(sessionName);
-		
+	public void rotate(boolean right) {		
 		// rotiert die Trainstation
 		rotateTrainstation(right);
 		
@@ -169,11 +153,11 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 			int railYpos = trainstationRail.getYPos();
 			
 			// rotiert die koordinaten
-			Coordinate newCoordinate = new Coordinate(0, 0);
+			Geometry.Coordinate newCoordinate;
 			if(right)
-				newCoordinate = rotate(railXpos, railYpos, CLOCKWISE, pivotXPos, pivotYPos);
+				newCoordinate = Geometry.rotate(railXpos, railYpos, CLOCKWISE, pivotXPos, pivotYPos);
 			else
-				newCoordinate = rotate(railXpos, railYpos, COUNTER_CLOCKWISE, pivotXPos, pivotYPos);
+				newCoordinate = Geometry.rotate(railXpos, railYpos, COUNTER_CLOCKWISE, pivotXPos, pivotYPos);
 			
 			Square oldRailSquare = (Square)editorSession.getMap().getSquareById(trainstationRail.getSquareId());
 			Square newRailSquare = (Square)editorSession.getMap().getSquare(newCoordinate.x, newCoordinate.y);
@@ -182,28 +166,11 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	}
 	
 	/**
-	 * Hält die neuen Koordinaten, die beim Berechnen erzeugt werden
-	 */
-	private class Coordinate{
-		int x;
-		int y;
-		public Coordinate(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-		@Override
-		public String toString() {
-			return "Coordinate [x=" + x + ", y=" + y + "]";
-		}
-	}
-
-	/**
 	 * Validiert ob man die Rotation umsetzen kann
 	 * @param right Uhrzeigersinn/Gegen Uhrzeigersinn
 	 * @return (True)Validiert oder (False)nicht validiert
 	 */
-	public boolean validRotation(boolean right) {
-		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(sessionName);
+	public boolean validateRotation(boolean right) {
 		int pivotXPos = this.getXPos();
 		int pivotYPos = this.getYPos();
 				
@@ -214,12 +181,12 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		for(Rail trainstationRail : trainstationRails) {
 			int railXpos = trainstationRail.getXPos();
 			int railYpos = trainstationRail.getYPos();
-
-			Coordinate newCoordinate = new Coordinate(0, 0);
+	
+			Geometry.Coordinate newCoordinate;
 			if(right)
-				newCoordinate = rotate(railXpos, railYpos, CLOCKWISE, pivotXPos, pivotYPos);
+				newCoordinate = Geometry.rotate(railXpos, railYpos, CLOCKWISE, pivotXPos, pivotYPos);
 			else
-				newCoordinate = rotate(railXpos, railYpos, COUNTER_CLOCKWISE, pivotXPos, pivotYPos);
+				newCoordinate = Geometry.rotate(railXpos, railYpos, COUNTER_CLOCKWISE, pivotXPos, pivotYPos);
 			
 			Square newRailSquare = (Square)editorSession.getMap().getSquare(newCoordinate.x, newCoordinate.y);
 			if(newRailSquare == null)

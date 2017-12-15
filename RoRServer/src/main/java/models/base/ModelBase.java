@@ -32,6 +32,10 @@ public abstract class ModelBase extends ObservableModel implements Model{
 	public UUID getId() {
 		return id;
 	}
+	
+	public String getSessionName() {
+		return sessionName;
+	}
 
 	/**
 	 * Hier werden Nachrichten hinzugefügt, die an die verbundenen Clients geschickt
