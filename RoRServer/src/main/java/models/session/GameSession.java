@@ -2,6 +2,7 @@ package models.session;
 
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
+import persistent.MapManager;
 
 /**
  * Oberklasse vom Game-Modus. 
@@ -11,8 +12,16 @@ import communication.queue.receiver.QueueReceiver;
 public class GameSession extends RoRSession{
 	public GameSession(String name) {
 		super(name);
-		
 		GameSessionDispatcher dispatcher = new GameSessionDispatcher(this);
 		this.queueReceiver = new QueueReceiver(name, dispatcher);
+		// DefaultMap laden
+		loadGameDefaultMap();
+	}
+	
+	/**
+	 * Lädt die DefaultMap in die GameSession
+	 */
+	public void loadGameDefaultMap() {
+		setMap(MapManager.loadMap("GameDefaultMap"));
 	}
 }
