@@ -36,7 +36,7 @@
                                    DataContext="{Binding TopMenuViewModel}"/>
 
         <!-- Darstellung der Map -->
-        <editor:MapUserControl Grid.Row="1"
+        <editor:MapEditorUserControl Grid.Row="1"
                                Grid.Column="1"
                                Grid.ColumnSpan="2"
                                Grid.RowSpan="2"

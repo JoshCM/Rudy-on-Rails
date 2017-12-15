@@ -15,7 +15,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type game:SquareGameViewModel}">
                             <Canvas>
-                                <vg:GameSquareUserControl DataContext="{Binding}" X="{Binding SquarePosX}"
+                                <vg:SquareGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}"
                                                           Y="{Binding SquarePosY}" />
                             </Canvas>
                         </DataTemplate>

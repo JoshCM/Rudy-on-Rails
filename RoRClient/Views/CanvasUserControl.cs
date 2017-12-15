@@ -91,6 +91,6 @@ namespace RoRClient.Views
                 SetValue(SquareDimProperty, value);
             }
         }
-        public static readonly DependencyProperty SquareDimProperty = DependencyProperty.Register("SquareDim", typeof(int), typeof(SquareUserControl), new UIPropertyMetadata(0));
+        public static readonly DependencyProperty SquareDimProperty = DependencyProperty.Register("SquareDim", typeof(int), typeof(SquareEditorUserControl), new UIPropertyMetadata(0));
     }
 }
