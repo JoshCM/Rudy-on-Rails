@@ -50,23 +50,26 @@ namespace RoRClient.ViewModels.Editor
                 return createPlaceableOnSquareCommand;
             }
         }
-        
+
         /// <summary>
         /// Wählt die richtige SendMethode für das ausgewählte Tool
         /// </summary>
         private void SendCreatePlaceableOnSquareCommand()
         {
-            if (toolbarViewModel.SelectedTool != null)
-            {
-                if (toolbarViewModel.SelectedTool.Name.Contains("rail"))
+            if (square.PlaceableOnSquare == null) {
+                if (toolbarViewModel.SelectedTool != null)
                 {
-                    SendCreateRailCommand();
+                    if (toolbarViewModel.SelectedTool.Name.Contains("rail"))
+                    {
+                        SendCreateRailCommand();
+                    }
+                    else if (toolbarViewModel.SelectedTool.Name.Contains("trainstation"))
+                    {
+                        SendCreateTrainstationCommand();
+                    }
                 }
-                else if (toolbarViewModel.SelectedTool.Name.Contains("trainstation"))
-                {
-                    SendCreateTrainstationCommand();
-                }
-            }
+
+            }   
         }
 
         /// <summary>

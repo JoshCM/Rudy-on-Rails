@@ -73,14 +73,14 @@ namespace RoRClient.Models.Game
         /// </summary>
         /// <param name="railId"></param>
         /// <returns></returns>
-        public IPlaceableOnSquare GetPlaceableById(Guid railId)
+        public IPlaceableOnSquare GetPlaceableById(Guid id)
         {
             foreach(Square square in squares)
             {
                 IPlaceableOnSquare placeableOnSquare = square.PlaceableOnSquare;
                 if (placeableOnSquare != null)
                 {
-                    if (placeableOnSquare.Id.Equals(railId))
+                    if (placeableOnSquare.Id.Equals(id))
                     {
                         return placeableOnSquare;
                     }

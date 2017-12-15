@@ -58,30 +58,39 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 	public void rotate(boolean right) {
 		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(sessionName);
-		int xPos = this.getXPos();
-		int yPos = this.getYPos();
+		int pivotXPos = this.getXPos();
+		int pivotYPos = this.getYPos();
 		
 		for(Rail trainstationRail : getTrainstationRails()) {
-			int trainXpos = trainstationRail.getXPos();
-			int trainYpos = trainstationRail.getYPos();
+			int railXpos = trainstationRail.getXPos();
+			int railYpos = trainstationRail.getYPos();
 			// diagonale Rail zu Trainstation
-			if(trainXpos != xPos && trainYpos != yPos) {
+			if(railXpos != pivotXPos && railYpos != pivotYPos) {
 				if(right) {
 					
 				}else {
-					if(trainXpos < xPos) {
-						if(trainYpos < yPos) {
-							trainXpos += 2;
-							trainYpos += 0;
+					if(railXpos < pivotXPos) {
+						if(railYpos < pivotYPos) {
+							railXpos += 2;
+							railYpos += 0;
+						}
+					}else if(railXpos > pivotXPos){
+						if(railYpos < pivotYPos) {
+							railXpos += (-2);
+							railYpos += 0;
 						}
 					}
 				}
 			}
-			Square oldTrainSquare = (Square)editorSession.getMap().getSquareById(trainstationRail.getSquareId());
-			Square newTrainSquare = (Square)editorSession.getMap().getSquare(trainXpos, trainYpos);
-			oldTrainSquare.setPlaceable(null);
-			newTrainSquare.setPlaceable(trainstationRail);
-			System.out.println(String.format("%s, %s", oldTrainSquare, newTrainSquare));
+			if(railXpos != trainstationRail.getXPos() || railYpos != trainstationRail.getYPos()) {
+				Square oldRailSquare = (Square)editorSession.getMap().getSquareById(trainstationRail.getSquareId());
+				Square newRailSquare = (Square)editorSession.getMap().getSquare(railXpos, railYpos);
+				
+				// altes Square wird zum moven mitgegeben
+				newRailSquare.movePlaceable(trainstationRail, oldRailSquare);
+				
+				System.out.println(String.format("%s, %s", oldRailSquare, newRailSquare));
+			}
 		}
 	}
 }

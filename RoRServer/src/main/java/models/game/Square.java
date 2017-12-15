@@ -36,6 +36,27 @@ public class Square extends ModelBase {
 		this.placeableOnSquare = placeable;
 	}
 	
+	public void movePlaceable(PlaceableOnSquare placeable, Square oldSquare) {
+		this.placeableOnSquare = placeable;
+		
+		// hier soll nur notify aufgerufen werden, wenn das Placeable schon vorhanden war
+		// und nicht neu erstellt wurde
+		// im moment ist es nur durch überladung getrennt
+		notifyMovePlaceable(oldSquare.getXIndex(), oldSquare.getYIndex());
+		oldSquare.deletePlaceable();
+	}
+	
+	private void notifyMovePlaceable(int oldXPos, int oldYPos) {
+		MessageInformation messageInfo = new MessageInformation("MovePlaceable");
+		messageInfo.putValue("oldXPos", oldXPos);
+		messageInfo.putValue("oldYPos", oldYPos);
+		messageInfo.putValue("newXPos", this.getXIndex());
+		messageInfo.putValue("newYPos", this.getYIndex());
+		messageInfo.putValue("placeableId", this.placeableOnSquare.getId().toString());
+		
+		notifyChange(messageInfo);
+	}
+	
 	public PlaceableOnSquare getPlaceableOnSquare(){
 		return placeableOnSquare;
 	}
