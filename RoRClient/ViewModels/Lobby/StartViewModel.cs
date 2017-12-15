@@ -19,7 +19,9 @@ namespace RoRClient.ViewModels.Lobby
 
             lobbyModel.PropertyChanged += OnClientModelChanged;
         }
-
+        /// <summary>
+        /// Muss noch ersetzt werden durch CreateGameSessionCommand
+        /// </summary>
         private ICommand start2GameCmd;
         public ICommand StartToGameCommand
         {
@@ -32,7 +34,9 @@ namespace RoRClient.ViewModels.Lobby
                 return start2GameCmd;
             }
         }
-
+        /// <summary>
+        /// Listener des Editor Buttons, welcher SendCreateEditorSessionCommand() beim klicken aufruft
+        /// </summary>
         private ICommand createEditorSessionCommand;
         public ICommand CreateEditorSessionCommand
         {
@@ -45,7 +49,9 @@ namespace RoRClient.ViewModels.Lobby
                 return createEditorSessionCommand;
             }
         }
-
+        /// <summary>
+        /// Wird von CreateEditorSessionCommand aufgerufen schickt passende Nachricht an Server
+        /// </summary>
         private void SendCreateEditorSessionCommand()
         {
             lobbyModel.StartConnection();
@@ -54,6 +60,35 @@ namespace RoRClient.ViewModels.Lobby
             messageInformation.PutValue("editorName", "Editor1");
             lobbyModel.getFromClientRequestSender().SendMessage("CreateEditorSession", messageInformation);
         }
+        /// <summary>
+        /// Listener des Game Buttons, welcher SendCreateGameSessionCommand() beim klicken aufruft
+        /// </summary>
+        private ICommand createGameSessionCommand;
+        public ICommand CreateGameSessionCommand
+        {
+            get
+            {
+                if (createGameSessionCommand == null)
+                {
+                    createGameSessionCommand = new ActionCommand(param => SendCreateGameSessionCommand());
+                }
+                return createGameSessionCommand;
+            }
+        }
+        /// <summary>
+        /// Wird von CreateGameSessionCommand aufgerufen schickt passende Nachricht an Server
+        /// </summary>
+        private void SendCreateGameSessionCommand()
+        {
+            lobbyModel.StartConnection();
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("playerName", "Heinz");
+            messageInformation.PutValue("gameName", "Game1");
+            lobbyModel.getFromClientRequestSender().SendMessage("CreateGameSession", messageInformation);
+        }
+
+
+
 
         public LobbyModel LobbyModel
         {
@@ -63,15 +98,30 @@ namespace RoRClient.ViewModels.Lobby
             }
         }
 
+        /// <summary>
+        /// In FromClientRequestQueueDispatcher wird je eine Boolean Variable fuer Game und Session der Klasse LobbyModel
+        /// auf true gesetzt (falls ein Game bzw. ein Editor erstellt oder gejoined werden soll), 
+        /// hier wird darauf reagiert und dem entsprechend der uiState auf "editor" oder "game" gesetzt.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnClientModelChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == "Connected")
+            if(e.PropertyName == "Connected_Editor")
             {
-                if (lobbyModel.Connected)
+                if (lobbyModel.Connected_Editor)
                 {
                     uiState.State = "editor";
                 }
             }
+            if (e.PropertyName == "Connected_Game")
+            {
+                if (lobbyModel.Connected_Game)
+                {
+                    uiState.State = "game";
+                }
+            }
         }
+
     }
 }

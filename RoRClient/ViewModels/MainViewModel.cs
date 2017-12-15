@@ -29,6 +29,7 @@ namespace RoRClient.ViewModels
         {
             CurrentViewModel = viewmodels[args.Statename];
         }
+
         public MainViewModel()
         {
             // Lobby / Startscreen zu ViewModels (Dictionary) hinzufügen
@@ -36,6 +37,7 @@ namespace RoRClient.ViewModels
 
             // Editor-Modus zu ViewModels (Dictionary) hinzufügen
             viewmodels.Add("editor", new EditorViewModel(uiState));
+            //viewmodels.Add("game", new GameViewModel(uiState));
 
             // Dampf-Modus zu ViewModels (Dictionary) hinzufügen
             viewmodels.Add("game", new GameViewModel(uiState));

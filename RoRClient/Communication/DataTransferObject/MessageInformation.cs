@@ -97,5 +97,10 @@ namespace RoRClient.Communication.DataTransferObject
             JArray array = (JArray)_attributes[key];
             return array.ToObject<List<JObject>>();
         }
+
+        public Guid GetValueAsGuid(string key)
+        {
+            return Guid.Parse(GetValueAsString(key));
+        }
     }
 }

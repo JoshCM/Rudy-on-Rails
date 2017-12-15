@@ -9,8 +9,12 @@
              VerticalAlignment="Stretch"
              HorizontalContentAlignment="Stretch"
              VerticalContentAlignment="Stretch"
-             d:DesignHeight="1050" d:DesignWidth="1680">
-
+             d:DesignHeight="1050" d:DesignWidth="1680"
+             >
+    <UserControl.InputBindings>
+        <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding TopMenuViewModel.SaveMapCommand}"/>
+    </UserControl.InputBindings>
+    
     <Grid x:Name="ContentGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -25,11 +29,11 @@
             <ColumnDefinition Width="0" />
         </Grid.ColumnDefinitions>
 
-
         <!-- Menü oben -->
         <editor:TopMenuUserControl Grid.Row="0"
                                    Grid.Column="0"
-                                   Grid.ColumnSpan="3" />
+                                   Grid.ColumnSpan="3"
+                                   DataContext="{Binding TopMenuViewModel}"/>
 
         <!-- Darstellung der Map -->
         <editor:MapUserControl Grid.Row="1"

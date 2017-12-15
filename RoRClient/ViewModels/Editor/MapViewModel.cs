@@ -24,6 +24,32 @@ namespace RoRClient.ViewModels.Editor
         private TaskFactory taskFactory;
         private ToolbarViewModel toolbarViewModel;
 
+        private CanvasViewModel previusSelectCanvasViewModel;
+        public CanvasViewModel PreviousSelectedCanvasViewModel
+        {
+            get
+            {
+                return previusSelectCanvasViewModel;
+            }
+            set
+            {
+                previusSelectCanvasViewModel = value;
+            }
+        }
+
+        private CanvasViewModel selectedCanvasViewModel;
+        public CanvasViewModel SelectedCanvasViewModel
+        {
+            get
+            {
+                return selectedCanvasViewModel;
+            }
+            set
+            {
+                selectedCanvasViewModel = value;
+            }
+        }
+
         private Map map;
 
         private ObservableCollection<SquareViewModel> squareViewModels = new ObservableCollection<SquareViewModel>();
@@ -92,6 +118,7 @@ namespace RoRClient.ViewModels.Editor
             foreach (Square square in map.Squares)
             {
                 SquareViewModel squareViewModel = new SquareViewModel(square, toolbarViewModel);
+                squareViewModel.MapViewModel = this;
                 squareViewModels.Add(squareViewModel);
                 square.PropertyChanged += OnSquarePropertyChanged;
 
@@ -102,19 +129,6 @@ namespace RoRClient.ViewModels.Editor
                     placeableOnSquareCollection.Add(railViewModel);
                     rail.PropertyChanged += OnRailPropertyChanged;
                 }
-            }
-        }
-
-        private ICommand createRandomRailsCommand;
-        public ICommand CreateRandomRailsCommand
-        {
-            get
-            {
-                if (createRandomRailsCommand == null)
-                {
-                    createRandomRailsCommand = new ActionCommand(param => ChangeRailSectionsFromActiveRails());
-                }
-                return createRandomRailsCommand;
             }
         }
 
@@ -130,36 +144,17 @@ namespace RoRClient.ViewModels.Editor
                 if(rand.Next(3) == 0)
                 {
                     List<RailSection> railSections = new List<RailSection>();
-                    railSections.Add(new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(RailSectionPosition.WEST, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.WEST));
-                    railSections.Add(new RailSection(RailSectionPosition.WEST, RailSectionPosition.NORTH));
-                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.NORTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.WEST, RailSectionPosition.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.WEST));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.WEST, RailSectionPosition.NORTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.NORTH));
 
-                    Rail rail = new Rail(Guid.NewGuid(), squareViewModel.Square, railSections[rand.Next(railSections.Count)]);
+                    List<RailSection> actualRailSection = new List<RailSection>();
+                    actualRailSection.Add(railSections[rand.Next(railSections.Count)]);
+                    Rail rail = new Rail(Guid.NewGuid(), squareViewModel.Square, actualRailSection);
                     squareViewModel.Square.PlaceableOnSquare = rail;
-                }
-            }
-        }
-
-        private void ChangeRailSectionsFromActiveRails()
-        {
-            Random rand = new Random();
-            foreach (SquareViewModel squareViewModel in squareViewModels)
-            {
-                if(squareViewModel.Square.PlaceableOnSquare != null)
-                {
-                    List<RailSection> railSections = new List<RailSection>();
-                    railSections.Add(new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(RailSectionPosition.WEST, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.WEST));
-                    railSections.Add(new RailSection(RailSectionPosition.WEST, RailSectionPosition.NORTH));
-                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.NORTH));
-
-                    Rail rail = (Rail)squareViewModel.Square.PlaceableOnSquare;
-                    rail.Section1 = railSections[rand.Next(railSections.Count)];
                 }
             }
         }
@@ -189,17 +184,137 @@ namespace RoRClient.ViewModels.Editor
 
                     if (result != null)
                     {
-                        placeableOnSquareCollection.Remove(result);
+                        taskFactory.StartNew(() => placeableOnSquareCollection.Remove(result));
                     }
                 }
                 else
                 {
                     ViewModelFactory factory = new ViewModelFactory();
-                    CanvasViewModel viewModel = factory.CreateViewModelForModel(square.PlaceableOnSquare);
+                    CanvasViewModel viewModel = factory.CreateViewModelForModel(square.PlaceableOnSquare, this);
 
                     taskFactory.StartNew(() => placeableOnSquareCollection.Add(viewModel));
                 }
             }
         }
+
+        /// <summary>
+        /// EditorObject (Rail etc.) ausgewählt + Quicknavigation anzeigen
+        /// </summary>
+        public void SwitchQuickNavigationForCanvasViewModel()
+        {
+            // Falls ein anderes CanvasViewModel angeklickt wurde
+            if (previusSelectCanvasViewModel != selectedCanvasViewModel) {
+                IsQuickNavigationVisible = false;
+                Console.WriteLine("Neues CanvasViewModel wurde angeklickt");
+            }
+
+            if (IsQuickNavigationVisible)
+            {
+                Console.WriteLine("Quicknavigation deaktiviert");
+                IsQuickNavigationVisible = false;
+
+            }
+            else
+            {
+                Console.WriteLine("Quicknavigation aktiviert");
+                IsQuickNavigationVisible = true;
+            }
+
+            Console.WriteLine("Selected ViewModel: " + SelectedCanvasViewModel.ToString() + " / ID: " + SelectedCanvasViewModel.Id);
+        }
+
+        /// <summary>
+        /// Binding für MapUserControl
+        /// </summary>
+        private Boolean isQuickNavigationVisible = false;
+        public Boolean IsQuickNavigationVisible
+        {
+            get
+            {
+                return isQuickNavigationVisible;
+            }
+            set
+            {
+                isQuickNavigationVisible = value;
+                OnPropertyChanged("IsQuickNavigationVisible");
+            }
+        }
+
+        /// <summary>
+        /// Command für RotateRight erstellen
+        /// </summary>
+        private ICommand rotateRightCommand;
+        public ICommand RotateRightCommand
+        {
+            get
+            {
+                if (rotateRightCommand == null)
+                {
+                    rotateRightCommand = new ActionCommand(param => RotateRight());
+                }
+
+                return rotateRightCommand;
+            }
+        }
+
+        /// <summary>
+        /// Das aktuell ausgewählte CanvasViewModel nach rechts rotieren
+        /// </summary>
+        private void RotateRight()
+        {
+            SelectedCanvasViewModel.RotateRight();
+        }
+
+        /// <summary>
+        /// Command für RotateLeft erstellen
+        /// </summary>
+        private ICommand rotateLeftCommand;
+        public ICommand RotateLeftCommand
+        {
+            get
+            {
+                if (rotateLeftCommand == null)
+                {
+                    rotateLeftCommand = new ActionCommand(param => RotateLeft());
+                }
+                return rotateLeftCommand;
+            }
+        }
+
+        /// <summary>
+        /// Das aktuell ausgewählte CanvasViewModel nach links rotieren
+        /// </summary>
+        private void RotateLeft()
+        {
+            SelectedCanvasViewModel.RotateLeft();
+        }
+
+        /// <summary>
+        /// Command für Delete erstellen
+        /// </summary>
+        private ICommand deleteCommand;
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                if (deleteCommand == null)
+                {
+                    deleteCommand = new ActionCommand(param => Delete());
+                }
+                return deleteCommand;
+            }
+        }
+
+        /// <summary>
+        /// Das aktuell ausgewählte CanvasViewModel löschen
+        /// </summary>
+        private void Delete()
+        {
+            SelectedCanvasViewModel.Delete();
+
+            // Quicknavigation nach dem Löschen nicht mehr anzeigen
+            IsQuickNavigationVisible = false;
+        }
+
     }
 }

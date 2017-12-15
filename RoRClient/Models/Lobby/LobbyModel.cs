@@ -10,7 +10,8 @@ namespace RoRClient.Models.Game
         private QueueSender fromClientRequestSender;
         private FromServerResponseReceiver queueReceiver;
 		private Guid clientId;
-        private bool connected;
+        private bool connected_Editor;
+        private bool connected_Game;
 
         public LobbyModel() {
 			
@@ -43,18 +44,33 @@ namespace RoRClient.Models.Game
             }
         }
 
-        public bool Connected
+        public bool Connected_Editor
         {
             get
             {
-                return connected;
+                return connected_Editor;
             }
             set
             {
-                if(connected != value)
+                if(connected_Editor != value)
                 {
-                    connected = value;
-                    NotifyPropertyChanged("Connected");
+                    connected_Editor = value;
+                    NotifyPropertyChanged("Connected_Editor");
+                }
+            }
+        }
+        public bool Connected_Game
+        {
+            get
+            {
+                return connected_Game;
+            }
+            set
+            {
+                if (connected_Game != value)
+                {
+                    connected_Game = value;
+                    NotifyPropertyChanged("Connected_Game");
                 }
             }
         }

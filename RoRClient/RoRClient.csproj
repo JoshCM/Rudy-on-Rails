@@ -100,10 +100,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
+    <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
     <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateRailCommand.cs" />
+    <Compile Include="Commands\Editor\Update\UpdateNodesOfRailSectionCommand.cs" />
+    <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
+    <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
     <Compile Include="Communication\Dispatcher\QueueDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicEditorDispatcher.cs" />
@@ -118,8 +122,6 @@
     <Compile Include="Communication\Dispatcher\GameSessionDispatcher.cs" />
     <Compile Include="Models\Base\IModel.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
-    <Compile Include="Models\Game\Cart.cs" />
-    <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Player.cs" />
     <Compile Include="Models\Session\EditorSession.cs" />
     <Compile Include="Models\Session\GameSession.cs" />
@@ -130,6 +132,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Game\GameMapViewModel.cs" />
+    <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
@@ -144,6 +147,7 @@
     <Compile Include="ViewModels\ViewConstants.cs" />
     <Compile Include="ViewModels\Editor\MapViewModel.cs" />
     <Compile Include="Views\CanvasUserControl.cs" />
+    <Compile Include="Views\Editor\Helper\RegexValidator.cs" />
     <Compile Include="Views\Editor\Helper\ToolConverter.cs" />
     <Compile Include="Views\Editor\RailUserControl.xaml.cs">
       <DependentUpon>RailUserControl.xaml</DependentUpon>
@@ -203,6 +207,10 @@
     <Compile Include="Views\Lobby\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Popup\AskUserForStringPopup.xaml.cs">
+      <DependentUpon>AskUserForStringPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Popup\PopupCreator.cs" />
     <Page Include="Views\Editor\Window2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -283,6 +291,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Popup\AskUserForStringPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communication\ClientConnection.cs" />
@@ -323,8 +335,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\Editor\Delete\" />
     <Folder Include="Commands\Editor\Update\" />
+    <Folder Include="Commands\Editor\Delete\" />
     <Folder Include="Commands\Game\Create\" />
   </ItemGroup>
   <ItemGroup>
@@ -343,6 +355,9 @@
     <Resource Include="Resources\Images\dummy.png" />
     <Resource Include="Resources\Images\game_minimap_dummy.png" />
     <Resource Include="Resources\Images\game_map_dummy.jpg" />
+    <Resource Include="Resources\Images\rotate_right.png" />
+    <Resource Include="Resources\Images\rotate_left.png" />
+    <Resource Include="Resources\Images\delete.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

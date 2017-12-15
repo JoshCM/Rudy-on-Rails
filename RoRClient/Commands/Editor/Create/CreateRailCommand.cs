@@ -7,33 +7,40 @@ using RoRClient.Commands.Base;
 using RoRClient.Models.Session;
 using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Game;
+using Newtonsoft.Json.Linq;
 
 namespace RoRClient.Commands.Editor.Create
 
 {
     public class CreateRailCommand : CommandBase
     {
-
         private Guid railId;
         private int xPos;
         private int yPos;
-        private RailSectionPosition node1;
-        private RailSectionPosition node2;
+        private List<RailSection> railSections = new List<RailSection>();
 
         public CreateRailCommand(EditorSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             railId = Guid.Parse(messageInformation.GetValueAsString("railId"));
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
-            node1 = (RailSectionPosition)Enum.Parse(typeof(RailSectionPosition), messageInformation.GetValueAsString("railSectionPositionNode1"));
-            node2 = (RailSectionPosition)Enum.Parse(typeof(RailSectionPosition), messageInformation.GetValueAsString("railSectionPositionNode2"));
+
+            List<JObject> railSectionList = messageInformation.GetValueAsJObjectList("railSections");
+            foreach (JObject obj in railSectionList)
+            {
+                Guid railSectionId = Guid.Parse(obj.GetValue("railSectionId").ToString());
+                RailSectionPosition node1 = (RailSectionPosition)Enum.Parse(typeof(RailSectionPosition), obj.GetValue("node1").ToString());
+                RailSectionPosition node2 = (RailSectionPosition)Enum.Parse(typeof(RailSectionPosition), obj.GetValue("node2").ToString());
+                RailSection section = new RailSection(railSectionId, node1, node2);
+                railSections.Add(section);
+            }
         }
 
         public override void Execute()
         {
             EditorSession editorSession = EditorSession.GetInstance();
             Square square = editorSession.Map.GetSquare(xPos, yPos);
-            Rail rail = new Rail(railId, square, new RailSection(node1, node2));
+            Rail rail = new Rail(railId, square, railSections);
             square.PlaceableOnSquare = rail;
         }
     }
