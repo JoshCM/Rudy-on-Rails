@@ -35,7 +35,6 @@ namespace RoRClient.ViewModels.Game
 
         private Map map;
 
-
         private int mapWidth;
         public int MapWidth
         {
@@ -80,10 +79,7 @@ namespace RoRClient.ViewModels.Game
                 squareViewModel.MapViewModel = this;
                 squareViewModels.Add(squareViewModel);
                 //square.PropertyChanged += OnSquarePropertyChanged;
-
-           
             }
         }
-
     }
 }

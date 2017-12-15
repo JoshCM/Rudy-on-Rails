@@ -7,7 +7,7 @@ using RoRClient.Models.Game;
 
 namespace RoRClient.ViewModels.Game
 {
-    public class GameSquareViewModel:GameCanvasViewModel
+    public class GameSquareViewModel : GameCanvasViewModel
     {
         private Square square;
         public GameSquareViewModel(Square square): base(square.Id)
