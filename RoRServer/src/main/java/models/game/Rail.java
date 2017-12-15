@@ -86,6 +86,11 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		return railSections.get(0);
 	}
 	
+	public List<RailSection> getRailSectionList(){
+		return railSections;
+	}
+
+	
 	public UUID getTrainstationId() {
 		return trainstationId;
 	}

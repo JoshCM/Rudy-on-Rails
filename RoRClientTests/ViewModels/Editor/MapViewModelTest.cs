@@ -16,12 +16,12 @@ namespace RoRClientTests.ViewModels.Editor
         Map map;
         Rail expectedRail;
         GameSession editorSession;
-        MapViewModel mapViewModel;
+        MapEditorViewModel mapViewModel;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            mapViewModel = new MapViewModel(new ToolbarViewModel());
+            mapViewModel = new MapEditorViewModel(new ToolbarViewModel());
             editorSession = GameSession.GetInstance();
             map = editorSession.Map;
         }

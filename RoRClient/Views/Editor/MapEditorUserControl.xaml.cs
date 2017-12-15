@@ -4,9 +4,9 @@ using System.Windows.Controls;
 
 namespace RoRClient.Views.Editor
 {
-    public partial class MapUserControl : UserControl
+    public partial class MapEditorUserControl : UserControl
     {
-        public MapUserControl()
+        public MapEditorUserControl()
         {
             InitializeComponent();
         }
@@ -22,7 +22,7 @@ namespace RoRClient.Views.Editor
 				SetValue(SelectedToolProperty, value);
 			}
 		}
-		public static readonly DependencyProperty SelectedToolProperty = DependencyProperty.Register("SelectedTool", typeof(ToolItem), typeof(MapUserControl), new UIPropertyMetadata(null));
+		public static readonly DependencyProperty SelectedToolProperty = DependencyProperty.Register("SelectedTool", typeof(ToolItem), typeof(MapEditorUserControl), new UIPropertyMetadata(null));
 
 	}
 }

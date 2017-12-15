@@ -1,0 +1,58 @@
+package commands.game;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import commands.base.CommandBase;
+import commands.editor.CreateRailCommand;
+import communication.MessageInformation;
+import models.game.Map;
+import models.game.PlaceableOnSquare;
+import models.game.Rail;
+import models.game.RailSection;
+import models.game.RailSectionPosition;
+import models.game.Square;
+import models.session.GameSession;
+import models.session.GameSessionManager;
+import models.session.RoRSession;
+import persistent.MapManager;
+
+public class LoadDefaultMapCommand extends CommandBase {
+
+	public LoadDefaultMapCommand(RoRSession session, MessageInformation messageInfo) {
+		super(session, messageInfo);
+
+	}
+
+	@Override
+	public void execute() {
+		System.out.println("Ich soll eine DefaultMap laden!");
+		
+		// Map laden
+		Map map = MapManager.loadMap("GameDefaultMap");
+		
+		// Jedes Square durchgehen
+		Square [][] squares = map.getSquares();
+		for (int i = 0; i < squares.length; i++) {
+			for (int j = 0; j < squares[i].length; j++) {
+				
+				// Square holen 
+				Square square = squares[i][j];
+				// Wenn ein Rail auf dem Square liegt
+				if (square.getPlaceableOnSquare() != null) {
+					Rail rail = (Rail)square.getPlaceableOnSquare();
+					// Hole die SectionPositions aus den RailSections und speichere in Liste
+					List<RailSectionPosition> railSectionPosition = new ArrayList<RailSectionPosition>();
+					for (RailSection section : rail.getRailSectionList()) {
+						railSectionPosition.add(section.getNode1());
+						railSectionPosition.add(section.getNode2());
+					}
+					// Neues Rail erstellen und damit an den Client schicken
+					Rail newRail = new Rail(session.getName(), square, railSectionPosition);
+					System.out.println("Neue Rail erstellt auf " + i + " " + j + ": " + rail.toString());
+				}
+
+			}
+		}
+	}
+}

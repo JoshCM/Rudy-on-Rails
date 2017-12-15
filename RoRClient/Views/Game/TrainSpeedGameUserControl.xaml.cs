@@ -18,9 +18,9 @@ namespace RoRClient.Views.Game
     /// <summary>
     /// Interaktionslogik für GameTrainSpeedUserControl.xaml
     /// </summary>
-    public partial class GameTrainSpeedUserControl : UserControl
+    public partial class TrainSpeedGameUserControl : UserControl
     {
-        public GameTrainSpeedUserControl()
+        public TrainSpeedGameUserControl()
         {
             InitializeComponent();
         }

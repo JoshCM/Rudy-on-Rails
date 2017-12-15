@@ -8,10 +8,11 @@ using System.Collections.ObjectModel;
 using RoRClient.Communication.Queue;
 using RoRClient.Models.Base;
 using RoRClient.Communication.Topic;
+using RoRClient.Communication.DataTransferObject;
 
 namespace RoRClient.Models.Session
 {
-    public class RoRSession : ModelBase
+    public class RoRSession
     {
         protected string name;
         protected Map map;
@@ -80,7 +81,13 @@ namespace RoRClient.Models.Session
                 return queueSender;
             }
         }
+
+        /// <summary>
+        /// Default Map laden
+        /// </summary>
+        public void LoadDefaultMapAtStartup()
+        {
+            QueueSender.SendMessage("LoadDefaultMap", new MessageInformation());
+        }
     }
-
-
 }

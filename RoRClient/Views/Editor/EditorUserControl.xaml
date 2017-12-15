@@ -36,14 +36,15 @@
                                    DataContext="{Binding TopMenuViewModel}"/>
 
         <!-- Darstellung der Map -->
-        <editor:MapUserControl Grid.Row="1"
+        <editor:MapEditorUserControl Grid.Row="1"
                                Grid.Column="1"
                                Grid.ColumnSpan="2"
                                Grid.RowSpan="2"
-                               DataContext="{Binding MapViewModel}"/>
+                               DataContext="{Binding MapViewModel}" />
 
         <!-- Werkzeugleiste -->
-        <editor:ToolbarUserControl DataContext="{Binding ToolbarViewModel}" x:Name="ToolbarUserControlName" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"/>
+        <editor:ToolbarUserControl DataContext="{Binding ToolbarViewModel}" x:Name="ToolbarUserControlName"
+                                   Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" />
 
         <Grid Grid.Row="3"
               Grid.Column="0"
