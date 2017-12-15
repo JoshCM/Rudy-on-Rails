@@ -78,7 +78,9 @@ namespace RoRClient.ViewModels
             }
         }
 
-        // Auswählen/Selektieren von ViewModels
+        /// <summary>
+        /// Auswählen/Selektieren von ViewModels
+        /// </summary>
         private ICommand selectInteractiveGameObjectCommand;
         public ICommand SelectInteractiveGameObjectCommand
         {
@@ -92,7 +94,9 @@ namespace RoRClient.ViewModels
             }
         }
 
-        // EditorObject (Rail etc.) ausgewählt + Quicknavigation anzeigen (sollte noch umbenannt werden)
+        /// <summary>
+        /// EditorObject (Rail etc.) ausgewählt + Quicknavigation anzeigen
+        /// </summary>
         public void SelectInteractiveGameObject()
         {
             // Neues CanvasViewModel im MapViewModel merken
