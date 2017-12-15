@@ -9,10 +9,5 @@ namespace RoRClient.Views.Editor
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

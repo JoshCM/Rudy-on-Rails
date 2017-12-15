@@ -18,7 +18,7 @@ namespace RoRClient.Views.Game
     /// <summary>
     /// Interaktionslogik für RailGameUserControl.xaml
     /// </summary>
-    public partial class RailGameUserControl : UserControl
+    public partial class RailGameUserControl : CanvasUserControl
     {
         public RailGameUserControl()
         {

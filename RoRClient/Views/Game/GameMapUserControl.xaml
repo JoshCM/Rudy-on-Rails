@@ -25,7 +25,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type game:GameCanvasViewModel}">
                             <Canvas>
-                                <vg:GameRailUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                                <vg:RailGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
