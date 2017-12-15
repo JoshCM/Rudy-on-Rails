@@ -3,6 +3,7 @@ using RoRClient.Models.Game;
 using RoRClient.Models.Lobby;
 using RoRClient.ViewModels.Commands;
 using RoRClient.ViewModels.Helper;
+using RoRClient.Views.Popup;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -107,11 +108,15 @@ namespace RoRClient.ViewModels.Lobby
         /// </summary>
         private void SendCreateEditorSessionCommand()
         {
-            lobbyModel.StartConnection();
-            MessageInformation messageInformation = new MessageInformation();
-            messageInformation.PutValue("playerName", "Heinz");
-            messageInformation.PutValue("editorName", "Editor1");
-            lobbyModel.getFromClientRequestSender().SendMessage("CreateEditorSession", messageInformation);
+            string editorName = PopupCreator.AskUserToInputString("Gib einer EditorSession einen Namen!");
+
+            if(editorName != "")
+            {
+                MessageInformation messageInformation = new MessageInformation();
+                messageInformation.PutValue("playerName", lobbyModel.PlayerName);
+                messageInformation.PutValue("editorName", editorName);
+                lobbyModel.getFromClientRequestSender().SendMessage("CreateEditorSession", messageInformation);
+            }
         }
 
         private void OnClientModelChanged(object sender, PropertyChangedEventArgs e)
