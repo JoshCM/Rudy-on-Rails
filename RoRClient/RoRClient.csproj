@@ -108,6 +108,7 @@
     <Compile Include="Commands\Editor\Update\UpdateNodesOfRailSectionCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
+    <Compile Include="Commands\LoadMapCommand.cs" />
     <Compile Include="Communication\Dispatcher\QueueDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicEditorDispatcher.cs" />
@@ -341,8 +342,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\Editor\Update\" />
-    <Folder Include="Commands\Editor\Delete\" />
     <Folder Include="Commands\Game\Create\" />
   </ItemGroup>
   <ItemGroup>

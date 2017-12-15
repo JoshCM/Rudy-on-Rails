@@ -22,6 +22,6 @@ public class GameSession extends RoRSession{
 	 * Lädt die DefaultMap in die GameSession
 	 */
 	public void loadGameDefaultMap() {
-		setMap(MapManager.loadMap("/maps/GameDefaultMap.map"));
+		setMap(MapManager.loadMap("GameDefaultMap"));
 	}
 }

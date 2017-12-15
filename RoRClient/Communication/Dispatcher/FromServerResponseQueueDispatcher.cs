@@ -55,13 +55,12 @@ namespace RoRClient.Communication.Dispatcher
             gameSession.Name = messageInformation.GetValueAsString("gameName");
             gameSession.Init(messageInformation.GetValueAsString("topicName"));
 
+            // DefaultMap beim Erstellen der Map laden
+            gameSession.loadDefaultMapAtStartup();
+
             Guid playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             string playerName = messageInformation.GetValueAsString("playerName");
             Player player = new Player(playerId, playerName);
-            // Load DefaultMap
-            String JSONMap = messageInformation.GetValueAsString("map");
-            Map map = null;
-            gameSession.Map = map;
             gameSession.AddPlayer(player);
             lobbyModel.Connected_Game = true;
         }
