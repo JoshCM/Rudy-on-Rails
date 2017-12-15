@@ -11,7 +11,7 @@ using RoRClient.Communication.Topic;
 
 namespace RoRClient.Models.Session
 {
-    public class RoRSession : ModelBase
+    public class RoRSession
     {
         protected string name;
         protected Map map;
