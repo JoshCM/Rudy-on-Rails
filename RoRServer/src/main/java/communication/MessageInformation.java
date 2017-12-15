@@ -1,8 +1,16 @@
 package communication;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.internal.LinkedTreeMap;
 
 /**
  * DTO, das serialisiert in einer Nachricht mitgesendet wird. Hier stehen nachrichtspezifischen
@@ -72,5 +80,15 @@ public class MessageInformation {
     
     public boolean getValueAsBoolean(String key) {
     	return (boolean)attributes.get(key);
+    }
+    
+    public List<JsonObject> getValueAsList(String key) {
+    	Gson gson = new Gson();
+    	List<LinkedTreeMap> list = (List<LinkedTreeMap>)attributes.get(key);
+    	List<JsonObject> result = new ArrayList<JsonObject>();
+    	for(LinkedTreeMap map : list) {
+    		result.add(gson.toJsonTree(map).getAsJsonObject());
+    	}
+    	return result;
     }
 }

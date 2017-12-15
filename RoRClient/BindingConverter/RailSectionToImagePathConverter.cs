@@ -1,6 +1,7 @@
 ﻿using RoRClient.Models.Game;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,7 @@ namespace RoRClient.BindingConverter
             {
                 RailSection railSection = (RailSection)value;
                 List<RailSectionPosition> positionList = railSection.GetNodesAsList();
+
                 if (positionList.Contains(RailSectionPosition.NORTH) && positionList.Contains(RailSectionPosition.SOUTH))
                 {
                     return IMAGE_FOLDER_PATH + "rail_ns.png";

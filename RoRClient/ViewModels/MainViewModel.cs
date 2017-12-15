@@ -29,6 +29,7 @@ namespace RoRClient.ViewModels
         {
             CurrentViewModel = viewmodels[args.Statename];
         }
+
         public MainViewModel()
         {
             // Lobby / Startscreen zu ViewModels (Dictionary) hinzufügen

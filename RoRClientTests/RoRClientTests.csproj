@@ -54,6 +54,7 @@
     <Compile Include="ViewModels\Editor\MapViewModelTest.cs" />
     <Compile Include="ViewModels\Editor\ToolbarViewModelTest.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactoryTests.cs" />
+    <Compile Include="Views\Editor\Helper\RegexValidatorTests.cs" />
     <Compile Include="Views\Editor\Helper\ToolConverterTest.cs" />
   </ItemGroup>
   <ItemGroup>
