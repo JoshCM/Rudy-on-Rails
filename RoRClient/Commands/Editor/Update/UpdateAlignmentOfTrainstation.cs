@@ -10,11 +10,11 @@ using RoRClient.Models.Game;
 
 namespace RoRClient.Commands.Editor.Update
 {
-    class UpdateAlignmentOfTrainstation : CommandBase
+    class UpdateAlignmentOfTrainstationCommand : CommandBase
     {
         private Guid trainstationId;
         private Compass alignment;
-        public UpdateAlignmentOfTrainstation(EditorSession session, MessageInformation message) : base(session, message)
+        public UpdateAlignmentOfTrainstationCommand(EditorSession session, MessageInformation message) : base(session, message)
         {
             trainstationId = message.GetValueAsGuid("id");
             alignment = (Compass)Enum.Parse(typeof(Compass), message.GetValueAsString("alignment"));
@@ -22,7 +22,9 @@ namespace RoRClient.Commands.Editor.Update
 
         public override void Execute()
         {
-            throw new NotImplementedException();
+            EditorSession editorSession = (EditorSession)session;
+            Trainstation trainstation = (Trainstation)editorSession.Map.GetPlaceableById(trainstationId);
+            trainstation.Alignment = alignment;
         }
     }
 }

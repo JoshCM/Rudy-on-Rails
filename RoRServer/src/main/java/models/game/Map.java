@@ -13,7 +13,7 @@ import communication.MessageInformation;
 public class Map extends ModelBase {
 	private String name;
 	private Square squares [][];
-	private final int mapSize = 50;
+	private final int mapSize = 3;
 	
 	/**
 	 * Jedes Square auf der Map braucht einen Index,

@@ -34,10 +34,10 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		notifyCreatedRail();
 	}
 	
-	public Rail(String sessionName, Square square, List<Compass> railSectionPositions, UUID id) {
+	public Rail(String sessionName, Square square, List<Compass> railSectionPositions, UUID trainstationId, UUID id) {
 		super(sessionName, square, id);
 		
-		square.setPlaceable(this);
+		setTrainstationId(trainstationId);
 		railSections = new ArrayList<RailSection>();
 		createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
 		notifyCreatedRail();
@@ -139,5 +139,11 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		for(RailSection section : railSections) {
 			section.rotate(right, notYet);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Rail [placeableOnRail=" + placeableOnRail + ", trainstationId=" + trainstationId + ", getXPos()="
+				+ getXPos() + ", getYPos()=" + getYPos() + ", getId()=" + getId() + "]";
 	}
 }

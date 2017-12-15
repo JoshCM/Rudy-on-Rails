@@ -4,16 +4,25 @@
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                      xmlns:v="clr-namespace:RoRClient.Views"
+                     xmlns:converter="clr-namespace:RoRClient.BindingConverter"
                      x:Name="trainstationUserControl"
                      mc:Ignorable="d" 
                      Canvas.Top="{Binding RealY, ElementName=trainstationUserControl}"
                      Canvas.Left="{Binding RealX, ElementName=trainstationUserControl}">
+    <UserControl.Resources>
+        <converter:TrainstationAlignmentToAngleConverter  x:Key="TrainstationAlignmentToAngleConverter"/>
+    </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=trainstationUserControl}"
             Height="{Binding SquareDim, ElementName=trainstationUserControl}">
         <Image Width="{Binding SquareDim, ElementName=trainstationUserControl}" Height="{Binding SquareDim, ElementName=trainstationUserControl}" Source="pack://application:,,,/Resources/Images/Tools/trainstation.png">
             <Image.InputBindings>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
             </Image.InputBindings>
+            <Image.LayoutTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="{Binding Trainstation.Alignment, Mode=OneWay, Converter={StaticResource TrainstationAlignmentToAngleConverter}}" />
+                </TransformGroup>
+            </Image.LayoutTransform>
         </Image>
     </Canvas>
 </v:CanvasUserControl>

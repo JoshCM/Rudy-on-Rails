@@ -57,13 +57,15 @@ namespace RoRClient.ViewModels.Editor
 			MessageInformation messageInformation = new MessageInformation();
 			messageInformation.PutValue("id", trainstation.Id);
 			messageInformation.PutValue("right", false);
-            messageInformation.PutValue("alignment", Compass.EAST.ToString());
             EditorSession.GetInstance().QueueSender.SendMessage("RotateTrainstation", messageInformation);
 		}
 
         public override void RotateRight()
         {
-            throw new NotImplementedException();
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("id", trainstation.Id);
+            messageInformation.PutValue("right", true);
+            EditorSession.GetInstance().QueueSender.SendMessage("RotateTrainstation", messageInformation);
         }
     }
 }

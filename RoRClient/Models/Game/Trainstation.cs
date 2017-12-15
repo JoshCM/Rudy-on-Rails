@@ -13,11 +13,12 @@ namespace RoRClient.Models.Game
     public class Trainstation : InteractiveGameObject, IPlaceableOnSquare
     {
         private List<Rail> trainstationRails;
-
-        public Trainstation(Guid id, Square square, List<Rail> trainstationRails) : base(square)
+        private Compass alignment;
+        public Trainstation(Guid id, Square square, List<Rail> trainstationRails, Compass alignment) : base(square)
         {
             this.id = id;
             this.trainstationRails = trainstationRails;
+            this.alignment = alignment;
         }
 
         public List<Rail> TrainstationRails
@@ -25,6 +26,19 @@ namespace RoRClient.Models.Game
             get
             {
                 return trainstationRails;
+            }
+        }
+
+        public Compass Alignment
+        {
+            get
+            {
+                return alignment;
+            }
+            set
+            {
+                alignment = value;
+                NotifyPropertyChanged("Alignment");
             }
         }
     }

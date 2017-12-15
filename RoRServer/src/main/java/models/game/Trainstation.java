@@ -2,6 +2,7 @@ package models.game;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +18,9 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	private Compass alignment;
 	private String sessionName;
 	
+	private final int CLOCKWISE = 90;
+	private final int COUNTER_CLOCKWISE = -90;
+	
 	public Trainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment) {
 		super(sessionName, square, id);
 		this.trainstationRailIds = trainstationRailIds;
@@ -31,16 +35,13 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		messageInfo.putValue("alignment", alignment);
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
-		
 		List<JsonObject> rails = new ArrayList<JsonObject>();
 		for(UUID railId : getTrainstationRailIds()) {
 			JsonObject json = new JsonObject();
 			json.addProperty("railId", railId.toString());
 			rails.add(json);
 		}
-		
 		messageInfo.putValue("trainstationRails", rails);
-
 		notifyChange(messageInfo);
 	}
 
@@ -48,6 +49,10 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		return trainstationRailIds;
 	}
 	
+	/**
+	 * Gibt die Liste von Rails der Trainstation zurück
+	 * @return
+	 */
 	public List<Rail> getTrainstationRails(){
 		List<Rail> trainstationRails = new ArrayList<Rail>();
 		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(sessionName);
@@ -57,6 +62,17 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		return trainstationRails;
 	}
 	
+	/**
+	 * Gibt die Liste von Rails der Trainstation umgedreht zurück
+	 * @return
+	 */
+	public List<Rail> getReverseTrainstationRails(){
+		List<Rail> trainstationRails = getTrainstationRails();
+		List<Rail> shallowCopy = trainstationRails.subList(0, trainstationRails.size());
+		Collections.reverse(shallowCopy);
+		return shallowCopy;
+	}
+	
 	private void notifyTrainstationAlignmentUpdated() {
 		MessageInformation messageInformation = new MessageInformation("UpdateAlignmentOfTrainstation");
 		messageInformation.putValue("id", this.getId());
@@ -64,11 +80,18 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		notifyChange(messageInformation);
 	}
 	
+	/**
+	 * Rotiert die zugehörigen Rails einer Trainstation
+	 * @param trainstationRail Ein Rail der Trainstation
+	 * @param oldRailSquare Square worauf die Rail vorher PlaceableOnSquare war
+	 * @param newRailSquare Square worauf die Rail PlaceableOnSquare werden soll
+	 * @param right Uhrzeigersinn/Gegen Uhrzeigersinn
+	 */
 	private void rotateTrainstationRail(Rail trainstationRail, Square oldRailSquare, Square newRailSquare, boolean right) {
 		
 		// rotate der Rail ohne notify
 		Rail tempRail = trainstationRail;
-		tempRail.rotate(right, false);
+		tempRail.rotate(right, right);
 		
 		// bekomme sessionname für neue Rail
 		String sessionName = EditorSessionManager.getInstance().getEditorSession().getName();
@@ -76,15 +99,19 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		// nehme section1 von RailSection
 		RailSection sectionOne = tempRail.getFirstSection();
 		
-		// erzeuge neue Rail und setze intern das Square.PlacableOnSquare
-		Rail newRail = new Rail(sessionName, newRailSquare, Arrays.asList(sectionOne.getNode1(), sectionOne.getNode2()), tempRail.getId());
-		
 		// lösche das Rail aus dem alten Square
+		// muss zuerst gelöscht werden damit danach auch wieder was draufgesetzt werden kann
 		oldRailSquare.deletePlaceable();
-		
-		System.out.println(String.format("%s, %s", oldRailSquare, newRailSquare));
+				
+		// erzeuge neue Rail und setze intern das Square.PlacableOnSquare
+		Rail newRail = new Rail(sessionName, newRailSquare, Arrays.asList(sectionOne.getNode1(), sectionOne.getNode2()), this.getId(), tempRail.getId());
+		newRailSquare.setPlaceable(newRail);
 	}
 	
+	/**
+	 * Rotiert das Alignment der Trainstation
+	 * @param right Uhrzeigersinn/Gegen Uhrzeigersinn
+	 */
 	private void rotateTrainstation(boolean right) {
 		int newIndex;
 		
@@ -101,90 +128,106 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		notifyTrainstationAlignmentUpdated();
 	}
 
+	/**
+	 * Rotiert eine Koordinate um einen definierten Punkt
+	 * @param x Koordinate X
+	 * @param y Koordinate Y
+	 * @param alpha Winkel um den gedreht wird
+	 * @param centerX Koordinate X des defnierten Mittelpunkts
+	 * @param centerY Koordinate Y des defnierten Mittelpunkts
+	 * @return Koordinate mit X, Y
+	 */
+	private Coordinate rotate(double x, double y, double alpha, double centerX, double centerY) {
+		alpha = Math.toRadians(alpha);		
+		double rotatedX = centerX + (x - centerX) * Math.cos(alpha) - (y - centerY) * Math.sin(alpha);
+		double rotatedY = centerY + (x - centerX) * Math.sin(alpha) + (y - centerY) * Math.cos(alpha);
+		return new Coordinate((int)Math.round(rotatedX), (int)Math.round(rotatedY));
+	}
+	
+	/**
+	 * Rotiert die Trainstation und alle zugehörigen Rails
+	 * @param right Uhrzeigersinn/Gegen Uhrzeigersinn
+	 */
 	public void rotate(boolean right) {
 		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(sessionName);
 		
-		// rotiert das Bahnhofgebäude
+		// rotiert die Trainstation
 		rotateTrainstation(right);
 		
+		// X und Y der Trainstation
 		int pivotXPos = this.getXPos();
 		int pivotYPos = this.getYPos();
 		
-		for(Rail trainstationRail : getTrainstationRails()) {
+		List<Rail> trainstationRails = getTrainstationRails();
+		
+		// wenn im Uhzeigersinn gedreht werden soll, dann muss die liste der rails umgedreht werden
+		if(right)
+			trainstationRails = getReverseTrainstationRails();
+		
+		for(Rail trainstationRail : trainstationRails) {
 			int railXpos = trainstationRail.getXPos();
 			int railYpos = trainstationRail.getYPos();
 			
-			// diagonale Rail zu Trainstation
-			if(railXpos != pivotXPos && railYpos != pivotYPos) {
-				if(right) {
-					
-				}else {
-					if(railXpos < pivotXPos) {
-						if(railYpos < pivotYPos) {
-							railXpos += 0;
-							railYpos += 2;
-						}else if(railYpos > pivotYPos) {
-							railXpos += 2;
-							railYpos += 0;
-						}
-					}else if(railXpos > pivotXPos){
-						if(railYpos < pivotYPos) {
-							railXpos += (-2);
-							railYpos += 0;
-						}else if(railYpos > pivotYPos) {
-							railXpos += 0;
-							railYpos += (-2);
-						}
-					}else if(railYpos < pivotYPos) {
-						if(railXpos < pivotXPos) {
-							railXpos += 0;
-							railYpos += 2;
-						}else if(railXpos > pivotXPos) {
-							railXpos += (-2);
-							railYpos += 0;
-						}
-					}else if(railYpos > pivotYPos) {
-						if(railXpos < pivotXPos) {
-							railXpos += 2;
-							railYpos += 0;
-						}else if(railYpos > pivotYPos) {
-							railXpos += 0;
-							railYpos += (-1);
-						}
-					}
-				}
-			}else{
-				// nebenliegende Rail zu Trainstation
-				if(right) {
-					
-				}else {
-					if(railXpos < pivotXPos) {
-						if(railYpos == pivotYPos) {
-							railXpos += 1;
-							railYpos += 1;
-						}
-					}else if(railXpos > pivotXPos){
-						if(railYpos == pivotYPos) {
-							railXpos += (-1);
-							railYpos += (-1);
-						}
-					}else if(railYpos < pivotYPos) {
-						if(railXpos == pivotXPos) {
-							railXpos += (-1);
-							railYpos += 1;
-						}
-					}else if(railYpos > pivotYPos) {
-						if(railXpos == pivotXPos) {
-							railXpos += 1;
-							railYpos += (-1);
-						}
-					}
-				}
-			}
+			// rotiert die koordinaten
+			Coordinate newCoordinate = new Coordinate(0, 0);
+			if(right)
+				newCoordinate = rotate(railXpos, railYpos, CLOCKWISE, pivotXPos, pivotYPos);
+			else
+				newCoordinate = rotate(railXpos, railYpos, COUNTER_CLOCKWISE, pivotXPos, pivotYPos);
 			
 			Square oldRailSquare = (Square)editorSession.getMap().getSquareById(trainstationRail.getSquareId());
-			Square newRailSquare = (Square)editorSession.getMap().getSquare(railXpos, railYpos);
+			Square newRailSquare = (Square)editorSession.getMap().getSquare(newCoordinate.x, newCoordinate.y);
 			rotateTrainstationRail(trainstationRail, oldRailSquare, newRailSquare, right);
 		}
+	}
+	
+	/**
+	 * Hält die neuen Koordinaten, die beim Berechnen erzeugt werden
+	 */
+	private class Coordinate{
+		int x;
+		int y;
+		public Coordinate(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+		@Override
+		public String toString() {
+			return "Coordinate [x=" + x + ", y=" + y + "]";
+		}
+	}
+
+	/**
+	 * Validiert ob man die Rotation umsetzen kann
+	 * @param right Uhrzeigersinn/Gegen Uhrzeigersinn
+	 * @return (True)Validiert oder (False)nicht validiert
+	 */
+	public boolean validRotation(boolean right) {
+		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(sessionName);
+		int pivotXPos = this.getXPos();
+		int pivotYPos = this.getYPos();
+				
+		List<Rail> trainstationRails = getTrainstationRails();
+		if(right)
+			trainstationRails = getReverseTrainstationRails();
+		
+		for(Rail trainstationRail : trainstationRails) {
+			int railXpos = trainstationRail.getXPos();
+			int railYpos = trainstationRail.getYPos();
+
+			Coordinate newCoordinate = new Coordinate(0, 0);
+			if(right)
+				newCoordinate = rotate(railXpos, railYpos, CLOCKWISE, pivotXPos, pivotYPos);
+			else
+				newCoordinate = rotate(railXpos, railYpos, COUNTER_CLOCKWISE, pivotXPos, pivotYPos);
+			
+			Square newRailSquare = (Square)editorSession.getMap().getSquare(newCoordinate.x, newCoordinate.y);
+			if(newRailSquare == null)
+				return false;
+			if(newRailSquare.getPlaceableOnSquare() != null)
+				if(!trainstationRailIds.contains(newRailSquare.getPlaceableOnSquare().getId()))
+					return false;
+		}
+		return true;
 	}
 }
