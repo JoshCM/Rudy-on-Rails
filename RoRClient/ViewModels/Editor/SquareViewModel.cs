@@ -13,7 +13,7 @@ using Newtonsoft.Json.Linq;
 
 namespace RoRClient.ViewModels.Editor
 {
-    public class SquareViewModel : CanvasViewModel
+    public class SquareViewModel : EditorCanvasViewModel
     {
         private Square square;
         private ToolbarViewModel toolbarViewModel;
@@ -56,7 +56,7 @@ namespace RoRClient.ViewModels.Editor
         /// </summary>
         private void SendCreateRailCommand()
         {
-            // Quick-Navigation von einem möglich vorherigen angeklicken CanvasViewModel ausblenden
+            // Quick-Navigation von einem möglich vorherigen angeklicken EditorCanvasViewModel ausblenden
             MapViewModel.IsQuickNavigationVisible = false;
 
             int xPos = square.PosX;

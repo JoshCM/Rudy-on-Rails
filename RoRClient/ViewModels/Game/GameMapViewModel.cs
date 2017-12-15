@@ -9,56 +9,81 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using RoRClient.Models.Game;
+using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
 using Point = System.Windows.Point;
 
 namespace RoRClient.ViewModels.Game
 {
-    class GameMapViewModel : ViewModelBase
+    public class GameMapViewModel : ViewModelBase
     {
-        private Map map = new Map();
+        private GameCanvasViewModel gameCanvasViewModel;
 
-        private ObservableCollection<Rectangle> rechteckeCollection = new ObservableCollection<Rectangle>();
-
-        public ObservableCollection<Rectangle> RechteckeCollection
+        public GameCanvasViewModel GameCanvasViewModel
         {
-            get { return rechteckeCollection; }
+            get { return gameCanvasViewModel; }
+            set { gameCanvasViewModel = value; }
         }
 
-        private void RechteckInit()
+        private ObservableCollection<GameSquareViewModel> squareViewModels =
+            new ObservableCollection<GameSquareViewModel>();
+
+        public ObservableCollection<GameSquareViewModel> SquareViewModels
         {
-            Rectangle r = new Rectangle();
-            r.Fill= new SolidColorBrush(Colors.Blue);
+            get { return squareViewModels; }
         }
 
+        private Map map;
 
 
-        // TODO: Zeigt nocht nichts an
-        private ICommand _clickPositionCommand;
-        public ICommand ClickPositionCommand
+        private int mapWidth;
+        public int MapWidth
         {
-            get
+            get { return mapWidth; }
+            set
             {
-                if (_clickPositionCommand == null)
+                if (mapWidth != value)
                 {
-                    _clickPositionCommand = new ActionCommand(param => LogPosition(param));
+                    mapWidth = value;
+                    OnPropertyChanged("MapWidth");
                 }
-                return _clickPositionCommand;
             }
         }
 
-        // TODO: Zeigt nocht nichts an
-        public void LogPosition(object param)
+        private int mapHeight;
+        public int MapHeight
         {
+            get { return mapHeight; }
+            set
             {
-                // Mausklick-Position in Canvas
-                Point mousePos = Mouse.GetPosition((IInputElement)param);
-
-                // Tupel an der Position anlegen und ViewModel hinzufügen (Anzeige erfolgt über Binding in XAML automatisch)
-                MessageBox.Show(mousePos.ToString());
-
+                if (mapHeight != value)
+                {
+                    mapHeight = value;
+                    OnPropertyChanged("MapHeight");
+                }
             }
-
         }
+
+        public GameMapViewModel()
+        {
+            map = GameSession.GetInstance().Map;
+            InitSquares();
+            MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
+            MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+        }
+
+        private void InitSquares()
+        {
+            foreach (Square square in map.Squares)
+            {
+                GameSquareViewModel squareViewModel = new GameSquareViewModel(square);
+                squareViewModel.MapViewModel = this;
+                squareViewModels.Add(squareViewModel);
+                //square.PropertyChanged += OnSquarePropertyChanged;
+
+           
+            }
+        }
+
     }
 }

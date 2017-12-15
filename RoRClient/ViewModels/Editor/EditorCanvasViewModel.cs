@@ -1,18 +1,14 @@
-﻿using RoRClient.ViewModels.Commands;
-using RoRClient.ViewModels.Editor;
-using RoRClient.Models.Session;
-using RoRClient.Models.Game;
-﻿using RoRClient.Communication.DataTransferObject;
-using System;
+﻿using System;
 using System.Windows.Input;
+using RoRClient.ViewModels.Commands;
 
-namespace RoRClient.ViewModels
+namespace RoRClient.ViewModels.Editor
 {
     /// <summary>
     /// Diese Klasse wird als Base-Klasse für alle ViewModels verwendet, die auf einem Canvas angezeigt werden.
     /// Dazu gehören zum Beispiel Squares und Rails. 
     /// </summary>
-    public abstract class CanvasViewModel : ViewModelBase
+    public abstract class EditorCanvasViewModel : ViewModelBase
     {
 
         private MapViewModel mapViewModel;
@@ -28,7 +24,7 @@ namespace RoRClient.ViewModels
             }
         }
 
-        public CanvasViewModel(Guid modelId)
+        public EditorCanvasViewModel(Guid modelId)
         {
             id = modelId;
         }
@@ -99,21 +95,21 @@ namespace RoRClient.ViewModels
         /// </summary>
         public void SelectInteractiveGameObject()
         {
-            // Neues CanvasViewModel im MapViewModel merken
-            MapViewModel.SelectedCanvasViewModel = this;
-            // Initial das vorherige CanvasViewModel auf das Neue setzen
-            if (MapViewModel.PreviousSelectedCanvasViewModel == null)
+            // Neues EditorCanvasViewModel im MapViewModel merken
+            MapViewModel.SelectedEditorCanvasViewModel = this;
+            // Initial das vorherige EditorCanvasViewModel auf das Neue setzen
+            if (MapViewModel.PreviousSelectedEditorCanvasViewModel == null)
             {
-                MapViewModel.PreviousSelectedCanvasViewModel = this;
+                MapViewModel.PreviousSelectedEditorCanvasViewModel = this;
                 Console.WriteLine("1. Mal");
             }
             // Anzeigen der Quicknavigation
             MapViewModel.SwitchQuickNavigationForCanvasViewModel();
 
-            // Danach das CanvasViewModel als vorheriges CanvasViewModel merken, wenn es sich geänder hat
-            if (this != MapViewModel.PreviousSelectedCanvasViewModel)
+            // Danach das EditorCanvasViewModel als vorheriges EditorCanvasViewModel merken, wenn es sich geänder hat
+            if (this != MapViewModel.PreviousSelectedEditorCanvasViewModel)
             {
-                MapViewModel.PreviousSelectedCanvasViewModel = this;
+                MapViewModel.PreviousSelectedEditorCanvasViewModel = this;
                 Console.WriteLine("Model hat sich geändert!");
 
             }
@@ -121,17 +117,17 @@ namespace RoRClient.ViewModels
         }
 
         /// <summary>
-        /// Methode zum Rotieren eines CanvasViewModel nach links / Muss in der jeweiligen Unterklasse überschrieben werden
+        /// Methode zum Rotieren eines EditorCanvasViewModel nach links / Muss in der jeweiligen Unterklasse überschrieben werden
         /// </summary>
         public abstract void RotateLeft();
 
         /// <summary>
-        /// Methode zum Rotieren eines CanvasViewModel nach rechts / Muss in der jeweiligen Unterklasse überschrieben werden
+        /// Methode zum Rotieren eines EditorCanvasViewModel nach rechts / Muss in der jeweiligen Unterklasse überschrieben werden
         /// </summary>
         public abstract void RotateRight();
 
         /// <summary>
-        /// Methode zum Löschen eines CanvasViewModel / Muss in der jeweiligen Unterklasse überschrieben werden
+        /// Methode zum Löschen eines EditorCanvasViewModel / Muss in der jeweiligen Unterklasse überschrieben werden
         /// </summary>
         public abstract void Delete();
 

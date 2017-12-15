@@ -33,7 +33,7 @@ namespace RoRClientTests.ViewModels.Helper
             ViewModelFactory viewModelFactory = new ViewModelFactory();
             Player square = new Player(new Guid(), "testplayer");
 
-            CanvasViewModel canvasViewModel = (CanvasViewModel)viewModelFactory.CreateViewModelForModel(square, null);
+            EditorCanvasViewModel editorCanvasViewModel = (EditorCanvasViewModel)viewModelFactory.CreateViewModelForModel(square, null);
         }
     }
 }

@@ -131,8 +131,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\Base\CanvasViewModelBase.cs" />
+    <Compile Include="ViewModels\Game\GameCanvasViewModel.cs" />
     <Compile Include="ViewModels\Game\GameMapViewModel.cs" />
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
+    <Compile Include="ViewModels\Game\GameSquareViewModel.cs" />
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
@@ -140,7 +143,7 @@
     <Compile Include="ViewModels\Lobby\StartViewModel.cs" />
     <Compile Include="ViewModels\Editor\SquareViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="ViewModels\CanvasViewModel.cs" />
+    <Compile Include="ViewModels\Editor\EditorCanvasViewModel.cs" />
     <Compile Include="ViewModels\Helper\INotifyPropertyChangedExtended.cs" />
     <Compile Include="ViewModels\Helper\PropertyChangedExtendedEventArgs.cs" />
     <Compile Include="ViewModels\Editor\RailViewModel.cs" />
@@ -335,8 +338,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\Editor\Update\" />
-    <Folder Include="Commands\Editor\Delete\" />
     <Folder Include="Commands\Game\Create\" />
   </ItemGroup>
   <ItemGroup>

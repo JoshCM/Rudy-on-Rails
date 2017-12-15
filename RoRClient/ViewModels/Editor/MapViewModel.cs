@@ -24,29 +24,29 @@ namespace RoRClient.ViewModels.Editor
         private TaskFactory taskFactory;
         private ToolbarViewModel toolbarViewModel;
 
-        private CanvasViewModel previusSelectCanvasViewModel;
-        public CanvasViewModel PreviousSelectedCanvasViewModel
+        private EditorCanvasViewModel _previousSelectEditorCanvasViewModel;
+        public EditorCanvasViewModel PreviousSelectedEditorCanvasViewModel
         {
             get
             {
-                return previusSelectCanvasViewModel;
+                return _previousSelectEditorCanvasViewModel;
             }
             set
             {
-                previusSelectCanvasViewModel = value;
+                _previousSelectEditorCanvasViewModel = value;
             }
         }
 
-        private CanvasViewModel selectedCanvasViewModel;
-        public CanvasViewModel SelectedCanvasViewModel
+        private EditorCanvasViewModel _selectedEditorCanvasViewModel;
+        public EditorCanvasViewModel SelectedEditorCanvasViewModel
         {
             get
             {
-                return selectedCanvasViewModel;
+                return _selectedEditorCanvasViewModel;
             }
             set
             {
-                selectedCanvasViewModel = value;
+                _selectedEditorCanvasViewModel = value;
             }
         }
 
@@ -61,8 +61,8 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
-        private ObservableCollection<CanvasViewModel> placeableOnSquareCollection = new ObservableCollection<CanvasViewModel>();
-        public ObservableCollection<CanvasViewModel> PlaceableOnSquareCollection
+        private ObservableCollection<EditorCanvasViewModel> placeableOnSquareCollection = new ObservableCollection<EditorCanvasViewModel>();
+        public ObservableCollection<EditorCanvasViewModel> PlaceableOnSquareCollection
         {
             get
             {
@@ -180,7 +180,7 @@ namespace RoRClient.ViewModels.Editor
                 if (square.PlaceableOnSquare == null)
                 {
                     IModel model = (IModel)eventArgs.OldValue;
-                    CanvasViewModel result = placeableOnSquareCollection.Where(x => x.Id == model.Id).First();
+                    EditorCanvasViewModel result = placeableOnSquareCollection.Where(x => x.Id == model.Id).First();
 
                     if (result != null)
                     {
@@ -190,7 +190,7 @@ namespace RoRClient.ViewModels.Editor
                 else
                 {
                     ViewModelFactory factory = new ViewModelFactory();
-                    CanvasViewModel viewModel = factory.CreateViewModelForModel(square.PlaceableOnSquare, this);
+                    EditorCanvasViewModel viewModel = factory.CreateViewModelForModel(square.PlaceableOnSquare, this);
 
                     taskFactory.StartNew(() => placeableOnSquareCollection.Add(viewModel));
                 }
@@ -202,10 +202,10 @@ namespace RoRClient.ViewModels.Editor
         /// </summary>
         public void SwitchQuickNavigationForCanvasViewModel()
         {
-            // Falls ein anderes CanvasViewModel angeklickt wurde
-            if (previusSelectCanvasViewModel != selectedCanvasViewModel) {
+            // Falls ein anderes EditorCanvasViewModel angeklickt wurde
+            if (_previousSelectEditorCanvasViewModel != _selectedEditorCanvasViewModel) {
                 IsQuickNavigationVisible = false;
-                Console.WriteLine("Neues CanvasViewModel wurde angeklickt");
+                Console.WriteLine("Neues EditorCanvasViewModel wurde angeklickt");
             }
 
             if (IsQuickNavigationVisible)
@@ -220,7 +220,7 @@ namespace RoRClient.ViewModels.Editor
                 IsQuickNavigationVisible = true;
             }
 
-            Console.WriteLine("Selected ViewModel: " + SelectedCanvasViewModel.ToString() + " / ID: " + SelectedCanvasViewModel.Id);
+            Console.WriteLine("Selected ViewModel: " + SelectedEditorCanvasViewModel.ToString() + " / ID: " + SelectedEditorCanvasViewModel.Id);
         }
 
         /// <summary>
@@ -258,11 +258,11 @@ namespace RoRClient.ViewModels.Editor
         }
 
         /// <summary>
-        /// Das aktuell ausgewählte CanvasViewModel nach rechts rotieren
+        /// Das aktuell ausgewählte EditorCanvasViewModel nach rechts rotieren
         /// </summary>
         private void RotateRight()
         {
-            SelectedCanvasViewModel.RotateRight();
+            SelectedEditorCanvasViewModel.RotateRight();
         }
 
         /// <summary>
@@ -282,11 +282,11 @@ namespace RoRClient.ViewModels.Editor
         }
 
         /// <summary>
-        /// Das aktuell ausgewählte CanvasViewModel nach links rotieren
+        /// Das aktuell ausgewählte EditorCanvasViewModel nach links rotieren
         /// </summary>
         private void RotateLeft()
         {
-            SelectedCanvasViewModel.RotateLeft();
+            SelectedEditorCanvasViewModel.RotateLeft();
         }
 
         /// <summary>
@@ -306,11 +306,11 @@ namespace RoRClient.ViewModels.Editor
         }
 
         /// <summary>
-        /// Das aktuell ausgewählte CanvasViewModel löschen
+        /// Das aktuell ausgewählte EditorCanvasViewModel löschen
         /// </summary>
         private void Delete()
         {
-            SelectedCanvasViewModel.Delete();
+            SelectedEditorCanvasViewModel.Delete();
 
             // Quicknavigation nach dem Löschen nicht mehr anzeigen
             IsQuickNavigationVisible = false;

@@ -16,7 +16,7 @@ namespace RoRClient.ViewModels.Helper
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Konkretes ViewModel zu einem Model</returns>
-        public CanvasViewModel CreateViewModelForModel(IModel model, MapViewModel mapViewModel)
+        public EditorCanvasViewModel CreateViewModelForModel(IModel model, MapViewModel mapViewModel)
         {
             Type modelType = model.GetType();
             String viewModelTypeName = VIEWMODEL_TYPE_PREFIX + modelType.Name + VIEWMODEL_CLASS_SUFFIX;
@@ -27,7 +27,7 @@ namespace RoRClient.ViewModels.Helper
                 throw new TypeLoadException("There is no ViewModel for Model: " + modelType.Name);
             }
 
-            CanvasViewModel viewModel = (CanvasViewModel)Activator.CreateInstance(viewModelType, model);
+            EditorCanvasViewModel viewModel = (EditorCanvasViewModel)Activator.CreateInstance(viewModelType, model);
             viewModel.MapViewModel = mapViewModel;
             return viewModel;
         }

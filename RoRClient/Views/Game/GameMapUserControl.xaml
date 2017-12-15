@@ -6,28 +6,23 @@
              xmlns:local="clr-namespace:RoRClient.Views.Game"
              mc:Ignorable="d"
              d:DesignHeight="900" d:DesignWidth="1600"
-             xmlns:vm="clr-namespace:RoRClient.ViewModels.Editor"
-             xmlns:ve="clr-namespace:RoRClient.Views.Editor">
+             xmlns:vg="clr-namespace:RoRClient.Views.Game"
+             xmlns:game="clr-namespace:RoRClient.ViewModels.Game">
     <ScrollViewer HorizontalScrollBarVisibility="Auto">
         <Canvas Background="White" x:Name="MapCanvas">
-            <Canvas.InputBindings>
-                <MouseBinding Gesture="LeftClick" Command="{Binding Path=ClickPositionCommand}"
-                              CommandParameter="{Binding ElementName=MapCanvas}" />
-            </Canvas.InputBindings>
 
             <ItemsControl ItemsSource="{Binding SquareViewModels}">
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type vm:SquareViewModel}">
+                    <DataTemplate DataType="{x:Type game:GameSquareViewModel}">
                         <Canvas>
-                            <ve:SquareUserControl DataContext="{Binding}" X="{Binding SquarePosX}"
+                            <vg:GameSquareUserControl DataContext="{Binding}" X="{Binding SquarePosX}"
                                                   Y="{Binding SquarePosY}" />
                         </Canvas>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-            <Rectangle Width="100" Height="100" Fill="Aqua" />
-            <Rectangle Margin="500" Width="100" Height="100" Fill="Red" />
+
         </Canvas>
     </ScrollViewer>
 

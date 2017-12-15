@@ -15,7 +15,7 @@ namespace RoRClient.ViewModels.Editor
     /// <summary>
     /// Hält die zugehörige Rail und die Position (SquarePosX, SquarePosY) des Rails
     /// </summary>
-    public class RailViewModel : CanvasViewModel
+    public class RailViewModel : EditorCanvasViewModel
     {
         private Rail rail;
         public RailViewModel(Rail rail) : base(rail.Id)
