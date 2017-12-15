@@ -12,36 +12,14 @@ using Newtonsoft.Json.Linq;
 namespace RoRClient.Commands.Game.Create
 
 {
-    public class CreateRailCommand : CommandBase
+    /// <summary>
+    /// CreateRailCommand für Game
+    /// </summary>
+    public class CreateRailCommand : CreateRailCommandBase
     {
-        private Guid railId;
-        private int xPos;
-        private int yPos;
-        private List<RailSection> railSections = new List<RailSection>();
-
-        public CreateRailCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        public CreateRailCommand(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
-            railId = Guid.Parse(messageInformation.GetValueAsString("railId"));
-            xPos = messageInformation.GetValueAsInt("xPos");
-            yPos = messageInformation.GetValueAsInt("yPos");
 
-            List<JObject> railSectionList = messageInformation.GetValueAsJObjectList("railSections");
-            foreach (JObject obj in railSectionList)
-            {
-                Guid railSectionId = Guid.Parse(obj.GetValue("railSectionId").ToString());
-                RailSectionPosition node1 = (RailSectionPosition)Enum.Parse(typeof(RailSectionPosition), obj.GetValue("node1").ToString());
-                RailSectionPosition node2 = (RailSectionPosition)Enum.Parse(typeof(RailSectionPosition), obj.GetValue("node2").ToString());
-                RailSection section = new RailSection(railSectionId, node1, node2);
-                railSections.Add(section);
-            }
-        }
-
-        public override void Execute()
-        {
-            GameSession gameSession = GameSession.GetInstance();
-            Square square = gameSession.Map.GetSquare(xPos, yPos);
-            Rail rail = new Rail(railId, square, railSections);
-            square.PlaceableOnSquare = rail;
         }
     }
 }

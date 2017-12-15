@@ -28,8 +28,10 @@ namespace RoRClient.ViewModels.Game
             taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             map = GameSession.GetInstance().Map;
             InitSquares();
+
             //TO-DO: nur zum Testen
-            CreateRandomRails();
+            //CreateRandomRails();
+
             MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
             MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
         }

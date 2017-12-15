@@ -13,7 +13,6 @@ namespace RoRClient.Commands.Base
     /// </summary>
     public abstract class CommandBase : ICommand
     {
-        // Hier muss noch auf generelle Session umgestellt werden (Game oder Editor), siehe auch Konstruktor
         protected RoRSession session;
 
         public CommandBase(RoRSession session, MessageInformation message)
