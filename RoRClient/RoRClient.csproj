@@ -125,6 +125,7 @@
     <Compile Include="Models\Base\IModel.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
     <Compile Include="Models\Game\Player.cs" />
+    <Compile Include="Models\Lobby\EditorSessionInfo.cs" />
     <Compile Include="Models\Session\EditorSession.cs" />
     <Compile Include="Models\Session\GameSession.cs" />
     <Compile Include="Models\Session\RoRSession.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="ViewModels\Game\RailGameViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
+    <Compile Include="ViewModels\Lobby\JoinEditorLobbyViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Lobby\StartViewModel.cs" />
     <Compile Include="ViewModels\Editor\SquareEditorViewModel.cs" />
@@ -210,6 +212,9 @@
     <Compile Include="Views\Game\RailGameUserControl.xaml.cs">
       <DependentUpon>RailGameUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Lobby\JoinEditorLobbyView.xaml.cs">
+      <DependentUpon>JoinEditorLobbyView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Lobby\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
     </Compile>
@@ -248,6 +253,10 @@
     <Page Include="Views\Game\RailGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Lobby\JoinEditorLobbyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -340,9 +349,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\Game\Create\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Images\railcurve_ne.png" />
     <Resource Include="Resources\Images\railcurve_nw.png" />

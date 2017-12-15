@@ -9,10 +9,8 @@ import java.util.UUID;
  * GameSessions duerfen ausschliesslich ueber diesen Manager erzeugt werden!
  */
 public class GameSessionManager {
-
 	private static GameSessionManager gameSessionManager;
     private HashMap<UUID, GameSession> gameSessionMap = new HashMap<>();
-    
     
     private GameSessionManager() {}
     	

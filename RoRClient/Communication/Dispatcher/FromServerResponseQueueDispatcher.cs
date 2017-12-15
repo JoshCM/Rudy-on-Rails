@@ -4,6 +4,7 @@ using RoRClient.Models.Session;
 using RoRClient.Models.Game;
 using System;
 using System.Collections.Generic;
+using RoRClient.Models.Lobby;
 
 namespace RoRClient.Communication.Dispatcher
 {
@@ -16,7 +17,7 @@ namespace RoRClient.Communication.Dispatcher
             this.lobbyModel = lobbyModel;
         }
 
-        public void handleCreateEditorSession(MessageInformation messageInformation)
+        public void HandleCreateEditorSession(MessageInformation messageInformation)
         {
             EditorSession editorSession = EditorSession.GetInstance();
             editorSession.Name = messageInformation.GetValueAsString("editorName");
@@ -29,7 +30,7 @@ namespace RoRClient.Communication.Dispatcher
             lobbyModel.Connected_Editor = true;
         }
 
-        public void handleJoinEditorSession(MessageInformation messageInformation)
+        public void HandleJoinEditorSession(MessageInformation messageInformation)
         {
             EditorSession editorSession = EditorSession.GetInstance();
             string editorName = messageInformation.GetValueAsString("editorName");
@@ -49,7 +50,7 @@ namespace RoRClient.Communication.Dispatcher
             lobbyModel.Connected_Editor = true;
         }
 
-        public void handleCreateGameSession(MessageInformation messageInformation)
+        public void HandleCreateGameSession(MessageInformation messageInformation)
         {
             GameSession gameSession = GameSession.GetInstance();
             gameSession.Name = messageInformation.GetValueAsString("gameName");
@@ -65,7 +66,7 @@ namespace RoRClient.Communication.Dispatcher
             lobbyModel.Connected_Game = true;
         }
 
-        public void handleJoinGameSession(MessageInformation messageInformation)
+        public void HandleJoinGameSession(MessageInformation messageInformation)
         {
             GameSession gameSession = GameSession.GetInstance();
             string gameName = messageInformation.GetValueAsString("gameName");
@@ -83,6 +84,20 @@ namespace RoRClient.Communication.Dispatcher
             }
 
             lobbyModel.Connected_Game = true;
+        }
+
+        public void HandleReadEditorSessions(MessageInformation messageInformation)
+        {
+            lobbyModel.ClearEditorSessionInfos();
+
+            List<JObject> editorSessionInfoList = messageInformation.GetValueAsJObjectList("editorSessionInfo");
+            foreach (JObject obj in editorSessionInfoList)
+            {
+                string name = obj.GetValue("name").ToString();
+                int amountOfPlayers = (int)obj.GetValue("amountOfPlayers");
+                EditorSessionInfo editorSessionInfo = new EditorSessionInfo(name, amountOfPlayers);
+                lobbyModel.AddEditorSessionInfo(editorSessionInfo);
+            }
         }
     }
 }

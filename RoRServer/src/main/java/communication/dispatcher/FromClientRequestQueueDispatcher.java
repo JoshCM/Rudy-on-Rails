@@ -30,28 +30,23 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	 * @param messageInformation
 	 */
 	public void handleCreateEditorSession(MessageInformation messageInformation) {
-		EditorSession editorSession;
-
-		if (EditorSessionManager.getInstance().getEditorSession() == null) {
+		if (EditorSessionManager.getInstance().getFirstEditorSession() == null) {
 			createEditorSessionAndSendResponse(messageInformation);
 		} else {
-			joinEditorSessionAndSendResponse(messageInformation);
+			EditorSession editorSession = EditorSessionManager.getInstance().getFirstEditorSession();
+			messageInformation.putValue("editorName", editorSession.getName());
+			handleJoinEditorSession(messageInformation);
 		}
 
 		log.info("Called handleCreateEditorSession");
 	}
-	/**
-	 * Es gibt schon einen Editor mit mind. einem Player. Diesem wird ein neuer Player hinzugefuegt und eine Response 
-	 * wird für den Client zusammengesetzt.
-	 * 
-	 * @param messageInformation
-	 */
-	private void joinEditorSessionAndSendResponse(MessageInformation messageInformation) {
+	
+	public void handleJoinEditorSession(MessageInformation messageInformation) {
 		EditorSession editorSession;
 		MessageInformation responseInformation = new MessageInformation("JoinEditorSession");
 		responseInformation.setClientid(messageInformation.getClientid());
 		
-		editorSession = EditorSessionManager.getInstance().getEditorSession();
+		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(messageInformation.getValueAsString("editorName"));
 		Player player = new Player(editorSession.getName(), messageInformation.getValueAsString("playerName"));
 		editorSession.addPlayer(player);
 		
@@ -89,7 +84,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	}
 	/**
 	 * Es gibt schon einen Game mit mind. einem Player. Diesem wird ein neuer Player hinzugefuegt und eine Response 
-	 * wird für den Client zusammengesetzt.
+	 * wird fï¿½r den Client zusammengesetzt.
 	 * @param messageInformation
 	 */
 	private void joinGameSessionAndSendResponse(MessageInformation messageInformation) {
@@ -157,5 +152,23 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		responseInformation.putValue("playerName", player.getName());		
 		responseInformation.putValue("playerId", player.getId().toString());
 		sendMessage("CreateGameSession", responseInformation);
+	}
+	
+	public void handleReadEditorSessions(MessageInformation messageInformation) {
+		MessageInformation responseInformation = new MessageInformation("ReadEditorSessions");
+		responseInformation.setClientid(messageInformation.getClientid());
+		
+		List<JsonObject> editorSessionInfos = new ArrayList<JsonObject>();
+		List<EditorSession> editorSessions = EditorSessionManager.getInstance().getEditorSessionsAsList();
+		for(EditorSession session : editorSessions) {
+			JsonObject json = new JsonObject();
+			json.addProperty("name", session.getName());
+			json.addProperty("amountOfPlayers", session.getPlayers().size());
+			editorSessionInfos.add(json);
+		}
+		
+		responseInformation.putValue("editorSessionInfo", editorSessionInfos);
+		
+		sendMessage("ReadEditorSessions", responseInformation);
 	}
 }

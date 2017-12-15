@@ -12,54 +12,29 @@ namespace RoRClient.ViewModels.Lobby
         public UIState uiState;
         private LobbyModel lobbyModel;
 
-        public StartViewModel(UIState uiState)
+        public StartViewModel(UIState uiState, LobbyModel lobbyModel)
         {
-            lobbyModel = new LobbyModel();
             this.uiState = uiState;
+            this.lobbyModel = lobbyModel;
 
             lobbyModel.PropertyChanged += OnClientModelChanged;
         }
         /// <summary>
         /// Muss noch ersetzt werden durch CreateGameSessionCommand
         /// </summary>
-        private ICommand start2GameCmd;
-        public ICommand StartToGameCommand
+        private ICommand switchToJoinEditorLobbyView;
+        public ICommand SwitchToJoinEditorLobbyView
         {
             get
             {
-                if (start2GameCmd == null)
+                if (switchToJoinEditorLobbyView == null)
                 {
-                    start2GameCmd = new ActionCommand(e => { uiState.State = "game"; });
+                    switchToJoinEditorLobbyView = new ActionCommand(e => { uiState.State = "joinEditorLobby"; });
                 }
-                return start2GameCmd;
+                return switchToJoinEditorLobbyView;
             }
         }
-        /// <summary>
-        /// Listener des Editor Buttons, welcher SendCreateEditorSessionCommand() beim klicken aufruft
-        /// </summary>
-        private ICommand createEditorSessionCommand;
-        public ICommand CreateEditorSessionCommand
-        {
-            get
-            {
-                if (createEditorSessionCommand == null)
-                {
-                    createEditorSessionCommand = new ActionCommand(param => SendCreateEditorSessionCommand());
-                }
-                return createEditorSessionCommand;
-            }
-        }
-        /// <summary>
-        /// Wird von CreateEditorSessionCommand aufgerufen schickt passende Nachricht an Server
-        /// </summary>
-        private void SendCreateEditorSessionCommand()
-        {
-            lobbyModel.StartConnection();
-            MessageInformation messageInformation = new MessageInformation();
-            messageInformation.PutValue("playerName", "Heinz");
-            messageInformation.PutValue("editorName", "Editor1");
-            lobbyModel.getFromClientRequestSender().SendMessage("CreateEditorSession", messageInformation);
-        }
+
         /// <summary>
         /// Listener des Game Buttons, welcher SendCreateGameSessionCommand() beim klicken aufruft
         /// </summary>
@@ -86,9 +61,6 @@ namespace RoRClient.ViewModels.Lobby
             messageInformation.PutValue("gameName", "Game1");
             lobbyModel.getFromClientRequestSender().SendMessage("CreateGameSession", messageInformation);
         }
-
-
-
 
         public LobbyModel LobbyModel
         {
@@ -122,6 +94,5 @@ namespace RoRClient.ViewModels.Lobby
                 }
             }
         }
-
     }
 }

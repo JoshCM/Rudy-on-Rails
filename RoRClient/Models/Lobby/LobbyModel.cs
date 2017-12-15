@@ -2,11 +2,17 @@
 using RoRClient.Models.Base;
 using RoRClient.Communication.Queue;
 using RoRClient.Communication;
+using RoRClient.Communication.DataTransferObject;
+using RoRClient.Models.Lobby;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace RoRClient.Models.Game
 {
     class LobbyModel : ModelBase
     {
+        private TaskFactory taskFactory;
+        private ObservableCollection<EditorSessionInfo> editorSessionInfos = new ObservableCollection<EditorSessionInfo>();
         private QueueSender fromClientRequestSender;
         private FromServerResponseReceiver queueReceiver;
 		private Guid clientId;
@@ -14,8 +20,16 @@ namespace RoRClient.Models.Game
         private bool connected_Game;
 
         public LobbyModel() {
-			
-		}
+            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+        }
+    
+        public ObservableCollection<EditorSessionInfo> EditorSessionInfos
+        {
+            get
+            {
+                return editorSessionInfos;
+            }
+        }
 
         public void StartConnection()
         {
@@ -42,6 +56,12 @@ namespace RoRClient.Models.Game
             {
                 return clientId;
             }
+        }
+
+        public void ReadEditorSessions()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            fromClientRequestSender.SendMessage("ReadEditorSessions", messageInformation);
         }
 
         public bool Connected_Editor
@@ -73,6 +93,18 @@ namespace RoRClient.Models.Game
                     NotifyPropertyChanged("Connected_Game");
                 }
             }
+        }
+
+        public void AddEditorSessionInfo(EditorSessionInfo editorSessionInfo)
+        {
+            taskFactory.StartNew(() => editorSessionInfos.Add(editorSessionInfo));
+            NotifyPropertyChanged("EditorSessionInfos");
+        }
+
+        public void ClearEditorSessionInfos()
+        {
+            taskFactory.StartNew(() => editorSessionInfos.Clear());
+            NotifyPropertyChanged("EditorSessionInfos");
         }
     }
 }
