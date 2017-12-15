@@ -9,11 +9,11 @@ namespace RoRClient.ViewModels.Game
     /// Diese Klasse wird als Base-Klasse für alle ViewModels verwendet, die auf einem Canvas angezeigt werden.
     /// Dazu gehören zum Beispiel Squares und Rails. 
     /// </summary>
-    public abstract class GameCanvasViewModel : CanvasViewModelBase
+    public abstract class CanvasGameViewModel : CanvasViewModelBase
     {
 
-        private GameMapViewModel mapViewModel;
-        public GameMapViewModel MapViewModel
+        private MapGameViewModel mapViewModel;
+        public MapGameViewModel MapViewModel
         {
             get
             {
@@ -25,7 +25,7 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
-        public GameCanvasViewModel(Guid modelId) : base(modelId)
+        public CanvasGameViewModel(Guid modelId) : base(modelId)
         {
         }
 

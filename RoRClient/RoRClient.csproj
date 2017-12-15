@@ -132,8 +132,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Base\CanvasViewModelBase.cs" />
-    <Compile Include="ViewModels\Game\GameCanvasViewModel.cs" />
-    <Compile Include="ViewModels\Game\GameMapViewModel.cs" />
+    <Compile Include="ViewModels\Game\CanvasGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\MapGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
     <Compile Include="ViewModels\Game\SquareGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
@@ -142,14 +142,14 @@
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Lobby\StartViewModel.cs" />
-    <Compile Include="ViewModels\Editor\SquareViewModel.cs" />
+    <Compile Include="ViewModels\Editor\SquareEditorViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="ViewModels\Editor\EditorCanvasViewModel.cs" />
+    <Compile Include="ViewModels\Editor\CanvasEditorViewModel.cs" />
     <Compile Include="ViewModels\Helper\INotifyPropertyChangedExtended.cs" />
     <Compile Include="ViewModels\Helper\PropertyChangedExtendedEventArgs.cs" />
-    <Compile Include="ViewModels\Editor\RailViewModel.cs" />
+    <Compile Include="ViewModels\Editor\RailEditorViewModel.cs" />
     <Compile Include="ViewModels\ViewConstants.cs" />
-    <Compile Include="ViewModels\Editor\MapViewModel.cs" />
+    <Compile Include="ViewModels\Editor\MapEditorViewModel.cs" />
     <Compile Include="Views\CanvasUserControl.cs" />
     <Compile Include="Views\Editor\Helper\RegexValidator.cs" />
     <Compile Include="Views\Editor\Helper\ToolConverter.cs" />

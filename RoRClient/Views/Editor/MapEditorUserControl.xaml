@@ -19,7 +19,7 @@
             <Canvas x:Name="thisCanvas" Background="Brown" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
                 <ItemsControl ItemsSource="{Binding SquareViewModels}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type vm:SquareViewModel}">
+                        <DataTemplate DataType="{x:Type vm:SquareEditorViewModel}">
                             <Canvas>
                                 <ve:SquareEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
@@ -28,7 +28,7 @@
                 </ItemsControl>
                 <ItemsControl ItemsSource="{Binding PlaceableOnSquareCollection}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type vm:RailViewModel}">
+                        <DataTemplate DataType="{x:Type vm:RailEditorViewModel}">
                             <Canvas>
                                 <ve:RailEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>

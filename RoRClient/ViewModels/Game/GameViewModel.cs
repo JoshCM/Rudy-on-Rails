@@ -10,19 +10,19 @@ namespace RoRClient.ViewModels.Game
     class GameViewModel : ViewModelBase
     {
         UIState uiState;
-        private GameMapViewModel gameMapViewModel;
+        private MapGameViewModel mapGameViewModel;
 
         #region Properties
-        public GameMapViewModel GameMapViewModel
+        public MapGameViewModel MapGameViewModel
         {
-            get { return gameMapViewModel; }
+            get { return mapGameViewModel; }
         }
         #endregion
 
         public GameViewModel(UIState uiState)
         {
             this.uiState = uiState;
-            gameMapViewModel = new GameMapViewModel();
+            mapGameViewModel = new MapGameViewModel();
         }
     }
 }

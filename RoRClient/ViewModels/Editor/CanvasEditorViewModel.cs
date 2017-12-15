@@ -8,11 +8,11 @@ namespace RoRClient.ViewModels.Editor
     /// Diese Klasse wird als Base-Klasse für alle ViewModels verwendet, die auf einem Canvas angezeigt werden.
     /// Dazu gehören zum Beispiel Squares und Rails. 
     /// </summary>
-    public abstract class EditorCanvasViewModel : ViewModelBase
+    public abstract class CanvasEditorViewModel : ViewModelBase
     {
 
-        private MapViewModel mapViewModel;
-        public MapViewModel MapViewModel
+        private MapEditorViewModel mapViewModel;
+        public MapEditorViewModel MapViewModel
         {
             get
             {
@@ -24,7 +24,7 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
-        public EditorCanvasViewModel(Guid modelId)
+        public CanvasEditorViewModel(Guid modelId)
         {
             id = modelId;
         }

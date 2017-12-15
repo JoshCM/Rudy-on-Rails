@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModels.Game
 {
-    public class RailGameViewModel: GameCanvasViewModel
+    public class RailGameViewModel: CanvasGameViewModel
     {
         private Rail rail;
 

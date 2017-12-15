@@ -19,14 +19,14 @@ namespace RoRClient.ViewModels.Editor
     /// Hält alle ViewModels die placeableOnSquare sind, sowie die Squares der Map
     /// und momentan noch die Map an sich
     /// </summary>
-    public class MapViewModel : ViewModelBase
+    public class MapEditorViewModel : ViewModelBase
     {
         private TaskFactory taskFactory;
         private ToolbarViewModel toolbarViewModel;
 
-        private EditorCanvasViewModel _previousSelectEditorCanvasViewModel;
+        private CanvasEditorViewModel _previousSelectEditorCanvasViewModel;
 
-        public MapViewModel(ToolbarViewModel toolbarViewModel)
+        public MapEditorViewModel(ToolbarViewModel toolbarViewModel)
         {
             this.toolbarViewModel = toolbarViewModel;
             taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
@@ -36,7 +36,7 @@ namespace RoRClient.ViewModels.Editor
             MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
         }
 
-        public EditorCanvasViewModel PreviousSelectedEditorCanvasViewModel
+        public CanvasEditorViewModel PreviousSelectedEditorCanvasViewModel
         {
             get
             {
@@ -48,8 +48,8 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
-        private EditorCanvasViewModel _selectedEditorCanvasViewModel;
-        public EditorCanvasViewModel SelectedEditorCanvasViewModel
+        private CanvasEditorViewModel _selectedEditorCanvasViewModel;
+        public CanvasEditorViewModel SelectedEditorCanvasViewModel
         {
             get
             {
@@ -63,8 +63,8 @@ namespace RoRClient.ViewModels.Editor
 
         private Map map;
 
-        private ObservableCollection<SquareViewModel> squareViewModels = new ObservableCollection<SquareViewModel>();
-        public ObservableCollection<SquareViewModel> SquareViewModels
+        private ObservableCollection<SquareEditorViewModel> squareViewModels = new ObservableCollection<SquareEditorViewModel>();
+        public ObservableCollection<SquareEditorViewModel> SquareViewModels
         {
             get
             {
@@ -72,8 +72,8 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
-        private ObservableCollection<EditorCanvasViewModel> placeableOnSquareCollection = new ObservableCollection<EditorCanvasViewModel>();
-        public ObservableCollection<EditorCanvasViewModel> PlaceableOnSquareCollection
+        private ObservableCollection<CanvasEditorViewModel> placeableOnSquareCollection = new ObservableCollection<CanvasEditorViewModel>();
+        public ObservableCollection<CanvasEditorViewModel> PlaceableOnSquareCollection
         {
             get
             {
@@ -118,7 +118,7 @@ namespace RoRClient.ViewModels.Editor
         {
             foreach (Square square in map.Squares)
             {
-                SquareViewModel squareViewModel = new SquareViewModel(square, toolbarViewModel);
+                SquareEditorViewModel squareViewModel = new SquareEditorViewModel(square, toolbarViewModel);
                 squareViewModel.MapViewModel = this;
                 squareViewModels.Add(squareViewModel);
                 square.PropertyChanged += OnSquarePropertyChanged;
@@ -126,7 +126,7 @@ namespace RoRClient.ViewModels.Editor
                 if (square.PlaceableOnSquare != null && square.PlaceableOnSquare.GetType() == typeof(Rail))
                 {
                     Rail rail = (Rail)square.PlaceableOnSquare;
-                    RailViewModel railViewModel = new RailViewModel(rail);
+                    RailEditorViewModel railViewModel = new RailEditorViewModel(rail);
                     placeableOnSquareCollection.Add(railViewModel);
                     rail.PropertyChanged += OnRailPropertyChanged;
                 }
@@ -139,7 +139,7 @@ namespace RoRClient.ViewModels.Editor
         private void CreateRandomRails()
         {
             Random rand = new Random();
-            foreach (SquareViewModel squareViewModel in squareViewModels)
+            foreach (SquareEditorViewModel squareViewModel in squareViewModels)
             {
                 squareViewModel.Square.PlaceableOnSquare = null;
                 if(rand.Next(3) == 0)
@@ -181,7 +181,7 @@ namespace RoRClient.ViewModels.Editor
                 if (square.PlaceableOnSquare == null)
                 {
                     IModel model = (IModel)eventArgs.OldValue;
-                    EditorCanvasViewModel result = placeableOnSquareCollection.Where(x => x.Id == model.Id).First();
+                    CanvasEditorViewModel result = placeableOnSquareCollection.Where(x => x.Id == model.Id).First();
 
                     if (result != null)
                     {
@@ -191,7 +191,7 @@ namespace RoRClient.ViewModels.Editor
                 else
                 {
                     ViewModelFactory factory = new ViewModelFactory();
-                    EditorCanvasViewModel viewModel = factory.CreateEditorViewModelForModel(square.PlaceableOnSquare, this);
+                    CanvasEditorViewModel viewModel = factory.CreateEditorViewModelForModel(square.PlaceableOnSquare, this);
 
                     taskFactory.StartNew(() => placeableOnSquareCollection.Add(viewModel));
                 }

@@ -18,9 +18,9 @@ namespace RoRClient.Views.Game
     /// <summary>
     /// Interaktionslogik für GameMapUserControl.xaml
     /// </summary>
-    public partial class GameMapUserControl : UserControl
+    public partial class MapGameUserControl : UserControl
     {
-        public GameMapUserControl()
+        public MapGameUserControl()
         {
             InitializeComponent();
         }

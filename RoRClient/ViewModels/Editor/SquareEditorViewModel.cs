@@ -13,12 +13,12 @@ using Newtonsoft.Json.Linq;
 
 namespace RoRClient.ViewModels.Editor
 {
-    public class SquareViewModel : EditorCanvasViewModel
+    public class SquareEditorViewModel : CanvasEditorViewModel
     {
         private Square square;
         private ToolbarViewModel toolbarViewModel;
 
-        public SquareViewModel(Square square, ToolbarViewModel toolbarViewModel) : base(square.Id)
+        public SquareEditorViewModel(Square square, ToolbarViewModel toolbarViewModel) : base(square.Id)
         {
             this.toolbarViewModel = toolbarViewModel;
             this.square = square;

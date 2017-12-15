@@ -18,12 +18,12 @@ using RoRClient.Models.Base;
 
 namespace RoRClient.ViewModels.Game
 {
-    public class GameMapViewModel : ViewModelBase
+    public class MapGameViewModel : ViewModelBase
     {
-        private GameCanvasViewModel gameCanvasViewModel;
+        private CanvasGameViewModel gameCanvasViewModel;
         private TaskFactory taskFactory;
 
-        public GameMapViewModel()
+        public MapGameViewModel()
         {
             taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             map = GameSession.GetInstance().Map;
@@ -34,7 +34,7 @@ namespace RoRClient.ViewModels.Game
             MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
         }
 
-        public GameCanvasViewModel GameCanvasViewModel
+        public CanvasGameViewModel GameCanvasViewModel
         {
             get { return gameCanvasViewModel; }
             set { gameCanvasViewModel = value; }
@@ -51,8 +51,8 @@ namespace RoRClient.ViewModels.Game
         private Map map;
 
 
-        private ObservableCollection<GameCanvasViewModel> placeableOnSquareCollection = new ObservableCollection<GameCanvasViewModel>();
-        public ObservableCollection<GameCanvasViewModel> PlaceableOnSquareCollection
+        private ObservableCollection<CanvasGameViewModel> placeableOnSquareCollection = new ObservableCollection<CanvasGameViewModel>();
+        public ObservableCollection<CanvasGameViewModel> PlaceableOnSquareCollection
         {
             get
             {
@@ -110,7 +110,7 @@ namespace RoRClient.ViewModels.Game
                 if (square.PlaceableOnSquare == null)
                 {
                     IModel model = (IModel)eventArgs.OldValue;
-                    GameCanvasViewModel result = placeableOnSquareCollection.Where(x => x.Id == model.Id).First();
+                    CanvasGameViewModel result = placeableOnSquareCollection.Where(x => x.Id == model.Id).First();
 
                     if (result != null)
                     {
@@ -120,7 +120,7 @@ namespace RoRClient.ViewModels.Game
                 else
                 {
                     ViewModelFactory factory = new ViewModelFactory();
-                    GameCanvasViewModel viewModel = factory.CreateGameViewModelForModel(square.PlaceableOnSquare, this);
+                    CanvasGameViewModel viewModel = factory.CreateGameViewModelForModel(square.PlaceableOnSquare, this);
 
                     taskFactory.StartNew(() => placeableOnSquareCollection.Add(viewModel));
                 }

@@ -8,7 +8,7 @@ namespace RoRClient.ViewModels.Helper
     public class ViewModelFactory
     {
         private const string VIEWMODEL_TYPE_PREFIX = "RoRClient.ViewModels.Editor.";
-        private const string VIEWMODEL_CLASS_SUFFIX = "ViewModel";
+        private const string VIEWMODEL_CLASS_SUFFIX = "EditorViewModel";
         private const string GAMEVIEWMODEL_TYPE_PREFIX = "RoRClient.ViewModels.Game.";
         private const string GAMEVIEWMODEL_CLASS_SUFFIX = "GameViewModel";
 
@@ -19,7 +19,7 @@ namespace RoRClient.ViewModels.Helper
         /// </summary>
         /// <param name="model"></param>
         /// <returns>Konkretes ViewModel zu einem Model</returns>
-        public EditorCanvasViewModel CreateEditorViewModelForModel(IModel model, MapViewModel mapViewModel)
+        public CanvasEditorViewModel CreateEditorViewModelForModel(IModel model, MapEditorViewModel mapViewModel)
         {
             Type modelType = model.GetType();
             String viewModelTypeName = VIEWMODEL_TYPE_PREFIX + modelType.Name + VIEWMODEL_CLASS_SUFFIX;
@@ -30,12 +30,12 @@ namespace RoRClient.ViewModels.Helper
                 throw new TypeLoadException("There is no ViewModel for Model: " + modelType.Name);
             }
 
-            EditorCanvasViewModel viewModel = (EditorCanvasViewModel)Activator.CreateInstance(viewModelType, model);
+            CanvasEditorViewModel viewModel = (CanvasEditorViewModel)Activator.CreateInstance(viewModelType, model);
             viewModel.MapViewModel = mapViewModel;
             return viewModel;
         }
 
-        public GameCanvasViewModel CreateGameViewModelForModel(IModel model, GameMapViewModel mapViewModel)
+        public CanvasGameViewModel CreateGameViewModelForModel(IModel model, MapGameViewModel mapViewModel)
         {
             Type modelType = model.GetType();
             String viewModelTypeName = GAMEVIEWMODEL_TYPE_PREFIX + modelType.Name + GAMEVIEWMODEL_CLASS_SUFFIX;
@@ -46,7 +46,7 @@ namespace RoRClient.ViewModels.Helper
                 throw new TypeLoadException("There is no ViewModel for Model: " + modelType.Name);
             }
 
-            GameCanvasViewModel viewModel = (GameCanvasViewModel)Activator.CreateInstance(viewModelType, model);
+            CanvasGameViewModel viewModel = (CanvasGameViewModel)Activator.CreateInstance(viewModelType, model);
             viewModel.MapViewModel = mapViewModel;
             return viewModel;
         }
