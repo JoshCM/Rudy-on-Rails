@@ -118,6 +118,7 @@ namespace RoRClient.ViewModels.Editor
             foreach (Square square in map.Squares)
             {
                 SquareViewModel squareViewModel = new SquareViewModel(square, toolbarViewModel);
+                squareViewModel.MapViewModel = this;
                 squareViewModels.Add(squareViewModel);
                 square.PropertyChanged += OnSquarePropertyChanged;
 
@@ -128,19 +129,6 @@ namespace RoRClient.ViewModels.Editor
                     placeableOnSquareCollection.Add(railViewModel);
                     rail.PropertyChanged += OnRailPropertyChanged;
                 }
-            }
-        }
-
-        private ICommand createRandomRailsCommand;
-        public ICommand CreateRandomRailsCommand
-        {
-            get
-            {
-                if (createRandomRailsCommand == null)
-                {
-                    createRandomRailsCommand = new ActionCommand(param => ChangeRailSectionsFromActiveRails());
-                }
-                return createRandomRailsCommand;
             }
         }
 
@@ -156,36 +144,17 @@ namespace RoRClient.ViewModels.Editor
                 if(rand.Next(3) == 0)
                 {
                     List<RailSection> railSections = new List<RailSection>();
-                    railSections.Add(new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(RailSectionPosition.WEST, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.WEST));
-                    railSections.Add(new RailSection(RailSectionPosition.WEST, RailSectionPosition.NORTH));
-                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.NORTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.WEST, RailSectionPosition.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.WEST));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.WEST, RailSectionPosition.NORTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.NORTH));
 
-                    Rail rail = new Rail(Guid.NewGuid(), squareViewModel.Square, railSections[rand.Next(railSections.Count)]);
+                    List<RailSection> actualRailSection = new List<RailSection>();
+                    actualRailSection.Add(railSections[rand.Next(railSections.Count)]);
+                    Rail rail = new Rail(Guid.NewGuid(), squareViewModel.Square, actualRailSection);
                     squareViewModel.Square.PlaceableOnSquare = rail;
-                }
-            }
-        }
-
-        private void ChangeRailSectionsFromActiveRails()
-        {
-            Random rand = new Random();
-            foreach (SquareViewModel squareViewModel in squareViewModels)
-            {
-                if(squareViewModel.Square.PlaceableOnSquare != null)
-                {
-                    List<RailSection> railSections = new List<RailSection>();
-                    railSections.Add(new RailSection(RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(RailSectionPosition.WEST, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.WEST));
-                    railSections.Add(new RailSection(RailSectionPosition.WEST, RailSectionPosition.NORTH));
-                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(RailSectionPosition.EAST, RailSectionPosition.NORTH));
-
-                    Rail rail = (Rail)squareViewModel.Square.PlaceableOnSquare;
-                    rail.Section1 = railSections[rand.Next(railSections.Count)];
                 }
             }
         }
@@ -257,7 +226,7 @@ namespace RoRClient.ViewModels.Editor
         /// <summary>
         /// Binding für MapUserControl
         /// </summary>
-        private Boolean isQuickNavigationVisible;
+        private Boolean isQuickNavigationVisible = false;
         public Boolean IsQuickNavigationVisible
         {
             get
@@ -342,6 +311,9 @@ namespace RoRClient.ViewModels.Editor
         private void Delete()
         {
             SelectedCanvasViewModel.Delete();
+
+            // Quicknavigation nach dem Löschen nicht mehr anzeigen
+            IsQuickNavigationVisible = false;
         }
 
     }
