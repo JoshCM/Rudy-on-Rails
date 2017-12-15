@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using RoRClient.ViewModels.Commands;
+using RoRClient.ViewModels.Base;
 
 namespace RoRClient.ViewModels.Editor
 {
@@ -8,9 +9,8 @@ namespace RoRClient.ViewModels.Editor
     /// Diese Klasse wird als Base-Klasse für alle ViewModels verwendet, die auf einem Canvas angezeigt werden.
     /// Dazu gehören zum Beispiel Squares und Rails. 
     /// </summary>
-    public abstract class CanvasEditorViewModel : ViewModelBase
+    public abstract class CanvasEditorViewModel : CanvasViewModelBase
     {
-
         private MapEditorViewModel mapViewModel;
         public MapEditorViewModel MapViewModel
         {
@@ -24,54 +24,9 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
-        public CanvasEditorViewModel(Guid modelId)
+        public CanvasEditorViewModel(Guid modelId) : base(modelId)
         {
-            id = modelId;
-        }
 
-        private Guid id;
-        public Guid Id
-        {
-            get
-            {
-                return id;
-            }
-        }
-
-        private int squarePosX;
-        public int SquarePosX
-        {
-            get
-            {
-                return squarePosX;
-            }
-
-            set
-            {
-                if (squarePosX != value)
-                {
-                    squarePosX = value;
-                    OnPropertyChanged("SquarePosX");
-                }
-            }
-        }
-
-        private int squarePosY;
-        public int SquarePosY
-        {
-            get
-            {
-                return squarePosY;
-            }
-
-            set
-            {
-                if (squarePosY != value)
-                {
-                    squarePosY = value;
-                    OnPropertyChanged("SquarePosY");
-                }
-            }
         }
 
         /// <summary>
@@ -111,9 +66,7 @@ namespace RoRClient.ViewModels.Editor
             {
                 MapViewModel.PreviousSelectedEditorCanvasViewModel = this;
                 Console.WriteLine("Model hat sich geändert!");
-
             }
-           
         }
 
         /// <summary>
@@ -130,6 +83,5 @@ namespace RoRClient.ViewModels.Editor
         /// Methode zum Löschen eines EditorCanvasViewModel / Muss in der jeweiligen Unterklasse überschrieben werden
         /// </summary>
         public abstract void Delete();
-
     }
 }
