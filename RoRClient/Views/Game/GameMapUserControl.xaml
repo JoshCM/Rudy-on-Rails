@@ -13,10 +13,19 @@
             <Canvas Background="White" x:Name="MapCanvas" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
                 <ItemsControl ItemsSource="{Binding SquareViewModels}">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type game:GameSquareViewModel}">
+                        <DataTemplate DataType="{x:Type game:SquareGameViewModel}">
                             <Canvas>
                                 <vg:GameSquareUserControl DataContext="{Binding}" X="{Binding SquarePosX}"
                                                           Y="{Binding SquarePosY}" />
+                            </Canvas>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl ItemsSource="{Binding PlaceableOnSquareCollection}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type game:GameCanvasViewModel}">
+                            <Canvas>
+                                <vg:GameRailUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

@@ -135,8 +135,9 @@
     <Compile Include="ViewModels\Game\GameCanvasViewModel.cs" />
     <Compile Include="ViewModels\Game\GameMapViewModel.cs" />
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
-    <Compile Include="ViewModels\Game\GameSquareViewModel.cs" />
+    <Compile Include="ViewModels\Game\SquareGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
+    <Compile Include="ViewModels\Game\RailGameViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

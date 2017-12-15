@@ -25,6 +25,17 @@ namespace RoRClient.ViewModels.Editor
         private ToolbarViewModel toolbarViewModel;
 
         private EditorCanvasViewModel _previousSelectEditorCanvasViewModel;
+
+        public MapViewModel(ToolbarViewModel toolbarViewModel)
+        {
+            this.toolbarViewModel = toolbarViewModel;
+            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            map = EditorSession.GetInstance().Map;
+            InitSquares();
+            MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
+            MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+        }
+
         public EditorCanvasViewModel PreviousSelectedEditorCanvasViewModel
         {
             get
@@ -96,16 +107,6 @@ namespace RoRClient.ViewModels.Editor
                     OnPropertyChanged("MapHeight");
                 }
             }
-        }
-
-        public MapViewModel(ToolbarViewModel toolbarViewModel)
-        {
-            this.toolbarViewModel = toolbarViewModel;
-            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
-            map = EditorSession.GetInstance().Map;
-            InitSquares();
-            MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
-            MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
         }
 
         /// <summary>
@@ -190,7 +191,7 @@ namespace RoRClient.ViewModels.Editor
                 else
                 {
                     ViewModelFactory factory = new ViewModelFactory();
-                    EditorCanvasViewModel viewModel = factory.CreateViewModelForModel(square.PlaceableOnSquare, this);
+                    EditorCanvasViewModel viewModel = factory.CreateEditorViewModelForModel(square.PlaceableOnSquare, this);
 
                     taskFactory.StartNew(() => placeableOnSquareCollection.Add(viewModel));
                 }

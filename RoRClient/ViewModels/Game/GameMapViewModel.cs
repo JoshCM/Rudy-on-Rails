@@ -12,12 +12,27 @@ using RoRClient.Models.Game;
 using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
 using Point = System.Windows.Point;
+using System.ComponentModel;
+using RoRClient.ViewModels.Helper;
+using RoRClient.Models.Base;
 
 namespace RoRClient.ViewModels.Game
 {
     public class GameMapViewModel : ViewModelBase
     {
         private GameCanvasViewModel gameCanvasViewModel;
+        private TaskFactory taskFactory;
+
+        public GameMapViewModel()
+        {
+            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            map = GameSession.GetInstance().Map;
+            InitSquares();
+            //TO-DO: nur zum Testen
+            CreateRandomRails();
+            MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
+            MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+        }
 
         public GameCanvasViewModel GameCanvasViewModel
         {
@@ -25,15 +40,25 @@ namespace RoRClient.ViewModels.Game
             set { gameCanvasViewModel = value; }
         }
 
-        private ObservableCollection<GameSquareViewModel> squareViewModels =
-            new ObservableCollection<GameSquareViewModel>();
+        private ObservableCollection<SquareGameViewModel> squareViewModels =
+            new ObservableCollection<SquareGameViewModel>();
 
-        public ObservableCollection<GameSquareViewModel> SquareViewModels
+        public ObservableCollection<SquareGameViewModel> SquareViewModels
         {
             get { return squareViewModels; }
         }
 
         private Map map;
+
+
+        private ObservableCollection<GameCanvasViewModel> placeableOnSquareCollection = new ObservableCollection<GameCanvasViewModel>();
+        public ObservableCollection<GameCanvasViewModel> PlaceableOnSquareCollection
+        {
+            get
+            {
+                return placeableOnSquareCollection;
+            }
+        }
 
         private int mapWidth;
         public int MapWidth
@@ -63,22 +88,65 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
-        public GameMapViewModel()
-        {
-            map = GameSession.GetInstance().Map;
-            InitSquares();
-            MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
-            MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
-        }
-
         private void InitSquares()
         {
             foreach (Square square in map.Squares)
             {
-                GameSquareViewModel squareViewModel = new GameSquareViewModel(square);
+                SquareGameViewModel squareViewModel = new SquareGameViewModel(square);
                 squareViewModel.MapViewModel = this;
                 squareViewModels.Add(squareViewModel);
                 //square.PropertyChanged += OnSquarePropertyChanged;
+            }
+        }
+
+        private void OnSquarePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Square square = (Square)sender;
+
+            if (e.PropertyName == "PlaceableOnSquare")
+            {
+                PropertyChangedExtendedEventArgs<IPlaceableOnSquare> eventArgs = (PropertyChangedExtendedEventArgs<IPlaceableOnSquare>)e;
+
+                if (square.PlaceableOnSquare == null)
+                {
+                    IModel model = (IModel)eventArgs.OldValue;
+                    GameCanvasViewModel result = placeableOnSquareCollection.Where(x => x.Id == model.Id).First();
+
+                    if (result != null)
+                    {
+                        taskFactory.StartNew(() => placeableOnSquareCollection.Remove(result));
+                    }
+                }
+                else
+                {
+                    ViewModelFactory factory = new ViewModelFactory();
+                    GameCanvasViewModel viewModel = factory.CreateGameViewModelForModel(square.PlaceableOnSquare, this);
+
+                    taskFactory.StartNew(() => placeableOnSquareCollection.Add(viewModel));
+                }
+            }
+        }
+        private void CreateRandomRails()
+        {
+            Random rand = new Random();
+            foreach (SquareGameViewModel squareViewModel in squareViewModels)
+            {
+                squareViewModel.Square.PlaceableOnSquare = null;
+                if (rand.Next(3) == 0)
+                {
+                    List<RailSection> railSections = new List<RailSection>();
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.WEST, RailSectionPosition.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.WEST));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.WEST, RailSectionPosition.NORTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.NORTH));
+
+                    List<RailSection> actualRailSection = new List<RailSection>();
+                    actualRailSection.Add(railSections[rand.Next(railSections.Count)]);
+                    Rail rail = new Rail(Guid.NewGuid(), squareViewModel.Square, actualRailSection);
+                    squareViewModel.Square.PlaceableOnSquare = rail;
+                }
             }
         }
     }

@@ -7,14 +7,19 @@ using RoRClient.Models.Game;
 
 namespace RoRClient.ViewModels.Game
 {
-    public class GameSquareViewModel : GameCanvasViewModel
+    public class SquareGameViewModel : GameCanvasViewModel
     {
         private Square square;
-        public GameSquareViewModel(Square square): base(square.Id)
+        public SquareGameViewModel(Square square): base(square.Id)
         {
             this.square = square;
             this.SquarePosX = square.PosX;
             this.SquarePosY = square.PosY;
+        }
+
+        public Square Square
+        {
+            get { return square; }
         }
     }
 }
