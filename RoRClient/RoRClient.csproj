@@ -106,10 +106,10 @@
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateTrainstationCommand.cs" />
+    <Compile Include="Commands\Editor\Update\UpdateAlignmentOfTrainstation.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNodesOfRailSectionCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
-    <Compile Include="Commands\Editor\Update\MovePlaceableCommand.cs" />
     <Compile Include="Communication\Dispatcher\QueueDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicEditorDispatcher.cs" />
