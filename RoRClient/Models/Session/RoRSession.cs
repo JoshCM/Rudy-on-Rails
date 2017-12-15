@@ -82,11 +82,12 @@ namespace RoRClient.Models.Session
             }
         }
 
-        public void loadDefaultMapAtStartup()
+        /// <summary>
+        /// Default Map laden
+        /// </summary>
+        public void LoadDefaultMapAtStartup()
         {
             QueueSender.SendMessage("LoadDefaultMap", new MessageInformation());
         }
     }
-
-
 }

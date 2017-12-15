@@ -56,7 +56,7 @@ namespace RoRClient.Communication.Dispatcher
             gameSession.Init(messageInformation.GetValueAsString("topicName"));
 
             // DefaultMap beim Erstellen der Map laden
-            gameSession.loadDefaultMapAtStartup();
+            gameSession.LoadDefaultMapAtStartup();
 
             Guid playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             string playerName = messageInformation.GetValueAsString("playerName");
