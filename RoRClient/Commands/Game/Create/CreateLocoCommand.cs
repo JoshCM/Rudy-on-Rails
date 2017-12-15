@@ -29,7 +29,7 @@ namespace RoRClient.Commands.Game.Create
             Square square = gameSession.Map.GetSquare(xPos, yPos);
             Rail rail = square.PlaceableOnSquare as Rail;
             Loco loco = new Loco(locoId, square);
-            rail.setPlaceableOnRail(loco);
+            //rail.setPlaceableOnRail(loco);
         }
     }
 }

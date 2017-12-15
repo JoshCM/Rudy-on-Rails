@@ -123,6 +123,8 @@
     <Compile Include="Communication\Dispatcher\GameSessionDispatcher.cs" />
     <Compile Include="Models\Base\IModel.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
+    <Compile Include="Models\Game\Cart.cs" />
+    <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Player.cs" />
     <Compile Include="Models\Session\EditorSession.cs" />
     <Compile Include="Models\Session\GameSession.cs" />
@@ -134,7 +136,6 @@
     </Compile>
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
-    <Compile Include="ViewModels\Game\LocoViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -342,12 +343,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\Editor\Update\" />
-    <Folder Include="Commands\Editor\Delete\" />
-    <Folder Include="Commands\Game\Create\" />
-    <Folder Include="Commands\Editor\Update\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Images\railcurve_ne.png" />
     <Resource Include="Resources\Images\railcurve_nw.png" />
