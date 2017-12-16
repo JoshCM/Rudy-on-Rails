@@ -35,7 +35,7 @@ namespace RoRClient.ViewModels
         {
             LobbyModel lobbyModel = new LobbyModel();
 
-            viewmodels.Add("start", new StartViewModel(uiState));
+            viewmodels.Add("start", new StartViewModel(uiState, lobbyModel));
             viewmodels.Add("editor", new EditorViewModel(uiState));
             viewmodels.Add("game", new GameViewModel(uiState));
             viewmodels.Add("joinEditorLobby", new JoinEditorLobbyViewModel(uiState, lobbyModel));

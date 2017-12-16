@@ -10,10 +10,20 @@ namespace RoRClient.ViewModels.Lobby
     class StartViewModel : ViewModelBase
     {
         public UIState uiState;
+        private LobbyModel lobbyModel;
 
-        public StartViewModel(UIState uiState)
+        public StartViewModel(UIState uiState, LobbyModel lobbyModel)
         {
             this.uiState = uiState;
+            this.lobbyModel = lobbyModel;
+        }
+
+        public LobbyModel LobbyModel
+        {
+            get
+            {
+                return lobbyModel;
+            }
         }
 
         private ICommand switchToJoinEditorLobbyView;
