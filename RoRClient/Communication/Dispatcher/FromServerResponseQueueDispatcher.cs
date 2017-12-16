@@ -74,6 +74,8 @@ namespace RoRClient.Communication.Dispatcher
             string topicName = messageInformation.GetValueAsString("topicName");
             gameSession.Init(topicName);
 
+            gameSession.LoadDefaultMapAtStartup();
+
             List<JObject> playersList = messageInformation.GetValueAsJObjectList("playerList");
             foreach (JObject obj in playersList)
             {
@@ -97,6 +99,20 @@ namespace RoRClient.Communication.Dispatcher
                 int amountOfPlayers = (int)obj.GetValue("amountOfPlayers");
                 EditorSessionInfo editorSessionInfo = new EditorSessionInfo(name, amountOfPlayers);
                 lobbyModel.AddEditorSessionInfo(editorSessionInfo);
+            }
+        }
+
+        public void HandleReadGameSessions(MessageInformation messageInformation)
+        {
+            lobbyModel.ClearGameSessionInfos();
+
+            List<JObject> gameSessionInfoList = messageInformation.GetValueAsJObjectList("gameSessionInfo");
+            foreach (JObject obj in gameSessionInfoList)
+            {
+                string name = obj.GetValue("name").ToString();
+                int amountOfPlayers = (int)obj.GetValue("amountOfPlayers");
+                GameSessionInfo gameSessionInfo = new GameSessionInfo(name, amountOfPlayers);
+                lobbyModel.AddGameSessionInfo(gameSessionInfo);
             }
         }
     }

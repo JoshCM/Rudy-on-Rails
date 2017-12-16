@@ -14,6 +14,7 @@ namespace RoRClient.Models.Game
         private TaskFactory taskFactory;
 
         private ObservableCollection<EditorSessionInfo> editorSessionInfos = new ObservableCollection<EditorSessionInfo>();
+        private ObservableCollection<GameSessionInfo> gameSessionInfos = new ObservableCollection<GameSessionInfo>();
         private string playerName = "Fresh Meat";
 
         private QueueSender fromClientRequestSender;
@@ -50,6 +51,14 @@ namespace RoRClient.Models.Game
             }
         }
 
+        public ObservableCollection<GameSessionInfo> GameSessionInfos
+        {
+            get
+            {
+                return gameSessionInfos;
+            }
+        }
+
         public void StartConnection()
         {
             ClientConnection.GetInstance().Setup();
@@ -64,7 +73,8 @@ namespace RoRClient.Models.Game
             queueReceiver = new FromServerResponseReceiver(clientId.ToString(), this);
         }
 
-		public QueueSender getFromClientRequestSender()
+
+        public QueueSender getFromClientRequestSender()
 		{
 			return fromClientRequestSender;
 		}
@@ -81,6 +91,11 @@ namespace RoRClient.Models.Game
         {
             MessageInformation messageInformation = new MessageInformation();
             fromClientRequestSender.SendMessage("ReadEditorSessions", messageInformation);
+        }
+        public void ReadGameSessions()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            fromClientRequestSender.SendMessage("ReadGameSessions", messageInformation);
         }
 
         public bool Connected_Editor
@@ -124,6 +139,18 @@ namespace RoRClient.Models.Game
         {
             taskFactory.StartNew(() => editorSessionInfos.Clear());
             NotifyPropertyChanged("EditorSessionInfos");
+        }
+
+        public void AddGameSessionInfo(GameSessionInfo gameSessionInfo)
+        {
+            taskFactory.StartNew(() => gameSessionInfos.Add(gameSessionInfo));
+            NotifyPropertyChanged("GameSessionInfos");
+        }
+
+        public void ClearGameSessionInfos()
+        {
+            taskFactory.StartNew(() => gameSessionInfos.Clear());
+            NotifyPropertyChanged("GameSessionInfos");
         }
     }
 }
