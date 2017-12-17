@@ -36,7 +36,7 @@ public abstract class ModelBase extends ObservableModel implements Model{
 	protected void notifyChange(MessageInformation messageInformation) {
 		MessageEnvelope messageEnvelope = new MessageEnvelope(sessionName, messageInformation.getMessageType(),
 				messageInformation);
-
+		setChanged();
 		notifyObservers(messageEnvelope);
 	}
 }
