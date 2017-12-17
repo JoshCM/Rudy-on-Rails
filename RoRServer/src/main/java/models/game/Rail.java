@@ -71,6 +71,10 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	public RailSection getFirstSection() {
 		return railSections.get(0);
 	}
+	
+	public List<RailSection> getRailSectionList(){
+		return railSections;
+	}
 
 	/**
 	 * Gibt den Ausgang der Rail,

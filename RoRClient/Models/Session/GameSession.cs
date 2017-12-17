@@ -14,7 +14,7 @@ namespace RoRClient.Models.Session
 
         private GameSession() : base()
         {
-            
+
         }
 
         public new void Init(string topicName)

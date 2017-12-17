@@ -9,11 +9,11 @@ using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Game;
 using Newtonsoft.Json.Linq;
 
-namespace RoRClient.Commands.Editor.Create
+namespace RoRClient.Commands.Game.Create
 
 {
     /// <summary>
-    /// CreateRailCommand für Editor
+    /// CreateRailCommand für Game
     /// </summary>
     public class CreateRailCommand : CreateRailCommandBase
     {

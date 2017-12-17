@@ -2,6 +2,7 @@ package models.session;
 
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
+import persistent.MapManager;
 import models.game.TickableGameObject;
 
 /**
@@ -19,9 +20,10 @@ public class GameSession extends RoRSession{
 	
 	public GameSession(String name) {
 		super(name);
-		
 		GameSessionDispatcher dispatcher = new GameSessionDispatcher(this);
 		this.queueReceiver = new QueueReceiver(name, dispatcher);
+		// DefaultMap laden
+		loadGameDefaultMap();
 		this.ticker = new Ticker();
 		this.stopped = false;
 		this.startTicking();
@@ -29,7 +31,14 @@ public class GameSession extends RoRSession{
 	}
 	
 	/**
-	 * startet den Thread der für das Ticking verantwortlich ist 
+	 * Lï¿½dt die DefaultMap in die GameSession
+	 */
+	public void loadGameDefaultMap() {
+		setMap(MapManager.loadMap("GameDefaultMap"));
+	}
+	
+	/**
+	 * startet den Thread der fï¿½r das Ticking verantwortlich ist 
 	 * und ruft die tick()-Methode der Ticker-Klasse auf
 	 */
 	private void startTicking() {
@@ -60,7 +69,7 @@ public class GameSession extends RoRSession{
 	}
 	
 	/**
-	 * Fügt dem Ticker neue TickableGameObject hinzu
+	 * Fï¿½gt dem Ticker neue TickableGameObject hinzu
 	 * @param tgo
 	 */
 	public void add(TickableGameObject tgo) {
@@ -68,7 +77,7 @@ public class GameSession extends RoRSession{
 	}
 	
 	/**
-	 * Fügt dem Ticker eine Collection von TickableGameObjects hinzu
+	 * Fï¿½gt dem Ticker eine Collection von TickableGameObjects hinzu
 	 * @param tgos
 	 */
 	public void addAll(TickableGameObject...tgos ) {

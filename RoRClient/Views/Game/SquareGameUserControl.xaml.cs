@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace RoRClient.Views.Game
 {
     /// <summary>
-    /// Interaktionslogik für GameMenuUserControl.xaml
+    /// Interaktionslogik für GameSqaureUserControl.xaml
     /// </summary>
-    public partial class GameMenuUserControl : UserControl
+    public partial class SquareGameUserControl : CanvasUserControl
     {
-        public GameMenuUserControl()
+        public SquareGameUserControl()
         {
             InitializeComponent();
-        }
-
-        private void GameMiniMapUserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

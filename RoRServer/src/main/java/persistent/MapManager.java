@@ -46,7 +46,7 @@ public class MapManager {
 	 */
 	public static Map loadMap(String mapName) {
 		String jsonMap = readFromFile(mapName);
-		log.info("Eingelesene Map: " + jsonMap);
+		//log.info("Eingelesene Map: " + jsonMap);
 		Map map = convertJsonToMap(jsonMap);
 		return map;
 	}

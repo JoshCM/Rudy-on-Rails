@@ -10,16 +10,14 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RoRClient.Views.Editor
+namespace RoRClient.Views.Lobby
 {
-    /// <summary>
-    /// Interaktionslogik für Window2.xaml
-    /// </summary>
-    public partial class Window2 : Window
+    public partial class JoinGameLobbyView : UserControl
     {
-        public Window2()
+        public JoinGameLobbyView()
         {
             InitializeComponent();
         }

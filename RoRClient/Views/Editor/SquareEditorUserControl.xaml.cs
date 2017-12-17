@@ -10,9 +10,9 @@ using System.Windows.Input;
 
 namespace RoRClient.Views.Editor
 {
-    public partial class SquareUserControl : CanvasUserControl
+    public partial class SquareEditorUserControl : CanvasUserControl
     {
-        public SquareUserControl()
+        public SquareEditorUserControl()
         {
             InitializeComponent();
         }

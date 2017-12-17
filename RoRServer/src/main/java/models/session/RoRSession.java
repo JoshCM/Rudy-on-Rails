@@ -10,6 +10,7 @@ import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicSender;
 import models.game.Map;
 import models.game.Player;
+import persistent.MapManager;
 
 /**
  * Oberklasse von EditorSession und GameSession
@@ -46,19 +47,13 @@ public abstract class RoRSession {
 	public Map getMap() {
 		return map;
 	}
+	
+	public void setMap(Map map) {
+		this.map = map;
+	}
 
 	public List<Player> getPlayers() {
 		return Collections.unmodifiableList(players);
 	}
-	
-	public Player findPlayer(UUID playerId) {
-		for (Player actPlayer: players) {
-			if(actPlayer.getId().equals(playerId)) {
-				return actPlayer;
-			}
-		}
-		
-		return null;
-			
-	}
+
 }

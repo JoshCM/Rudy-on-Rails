@@ -13,14 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RoRClient.Views.Game
+namespace RoRClient.Views.Lobby
 {
-    /// <summary>
-    /// Interaktionslogik für GameMapUserControl.xaml
-    /// </summary>
-    public partial class GameMapUserControl : UserControl
+    public partial class JoinEditorLobbyView : UserControl
     {
-        public GameMapUserControl()
+        public JoinEditorLobbyView()
         {
             InitializeComponent();
         }

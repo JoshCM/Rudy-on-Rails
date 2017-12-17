@@ -12,86 +12,11 @@ namespace RoRClient.ViewModels.Lobby
         public UIState uiState;
         private LobbyModel lobbyModel;
 
-        public StartViewModel(UIState uiState)
+        public StartViewModel(UIState uiState, LobbyModel lobbyModel)
         {
-            lobbyModel = new LobbyModel();
             this.uiState = uiState;
-
-            lobbyModel.PropertyChanged += OnClientModelChanged;
+            this.lobbyModel = lobbyModel;
         }
-        /// <summary>
-        /// Muss noch ersetzt werden durch CreateGameSessionCommand
-        /// </summary>
-        private ICommand start2GameCmd;
-        public ICommand StartToGameCommand
-        {
-            get
-            {
-                if (start2GameCmd == null)
-                {
-                    start2GameCmd = new ActionCommand(e => { uiState.State = "game"; });
-                }
-                return start2GameCmd;
-            }
-        }
-        /// <summary>
-        /// Listener des Editor Buttons, welcher SendCreateEditorSessionCommand() beim klicken aufruft
-        /// </summary>
-        private ICommand createEditorSessionCommand;
-        public ICommand CreateEditorSessionCommand
-        {
-            get
-            {
-                if (createEditorSessionCommand == null)
-                {
-                    createEditorSessionCommand = new ActionCommand(param => SendCreateEditorSessionCommand());
-                }
-                return createEditorSessionCommand;
-            }
-        }
-        /// <summary>
-        /// Wird von CreateEditorSessionCommand aufgerufen schickt passende Nachricht an Server
-        /// </summary>
-        private void SendCreateEditorSessionCommand()
-        {
-            lobbyModel.StartConnection();
-            MessageInformation messageInformation = new MessageInformation();
-            messageInformation.PutValue("playerName", "Heinz");
-            messageInformation.PutValue("editorName", "Editor1");
-            lobbyModel.getFromClientRequestSender().SendMessage("CreateEditorSession", messageInformation);
-        }
-        /// <summary>
-        /// Listener des Game Buttons, welcher SendCreateGameSessionCommand() beim klicken aufruft
-        /// </summary>
-        private ICommand createGameSessionCommand;
-        public ICommand CreateGameSessionCommand
-        {
-            get
-            {
-                if (createGameSessionCommand == null)
-                {
-                    createGameSessionCommand = new ActionCommand(param => SendCreateGameSessionCommand());
-                }
-                return createGameSessionCommand;
-            }
-        }
-        /// <summary>
-        /// Wird von CreateGameSessionCommand aufgerufen schickt passende Nachricht an Server
-        /// </summary>
-        private void SendCreateGameSessionCommand()
-        {
-            lobbyModel.StartConnection();
-            MessageInformation messageInformation = new MessageInformation();
-            messageInformation.PutValue("playerName", "Heinz");
-            messageInformation.PutValue("gameName", "Game1");
-            lobbyModel.getFromClientRequestSender().SendMessage("CreateGameSession", messageInformation);
-  
-
-        }
-
-       
-
-
 
         public LobbyModel LobbyModel
         {
@@ -101,30 +26,30 @@ namespace RoRClient.ViewModels.Lobby
             }
         }
 
-        /// <summary>
-        /// In FromClientRequestQueueDispatcher wird je eine Boolean Variable fuer Game und Session der Klasse LobbyModel
-        /// auf true gesetzt (falls ein Game bzw. ein Editor erstellt oder gejoined werden soll), 
-        /// hier wird darauf reagiert und dem entsprechend der uiState auf "editor" oder "game" gesetzt.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnClientModelChanged(object sender, PropertyChangedEventArgs e)
+        private ICommand switchToJoinEditorLobbyView;
+        public ICommand SwitchToJoinEditorLobbyView
         {
-            if(e.PropertyName == "Connected_Editor")
+            get
             {
-                if (lobbyModel.Connected_Editor)
+                if (switchToJoinEditorLobbyView == null)
                 {
-                    uiState.State = "editor";
+                    switchToJoinEditorLobbyView = new ActionCommand(e => { uiState.State = "joinEditorLobby"; });
                 }
-            }
-            if (e.PropertyName == "Connected_Game")
-            {
-                if (lobbyModel.Connected_Game)
-                {
-                    uiState.State = "game";
-                }
+                return switchToJoinEditorLobbyView;
             }
         }
 
+        private ICommand switchToJoinGameLobbyView;
+        public ICommand SwitchToJoinGameLobbyView
+        {
+            get
+            {
+                if (switchToJoinGameLobbyView == null)
+                {
+                    switchToJoinGameLobbyView = new ActionCommand(e => { uiState.State = "joinGameLobby"; });
+                }
+                return switchToJoinGameLobbyView;
+            }
+        }
     }
 }

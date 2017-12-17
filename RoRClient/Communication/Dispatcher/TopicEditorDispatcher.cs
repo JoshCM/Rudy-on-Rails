@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RoRClient.Models.Session;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace RoRClient.Communication.Dispatcher
     {
         public TopicEditorDispatcher()
         {
+            session = EditorSession.GetInstance();
             COMMAND_TYPE_PREFIX = "RoRClient.Commands.Editor.";
         }
     }
