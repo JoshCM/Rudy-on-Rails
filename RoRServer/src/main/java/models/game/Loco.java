@@ -25,10 +25,9 @@ public class Loco extends TickableGameObject implements PlaceableOnRail  {
 	 * Konstruktor einer Lok
 	 * @param square auf dem die Lok steht wird mitgegeben
 	 */
-	public Loco(String sessionName, Square square, Player player) {
+	public Loco(String sessionName, Square square) {
 		super(sessionName,square);
 		this.setCarts(new ArrayList<Cart>());
-		this.player = player;
 		
 		//TODO: Wenn Zug Richtung implementiert ist, muss der Wagon so initialisiert werden, dass er ein Feld hinter der Lok steht 
 		this.addCart(new Cart(sessionName,square));

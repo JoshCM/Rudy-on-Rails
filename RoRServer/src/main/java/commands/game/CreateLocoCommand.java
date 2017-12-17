@@ -14,7 +14,7 @@ import models.session.RoRSession;
 /**
  * 
  * @author Isabel Rott, Michelle Le
- * Command für das Erstellen einer Lok
+ * Command fï¿½r das Erstellen einer Lok
  */
 public class CreateLocoCommand extends CommandBase {
 
@@ -36,10 +36,10 @@ public class CreateLocoCommand extends CommandBase {
 		Map map = gameSession.getMap();
 		Square square = map.getSquare(xPos, yPos);
 		
-		//prüfen ob auf dem Square eine Rail liegt
+		//prï¿½fen ob auf dem Square eine Rail liegt
 		if(square.getPlaceableOnSquare() != null) {
 			Rail rail = (Rail) square.getPlaceableOnSquare();
-			Loco loco = new Loco(session.getName(),square,gameSession.findPlayer(playerId));
+			Loco loco = new Loco(session.getName(),square);
 			rail.setPlaceableOnRail(loco);
 		}
 		
