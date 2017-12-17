@@ -23,7 +23,6 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	 */
 	public Rail(String sessionName, Square square, List<Direction> directions) {
 		super(sessionName, square);
-		
 		railSections = new ArrayList<RailSection>();
 		createRailSectionsForRailSectionPositions(sessionName, directions);
 		notifyCreatedRail();
@@ -102,7 +101,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		for(RailSection section : railSections) {
 			result = prime * result + ((section == null) ? 0 : section.hashCode());
 		}
-		
+
 		return result;
 	}
 

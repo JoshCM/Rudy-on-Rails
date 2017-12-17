@@ -63,6 +63,7 @@ namespace RoRClient.Communication.Dispatcher
             string playerName = messageInformation.GetValueAsString("playerName");
             Player player = new Player(playerId, playerName);
             gameSession.AddPlayer(player);
+
             lobbyModel.Connected_Game = true;
 
             //TODO: hier soll ein Create Loco Command angestoßen werden
@@ -99,8 +100,8 @@ namespace RoRClient.Communication.Dispatcher
         private void SendCreateLocoCommand(Guid playerId)
         {
             MessageInformation messageInformation = new MessageInformation();
-            int xPos = 0;
-            int yPos = 0;
+            int xPos = 7;
+            int yPos = 3;
 
             messageInformation.PutValue("xPos", xPos);
             messageInformation.PutValue("yPos", yPos);

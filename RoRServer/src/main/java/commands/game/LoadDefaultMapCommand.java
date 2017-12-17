@@ -21,7 +21,6 @@ public class LoadDefaultMapCommand extends CommandBase {
 
 	public LoadDefaultMapCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
-
 	}
 
 	@Override
@@ -54,5 +53,6 @@ public class LoadDefaultMapCommand extends CommandBase {
 
 			}
 		}
+
 	}
 }

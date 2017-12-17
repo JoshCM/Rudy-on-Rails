@@ -24,8 +24,10 @@ public class CreateLocoCommand extends CommandBase {
 	
 	public CreateLocoCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
-		xPos = messageInfo.getValueAsInt("xPos");
-		yPos = messageInfo.getValueAsInt("yPos");
+		xPos = 7;
+		yPos = 3;
+		//xPos = messageInfo.getValueAsInt("xPos");
+		//yPos = messageInfo.getValueAsInt("yPos");
 		playerId = messageInfo.getValueAsUUID("playerId");
 	}
 
@@ -39,7 +41,8 @@ public class CreateLocoCommand extends CommandBase {
 		//pr�fen ob auf dem Square eine Rail liegt
 		if(square.getPlaceableOnSquare() != null) {
 			Rail rail = (Rail) square.getPlaceableOnSquare();
-			Loco loco = new Loco(session.getName(),square);
+			Loco loco = new Loco(session.getName(),square, map);
+			((GameSession) session).add(loco);
 			rail.setPlaceableOnRail(loco);
 		}
 		

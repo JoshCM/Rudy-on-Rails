@@ -18,7 +18,7 @@ namespace RoRClient.Commands.Game.Create
 
         public CreateLocoCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
-            locoId = Guid.Parse(messageInformation.GetValueAsString("railId"));
+            locoId = Guid.Parse(messageInformation.GetValueAsString("locoId"));
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
         }
@@ -29,7 +29,7 @@ namespace RoRClient.Commands.Game.Create
             Square square = gameSession.Map.GetSquare(xPos, yPos);
             Rail rail = square.PlaceableOnSquare as Rail;
             Loco loco = new Loco(locoId, square);
-            //rail.setPlaceableOnRail(loco);
+            rail.setPlaceableOnRail(loco);
         }
     }
 }
