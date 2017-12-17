@@ -140,6 +140,7 @@
     </Compile>
     <Compile Include="ViewModels\Base\CanvasViewModelBase.cs" />
     <Compile Include="ViewModels\Game\CanvasGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\LocoViewModel.cs" />
     <Compile Include="ViewModels\Game\MapGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
     <Compile Include="ViewModels\Game\SquareGameViewModel.cs" />
@@ -196,6 +197,9 @@
     <Compile Include="Views\Game\GameInteractionUserControl.xaml.cs">
       <DependentUpon>GameInteractionUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\LocoUserControl.xaml.cs">
+      <DependentUpon>LocoUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\MapGameUserControl.xaml.cs">
       <DependentUpon>MapGameUserControl.xaml</DependentUpon>
     </Compile>
@@ -231,6 +235,10 @@
     </Compile>
     <Compile Include="Views\Popup\PopupCreator.cs" />
     <Page Include="Views\Game\GameInteractionUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\LocoUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -381,6 +389,7 @@
     <Resource Include="Resources\Images\rotate_right.png" />
     <Resource Include="Resources\Images\rotate_left.png" />
     <Resource Include="Resources\Images\delete.png" />
+    <Resource Include="Resources\Images\Tools\loco.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
