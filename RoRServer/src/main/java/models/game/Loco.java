@@ -68,9 +68,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail  {
 	public void drive(){
 		Rail nextRail = getNextRail();
 		this.direction = nextRail.getExitDirection(getDirectionNegation());
-		this.rail.setPlaceableOnRail(null);
 		this.rail = nextRail;
-		this.rail.setPlaceableOnRail(this);
 	}
 
 	/**
