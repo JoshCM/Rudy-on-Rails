@@ -12,6 +12,8 @@ namespace RoRClient.Models.Session
     {
         private static GameSession gameSession = null;
 
+
+
         private GameSession() : base()
         {
 

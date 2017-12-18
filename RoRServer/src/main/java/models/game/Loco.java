@@ -1,6 +1,7 @@
 package models.game;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import communication.MessageInformation;
 
@@ -14,9 +15,9 @@ public class Loco extends TickableGameObject implements PlaceableOnRail  {
 	private final long SEC_IN_NANO= 1000000000;
 	private ArrayList<Cart> carts;
 	private Rail rail;
-	private Player player;
+	private UUID playerId;
 	private long timeDeltaCounter = 0;//Summe der Zeit zwischen den Ticks
-	private int speed;
+	private long speed;
 	private Direction direction;
 	private Map map;
 	private Square square;
@@ -25,17 +26,17 @@ public class Loco extends TickableGameObject implements PlaceableOnRail  {
 	 * Konstruktor einer Lok
 	 * @param square auf dem die Lok steht wird mitgegeben
 	 */
-	public Loco(String sessionName, Square square, Map map) {
+	public Loco(String sessionName, Square square, Map map, UUID playerId) {
 		super(sessionName,square);
 		this.setCarts(new ArrayList<Cart>());
-		
 		//TODO: Wenn Zug Richtung implementiert ist, muss der Wagon so initialisiert werden, dass er ein Feld hinter der Lok steht 
 		this.addCart(new Cart(sessionName,square));
-		this.square = square;
+		this.square = square;// Das hier muss noch raus, aber erst testen 
 		this.rail = (Rail)square.getPlaceableOnSquare();
 		this.map = map;
 		this.direction = rail.getFirstSection().getNode1();
 		this.speed = 1; //Nur zu testzwecken
+		this.playerId = playerId;
 		SendCreatedLocoMessage();
 	}
 
@@ -57,7 +58,6 @@ public class Loco extends TickableGameObject implements PlaceableOnRail  {
 	public void specificUpdate() {
 		this.timeDeltaCounter += timeDeltaInNanoSeconds;
 		if(this.timeDeltaCounter >= SEC_IN_NANO/(speed*timeDeltaInNanoSeconds)) {
-			System.out.println("X: "+ this.rail.getXPos() +" Y: "+ this.rail.getYPos());
 			timeDeltaCounter = 0;
 			drive();
 		}
@@ -70,6 +70,9 @@ public class Loco extends TickableGameObject implements PlaceableOnRail  {
 		Rail nextRail = getNextRail();
 		this.direction = nextRail.getExitDirection(getDirectionNegation());
 		this.rail = nextRail;
+		this.setXPos(this.rail.getXPos());
+		this.setYPos(this.rail.getYPos());
+		SendUpdateLocoMessage();
 		
 	}
 
@@ -116,12 +119,17 @@ public class Loco extends TickableGameObject implements PlaceableOnRail  {
 	private void SendCreatedLocoMessage() {
 		MessageInformation messageInfo = new MessageInformation("CreateLoco");
 		messageInfo.putValue("locoId", getId());
-		//messageInfo.putValue("squareId", getSquareId());
-		//messageInfo.putValue("railId", rail.getId());
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
-		
+		messageInfo.putValue("playerId", this.playerId);
 		System.out.println("LOCO WURDE ERSTELLT; NACHRICHT WIRD ZUR�CKGESCHICKT");
+		notifyChange(messageInfo);
+	}
+	private void SendUpdateLocoMessage() {
+		MessageInformation messageInfo = new MessageInformation("UpdateLoco");
+		messageInfo.putValue("locoId", getId());
+		messageInfo.putValue("xPos", getXPos());
+		messageInfo.putValue("yPos", getYPos());
 		notifyChange(messageInfo);
 	}
 	
@@ -145,7 +153,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail  {
 	public Rail getRail() {
 		return this.rail;
 	}
-	public int getSpeed() {
+	public long getSpeed() {
 		return this.speed;
 	}
 

@@ -27,7 +27,7 @@ public class LocoTests {
 		
 		Map map = gameSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Loco loco = new Loco(gameSession.getName(), square,player);
+		Loco loco = new Loco(gameSession.getName(), square,map, player.getId());
 		
 		assertEquals(1, loco.getCarts().size());
 

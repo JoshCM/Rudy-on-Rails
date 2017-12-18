@@ -41,7 +41,7 @@ public class CreateLocoCommand extends CommandBase {
 		//pr�fen ob auf dem Square eine Rail liegt
 		if(square.getPlaceableOnSquare() != null) {
 			Rail rail = (Rail) square.getPlaceableOnSquare();
-			Loco loco = new Loco(session.getName(),square, map);
+			Loco loco = new Loco(session.getName(),square, map, playerId);
 			((GameSession) session).add(loco);
 			rail.setPlaceableOnRail(loco);
 		}

@@ -111,6 +111,7 @@
     <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateLocoCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateLocoCommand.cs" />
     <Compile Include="Communication\Dispatcher\QueueDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicEditorDispatcher.cs" />
@@ -140,7 +141,7 @@
     </Compile>
     <Compile Include="ViewModels\Base\CanvasViewModelBase.cs" />
     <Compile Include="ViewModels\Game\CanvasGameViewModel.cs" />
-    <Compile Include="ViewModels\Game\LocoViewModel.cs" />
+    <Compile Include="ViewModels\Game\LocoGameViewModel.cs" />
     <Compile Include="ViewModels\Game\MapGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
     <Compile Include="ViewModels\Game\SquareGameViewModel.cs" />
@@ -197,8 +198,8 @@
     <Compile Include="Views\Game\GameInteractionUserControl.xaml.cs">
       <DependentUpon>GameInteractionUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Game\LocoUserControl.xaml.cs">
-      <DependentUpon>LocoUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Game\LocoGameUserControl.xaml.cs">
+      <DependentUpon>LocoGameUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\MapGameUserControl.xaml.cs">
       <DependentUpon>MapGameUserControl.xaml</DependentUpon>
@@ -238,7 +239,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Game\LocoUserControl.xaml">
+    <Page Include="Views\Game\LocoGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,31 +8,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.Commands.Game.Create
+namespace RoRClient.Commands.Game.Update
 {
-    class CreateLocoCommand : CommandBase
+    class UpdateLocoCommand : CommandBase
     {
         private Guid locoId;
-        private Guid playerId;
         private int xPos;
         private int yPos;
 
-        public CreateLocoCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        public UpdateLocoCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             locoId = Guid.Parse(messageInformation.GetValueAsString("locoId"));
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
-            playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
         }
 
         public override void Execute()
         {
             GameSession gameSession = GameSession.GetInstance();
-            Player player = gameSession.GetPlayerById(playerId);
             Square square = gameSession.Map.GetSquare(xPos, yPos);
+            Console.WriteLine(xPos+" " +yPos);
             Loco loco = new Loco(locoId, square);
-            player.Loco = loco;
-            square.PlaceableOnSquare = loco;
+            //square.PlaceableOnSquare = loco;
         }
     }
 }

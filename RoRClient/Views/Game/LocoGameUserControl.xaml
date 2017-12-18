@@ -1,4 +1,4 @@
-﻿<v:CanvasUserControl x:Class="RoRClient.Views.Game.LocoUserControl"
+﻿<v:CanvasUserControl x:Class="RoRClient.Views.Game.LocoGameUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,10 +10,10 @@
     <UserControl.Resources>
         
     </UserControl.Resources>
-    <Canvas Width="{Binding SquareDim, ElementName=railUserControl}"
-            Height="{Binding SquareDim, ElementName=railUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=railUserControl}" 
-               Height="{Binding SquareDim, ElementName=railUserControl}" 
+    <Canvas Width="{Binding SquareDim, ElementName=locoGameUserControl}"
+            Height="{Binding SquareDim, ElementName=locoGameUserControl}">
+        <Image Width="{Binding SquareDim, ElementName=locoGameUserControl}" 
+               Height="{Binding SquareDim, ElementName=locoGameUserControl}" 
                Source="/RoRClient;component/Resources/Images/loco.png" Stretch="Fill">
         </Image>
     </Canvas>

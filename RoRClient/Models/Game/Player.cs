@@ -19,5 +19,20 @@ namespace RoRClient.Models.Game
                 return name;
             }
         }
+        private Loco loco;
+        public Loco Loco
+        {
+            get
+            {
+                return loco;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    this.loco = value;
+                }
+            }
+        }
     }
 }
