@@ -19,19 +19,23 @@ namespace RoRClient.Commands.Game.Create
 
         public CreateLocoCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
+            
             locoId = Guid.Parse(messageInformation.GetValueAsString("locoId"));
+           
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
             playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
+         
         }
 
         public override void Execute()
         {
-            GameSession gameSession = GameSession.GetInstance();
-            Player player = gameSession.GetPlayerById(playerId);
-            Square square = gameSession.Map.GetSquare(xPos, yPos);
+            
+            Player player = session.GetPlayerById(playerId);
+            Square square = session.Map.GetSquare(xPos, yPos);
             Loco loco = new Loco(locoId, square);
             player.Loco = loco;
+            Console.WriteLine("Player: " + playerId + " wird " + locoId + " zugeordnet");
             square.PlaceableOnSquare = loco;
         }
     }

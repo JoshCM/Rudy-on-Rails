@@ -24,10 +24,10 @@ namespace RoRClient.Commands.Game.Update
         }
 
         public override void Execute()
-        {
+        { 
             GameSession gameSession = GameSession.GetInstance();
             Square square = gameSession.Map.GetSquare(xPos, yPos);
-            Console.WriteLine(xPos+" " +yPos);
+            //Console.WriteLine(xPos+" " +yPos);
             Loco loco = new Loco(locoId, square);
             //square.PlaceableOnSquare = loco;
         }

@@ -5,15 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:v="clr-namespace:RoRClient.Views"
              xmlns:local="clr-namespace:RoRClient.Views.Game"
+             x:Name="locoUserControl"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        
+
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=locoGameUserControl}"
             Height="{Binding SquareDim, ElementName=locoGameUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=locoGameUserControl}" 
-               Height="{Binding SquareDim, ElementName=locoGameUserControl}" 
+        <Image Width="290" 
+               Height="290" 
                Source="/RoRClient;component/Resources/Images/loco.png" Stretch="Fill">
         </Image>
     </Canvas>
