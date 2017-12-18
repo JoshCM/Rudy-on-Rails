@@ -13,7 +13,6 @@ import com.google.gson.JsonObject;
 import commands.base.Command;
 import commands.editor.CreateRailCommand;
 import communication.MessageInformation;
-import models.game.RailSectionPosition;
 import models.session.EditorSessionManager;
 import models.session.RoRSession;
 

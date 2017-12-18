@@ -109,6 +109,7 @@
     <Compile Include="Commands\Editor\Update\UpdateNodesOfRailSectionCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateLocoCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
     <Compile Include="Communication\Dispatcher\QueueDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicDispatcherBase.cs" />
@@ -124,7 +125,11 @@
     <Compile Include="Communication\Dispatcher\GameSessionDispatcher.cs" />
     <Compile Include="Models\Base\IModel.cs" />
     <Compile Include="Models\Base\ModelBase.cs" />
+    <Compile Include="Models\Game\Cart.cs" />
+    <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Player.cs" />
+    <Compile Include="Models\Lobby\GameSessionInfo.cs" />
+    <Compile Include="Models\Lobby\EditorSessionInfo.cs" />
     <Compile Include="Models\Session\EditorSession.cs" />
     <Compile Include="Models\Session\GameSession.cs" />
     <Compile Include="Models\Session\RoRSession.cs" />
@@ -135,6 +140,7 @@
     </Compile>
     <Compile Include="ViewModels\Base\CanvasViewModelBase.cs" />
     <Compile Include="ViewModels\Game\CanvasGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\LocoViewModel.cs" />
     <Compile Include="ViewModels\Game\MapGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
     <Compile Include="ViewModels\Game\SquareGameViewModel.cs" />
@@ -142,6 +148,8 @@
     <Compile Include="ViewModels\Game\RailGameViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
+    <Compile Include="ViewModels\Lobby\JoinGameLobbyViewModel.cs" />
+    <Compile Include="ViewModels\Lobby\JoinEditorLobbyViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Lobby\StartViewModel.cs" />
     <Compile Include="ViewModels\Editor\SquareEditorViewModel.cs" />
@@ -189,6 +197,9 @@
     <Compile Include="Views\Game\GameInteractionUserControl.xaml.cs">
       <DependentUpon>GameInteractionUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\LocoUserControl.xaml.cs">
+      <DependentUpon>LocoUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\MapGameUserControl.xaml.cs">
       <DependentUpon>MapGameUserControl.xaml</DependentUpon>
     </Compile>
@@ -210,6 +221,12 @@
     <Compile Include="Views\Game\RailGameUserControl.xaml.cs">
       <DependentUpon>RailGameUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Lobby\JoinGameLobbyView.xaml.cs">
+      <DependentUpon>JoinGameLobbyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lobby\JoinEditorLobbyView.xaml.cs">
+      <DependentUpon>JoinEditorLobbyView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Lobby\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
     </Compile>
@@ -218,6 +235,10 @@
     </Compile>
     <Compile Include="Views\Popup\PopupCreator.cs" />
     <Page Include="Views\Game\GameInteractionUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\LocoUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -248,6 +269,14 @@
     <Page Include="Views\Game\RailGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Lobby\JoinGameLobbyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Lobby\JoinEditorLobbyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -340,9 +369,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\Game\Create\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Images\railcurve_ne.png" />
     <Resource Include="Resources\Images\railcurve_nw.png" />
@@ -362,6 +389,7 @@
     <Resource Include="Resources\Images\rotate_right.png" />
     <Resource Include="Resources\Images\rotate_left.png" />
     <Resource Include="Resources\Images\delete.png" />
+    <Resource Include="Resources\Images\Tools\loco.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

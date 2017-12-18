@@ -43,5 +43,9 @@ namespace RoRClient.Models.Game
             railSections.Add(railSection);
             NotifyPropertyChanged("RailSections");
         }
+        public void setPlaceableOnRail(IPlaceableOnRail placeableOnRail)
+        {
+            this.placeableOnRail = placeableOnRail;
+        }
     }
 }

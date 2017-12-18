@@ -25,10 +25,10 @@ public class Map extends ModelBase {
 		super(sessionName);
 		squares = new Square[mapSize][mapSize];
 		
-		for(int i= 0; i < mapSize; i++) {
-			for(int j = 0; j < mapSize; j++) {
-				Square s = new Square(sessionName, this, i, j);
-				squares[i][j] = s;
+		for(int x= 0; x < mapSize; x++) {
+			for(int y = 0; y < mapSize; y++) {
+				Square s = new Square(sessionName, this, x, y);
+				squares[x][y] = s;
 			}
 		}
 	}
@@ -48,8 +48,8 @@ public class Map extends ModelBase {
 		notifyChange(messageInformation);
 	}
 	
-	public Square getSquare(int i, int j) {
-		return squares[i][j];
+	public Square getSquare(int x, int y) {
+		return squares[x][y];
 	}
 	
 	public Square[][] getSquares() {

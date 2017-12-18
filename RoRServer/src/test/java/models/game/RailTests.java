@@ -16,18 +16,18 @@ public class RailTests {
 
 	@Test
 	public void RailIsCreatedWithRightValues() {
-		RailSectionPosition node1 = RailSectionPosition.NORTH;
-		RailSectionPosition node2 = RailSectionPosition.SOUTH;
-		List<RailSectionPosition> railSectionPositions = new ArrayList<>();
-		railSectionPositions.add(node1);
-		railSectionPositions.add(node2);
+		Direction node1 = Direction.NORTH;
+		Direction node2 = Direction.SOUTH;
+		List<Direction> directions = new ArrayList<>();
+		directions.add(node1);
+		directions.add(node2);
 		int squarePosX = 0;
 		int squarePosY = 0;
 		
 		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions);
+		Rail rail = new Rail(editorSession.getName(), square, directions);
 		
 		assertEquals(node1, rail.getFirstSection().getNode1());
 		assertEquals(node2, rail.getFirstSection().getNode2());
@@ -35,18 +35,18 @@ public class RailTests {
 	
 	@Test
 	public void RailCreatesMessageAfterCreation() {
-		RailSectionPosition node1 = RailSectionPosition.NORTH;
-		RailSectionPosition node2 = RailSectionPosition.SOUTH;
-		List<RailSectionPosition> railSectionPositions = new ArrayList<>();
-		railSectionPositions.add(node1);
-		railSectionPositions.add(node2);
+		Direction node1 = Direction.NORTH;
+		Direction node2 = Direction.SOUTH;
+		List<Direction> directions = new ArrayList<>();
+		directions.add(node1);
+		directions.add(node2);
 		int squarePosX = 0;
 		int squarePosY = 0;
 		
 		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions);
+		Rail rail = new Rail(editorSession.getName(), square, directions);
 		
 		MessageInformation messageInfo = MessageQueue.getInstance().getFirstFoundMessageInformationForMessageType("CreateRail");
 	
@@ -66,8 +66,8 @@ public class RailTests {
 		Rail rail = createCrossRail();
 		rail.rotate(true);
 		
-		assertEquals(RailSectionPosition.EAST, rail.getFirstSection().getNode1());
-		assertEquals(RailSectionPosition.WEST, rail.getFirstSection().getNode2());
+		assertEquals(Direction.EAST, rail.getFirstSection().getNode1());
+		assertEquals(Direction.WEST, rail.getFirstSection().getNode2());
 	}
 	
 	@Test
@@ -75,27 +75,27 @@ public class RailTests {
 		Rail rail = createCrossRail();
 		rail.rotate(false);
 		
-		assertEquals(RailSectionPosition.WEST, rail.getFirstSection().getNode1());
-		assertEquals(RailSectionPosition.EAST, rail.getFirstSection().getNode2());
+		assertEquals(Direction.WEST, rail.getFirstSection().getNode1());
+		assertEquals(Direction.EAST, rail.getFirstSection().getNode2());
 	}
 	
 	private Rail createCrossRail() {
-		RailSectionPosition node1 = RailSectionPosition.NORTH;
-		RailSectionPosition node2 = RailSectionPosition.SOUTH;
-		RailSectionPosition node3 = RailSectionPosition.WEST;
-		RailSectionPosition node4 = RailSectionPosition.EAST;
-		List<RailSectionPosition> railSectionPositions = new ArrayList<>();
-		railSectionPositions.add(node1);
-		railSectionPositions.add(node2);
-		railSectionPositions.add(node3);
-		railSectionPositions.add(node4);
+		Direction node1 = Direction.NORTH;
+		Direction node2 = Direction.SOUTH;
+		Direction node3 = Direction.WEST;
+		Direction node4 = Direction.EAST;
+		List<Direction> directions = new ArrayList<>();
+		directions.add(node1);
+		directions.add(node2);
+		directions.add(node3);
+		directions.add(node4);
 		int squarePosX = 0;
 		int squarePosY = 0;
 		
 		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions);
+		Rail rail = new Rail(editorSession.getName(), square, directions);
 		return rail;
 	}
 }

@@ -14,11 +14,11 @@ import models.session.EditorSessionManager;
 public class RailSectionTests {
 	@Test(expected = InvalidModelOperationException.class)
 	public void RailSectionWithEqualNodesThrowsException() {
-		RailSectionPosition node1 = RailSectionPosition.NORTH;
-		RailSectionPosition node2 = RailSectionPosition.NORTH;
-		List<RailSectionPosition> railSectionPositions = new ArrayList<>();
-		railSectionPositions.add(node1);
-		railSectionPositions.add(node2);
+		Direction node1 = Direction.NORTH;
+		Direction node2 = Direction.NORTH;
+		List<Direction> directions = new ArrayList<>();
+		directions.add(node1);
+		directions.add(node2);
 		int squarePosX = 0;
 		int squarePosY = 0;
 		
@@ -26,13 +26,13 @@ public class RailSectionTests {
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
 		
-		new Rail(editorSession.getName(), square, railSectionPositions);
+		new Rail(editorSession.getName(), square, directions);
 	}
 	
-	private Rail createTestRail(RailSectionPosition node1, RailSectionPosition node2) {
-		List<RailSectionPosition> railSectionPositions = new ArrayList<>();
-		railSectionPositions.add(node1);
-		railSectionPositions.add(node2);
+	private Rail createTestRail(Direction node1, Direction node2) {
+		List<Direction> directions = new ArrayList<>();
+		directions.add(node1);
+		directions.add(node2);
 		int squarePosX = 0;
 		int squarePosY = 0;
 		
@@ -40,58 +40,58 @@ public class RailSectionTests {
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
 		
-		return new Rail(editorSession.getName(), square, railSectionPositions);
+		return new Rail(editorSession.getName(), square, directions);
 	}
 	
 	@Test
 	public void RailSectionNORTHSOUTHRotatesRight() {
-		RailSectionPosition node1 = RailSectionPosition.NORTH;
-		RailSectionPosition node2 = RailSectionPosition.SOUTH;
+		Direction node1 = Direction.NORTH;
+		Direction node2 = Direction.SOUTH;
 		Rail rail = createTestRail(node1, node2);
 		RailSection section = new RailSection("test", rail, node1, node2);
 		
 		section.rotate(true);
 		
-		assertEquals(RailSectionPosition.EAST, section.getNode1());
-		assertEquals(RailSectionPosition.WEST, section.getNode2());
+		assertEquals(Direction.EAST, section.getNode1());
+		assertEquals(Direction.WEST, section.getNode2());
 	}
 	
 	@Test
 	public void RailSectionEASTWESTRotatesRight() {
-		RailSectionPosition node1 = RailSectionPosition.EAST;
-		RailSectionPosition node2 = RailSectionPosition.WEST;
+		Direction node1 = Direction.EAST;
+		Direction node2 = Direction.WEST;
 		Rail rail = createTestRail(node1, node2);
 		RailSection section = new RailSection("test", rail, node1, node2);
 		
 		section.rotate(true);
 		
-		assertEquals(RailSectionPosition.SOUTH, section.getNode1());
-		assertEquals(RailSectionPosition.NORTH, section.getNode2());
+		assertEquals(Direction.SOUTH, section.getNode1());
+		assertEquals(Direction.NORTH, section.getNode2());
 	}
 	
 	@Test
 	public void RailSectionNORTHSOUTHRotatesLeft() {
-		RailSectionPosition node1 = RailSectionPosition.NORTH;
-		RailSectionPosition node2 = RailSectionPosition.SOUTH;
+		Direction node1 = Direction.NORTH;
+		Direction node2 = Direction.SOUTH;
 		Rail rail = createTestRail(node1, node2);
 		RailSection section = new RailSection("test", rail, node1, node2);
 		
 		section.rotate(false);
 		
-		assertEquals(RailSectionPosition.WEST, section.getNode1());
-		assertEquals(RailSectionPosition.EAST, section.getNode2());
+		assertEquals(Direction.WEST, section.getNode1());
+		assertEquals(Direction.EAST, section.getNode2());
 	}
 	
 	@Test
 	public void RailSectionEASTWESTRotatesLeft() {
-		RailSectionPosition node1 = RailSectionPosition.EAST;
-		RailSectionPosition node2 = RailSectionPosition.WEST;
+		Direction node1 = Direction.EAST;
+		Direction node2 = Direction.WEST;
 		Rail rail = createTestRail(node1, node2);
 		RailSection section = new RailSection("test", rail, node1, node2);
 		
 		section.rotate(false);
 		
-		assertEquals(RailSectionPosition.NORTH, section.getNode1());
-		assertEquals(RailSectionPosition.SOUTH, section.getNode2());
+		assertEquals(Direction.NORTH, section.getNode1());
+		assertEquals(Direction.SOUTH, section.getNode2());
 	}
 }

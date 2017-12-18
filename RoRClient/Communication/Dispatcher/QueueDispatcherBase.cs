@@ -24,7 +24,7 @@ namespace RoRClient.Communication.Dispatcher
         public void Dispatch(string request, string message)
         {
             MessageInformation messageInformation = MessageDeserializer.getInstance().Deserialize(message);
-            CallMethodFromString("handle" + request, messageInformation);
+            CallMethodFromString("Handle" + request, messageInformation);
         }
     }
 }

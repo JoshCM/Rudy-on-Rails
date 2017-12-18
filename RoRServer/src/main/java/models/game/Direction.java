@@ -3,4 +3,4 @@ package models.game;
 /**
  * Enum fuer die Knotenposition eines Schienenstuecks
  */
-public enum RailSectionPosition {NORTH, EAST, SOUTH, WEST}
+public enum Direction {NORTH, EAST, SOUTH, WEST}

@@ -14,12 +14,12 @@ public class RailSection extends ModelBase {
 	private int squareXPos;
 	private int squareYPos;
 	private UUID railId;
-	private RailSectionPosition node1;
-	private RailSectionPosition node2;
+	private Direction node1;
+	private Direction node2;
 	
 	// TODO: hier muss placeableOnSquareSection
 
-	public RailSection(String sessionName, Rail rail, RailSectionPosition node1, RailSectionPosition node2) {
+	public RailSection(String sessionName, Rail rail, Direction node1, Direction node2) {
 		super(sessionName);
 		
 		if (node1 == node2) {
@@ -64,11 +64,11 @@ public class RailSection extends ModelBase {
 		return railId;
 	}
 
-	public RailSectionPosition getNode1() {
+	public Direction getNode1() {
 		return node1;
 	}
 
-	public RailSectionPosition getNode2() {
+	public Direction getNode2() {
 		return node2;
 	}
 
@@ -95,18 +95,19 @@ public class RailSection extends ModelBase {
 		notifyChange(messageInformation);
 	}
 	
-	private RailSectionPosition rotateRailSectionPosition(RailSectionPosition railSectionPosition, boolean right) {
+	private Direction rotateRailSectionPosition(Direction direction, boolean right) {
 		int newIndex;
 		
 		if(right) {
-			newIndex = ((railSectionPosition.ordinal() + 1) % RailSectionPosition.values().length);
+			newIndex = ((direction.ordinal() + 1) % Direction.values().length);
 		} else {
-			newIndex = ((railSectionPosition.ordinal() - 1) % RailSectionPosition.values().length);
+			newIndex = ((direction.ordinal() - 1) % Direction.values().length);
 			if(newIndex < 0) {
-				newIndex += RailSectionPosition.values().length;
+				newIndex += Direction.values().length;
 			}
 		}
 		
-		return RailSectionPosition.values()[newIndex];
+		return Direction.values()[newIndex];
 	}
+
 }
