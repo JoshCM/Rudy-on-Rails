@@ -57,6 +57,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail  {
 	public void specificUpdate() {
 		this.timeDeltaCounter += timeDeltaInNanoSeconds;
 		if(this.timeDeltaCounter >= SEC_IN_NANO/(speed*timeDeltaInNanoSeconds)) {
+			System.out.println("X: "+ this.rail.getXPos() +" Y: "+ this.rail.getYPos());
 			timeDeltaCounter = 0;
 			drive();
 		}
@@ -69,6 +70,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail  {
 		Rail nextRail = getNextRail();
 		this.direction = nextRail.getExitDirection(getDirectionNegation());
 		this.rail = nextRail;
+		
 	}
 
 	/**

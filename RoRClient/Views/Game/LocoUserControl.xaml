@@ -14,7 +14,7 @@
             Height="{Binding SquareDim, ElementName=railUserControl}">
         <Image Width="{Binding SquareDim, ElementName=railUserControl}" 
                Height="{Binding SquareDim, ElementName=railUserControl}" 
-               Source="/RoRClient;component/Resources/Images/Tools/loco.png" Stretch="Fill">
+               Source="/RoRClient;component/Resources/Images/loco.png" Stretch="Fill">
         </Image>
     </Canvas>
 </v:CanvasUserControl>
