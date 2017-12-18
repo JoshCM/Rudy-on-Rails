@@ -35,7 +35,6 @@ namespace RoRClient.Commands.Game.Create
             Square square = session.Map.GetSquare(xPos, yPos);
             Loco loco = new Loco(locoId, square);
             player.Loco = loco;
-            Console.WriteLine("Player: " + playerId + " wird " + locoId + " zugeordnet");
             square.PlaceableOnSquare = loco;
         }
     }

@@ -13,7 +13,6 @@ namespace RoRClient.ViewModels.Game
 
         public LocoGameViewModel(Loco loco) : base(loco.Id)
         {
-            Console.WriteLine("loco wird locogameviewmodel zugeordnet");
             this.l = loco;
             this.SquarePosX = loco.Square.PosX;
             this.SquarePosY = loco.Square.PosY;

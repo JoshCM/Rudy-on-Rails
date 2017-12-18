@@ -31,7 +31,12 @@
 							</Canvas>
 						</DataTemplate>
 						<!-- Hier muss dann auch das LocoGameUserControl hin mit dem DataType des LocoGameViewModels, was ja in der PlaceableOnSquareCollection drin sein sollte -->
-					</ItemsControl.Resources>
+                        <DataTemplate DataType="{x:Type vm:LocoGameViewModel}">
+                            <Canvas>
+                                <vg:LocoGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
 				</ItemsControl>
 			</Canvas>
         </ScrollViewer>
