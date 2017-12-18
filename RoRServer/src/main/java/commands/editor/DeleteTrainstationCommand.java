@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.google.gson.JsonObject;
-
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import models.game.Map;

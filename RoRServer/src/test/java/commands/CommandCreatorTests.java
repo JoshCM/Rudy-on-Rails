@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.Test;
@@ -13,8 +15,11 @@ import com.google.gson.JsonObject;
 import commands.base.Command;
 import commands.editor.CreateRailCommand;
 import commands.editor.CreateTrainstationCommand;
+import commands.editor.DeleteTrainstationCommand;
 import communication.MessageInformation;
 import models.game.Compass;
+import models.game.Rail;
+import models.game.Trainstation;
 import models.session.EditorSessionManager;
 import models.session.RoRSession;
 
