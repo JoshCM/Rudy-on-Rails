@@ -46,20 +46,21 @@ public class RailTests {
 		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions);
+		UUID railId = UUID.randomUUID();
+		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions, UUID.randomUUID(), railId);
 		
-		MessageInformation messageInfo = MessageQueue.getInstance().getFirstFoundMessageInformationForMessageType("CreateRail");
+		MessageInformation messageInfo = MessageQueue.getInstance().geMessageInformationForRailId("CreateRail", railId);
 	
-		UUID railId = messageInfo.getValueAsUUID("railId");
-		UUID squareId = messageInfo.getValueAsUUID("squareId");
-		int xPos = messageInfo.getValueAsInt("xPos");
-		int yPos = messageInfo.getValueAsInt("yPos");
+		UUID messageInfoRailId = messageInfo.getValueAsUUID("railId");
+		UUID messageInfoSquareId = messageInfo.getValueAsUUID("squareId");
+		int messageInfoXPos = messageInfo.getValueAsInt("xPos");
+		int messageInfoYPos = messageInfo.getValueAsInt("yPos");
 
 		//warum nicht die richtige ?
-		//assertEquals(rail.getId(), railId);
-		assertEquals(rail.getXPos(), xPos);
-		assertEquals(rail.getYPos(), yPos);
-		//assertEquals(rail.getSquareId(), squareId);
+		assertEquals(rail.getId(), messageInfoRailId);
+		assertEquals(rail.getXPos(), messageInfoXPos);
+		assertEquals(rail.getYPos(), messageInfoYPos);
+		assertEquals(rail.getSquareId(), messageInfoSquareId);
 	}
 	
 	@Test
