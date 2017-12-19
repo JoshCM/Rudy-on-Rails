@@ -51,16 +51,6 @@ public class EditorSessionManager {
         return null;
     }
 
-    public EditorSession getEditorSessionByName(String sessionName){
-        for(EditorSession currentEditorSession : editorSessionMap.values()) {
-        	if(currentEditorSession.getName().equals(sessionName)) {
-        		return currentEditorSession;
-        	}
-        }
-
-        return getEditorSession();
-    }
-
     public EditorSession getEditorSessionByName(String name) {
     	return editorSessionMap.get(name);
     }

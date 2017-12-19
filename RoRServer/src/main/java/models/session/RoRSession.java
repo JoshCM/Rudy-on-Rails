@@ -42,6 +42,10 @@ public abstract class RoRSession {
 	public void removePlayer(Player player) {
 		this.players.remove(player);
 	}
+	
+	public Player getHost() {
+		return players.stream().filter(x -> x.getIsHost()).findFirst().get();
+	}
 
 	public Map getMap() {
 		return map;
@@ -54,5 +58,4 @@ public abstract class RoRSession {
 	public List<Player> getPlayers() {
 		return Collections.unmodifiableList(players);
 	}
-
 }

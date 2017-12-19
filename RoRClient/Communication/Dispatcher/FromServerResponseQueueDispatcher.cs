@@ -25,7 +25,7 @@ namespace RoRClient.Communication.Dispatcher
 
             Guid playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             string playerName = messageInformation.GetValueAsString("playerName");
-            Player player = new Player(playerId, playerName);
+            Player player = new Player(playerId, playerName, true);
             editorSession.AddPlayer(player);
             lobbyModel.Connected_Editor = true;
         }
@@ -43,7 +43,8 @@ namespace RoRClient.Communication.Dispatcher
             {
                 Guid playerId = Guid.Parse(obj.GetValue("playerId").ToString());
                 string playerName = obj.GetValue("playerName").ToString();
-                Player player = new Player(playerId, playerName);
+                bool isHost = Boolean.Parse(obj.GetValue("isHost").ToString());
+                Player player = new Player(playerId, playerName, isHost);
                 editorSession.AddPlayer(player);
             }
 
@@ -61,11 +62,10 @@ namespace RoRClient.Communication.Dispatcher
 
             Guid playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             string playerName = messageInformation.GetValueAsString("playerName");
-            Player player = new Player(playerId, playerName);
+            Player player = new Player(playerId, playerName, true);
             gameSession.AddPlayer(player);
 
             lobbyModel.Connected_Game = true;
-
         }
 
         public void HandleJoinGameSession(MessageInformation messageInformation)
@@ -83,15 +83,14 @@ namespace RoRClient.Communication.Dispatcher
             {
                 Guid playerId = Guid.Parse(obj.GetValue("playerId").ToString());
                 string playerName = obj.GetValue("playerName").ToString();
-                Player player = new Player(playerId, playerName);
+                bool isHost = Boolean.Parse(obj.GetValue("isHost").ToString());
+                Player player = new Player(playerId, playerName, isHost);
                 gameSession.AddPlayer(player);
             }
 
             lobbyModel.Connected_Game = true;
             //TODO: hier soll ein Create Loco Command angestoßen werden
         }
-
-
 
         public void HandleReadEditorSessions(MessageInformation messageInformation)
         {
