@@ -2,22 +2,23 @@ package commands.editor;
 
 import commands.base.CommandBase;
 import communication.MessageInformation;
-import models.game.Rail;
 import models.game.Square;
+import models.game.Trainstation;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
-public class MoveRailCommand extends CommandBase{
-	
+public class MoveTrainstationCommand extends CommandBase{
+
 	private Square oldSquare;
 	private Square newSquare;
-	public MoveRailCommand(RoRSession session, MessageInformation messageInfo) {
+	
+	public MoveTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		EditorSession editorSession = (EditorSession) session;
-		Rail rail = (Rail)editorSession.getMap().getPlaceableById(messageInfo.getValueAsUUID("id"));
+		Trainstation trainstation = (Trainstation)editorSession.getMap().getPlaceableById(messageInfo.getValueAsUUID("id"));
 		int newXPos = messageInfo.getValueAsInt("newXPos");
 		int newYPos = messageInfo.getValueAsInt("newYPos");
-		this.oldSquare = editorSession.getMap().getSquareById(rail.getSquareId());
+		this.oldSquare = editorSession.getMap().getSquareById(trainstation.getSquareId());
 		this.newSquare = editorSession.getMap().getSquare(newXPos, newYPos);
 	}
 

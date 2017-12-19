@@ -30,6 +30,10 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		notifyCreatedTrainstation();
 	}
 	
+	public Compass getAlignment() {
+		return alignment;
+	}
+	
 	private void notifyCreatedTrainstation() {
 		MessageInformation messageInfo = new MessageInformation("CreateTrainstation");
 		messageInfo.putValue("trainstationId", getId());

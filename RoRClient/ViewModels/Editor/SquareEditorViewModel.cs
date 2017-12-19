@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Newtonsoft.Json.Linq;
+using RoRClient.ViewModels.Helper;
 
 namespace RoRClient.ViewModels.Editor
 {
@@ -143,8 +144,9 @@ namespace RoRClient.ViewModels.Editor
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("newXPos", this.SquarePosX);
             messageInformation.PutValue("newYPos", this.SquarePosY);
-            messageInformation.PutValue("railId", MapViewModel.SelectedEditorCanvasViewModel.Id);
-            EditorSession.GetInstance().QueueSender.SendMessage("MoveRail", messageInformation);
+            messageInformation.PutValue("id", MapViewModel.SelectedEditorCanvasViewModel.Id);
+			String viewModelType = TypeHelper.getTypeNameByViewModel(MapViewModel.SelectedEditorCanvasViewModel.GetType().Name);
+            EditorSession.GetInstance().QueueSender.SendMessage("Move" + viewModelType, messageInformation);
         }
     }
 }

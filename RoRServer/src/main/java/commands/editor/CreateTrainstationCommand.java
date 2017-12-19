@@ -36,8 +36,8 @@ public class CreateTrainstationCommand extends CommandBase {
 		Map map = editorSession.getMap();
 		Square trainstationSquare = map.getSquare(xPos, yPos);
 
-		if (!validate(map, trainstationSquare)) {
-			throw new InvalidModelOperationException("Trainstation konnte nicht angelegt werden");
+		if (!map.validateSetTrainstationOnMap(trainstationSquare, alignment)) {
+			throw new InvalidModelOperationException(String.format("Trainstation(x:%s,y:%s) konnte nicht angelegt werden", xPos, yPos));
 		} else {
 			// generiere UUID für Trainstation
 			UUID trainstationId = UUID.randomUUID();
@@ -75,53 +75,5 @@ public class CreateTrainstationCommand extends CommandBase {
 		}
 		
 		return trainstationRailIds;
-	}
-	
-	private boolean validate(Map map, Square square) {
-		if(!validatePossibleTrainstation(map, square))
-			return false;
-		if(!validateWindowEdges(map, square))
-			return false;
-		if(!validatePossibleRails(map, square))
-			return false;		
-		return true;
-	}
-	
-	private boolean validatePossibleTrainstation(Map map, Square square) {
-		if (square != null) {
-			if (square.getPlaceableOnSquare() != null) {
-				return false;
-			}
-		} else {
-			return false;
-		}
-		return true;
-	}
-
-	private boolean validateWindowEdges(Map map, Square square) {
-		if(square.getYIndex() == 0)
-			return false;
-		if(square.getYIndex() == map.getSquares().length - 1)
-			return false;
-		if(square.getXIndex() == map.getSquares().length - 1)
-			return false;
-		return true;
-	}
-	
-	private boolean validatePossibleRails(Map map, Square square) {
-		// Iteriert über die Squares für die möglichen Rails der Trainstation
-		for (int i = -1; i <= 1; i++) {
-			Square possibleRailSquare = map.getSquare(square.getXIndex() + 1, square.getYIndex() + i);
-			// Square für Rail ist vorhanden
-			if (possibleRailSquare != null) {
-				// Square für Rail ist belegt
-				if (possibleRailSquare.getPlaceableOnSquare() != null) {
-					return false;
-				}
-			} else {
-				return false;
-			}
-		}
-		return true;
 	}
 }

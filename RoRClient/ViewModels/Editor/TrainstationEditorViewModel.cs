@@ -47,16 +47,16 @@ namespace RoRClient.ViewModels.Editor
                 railGuids.Add(trainstationRail.Id);
             }
             messageInformation.PutValue("trainstationRailIds", railGuids);
-
             editorSession.QueueSender.SendMessage("DeleteTrainstation", messageInformation);
-            Console.WriteLine("DELETE TRAINSTATION");
-        }
+
+			// setze das Selektierte Objekt auf null
+			MapViewModel.SelectedEditorCanvasViewModel = null;
+		}
 
         public override void Move()
         {
-            //TODO: trainstation moven
-            throw new NotImplementedException();
-        }
+			
+		}
 
         public override void RotateLeft()
         {
