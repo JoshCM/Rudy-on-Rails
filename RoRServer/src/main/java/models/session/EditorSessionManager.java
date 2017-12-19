@@ -50,7 +50,7 @@ public class EditorSessionManager {
         }
         return null;
     }
-    
+
     public EditorSession getEditorSessionByName(String sessionName){
         for(EditorSession currentEditorSession : editorSessionMap.values()) {
         	if(currentEditorSession.getName().equals(sessionName)) {
@@ -64,6 +64,7 @@ public class EditorSessionManager {
     public EditorSession getEditorSessionByName(String name) {
     	return editorSessionMap.get(name);
     }
+
     
     public List<EditorSession> getEditorSessionsAsList(){
     	List<EditorSession> result = new ArrayList<EditorSession>();

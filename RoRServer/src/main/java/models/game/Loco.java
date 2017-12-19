@@ -18,7 +18,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	private UUID playerId;
 	private long timeDeltaCounter = 0;// Summe der Zeit zwischen den Ticks
 	private long speed;
-	private Direction direction;
+	private Compass compass;
 	private Map map;
 	private Square square;
 
@@ -37,7 +37,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		this.square = square;// Das hier muss noch raus, aber erst testen
 		this.rail = (Rail) square.getPlaceableOnSquare();
 		this.map = map;
-		this.direction = rail.getFirstSection().getNode1();
+		this.compass = rail.getFirstSection().getNode1();
 		this.speed = 1; // Nur zu testzwecken
 		this.playerId = playerId;
 		SendCreatedLocoMessage();
@@ -73,7 +73,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	 */
 	public void drive() {
 		Rail nextRail = getNextRail();
-		this.direction = nextRail.getExitDirection(getDirectionNegation());
+		this.compass = nextRail.getExitDirection(getDirectionNegation());
 		this.rail = nextRail;
 		this.setXPos(this.rail.getXPos());
 		this.setYPos(this.rail.getYPos());
@@ -88,7 +88,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	 * @return nextRail
 	 */
 	public Rail getNextRail() {
-		switch (this.direction) {
+		switch (this.compass) {
 		case NORTH:
 			this.square = this.map.getSquare(this.square.getXIndex(), this.square.getYIndex() - 1);
 			return (Rail) this.square.getPlaceableOnSquare();
@@ -111,16 +111,16 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	 * 
 	 * @return negated Direction
 	 */
-	public Direction getDirectionNegation() {
-		switch (this.direction) {
+	public Compass getDirectionNegation() {
+		switch (this.compass) {
 		case NORTH:
-			return Direction.SOUTH;
+			return Compass.SOUTH;
 		case EAST:
-			return Direction.WEST;
+			return Compass.WEST;
 		case SOUTH:
-			return Direction.NORTH;
+			return Compass.NORTH;
 		case WEST:
-			return Direction.EAST;
+			return Compass.EAST;
 		}
 		return null;
 	}

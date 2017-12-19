@@ -27,7 +27,7 @@ public class RailTests {
 		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Rail rail = new Rail(editorSession.getName(), square, directions);
+		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions);
 		
 		assertEquals(node1, rail.getFirstSection().getNode1());
 		assertEquals(node2, rail.getFirstSection().getNode2());
@@ -97,7 +97,7 @@ public class RailTests {
 		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Rail rail = new Rail(editorSession.getName(), square, directions);
+		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions);
 		return rail;
 	}
 }

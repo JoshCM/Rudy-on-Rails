@@ -42,8 +42,8 @@ public class LoadDefaultMapCommand extends CommandBase {
 					// Hole die SectionPositions aus den RailSections und speichere in Liste
 					List<Compass> railSectionPosition = new ArrayList<Compass>();
 					for (RailSection section : rail.getRailSectionList()) {
-						directions.add(section.getNode1());
-						directions.add(section.getNode2());
+						railSectionPosition.add(section.getNode1());
+						railSectionPosition.add(section.getNode2());
 					}
 					// Neues Rail erstellen und damit an den Client schicken
 					Rail newRail = new Rail(session.getName(), square, railSectionPosition);

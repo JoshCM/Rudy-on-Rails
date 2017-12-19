@@ -29,7 +29,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	public Rail(String sessionName, Square square, List<Compass> railSectionPositions) {
 		super(sessionName, square);
 		railSections = new ArrayList<RailSection>();
-		createRailSectionsForRailSectionPositions(sessionName, directions);
+		createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
 		notifyCreatedRail();
 	}
 	
@@ -98,6 +98,23 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		this.trainstationId = trainstationId;
 	}
 	
+	/** 
+	   * Gibt den Ausgang der Rail, 
+	   * und damit auch die Zukünftige Fahrtrichtugn der Lok zurück. 
+	   * 
+	   * @param direction 
+	   * @return exitDirection 
+	   */ 
+	  public Compass getExitDirection(Compass direction){ 
+	    for(RailSection r : railSections){ 
+	      if(r.getNode1() == direction) 
+	        return r.getNode2(); 
+	      if(r.getNode2() == direction) 
+	        return r.getNode1(); 
+	    } 
+	    return null; 
+	  }
+	  
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -38,9 +38,9 @@ public class LocoTests {
 	public void LocoFindsRailItStandsOn() {
 		int squarePosX = 0;
 		int squarePosY = 0;
-		Direction node1 = Direction.NORTH;
-		Direction node2 = Direction.SOUTH;
-		List<Direction> directions = new ArrayList<>();
+		Compass node1 = Compass.NORTH;
+		Compass node2 = Compass.SOUTH;
+		List<Compass> directions = new ArrayList<>();
 		directions.add(node1);
 		directions.add(node2);
 
