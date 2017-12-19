@@ -54,6 +54,7 @@ namespace RoRClient.ViewModels.Editor
 
         public override void Move()
         {
+            //TODO: trainstation moven
             throw new NotImplementedException();
         }
 

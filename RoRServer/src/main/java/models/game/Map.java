@@ -127,7 +127,7 @@ public class Map extends ModelBase {
 			tempPlaceableOnSquare.setXPos(newSquare.getXIndex());
 			tempPlaceableOnSquare.setYPos(newSquare.getYIndex());
 			
-			// sections müssen auch die squareänderung mitbekommen
+			// sections müssen auch die square-Änderung mitbekommen
 			if(tempPlaceableOnSquare instanceof Rail) {
 				for(RailSection railRection : ((Rail) tempPlaceableOnSquare).getRailSectionList()) {
 					railRection.changeSquare(newSquare);
