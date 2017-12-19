@@ -14,12 +14,12 @@ public class RailSection extends ModelBase {
 	private int squareXPos;
 	private int squareYPos;
 	private UUID railId;
-	private Direction node1;
-	private Direction node2;
+	private Compass node1;
+	private Compass node2;
 	
 	// TODO: hier muss placeableOnSquareSection
 
-	public RailSection(String sessionName, Rail rail, Direction node1, Direction node2) {
+	public RailSection(String sessionName, Rail rail, Compass node1, Compass node2) {
 		super(sessionName);
 		
 		if (node1 == node2) {
@@ -64,11 +64,11 @@ public class RailSection extends ModelBase {
 		return railId;
 	}
 
-	public Direction getNode1() {
+	public Compass getNode1() {
 		return node1;
 	}
 
-	public Direction getNode2() {
+	public Compass getNode2() {
 		return node2;
 	}
 
@@ -84,6 +84,11 @@ public class RailSection extends ModelBase {
 		notifyNodesUpdated();
 	}
 	
+	public void rotate(boolean right, boolean notYet) {
+		node1 = rotateRailSectionPosition(node1, right);
+		node2 = rotateRailSectionPosition(node2, right);
+	}
+	
 	private void notifyNodesUpdated() {
 		MessageInformation messageInformation = new MessageInformation("UpdateNodesOfRailSection");
 		messageInformation.putValue("squareId", squareId);
@@ -95,19 +100,19 @@ public class RailSection extends ModelBase {
 		notifyChange(messageInformation);
 	}
 	
-	private Direction rotateRailSectionPosition(Direction direction, boolean right) {
+	private Compass rotateRailSectionPosition(Compass railSectionPosition, boolean right) {
 		int newIndex;
 		
 		if(right) {
-			newIndex = ((direction.ordinal() + 1) % Direction.values().length);
+			newIndex = ((railSectionPosition.ordinal() + 1) % Compass.values().length);
 		} else {
-			newIndex = ((direction.ordinal() - 1) % Direction.values().length);
+			newIndex = ((railSectionPosition.ordinal() - 1) % Compass.values().length);
 			if(newIndex < 0) {
-				newIndex += Direction.values().length;
+				newIndex += Compass.values().length;
 			}
 		}
 		
-		return Direction.values()[newIndex];
+		return Compass.values()[newIndex];
 	}
 
 }

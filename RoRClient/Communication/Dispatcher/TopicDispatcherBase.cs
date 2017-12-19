@@ -35,6 +35,10 @@ namespace RoRClient.Communication.Dispatcher
             {
                 pathToCommand = COMMAND_TYPE_PREFIX + DELETE + request + COMMAND_CLASS_SUFFIX;
             }
+            if (request.StartsWith("Move"))
+            {
+                pathToCommand = COMMAND_TYPE_PREFIX + UPDATE + request + COMMAND_CLASS_SUFFIX;
+            }
             try
             {
                 Type commandType = Type.GetType(pathToCommand);

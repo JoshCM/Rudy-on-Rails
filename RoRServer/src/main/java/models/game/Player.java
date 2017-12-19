@@ -1,7 +1,6 @@
 package models.game;
 
 import models.base.ModelBase;
-import models.session.RoRSession;
 
 public class Player extends ModelBase {
     private String name;

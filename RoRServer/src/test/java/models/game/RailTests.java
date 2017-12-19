@@ -16,11 +16,11 @@ public class RailTests {
 
 	@Test
 	public void RailIsCreatedWithRightValues() {
-		Direction node1 = Direction.NORTH;
-		Direction node2 = Direction.SOUTH;
-		List<Direction> directions = new ArrayList<>();
-		directions.add(node1);
-		directions.add(node2);
+		Compass node1 = Compass.NORTH;
+		Compass node2 = Compass.SOUTH;
+		List<Compass> railSectionPositions = new ArrayList<>();
+		railSectionPositions.add(node1);
+		railSectionPositions.add(node2);
 		int squarePosX = 0;
 		int squarePosY = 0;
 		
@@ -35,30 +35,32 @@ public class RailTests {
 	
 	@Test
 	public void RailCreatesMessageAfterCreation() {
-		Direction node1 = Direction.NORTH;
-		Direction node2 = Direction.SOUTH;
-		List<Direction> directions = new ArrayList<>();
-		directions.add(node1);
-		directions.add(node2);
+		Compass node1 = Compass.NORTH;
+		Compass node2 = Compass.SOUTH;
+		List<Compass> railSectionPositions = new ArrayList<>();
+		railSectionPositions.add(node1);
+		railSectionPositions.add(node2);
 		int squarePosX = 0;
 		int squarePosY = 0;
 		
 		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Rail rail = new Rail(editorSession.getName(), square, directions);
+		UUID railId = UUID.randomUUID();
+		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions, UUID.randomUUID(), railId);
 		
-		MessageInformation messageInfo = MessageQueue.getInstance().getFirstFoundMessageInformationForMessageType("CreateRail");
+		MessageInformation messageInfo = MessageQueue.getInstance().geMessageInformationForRailId("CreateRail", railId);
 	
-		UUID railId = messageInfo.getValueAsUUID("railId");
-		UUID squareId = messageInfo.getValueAsUUID("squareId");
-		int xPos = messageInfo.getValueAsInt("xPos");
-		int yPos = messageInfo.getValueAsInt("yPos");
+		UUID messageInfoRailId = messageInfo.getValueAsUUID("railId");
+		UUID messageInfoSquareId = messageInfo.getValueAsUUID("squareId");
+		int messageInfoXPos = messageInfo.getValueAsInt("xPos");
+		int messageInfoYPos = messageInfo.getValueAsInt("yPos");
 
-		assertEquals(rail.getId(), railId);
-		assertEquals(rail.getXPos(), xPos);
-		assertEquals(rail.getYPos(), yPos);
-		assertEquals(rail.getSquareId(), squareId);
+		//warum nicht die richtige ?
+		assertEquals(rail.getId(), messageInfoRailId);
+		assertEquals(rail.getXPos(), messageInfoXPos);
+		assertEquals(rail.getYPos(), messageInfoYPos);
+		assertEquals(rail.getSquareId(), messageInfoSquareId);
 	}
 	
 	@Test
@@ -66,8 +68,8 @@ public class RailTests {
 		Rail rail = createCrossRail();
 		rail.rotate(true);
 		
-		assertEquals(Direction.EAST, rail.getFirstSection().getNode1());
-		assertEquals(Direction.WEST, rail.getFirstSection().getNode2());
+		assertEquals(Compass.EAST, rail.getFirstSection().getNode1());
+		assertEquals(Compass.WEST, rail.getFirstSection().getNode2());
 	}
 	
 	@Test
@@ -75,20 +77,20 @@ public class RailTests {
 		Rail rail = createCrossRail();
 		rail.rotate(false);
 		
-		assertEquals(Direction.WEST, rail.getFirstSection().getNode1());
-		assertEquals(Direction.EAST, rail.getFirstSection().getNode2());
+		assertEquals(Compass.WEST, rail.getFirstSection().getNode1());
+		assertEquals(Compass.EAST, rail.getFirstSection().getNode2());
 	}
 	
 	private Rail createCrossRail() {
-		Direction node1 = Direction.NORTH;
-		Direction node2 = Direction.SOUTH;
-		Direction node3 = Direction.WEST;
-		Direction node4 = Direction.EAST;
-		List<Direction> directions = new ArrayList<>();
-		directions.add(node1);
-		directions.add(node2);
-		directions.add(node3);
-		directions.add(node4);
+		Compass node1 = Compass.NORTH;
+		Compass node2 = Compass.SOUTH;
+		Compass node3 = Compass.WEST;
+		Compass node4 = Compass.EAST;
+		List<Compass> railSectionPositions = new ArrayList<>();
+		railSectionPositions.add(node1);
+		railSectionPositions.add(node2);
+		railSectionPositions.add(node3);
+		railSectionPositions.add(node4);
 		int squarePosX = 0;
 		int squarePosY = 0;
 		

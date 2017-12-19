@@ -10,7 +10,7 @@ import org.junit.Test;
 import models.dummy.DummySignal;
 import models.game.Map;
 import models.game.Rail;
-import models.game.Direction;
+import models.game.Compass;
 import persistent.MapManager;
 
 public class MapManagerTest {
@@ -21,10 +21,10 @@ public class MapManagerTest {
 	public void mapManager_SavedAndLoadedMapAreEqual() {
 		
 		DummySignal signal = new DummySignal(savedMap.getSquare(0, 0));
-		List<Direction> directions = new ArrayList<>();
-		directions.add(Direction.NORTH);
-		directions.add(Direction.WEST);
-		savedMap.getSquare(0, 0).setPlaceable(new Rail("TestSession", savedMap.getSquare(0, 0), directions));
+		List<Compass> railSectionPositions = new ArrayList<>();
+		railSectionPositions.add(Compass.NORTH);
+		railSectionPositions.add(Compass.WEST);
+		savedMap.getSquare(0, 0).setPlaceable(new Rail("TestSession", savedMap.getSquare(0, 0), railSectionPositions));
 		((Rail)savedMap.getSquare(0, 0).getPlaceableOnSquare()).setPlaceableOnRail(signal);
 		
 		String mapAsJson = MapManager.convertMapToJson(savedMap);

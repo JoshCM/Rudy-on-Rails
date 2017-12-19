@@ -102,10 +102,13 @@
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
     <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
+    <Compile Include="BindingConverter\TrainstationAlignmentToAngleConverter.cs" />
     <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Base\CreateRailCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateRailCommand.cs" />
+    <Compile Include="Commands\Editor\Create\CreateTrainstationCommand.cs" />
+    <Compile Include="Commands\Editor\Update\UpdateAlignmentOfTrainstation.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNodesOfRailSectionCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
@@ -130,6 +133,7 @@
     <Compile Include="Models\Game\Cart.cs" />
     <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Player.cs" />
+    <Compile Include="Models\Game\Trainstation.cs" />
     <Compile Include="Models\Lobby\GameSessionInfo.cs" />
     <Compile Include="Models\Lobby\EditorSessionInfo.cs" />
     <Compile Include="Models\Session\EditorSession.cs" />
@@ -148,6 +152,7 @@
     <Compile Include="ViewModels\Game\SquareGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
     <Compile Include="ViewModels\Game\RailGameViewModel.cs" />
+    <Compile Include="ViewModels\Editor\TrainstationEditorViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
     <Compile Include="ViewModels\Lobby\JoinGameLobbyViewModel.cs" />
@@ -165,6 +170,9 @@
     <Compile Include="Views\CanvasUserControl.cs" />
     <Compile Include="Views\Editor\Helper\RegexValidator.cs" />
     <Compile Include="Views\Editor\Helper\ToolConverter.cs" />
+    <Compile Include="Views\Editor\TrainstationEditorUserControl.xaml.cs">
+      <DependentUpon>TrainstationEditorUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Editor\RailEditorUserControl.xaml.cs">
       <DependentUpon>RailEditorUserControl.xaml</DependentUpon>
     </Compile>
@@ -272,6 +280,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Editor\TrainstationEditorUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Lobby\JoinGameLobbyView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -345,7 +357,7 @@
     <Compile Include="Models\Game\IPlaceableOnSquare.cs" />
     <Compile Include="Models\Game\Rail.cs" />
     <Compile Include="Models\Game\RailSection.cs" />
-    <Compile Include="Models\Game\RailSectionPosition.cs" />
+    <Compile Include="Models\Game\Compass.cs" />
     <Compile Include="Models\Game\Square.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -386,6 +398,7 @@
     <Resource Include="Resources\Images\Tools\railcurve_nw.png" />
     <Resource Include="Resources\Images\Tools\railcurve_se.png" />
     <Resource Include="Resources\Images\dummy.png" />
+    <Resource Include="Resources\Images\Tools\trainstation.png" />
     <Resource Include="Resources\Images\game_minimap_dummy.png" />
     <Resource Include="Resources\Images\game_map_dummy.jpg" />
     <Resource Include="Resources\Images\rotate_right.png" />

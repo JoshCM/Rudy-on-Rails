@@ -7,7 +7,6 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
-import communication.topic.TopicSender;
 import models.game.Map;
 import models.game.Player;
 import persistent.MapManager;

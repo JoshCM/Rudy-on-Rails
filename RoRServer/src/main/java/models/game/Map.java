@@ -1,10 +1,8 @@
 package models.game;
 
 import models.base.ModelBase;
-import models.session.EditorSession;
-import models.session.RoRSession;
-
 import java.util.Arrays;
+import java.util.UUID;
 
 import communication.MessageInformation;
 
@@ -84,5 +82,34 @@ public class Map extends ModelBase {
 		result = prime * result + mapSize;
 		result = prime * result + Arrays.deepHashCode(squares);
 		return result;
+	}
+
+	public PlaceableOnSquare getPlaceableById(UUID id) {
+		for(Square[] squares : getSquares())
+        {
+			for(Square square : squares) {
+				PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
+	            if (placeableOnSquare != null)
+	            {
+	                if (placeableOnSquare.getId().equals(id))
+	                {
+	                    return placeableOnSquare;
+	                }
+	            }
+			}
+        }
+        return null;
+	}
+	
+	public Square getSquareById(UUID id) {
+		for(Square[] squares : getSquares())
+        {
+			for(Square square : squares) {
+				if(square.getId().equals(id)) {
+					return square;
+				}
+			}
+        }
+        return null;
 	}
 }

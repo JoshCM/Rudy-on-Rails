@@ -1,5 +1,7 @@
 package models.game;
 
+import java.util.UUID;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,15 +18,27 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 
 	// muss hier raus und eine Ebene tiefer(RailSection)
 	protected PlaceableOnRail placeableOnRail = null;
+	protected RailSection section1;
+	protected RailSection section2;
+	private UUID trainstationId;
 	protected List<RailSection> railSections;
 
 	/**
 	 * Konstruktor für Geraden oder Kurven
 	 */
-	public Rail(String sessionName, Square square, List<Direction> directions) {
+	public Rail(String sessionName, Square square, List<Compass> railSectionPositions) {
 		super(sessionName, square);
 		railSections = new ArrayList<RailSection>();
 		createRailSectionsForRailSectionPositions(sessionName, directions);
+		notifyCreatedRail();
+	}
+	
+	public Rail(String sessionName, Square square, List<Compass> railSectionPositions, UUID trainstationId, UUID id) {
+		super(sessionName, square, id);
+		
+		setTrainstationId(trainstationId);
+		railSections = new ArrayList<RailSection>();
+		createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
 		notifyCreatedRail();
 	}
 	
@@ -34,9 +48,9 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	 * @param sessionName
 	 * @param directions
 	 */
-	private void createRailSectionsForRailSectionPositions(String sessionName, List<Direction> directions) {
-		for(int i = 0; i < directions.size(); i += 2) {
-			RailSection section = new RailSection(sessionName, this, directions.get(i), directions.get(i + 1));
+	private void createRailSectionsForRailSectionPositions(String sessionName, List<Compass> railSectionPositions) {
+		for(int i = 0; i < railSectionPositions.size(); i += 2) {
+			RailSection section = new RailSection(sessionName, this, railSectionPositions.get(i), railSectionPositions.get(i + 1));
 			railSections.add(section);
 		}
 	}
@@ -75,23 +89,15 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		return railSections;
 	}
 
-	/**
-	 * Gibt den Ausgang der Rail,
-	 * und damit auch die Zukünftige Fahrtrichtugn der Lok zurück.
-	 *
-	 * @param direction
-	 * @return exitDirection
-	 */
-	public Direction getExitDirection(Direction direction){
-		for(RailSection r : railSections){
-			if(r.getNode1() == direction)
-				return r.getNode2();
-			if(r.getNode2() == direction)
-				return r.getNode1();
-		}
-		return null;
+	
+	public UUID getTrainstationId() {
+		return trainstationId;
 	}
-
+	
+	public void setTrainstationId(UUID trainstationId) {
+		this.trainstationId = trainstationId;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -131,5 +137,17 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		for(RailSection section : railSections) {
 			section.rotate(right);
 		}
+	}
+	
+	public void rotate(boolean right, boolean notYet) {
+		for(RailSection section : railSections) {
+			section.rotate(right, notYet);
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "Rail [placeableOnRail=" + placeableOnRail + ", trainstationId=" + trainstationId + ", getXPos()="
+				+ getXPos() + ", getYPos()=" + getYPos() + ", getId()=" + getId() + "]";
 	}
 }

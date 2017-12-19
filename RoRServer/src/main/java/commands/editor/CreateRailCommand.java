@@ -9,7 +9,8 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import models.game.Map;
 import models.game.Rail;
-import models.game.Direction;
+import models.game.RailSection;
+import models.game.Compass;
 import models.game.Square;
 import models.session.EditorSession;
 import models.session.RoRSession;
@@ -33,12 +34,12 @@ public class CreateRailCommand extends CommandBase {
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(xPos, yPos);
 		
-		List<Direction> directions = new ArrayList<Direction>();
+		List<Compass> railSectionPositions = new ArrayList<Compass>();
 		for(JsonObject json : railSectionData) {
-			Direction node1 = Direction.valueOf(json.get("node1").getAsString());
-			Direction node2 = Direction.valueOf(json.get("node2").getAsString());
-			directions.add(node1);
-			directions.add(node2);
+			Compass node1 = Compass.valueOf(json.get("node1").getAsString());
+			Compass node2 = Compass.valueOf(json.get("node2").getAsString());
+			railSectionPositions.add(node1);
+			railSectionPositions.add(node2);
 		}
 		
 		Rail rail = new Rail(session.getName(), square, directions);

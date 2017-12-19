@@ -2,7 +2,6 @@ package models.dummy;
 
 import models.game.InteractiveGameObject;
 import models.game.PlaceableOnRail;
-import models.game.PlaceableOnSquare;
 import models.game.Square;
 
 public class DummySignal extends InteractiveGameObject implements PlaceableOnRail {
