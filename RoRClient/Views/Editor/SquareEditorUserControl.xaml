@@ -21,7 +21,7 @@
             Stroke="WHITE"
             StrokeThickness="1">
             <Rectangle.InputBindings>
-                <MouseBinding MouseAction="LeftClick" Command="{Binding CreateRailCommand}"/>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding CreatePlaceableOnSquareCommand}"/>
             </Rectangle.InputBindings>
         </Rectangle>
     </Canvas>

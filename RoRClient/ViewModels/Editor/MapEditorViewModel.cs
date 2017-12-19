@@ -123,12 +123,24 @@ namespace RoRClient.ViewModels.Editor
                 squareViewModels.Add(squareViewModel);
                 square.PropertyChanged += OnSquarePropertyChanged;
 
-                if (square.PlaceableOnSquare != null && square.PlaceableOnSquare.GetType() == typeof(Rail))
+
+                if (square.PlaceableOnSquare != null)
                 {
-                    Rail rail = (Rail)square.PlaceableOnSquare;
-                    RailEditorViewModel railViewModel = new RailEditorViewModel(rail);
-                    placeableOnSquareCollection.Add(railViewModel);
-                    rail.PropertyChanged += OnRailPropertyChanged;
+                    switch (square.PlaceableOnSquare.GetType().Name)
+                    {
+                        case "Rail":
+                            Rail rail = (Rail)square.PlaceableOnSquare;
+                            RailEditorViewModel railViewModel = new RailEditorViewModel(rail);
+                            placeableOnSquareCollection.Add(railViewModel);
+                            rail.PropertyChanged += OnRailPropertyChanged;
+                            break;
+                        case "Trainstation":
+                            Trainstation trainstation = (Trainstation)square.PlaceableOnSquare;
+                            TrainstationEditorViewModel trainstationViewModel = new TrainstationEditorViewModel(trainstation);
+                            placeableOnSquareCollection.Add(trainstationViewModel);
+                            trainstation.PropertyChanged += OnTrainstationPropertyChanged;
+                            break;
+                    }
                 }
             }
         }
@@ -163,6 +175,11 @@ namespace RoRClient.ViewModels.Editor
         private void OnRailPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             Rail rail = (Rail)sender;
+        }
+
+        private void OnTrainstationPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Trainstation trainstation = (Trainstation)sender;
         }
 
         /// <summary>

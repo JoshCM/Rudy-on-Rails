@@ -61,7 +61,7 @@ namespace RoRClient.ViewModels.Editor
             // Anzeigen der Quicknavigation
             MapViewModel.SwitchQuickNavigationForCanvasViewModel();
 
-            // Danach das EditorCanvasViewModel als vorheriges EditorCanvasViewModel merken, wenn es sich geänder hat
+            // Danach das EditorCanvasViewModel als vorheriges EditorCanvasViewModel merken, wenn es sich geändert hat
             if (this != MapViewModel.PreviousSelectedEditorCanvasViewModel)
             {
                 MapViewModel.PreviousSelectedEditorCanvasViewModel = this;

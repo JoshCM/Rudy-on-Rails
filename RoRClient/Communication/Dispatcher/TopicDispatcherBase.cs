@@ -16,6 +16,7 @@ namespace RoRClient.Communication.Dispatcher
         protected const string CREATE = "Create.";
         protected const string UPDATE = "Update.";
         protected const string DELETE = "Delete.";
+        protected const string MOVE = "Move.";
         protected RoRSession session;
         
         public void Dispatch(string request, MessageInformation message)
@@ -34,6 +35,10 @@ namespace RoRClient.Communication.Dispatcher
             if(request.StartsWith("Delete"))
             {
                 pathToCommand = COMMAND_TYPE_PREFIX + DELETE + request + COMMAND_CLASS_SUFFIX;
+            }
+            if (request.StartsWith("Move"))
+            {
+                pathToCommand = COMMAND_TYPE_PREFIX + MOVE + request + COMMAND_CLASS_SUFFIX;
             }
             try
             {

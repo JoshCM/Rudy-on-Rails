@@ -69,6 +69,27 @@ namespace RoRClient.Models.Game
         }
 
         /// <summary>
+        /// Gibt ein placableOnSquare für eine ID zurück
+        /// </summary>
+        /// <param name="railId"></param>
+        /// <returns></returns>
+        public IPlaceableOnSquare GetPlaceableById(Guid id)
+        {
+            foreach(Square square in squares)
+            {
+                IPlaceableOnSquare placeableOnSquare = square.PlaceableOnSquare;
+                if (placeableOnSquare != null)
+                {
+                    if (placeableOnSquare.Id.Equals(id))
+                    {
+                        return placeableOnSquare;
+                    }
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
         /// (Testweise)
         /// Erzeugt für zufällige Squares auf der Map eine Rail mit einer RailSection
         /// </summary>
@@ -79,7 +100,7 @@ namespace RoRClient.Models.Game
                 for (int y = 0; y < mapSize; y++)
                 {
                     Random rand = new Random();
-                    RailSection section = new RailSection(Guid.NewGuid(), RailSectionPosition.NORTH, RailSectionPosition.SOUTH);
+                    RailSection section = new RailSection(Guid.NewGuid(), Compass.NORTH, Compass.SOUTH);
                     List<RailSection> railSections = new List<RailSection>();
                     railSections.Add(section);
                     Rail rail = new Rail(Guid.NewGuid(), squares[x, y], railSections);

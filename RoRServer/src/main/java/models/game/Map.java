@@ -1,12 +1,13 @@
 package models.game;
 
 import models.base.ModelBase;
-import models.session.EditorSession;
-import models.session.RoRSession;
-
 import java.util.Arrays;
+import java.util.UUID;
+
+import org.hamcrest.core.IsInstanceOf;
 
 import communication.MessageInformation;
+import exceptions.NotMoveableException;
 
 
 /**
@@ -84,5 +85,73 @@ public class Map extends ModelBase {
 		result = prime * result + mapSize;
 		result = prime * result + Arrays.deepHashCode(squares);
 		return result;
+	}
+
+	public PlaceableOnSquare getPlaceableById(UUID id) {
+		for(Square[] squares : getSquares())
+        {
+			for(Square square : squares) {
+				PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
+	            if (placeableOnSquare != null)
+	            {
+	                if (placeableOnSquare.getId().equals(id))
+	                {
+	                    return placeableOnSquare;
+	                }
+	            }
+			}
+        }
+        return null;
+	}
+	
+	public Square getSquareById(UUID id) {
+		for(Square[] squares : getSquares())
+        {
+			for(Square square : squares) {
+				if(square.getId().equals(id)) {
+					return square;
+				}
+			}
+        }
+        return null;
+	}
+
+	public void movePlaceableOnSquare(Square oldSquare, Square newSquare) {
+		if(validateMovePlaceableOnSquare(oldSquare, newSquare)) {
+			InteractiveGameObject tempPlaceableOnSquare = (InteractiveGameObject)oldSquare.getPlaceableOnSquare();
+			oldSquare.setPlaceable(null);
+			newSquare.setPlaceable((PlaceableOnSquare)tempPlaceableOnSquare);
+			
+			// entweder nur ids oder nur x und y, wir müssen uns entscheiden
+			tempPlaceableOnSquare.setSquareId(newSquare.getId());
+			tempPlaceableOnSquare.setXPos(newSquare.getXIndex());
+			tempPlaceableOnSquare.setYPos(newSquare.getYIndex());
+			
+			// sections müssen auch die squareänderung mitbekommen
+			if(tempPlaceableOnSquare instanceof Rail) {
+				for(RailSection railRection : ((Rail) tempPlaceableOnSquare).getRailSectionList()) {
+					railRection.changeSquare(newSquare);
+				}
+			}
+			
+			notifyMovedPlaceableOnSquare(oldSquare, newSquare);
+		}else {
+			throw new NotMoveableException(String.format("PlaceableOnSquare von %s ist nicht auf %s verschiebar", oldSquare.toString(), newSquare.toString()));
+		}
+	}
+	
+	private void notifyMovedPlaceableOnSquare(Square oldSquare, Square newSquare) {
+		MessageInformation messageInformation = new MessageInformation("MovePlaceableOnSquare");
+		messageInformation.putValue("oldXPos", oldSquare.getXIndex());
+		messageInformation.putValue("oldYPos", oldSquare.getYIndex());
+		messageInformation.putValue("newXPos", newSquare.getXIndex());
+		messageInformation.putValue("newYPos", newSquare.getYIndex());
+		notifyChange(messageInformation);
+	}
+
+	private boolean validateMovePlaceableOnSquare(Square oldSquare, Square newSquare) {
+		if(newSquare.getPlaceableOnSquare() != null)
+			return false;
+		return true;
 	}
 }

@@ -2,6 +2,8 @@ package commands.editor;
 
 import commands.base.CommandBase;
 import communication.MessageInformation;
+import exceptions.NotRemoveableException;
+import exceptions.NotRotateableException;
 import models.game.Map;
 import models.game.Rail;
 import models.game.Square;
@@ -26,7 +28,23 @@ public class RotateRailCommand extends CommandBase {
 		EditorSession editorSession = (EditorSession)session;
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(xPos, yPos);
+		
+		boolean rotateable = true;
 		Rail rail = (Rail)square.getPlaceableOnSquare();
-		rail.rotate(right);
+
+		// wenn die Rail einen TrainstationId hat
+		if (rail.getTrainstationId() != null) {
+			rotateable = false;
+		}
+
+		if (rotateable) {
+			rail.rotate(right);
+		} else {
+			throw new NotRotateableException(
+					String.format("%s(Id:%s)%s", 
+							square.getPlaceableOnSquare().getClass().getName(),
+							square.getPlaceableOnSquare().getId(), 
+							" kann nicht rotiert werden"));
+		}
 	}
 }

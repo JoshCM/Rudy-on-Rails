@@ -7,7 +7,6 @@ import javax.jms.TextMessage;
 import javax.jms.Topic;
 
 import communication.MessageEnvelope;
-import communication.MessageInformation;
 import communication.ServerConnection;
 import communication.dispatcher.RequestSerializer;
 

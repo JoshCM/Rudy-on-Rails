@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 import communication.queue.receiver.QueueReceiver;
 import models.game.Map;
 import models.game.Rail;
-import models.game.RailSectionPosition;
+import models.game.Compass;
 import persistent.MapManager;
 
 public class MainModels {
@@ -19,9 +19,9 @@ public class MainModels {
 		DummyGame game1 = new DummyGame();
 		
 		Map map = new Map("blubb");
-		List<RailSectionPosition> railSectionPositions = new ArrayList<RailSectionPosition>();
-		railSectionPositions.add(RailSectionPosition.EAST);
-		railSectionPositions.add(RailSectionPosition.WEST);
+		List<Compass> railSectionPositions = new ArrayList<Compass>();
+		railSectionPositions.add(Compass.EAST);
+		railSectionPositions.add(Compass.WEST);
 		map.getSquare(0, 0).setPlaceable(new Rail("blubb", map.getSquare(0, 0), railSectionPositions));
 		Rail rail = (Rail) map.getSquare(0, 0).getPlaceableOnSquare();
 		rail.setPlaceableOnRail(new DummySignal(map.getSquare(0, 0)));

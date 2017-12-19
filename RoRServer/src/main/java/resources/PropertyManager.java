@@ -10,14 +10,20 @@ import java.util.Properties;
  */
 public class PropertyManager {
 
-	private final static String PROPERTIES_PATH = "src\\main\\java\\resources\\config.properties";
+	private final static String PROPERTIES_NAME = "src/main/java/resources/config.properties";
 	private static Properties properties = new Properties();
 
 	static {
 		try {
-			properties.load(new FileInputStream(PROPERTIES_PATH));
+			properties.load(new FileInputStream(PROPERTIES_NAME));
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			try {
+				properties.load(new FileInputStream(String.format("%s/%s", System.getProperty("user.dir"), PROPERTIES_NAME)));
+			} catch (FileNotFoundException eServer) {
+				eServer.printStackTrace();
+			} catch (IOException eServer) {
+				eServer.printStackTrace();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

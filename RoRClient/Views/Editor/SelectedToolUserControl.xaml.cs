@@ -10,18 +10,5 @@ namespace RoRClient.Views.Editor
         {
             InitializeComponent();
         }
-        public ToolbarViewModel ToolbarViewModel
-        {
-            get
-            {
-                return (ToolbarViewModel)GetValue(ToolbarViewModelProperty);
-            }
-            set
-            {
-                SetValue(ToolbarViewModelProperty, value);
-            }
-        }
-        public static readonly DependencyProperty ToolbarViewModelProperty = DependencyProperty.Register("ToolbarViewModel", typeof(ToolbarViewModel), typeof(SelectedToolUserControl), new UIPropertyMetadata(null));
     }
-
 }

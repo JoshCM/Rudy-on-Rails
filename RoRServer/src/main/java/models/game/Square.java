@@ -78,4 +78,9 @@ public class Square extends ModelBase {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		return "Square [placeableOnSquare=" + placeableOnSquare + ", xIndex=" + xIndex + ", yIndex=" + yIndex + "]";
+	}
 }

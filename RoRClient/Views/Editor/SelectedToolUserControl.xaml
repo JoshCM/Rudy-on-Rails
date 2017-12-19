@@ -25,10 +25,10 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
 
-        <Image Grid.ColumnSpan="3" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Source="{Binding ToolbarViewModel.SelectedTool.ImagePath, ElementName=selectedToolUserControl}" />
+        <Image Grid.ColumnSpan="3" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Source="{Binding SelectedTool.ImagePath}" />
 
         <Button Content="Drehen" Grid.Column="5" Grid.Row="1"/>
-        <Label Content="{Binding ToolbarViewModel.SelectedTool.Name, ElementName=selectedToolUserControl}" Grid.Column="5" Grid.Row="3"/>
+        <Label Content="{Binding SelectedTool.Name}" Grid.Column="5" Grid.Row="3"/>
 
     </Grid>
 

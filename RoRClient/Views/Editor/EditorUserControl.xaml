@@ -50,7 +50,7 @@
               Grid.Column="0"
               Background="Violet">
             <!--Aktives Werkzeug -->
-            <editor:SelectedToolUserControl />
+            <editor:SelectedToolUserControl DataContext="{Binding ToolbarViewModel}"/>
         </Grid>
 
         <Grid Grid.Row="3"
