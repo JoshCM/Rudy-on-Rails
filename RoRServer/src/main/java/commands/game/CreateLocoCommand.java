@@ -2,6 +2,7 @@ package commands.game;
 
 import java.util.UUID;
 
+import commands.base.Command;
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import models.game.Loco;
@@ -14,21 +15,26 @@ import models.session.RoRSession;
 /**
  * 
  * @author Isabel Rott, Michelle Le
- * Command fï¿½r das Erstellen einer Lok
+ * Command fuer das Erstellen einer Lok
  */
-public class CreateLocoCommand extends CommandBase {
+public class CreateLocoCommand implements Command {
 
 	private int xPos;
 	private int yPos;
 	private UUID playerId;
-	
-	public CreateLocoCommand(RoRSession session, MessageInformation messageInfo) {
-		super(session, messageInfo);
+	protected RoRSession session;
+	/**
+	 * yPos, xPos müssen von den Bahnhöfen rausgelesen werden
+	 * @param session
+	 * @param messageInfo
+	 */
+	public CreateLocoCommand(RoRSession session, UUID playerId) {
 		xPos = 7;
 		yPos = 3;
+		this.session = session;
 		//xPos = messageInfo.getValueAsInt("xPos");
 		//yPos = messageInfo.getValueAsInt("yPos");
-		playerId = messageInfo.getValueAsUUID("playerId");
+		this.playerId = playerId;
 	}
 
 	@Override

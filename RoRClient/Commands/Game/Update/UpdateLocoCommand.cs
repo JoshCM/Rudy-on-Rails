@@ -34,6 +34,7 @@ namespace RoRClient.Commands.Game.Update
             Loco loco = player.Loco;
             loco.Square = square;
             square.PlaceableOnSquare = loco;
+            
         }
 
     }

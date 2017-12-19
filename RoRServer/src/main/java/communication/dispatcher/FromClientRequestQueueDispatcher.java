@@ -7,11 +7,16 @@ import models.session.EditorSession;
 import models.session.EditorSessionManager;
 import models.session.GameSession;
 import models.session.GameSessionManager;
+import models.session.RoRSession;
 
 import org.apache.log4j.Logger;
 import com.google.gson.JsonObject;
+
+import commands.game.CreateLocoCommand;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	private Logger log = Logger.getLogger(FromClientRequestQueueDispatcher.class.getName());
@@ -89,6 +94,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		gameSession.setup();
 		Player player = new Player(gameSession.getName(), messageInformation.getValueAsString("playerName"));
 		gameSession.addPlayer(player);
+		createLocoForPlayer(gameSession,player.getId());
 
 		responseInformation.putValue("topicName", gameSession.getName());
 		responseInformation.putValue("gameName", gameSession.getName());
@@ -100,7 +106,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	}
 
 	/**
-	 * Es gibt schon einen Game mit mind. einem Player. Diesem wird ein neuer Player
+	 * Es gibt schon einen Game mit mind. einen Player. Diesem wird ein neuer Player
 	 * hinzugefuegt und eine Response wird für den Client zusammengesetzt.
 	 * 
 	 * @param messageInformation
@@ -114,6 +120,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		gameSession = GameSessionManager.getInstance().getGameSessionByName(gameName);
 		Player player = new Player(gameSession.getName(), messageInformation.getValueAsString("playerName"));
 		gameSession.addPlayer(player);
+		createLocoForPlayer(gameSession,player.getId());
 
 		responseInformation.putValue("topicName", gameSession.getName());
 		responseInformation.putValue("gameName", gameSession.getName());
@@ -171,11 +178,12 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	 * Sobald ein Player der GameSession gejoined ist, soll eine Loco erstellt werden, die dem Player zugeordnet ist
 	 * @param messageInformation
 	 */
-	/*
-	private void handleCreateLoco(MessageInformation messageInformation) {
+	
+	private void createLocoForPlayer(RoRSession session, UUID playerId) {
 		
-		System.out.println("MESSAGE LOCO WURDE EMPFANGEN: " +messageInformation.);
+		CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, playerId);
+		createLocoCommand.execute();
 		
 	}
-	*/
+
 }
