@@ -25,8 +25,5 @@ namespace RoRClient.ViewModels.Game
                 return r;
             }
         }
-
-
-
     }
 }
