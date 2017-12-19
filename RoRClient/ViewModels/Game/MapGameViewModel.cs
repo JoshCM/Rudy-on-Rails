@@ -29,6 +29,7 @@ namespace RoRClient.ViewModels.Game
             map = GameSession.GetInstance().Map;
             InitSquares();
 
+            GameSession.GetInstance().PropertyChanged += OnLocoAddedInGameSession;
             //TO-DO: nur zum Testen
             //CreateRandomRails();
 
@@ -59,6 +60,16 @@ namespace RoRClient.ViewModels.Game
             get
             {
                 return placeableOnSquareCollection;
+            }
+        }
+
+
+        private ObservableCollection<CanvasGameViewModel> placeableOnRailCollection = new ObservableCollection<CanvasGameViewModel>();
+        public ObservableCollection<CanvasGameViewModel> PlaceableOnRailCollection
+        {
+            get
+            {
+                return placeableOnRailCollection;
             }
         }
 
@@ -128,6 +139,21 @@ namespace RoRClient.ViewModels.Game
                 }
             }
         }
+
+
+        private void OnLocoAddedInGameSession(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "Locos")
+            {
+                PropertyChangedExtendedEventArgs<Loco> eventArgs = (PropertyChangedExtendedEventArgs<Loco>)e;
+                Loco loco = eventArgs.NewValue;
+                LocoGameViewModel locoGameViewModel = new LocoGameViewModel(loco);
+                taskFactory.StartNew(() => placeableOnRailCollection.Add(locoGameViewModel));
+            }
+            
+
+        }
+        
         private void CreateRandomRails()
         {
             Random rand = new Random();

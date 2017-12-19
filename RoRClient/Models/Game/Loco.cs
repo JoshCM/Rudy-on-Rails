@@ -10,7 +10,7 @@ namespace RoRClient.Models.Game
     /// <summary>
     /// Klasse für die Loco, die eine Liste von Carts enthält
     /// </summary>
-    public class Loco : InteractiveGameObject, IPlaceableOnSquare
+    public class Loco : InteractiveGameObject, IPlaceableOnRail
     {
         public Loco(Guid id, Square square) : base(square)
         {

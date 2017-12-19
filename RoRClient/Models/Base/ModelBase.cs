@@ -8,28 +8,9 @@ namespace RoRClient.Models.Base
     /// Abstrakte Klasse für alle Models
     /// Stellt den PropertyChangedEventHandler bereit
     /// </summary>
-    public abstract class ModelBase : IModel, INotifyPropertyChanged
+    public abstract class ModelBase : ObservableBase, IModel
     {
-        #region PropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-        public virtual void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        public virtual void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            PropertyChanged?.Invoke(sender, e);
-        }
-
-        protected void NotifyPropertyChanged<T>(string propertyName, T oldvalue, T newvalue)
-        {
-            OnPropertyChanged(this, new PropertyChangedExtendedEventArgs<T>(propertyName, oldvalue, newvalue));
-        }
-        #endregion
+        
 
         public ModelBase()
         {

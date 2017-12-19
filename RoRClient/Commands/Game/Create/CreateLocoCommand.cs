@@ -32,10 +32,12 @@ namespace RoRClient.Commands.Game.Create
             
             Player player = session.GetPlayerById(playerId);
             Square square = session.Map.GetSquare(xPos, yPos);
-            Console.WriteLine(square.PosX + " " + square.PosY);
+           // Rail rail = square.PlaceableOnSquare as Rail;
+            
             Loco loco = new Loco(locoId, square);
             player.Loco = loco;
-            square.PlaceableOnSquare = loco;
+            ((GameSession)session).AddLoco(loco);
+            //rail.PlaceableOnRail = loco;
         }
     }
 }

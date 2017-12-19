@@ -31,6 +31,7 @@ namespace RoRClient.Models.Game
                 if (value != null)
                 {
                     this.loco = value;
+                    NotifyPropertyChanged("LocoCreated");
                 }
             }
         }

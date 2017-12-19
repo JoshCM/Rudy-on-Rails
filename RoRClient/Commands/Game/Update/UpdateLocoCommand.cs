@@ -30,12 +30,13 @@ namespace RoRClient.Commands.Game.Update
         {
             GameSession gameSession = GameSession.GetInstance();
             Square square = gameSession.Map.GetSquare(xPos, yPos);
+            Rail rail = square.PlaceableOnSquare as Rail;
             Player player = gameSession.GetPlayerById(playerId);
             Loco loco = player.Loco;
-            loco.Square = square;
-            square.PlaceableOnSquare = loco;
-            
-        }
 
+            //rail.PlaceableOnRail = loco;
+            loco.Square = square;
+            Console.WriteLine("Zug fährt auf " + square.PosX+", "+ square.PosY);
+        }
     }
 }

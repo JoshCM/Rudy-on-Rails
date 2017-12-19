@@ -94,7 +94,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		gameSession.setup();
 		Player player = new Player(gameSession.getName(), messageInformation.getValueAsString("playerName"));
 		gameSession.addPlayer(player);
-		createLocoForPlayer(gameSession,player.getId());
+		
 
 		responseInformation.putValue("topicName", gameSession.getName());
 		responseInformation.putValue("gameName", gameSession.getName());
@@ -102,6 +102,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		responseInformation.putValue("playerId", player.getId().toString());
 		sendMessage("CreateGameSession", responseInformation);
 
+		
 		log.info("Called handleCreateGameSession");
 	}
 
@@ -120,7 +121,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		gameSession = GameSessionManager.getInstance().getGameSessionByName(gameName);
 		Player player = new Player(gameSession.getName(), messageInformation.getValueAsString("playerName"));
 		gameSession.addPlayer(player);
-		createLocoForPlayer(gameSession,player.getId());
+		
 
 		responseInformation.putValue("topicName", gameSession.getName());
 		responseInformation.putValue("gameName", gameSession.getName());
@@ -133,8 +134,9 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		}
 
 		responseInformation.putValue("playerList", players);
-
+		
 		sendMessage("JoinGameSession", responseInformation);
+
 	}
 
 	public void handleReadEditorSessions(MessageInformation messageInformation) {
@@ -174,16 +176,6 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	}
 	
 	
-	/**
-	 * Sobald ein Player der GameSession gejoined ist, soll eine Loco erstellt werden, die dem Player zugeordnet ist
-	 * @param messageInformation
-	 */
 	
-	private void createLocoForPlayer(RoRSession session, UUID playerId) {
-		
-		CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, playerId);
-		createLocoCommand.execute();
-		
-	}
 
 }

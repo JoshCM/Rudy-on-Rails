@@ -12,11 +12,12 @@ using RoRClient.Communication.DataTransferObject;
 
 namespace RoRClient.Models.Session
 {
-    public class RoRSession
+    public class RoRSession : ObservableBase
     {
         protected string name;
         protected Map map;
         protected ObservableCollection<Player> players = new ObservableCollection<Player>();
+
         protected QueueSender queueSender;
         protected TopicReceiver topicReceiver;
 
@@ -56,6 +57,7 @@ namespace RoRClient.Models.Session
 
         }
 
+
         public ObservableCollection<Player> Players
         {
             get
@@ -63,6 +65,7 @@ namespace RoRClient.Models.Session
                 return players;
             }
         }
+
 
         public void AddPlayer(Player player)
         {

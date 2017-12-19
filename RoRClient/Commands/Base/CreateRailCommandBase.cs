@@ -43,6 +43,7 @@ namespace RoRClient.Commands.Base
             Square square = session.Map.GetSquare(xPos, yPos);
             Rail rail = new Rail(railId, square, railSections);
             square.PlaceableOnSquare = rail;
+            Console.WriteLine("PlaceableOnSquare wurde gesetzt an Square mit " + square.PosX+ ", " + square.PosY);
         }
         
     }

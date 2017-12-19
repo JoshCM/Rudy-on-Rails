@@ -2,12 +2,14 @@ package commands.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import commands.base.CommandBase;
 import commands.editor.CreateRailCommand;
 import communication.MessageInformation;
 import models.game.Map;
 import models.game.PlaceableOnSquare;
+import models.game.Player;
 import models.game.Rail;
 import models.game.RailSection;
 import models.game.Direction;
@@ -49,10 +51,29 @@ public class LoadDefaultMapCommand extends CommandBase {
 					// Neues Rail erstellen und damit an den Client schicken
 					Rail newRail = new Rail(session.getName(), square, directions);
 					System.out.println("Neue Rail erstellt auf " + i + " " + j + ": " + rail.toString());
+					
+			
 				}
 
 			}
 		}
 
+		createLocoForPlayers(session);
+	}
+	
+	/**
+	 * Sobald ein Player der GameSession gejoined ist, soll eine Loco erstellt werden, die dem Player zugeordnet ist
+	 * @param messageInformation
+	 */
+	
+	private void createLocoForPlayers(RoRSession session) {
+		
+		for(Player p : session.getPlayers()) {		
+			CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, p.getId());
+			System.out.println();
+			createLocoCommand.execute();
+		}
+		
+		
 	}
 }
