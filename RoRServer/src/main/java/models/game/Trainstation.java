@@ -9,7 +9,7 @@ import java.util.UUID;
 import com.google.gson.JsonObject;
 
 import communication.MessageInformation;
-import models.Geometry;
+import helper.Geometry;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
 
