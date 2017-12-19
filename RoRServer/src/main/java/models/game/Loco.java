@@ -130,6 +130,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail  {
 		messageInfo.putValue("locoId", getId());
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
+		messageInfo.putValue("playerId", this.playerId);
 		notifyChange(messageInfo);
 	}
 	

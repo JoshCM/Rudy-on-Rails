@@ -13,6 +13,7 @@ namespace RoRClient.Commands.Game.Update
     class UpdateLocoCommand : CommandBase
     {
         private Guid locoId;
+        private Guid playerId;
         private int xPos;
         private int yPos;
 
@@ -21,15 +22,19 @@ namespace RoRClient.Commands.Game.Update
             locoId = Guid.Parse(messageInformation.GetValueAsString("locoId"));
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
+            playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
+
         }
 
         public override void Execute()
-        { 
+        {
             GameSession gameSession = GameSession.GetInstance();
             Square square = gameSession.Map.GetSquare(xPos, yPos);
-            //Console.WriteLine(xPos+" " +yPos);
-            Loco loco = new Loco(locoId, square);
-            //square.PlaceableOnSquare = loco;
+            Player player = gameSession.GetPlayerById(playerId);
+            Loco loco = player.Loco;
+            loco.Square = square;
+            square.PlaceableOnSquare = loco;
         }
+
     }
 }

@@ -25,7 +25,6 @@ namespace RoRClient.Commands.Game.Create
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
             playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
-         
         }
 
         public override void Execute()
@@ -33,6 +32,7 @@ namespace RoRClient.Commands.Game.Create
             
             Player player = session.GetPlayerById(playerId);
             Square square = session.Map.GetSquare(xPos, yPos);
+            Console.WriteLine(square.PosX + " " + square.PosY);
             Loco loco = new Loco(locoId, square);
             player.Loco = loco;
             square.PlaceableOnSquare = loco;
