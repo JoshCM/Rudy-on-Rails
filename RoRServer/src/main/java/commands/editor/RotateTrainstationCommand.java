@@ -2,11 +2,8 @@ package commands.editor;
 
 import commands.base.CommandBase;
 import communication.MessageInformation;
-import exceptions.NotRemoveableException;
-import models.game.Compass;
+import exceptions.NotRotateableException;
 import models.game.Map;
-import models.game.Rail;
-import models.game.Square;
 import models.game.Trainstation;
 import models.session.EditorSession;
 import models.session.RoRSession;
@@ -27,6 +24,8 @@ public class RotateTrainstationCommand extends CommandBase{
 	public void execute() {
 		if(trainstation.validateRotation(right))
 			trainstation.rotate(right);
+		else
+			throw new NotRotateableException(String.format("Trainstation kann nicht rotiert werden(Clockwise:%s)", right));
 	}
 
 }
