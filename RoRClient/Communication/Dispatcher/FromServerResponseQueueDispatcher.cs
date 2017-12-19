@@ -93,6 +93,8 @@ namespace RoRClient.Communication.Dispatcher
             //TODO: hier soll ein Create Loco Command angestoßen werden
         }
 
+
+        /*
         /// <summary>
         /// Methode, die eine Message an den Server schicken soll, dass eine Lok für den jeweiligen Player erstellt werden soll
         /// </summary>
@@ -110,6 +112,7 @@ namespace RoRClient.Communication.Dispatcher
             GameSession gameSession = GameSession.GetInstance();
             gameSession.QueueSender.SendMessage("CreateLoco", messageInformation);
         }
+        */
 
         public void HandleReadEditorSessions(MessageInformation messageInformation)
         {
