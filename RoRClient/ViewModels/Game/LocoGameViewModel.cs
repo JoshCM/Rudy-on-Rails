@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModels.Game
 {
-    public class LocoViewModel : CanvasGameViewModel
+    public class LocoGameViewModel : CanvasGameViewModel
     {
         private Loco l;
 
-        public LocoViewModel(Loco loco) : base(loco.Id)
+        public LocoGameViewModel(Loco loco) : base(loco.Id)
         {
             this.l = loco;
             this.SquarePosX = loco.Square.PosX;

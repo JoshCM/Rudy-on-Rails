@@ -13,7 +13,7 @@ public abstract class InteractiveGameObject extends ModelBase {
 	protected final String className;
 	private int xPos; // So lange, bis nur noch die id ausreicht
 	private int yPos; // So lange, bis nur noch die id ausreicht
-	private Square square;
+	protected Square square;
     
 	public InteractiveGameObject(String sessionName, Square square) {
 		super(sessionName);
@@ -37,5 +37,12 @@ public abstract class InteractiveGameObject extends ModelBase {
 	
 	public UUID getSquareId() {
 		return this.square.getId();
+	}
+	
+	public void setXPos(int xPos) {
+		this.xPos = xPos;
+	}
+	public void setYPos(int yPos) {
+		this.yPos = yPos;
 	}
 }

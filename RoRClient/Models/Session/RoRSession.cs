@@ -74,6 +74,15 @@ namespace RoRClient.Models.Session
             players.Remove(player);
         }
 
+        public Player GetPlayerById(Guid playerId)
+        {
+            foreach(Player p in players)
+            {
+                if (p.Id == playerId)
+                    return p;
+            }
+            return null;
+        }
         public QueueSender QueueSender
         {
             get
