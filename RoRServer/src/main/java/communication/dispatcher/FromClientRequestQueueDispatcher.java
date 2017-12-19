@@ -125,7 +125,6 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		gameSession = GameSessionManager.getInstance().getGameSessionByName(gameName);
 		Player player = new Player(gameSession.getName(), messageInformation.getValueAsString("playerName"));
 		gameSession.addPlayer(player);
-		
 
 		responseInformation.putValue("topicName", gameSession.getName());
 		responseInformation.putValue("gameName", gameSession.getName());

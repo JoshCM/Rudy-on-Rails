@@ -54,9 +54,7 @@ namespace RoRClient.Models.Session
             {
                 map = value;
             }
-
         }
-
 
         public ObservableCollection<Player> Players
         {
@@ -65,7 +63,6 @@ namespace RoRClient.Models.Session
                 return players;
             }
         }
-
 
         public void AddPlayer(Player player)
         {
@@ -79,12 +76,7 @@ namespace RoRClient.Models.Session
 
         public Player GetPlayerById(Guid playerId)
         {
-            foreach(Player p in players)
-            {
-                if (p.Id == playerId)
-                    return p;
-            }
-            return null;
+            return players.Where(x => x.Id == playerId).First();
         }
         public QueueSender QueueSender
         {
@@ -92,14 +84,6 @@ namespace RoRClient.Models.Session
             {
                 return queueSender;
             }
-        }
-
-        /// <summary>
-        /// Default Map laden
-        /// </summary>
-        public void LoadDefaultMapAtStartup()
-        {
-            QueueSender.SendMessage("LoadDefaultMap", new MessageInformation());
         }
     }
 }

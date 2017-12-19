@@ -114,6 +114,7 @@
     <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateLocoCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
+    <Compile Include="Commands\Game\Other\StartGameCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoCommand.cs" />
     <Compile Include="Communication\Dispatcher\QueueDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicDispatcherBase.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="ViewModels\Editor\TrainstationEditorViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
+    <Compile Include="ViewModels\Lobby\GameLobbyViewModel.cs" />
     <Compile Include="ViewModels\Lobby\JoinGameLobbyViewModel.cs" />
     <Compile Include="ViewModels\Lobby\JoinEditorLobbyViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -237,6 +239,9 @@
     <Compile Include="Views\Lobby\JoinEditorLobbyView.xaml.cs">
       <DependentUpon>JoinEditorLobbyView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Lobby\GameLobbyView.xaml.cs">
+      <DependentUpon>GameLobbyView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Lobby\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
     </Compile>
@@ -289,6 +294,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Lobby\JoinEditorLobbyView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Lobby\GameLobbyView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -125,7 +125,7 @@ namespace RoRClient.ViewModels.Lobby
             {
                 if (lobbyModel.Connected_Game)
                 {
-                    uiState.State = "game";
+                    uiState.State = "gameLobby";
                 }
             }
         }

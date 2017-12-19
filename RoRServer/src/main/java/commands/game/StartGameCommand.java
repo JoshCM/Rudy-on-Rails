@@ -16,9 +16,9 @@ import models.game.Square;
 import models.session.RoRSession;
 import persistent.MapManager;
 
-public class LoadDefaultMapCommand extends CommandBase {
+public class StartGameCommand extends CommandBase {
 
-	public LoadDefaultMapCommand(RoRSession session, MessageInformation messageInfo) {
+	public StartGameCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 	}
 
@@ -49,26 +49,24 @@ public class LoadDefaultMapCommand extends CommandBase {
 					Rail newRail = new Rail(session.getName(), square, railSectionPosition);
 					System.out.println("Neue Rail erstellt auf " + i + " " + j + ": " + newRail.toString());
 				}
-
 			}
 		}
 
 		createLocoForPlayers(session);
+		
+		session.getMap().notifyGameStarted();
 	}
-	
+
 	/**
 	 * Sobald ein Player der GameSession gejoined ist, soll eine Loco erstellt werden, die dem Player zugeordnet ist
 	 * @param messageInformation
 	 */
 	
 	private void createLocoForPlayers(RoRSession session) {
-		
 		for(Player p : session.getPlayers()) {		
 			CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, p.getId());
 			System.out.println();
 			createLocoCommand.execute();
 		}
-		
-		
 	}
 }

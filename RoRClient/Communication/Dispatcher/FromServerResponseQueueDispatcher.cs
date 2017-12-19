@@ -57,9 +57,6 @@ namespace RoRClient.Communication.Dispatcher
             gameSession.Name = messageInformation.GetValueAsString("gameName");
             gameSession.Init(messageInformation.GetValueAsString("topicName"));
 
-            // DefaultMap beim Erstellen der Map laden
-            gameSession.LoadDefaultMapAtStartup();
-
             Guid playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             string playerName = messageInformation.GetValueAsString("playerName");
             Player player = new Player(playerId, playerName, true);
@@ -75,8 +72,6 @@ namespace RoRClient.Communication.Dispatcher
             gameSession.Name = gameName;
             string topicName = messageInformation.GetValueAsString("topicName");
             gameSession.Init(topicName);
-
-            gameSession.LoadDefaultMapAtStartup();
 
             List<JObject> playersList = messageInformation.GetValueAsJObjectList("playerList");
             foreach (JObject obj in playersList)

@@ -112,4 +112,9 @@ public class Map extends ModelBase {
         }
         return null;
 	}
+
+	public void notifyGameStarted() {
+		MessageInformation messageInfo = new MessageInformation("GameStarted");
+		notifyChange(messageInfo);
+	}
 }

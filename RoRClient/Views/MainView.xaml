@@ -31,6 +31,9 @@
         <DataTemplate x:Name="JoinGameLobbyTemplate" DataType="{x:Type vml:JoinGameLobbyViewModel}">
             <vl:JoinGameLobbyView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="GameLobbyTemplate" DataType="{x:Type vml:GameLobbyViewModel}">
+            <vl:GameLobbyView DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
 
 

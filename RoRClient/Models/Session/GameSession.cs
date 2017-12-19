@@ -15,8 +15,6 @@ namespace RoRClient.Models.Session
         private static GameSession gameSession = null;
         protected ObservableCollection<Loco> locos = new ObservableCollection<Loco>();
 
-
-
         private GameSession() : base()
         {
 
@@ -35,6 +33,24 @@ namespace RoRClient.Models.Session
                 return locos;
             }
         }
+
+        private bool started;
+        public bool Started
+        {
+            get
+            {
+                return started;
+            }
+            set
+            {
+                if(started != value)
+                {
+                    started = value;
+                    NotifyPropertyChanged("Started");
+                }
+            }
+        }
+
         public void AddLoco(Loco loco)
         {
             locos.Add(loco);

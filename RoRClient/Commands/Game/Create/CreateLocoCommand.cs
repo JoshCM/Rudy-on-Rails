@@ -19,9 +19,7 @@ namespace RoRClient.Commands.Game.Create
 
         public CreateLocoCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
-            
             locoId = Guid.Parse(messageInformation.GetValueAsString("locoId"));
-           
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
             playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
@@ -29,15 +27,12 @@ namespace RoRClient.Commands.Game.Create
 
         public override void Execute()
         {
-            
             Player player = session.GetPlayerById(playerId);
             Square square = session.Map.GetSquare(xPos, yPos);
-           // Rail rail = square.PlaceableOnSquare as Rail;
             
             Loco loco = new Loco(locoId, square);
             player.Loco = loco;
             ((GameSession)session).AddLoco(loco);
-            //rail.PlaceableOnRail = loco;
         }
     }
 }
