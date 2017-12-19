@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RoRClient.Views.Editor
+namespace RoRClient.Views.Game
 {
     /// <summary>
-    /// Interaktionslogik für Window2.xaml
+    /// Interaktionslogik für UserControl1.xaml
     /// </summary>
-    public partial class Window2 : Window
+    public partial class UserControl1 : UserControl
     {
-        public Window2()
+        public UserControl1()
         {
             InitializeComponent();
         }

@@ -11,11 +11,11 @@ namespace RoRClient.ViewModels.Editor
     class EditorViewModel : ViewModelBase
     {
         private UIState uiState;
-        private MapViewModel mapViewModel;
+        private MapEditorViewModel mapViewModel;
         private ToolbarViewModel toolbarViewModel;
         private TopMenuViewModel topMenuViewModel;
 
-        public MapViewModel MapViewModel
+        public MapEditorViewModel MapViewModel
         {
             get
             {
@@ -43,7 +43,7 @@ namespace RoRClient.ViewModels.Editor
         {
             this.uiState = uiState;
             toolbarViewModel = new ToolbarViewModel();
-            mapViewModel = new MapViewModel(toolbarViewModel);
+            mapViewModel = new MapEditorViewModel(toolbarViewModel);
             topMenuViewModel = new TopMenuViewModel();
         }
     }

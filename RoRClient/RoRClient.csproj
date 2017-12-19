@@ -103,11 +103,13 @@
     <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
     <Compile Include="Commands\Base\CommandBase.cs" />
+    <Compile Include="Commands\Base\CreateRailCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNodesOfRailSectionCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
     <Compile Include="Communication\Dispatcher\QueueDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicEditorDispatcher.cs" />
@@ -131,34 +133,39 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\Base\CanvasViewModelBase.cs" />
+    <Compile Include="ViewModels\Game\CanvasGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\MapGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
+    <Compile Include="ViewModels\Game\SquareGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
+    <Compile Include="ViewModels\Game\RailGameViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Lobby\StartViewModel.cs" />
-    <Compile Include="ViewModels\Editor\SquareViewModel.cs" />
+    <Compile Include="ViewModels\Editor\SquareEditorViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="ViewModels\CanvasViewModel.cs" />
+    <Compile Include="ViewModels\Editor\CanvasEditorViewModel.cs" />
     <Compile Include="ViewModels\Helper\INotifyPropertyChangedExtended.cs" />
     <Compile Include="ViewModels\Helper\PropertyChangedExtendedEventArgs.cs" />
-    <Compile Include="ViewModels\Editor\RailViewModel.cs" />
+    <Compile Include="ViewModels\Editor\RailEditorViewModel.cs" />
     <Compile Include="ViewModels\ViewConstants.cs" />
-    <Compile Include="ViewModels\Editor\MapViewModel.cs" />
+    <Compile Include="ViewModels\Editor\MapEditorViewModel.cs" />
     <Compile Include="Views\CanvasUserControl.cs" />
     <Compile Include="Views\Editor\Helper\RegexValidator.cs" />
     <Compile Include="Views\Editor\Helper\ToolConverter.cs" />
-    <Compile Include="Views\Editor\RailUserControl.xaml.cs">
-      <DependentUpon>RailUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Editor\RailEditorUserControl.xaml.cs">
+      <DependentUpon>RailEditorUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Editor\SelectedToolUserControl.xaml.cs">
       <DependentUpon>SelectedToolUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editor\SquareUserControl.xaml.cs">
-      <DependentUpon>SquareUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Editor\SquareEditorUserControl.xaml.cs">
+      <DependentUpon>SquareEditorUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editor\MapUserControl.xaml.cs">
-      <DependentUpon>MapUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Editor\MapEditorUserControl.xaml.cs">
+      <DependentUpon>MapEditorUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Editor\ToolItem.cs" />
     <Compile Include="ViewModels\Editor\EditorViewModel.cs" />
@@ -179,32 +186,29 @@
     <Compile Include="Views\Editor\AttributeSelectionUserControl.xaml.cs">
       <DependentUpon>AttributeSelectionUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Editor\Window2.xaml.cs">
-      <DependentUpon>Window2.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Game\GameInteractionUserControl.xaml.cs">
       <DependentUpon>GameInteractionUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Game\GameMapUserControl.xaml.cs">
-      <DependentUpon>GameMapUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Game\GameMenuUserControl.xaml.cs">
-      <DependentUpon>GameMenuUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Game\MapGameUserControl.xaml.cs">
+      <DependentUpon>MapGameUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\GameMiniMapUserControl.xaml.cs">
       <DependentUpon>GameMiniMapUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\SquareGameUserControl.xaml.cs">
+      <DependentUpon>SquareGameUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\GameStatusUserControl.xaml.cs">
       <DependentUpon>GameStatusUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Game\GameTrainSpeedUserControl.xaml.cs">
-      <DependentUpon>GameTrainSpeedUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Game\TrainSpeedGameUserControl.xaml.cs">
+      <DependentUpon>TrainSpeedGameUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\GameUserControl.xaml.cs">
       <DependentUpon>GameUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Game\Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
+    <Compile Include="Views\Game\RailGameUserControl.xaml.cs">
+      <DependentUpon>RailGameUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Lobby\StartView.xaml.cs">
       <DependentUpon>StartView.xaml</DependentUpon>
@@ -213,19 +217,11 @@
       <DependentUpon>AskUserForStringPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Popup\PopupCreator.cs" />
-    <Page Include="Views\Editor\Window2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Game\GameInteractionUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Game\GameMapUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Game\GameMenuUserControl.xaml">
+    <Page Include="Views\Game\MapGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -233,11 +229,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Game\SquareGameUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Game\GameStatusUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Game\GameTrainSpeedUserControl.xaml">
+    <Page Include="Views\Game\TrainSpeedGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,7 +245,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Game\Window1.xaml">
+    <Page Include="Views\Game\RailGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -281,15 +281,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Editor\RailUserControl.xaml">
+    <Page Include="Views\Editor\RailEditorUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Editor\SquareUserControl.xaml">
+    <Page Include="Views\Editor\SquareEditorUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Editor\MapUserControl.xaml">
+    <Page Include="Views\Editor\MapEditorUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

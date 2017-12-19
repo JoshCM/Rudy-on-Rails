@@ -16,6 +16,7 @@ namespace RoRClient.Communication.Dispatcher
         protected const string CREATE = "Create.";
         protected const string UPDATE = "Update.";
         protected const string DELETE = "Delete.";
+        protected RoRSession session;
         
         public void Dispatch(string request, MessageInformation message)
         {
@@ -38,8 +39,7 @@ namespace RoRClient.Communication.Dispatcher
             {
                 Type commandType = Type.GetType(pathToCommand);
                 // nach commandType müssen die genauen Parameter für den Konstruktor mitgegeben werden (siehe CommandBase)
-                // Die EditorSession muss noch durch Session (Game oder Editor) ersetzt werden
-                ICommand command = (ICommand)Activator.CreateInstance(commandType, EditorSession.GetInstance(), message);
+                ICommand command = (ICommand)Activator.CreateInstance(commandType, session, message);
                 command.Execute();
             }
             catch(FormatException)

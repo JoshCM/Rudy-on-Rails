@@ -15,10 +15,10 @@ namespace RoRClient.ViewModels.Editor
     /// <summary>
     /// Hält die zugehörige Rail und die Position (SquarePosX, SquarePosY) des Rails
     /// </summary>
-    public class RailViewModel : CanvasViewModel
+    public class RailEditorViewModel : CanvasEditorViewModel
     {
         private Rail rail;
-        public RailViewModel(Rail rail) : base(rail.Id)
+        public RailEditorViewModel(Rail rail) : base(rail.Id)
         {
             this.rail = rail;
             this.SquarePosX = rail.Square.PosX;
@@ -45,7 +45,6 @@ namespace RoRClient.ViewModels.Editor
 
             // TODO: Message sollte mithilfe CommandManager oder so geschickt werden
             editorSession.QueueSender.SendMessage("DeletePlaceable", messageInformation);
-            Console.WriteLine("DELETE");
         }
 
         public override void RotateLeft()
@@ -75,7 +74,7 @@ namespace RoRClient.ViewModels.Editor
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("xPos", this.SquarePosX);
             messageInformation.PutValue("yPos", this.SquarePosY);
-            messageInformation.PutValue("raildId", MapViewModel.SelectedCanvasViewModel.Id);
+            messageInformation.PutValue("raildId", MapViewModel.SelectedEditorCanvasViewModel.Id);
             EditorSession.GetInstance().QueueSender.SendMessage("CreateRail", messageInformation);
         }
     }

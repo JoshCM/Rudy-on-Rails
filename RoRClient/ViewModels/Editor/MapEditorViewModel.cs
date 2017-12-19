@@ -19,41 +19,52 @@ namespace RoRClient.ViewModels.Editor
     /// Hält alle ViewModels die placeableOnSquare sind, sowie die Squares der Map
     /// und momentan noch die Map an sich
     /// </summary>
-    public class MapViewModel : ViewModelBase
+    public class MapEditorViewModel : ViewModelBase
     {
         private TaskFactory taskFactory;
         private ToolbarViewModel toolbarViewModel;
 
-        private CanvasViewModel previusSelectCanvasViewModel;
-        public CanvasViewModel PreviousSelectedCanvasViewModel
+        private CanvasEditorViewModel _previousSelectEditorCanvasViewModel;
+
+        public MapEditorViewModel(ToolbarViewModel toolbarViewModel)
+        {
+            this.toolbarViewModel = toolbarViewModel;
+            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            map = EditorSession.GetInstance().Map;
+            InitSquares();
+            MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
+            MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+        }
+
+        public CanvasEditorViewModel PreviousSelectedEditorCanvasViewModel
         {
             get
             {
-                return previusSelectCanvasViewModel;
+                return _previousSelectEditorCanvasViewModel;
             }
             set
             {
-                previusSelectCanvasViewModel = value;
+                _previousSelectEditorCanvasViewModel = value;
             }
         }
 
-        private CanvasViewModel selectedCanvasViewModel;
-        public CanvasViewModel SelectedCanvasViewModel
+        private CanvasEditorViewModel _selectedEditorCanvasViewModel;
+        public CanvasEditorViewModel SelectedEditorCanvasViewModel
         {
             get
             {
-                return selectedCanvasViewModel;
+                return _selectedEditorCanvasViewModel;
             }
             set
             {
-                selectedCanvasViewModel = value;
+                _selectedEditorCanvasViewModel = value;
             }
         }
 
         private Map map;
 
-        private ObservableCollection<SquareViewModel> squareViewModels = new ObservableCollection<SquareViewModel>();
-        public ObservableCollection<SquareViewModel> SquareViewModels
+        private ObservableCollection<SquareEditorViewModel> squareViewModels = new ObservableCollection<SquareEditorViewModel>();
+        public ObservableCollection<SquareEditorViewModel> SquareViewModels
         {
             get
             {
@@ -61,8 +72,8 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
-        private ObservableCollection<CanvasViewModel> placeableOnSquareCollection = new ObservableCollection<CanvasViewModel>();
-        public ObservableCollection<CanvasViewModel> PlaceableOnSquareCollection
+        private ObservableCollection<CanvasEditorViewModel> placeableOnSquareCollection = new ObservableCollection<CanvasEditorViewModel>();
+        public ObservableCollection<CanvasEditorViewModel> PlaceableOnSquareCollection
         {
             get
             {
@@ -98,16 +109,6 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
-        public MapViewModel(ToolbarViewModel toolbarViewModel)
-        {
-            this.toolbarViewModel = toolbarViewModel;
-            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
-            map = EditorSession.GetInstance().Map;
-            InitSquares();
-            MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
-            MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
-        }
-
         /// <summary>
         /// Erstellt eine Map mit mehreren Rails, die zurzeit zu Testzwecken verwendet wird.
         /// Später wird die Map dann über den Server geschickt.
@@ -117,7 +118,7 @@ namespace RoRClient.ViewModels.Editor
         {
             foreach (Square square in map.Squares)
             {
-                SquareViewModel squareViewModel = new SquareViewModel(square, toolbarViewModel);
+                SquareEditorViewModel squareViewModel = new SquareEditorViewModel(square, toolbarViewModel);
                 squareViewModel.MapViewModel = this;
                 squareViewModels.Add(squareViewModel);
                 square.PropertyChanged += OnSquarePropertyChanged;
@@ -125,7 +126,7 @@ namespace RoRClient.ViewModels.Editor
                 if (square.PlaceableOnSquare != null && square.PlaceableOnSquare.GetType() == typeof(Rail))
                 {
                     Rail rail = (Rail)square.PlaceableOnSquare;
-                    RailViewModel railViewModel = new RailViewModel(rail);
+                    RailEditorViewModel railViewModel = new RailEditorViewModel(rail);
                     placeableOnSquareCollection.Add(railViewModel);
                     rail.PropertyChanged += OnRailPropertyChanged;
                 }
@@ -138,18 +139,18 @@ namespace RoRClient.ViewModels.Editor
         private void CreateRandomRails()
         {
             Random rand = new Random();
-            foreach (SquareViewModel squareViewModel in squareViewModels)
+            foreach (SquareEditorViewModel squareViewModel in squareViewModels)
             {
                 squareViewModel.Square.PlaceableOnSquare = null;
                 if(rand.Next(3) == 0)
                 {
                     List<RailSection> railSections = new List<RailSection>();
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.WEST, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.WEST));
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.WEST, RailSectionPosition.NORTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.NORTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.NORTH, Compass.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.WEST, Compass.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.EAST, Compass.WEST));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.WEST, Compass.NORTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.EAST, Compass.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.EAST, Compass.NORTH));
 
                     List<RailSection> actualRailSection = new List<RailSection>();
                     actualRailSection.Add(railSections[rand.Next(railSections.Count)]);
@@ -180,7 +181,7 @@ namespace RoRClient.ViewModels.Editor
                 if (square.PlaceableOnSquare == null)
                 {
                     IModel model = (IModel)eventArgs.OldValue;
-                    CanvasViewModel result = placeableOnSquareCollection.Where(x => x.Id == model.Id).First();
+                    CanvasEditorViewModel result = placeableOnSquareCollection.Where(x => x.Id == model.Id).First();
 
                     if (result != null)
                     {
@@ -190,7 +191,7 @@ namespace RoRClient.ViewModels.Editor
                 else
                 {
                     ViewModelFactory factory = new ViewModelFactory();
-                    CanvasViewModel viewModel = factory.CreateViewModelForModel(square.PlaceableOnSquare, this);
+                    CanvasEditorViewModel viewModel = factory.CreateEditorViewModelForModel(square.PlaceableOnSquare, this);
 
                     taskFactory.StartNew(() => placeableOnSquareCollection.Add(viewModel));
                 }
@@ -202,10 +203,10 @@ namespace RoRClient.ViewModels.Editor
         /// </summary>
         public void SwitchQuickNavigationForCanvasViewModel()
         {
-            // Falls ein anderes CanvasViewModel angeklickt wurde
-            if (previusSelectCanvasViewModel != selectedCanvasViewModel) {
+            // Falls ein anderes EditorCanvasViewModel angeklickt wurde
+            if (_previousSelectEditorCanvasViewModel != _selectedEditorCanvasViewModel) {
                 IsQuickNavigationVisible = false;
-                Console.WriteLine("Neues CanvasViewModel wurde angeklickt");
+                Console.WriteLine("Neues EditorCanvasViewModel wurde angeklickt");
             }
 
             if (IsQuickNavigationVisible)
@@ -220,7 +221,7 @@ namespace RoRClient.ViewModels.Editor
                 IsQuickNavigationVisible = true;
             }
 
-            Console.WriteLine("Selected ViewModel: " + SelectedCanvasViewModel.ToString() + " / ID: " + SelectedCanvasViewModel.Id);
+            Console.WriteLine("Selected ViewModel: " + SelectedEditorCanvasViewModel.ToString() + " / ID: " + SelectedEditorCanvasViewModel.Id);
         }
 
         /// <summary>
@@ -258,11 +259,11 @@ namespace RoRClient.ViewModels.Editor
         }
 
         /// <summary>
-        /// Das aktuell ausgewählte CanvasViewModel nach rechts rotieren
+        /// Das aktuell ausgewählte EditorCanvasViewModel nach rechts rotieren
         /// </summary>
         private void RotateRight()
         {
-            SelectedCanvasViewModel.RotateRight();
+            SelectedEditorCanvasViewModel.RotateRight();
         }
 
         /// <summary>
@@ -282,11 +283,11 @@ namespace RoRClient.ViewModels.Editor
         }
 
         /// <summary>
-        /// Das aktuell ausgewählte CanvasViewModel nach links rotieren
+        /// Das aktuell ausgewählte EditorCanvasViewModel nach links rotieren
         /// </summary>
         private void RotateLeft()
         {
-            SelectedCanvasViewModel.RotateLeft();
+            SelectedEditorCanvasViewModel.RotateLeft();
         }
 
         /// <summary>
@@ -306,11 +307,11 @@ namespace RoRClient.ViewModels.Editor
         }
 
         /// <summary>
-        /// Das aktuell ausgewählte CanvasViewModel löschen
+        /// Das aktuell ausgewählte EditorCanvasViewModel löschen
         /// </summary>
         private void Delete()
         {
-            SelectedCanvasViewModel.Delete();
+            SelectedEditorCanvasViewModel.Delete();
 
             // Quicknavigation nach dem Löschen nicht mehr anzeigen
             IsQuickNavigationVisible = false;
@@ -337,7 +338,7 @@ namespace RoRClient.ViewModels.Editor
         /// </summary>
         private void Move()
         {
-            SelectedCanvasViewModel.Move();
+            SelectedEditorCanvasViewModel.Move();
 
             // Quicknavigation nach dem Verschieben nicht mehr anzeigen
             IsQuickNavigationVisible = false;
