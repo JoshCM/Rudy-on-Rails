@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RoRClient.Commands.Base;
 using RoRClient.Models.Session;
 using RoRClient.Communication.DataTransferObject;
+using RoRClient.Communication;
 
 namespace RoRClient.ViewModels.Game
 {
@@ -21,7 +22,6 @@ namespace RoRClient.ViewModels.Game
 
         private void sendUpdateSpeedCommand(double newValue)
         {
-            Console.WriteLine("neuer Wert:" + newValue);
             MessageInformation messageInformation = new MessageInformation();
             GameSession gameSession = GameSession.GetInstance();
 

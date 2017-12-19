@@ -42,7 +42,11 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		editorSession = EditorSessionManager.getInstance()
 				.createNewEditorSession(messageInformation.getValueAsString("editorName"));
 		editorSession.setup();
-		Player player = new Player(editorSession.getName(), messageInformation.getValueAsString("playerName"));
+		Player player = new Player(
+				editorSession.getName(),
+				messageInformation.getValueAsString("playerName"),
+				UUID.fromString(messageInformation.getClientid()));
+
 		editorSession.addPlayer(player);
 
 		responseInformation.putValue("topicName", editorSession.getName());
@@ -61,7 +65,11 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 
 		editorSession = EditorSessionManager.getInstance()
 				.getEditorSessionByName(messageInformation.getValueAsString("editorName"));
-		Player player = new Player(editorSession.getName(), messageInformation.getValueAsString("playerName"));
+		Player player = new Player(
+				editorSession.getName(),
+				messageInformation.getValueAsString("playerName"),
+				UUID.fromString(messageInformation.getClientid()));
+
 		editorSession.addPlayer(player);
 
 		responseInformation.putValue("topicName", editorSession.getName());
@@ -92,9 +100,13 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		String gameName = messageInformation.getValueAsString("gameName");
 		gameSession = GameSessionManager.getInstance().createNewGameSession(gameName);
 		gameSession.setup();
-		Player player = new Player(gameSession.getName(), messageInformation.getValueAsString("playerName"));
+		Player player = new Player(
+				gameSession.getName(),
+				messageInformation.getValueAsString("playerName"),
+				UUID.fromString(messageInformation.getClientid()));
+
 		gameSession.addPlayer(player);
-		createLocoForPlayer(gameSession,player.getId());
+		createLocoForPlayer(gameSession, player.getId());
 
 		responseInformation.putValue("topicName", gameSession.getName());
 		responseInformation.putValue("gameName", gameSession.getName());
@@ -118,7 +130,11 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 
 		String gameName = messageInformation.getValueAsString("gameName");
 		gameSession = GameSessionManager.getInstance().getGameSessionByName(gameName);
-		Player player = new Player(gameSession.getName(), messageInformation.getValueAsString("playerName"));
+		Player player = new Player(
+				gameSession.getName(),
+				messageInformation.getValueAsString("playerName"),
+				UUID.fromString(messageInformation.getClientid()));
+
 		gameSession.addPlayer(player);
 		createLocoForPlayer(gameSession,player.getId());
 

@@ -65,9 +65,6 @@ namespace RoRClient.Communication.Dispatcher
             gameSession.AddPlayer(player);
 
             lobbyModel.Connected_Game = true;
-
-            //TODO: hier soll ein Create Loco Command angestoßen werden
-            SendCreateLocoCommand(playerId);
         }
 
         public void HandleJoinGameSession(MessageInformation messageInformation)

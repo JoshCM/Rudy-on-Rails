@@ -2,8 +2,13 @@ package models.session;
 
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
+import models.game.Loco;
 import persistent.MapManager;
 import models.game.TickableGameObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * Oberklasse vom Game-Modus. 
@@ -17,7 +22,8 @@ public class GameSession extends RoRSession{
 	private boolean stopped;
 	private long lastTimeUpdatedInNanoSeconds;
 	private Ticker ticker;
-	
+	private ArrayList<Loco> locomotives = new ArrayList<>();
+
 	public GameSession(String name) {
 		super(name);
 		GameSessionDispatcher dispatcher = new GameSessionDispatcher(this);
@@ -93,8 +99,32 @@ public class GameSession extends RoRSession{
 	public void remove(TickableGameObject tgo) {
 		ticker.deleteObserver(tgo);
 	}
-	
+
+	/**
+	 * Sucht Locomotive über die playerId heraus, null falls playerId nicht vorhanden
+	 * @param playerId
+	 * @return
+	 */
+	public Loco getLocomotiveByPlayerId(UUID playerId) {
+		for (Loco loc : locomotives) {
+			if (loc.getPlayerId().toString().equals(playerId.toString())) {
+				return loc;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Fügt Locotmotive der ArrayList hinzu
+	 * @param locomotive
+	 */
+	public void addLocomotive(Loco locomotive) {
+		if(locomotive != null) {
+			this.locomotives.add(locomotive);
+		}
+	}
 }
+
 
 
 

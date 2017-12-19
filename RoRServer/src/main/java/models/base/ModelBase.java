@@ -14,6 +14,7 @@ import models.session.RoRSession;
  * Änderungen an den Client geben können über die Methode addMessage()
  */
 public abstract class ModelBase extends ObservableModel implements Model{
+
 	private UUID id;
 	private String sessionName;
 
@@ -21,6 +22,10 @@ public abstract class ModelBase extends ObservableModel implements Model{
 		this.addObserver(MessageQueue.getInstance());
 		this.id = UUID.randomUUID();
 		this.sessionName = sessionName;
+	}
+
+	protected void setId(UUID id) {
+		this.id = id;
 	}
 
 	public UUID getId() {
