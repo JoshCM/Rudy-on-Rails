@@ -15,6 +15,9 @@ public class ObservableModel {
 	private boolean changed = false;
 	
 	public void addObserver(ModelObserver observer) {
+		if(observers == null) {
+			observers = new ArrayList<ModelObserver>();
+		}
 		observers.add(observer);
 	}
 	

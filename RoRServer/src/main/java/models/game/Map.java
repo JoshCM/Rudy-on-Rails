@@ -114,7 +114,11 @@ public class Map extends ModelBase {
 	}
 
 	public void notifyGameStarted() {
-		MessageInformation messageInfo = new MessageInformation("GameStarted");
+		MessageInformation messageInfo = new MessageInformation("StartGame");
 		notifyChange(messageInfo);
+	}
+	
+	public void setSessionName(String sessionName) {
+		this.sessionName = sessionName;
 	}
 }

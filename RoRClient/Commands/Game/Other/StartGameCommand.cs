@@ -9,7 +9,7 @@ using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Game;
 using Newtonsoft.Json.Linq;
 
-namespace RoRClient.Commands.Game.Create
+namespace RoRClient.Commands.Game.Other
 
 {
     /// <summary>

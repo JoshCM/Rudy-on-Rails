@@ -22,19 +22,9 @@ public class GameSession extends RoRSession{
 		super(name);
 		GameSessionDispatcher dispatcher = new GameSessionDispatcher(this);
 		this.queueReceiver = new QueueReceiver(name, dispatcher);
-		// DefaultMap laden
-		loadGameDefaultMap();
 		this.ticker = new Ticker();
 		this.stopped = false;
 		this.startTicking();
-		
-	}
-	
-	/**
-	 * L�dt die DefaultMap in die GameSession
-	 */
-	public void loadGameDefaultMap() {
-		setMap(MapManager.loadMap("GameDefaultMap"));
 	}
 	
 	/**

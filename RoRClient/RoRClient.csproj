@@ -113,6 +113,7 @@
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateLocoCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Game\Other\StartGameCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoCommand.cs" />

@@ -14,7 +14,7 @@ import communication.topic.MessageQueue;
  */
 public abstract class ModelBase extends ObservableModel implements Model{
 	private UUID id;
-	private String sessionName;
+	protected String sessionName;
 
 	public ModelBase(String sessionName) {
 		this.addObserver(MessageQueue.getInstance());

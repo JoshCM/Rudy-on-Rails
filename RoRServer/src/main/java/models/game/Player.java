@@ -1,5 +1,6 @@
 package models.game;
 
+import communication.MessageInformation;
 import models.base.ModelBase;
 
 public class Player extends ModelBase {
@@ -9,6 +10,8 @@ public class Player extends ModelBase {
     public Player(String sessionName, String name) {
     	super(sessionName);
         this.name = name;
+        
+        notifyCreated();
     }
     
     public Player(String sessionName, String name, boolean isHost) {
@@ -26,5 +29,13 @@ public class Player extends ModelBase {
     
     public boolean getIsHost() {
     	return isHost;
+    }
+    
+    private void notifyCreated() {
+    	MessageInformation messageInfo = new MessageInformation("CreatePlayer");
+    	messageInfo.putValue("playerId", getId());
+    	messageInfo.putValue("playerName", name);
+    	messageInfo.putValue("isHost", isHost);
+    	notifyChange(messageInfo);
     }
 }

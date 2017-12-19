@@ -40,7 +40,7 @@ namespace RoRClient.Communication.Dispatcher
             {
                 pathToCommand = COMMAND_TYPE_PREFIX + UPDATE + request + COMMAND_CLASS_SUFFIX;
             }
-            else if (request.StartsWith("Other"))
+            else 
             {
                 pathToCommand = COMMAND_TYPE_PREFIX + OTHER + request + COMMAND_CLASS_SUFFIX;
             }
