@@ -32,6 +32,8 @@ namespace RoRClient.Commands.Game.Create
             
             Loco loco = new Loco(locoId, square);
             player.Loco = loco;
+
+
             ((GameSession)session).AddLoco(loco);
         }
     }

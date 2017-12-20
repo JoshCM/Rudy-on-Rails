@@ -77,7 +77,6 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		this.rail = nextRail;
 		this.setXPos(this.rail.getXPos());
 		this.setYPos(this.rail.getYPos());
-		System.out.println("PosX " + getXPos() + "PosY" + getYPos());
 		SendUpdateLocoMessage();
 
 	}
@@ -135,7 +134,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	}
 
 	private void SendUpdateLocoMessage() {
-		MessageInformation messageInfo = new MessageInformation("UpdateLoco");
+		MessageInformation messageInfo = new MessageInformation("UpdateLocoPosition");
 		messageInfo.putValue("locoId", getId());
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());

@@ -49,7 +49,6 @@ public class CreateLocoCommand implements Command {
 			Rail rail = (Rail) square.getPlaceableOnSquare();
 			Loco loco = new Loco(session.getName(),square, map, playerId);
 			((GameSession) session).addLocomotive(loco);
-			((GameSession) session).add(loco);
 			rail.setPlaceableOnRail(loco);
 		}
 		

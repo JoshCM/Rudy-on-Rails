@@ -17,7 +17,7 @@ public class Player extends ModelBase {
         
         notifyCreated();
     }
-
+    
     public String getName() {
         return name;
     }

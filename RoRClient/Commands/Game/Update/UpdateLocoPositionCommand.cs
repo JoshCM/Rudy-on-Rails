@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Commands.Game.Update
 {
-    class UpdateLocoCommand : CommandBase
+    class UpdateLocoPositionCommand : CommandBase
     {
         private Guid locoId;
         private Guid playerId;
         private int xPos;
         private int yPos;
 
-        public UpdateLocoCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        public UpdateLocoPositionCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             locoId = Guid.Parse(messageInformation.GetValueAsString("locoId"));
             xPos = messageInformation.GetValueAsInt("xPos");
@@ -30,13 +30,10 @@ namespace RoRClient.Commands.Game.Update
         {
             GameSession gameSession = GameSession.GetInstance();
             Square square = gameSession.Map.GetSquare(xPos, yPos);
-            Rail rail = square.PlaceableOnSquare as Rail;
             Player player = gameSession.GetPlayerById(playerId);
-            Loco loco = player.Loco;
 
-            //rail.PlaceableOnRail = loco;
+            Loco loco = player.Loco;
             loco.Square = square;
-            Console.WriteLine("Zug fährt auf " + square.PosX+", "+ square.PosY);
         }
     }
 }

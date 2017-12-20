@@ -64,14 +64,7 @@ public class GameSession extends RoRSession{
 		this.stopped = true;
 	}
 	
-	/**
-	 * F�gt dem Ticker neue TickableGameObject hinzu
-	 * @param tgo
-	 */
-	public void add(TickableGameObject tgo) {
-		ticker.addObserver(tgo);
-	}
-	
+
 	/**
 	 * F�gt dem Ticker eine Collection von TickableGameObjects hinzu
 	 * @param tgos
@@ -109,8 +102,10 @@ public class GameSession extends RoRSession{
 	 * @param locomotive
 	 */
 	public void addLocomotive(Loco locomotive) {
+
 		if(locomotive != null) {
 			this.locomotives.add(locomotive);
+			ticker.addObserver(locomotive);
 		}
 	}
 }
