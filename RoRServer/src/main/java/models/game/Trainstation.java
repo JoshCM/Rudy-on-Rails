@@ -3,6 +3,7 @@ package models.game;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ import com.google.gson.JsonObject;
 
 import communication.MessageInformation;
 import helper.Geometry;
+import helper.Geometry.Coordinate;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
 
@@ -92,24 +94,45 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	 * @param newRailSquare Square worauf die Rail PlaceableOnSquare werden soll
 	 * @param right Uhrzeigersinn/Gegen Uhrzeigersinn
 	 */
-	private void rotateTrainstationRail(Rail trainstationRail, Square oldRailSquare, Square newRailSquare, boolean right) {
-		// rotate der Rail ohne notify
-		Rail tempRail = trainstationRail;
-		tempRail.rotate(right, right);
+	private void rotateTrainstationRails(List<Rail> trainstationRails, int pivotXPos, int pivotYPos, boolean right) {
+		HashMap<Coordinate, Rail> tempRailMap = new HashMap<Coordinate, Rail>();
+		for(Rail trainstationRail : trainstationRails) {
+			int railXpos = trainstationRail.getXPos();
+			int railYpos = trainstationRail.getYPos();
+			
+			// rotiert die koordinaten
+			Geometry.Coordinate newCoordinate;
+			if(right)
+				newCoordinate = Geometry.rotate(railXpos, railYpos, CLOCKWISE, pivotXPos, pivotYPos);
+			else
+				newCoordinate = Geometry.rotate(railXpos, railYpos, COUNTER_CLOCKWISE, pivotXPos, pivotYPos);
+			
+			Square oldRailSquare = (Square)editorSession.getMap().getSquareById(trainstationRail.getSquareId());
+			
+			// rotiere und adde trainstationRail der tempList
+			trainstationRail.rotate(right, right);
+			tempRailMap.put(newCoordinate, trainstationRail);
+			
+			// lösche das Rail aus dem alten Square
+			oldRailSquare.deletePlaceable();
+		}
 		
-		// bekomme sessionname für neue Rail
-		String sessionName = editorSession.getName();
-		
-		// nehme section1 von RailSection
-		RailSection sectionOne = tempRail.getFirstSection();
-		
-		// lösche das Rail aus dem alten Square
-		// muss zuerst gelöscht werden damit danach auch wieder was draufgesetzt werden kann
-		oldRailSquare.deletePlaceable();
-				
-		// erzeuge neue Rail und setze intern das Square.PlacableOnSquare
-		Rail newRail = new Rail(sessionName, newRailSquare, Arrays.asList(sectionOne.getNode1(), sectionOne.getNode2()), this.getId(), tempRail.getId());
-		newRailSquare.setPlaceable(newRail);
+		for(Coordinate railCoordinate : tempRailMap.keySet()) {
+			
+			Rail tempRail = tempRailMap.get(railCoordinate);
+			// bekomme sessionname für neue Rail
+			String sessionName = editorSession.getName();
+			
+			// nehme section1 von RailSection
+			RailSection sectionOne = tempRail.getFirstSection();
+			
+			// bekomme newSquare
+			Square newRailSquare = (Square)editorSession.getMap().getSquare(railCoordinate.x, railCoordinate.y);
+			
+			// erzeuge neue Rail und setze intern das Square.PlacableOnSquare
+			Rail newRail = new Rail(sessionName, newRailSquare, Arrays.asList(sectionOne.getNode1(), sectionOne.getNode2()), tempRail.getTrainstationId(), tempRail.getId());
+			newRailSquare.setPlaceableOnSquare(newRail);
+		}		
 	}
 	
 	/**
@@ -147,26 +170,11 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		int pivotYPos = this.getYPos();
 		
 		List<Rail> trainstationRails = getTrainstationRails();
-		
 		// wenn im Uhzeigersinn gedreht werden soll, dann muss die liste der rails umgedreht werden
 		if(right)
 			trainstationRails = getReverseTrainstationRails();
 		
-		for(Rail trainstationRail : trainstationRails) {
-			int railXpos = trainstationRail.getXPos();
-			int railYpos = trainstationRail.getYPos();
-			
-			// rotiert die koordinaten
-			Geometry.Coordinate newCoordinate;
-			if(right)
-				newCoordinate = Geometry.rotate(railXpos, railYpos, CLOCKWISE, pivotXPos, pivotYPos);
-			else
-				newCoordinate = Geometry.rotate(railXpos, railYpos, COUNTER_CLOCKWISE, pivotXPos, pivotYPos);
-			
-			Square oldRailSquare = (Square)editorSession.getMap().getSquareById(trainstationRail.getSquareId());
-			Square newRailSquare = (Square)editorSession.getMap().getSquare(newCoordinate.x, newCoordinate.y);
-			rotateTrainstationRail(trainstationRail, oldRailSquare, newRailSquare, right);
-		}
+		rotateTrainstationRails(trainstationRails, pivotXPos, pivotYPos, right);
 	}
 	
 	/**

@@ -35,7 +35,7 @@ public class CommandDeleterTests {
 		List<UUID> trainstationRailIds = new ArrayList<UUID>();
 		List<String> trainstationRailIdStrings = new ArrayList<String>();
 		for(Rail trainstationRail : trainstationRails) {
-			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceable(trainstationRail);
+			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceableOnSquare(trainstationRail);
 			trainstationRailIds.add(trainstationRail.getId());
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
@@ -45,7 +45,7 @@ public class CommandDeleterTests {
 		messageInformation.putValue("trainstationRailIds", trainstationRailIdStrings);
 		
 		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
-		session.getMap().getSquare(1, 1).setPlaceable(trainstation);
+		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		DeleteTrainstationCommand command = new DeleteTrainstationCommand(session, messageInformation);
 		
 		String commandName = command.getClass().getName();

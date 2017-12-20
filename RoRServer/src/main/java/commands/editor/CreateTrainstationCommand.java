@@ -43,7 +43,7 @@ public class CreateTrainstationCommand extends CommandBase {
 			UUID trainstationId = UUID.randomUUID();
 			// Trainstation wird erzeugt und auf Square gesetzt
 			Trainstation trainstation = new Trainstation(session.getName(), trainstationSquare, createTrainstationRails(map, trainstationSquare, trainstationId), trainstationId, alignment);
-			trainstationSquare.setPlaceable(trainstation);
+			trainstationSquare.setPlaceableOnSquare(trainstation);
 		}
 	}
 
@@ -55,7 +55,7 @@ public class CreateTrainstationCommand extends CommandBase {
 		Compass railSectionPositionNode2 = Compass.SOUTH;
 		List<Compass> railSectionPositions = Arrays.asList(railSectionPositionNode1, railSectionPositionNode2);
 		
-		// Squares für die Rails der Trainstation werden erstellt
+		// Squares für die Rails der Trainstation werden gefunden
 		Square squareTop = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN,
 				square.getYIndex() - TRAINSTATION_MARGIN);
 		Square squareMid = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN, square.getYIndex());
@@ -69,7 +69,7 @@ public class CreateTrainstationCommand extends CommandBase {
 		for(int i = 0; i < 3; i++) {
 			Square trainstationRailSquare = trainstationRailSquares.get(i);
 			Rail rail = new Rail(session.getName(), trainstationRailSquare, railSectionPositions);
-			trainstationRailSquare.setPlaceable(rail);
+			trainstationRailSquare.setPlaceableOnSquare(rail);
 			rail.setTrainstationId(trainstationId);
 			trainstationRailIds.add(rail.getId());
 		}

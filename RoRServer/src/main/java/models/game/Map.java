@@ -2,27 +2,19 @@ package models.game;
 
 import models.base.ModelBase;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import org.hamcrest.core.IsInstanceOf;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
-
 import communication.MessageInformation;
 import exceptions.NotMoveableException;
 
 /**
  * Klasse, die das Spielfeld darstellt und aus Feldern (Squares) besteht
  */
-public class Map extends ModelBase {	
+public class Map extends ModelBase {
 	private String name;
 	private Square squares[][];
 	private final int mapSize = 50;
@@ -119,63 +111,72 @@ public class Map extends ModelBase {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * Gibt ein zugehöriges neuse Square, nach dem Moven der Trainstation, für eine Rail zurück
+	 * Gibt ein zugehöriges neuse Square, nach dem Moven der Trainstation, für eine
+	 * Rail zurück
+	 * 
 	 * @param trainstationSquare
 	 * @param alignment
 	 * @return Zugehöriges Square einer Rail
 	 */
-	private Square getTrainstationRailSquare(Rail trainstationRail, Trainstation newTrainstation, int oldPlaceableOnSquareXPos, int oldPlaceableOnSquareYPos) {
+	private Square getTrainstationRailSquare(Rail trainstationRail, Trainstation newTrainstation,
+			int oldPlaceableOnSquareXPos, int oldPlaceableOnSquareYPos) {
 		int trainstationRailXSpan = trainstationRail.getXPos() - oldPlaceableOnSquareXPos;
 		int trainstationRailYSpan = trainstationRail.getYPos() - oldPlaceableOnSquareYPos;
-		
+
 		int newSquareX = newTrainstation.getXPos() + trainstationRailXSpan;
 		int newSquareY = newTrainstation.getYPos() + trainstationRailYSpan;
 		return getSquare(newSquareX, newSquareY);
 	}
 
-	public void movePlaceableOnSquare(Square oldSquare, Square newSquare) {
-		if (validateMovePlaceableOnSquare(oldSquare, newSquare)) {
-			InteractiveGameObject tempPlaceableOnSquare = (InteractiveGameObject) oldSquare.getPlaceableOnSquare();
-			int oldPlaceableOnSquareXPos = tempPlaceableOnSquare.getXPos();
-			int oldPlaceableOnSquareYPos = tempPlaceableOnSquare.getYPos();
-			oldSquare.setPlaceable(null);
-			newSquare.setPlaceable((PlaceableOnSquare) tempPlaceableOnSquare);
+	public void movePlaceableOnSquare(Square oldSquareOfPlaceable, Square newSquareOfPlaceable) {
+		if (validateMovePlaceableOnSquare(oldSquareOfPlaceable, newSquareOfPlaceable)) {
+			InteractiveGameObject placeableOnSquare = (InteractiveGameObject) oldSquareOfPlaceable.getPlaceableOnSquare();
+			int oldPlaceableOnSquareXPos = placeableOnSquare.getXPos();
+			int oldPlaceableOnSquareYPos = placeableOnSquare.getYPos();
+			oldSquareOfPlaceable.setPlaceableOnSquare(null);
+			newSquareOfPlaceable.setPlaceableOnSquare((PlaceableOnSquare) placeableOnSquare);
 
 			// entweder nur ids oder nur x und y, wir müssen uns entscheiden
-			tempPlaceableOnSquare.setSquareId(newSquare.getId());
-			tempPlaceableOnSquare.setXPos(newSquare.getXIndex());
-			tempPlaceableOnSquare.setYPos(newSquare.getYIndex());
+			placeableOnSquare.setSquareId(newSquareOfPlaceable.getId());
+			placeableOnSquare.setXPos(newSquareOfPlaceable.getXIndex());
+			placeableOnSquare.setYPos(newSquareOfPlaceable.getYIndex());
 
-			if (tempPlaceableOnSquare instanceof Rail) {
+			if (placeableOnSquare instanceof Rail) {
+				Rail rail = (Rail) placeableOnSquare;
 				// sections müssen auch die square-Änderung mitbekommen
-				for (RailSection railSection : ((Rail) tempPlaceableOnSquare).getRailSectionList()) {
-					railSection.changeSquare(newSquare);
+				for (RailSection railSection : rail.getRailSectionList()) {
+					railSection.changeSquare(newSquareOfPlaceable);
 				}
-			} else if (tempPlaceableOnSquare instanceof Trainstation) {
-				Trainstation newTrainstation = (Trainstation) tempPlaceableOnSquare;
-				// trainstationRails müssen umgesetzt werden
-				for (Rail trainstationRail : newTrainstation.getTrainstationRails()) {
-					trainstationRail.changeSquare(getTrainstationRailSquare(trainstationRail, newTrainstation, oldPlaceableOnSquareXPos, oldPlaceableOnSquareYPos));
+			} else if (placeableOnSquare instanceof Trainstation) {
+				Trainstation trainstation = (Trainstation) placeableOnSquare;
+				// trainstationRails müssen auch die square-Änderung mitbekommen
+				for (Rail trainstationRail : trainstation.getTrainstationRails()) {
+					Square oldSquareOfRail = getSquare(trainstationRail.getXPos(), trainstationRail.getYPos());
+					oldSquareOfRail.setPlaceableOnSquare(null);
+					Square newSquareOfRail = getTrainstationRailSquare(trainstationRail, trainstation,
+							oldPlaceableOnSquareXPos, oldPlaceableOnSquareYPos);
+					trainstationRail.changeSquare(newSquareOfRail);
+					newSquareOfRail.setPlaceableOnSquare(trainstationRail);
 				}
 			}
-
-			notifyMovedPlaceableOnSquare(oldSquare, newSquare, tempPlaceableOnSquare);
+			notifyMovedPlaceableOnSquare(oldSquareOfPlaceable, newSquareOfPlaceable, placeableOnSquare);
 		} else {
-			throw new NotMoveableException(String.format("PlaceableOnSquare von %s ist nicht auf %s verschiebar",
-					oldSquare.toString(), newSquare.toString()));
+			throw new NotMoveableException(String.format("PlaceableOnSquare von %s ist nicht auf %s verschiebbar",
+					oldSquareOfPlaceable.toString(), newSquareOfPlaceable.toString()));
 		}
 	}
 
-	private void notifyMovedPlaceableOnSquare(Square oldSquare, Square newSquare, InteractiveGameObject movedPlaceableOnSquare) {
+	private void notifyMovedPlaceableOnSquare(Square oldSquare, Square newSquare,
+			InteractiveGameObject movedPlaceableOnSquare) {
 		switch (movedPlaceableOnSquare.getClass().getSimpleName()) {
-			case "Rail":
-				notifyMovedRail(oldSquare, newSquare);
-				break;
-			case "Trainstation":
-				notifyMovedTrainstation(oldSquare, newSquare, (Trainstation)movedPlaceableOnSquare);
-				break;
+		case "Rail":
+			notifyMovedRail(oldSquare, newSquare);
+			break;
+		case "Trainstation":
+			notifyMovedTrainstation(oldSquare, newSquare, (Trainstation) movedPlaceableOnSquare);
+			break;
 		}
 	}
 
@@ -185,9 +186,9 @@ public class Map extends ModelBase {
 		messageInformation.putValue("oldYPos", oldSquare.getYIndex());
 		messageInformation.putValue("newXPos", newSquare.getXIndex());
 		messageInformation.putValue("newYPos", newSquare.getYIndex());
-		
+
 		List<List<String>> trainstationRailsCoordinateList = new ArrayList<List<String>>();
-		for(Rail trainstationRail : trainstation.getTrainstationRails()) {
+		for (Rail trainstationRail : trainstation.getTrainstationRails()) {
 			List<String> trainstationRailCoordinates = new ArrayList<String>();
 			Square newTrainstationRailSquare = this.getSquareById(trainstationRail.getSquareId());
 			trainstationRailCoordinates.add(trainstationRail.getId().toString());
@@ -211,13 +212,17 @@ public class Map extends ModelBase {
 	private boolean validateMovePlaceableOnSquare(Square oldSquare, Square newSquare) {
 		InteractiveGameObject placeableOnSquare = (InteractiveGameObject) oldSquare.getPlaceableOnSquare();
 		if (placeableOnSquare instanceof Rail) {
-			if (newSquare.getPlaceableOnSquare() != null)
-				return false;
+			return validateSetRailRailOnMap(newSquare);
 		} else if (placeableOnSquare instanceof Trainstation) {
 			Trainstation possibleTrainstation = (Trainstation) placeableOnSquare;
-			if (!validateSetTrainstationOnMap(newSquare, possibleTrainstation.getAlignment()))
-				return false;
+			return validateSetTrainstationOnMap(newSquare, possibleTrainstation.getAlignment());
 		}
+		return false;
+	}
+
+	private boolean validateSetRailRailOnMap(Square newSquare) {
+		if (newSquare.getPlaceableOnSquare() != null)
+			return false;
 		return true;
 	}
 
@@ -285,12 +290,16 @@ public class Map extends ModelBase {
 			switch (alignment) {
 			case EAST:
 				possibleRailSquare = map.getSquare(square.getXIndex() + 1, square.getYIndex() + (i - 1));
+				break;
 			case SOUTH:
 				possibleRailSquare = map.getSquare(square.getXIndex() + (i - 1), square.getYIndex() + 1);
+				break;
 			case WEST:
 				possibleRailSquare = map.getSquare(square.getXIndex() - 1, square.getYIndex() + (i - 1));
+				break;
 			case NORTH:
 				possibleRailSquare = map.getSquare(square.getXIndex() + (i - 1), square.getYIndex() - 1);
+				break;
 			}
 
 			// Square für Rail ist vorhanden

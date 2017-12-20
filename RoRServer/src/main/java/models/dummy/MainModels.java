@@ -22,14 +22,14 @@ public class MainModels {
 		List<Compass> railSectionPositions = new ArrayList<Compass>();
 		railSectionPositions.add(Compass.EAST);
 		railSectionPositions.add(Compass.WEST);
-		map.getSquare(0, 0).setPlaceable(new Rail("blubb", map.getSquare(0, 0), railSectionPositions));
+		map.getSquare(0, 0).setPlaceableOnSquare(new Rail("blubb", map.getSquare(0, 0), railSectionPositions));
 		Rail rail = (Rail) map.getSquare(0, 0).getPlaceableOnSquare();
 		rail.setPlaceableOnRail(new DummySignal(map.getSquare(0, 0)));
-		map.getSquare(0, 1).setPlaceable(new Rail("blubb", map.getSquare(0, 1), railSectionPositions));
-		map.getSquare(0, 2).setPlaceable(new DummyContainer());
-		map.getSquare(1, 1).setPlaceable(new Rail("blubb", map.getSquare(1, 1), railSectionPositions));
-		map.getSquare(2, 0).setPlaceable(new Rail("blubb", map.getSquare(2, 0), railSectionPositions));
-		map.getSquare(2, 1).setPlaceable(new Rail("blubb", map.getSquare(1, 1), railSectionPositions));
+		map.getSquare(0, 1).setPlaceableOnSquare(new Rail("blubb", map.getSquare(0, 1), railSectionPositions));
+		map.getSquare(0, 2).setPlaceableOnSquare(new DummyContainer());
+		map.getSquare(1, 1).setPlaceableOnSquare(new Rail("blubb", map.getSquare(1, 1), railSectionPositions));
+		map.getSquare(2, 0).setPlaceableOnSquare(new Rail("blubb", map.getSquare(2, 0), railSectionPositions));
+		map.getSquare(2, 1).setPlaceableOnSquare(new Rail("blubb", map.getSquare(1, 1), railSectionPositions));
 		
 		game.setMap(map);
 		MapManager.saveMap(map);

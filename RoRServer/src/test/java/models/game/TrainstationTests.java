@@ -27,8 +27,8 @@ public class TrainstationTests {
 	
 	public void initValidTrainstationCommand() {
 		MessageInformation messageInformation = new MessageInformation();
-		messageInformation.putValue("xPos", 0);
-		messageInformation.putValue("yPos", 1);
+		messageInformation.putValue("xPos", 1);
+		messageInformation.putValue("yPos", 2);
 		messageInformation.putValue("alignment", Compass.EAST.toString());
 		
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
@@ -47,7 +47,7 @@ public class TrainstationTests {
 	@Test
 	public void TrainstationIsCreatedWithRightValuesOverCommand() {
 		initValidTrainstationCommand();
-		Square square = session.getMap().getSquare(0, 1);
+		Square square = session.getMap().getSquare(1, 2);
 		Assert.assertNotNull(square.getPlaceableOnSquare());
 		Assert.assertEquals(Trainstation.class, square.getPlaceableOnSquare().getClass());
 		List<UUID> railIds = ((Trainstation)square.getPlaceableOnSquare()).getTrainstationRailIds();
@@ -89,7 +89,7 @@ public class TrainstationTests {
 		// setzen der rail die die exception verursacht
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Square square = session.getMap().getSquare(1, 0);
-		square.setPlaceable(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
+		square.setPlaceableOnSquare(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
 		
@@ -113,7 +113,7 @@ public class TrainstationTests {
 		// setzen der rail die die exception verursacht
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Square square = session.getMap().getSquare(1, 1);
-		square.setPlaceable(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
+		square.setPlaceableOnSquare(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
 		
@@ -137,7 +137,7 @@ public class TrainstationTests {
 		// setzen der rail die die exception verursacht
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		Square square = session.getMap().getSquare(1, 2);
-		square.setPlaceable(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
+		square.setPlaceableOnSquare(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
 		
@@ -166,13 +166,13 @@ public class TrainstationTests {
 		List<UUID> trainstationRailIds = new ArrayList<UUID>();
 		List<String> trainstationRailIdStrings = new ArrayList<String>();
 		for(Rail trainstationRail : trainstationRails) {
-			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceable(trainstationRail);
+			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceableOnSquare(trainstationRail);
 			trainstationRailIds.add(trainstationRail.getId());
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
 		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
-		session.getMap().getSquare(1, 1).setPlaceable(trainstation);
+		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		
 		Assert.assertTrue(trainstation.validateRotation(true));
 	}
@@ -192,13 +192,13 @@ public class TrainstationTests {
 		List<UUID> trainstationRailIds = new ArrayList<UUID>();
 		List<String> trainstationRailIdStrings = new ArrayList<String>();
 		for(Rail trainstationRail : trainstationRails) {
-			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceable(trainstationRail);
+			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceableOnSquare(trainstationRail);
 			trainstationRailIds.add(trainstationRail.getId());
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
 		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
-		session.getMap().getSquare(1, 1).setPlaceable(trainstation);
+		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		
 		Assert.assertTrue(trainstation.validateRotation(false));
 	}
@@ -223,13 +223,13 @@ public class TrainstationTests {
 		List<UUID> trainstationRailIds = new ArrayList<UUID>();
 		List<String> trainstationRailIdStrings = new ArrayList<String>();
 		for(Rail trainstationRail : trainstationRails) {
-			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceable(trainstationRail);
+			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceableOnSquare(trainstationRail);
 			trainstationRailIds.add(trainstationRail.getId());
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
 		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
-		session.getMap().getSquare(1, 1).setPlaceable(trainstation);
+		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		
 		trainstation.rotate(true);
 		
@@ -267,13 +267,13 @@ public class TrainstationTests {
 		List<UUID> trainstationRailIds = new ArrayList<UUID>();
 		List<String> trainstationRailIdStrings = new ArrayList<String>();
 		for(Rail trainstationRail : trainstationRails) {
-			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceable(trainstationRail);
+			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceableOnSquare(trainstationRail);
 			trainstationRailIds.add(trainstationRail.getId());
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
 		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
-		session.getMap().getSquare(1, 1).setPlaceable(trainstation);
+		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		
 		trainstation.rotate(false);
 		

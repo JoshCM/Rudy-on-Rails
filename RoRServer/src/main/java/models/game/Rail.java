@@ -14,7 +14,7 @@ import communication.MessageInformation;
  * Schienenstueck (= Gerade, Kurve) bzw. zwei Schienenstuecke (= Kreuzung,
  * Weiche) besitzen
  */
-public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
+public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Comparable<Rail> {
 
 	// muss hier raus und eine Ebene tiefer(RailSection)
 	protected PlaceableOnRail placeableOnRail = null;
@@ -156,5 +156,14 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		this.setSquareId(newSquare.getId());
 		this.setXPos(newSquare.getXIndex());
 		this.setYPos(newSquare.getYIndex());
+	}
+
+	@Override
+	public int compareTo(Rail o) {
+		if(this.getXPos() == o.getXPos()) {
+			return o.getYPos() - this.getYPos();
+		}else {
+			return o.getXPos() - this.getXPos();
+		}
 	}
 }

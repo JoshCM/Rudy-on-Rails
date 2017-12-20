@@ -24,7 +24,7 @@ public class MapManagerTest {
 		List<Compass> railSectionPositions = new ArrayList<>();
 		railSectionPositions.add(Compass.NORTH);
 		railSectionPositions.add(Compass.WEST);
-		savedMap.getSquare(0, 0).setPlaceable(new Rail("TestSession", savedMap.getSquare(0, 0), railSectionPositions));
+		savedMap.getSquare(0, 0).setPlaceableOnSquare(new Rail("TestSession", savedMap.getSquare(0, 0), railSectionPositions));
 		((Rail)savedMap.getSquare(0, 0).getPlaceableOnSquare()).setPlaceableOnRail(signal);
 		
 		String mapAsJson = MapManager.convertMapToJson(savedMap);
