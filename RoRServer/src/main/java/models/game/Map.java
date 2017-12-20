@@ -25,7 +25,7 @@ public class Map extends ModelBase {
 		
 		for(int x= 0; x < mapSize; x++) {
 			for(int y = 0; y < mapSize; y++) {
-				Square s = new Square(sessionName, this, x, y);
+				Square s = new Square(sessionName, x, y);
 				squares[x][y] = s;
 			}
 		}
