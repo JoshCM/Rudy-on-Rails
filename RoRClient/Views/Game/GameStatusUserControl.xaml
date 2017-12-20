@@ -5,11 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RoRClient.Views.Game"
              mc:Ignorable="d" 
-             d:DesignHeight="20" d:DesignWidth="300">
+             d:DesignHeight="100" d:DesignWidth="900">
     <StackPanel Orientation="Horizontal" >
-        <Label Content="14 Kohle | 5 Gold" FontSize="6" Margin="5,0" MinWidth="50" Width="79" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <Label Content="Waggons: 5 gelagert | 3 beladen | 1 leer" FontSize="6" Margin="5,0" MinWidth="150" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Label Content="4 Punkte" FontSize="6"  Margin="5,0" MinWidth="50" Width="38" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Content="14 Kohle"  Margin="20" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Label Content="5 Gold"  VerticalAlignment="Center"  HorizontalAlignment="Center" Foreground="White" Padding="5,5,100,5"></Label>
+        <Label Content="Waggons:"  Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Label Content="5 gelagert" Margin="5,0" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Content="3 beladen" Margin="5,0"  Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        <Label Content="1 leer" Margin="5,0"  Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5,5,100,5"/>
+        <Label Content="4 Punkte" MinWidth="100"  Margin="5,0"  Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
     </StackPanel>
 </UserControl>

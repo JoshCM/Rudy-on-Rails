@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RoRClient.Views.Game"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="100">
-    <StackPanel >
-        <Label Content="Geschwindigkeit" FontSize="8" Height="20" FontWeight="Bold" HorizontalAlignment="Center" />
+             d:DesignHeight="200" d:DesignWidth="400" FontSize="24">
+    <StackPanel HorizontalAlignment="Center">
+        <Label Content="Geschwindigkeit" MinHeight="30" MinWidth="150" Margin="30" FontWeight="Bold" HorizontalAlignment="Center" />
         <Slider Minimum="0" Maximum="100" IsSnapToTickEnabled="True" TickFrequency="1" HorizontalContentAlignment="Center"  Value="50"/>
 
     </StackPanel>

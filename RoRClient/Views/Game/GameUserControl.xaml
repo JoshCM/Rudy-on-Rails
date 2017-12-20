@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:game="clr-namespace:RoRClient.Views.Game"
              mc:Ignorable="d"
-             d:DesignHeight="900" d:DesignWidth="1600" Background="Gray">
+             d:DesignHeight="2000" d:DesignWidth="4000" Background="Gray">
 
     <Grid x:Name="ContentGrid" Margin="1">
         <Grid.RowDefinitions>
@@ -22,20 +22,15 @@
 
         <game:GameStatusUserControl Grid.Row="0"
                                     Grid.Column="0"
-                                    Grid.ColumnSpan="3" />
+                                    Grid.ColumnSpan="4" />
 
         <game:MapGameUserControl Grid.Row="1"
                                  Grid.Column="0"
                                  Grid.ColumnSpan="4" 
                                  DataContext="{Binding MapGameViewModel}"/>
 
-        <game:GameMiniMapUserControl Grid.Row="2" Grid.Column="0" />
+        <game:GameMiniMapUserControl Grid.Row="2" Grid.Column="0" Loaded="GameMiniMapUserControl_Loaded" />
         <game:GameInteractionUserControl Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" />
         <game:TrainSpeedGameUserControl Grid.Row="2" Grid.Column="3" />
-
-        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="2" />
-        <Border Grid.Column="0" Grid.Row="2" BorderBrush="Black" BorderThickness="2" />
-        <Border Grid.Column="1" Grid.Row="2" BorderBrush="Black" BorderThickness="2" />
-        <Border Grid.Column="2" Grid.Row="2" BorderBrush="Black" BorderThickness="2" />
     </Grid>
 </UserControl>

@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RoRClient.Views.Game"
              mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="100">
+             d:DesignHeight="500" d:DesignWidth="700">
     <StackPanel >
-        <Label Content="Mini Map" FontSize="8" Height="20" FontWeight="Bold" HorizontalAlignment="Center"  />
-        <Image Height="42" Source="/RoRClient;component/Resources/Images/game_minimap_dummy.png" VerticalAlignment="Center" HorizontalAlignment="Center" Width="60" Margin="0,5,0,0"/>
+        <Label Content="Mini Map" FontWeight="Bold" HorizontalAlignment="Center"  />
+        <Image MaxHeight="300" Source="/RoRClient;component/Resources/Images/game_minimap_dummy.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
 
     </StackPanel>

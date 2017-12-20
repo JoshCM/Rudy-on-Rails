@@ -30,5 +30,10 @@ namespace RoRClient.Views.Game
         {
 
         }
+
+        private void GameMiniMapUserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
