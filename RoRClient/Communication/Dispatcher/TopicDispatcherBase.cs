@@ -17,7 +17,8 @@ namespace RoRClient.Communication.Dispatcher
         protected const string UPDATE = "Update.";
         protected const string DELETE = "Delete.";
         protected const string OTHER = "Other.";
-        protected RoRSession session;
+	    protected const string MOVE = "Move.";
+		protected RoRSession session;
         
         public void Dispatch(string request, MessageInformation message)
         {

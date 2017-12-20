@@ -50,7 +50,7 @@ public class LocoTests {
 		Square square = map.getSquare(squarePosX, squarePosY);
 		Rail rail = new Rail(gameSession.getName(), square, directions);
 
-		square.setPlaceable(rail);
+		square.setPlaceableOnSquare(rail);
 		Loco loco = new Loco(gameSession.getName(), square, map, player.getId());
 
 		assertEquals(rail, loco.getRail());
