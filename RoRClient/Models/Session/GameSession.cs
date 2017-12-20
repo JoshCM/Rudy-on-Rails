@@ -34,6 +34,11 @@ namespace RoRClient.Models.Session
             }
         }
 
+        public Loco GetLocoById(Guid locoId)
+        {
+            return locos.Where(x => x.Id == locoId).First();
+        }
+
         private bool started;
         public bool Started
         {
