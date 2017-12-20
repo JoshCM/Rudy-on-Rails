@@ -9,11 +9,11 @@ namespace RoRClient.ViewModels.Game
 {
     public class RailGameViewModel: CanvasGameViewModel
     {
-        private Rail rail;
+        private Rail r;
 
         public RailGameViewModel(Rail rail) : base(rail.Id)
         {
-            this.rail = rail;
+            this.r = rail;
             this.SquarePosX = rail.Square.PosX;
             this.SquarePosY = rail.Square.PosY;
         }
@@ -22,11 +22,8 @@ namespace RoRClient.ViewModels.Game
         {
             get
             {
-                return rail;
+                return r;
             }
         }
-
-
-
     }
 }

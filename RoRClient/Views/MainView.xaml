@@ -25,6 +25,15 @@
         <DataTemplate x:Name="GameTemplate" DataType="{x:Type vmg:GameViewModel}">
             <vg:GameUserControl DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="JoinEditorLobbyTemplate" DataType="{x:Type vml:JoinEditorLobbyViewModel}">
+            <vl:JoinEditorLobbyView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="JoinGameLobbyTemplate" DataType="{x:Type vml:JoinGameLobbyViewModel}">
+            <vl:JoinGameLobbyView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="GameLobbyTemplate" DataType="{x:Type vml:GameLobbyViewModel}">
+            <vl:GameLobbyView DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
 
 

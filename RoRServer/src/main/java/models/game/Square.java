@@ -12,7 +12,7 @@ public class Square extends ModelBase {
 	private int xIndex;
 	private int yIndex;
 	
-	public Square(String sessionName, Map map, int xIndex, int yIndex) {
+	public Square(String sessionName, int xIndex, int yIndex) {
 		super(sessionName);
 		this.xIndex = xIndex;
 		this.yIndex = yIndex;
@@ -77,5 +77,10 @@ public class Square extends ModelBase {
 		if (yIndex != other.yIndex)
 			return false;
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return "Square [placeableOnSquare=" + placeableOnSquare + ", xIndex=" + xIndex + ", yIndex=" + yIndex + "]";
 	}
 }

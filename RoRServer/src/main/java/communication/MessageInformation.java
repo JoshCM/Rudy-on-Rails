@@ -91,4 +91,13 @@ public class MessageInformation {
     	}
     	return result;
     }
+    
+    public <T> List<T> getValueAsObjectList(String key){
+    	List<Object> oList = (List<Object>)attributes.get(key);;
+    	List<T> tList = new ArrayList<T>();
+    	for(Object obj : oList) {
+    		tList.add((T) obj);
+    	}
+		return tList;
+    }
 }

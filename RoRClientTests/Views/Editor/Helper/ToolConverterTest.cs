@@ -12,7 +12,7 @@ namespace RoRClientTests.Views.Editor.Helper
         public void ToolConvert_ConvertStraightRailNameToRailSection()
         {
             String toolName = "rail_ew";
-            RailSection railSection = new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.WEST);
+            RailSection railSection = new RailSection(Guid.NewGuid(), Compass.EAST, Compass.WEST);
             Assert.AreEqual(railSection.Node1, ToolConverter.ConvertToRailSection(toolName).Node1);
             Assert.AreEqual(railSection.Node2, ToolConverter.ConvertToRailSection(toolName).Node2);
 
@@ -22,7 +22,7 @@ namespace RoRClientTests.Views.Editor.Helper
         public void ToolConvert_ConvertCurveRailNameToRailSection()
         {
             String toolName = "railcurve_nw";
-            RailSection railSection = new RailSection(Guid.NewGuid(), RailSectionPosition.NORTH, RailSectionPosition.WEST);
+            RailSection railSection = new RailSection(Guid.NewGuid(), Compass.NORTH, Compass.WEST);
             Assert.AreEqual(railSection.Node1, ToolConverter.ConvertToRailSection(toolName).Node1);
             Assert.AreEqual(railSection.Node2, ToolConverter.ConvertToRailSection(toolName).Node2);
         }

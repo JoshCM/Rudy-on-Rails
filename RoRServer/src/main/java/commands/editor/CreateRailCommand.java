@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.JsonObject;
-import com.google.gson.internal.LinkedTreeMap;
 
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import models.game.Map;
 import models.game.Rail;
 import models.game.RailSection;
-import models.game.RailSectionPosition;
+import models.game.Compass;
 import models.game.Square;
 import models.session.EditorSession;
 import models.session.RoRSession;
@@ -35,10 +34,10 @@ public class CreateRailCommand extends CommandBase {
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(xPos, yPos);
 		
-		List<RailSectionPosition> railSectionPositions = new ArrayList<RailSectionPosition>();
+		List<Compass> railSectionPositions = new ArrayList<Compass>();
 		for(JsonObject json : railSectionData) {
-			RailSectionPosition node1 = RailSectionPosition.valueOf(json.get("node1").getAsString());
-			RailSectionPosition node2 = RailSectionPosition.valueOf(json.get("node2").getAsString());
+			Compass node1 = Compass.valueOf(json.get("node1").getAsString());
+			Compass node2 = Compass.valueOf(json.get("node2").getAsString());
 			railSectionPositions.add(node1);
 			railSectionPositions.add(node2);
 		}

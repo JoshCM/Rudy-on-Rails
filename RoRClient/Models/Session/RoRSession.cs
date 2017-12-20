@@ -12,11 +12,12 @@ using RoRClient.Communication.DataTransferObject;
 
 namespace RoRClient.Models.Session
 {
-    public class RoRSession
+    public class RoRSession : ObservableBase
     {
         protected string name;
         protected Map map;
         protected ObservableCollection<Player> players = new ObservableCollection<Player>();
+
         protected QueueSender queueSender;
         protected TopicReceiver topicReceiver;
 
@@ -53,7 +54,6 @@ namespace RoRClient.Models.Session
             {
                 map = value;
             }
-
         }
 
         public ObservableCollection<Player> Players
@@ -74,20 +74,16 @@ namespace RoRClient.Models.Session
             players.Remove(player);
         }
 
+        public Player GetPlayerById(Guid playerId)
+        {
+            return players.Where(x => x.Id == playerId).First();
+        }
         public QueueSender QueueSender
         {
             get
             {
                 return queueSender;
             }
-        }
-
-        /// <summary>
-        /// Default Map laden
-        /// </summary>
-        public void LoadDefaultMapAtStartup()
-        {
-            QueueSender.SendMessage("LoadDefaultMap", new MessageInformation());
         }
     }
 }

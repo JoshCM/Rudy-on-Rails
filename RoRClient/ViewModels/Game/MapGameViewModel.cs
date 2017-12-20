@@ -29,6 +29,7 @@ namespace RoRClient.ViewModels.Game
             map = GameSession.GetInstance().Map;
             InitSquares();
 
+            GameSession.GetInstance().PropertyChanged += OnLocoAddedInGameSession;
             //TO-DO: nur zum Testen
             //CreateRandomRails();
 
@@ -59,6 +60,16 @@ namespace RoRClient.ViewModels.Game
             get
             {
                 return placeableOnSquareCollection;
+            }
+        }
+
+
+        private ObservableCollection<CanvasGameViewModel> placeableOnRailCollection = new ObservableCollection<CanvasGameViewModel>();
+        public ObservableCollection<CanvasGameViewModel> PlaceableOnRailCollection
+        {
+            get
+            {
+                return placeableOnRailCollection;
             }
         }
 
@@ -128,6 +139,21 @@ namespace RoRClient.ViewModels.Game
                 }
             }
         }
+
+
+        private void OnLocoAddedInGameSession(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "Locos")
+            {
+                PropertyChangedExtendedEventArgs<Loco> eventArgs = (PropertyChangedExtendedEventArgs<Loco>)e;
+                Loco loco = eventArgs.NewValue;
+                LocoGameViewModel locoGameViewModel = new LocoGameViewModel(loco);
+                taskFactory.StartNew(() => placeableOnRailCollection.Add(locoGameViewModel));
+            }
+            
+
+        }
+        
         private void CreateRandomRails()
         {
             Random rand = new Random();
@@ -137,12 +163,12 @@ namespace RoRClient.ViewModels.Game
                 if (rand.Next(3) == 0)
                 {
                     List<RailSection> railSections = new List<RailSection>();
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.WEST, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.WEST));
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.WEST, RailSectionPosition.NORTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.NORTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.NORTH, Compass.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.WEST, Compass.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.EAST, Compass.WEST));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.WEST, Compass.NORTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.EAST, Compass.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.EAST, Compass.NORTH));
 
                     List<RailSection> actualRailSection = new List<RailSection>();
                     actualRailSection.Add(railSections[rand.Next(railSections.Count)]);

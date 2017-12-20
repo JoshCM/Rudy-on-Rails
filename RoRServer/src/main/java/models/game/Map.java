@@ -1,10 +1,8 @@
 package models.game;
 
 import models.base.ModelBase;
-import models.session.EditorSession;
-import models.session.RoRSession;
-
 import java.util.Arrays;
+import java.util.UUID;
 
 import communication.MessageInformation;
 
@@ -25,10 +23,10 @@ public class Map extends ModelBase {
 		super(sessionName);
 		squares = new Square[mapSize][mapSize];
 		
-		for(int i= 0; i < mapSize; i++) {
-			for(int j = 0; j < mapSize; j++) {
-				Square s = new Square(sessionName, this, i, j);
-				squares[i][j] = s;
+		for(int x= 0; x < mapSize; x++) {
+			for(int y = 0; y < mapSize; y++) {
+				Square s = new Square(sessionName, x, y);
+				squares[x][y] = s;
 			}
 		}
 	}
@@ -48,8 +46,8 @@ public class Map extends ModelBase {
 		notifyChange(messageInformation);
 	}
 	
-	public Square getSquare(int i, int j) {
-		return squares[i][j];
+	public Square getSquare(int x, int y) {
+		return squares[x][y];
 	}
 	
 	public Square[][] getSquares() {
@@ -84,5 +82,43 @@ public class Map extends ModelBase {
 		result = prime * result + mapSize;
 		result = prime * result + Arrays.deepHashCode(squares);
 		return result;
+	}
+
+	public PlaceableOnSquare getPlaceableById(UUID id) {
+		for(Square[] squares : getSquares())
+        {
+			for(Square square : squares) {
+				PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
+	            if (placeableOnSquare != null)
+	            {
+	                if (placeableOnSquare.getId().equals(id))
+	                {
+	                    return placeableOnSquare;
+	                }
+	            }
+			}
+        }
+        return null;
+	}
+	
+	public Square getSquareById(UUID id) {
+		for(Square[] squares : getSquares())
+        {
+			for(Square square : squares) {
+				if(square.getId().equals(id)) {
+					return square;
+				}
+			}
+        }
+        return null;
+	}
+
+	public void notifyGameStarted() {
+		MessageInformation messageInfo = new MessageInformation("StartGame");
+		notifyChange(messageInfo);
+	}
+	
+	public void setSessionName(String sessionName) {
+		this.sessionName = sessionName;
 	}
 }

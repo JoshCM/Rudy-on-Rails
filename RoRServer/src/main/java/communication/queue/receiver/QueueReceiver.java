@@ -32,6 +32,7 @@ public class QueueReceiver extends QueueBase implements MessageListener {
 			String request = message.getJMSType();
 
 			log.info("ClientRequestReceiver.onMessage(): ... Message received [" + new Date().toString() + "]: "
+					+ request
 					+ textMessage.getText());
 			dispatcher.dispatch(request, textMessage.getText());
 		} catch (JMSException e) {

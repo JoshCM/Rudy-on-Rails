@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RoRClient.ViewModels.Game;
 
 namespace RoRClient.Views.Game
 {
@@ -20,9 +21,15 @@ namespace RoRClient.Views.Game
     /// </summary>
     public partial class TrainSpeedGameUserControl : UserControl
     {
+        SpeedSliderViewModel speedSlider;
         public TrainSpeedGameUserControl()
         {
             InitializeComponent();
+            speedSlider = new SpeedSliderViewModel();
+        }
+        public void SliderValueChanged(object sender, RoutedPropertyChangedEventArgs<Double> e)
+        {
+            speedSlider.UpdateSpeedCommand(e.NewValue);
         }
     }
 }

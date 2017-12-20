@@ -2,26 +2,25 @@ package commands.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import commands.base.CommandBase;
-import commands.editor.CreateRailCommand;
 import communication.MessageInformation;
+import communication.topic.MessageQueue;
+import models.game.Compass;
 import models.game.Map;
 import models.game.PlaceableOnSquare;
+import models.game.Player;
 import models.game.Rail;
 import models.game.RailSection;
-import models.game.RailSectionPosition;
 import models.game.Square;
-import models.session.GameSession;
-import models.session.GameSessionManager;
 import models.session.RoRSession;
 import persistent.MapManager;
 
-public class LoadDefaultMapCommand extends CommandBase {
+public class StartGameCommand extends CommandBase {
 
-	public LoadDefaultMapCommand(RoRSession session, MessageInformation messageInfo) {
+	public StartGameCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
-
 	}
 
 	@Override
@@ -30,6 +29,9 @@ public class LoadDefaultMapCommand extends CommandBase {
 		
 		// Map laden
 		Map map = MapManager.loadMap("GameDefaultMap");
+		map.setSessionName(session.getName());
+		map.addObserver(MessageQueue.getInstance());
+		session.setMap(map);
 		
 		// Jedes Square durchgehen
 		Square [][] squares = map.getSquares();
@@ -42,17 +44,33 @@ public class LoadDefaultMapCommand extends CommandBase {
 				if (square.getPlaceableOnSquare() != null) {
 					Rail rail = (Rail)square.getPlaceableOnSquare();
 					// Hole die SectionPositions aus den RailSections und speichere in Liste
-					List<RailSectionPosition> railSectionPosition = new ArrayList<RailSectionPosition>();
+					List<Compass> railSectionPosition = new ArrayList<Compass>();
 					for (RailSection section : rail.getRailSectionList()) {
 						railSectionPosition.add(section.getNode1());
 						railSectionPosition.add(section.getNode2());
 					}
 					// Neues Rail erstellen und damit an den Client schicken
 					Rail newRail = new Rail(session.getName(), square, railSectionPosition);
-					System.out.println("Neue Rail erstellt auf " + i + " " + j + ": " + rail.toString());
+					System.out.println("Neue Rail erstellt auf " + i + " " + j + ": " + newRail.toString());
 				}
-
 			}
+		}
+
+		createLocoForPlayers(session);
+		
+		session.getMap().notifyGameStarted();
+	}
+
+	/**
+	 * Sobald ein Player der GameSession gejoined ist, soll eine Loco erstellt werden, die dem Player zugeordnet ist
+	 * @param messageInformation
+	 */
+	
+	private void createLocoForPlayers(RoRSession session) {
+		for(Player p : session.getPlayers()) {		
+			CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, p.getId());
+			System.out.println();
+			createLocoCommand.execute();
 		}
 	}
 }

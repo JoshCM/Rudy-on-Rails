@@ -10,8 +10,8 @@ namespace RoRClient.ViewModels.Editor
 
         public ToolbarViewModel()
         {
-            //GenerateToolbarItemsFromFolder();
-            CreateToolbarItems();
+            GenerateToolbarItemsFromFolder();
+            //CreateToolbarItems();
         }
 
         public ToolbarViewModel(string path, bool generate)
@@ -47,7 +47,7 @@ namespace RoRClient.ViewModels.Editor
             {
                 if (file.EndsWith(".png"))
                 {
-                    toolItems.Add(new ToolItem(Path.GetFileName(file).TrimEnd(".png".ToCharArray()), file));
+                    toolItems.Add(new ToolItem(Path.GetFileName(file).Split('.')[0], file));
                 }
             }
         }

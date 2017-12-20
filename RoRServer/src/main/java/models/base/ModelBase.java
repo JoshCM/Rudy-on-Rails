@@ -6,7 +6,6 @@ import java.util.UUID;
 import communication.MessageEnvelope;
 import communication.MessageInformation;
 import communication.topic.MessageQueue;
-import models.session.RoRSession;
 
 /**
  * Base-Klasse für alle Models, damit alle Models eine Id und die zugehörige
@@ -14,17 +13,33 @@ import models.session.RoRSession;
  * Änderungen an den Client geben können über die Methode addMessage()
  */
 public abstract class ModelBase extends ObservableModel implements Model{
+
 	private UUID id;
-	private String sessionName;
+	protected String sessionName;
 
 	public ModelBase(String sessionName) {
 		this.addObserver(MessageQueue.getInstance());
 		this.id = UUID.randomUUID();
 		this.sessionName = sessionName;
 	}
+	
+	// Konstruktur um eine vordefinierte UUID zu setzen
+	public ModelBase(String sessionName, UUID id) {
+		this.addObserver(MessageQueue.getInstance());
+		this.id = id;
+		this.sessionName = sessionName;
+	}
+
+	protected void setId(UUID id) {
+		this.id = id;
+	}
 
 	public UUID getId() {
 		return id;
+	}
+	
+	public String getSessionName() {
+		return sessionName;
 	}
 
 	/**
@@ -36,7 +51,7 @@ public abstract class ModelBase extends ObservableModel implements Model{
 	protected void notifyChange(MessageInformation messageInformation) {
 		MessageEnvelope messageEnvelope = new MessageEnvelope(sessionName, messageInformation.getMessageType(),
 				messageInformation);
-
+		setChanged();
 		notifyObservers(messageEnvelope);
 	}
 }

@@ -14,12 +14,12 @@ public class RailSection extends ModelBase {
 	private int squareXPos;
 	private int squareYPos;
 	private UUID railId;
-	private RailSectionPosition node1;
-	private RailSectionPosition node2;
+	private Compass node1;
+	private Compass node2;
 	
 	// TODO: hier muss placeableOnSquareSection
 
-	public RailSection(String sessionName, Rail rail, RailSectionPosition node1, RailSectionPosition node2) {
+	public RailSection(String sessionName, Rail rail, Compass node1, Compass node2) {
 		super(sessionName);
 		
 		if (node1 == node2) {
@@ -64,11 +64,11 @@ public class RailSection extends ModelBase {
 		return railId;
 	}
 
-	public RailSectionPosition getNode1() {
+	public Compass getNode1() {
 		return node1;
 	}
 
-	public RailSectionPosition getNode2() {
+	public Compass getNode2() {
 		return node2;
 	}
 
@@ -84,6 +84,11 @@ public class RailSection extends ModelBase {
 		notifyNodesUpdated();
 	}
 	
+	public void rotate(boolean right, boolean notYet) {
+		node1 = rotateRailSectionPosition(node1, right);
+		node2 = rotateRailSectionPosition(node2, right);
+	}
+	
 	private void notifyNodesUpdated() {
 		MessageInformation messageInformation = new MessageInformation("UpdateNodesOfRailSection");
 		messageInformation.putValue("squareId", squareId);
@@ -95,18 +100,19 @@ public class RailSection extends ModelBase {
 		notifyChange(messageInformation);
 	}
 	
-	private RailSectionPosition rotateRailSectionPosition(RailSectionPosition railSectionPosition, boolean right) {
+	private Compass rotateRailSectionPosition(Compass railSectionPosition, boolean right) {
 		int newIndex;
 		
 		if(right) {
-			newIndex = ((railSectionPosition.ordinal() + 1) % RailSectionPosition.values().length);
+			newIndex = ((railSectionPosition.ordinal() + 1) % Compass.values().length);
 		} else {
-			newIndex = ((railSectionPosition.ordinal() - 1) % RailSectionPosition.values().length);
+			newIndex = ((railSectionPosition.ordinal() - 1) % Compass.values().length);
 			if(newIndex < 0) {
-				newIndex += RailSectionPosition.values().length;
+				newIndex += Compass.values().length;
 			}
 		}
 		
-		return RailSectionPosition.values()[newIndex];
+		return Compass.values()[newIndex];
 	}
+
 }

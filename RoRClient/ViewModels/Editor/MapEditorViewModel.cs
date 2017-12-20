@@ -123,12 +123,24 @@ namespace RoRClient.ViewModels.Editor
                 squareViewModels.Add(squareViewModel);
                 square.PropertyChanged += OnSquarePropertyChanged;
 
-                if (square.PlaceableOnSquare != null && square.PlaceableOnSquare.GetType() == typeof(Rail))
+
+                if (square.PlaceableOnSquare != null)
                 {
-                    Rail rail = (Rail)square.PlaceableOnSquare;
-                    RailEditorViewModel railViewModel = new RailEditorViewModel(rail);
-                    placeableOnSquareCollection.Add(railViewModel);
-                    rail.PropertyChanged += OnRailPropertyChanged;
+                    switch (square.PlaceableOnSquare.GetType().Name)
+                    {
+                        case "Rail":
+                            Rail rail = (Rail)square.PlaceableOnSquare;
+                            RailEditorViewModel railViewModel = new RailEditorViewModel(rail);
+                            placeableOnSquareCollection.Add(railViewModel);
+                            rail.PropertyChanged += OnRailPropertyChanged;
+                            break;
+                        case "Trainstation":
+                            Trainstation trainstation = (Trainstation)square.PlaceableOnSquare;
+                            TrainstationEditorViewModel trainstationViewModel = new TrainstationEditorViewModel(trainstation);
+                            placeableOnSquareCollection.Add(trainstationViewModel);
+                            trainstation.PropertyChanged += OnTrainstationPropertyChanged;
+                            break;
+                    }
                 }
             }
         }
@@ -145,12 +157,12 @@ namespace RoRClient.ViewModels.Editor
                 if(rand.Next(3) == 0)
                 {
                     List<RailSection> railSections = new List<RailSection>();
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.NORTH, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.WEST, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.WEST));
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.WEST, RailSectionPosition.NORTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.SOUTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), RailSectionPosition.EAST, RailSectionPosition.NORTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.NORTH, Compass.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.WEST, Compass.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.EAST, Compass.WEST));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.WEST, Compass.NORTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.EAST, Compass.SOUTH));
+                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.EAST, Compass.NORTH));
 
                     List<RailSection> actualRailSection = new List<RailSection>();
                     actualRailSection.Add(railSections[rand.Next(railSections.Count)]);
@@ -163,6 +175,11 @@ namespace RoRClient.ViewModels.Editor
         private void OnRailPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             Rail rail = (Rail)sender;
+        }
+
+        private void OnTrainstationPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Trainstation trainstation = (Trainstation)sender;
         }
 
         /// <summary>

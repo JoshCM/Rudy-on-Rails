@@ -51,7 +51,7 @@ namespace RoRClient.Communication.Topic
             // Der Dispatcher (Game/Editor) wird bei Erstellung mitgegeben
             dispatcher.Dispatch(messageType, messageInformation);
 
-            Console.WriteLine("Folgende Änderung am Game erhalten: " + textMessage.Text+"(topicReceiver)");
+           // Console.WriteLine("Folgende Änderung am Game erhalten: " + textMessage.Text+"(topicReceiver)");
         }
     }
 }

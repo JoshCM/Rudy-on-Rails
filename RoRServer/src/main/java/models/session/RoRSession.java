@@ -3,10 +3,10 @@ package models.session;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
-import communication.topic.TopicSender;
 import models.game.Map;
 import models.game.Player;
 import persistent.MapManager;
@@ -42,6 +42,10 @@ public abstract class RoRSession {
 	public void removePlayer(Player player) {
 		this.players.remove(player);
 	}
+	
+	public Player getHost() {
+		return players.stream().filter(x -> x.getIsHost()).findFirst().get();
+	}
 
 	public Map getMap() {
 		return map;
@@ -54,5 +58,4 @@ public abstract class RoRSession {
 	public List<Player> getPlayers() {
 		return Collections.unmodifiableList(players);
 	}
-
 }

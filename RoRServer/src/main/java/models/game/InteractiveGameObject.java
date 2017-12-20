@@ -3,7 +3,6 @@ package models.game;
 import java.util.UUID;
 
 import models.base.ModelBase;
-import models.session.RoRSession;
 
 /**
  * Abstrakte Klasse fuer alle Objekte, mit denen interagiert werden kann
@@ -11,16 +10,23 @@ import models.session.RoRSession;
  */
 public abstract class InteractiveGameObject extends ModelBase {
 	protected final String className;
+	private UUID squareId;
 	private int xPos; // So lange, bis nur noch die id ausreicht
 	private int yPos; // So lange, bis nur noch die id ausreicht
-	private UUID squareId;
     
 	public InteractiveGameObject(String sessionName, Square square) {
 		super(sessionName);
 		this.className = getClass().getName();
 		this.xPos = square.getXIndex();
 		this.yPos = square.getYIndex();
-		this.squareId = square.getId();
+	}
+	
+	public InteractiveGameObject(String sessionName, Square square, UUID id) {
+		super(sessionName, id);
+		this.className = getClass().getName();
+		squareId = square.getId();
+		this.xPos = square.getXIndex();
+		this.yPos = square.getYIndex();
 	}
 	
 	public String getClassName() {
@@ -37,5 +43,12 @@ public abstract class InteractiveGameObject extends ModelBase {
 	
 	public UUID getSquareId() {
 		return squareId;
+	}
+	
+	public void setXPos(int xPos) {
+		this.xPos = xPos;
+	}
+	public void setYPos(int yPos) {
+		this.yPos = yPos;
 	}
 }

@@ -9,7 +9,7 @@ namespace RoRClient.Models.Game
     /// </summary>
     public class Square : ModelBase
     {
-        IPlaceableOnSquare placeableOnSquare = null;
+        protected IPlaceableOnSquare placeableOnSquare = null;
         private int posX;
         private int posY;
 
