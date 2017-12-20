@@ -28,7 +28,6 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	 */
 	public Rail(String sessionName, Square square, List<Compass> railSectionPositions) {
 		super(sessionName, square);
-		
 		railSections = new ArrayList<RailSection>();
 		createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
 		notifyCreatedRail();
@@ -47,7 +46,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	 * Erstellt f√ºr die hereingegebenen RailSectionPositions die jeweiligen RailSections
 	 * Dabei werden f√ºr jede RailSection immer zwei RailSectionPositions ben√∂tigt
 	 * @param sessionName
-	 * @param railSectionPositions
+	 * @param directions
 	 */
 	private void createRailSectionsForRailSectionPositions(String sessionName, List<Compass> railSectionPositions) {
 		for(int i = 0; i < railSectionPositions.size(); i += 2) {
@@ -99,6 +98,23 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		this.trainstationId = trainstationId;
 	}
 	
+	/** 
+	   * Gibt den Ausgang der Rail, 
+	   * und damit auch die Zuk¸nftige Fahrtrichtugn der Lok zur¸ck. 
+	   * 
+	   * @param direction 
+	   * @return exitDirection 
+	   */ 
+	  public Compass getExitDirection(Compass direction){ 
+	    for(RailSection r : railSections){ 
+	      if(r.getNode1() == direction) 
+	        return r.getNode2(); 
+	      if(r.getNode2() == direction) 
+	        return r.getNode1(); 
+	    } 
+	    return null; 
+	  }
+	  
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -108,7 +124,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		for(RailSection section : railSections) {
 			result = prime * result + ((section == null) ? 0 : section.hashCode());
 		}
-		
+
 		return result;
 	}
 

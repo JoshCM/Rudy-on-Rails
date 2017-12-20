@@ -13,8 +13,9 @@ import communication.topic.MessageQueue;
  * Änderungen an den Client geben können über die Methode addMessage()
  */
 public abstract class ModelBase extends ObservableModel implements Model{
+
 	private UUID id;
-	private String sessionName;
+	protected String sessionName;
 
 	public ModelBase(String sessionName) {
 		this.addObserver(MessageQueue.getInstance());
@@ -27,6 +28,10 @@ public abstract class ModelBase extends ObservableModel implements Model{
 		this.addObserver(MessageQueue.getInstance());
 		this.id = id;
 		this.sessionName = sessionName;
+	}
+
+	protected void setId(UUID id) {
+		this.id = id;
 	}
 
 	public UUID getId() {
@@ -46,7 +51,7 @@ public abstract class ModelBase extends ObservableModel implements Model{
 	protected void notifyChange(MessageInformation messageInformation) {
 		MessageEnvelope messageEnvelope = new MessageEnvelope(sessionName, messageInformation.getMessageType(),
 				messageInformation);
-
+		setChanged();
 		notifyObservers(messageEnvelope);
 	}
 }

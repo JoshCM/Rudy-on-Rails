@@ -26,6 +26,11 @@ public class Map extends ModelBase {
 	public Map(String sessionName) {
 		super(sessionName);
 		squares = new Square[mapSize][mapSize];
+		
+		for(int x= 0; x < mapSize; x++) {
+			for(int y = 0; y < mapSize; y++) {
+				Square s = new Square(sessionName, x, y);
+				squares[x][y] = s;
 
 		for (int i = 0; i < mapSize; i++) {
 			for (int j = 0; j < mapSize; j++) {
@@ -49,6 +54,9 @@ public class Map extends ModelBase {
 		messageInformation.putValue("mapName", name);
 		notifyChange(messageInformation);
 	}
+	
+	public Square getSquare(int x, int y) {
+		return squares[x][y];
 
 	public Square getSquare(int i, int j) {
 		return squares[i][j];
@@ -110,6 +118,15 @@ public class Map extends ModelBase {
 			}
 		}
 		return null;
+	}
+
+	public void notifyGameStarted() {
+		MessageInformation messageInfo = new MessageInformation("StartGame");
+		notifyChange(messageInfo);
+	}
+	
+	public void setSessionName(String sessionName) {
+		this.sessionName = sessionName;
 	}
 
 	/**

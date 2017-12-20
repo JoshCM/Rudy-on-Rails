@@ -1,6 +1,8 @@
 package models.session;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -10,7 +12,7 @@ import java.util.UUID;
 public class EditorSessionManager {
 
     private static EditorSessionManager editorSessionManager;
-    private HashMap<UUID, EditorSession> editorSessionMap = new HashMap<>();
+    private HashMap<String, EditorSession> editorSessionMap = new HashMap<>();
 
     private EditorSessionManager(){}
 
@@ -27,7 +29,7 @@ public class EditorSessionManager {
      */
     public EditorSession createNewEditorSession(String editorName){
         EditorSession editorSession = new EditorSession(editorName);
-        editorSessionMap.put(UUID.randomUUID(), editorSession);
+        editorSessionMap.put(editorName, editorSession);
         return editorSession;
     }
     /**
@@ -35,12 +37,12 @@ public class EditorSessionManager {
      * @param editorSession
      */
     public void removeEditorSession(EditorSession editorSession){
-        editorSessionMap.remove(UUID.randomUUID());
+        editorSessionMap.remove(editorSession.getName());
     }
     
     //aktuell wird immer die erste EditorSession in der HashMap zurueckgegeben
     //TODO: sobald wir eine Lobby haben in der man sich einen Editor aussuchen kann, muss auch dieser zurueckgegeben werden.
-    public EditorSession getEditorSession(){
+    public EditorSession getFirstEditorSession(){
         EditorSession editor;
         if(!editorSessionMap.values().isEmpty() ) {
             editor =  (EditorSession) editorSessionMap.values().toArray()[0];
@@ -48,15 +50,17 @@ public class EditorSessionManager {
         }
         return null;
     }
-    
-    public EditorSession getEditorSessionByName(String sessionName){
-        for(EditorSession currentEditorSession : editorSessionMap.values()) {
-        	if(currentEditorSession.getName().equals(sessionName)) {
-        		return currentEditorSession;
-        	}
-        }
 
-        return getEditorSession();
+    public EditorSession getEditorSessionByName(String name) {
+    	return editorSessionMap.get(name);
     }
 
+    
+    public List<EditorSession> getEditorSessionsAsList(){
+    	List<EditorSession> result = new ArrayList<EditorSession>();
+    	for(EditorSession session : editorSessionMap.values()) {
+    		result.add(session);
+    	}
+    	return result;
+    }
 }

@@ -11,7 +11,7 @@ namespace RoRClient.Models.Game
     /// Klasse für einen Cart, der einer Schiene zugeordnet ist
     /// Der Cart besitzt mehrere Container (wird erst später implementiert)
     /// </summary>
-    class Cart : InteractiveGameObject, IPlaceableOnRail
+    public class Cart : InteractiveGameObject, IPlaceableOnRail
     {
         public Cart(Guid id, Square square) : base(square)
         {

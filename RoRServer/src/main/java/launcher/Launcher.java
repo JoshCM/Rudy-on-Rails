@@ -8,7 +8,7 @@ import communication.topic.MessageQueue;
  */
 public class Launcher {
 	public static void main(String[] args) {
-		MessageBroker messageBroker = MessageBroker.getInstance();
+		MessageBroker.getInstance();
 		MessageQueue.getInstance().setup();
 	}
 }

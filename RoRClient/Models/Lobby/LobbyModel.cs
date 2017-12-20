@@ -2,11 +2,21 @@
 using RoRClient.Models.Base;
 using RoRClient.Communication.Queue;
 using RoRClient.Communication;
+using RoRClient.Communication.DataTransferObject;
+using RoRClient.Models.Lobby;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace RoRClient.Models.Game
 {
     class LobbyModel : ModelBase
     {
+        private TaskFactory taskFactory;
+
+        private ObservableCollection<EditorSessionInfo> editorSessionInfos = new ObservableCollection<EditorSessionInfo>();
+        private ObservableCollection<GameSessionInfo> gameSessionInfos = new ObservableCollection<GameSessionInfo>();
+        private string playerName = "Fresh Meat";
+
         private QueueSender fromClientRequestSender;
         private FromServerResponseReceiver queueReceiver;
 		private Guid clientId;
@@ -14,8 +24,40 @@ namespace RoRClient.Models.Game
         private bool connected_Game;
 
         public LobbyModel() {
-			
-		}
+            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        public string PlayerName
+        {
+            get
+            {
+                return playerName;
+            }
+            set
+            {
+                if(playerName != value)
+                {
+                    playerName = value;
+                    NotifyPropertyChanged("PlayerName");
+                }
+            }
+        }
+    
+        public ObservableCollection<EditorSessionInfo> EditorSessionInfos
+        {
+            get
+            {
+                return editorSessionInfos;
+            }
+        }
+
+        public ObservableCollection<GameSessionInfo> GameSessionInfos
+        {
+            get
+            {
+                return gameSessionInfos;
+            }
+        }
 
         public void StartConnection()
         {
@@ -31,7 +73,8 @@ namespace RoRClient.Models.Game
             queueReceiver = new FromServerResponseReceiver(clientId.ToString(), this);
         }
 
-		public QueueSender getFromClientRequestSender()
+
+        public QueueSender getFromClientRequestSender()
 		{
 			return fromClientRequestSender;
 		}
@@ -42,6 +85,17 @@ namespace RoRClient.Models.Game
             {
                 return clientId;
             }
+        }
+
+        public void ReadEditorSessions()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            fromClientRequestSender.SendMessage("ReadEditorSessions", messageInformation);
+        }
+        public void ReadGameSessions()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            fromClientRequestSender.SendMessage("ReadGameSessions", messageInformation);
         }
 
         public bool Connected_Editor
@@ -73,6 +127,30 @@ namespace RoRClient.Models.Game
                     NotifyPropertyChanged("Connected_Game");
                 }
             }
+        }
+
+        public void AddEditorSessionInfo(EditorSessionInfo editorSessionInfo)
+        {
+            taskFactory.StartNew(() => editorSessionInfos.Add(editorSessionInfo));
+            NotifyPropertyChanged("EditorSessionInfos");
+        }
+
+        public void ClearEditorSessionInfos()
+        {
+            taskFactory.StartNew(() => editorSessionInfos.Clear());
+            NotifyPropertyChanged("EditorSessionInfos");
+        }
+
+        public void AddGameSessionInfo(GameSessionInfo gameSessionInfo)
+        {
+            taskFactory.StartNew(() => gameSessionInfos.Add(gameSessionInfo));
+            NotifyPropertyChanged("GameSessionInfos");
+        }
+
+        public void ClearGameSessionInfos()
+        {
+            taskFactory.StartNew(() => gameSessionInfos.Clear());
+            NotifyPropertyChanged("GameSessionInfos");
         }
     }
 }

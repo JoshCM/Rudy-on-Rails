@@ -12,8 +12,12 @@ import java.util.Observer;
  */
 public class ObservableModel {
 	private transient List<ModelObserver> observers = new ArrayList<ModelObserver>();
+	private boolean changed = false;
 	
 	public void addObserver(ModelObserver observer) {
+		if(observers == null) {
+			observers = new ArrayList<ModelObserver>();
+		}
 		observers.add(observer);
 	}
 	
@@ -28,8 +32,23 @@ public class ObservableModel {
 	}
 	
 	public void notifyObservers(Object arg) {
-		for(ModelObserver observer : observers) {
-			observer.update(this, arg);
+		if(hasChanged()) {
+			for(ModelObserver observer : observers) {
+				observer.update(this, arg);
+			}
 		}
+		clearChanged();
+	}
+	
+	public void setChanged() {
+		this.changed = true;
+	}
+	
+	public boolean hasChanged() {
+		return changed;
+	}
+	
+	public void clearChanged() {
+		this.changed = false;
 	}
 }
