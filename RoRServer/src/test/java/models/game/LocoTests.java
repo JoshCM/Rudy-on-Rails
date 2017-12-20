@@ -21,7 +21,7 @@ public class LocoTests {
 		int squarePosX = 0;
 		int squarePosY = 0;
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString());
-		Player player = new Player(gameSession.getName(), "Hans");
+		Player player = new Player(gameSession.getName(), "Hans", UUID.randomUUID(), true);
 
 		Map map = gameSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
@@ -45,7 +45,7 @@ public class LocoTests {
 		directions.add(node2);
 
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString());
-		Player player = new Player(gameSession.getName(), "Hans");
+		Player player = new Player(gameSession.getName(), "Hans", UUID.randomUUID(), true);
 		Map map = gameSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
 		Rail rail = new Rail(gameSession.getName(), square, directions);

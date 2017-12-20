@@ -84,7 +84,6 @@ namespace RoRClient.Communication.Dispatcher
             }
 
             lobbyModel.Connected_Game = true;
-            //TODO: hier soll ein Create Loco Command angestoßen werden
         }
 
         public void HandleReadEditorSessions(MessageInformation messageInformation)

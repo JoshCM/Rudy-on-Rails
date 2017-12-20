@@ -69,7 +69,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	}
 
 	/**
-	 * Überführt die Lok in das nächste mögliche feld in Fahrtrichtung
+	 * Überführt die Lok in das nächste mögliche Feld in Fahrtrichtung
 	 */
 	public void drive() {
 		Rail nextRail = getNextRail();
@@ -169,4 +169,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		return this.speed;
 	}
 
+	public UUID getPlayerId() {
+		return playerId;
+	}
 }

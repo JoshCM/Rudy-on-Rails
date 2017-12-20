@@ -1,6 +1,9 @@
 package models.session;
 
 import static org.junit.Assert.assertEquals;
+
+import java.util.UUID;
+
 import org.junit.Test;
 import models.game.Player;
 import models.session.EditorSession;
@@ -18,7 +21,7 @@ public class EditorSessionManagerTests {
 	public void EditorSessionManager_AddsPlayer() {
 		String editorSessionName = "TestEditorSession";
 		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName);
-		Player player = new Player(editorSessionName, "Neuer Spieler");
+		Player player = new Player(editorSessionName, "Neuer Spieler", UUID.randomUUID(), true);
 		editorSession.addPlayer(player);
 		
 		assertEquals(1, editorSession.getPlayers().size());

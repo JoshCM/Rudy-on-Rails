@@ -49,7 +49,7 @@ public class RailTests {
 		UUID railId = UUID.randomUUID();
 		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions, UUID.randomUUID(), railId);
 		
-		MessageInformation messageInfo = MessageQueue.getInstance().geMessageInformationForRailId("CreateRail", railId);
+		MessageInformation messageInfo = MessageQueue.getInstance().getFirstFoundMessageInformationForMessageType("CreateRail");
 	
 		UUID messageInfoRailId = messageInfo.getValueAsUUID("railId");
 		UUID messageInfoSquareId = messageInfo.getValueAsUUID("squareId");

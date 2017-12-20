@@ -24,7 +24,7 @@ public class CreateLocoCommand implements Command {
 	private UUID playerId;
 	protected RoRSession session;
 	/**
-	 * yPos, xPos müssen von den Bahnhöfen rausgelesen werden
+	 * yPos, xPos mï¿½ssen von den Bahnhï¿½fen rausgelesen werden
 	 * @param session
 	 * @param messageInfo
 	 */
@@ -48,6 +48,7 @@ public class CreateLocoCommand implements Command {
 		if(square.getPlaceableOnSquare() != null) {
 			Rail rail = (Rail) square.getPlaceableOnSquare();
 			Loco loco = new Loco(session.getName(),square, map, playerId);
+			((GameSession) session).addLocomotive(loco);
 			((GameSession) session).add(loco);
 			rail.setPlaceableOnRail(loco);
 		}
