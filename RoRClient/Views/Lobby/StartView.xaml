@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="RoRClient.Views.Lobby.StartView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RoRClient.Views"
+             xmlns:vm ="clr-namespace:RoRClient.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="900" d:DesignWidth="1600" Background="BlanchedAlmond">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="PlayerName"/>
+            <TextBox Text="{Binding LobbyModel.PlayerName, Mode=TwoWay}" Width="200"/>
+        </StackPanel>
+        
+        <Button x:Name="editorButton" Command="{Binding SwitchToJoinEditorLobbyView}" Content="Hier gehts zum Editor"/>
+        <!-- Binding muss noch eingerichtet werden -->
+        <Button x:Name="gameButton" Command="{Binding SwitchToJoinGameLobbyView}" Content="Hier gehts zum Dampf-Modus"/>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,28 @@
+﻿<local:CanvasUserControl x:Class="RoRClient.Views.Editor.SquareEditorUserControl"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                     xmlns:local="clr-namespace:RoRClient.Views"
+                     mc:Ignorable="d" 
+                     x:Name="squareUserControl"
+                     xmlns:vm="clr-namespace:RoRClient.ViewModels"
+					 xmlns:vme="clr-namespace:RoRClient.ViewModels.Editor"
+                     Canvas.Top="{Binding RealY, ElementName=squareUserControl}"
+                     Canvas.Left="{Binding RealX, ElementName=squareUserControl}"
+                     >
+    <Canvas Width="{Binding SquareDim, ElementName=squareUserControl}"
+            Height="{Binding SquareDim, ElementName=squareUserControl}">
+
+        <Rectangle
+            Width="{Binding SquareDim, ElementName=squareUserControl}"
+            Height="{Binding SquareDim, ElementName=squareUserControl}"
+            Fill="BROWN"
+            Stroke="WHITE"
+            StrokeThickness="1">
+            <Rectangle.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding CreatePlaceableOnSquareCommand}"/>
+            </Rectangle.InputBindings>
+        </Rectangle>
+    </Canvas>
+</local:CanvasUserControl>

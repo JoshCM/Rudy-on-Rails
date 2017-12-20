@@ -1,7 +1,12 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RoRClient.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="BrokerUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">tcp://localhost:61616</Value>
+    </Setting>
+    <Setting Name="ImageFolderPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\Resources\Images\Tools\</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>
