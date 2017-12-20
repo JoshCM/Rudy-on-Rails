@@ -130,6 +130,11 @@ public class Map extends ModelBase {
 		return getSquare(newSquareX, newSquareY);
 	}
 
+	/**
+	 * Verschiebt ein PlaceableOnSquare von oldSquareOfPlaceable auf newSquareOfPlaceable
+	 * @param oldSquareOfPlaceable Altes Square von dem das PlaceableOnSquare verschoben werden soll
+	 * @param newSquareOfPlaceable Neues Square auf den das PlaceableOnSquare verschoben werden soll
+	 */
 	public void movePlaceableOnSquare(Square oldSquareOfPlaceable, Square newSquareOfPlaceable) {
 		if (validateMovePlaceableOnSquare(oldSquareOfPlaceable, newSquareOfPlaceable)) {
 			InteractiveGameObject placeableOnSquare = (InteractiveGameObject) oldSquareOfPlaceable.getPlaceableOnSquare();
@@ -149,6 +154,7 @@ public class Map extends ModelBase {
 				for (RailSection railSection : rail.getRailSectionList()) {
 					railSection.changeSquare(newSquareOfPlaceable);
 				}
+				notifyMovedRail(oldSquareOfPlaceable, newSquareOfPlaceable);
 			} else if (placeableOnSquare instanceof Trainstation) {
 				Trainstation trainstation = (Trainstation) placeableOnSquare;
 				// trainstationRails müssen auch die square-Änderung mitbekommen
@@ -160,27 +166,16 @@ public class Map extends ModelBase {
 					trainstationRail.changeSquare(newSquareOfRail);
 					newSquareOfRail.setPlaceableOnSquare(trainstationRail);
 				}
+				notifyMovedTrainstation(oldSquareOfPlaceable, newSquareOfPlaceable, trainstation);
 			}
-			notifyMovedPlaceableOnSquare(oldSquareOfPlaceable, newSquareOfPlaceable, placeableOnSquare);
 		} else {
 			throw new NotMoveableException(String.format("PlaceableOnSquare von %s ist nicht auf %s verschiebbar",
 					oldSquareOfPlaceable.toString(), newSquareOfPlaceable.toString()));
 		}
 	}
 
-	private void notifyMovedPlaceableOnSquare(Square oldSquare, Square newSquare,
-			InteractiveGameObject movedPlaceableOnSquare) {
-		switch (movedPlaceableOnSquare.getClass().getSimpleName()) {
-		case "Rail":
-			notifyMovedRail(oldSquare, newSquare);
-			break;
-		case "Trainstation":
-			notifyMovedTrainstation(oldSquare, newSquare, (Trainstation) movedPlaceableOnSquare);
-			break;
-		}
-	}
-
 	private void notifyMovedTrainstation(Square oldSquare, Square newSquare, Trainstation trainstation) {
+		// TODO: Trainstation und Rails einzeln moven als Command
 		MessageInformation messageInformation = new MessageInformation("MoveTrainstation");
 		messageInformation.putValue("oldXPos", oldSquare.getXIndex());
 		messageInformation.putValue("oldYPos", oldSquare.getYIndex());
@@ -209,10 +204,16 @@ public class Map extends ModelBase {
 		notifyChange(messageInformation);
 	}
 
+	/**
+	 * Validiert ob das PlaceableOnSquare von oldSquare auf newSquare gesetzt werden kann
+	 * @param oldSquare
+	 * @param newSquare
+	 * @return boolean
+	 */
 	private boolean validateMovePlaceableOnSquare(Square oldSquare, Square newSquare) {
 		InteractiveGameObject placeableOnSquare = (InteractiveGameObject) oldSquare.getPlaceableOnSquare();
 		if (placeableOnSquare instanceof Rail) {
-			return validateSetRailRailOnMap(newSquare);
+			return validateSetRailOnMap(newSquare);
 		} else if (placeableOnSquare instanceof Trainstation) {
 			Trainstation possibleTrainstation = (Trainstation) placeableOnSquare;
 			return validateSetTrainstationOnMap(newSquare, possibleTrainstation.getAlignment());
@@ -220,13 +221,24 @@ public class Map extends ModelBase {
 		return false;
 	}
 
-	private boolean validateSetRailRailOnMap(Square newSquare) {
+	/**
+	 * Validiert ob eine Rail auf newSquare gesetzt werden kann
+	 * @param newSquare
+	 * @return boolean
+	 */
+	private boolean validateSetRailOnMap(Square newSquare) {
 		if (newSquare.getPlaceableOnSquare() != null)
 			return false;
 		return true;
 	}
 
-	public boolean validateSetTrainstationOnMap(Square square, Compass alignment) {
+	/**
+	 * Validiert ob eine Trainstation auf newSquare gesetzt werden kann
+	 * @param newSquare Neues Square 
+	 * @param alignment Ausrichtung der Trainstation
+	 * @return boolean
+	 */
+	public boolean validateSetTrainstationOnMap(Square newSquare, Compass alignment) {
 		// TODO: ist noch zu konfus das height auch width sein kann und andersherum
 		int trainstationRailsHeight = 3;
 		int trainstationRailsWidth = 1;
@@ -242,18 +254,23 @@ public class Map extends ModelBase {
 			trainstationWidth = trainstationRailsHeight;
 		}
 
-		if (!validatePossibleTrainstation(this, square))
+		if (!validatePossibleTrainstation(newSquare))
 			return false;
-		if (!validateWindowEdges(this, square, trainstationHeight, trainstationWidth))
+		if (!validateWindowEdges(newSquare, trainstationHeight, trainstationWidth))
 			return false;
-		if (!validatePossibleRails(this, square, alignment))
+		if (!validatePossibleRails(newSquare, alignment))
 			return false;
 		return true;
 	}
 
-	private boolean validatePossibleTrainstation(Map map, Square square) {
-		if (square != null) {
-			if (square.getPlaceableOnSquare() != null) {
+	/**
+	 * Validiert ob das Trainstation-Gebäude auf das newSquare gesetzt werden kann
+	 * @param newSquare
+	 * @return boolean
+	 */
+	private boolean validatePossibleTrainstation(Square newSquare) {
+		if (newSquare != null) {
+			if (newSquare.getPlaceableOnSquare() != null) {
 				return false;
 			}
 		} else {
@@ -262,26 +279,39 @@ public class Map extends ModelBase {
 		return true;
 	}
 
-	private boolean validateWindowEdges(Map map, Square square, int trainstationHeight, int trainstationWidth) {
+	/**
+	 * Gibt an ob die Trainstation zu nahe an den Kanten der Map ist
+	 * @param newSquare
+	 * @param trainstationHeight
+	 * @param trainstationWidth
+	 * @return boolean
+	 */
+	private boolean validateWindowEdges(Square newSquare, int trainstationHeight, int trainstationWidth) {
 		// TODO: muss noch an die ränder optimal angepasst werden
 
 		// wenn y kleiner ist als die höhe minus das trainstation-feld
-		if (square.getYIndex() < (trainstationHeight - 1))
+		if (newSquare.getYIndex() < (trainstationHeight - 1))
 			return false;
 		// wenn y größer ist als höhe der map minus die höhe minus das trainstation-feld
-		if (square.getYIndex() > (map.getSquares().length - 1) - (trainstationHeight + 1))
+		if (newSquare.getYIndex() > (this.getSquares().length - 1) - (trainstationHeight + 1))
 			return false;
 		// wenn x kleiner ist als breite der map minus die breite minus das
 		// trainstation-feld
-		if (square.getXIndex() < (trainstationWidth - 1))
+		if (newSquare.getXIndex() < (trainstationWidth - 1))
 			return false;
 		// wenn x kleiner ist als anzahl der horizontalen rails
-		if (square.getXIndex() > (map.getSquares().length - 1) - (trainstationWidth + 1))
+		if (newSquare.getXIndex() > (this.getSquares().length - 1) - (trainstationWidth + 1))
 			return false;
 		return true;
 	}
 
-	private boolean validatePossibleRails(Map map, Square square, Compass alignment) {
+	/**
+	 * Gibt an ob die neuen Squares der TrainstationRails einer neuen Trainstation platzierbar sind
+	 * @param newSquare
+	 * @param alignment Ausrichtung der Trainstation
+	 * @return boolean
+	 */
+	private boolean validatePossibleRails(Square newSquare, Compass alignment) {
 
 		// Iteriert über die Squares für die möglichen Rails der Trainstation
 		for (int i = 0; i <= 2; i++) {
@@ -289,16 +319,16 @@ public class Map extends ModelBase {
 			Square possibleRailSquare = null;
 			switch (alignment) {
 			case EAST:
-				possibleRailSquare = map.getSquare(square.getXIndex() + 1, square.getYIndex() + (i - 1));
+				possibleRailSquare = this.getSquare(newSquare.getXIndex() + 1, newSquare.getYIndex() + (i - 1));
 				break;
 			case SOUTH:
-				possibleRailSquare = map.getSquare(square.getXIndex() + (i - 1), square.getYIndex() + 1);
+				possibleRailSquare = this.getSquare(newSquare.getXIndex() + (i - 1), newSquare.getYIndex() + 1);
 				break;
 			case WEST:
-				possibleRailSquare = map.getSquare(square.getXIndex() - 1, square.getYIndex() + (i - 1));
+				possibleRailSquare = this.getSquare(newSquare.getXIndex() - 1, newSquare.getYIndex() + (i - 1));
 				break;
 			case NORTH:
-				possibleRailSquare = map.getSquare(square.getXIndex() + (i - 1), square.getYIndex() - 1);
+				possibleRailSquare = this.getSquare(newSquare.getXIndex() + (i - 1), newSquare.getYIndex() - 1);
 				break;
 			}
 
