@@ -172,6 +172,7 @@
     <Compile Include="ViewModels\Editor\RailEditorViewModel.cs" />
     <Compile Include="ViewModels\ViewConstants.cs" />
     <Compile Include="ViewModels\Editor\MapEditorViewModel.cs" />
+    <Compile Include="Views\AnimatedCanvasUserControl.cs" />
     <Compile Include="Views\CanvasUserControl.cs" />
     <Compile Include="Views\Editor\Helper\RegexValidator.cs" />
     <Compile Include="Views\Editor\Helper\ToolConverter.cs" />

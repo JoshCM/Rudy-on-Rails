@@ -9,9 +9,9 @@ namespace RoRClient.Views
     /// <summary>
     /// Oberklasse für alle UserControls, die Objekte auf dem Spielfeld anzeigen
     /// </summary>
-    public class CanvasUserControl : UserControl
+    public class AnimatedCanvasUserControl : UserControl
     {
-        public CanvasUserControl()
+        public AnimatedCanvasUserControl()
         {
             SquareDim = ViewConstants.SQUARE_DIM;
         }
@@ -27,12 +27,12 @@ namespace RoRClient.Views
                 SetValue(XProperty, value);
             }
         }
-        public static readonly DependencyProperty XProperty = DependencyProperty.Register("X", typeof(int), typeof(CanvasUserControl), new UIPropertyMetadata(0, OnXchanged));
+        public static readonly DependencyProperty XProperty = DependencyProperty.Register("X", typeof(int), typeof(AnimatedCanvasUserControl), new UIPropertyMetadata(0, OnXchanged));
 
         private static void OnXchanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CanvasUserControl canvasUserControl = (CanvasUserControl)d;
-            canvasUserControl.RealX = canvasUserControl.X * ViewConstants.SQUARE_DIM;
+            AnimatedCanvasUserControl canvasUserControl = (AnimatedCanvasUserControl)d;
+            canvasUserControl.BeginAnimation(AnimatedCanvasUserControl.RealXProperty, new Int32Animation { From = canvasUserControl.RealX, To = canvasUserControl.X * ViewConstants.SQUARE_DIM });
         }
 
 
@@ -47,12 +47,12 @@ namespace RoRClient.Views
                 SetValue(YProperty, value);
             }
         }
-        public static readonly DependencyProperty YProperty = DependencyProperty.Register("Y", typeof(int), typeof(CanvasUserControl), new UIPropertyMetadata(0, OnYchanged));
+        public static readonly DependencyProperty YProperty = DependencyProperty.Register("Y", typeof(int), typeof(AnimatedCanvasUserControl), new UIPropertyMetadata(0, OnYchanged));
 
         private static void OnYchanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CanvasUserControl canvasUserControl = (CanvasUserControl)d;
-            canvasUserControl.RealY = canvasUserControl.Y * ViewConstants.SQUARE_DIM;
+            AnimatedCanvasUserControl canvasUserControl = (AnimatedCanvasUserControl)d;
+            canvasUserControl.BeginAnimation(AnimatedCanvasUserControl.RealYProperty, new Int32Animation { From = canvasUserControl.RealY, To = canvasUserControl.Y * ViewConstants.SQUARE_DIM });
         }
 
         public int RealX
@@ -66,7 +66,7 @@ namespace RoRClient.Views
                 SetValue(RealXProperty, value);
             }
         }
-        public static readonly DependencyProperty RealXProperty = DependencyProperty.Register("RealX", typeof(int), typeof(CanvasUserControl), new UIPropertyMetadata(0));
+        public static readonly DependencyProperty RealXProperty = DependencyProperty.Register("RealX", typeof(int), typeof(AnimatedCanvasUserControl), new UIPropertyMetadata(0));
 
         public int RealY
         {
@@ -79,7 +79,7 @@ namespace RoRClient.Views
                 SetValue(RealYProperty, value);
             }
         }
-        public static readonly DependencyProperty RealYProperty = DependencyProperty.Register("RealY", typeof(int), typeof(CanvasUserControl), new UIPropertyMetadata(0));
+        public static readonly DependencyProperty RealYProperty = DependencyProperty.Register("RealY", typeof(int), typeof(AnimatedCanvasUserControl), new UIPropertyMetadata(0));
   
         public int SquareDim
         {
@@ -92,6 +92,6 @@ namespace RoRClient.Views
                 SetValue(SquareDimProperty, value);
             }
         }
-        public static readonly DependencyProperty SquareDimProperty = DependencyProperty.Register("SquareDim", typeof(int), typeof(SquareEditorUserControl), new UIPropertyMetadata(0));
+        public static readonly DependencyProperty SquareDimProperty = DependencyProperty.Register("SquareDim", typeof(int), typeof(AnimatedCanvasUserControl), new UIPropertyMetadata(0));
     }
 }

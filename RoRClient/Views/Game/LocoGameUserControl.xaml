@@ -1,4 +1,4 @@
-﻿<v:CanvasUserControl x:Class="RoRClient.Views.Game.LocoGameUserControl"
+﻿<v:AnimatedCanvasUserControl x:Class="RoRClient.Views.Game.LocoGameUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -19,4 +19,4 @@
                 Source="/RoRClient;component/Resources/Images/loco.png" Stretch="Fill">
         </Image>
     </Canvas>
-</v:CanvasUserControl>
+</v:AnimatedCanvasUserControl>

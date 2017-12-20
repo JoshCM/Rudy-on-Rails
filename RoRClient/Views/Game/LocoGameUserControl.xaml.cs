@@ -18,7 +18,7 @@ namespace RoRClient.Views.Game
     /// <summary>
     /// Interaktionslogik für LocoUserControl.xaml
     /// </summary>
-    public partial class LocoGameUserControl : CanvasUserControl
+    public partial class LocoGameUserControl : AnimatedCanvasUserControl
     {
         public LocoGameUserControl()
         {
