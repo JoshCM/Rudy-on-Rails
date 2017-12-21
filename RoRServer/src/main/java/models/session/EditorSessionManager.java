@@ -27,8 +27,8 @@ public class EditorSessionManager {
      * @param editorName
      * @return
      */
-    public EditorSession createNewEditorSession(String editorName){
-        EditorSession editorSession = new EditorSession(editorName);
+    public EditorSession createNewEditorSession(String editorName, UUID hostPlayerId, String hostPlayerName){
+        EditorSession editorSession = new EditorSession(editorName, hostPlayerId, hostPlayerName);
         editorSessionMap.put(editorName, editorSession);
         return editorSession;
     }

@@ -2,6 +2,9 @@ package communication.dispatcher;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import org.apache.log4j.Logger;
+
 import communication.MessageInformation;
 
 /**
@@ -9,6 +12,8 @@ import communication.MessageInformation;
  * der Nachrichten für Dispatcher verankert.
  */
 public abstract class DispatcherBase {
+	private Logger log = Logger.getLogger(FromClientRequestQueueDispatcher.class.getName());
+	
 	public DispatcherBase() {
 
 	}
@@ -22,6 +27,7 @@ public abstract class DispatcherBase {
 			paramsObj[0] = messageInfo;
 			Method thisMethod = this.getClass().getDeclaredMethod(methodName, params);
 			thisMethod.invoke(this, paramsObj);
+			log.info("Called " + methodName);
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {

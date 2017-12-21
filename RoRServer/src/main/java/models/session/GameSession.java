@@ -1,15 +1,12 @@
 package models.session;
 
+import java.util.ArrayList;
+import java.util.UUID;
 import communication.MessageInformation;
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
 import models.game.Loco;
-import persistent.MapManager;
 import models.game.TickableGameObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
 
 /**
  * Oberklasse vom Game-Modus. 
@@ -25,8 +22,8 @@ public class GameSession extends RoRSession{
 	private Ticker ticker;
 	private ArrayList<Loco> locomotives = new ArrayList<>();
 
-	public GameSession(String name) {
-		super(name);
+	public GameSession(String name, UUID hostPlayerId, String hostPlayerName) {
+		super(name, hostPlayerId, hostPlayerName);
 		GameSessionDispatcher dispatcher = new GameSessionDispatcher(this);
 		this.queueReceiver = new QueueReceiver(name, dispatcher);
 		this.ticker = new Ticker();

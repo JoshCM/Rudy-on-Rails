@@ -13,18 +13,18 @@ public class GameSessionManagerTests {
 	@Test
 	public void EditorSessionManager_CreatesEditorSession() {
 		String gameSessionName = "TestGameSession";
-		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName);
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), "HostPlayer");
 		assertEquals(gameSessionName, gameSession.getSessionName());
 	}
 	
 	@Test
 	public void EditorSessionManager_AddsPlayer() {
 		String gameSessionName = "TestGameSession";
-		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName);
-		Player player = new Player(gameSessionName, "Neuer Spieler", UUID.randomUUID(), true);
-		gameSession.addPlayer(player);
-		
-		assertEquals(1, gameSession.getPlayers().size());
-		assertEquals("Neuer Spieler", gameSession.getPlayers().get(0).getName());
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), "HostPlayer");
+		Player player = gameSession.createPlayer(UUID.randomUUID(), "Neuer Spieler");
+
+		assertEquals(2, gameSession.getPlayers().size());
+		assertEquals("HostPlayer", gameSession.getPlayers().get(0).getName());
+		assertEquals("Neuer Spieler", gameSession.getPlayers().get(1).getName());
 	}
 }

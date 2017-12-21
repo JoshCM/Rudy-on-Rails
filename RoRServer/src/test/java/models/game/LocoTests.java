@@ -20,7 +20,8 @@ public class LocoTests {
 	public void LocoHasInitialCart() {
 		int squarePosX = 0;
 		int squarePosY = 0;
-		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString());
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(),
+				UUID.randomUUID(), "Player");
 		Player player = new Player(gameSession.getSessionName(), "Hans", UUID.randomUUID(), true);
 
 		Map map = gameSession.getMap();
@@ -44,7 +45,8 @@ public class LocoTests {
 		directions.add(node1);
 		directions.add(node2);
 
-		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString());
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(),
+				UUID.randomUUID(), "Player");
 		Player player = new Player(gameSession.getSessionName(), "Hans", UUID.randomUUID(), true);
 		Map map = gameSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);

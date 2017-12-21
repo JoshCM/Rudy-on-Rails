@@ -25,17 +25,25 @@ public abstract class RoRSession extends ModelBase {
 	
 	protected QueueReceiver queueReceiver;
 	
-	public RoRSession(String name) {
+	public RoRSession(String name, UUID hostPlayerId, String hostPlayerName) {
 		super(name);
 		map = new Map(name);
+		createHostPlayer(hostPlayerId, hostPlayerName);
+	}
+	
+	private void createHostPlayer(UUID playerId, String playerName) {
+		Player player = new Player(getSessionName(), playerName, playerId, true);
+		players.add(player);
+	}
+	
+	public Player createPlayer(UUID playerId, String playerName) {
+		Player player = new Player(getSessionName(), playerName, playerId, false);
+		players.add(player);
+		return player;
 	}
 		
 	public void setup() {
 		queueReceiver.setup();
-	}
-	
-	public void addPlayer(Player player) {
-		this.players.add(player);
 	}
 
 	public void removePlayer(Player player) {

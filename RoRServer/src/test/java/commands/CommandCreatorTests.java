@@ -30,41 +30,43 @@ public class CommandCreatorTests {
 		messageInformation.putValue("xPos", 0);
 		messageInformation.putValue("yPos", 0);
 		messageInformation.putValue("railSections", new ArrayList<JsonObject>());
-		
-		RoRSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
+
+		RoRSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+				UUID.randomUUID(), "Player");
 		CreateRailCommand command = new CreateRailCommand(session, messageInformation);
-		
+
 		String commandName = command.getClass().getName();
 		Command createdCommand = null;
 		try {
 			createdCommand = CommandCreator.createCommandForName(commandName, session, messageInformation);
 		} catch (Exception e) {
-			
+
 		}
-		
+
 		assertNotNull(createdCommand);
 		assertEquals(commandName, createdCommand.getClass().getName());
 		assertEquals(command.getClass(), createdCommand.getClass());
 	}
-	
+
 	@Test
 	public void CreateTrainstationCommandIsCreatedViaName() {
 		MessageInformation messageInformation = new MessageInformation();
 		messageInformation.putValue("xPos", 0);
 		messageInformation.putValue("yPos", 1);
 		messageInformation.putValue("alignment", Compass.NORTH.toString());
-		
-		RoRSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
+
+		RoRSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+				UUID.randomUUID(), "Player");
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
-		
+
 		String commandName = command.getClass().getName();
 		Command createdCommand = null;
 		try {
 			createdCommand = CommandCreator.createCommandForName(commandName, session, messageInformation);
 		} catch (Exception e) {
-			
+
 		}
-		
+
 		assertNotNull(createdCommand);
 		assertEquals(commandName, createdCommand.getClass().getName());
 		assertEquals(command.getClass(), createdCommand.getClass());

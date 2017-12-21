@@ -23,16 +23,17 @@ public class RailTests {
 		railSectionPositions.add(node2);
 		int squarePosX = 0;
 		int squarePosY = 0;
-		
-		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
+
+		EditorSession editorSession = EditorSessionManager.getInstance()
+				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "Player");
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
 		Rail rail = new Rail(editorSession.getSessionName(), square, railSectionPositions);
-		
+
 		assertEquals(node1, rail.getFirstSection().getNode1());
 		assertEquals(node2, rail.getFirstSection().getNode2());
 	}
-	
+
 	@Test
 	public void RailCreatesMessageAfterCreation() {
 		Compass node1 = Compass.NORTH;
@@ -42,45 +43,47 @@ public class RailTests {
 		railSectionPositions.add(node2);
 		int squarePosX = 0;
 		int squarePosY = 0;
-		
-		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
+
+		EditorSession editorSession = EditorSessionManager.getInstance()
+				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "Player");
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
 		UUID railId = UUID.randomUUID();
 		Rail rail = new Rail(editorSession.getSessionName(), square, railSectionPositions, UUID.randomUUID(), railId);
-		
-		MessageInformation messageInfo = MessageQueue.getInstance().getFirstFoundMessageInformationForMessageType("CreateRail");
-	
+
+		MessageInformation messageInfo = MessageQueue.getInstance()
+				.getFirstFoundMessageInformationForMessageType("CreateRail");
+
 		UUID messageInfoRailId = messageInfo.getValueAsUUID("railId");
 		UUID messageInfoSquareId = messageInfo.getValueAsUUID("squareId");
 		int messageInfoXPos = messageInfo.getValueAsInt("xPos");
 		int messageInfoYPos = messageInfo.getValueAsInt("yPos");
 
-		//warum nicht die richtige ?
+		// warum nicht die richtige ?
 		assertEquals(rail.getId(), messageInfoRailId);
 		assertEquals(rail.getXPos(), messageInfoXPos);
 		assertEquals(rail.getYPos(), messageInfoYPos);
 		assertEquals(rail.getSquareId(), messageInfoSquareId);
 	}
-	
+
 	@Test
 	public void RailRotatesRight() {
 		Rail rail = createCrossRail();
 		rail.rotate(true);
-		
+
 		assertEquals(Compass.EAST, rail.getFirstSection().getNode1());
 		assertEquals(Compass.WEST, rail.getFirstSection().getNode2());
 	}
-	
+
 	@Test
 	public void RailRotatesLeft() {
 		Rail rail = createCrossRail();
 		rail.rotate(false);
-		
+
 		assertEquals(Compass.WEST, rail.getFirstSection().getNode1());
 		assertEquals(Compass.EAST, rail.getFirstSection().getNode2());
 	}
-	
+
 	private Rail createCrossRail() {
 		Compass node1 = Compass.NORTH;
 		Compass node2 = Compass.SOUTH;
@@ -93,8 +96,9 @@ public class RailTests {
 		railSectionPositions.add(node4);
 		int squarePosX = 0;
 		int squarePosY = 0;
-		
-		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
+
+		EditorSession editorSession = EditorSessionManager.getInstance()
+				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "Player");
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
 		Rail rail = new Rail(editorSession.getSessionName(), square, railSectionPositions);
