@@ -16,7 +16,7 @@
             Height="{Binding SquareDim, ElementName=cartGameUserControl}">
         <Image Width="{Binding SquareDim, ElementName=cartGameUserControl}" 
                Height="{Binding SquareDim, ElementName=cartGameUserControl}" 
-                Source="/RoRClient;component/Resources/Images/Tools/loco.png" Stretch="Fill">
+                Source="/RoRClient;component/Resources/Images/loco.png" Stretch="Fill">
         </Image>
     </Canvas>
 </v:CanvasUserControl>

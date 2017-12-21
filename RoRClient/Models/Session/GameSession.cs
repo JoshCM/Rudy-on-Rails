@@ -14,6 +14,7 @@ namespace RoRClient.Models.Session
     {
         private static GameSession gameSession = null;
         protected ObservableCollection<Loco> locos = new ObservableCollection<Loco>();
+        protected ObservableCollection<Cart> carts = new ObservableCollection<Cart>();
 
         private GameSession() : base()
         {
@@ -33,7 +34,13 @@ namespace RoRClient.Models.Session
                 return locos;
             }
         }
-
+        public ObservableCollection<Loco> Carts
+        {
+            get
+            {
+                return Carts;
+            }
+        }
         private bool started;
         public bool Started
         {
@@ -56,6 +63,12 @@ namespace RoRClient.Models.Session
             locos.Add(loco);
             NotifyPropertyChanged("Locos",null,loco);
             
+        }
+        public void AddCart(Cart cart)
+        {
+            carts.Add(cart);
+            NotifyPropertyChanged("Carts", null, cart);
+
         }
         public static GameSession GetInstance()
         {

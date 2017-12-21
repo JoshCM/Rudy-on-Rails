@@ -29,7 +29,7 @@ public class CreateLocoCommand implements Command {
 	 * @param messageInfo
 	 */
 	public CreateLocoCommand(RoRSession session, UUID playerId) {
-		xPos = 7;
+		xPos = 8;
 		yPos = 3;
 		this.session = session;
 		//xPos = messageInfo.getValueAsInt("xPos");

@@ -33,14 +33,14 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		this.setCarts(new ArrayList<Cart>());
 		// TODO: Wenn Zug Richtung implementiert ist, muss der Wagon so initialisiert
 		// werden, dass er ein Feld hinter der Lok steht
-		this.addCart();
 		this.square = square;// Das hier muss noch raus? Sollte man nicht an das InteractivGameoObject das Square packen?
 		this.rail = (Rail) square.getPlaceableOnSquare();
 		this.map = map;
 		this.compass = rail.getFirstSection().getNode1();
-		this.speed = 1; // Nur zu testzwecken
+		this.speed = 0; // Nur zu testzwecken
 		this.playerId = playerId;
 		SendCreatedLocoMessage();
+		this.addCart();
 	}
 
 	/**
@@ -50,15 +50,18 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	 */
 	public void addCart() {
 		Rail prevRail = null;
+		Square cartSquare = null;
 		if(carts.isEmpty()) {
 			Compass compass = this.getCompassNegation();
 			prevRail = getPreviousRail(compass);
+			cartSquare = map.getSquare(prevRail.getXPos(), prevRail.getYPos());
 		}
 		else {
+			
 			//Wenn du mehrere Carts haben willst, musst du hier programmieren. 
 		}
-		carts.add(new Cart(this.sessionName,prevRail.getSquare()));
-		SendAddCartMessage(prevRail.getSquare());
+		carts.add(new Cart(this.sessionName, cartSquare));
+		SendAddCartMessage(cartSquare);
 		
 	}
 

@@ -30,6 +30,7 @@ namespace RoRClient.ViewModels.Game
             InitSquares();
 
             GameSession.GetInstance().PropertyChanged += OnLocoAddedInGameSession;
+            GameSession.GetInstance().PropertyChanged += OnCartAddedInGameSession;
             //TO-DO: nur zum Testen
             //CreateRandomRails();
 
@@ -153,7 +154,18 @@ namespace RoRClient.ViewModels.Game
             
 
         }
-        
+        private void OnCartAddedInGameSession(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Carts")
+            {
+                PropertyChangedExtendedEventArgs<Cart> eventArgs = (PropertyChangedExtendedEventArgs<Cart>)e;
+                Cart cart = eventArgs.NewValue;
+                CartGameViewModel cartGameViewModel = new CartGameViewModel(cart);
+                taskFactory.StartNew(() => placeableOnRailCollection.Add(cartGameViewModel));
+            }
+
+
+        }
         private void CreateRandomRails()
         {
             Random rand = new Random();

@@ -12,14 +12,13 @@ namespace RoRClient.Commands.Game.Create
 {
     class CreateCartCommand : CommandBase
     {
-        private Guid locoId;
         private Guid playerId;
         private int xPos;
         private int yPos;
 
         public CreateCartCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
-            locoId = Guid.Parse(messageInformation.GetValueAsString("locoId"));
+            playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
         }
@@ -28,8 +27,11 @@ namespace RoRClient.Commands.Game.Create
         {
             Player player = session.GetPlayerById(playerId);
             Loco loco = player.Loco;
+            Square square = ((GameSession)session).Map.GetSquare(xPos, yPos);
+            Cart cart = new Cart(Guid.NewGuid(), square);
+            loco.Carts.Add(cart);
+            ((GameSession)session).AddCart(cart);
 
-            //loco.addCart(new Cart(new Guid(), ));
         }
     }
 }
