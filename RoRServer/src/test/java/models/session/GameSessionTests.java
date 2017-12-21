@@ -3,16 +3,9 @@ package models.session;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
-
 import org.junit.Test;
-
-import communication.MessageEnvelope;
 import helper.MessageQueueStub;
-import models.base.ModelObserver;
-import models.base.ObservableModel;
 
 public class GameSessionTests {
 	@Test
