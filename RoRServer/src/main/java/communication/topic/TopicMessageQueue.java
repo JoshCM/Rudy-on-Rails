@@ -68,6 +68,10 @@ public class TopicMessageQueue implements ModelObserver {
 		}
 		return null;
 	}
+	
+	public void clear() {
+		messagesToSendOnTopicQueue.clear();
+	}
 
 	@Override
 	public void update(ObservableModel observable, Object arg) {

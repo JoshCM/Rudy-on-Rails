@@ -17,6 +17,7 @@ public abstract class InteractiveGameObject extends ModelBase {
 	public InteractiveGameObject(String sessionName, Square square) {
 		super(sessionName);
 		this.className = getClass().getName();
+		this.squareId = square.getId();
 		this.xPos = square.getXIndex();
 		this.yPos = square.getYIndex();
 	}

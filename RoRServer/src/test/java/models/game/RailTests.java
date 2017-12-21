@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import org.junit.Before;
 import org.junit.Test;
 
 import communication.MessageInformation;
@@ -13,6 +15,10 @@ import models.session.EditorSession;
 import models.session.EditorSessionManager;
 
 public class RailTests {
+	@Before
+	public void initTests() {
+		TopicMessageQueue.getInstance().clear(); // Leider nötig, damit die richtige Nachricht rausbekommt
+	}
 
 	@Test
 	public void RailIsCreatedWithRightValues() {
