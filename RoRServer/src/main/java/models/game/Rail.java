@@ -20,6 +20,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	protected PlaceableOnRail placeableOnRail = null;
 	protected RailSection section1;
 	protected RailSection section2;
+	private Square square;
 	private UUID trainstationId;
 	protected List<RailSection> railSections;
 
@@ -28,6 +29,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	 */
 	public Rail(String sessionName, Square square, List<Compass> railSectionPositions) {
 		super(sessionName, square);
+		this.square = square;
 		railSections = new ArrayList<RailSection>();
 		createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
 		notifyCreatedRail();
@@ -35,7 +37,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	
 	public Rail(String sessionName, Square square, List<Compass> railSectionPositions, UUID trainstationId, UUID id) {
 		super(sessionName, square, id);
-		
+		this.square = square;
 		setTrainstationId(trainstationId);
 		railSections = new ArrayList<RailSection>();
 		createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
@@ -89,6 +91,9 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		return railSections;
 	}
 
+	public Square getSquare() {
+		return square;
+	}
 	
 	public UUID getTrainstationId() {
 		return trainstationId;
@@ -114,6 +119,8 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	    } 
 	    return null; 
 	  }
+	  
+	  
 	  
 	@Override
 	public int hashCode() {

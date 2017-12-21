@@ -33,8 +33,8 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		this.setCarts(new ArrayList<Cart>());
 		// TODO: Wenn Zug Richtung implementiert ist, muss der Wagon so initialisiert
 		// werden, dass er ein Feld hinter der Lok steht
-		this.addCart(new Cart(sessionName, square));
-		this.square = square;// Das hier muss noch raus, aber erst testen
+		this.addCart();
+		this.square = square;// Das hier muss noch raus? Sollte man nicht an das InteractivGameoObject das Square packen?
 		this.rail = (Rail) square.getPlaceableOnSquare();
 		this.map = map;
 		this.compass = rail.getFirstSection().getNode1();
@@ -48,9 +48,18 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	 * 
 	 * @param cart
 	 */
-	public void addCart(Cart cart) {
-		this.carts.add(cart);
-
+	public void addCart() {
+		Rail prevRail = null;
+		if(carts.isEmpty()) {
+			Compass compass = this.getCompassNegation();
+			prevRail = getPreviousRail(compass);
+		}
+		else {
+			//Wenn du mehrere Carts haben willst, musst du hier programmieren. 
+		}
+		carts.add(new Cart(this.sessionName,prevRail.getSquare()));
+		SendAddCartMessage(prevRail.getSquare());
+		
 	}
 
 	/**
@@ -73,7 +82,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	 */
 	public void drive() {
 		Rail nextRail = getNextRail();
-		this.compass = nextRail.getExitDirection(getDirectionNegation());
+		this.compass = nextRail.getExitDirection(getCompassNegation());
 		this.rail = nextRail;
 		this.setXPos(this.rail.getXPos());
 		this.setYPos(this.rail.getYPos());
@@ -104,13 +113,33 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		return null;
 	}
 
+	
+	public Rail getPreviousRail(Compass compass) {
+		Square square;
+		switch (compass) {
+		case NORTH:
+			square = this.map.getSquare(this.square.getXIndex(), this.square.getYIndex() - 1);
+			return (Rail) square.getPlaceableOnSquare();
+		case EAST:
+			square = this.map.getSquare(this.square.getXIndex() + 1, this.square.getYIndex());
+			return (Rail) square.getPlaceableOnSquare();
+		case SOUTH:
+			square = this.map.getSquare(this.square.getXIndex(), this.square.getYIndex() + 1);
+			return (Rail) square.getPlaceableOnSquare();
+		case WEST:
+			square = this.map.getSquare(this.square.getXIndex() - 1, this.square.getYIndex());
+			return (Rail) square.getPlaceableOnSquare();
+		}
+		return null;
+	}
+	
 	/**
 	 * Negiert die aktuelle Fahrtrichtung Ist benötigt um einen U-Turn zu
 	 * verhindern.
 	 * 
 	 * @return negated Direction
 	 */
-	public Compass getDirectionNegation() {
+	public Compass getCompassNegation() {
 		switch (this.compass) {
 		case NORTH:
 			return Compass.SOUTH;
@@ -139,6 +168,26 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
 		messageInfo.putValue("playerId", this.playerId);
+		notifyChange(messageInfo);
+	}
+	
+	private void SendAddCartMessage(Square square) {
+		MessageInformation messageInfo = new MessageInformation("CreateCart");
+		messageInfo.putValue("playerId", this.playerId);
+		messageInfo.putValue("xPos", square.getXIndex());
+		messageInfo.putValue("yPos", square.getYIndex());
+		notifyChange(messageInfo);
+	}
+	
+	public void changeSpeed(int speed) {
+		this.speed = speed;
+		notifySpeedChanged();
+	}
+	
+	private void notifySpeedChanged() {
+		MessageInformation messageInfo = new MessageInformation("UpdateLocoSpeed");
+		messageInfo.putValue("locoId", getId());
+		messageInfo.putValue("speed", speed);
 		notifyChange(messageInfo);
 	}
 

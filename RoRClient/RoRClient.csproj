@@ -112,6 +112,7 @@
     <Compile Include="Commands\Editor\Update\UpdateNodesOfRailSectionCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateCartCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateLocoCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
@@ -149,6 +150,7 @@
     </Compile>
     <Compile Include="ViewModels\Base\CanvasViewModelBase.cs" />
     <Compile Include="ViewModels\Game\CanvasGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\CartGameViewModel.cs" />
     <Compile Include="ViewModels\Game\LocoGameViewModel.cs" />
     <Compile Include="ViewModels\Game\MapGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
@@ -209,6 +211,9 @@
     <Compile Include="Views\Editor\AttributeSelectionUserControl.xaml.cs">
       <DependentUpon>AttributeSelectionUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\CartGameUserControl.xaml.cs">
+      <DependentUpon>CartGameUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\GameInteractionUserControl.xaml.cs">
       <DependentUpon>GameInteractionUserControl.xaml</DependentUpon>
     </Compile>
@@ -252,6 +257,10 @@
       <DependentUpon>AskUserForStringPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Popup\PopupCreator.cs" />
+    <Page Include="Views\Game\CartGameUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Game\GameInteractionUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -8,30 +8,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.Commands.Game.Update
+namespace RoRClient.Commands.Game.Create
 {
-    class UpdateLocoPositionCommand : CommandBase
+    class CreateCartCommand : CommandBase
     {
+        private Guid locoId;
         private Guid playerId;
         private int xPos;
         private int yPos;
 
-        public UpdateLocoPositionCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        public CreateCartCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
+            locoId = Guid.Parse(messageInformation.GetValueAsString("locoId"));
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
-            playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
-
         }
 
         public override void Execute()
         {
-            GameSession gameSession = GameSession.GetInstance();
-            Square square = gameSession.Map.GetSquare(xPos, yPos);
-            Player player = gameSession.GetPlayerById(playerId);
-
+            Player player = session.GetPlayerById(playerId);
             Loco loco = player.Loco;
-            loco.Square = square;
+
+            //loco.addCart(new Cart(new Guid(), ));
         }
     }
 }
