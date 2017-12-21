@@ -21,6 +21,7 @@ import models.session.GameSession;
 import models.session.GameSessionManager;
 
 public class FromClientRequestQueueDispatcherTests {
+
 	@Test
 	public void FromClientRequestQueueDispatcher_handleCreateEditorSession_createsEditorSessionAndHostPlayer() {
 		MessageQueueStub messageQueueStub = new MessageQueueStub();
@@ -135,7 +136,7 @@ public class FromClientRequestQueueDispatcherTests {
 				.findFirst().get();
 		assertNotNull(joinedPlayer);
 	}
-	
+
 	@Test
 	public void FromClientRequestQueueDispatcher_handleJoinEditorSession_createsResponseWithExpectedValues() {
 		MessageQueueStub messageQueueStub = new MessageQueueStub();
@@ -159,23 +160,23 @@ public class FromClientRequestQueueDispatcherTests {
 		assertEquals(messageType, messageEnvelope.getMessageType());
 		assertEquals(editorSessionName, response.getValueAsString("editorName"));
 		assertEquals(editorSessionName, response.getValueAsString("topicName"));
-		
+
 		@SuppressWarnings("unchecked")
 		List<JsonObject> playerList = (List<JsonObject>) response.getValue("playerList");
-		
+
 		JsonObject hostPlayerData = playerList.get(0);
 		Player hostPlayer = editorSession.getPlayers().get(0);
 		assertEquals(hostPlayer.getId().toString(), hostPlayerData.get("playerId").getAsString());
 		assertEquals(hostPlayer.getName(), hostPlayerData.get("playerName").getAsString());
 		assertEquals(hostPlayer.getIsHost(), hostPlayerData.get("isHost").getAsBoolean());
-		
+
 		JsonObject joinedPlayerData = playerList.get(1);
 		Player joinedPlayer = editorSession.getPlayers().get(1);
 		assertEquals(joinedPlayer.getId().toString(), joinedPlayerData.get("playerId").getAsString());
 		assertEquals(joinedPlayer.getName(), joinedPlayerData.get("playerName").getAsString());
 		assertEquals(joinedPlayer.getIsHost(), joinedPlayerData.get("isHost").getAsBoolean());
 	}
-	
+
 	@Test
 	public void FromClientRequestQueueDispatcher_handleJoinGameSession_createsNewPlayerWithRightName() {
 		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
@@ -198,7 +199,7 @@ public class FromClientRequestQueueDispatcherTests {
 				.findFirst().get();
 		assertNotNull(joinedPlayer);
 	}
-	
+
 	@Test
 	public void FromClientRequestQueueDispatcher_handleJoinGameSession_createsResponseWithExpectedValues() {
 		MessageQueueStub messageQueueStub = new MessageQueueStub();
@@ -222,16 +223,16 @@ public class FromClientRequestQueueDispatcherTests {
 		assertEquals(messageType, messageEnvelope.getMessageType());
 		assertEquals(gameSessionName, response.getValueAsString("gameName"));
 		assertEquals(gameSessionName, response.getValueAsString("topicName"));
-		
+
 		@SuppressWarnings("unchecked")
 		List<JsonObject> playerList = (List<JsonObject>) response.getValue("playerList");
-		
+
 		JsonObject hostPlayerData = playerList.get(0);
 		Player hostPlayer = gameSession.getPlayers().get(0);
 		assertEquals(hostPlayer.getId().toString(), hostPlayerData.get("playerId").getAsString());
 		assertEquals(hostPlayer.getName(), hostPlayerData.get("playerName").getAsString());
 		assertEquals(hostPlayer.getIsHost(), hostPlayerData.get("isHost").getAsBoolean());
-		
+
 		JsonObject joinedPlayerData = playerList.get(1);
 		Player joinedPlayer = gameSession.getPlayers().get(1);
 		assertEquals(joinedPlayer.getId().toString(), joinedPlayerData.get("playerId").getAsString());
@@ -315,7 +316,8 @@ public class FromClientRequestQueueDispatcherTests {
 
 		@SuppressWarnings("unchecked")
 		List<JsonObject> editorSessionInfos = (List<JsonObject>) response.getValue("editorSessionInfo");
-		JsonObject editorSessionInfo = editorSessionInfos.get(0);
+		JsonObject editorSessionInfo = editorSessionInfos.stream()
+				.filter(x -> x.get("name").getAsString().equals(editorSessionName)).findFirst().get();
 		assertEquals(editorSessionName, editorSessionInfo.get("name").getAsString());
 		assertEquals(hostPlayerName, editorSessionInfo.get("hostname").getAsString());
 		assertEquals(1, editorSessionInfo.get("amountOfPlayers").getAsInt());
