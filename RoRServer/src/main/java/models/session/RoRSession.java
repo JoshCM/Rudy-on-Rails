@@ -7,7 +7,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
-import communication.topic.MessageQueue;
+import communication.topic.TopicMessageQueue;
 import models.base.ModelBase;
 import models.base.ObservableModel;
 import models.game.Map;

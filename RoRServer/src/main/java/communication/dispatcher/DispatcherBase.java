@@ -6,12 +6,13 @@ import java.lang.reflect.Method;
 import org.apache.log4j.Logger;
 
 import communication.MessageInformation;
+import models.base.ObservableModel;
 
 /**
  * Base-Klasse für alle spezifischen Dispatcher. Hier ist die grundsätzliche Verteilungslogik 
  * der Nachrichten für Dispatcher verankert.
  */
-public abstract class DispatcherBase {
+public abstract class DispatcherBase extends ObservableModel {
 	private Logger log = Logger.getLogger(FromClientRequestQueueDispatcher.class.getName());
 	
 	public DispatcherBase() {

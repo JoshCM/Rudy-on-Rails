@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.junit.Test;
 
 import communication.MessageInformation;
-import communication.topic.MessageQueue;
+import communication.topic.TopicMessageQueue;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
 
@@ -51,7 +51,7 @@ public class RailTests {
 		UUID railId = UUID.randomUUID();
 		Rail rail = new Rail(editorSession.getSessionName(), square, railSectionPositions, UUID.randomUUID(), railId);
 
-		MessageInformation messageInfo = MessageQueue.getInstance()
+		MessageInformation messageInfo = TopicMessageQueue.getInstance()
 				.getFirstFoundMessageInformationForMessageType("CreateRail");
 
 		UUID messageInfoRailId = messageInfo.getValueAsUUID("railId");

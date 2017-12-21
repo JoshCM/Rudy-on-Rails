@@ -1,23 +1,33 @@
 package communication.dispatcher;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import javax.jms.Session;
+
+import com.google.gson.JsonObject;
+
+import communication.MessageEnvelope;
 import communication.MessageInformation;
-import communication.queue.sender.QueueSender;
+import communication.queue.QueueMessageQueue;
 import models.game.Player;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
 import models.session.GameSession;
 import models.session.GameSessionManager;
-import org.apache.log4j.Logger;
-import com.google.gson.JsonObject;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class FromClientRequestQueueDispatcher extends DispatcherBase {
-	private void sendMessage(String messageType, MessageInformation messageInformation) {
-		QueueSender queueSender = new QueueSender(messageInformation.getClientid());
-		queueSender.setup();
-		queueSender.sendMessage(messageType, messageInformation);
+
+	public FromClientRequestQueueDispatcher() {
+		addObserver(QueueMessageQueue.getInstance());
+	}
+
+	private void sendMessage(MessageInformation messageInformation) {
+		MessageEnvelope messageEnvelope = new MessageEnvelope(messageInformation.getClientid(),
+				messageInformation.getMessageType(), messageInformation);
+		setChanged();
+		notifyObservers(messageEnvelope);
 	}
 
 	/**
@@ -47,7 +57,8 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		Player hostPlayer = editorSession.getHost();
 		responseInformation.putValue("playerName", hostPlayer.getName());
 		responseInformation.putValue("playerId", hostPlayer.getId().toString());
-		sendMessage("CreateEditorSession", responseInformation);
+
+		sendMessage(responseInformation);
 	}
 
 	public void handleJoinEditorSession(MessageInformation messageInformation) {
@@ -77,7 +88,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		}
 		responseInformation.putValue("playerList", players);
 
-		sendMessage("JoinEditorSession", responseInformation);
+		sendMessage(responseInformation);
 	}
 
 	/**
@@ -103,7 +114,8 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		responseInformation.putValue("gameName", gameSession.getSessionName());
 		responseInformation.putValue("playerName", gameSession.getHost().getName());
 		responseInformation.putValue("playerId", gameSession.getHost().getId().toString());
-		sendMessage("CreateGameSession", responseInformation);
+
+		sendMessage(responseInformation);
 	}
 
 	/**
@@ -138,7 +150,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		}
 		responseInformation.putValue("playerList", players);
 
-		sendMessage("JoinGameSession", responseInformation);
+		sendMessage(responseInformation);
 	}
 
 	public void handleReadEditorSessions(MessageInformation messageInformation) {
@@ -159,7 +171,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 
 		responseInformation.putValue("editorSessionInfo", editorSessionInfos);
 
-		sendMessage("ReadEditorSessions", responseInformation);
+		sendMessage(responseInformation);
 	}
 
 	public void handleReadGameSessions(MessageInformation messageInformation) {
@@ -180,6 +192,6 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 
 		responseInformation.putValue("gameSessionInfo", gameSessionInfos);
 
-		sendMessage("ReadGameSessions", responseInformation);
+		sendMessage(responseInformation);
 	}
 }

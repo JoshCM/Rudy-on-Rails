@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import commands.base.CommandBase;
 import communication.MessageInformation;
-import communication.topic.MessageQueue;
+import communication.topic.TopicMessageQueue;
 import models.game.Compass;
 import models.game.Map;
 import models.game.PlaceableOnSquare;
@@ -31,7 +31,7 @@ public class StartGameCommand extends CommandBase {
 		// Map laden
 		Map map = MapManager.loadMap("GameDefaultMap");
 		map.setSessionName(session.getSessionName());
-		map.addObserver(MessageQueue.getInstance());
+		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
 		
 		// Jedes Square durchgehen

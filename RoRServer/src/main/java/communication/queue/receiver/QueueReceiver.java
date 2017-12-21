@@ -5,23 +5,27 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
+import javax.jms.Queue;
+import javax.jms.Session;
 import javax.jms.TextMessage;
-
+import communication.ServerConnection;
 import communication.dispatcher.DispatcherBase;
-import communication.queue.QueueBase;
 import org.apache.log4j.Logger;
 
 /**
  * Base-Klasse für alle spezifischen QueueReceiver
  */
-public class QueueReceiver extends QueueBase implements MessageListener {
+public class QueueReceiver implements MessageListener {
 	protected Logger log = Logger.getLogger(QueueReceiver.class.getName());
 
+	private Session session;
+	private Queue queue;
+	private String queueName;
 	private MessageConsumer consumer;
 	private DispatcherBase dispatcher;
 
 	public QueueReceiver(String queueName, DispatcherBase dispatcher) {
-		super.queueName = queueName;
+		this.queueName = queueName;
 		this.dispatcher = dispatcher;
 	}
 
@@ -45,9 +49,9 @@ public class QueueReceiver extends QueueBase implements MessageListener {
 	 * Erzeugt den Consumer und dessen Listener
 	 */
 	public void setup() {
-		super.setup();
-		
 		try {
+			session = ServerConnection.getInstance().getSession();
+			queue = session.createQueue(queueName);
 			consumer = session.createConsumer(queue);
 			consumer.setMessageListener(this);
 			log.info("Waiting for Messages on Queue " + queueName + " :");
