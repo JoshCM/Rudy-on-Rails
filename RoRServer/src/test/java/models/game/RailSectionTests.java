@@ -26,7 +26,7 @@ public class RailSectionTests {
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
 		
-		new Rail(editorSession.getName(), square, railSectionPositions);
+		new Rail(editorSession.getSessionName(), square, railSectionPositions);
 	}
 	
 	private Rail createTestRail(Compass node1, Compass node2) {
@@ -40,7 +40,7 @@ public class RailSectionTests {
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
 		
-		return new Rail(editorSession.getName(), square, railSectionPositions);
+		return new Rail(editorSession.getSessionName(), square, railSectionPositions);
 	}
 	
 	@Test

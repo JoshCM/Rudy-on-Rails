@@ -7,6 +7,9 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
+import communication.topic.MessageQueue;
+import models.base.ModelBase;
+import models.base.ObservableModel;
 import models.game.Map;
 import models.game.Player;
 import persistent.MapManager;
@@ -15,20 +18,16 @@ import persistent.MapManager;
  * Oberklasse von EditorSession und GameSession
  * 
  */
-public abstract class RoRSession {
-	private String name;
+public abstract class RoRSession extends ModelBase {
 	private ArrayList<Player> players = new ArrayList<>();
 	private Map map;
+	protected boolean started;
 	
 	protected QueueReceiver queueReceiver;
 	
 	public RoRSession(String name) {
-		this.name = name;
+		super(name);
 		map = new Map(name);
-	}
-	
-	public String getName() {
-		return name;
 	}
 		
 	public void setup() {
@@ -57,5 +56,9 @@ public abstract class RoRSession {
 
 	public List<Player> getPlayers() {
 		return Collections.unmodifiableList(players);
+	}
+	
+	public boolean isStarted() {
+		return started;
 	}
 }

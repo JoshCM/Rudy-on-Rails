@@ -1,5 +1,6 @@
 package models.session;
 
+import communication.MessageInformation;
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
 import models.game.Loco;
@@ -107,6 +108,12 @@ public class GameSession extends RoRSession{
 			this.locomotives.add(locomotive);
 			ticker.addObserver(locomotive);
 		}
+	}
+	
+	public void startGame() {
+		started = true;
+		MessageInformation messageInfo = new MessageInformation("StartGame");
+		notifyChange(messageInfo);
 	}
 }
 

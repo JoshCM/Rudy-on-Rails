@@ -42,7 +42,7 @@ public class CreateRailCommand extends CommandBase {
 			railSectionPositions.add(node2);
 		}
 		
-		Rail rail = new Rail(session.getName(), square, railSectionPositions);
+		Rail rail = new Rail(session.getSessionName(), square, railSectionPositions);
 		square.setPlaceable(rail);
 	}
 }

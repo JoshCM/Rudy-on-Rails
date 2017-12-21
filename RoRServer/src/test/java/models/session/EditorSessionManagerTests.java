@@ -14,7 +14,7 @@ public class EditorSessionManagerTests {
 	public void EditorSessionManager_CreatesEditorSession() {
 		String editorSessionName = "TestEditorSession";
 		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName);
-		assertEquals(editorSessionName, editorSession.getName());
+		assertEquals(editorSessionName, editorSession.getSessionName());
 	}
 	
 	@Test

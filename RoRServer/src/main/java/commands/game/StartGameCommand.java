@@ -14,6 +14,7 @@ import models.game.Player;
 import models.game.Rail;
 import models.game.RailSection;
 import models.game.Square;
+import models.session.GameSession;
 import models.session.RoRSession;
 import persistent.MapManager;
 
@@ -29,7 +30,7 @@ public class StartGameCommand extends CommandBase {
 		
 		// Map laden
 		Map map = MapManager.loadMap("GameDefaultMap");
-		map.setSessionName(session.getName());
+		map.setSessionName(session.getSessionName());
 		map.addObserver(MessageQueue.getInstance());
 		session.setMap(map);
 		
@@ -50,7 +51,7 @@ public class StartGameCommand extends CommandBase {
 						railSectionPosition.add(section.getNode2());
 					}
 					// Neues Rail erstellen und damit an den Client schicken
-					Rail newRail = new Rail(session.getName(), square, railSectionPosition);
+					Rail newRail = new Rail(session.getSessionName(), square, railSectionPosition);
 					System.out.println("Neue Rail erstellt auf " + i + " " + j + ": " + newRail.toString());
 				}
 			}
@@ -58,7 +59,7 @@ public class StartGameCommand extends CommandBase {
 
 		createLocoForPlayers(session);
 		
-		session.getMap().notifyGameStarted();
+		((GameSession)session).startGame();
 	}
 
 	/**

@@ -41,7 +41,7 @@ public abstract class ModelBase extends ObservableModel implements Model{
 	public String getSessionName() {
 		return sessionName;
 	}
-
+	
 	/**
 	 * Hier werden Nachrichten hinzugefügt, die an die verbundenen Clients geschickt
 	 * werden sollen

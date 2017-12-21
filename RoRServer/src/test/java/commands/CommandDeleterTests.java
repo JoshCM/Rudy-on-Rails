@@ -27,9 +27,9 @@ public class CommandDeleterTests {
 		RoRSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
 		
 		// generiere trainstationRails
-		List<Rail> trainstationRails = Arrays.asList(new Rail(session.getName(), session.getMap().getSquare(2, 0), Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getName(), session.getMap().getSquare(2, 1), Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getName(), session.getMap().getSquare(2, 2), Arrays.asList(Compass.NORTH, Compass.SOUTH)));
+		List<Rail> trainstationRails = Arrays.asList(new Rail(session.getSessionName(), session.getMap().getSquare(2, 0), Arrays.asList(Compass.NORTH, Compass.SOUTH)),
+				new Rail(session.getSessionName(), session.getMap().getSquare(2, 1), Arrays.asList(Compass.NORTH, Compass.SOUTH)),
+				new Rail(session.getSessionName(), session.getMap().getSquare(2, 2), Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 		
 		// setzt die rails als placeable und generiert trainstationRailIds
 		List<UUID> trainstationRailIds = new ArrayList<UUID>();
@@ -44,7 +44,7 @@ public class CommandDeleterTests {
 		messageInformation.putValue("id", trainstationId);
 		messageInformation.putValue("trainstationRailIds", trainstationRailIdStrings);
 		
-		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
+		Trainstation trainstation = new Trainstation(session.getSessionName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
 		session.getMap().getSquare(1, 1).setPlaceable(trainstation);
 		DeleteTrainstationCommand command = new DeleteTrainstationCommand(session, messageInformation);
 		
