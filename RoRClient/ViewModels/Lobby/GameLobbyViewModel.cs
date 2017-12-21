@@ -39,8 +39,10 @@ namespace RoRClient.ViewModels.Lobby
         /// </summary>
         private void StartGame()
         {
-            // ToDo: Hier abprüfen, ob man selber der Host ist oder nicht!
-            GameSession.GetInstance().QueueSender.SendMessage("StartGame", new MessageInformation());
+            if (GameSession.GetInstance().OwnPlayer.IsHost)
+            {
+                GameSession.GetInstance().QueueSender.SendMessage("StartGame", new MessageInformation());
+            }
         }
 
         private void OnGameStarted(object sender, PropertyChangedEventArgs e)

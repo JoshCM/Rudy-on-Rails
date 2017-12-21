@@ -9,6 +9,7 @@ using RoRClient.Communication.Queue;
 using RoRClient.Models.Base;
 using RoRClient.Communication.Topic;
 using RoRClient.Communication.DataTransferObject;
+using RoRClient.Communication;
 
 namespace RoRClient.Models.Session
 {
@@ -61,6 +62,19 @@ namespace RoRClient.Models.Session
             get
             {
                 return players;
+            }
+        }
+
+        public Player OwnPlayer
+        {
+            get
+            {
+                Player ownPlayer = players.Where(x => x.Id == ClientConnection.GetInstance().ClientId).First();
+                if (ownPlayer != null)
+                {
+                    return ownPlayer;
+                }
+                return new Player(Guid.NewGuid(), "");
             }
         }
 
