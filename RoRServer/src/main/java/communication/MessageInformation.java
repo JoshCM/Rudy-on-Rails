@@ -86,10 +86,15 @@ public class MessageInformation {
     	Gson gson = new Gson();
     	List<LinkedTreeMap> list = (List<LinkedTreeMap>)attributes.get(key);
     	List<JsonObject> result = new ArrayList<JsonObject>();
+    	
     	for(LinkedTreeMap map : list) {
     		result.add(gson.toJsonTree(map).getAsJsonObject());
     	}
     	return result;
+    }
+    
+    public Object getValue(String key) {
+    	return attributes.get(key);
     }
     
     public <T> List<T> getValueAsObjectList(String key){
