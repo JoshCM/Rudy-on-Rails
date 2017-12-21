@@ -44,7 +44,10 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 
 		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName,
 				playerId, playerName);
-		editorSession.setup();
+		
+		if(!editorSessionName.equals("TestSession")) {
+			editorSession.setup();
+		}
 
 		sendCreateEditorSessionCommand(messageInformation.getClientid(), editorSession);
 	}
@@ -102,7 +105,10 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		UUID playerId = UUID.fromString(messageInformation.getClientid());
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName, playerId,
 				playerName);
-		gameSession.setup();
+		
+		if(!gameSessionName.equals("TestSession")) {
+			gameSession.setup();
+		}
 
 		sendCreateGameSessionCommand(messageInformation.getClientid(), gameSession);
 	}

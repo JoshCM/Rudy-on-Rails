@@ -54,7 +54,6 @@ public class EditorSessionManager {
     public EditorSession getEditorSessionByName(String name) {
     	return editorSessionMap.get(name);
     }
-
     
     public List<EditorSession> getEditorSessionsAsList(){
     	List<EditorSession> result = new ArrayList<EditorSession>();
