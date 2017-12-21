@@ -135,6 +135,29 @@ public class FromClientRequestQueueDispatcherTests {
 				.findFirst().get();
 		assertNotNull(joinedPlayer);
 	}
+	
+	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinGameSession_createsNewPlayerWithRightName() {
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		String messageType = "JoinGameSession";
+		String gameSessionName = "TestSession";
+		String joinedPlayerName = "MyPlayer";
+
+		GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), "host");
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("gameName", gameSessionName);
+		messageInfo.putValue("playerName", joinedPlayerName);
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinGameSession(messageInfo);
+
+		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(gameSessionName);
+
+		assertEquals(2, gameSession.getPlayers().size());
+
+		Player joinedPlayer = gameSession.getPlayers().stream().filter(x -> x.getName().equals(joinedPlayerName))
+				.findFirst().get();
+		assertNotNull(joinedPlayer);
+	}
 
 	@Test
 	public void FromClientRequestQueueDispatcher_handleReadGameSessions_createsResonseWithExpectedValues() {
