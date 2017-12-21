@@ -137,6 +137,46 @@ public class FromClientRequestQueueDispatcherTests {
 	}
 	
 	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinEditorSession_createsResponseWithExpectedValues() {
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		dispatcher.addObserver(messageQueueStub);
+		String messageType = "JoinEditorSession";
+		String editorSessionName = "TestSession";
+		String joinedPlayerName = "MyPlayer";
+
+		EditorSessionManager.getInstance().createNewEditorSession(editorSessionName, UUID.randomUUID(), "host");
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("editorName", editorSessionName);
+		messageInfo.putValue("playerName", joinedPlayerName);
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinEditorSession(messageInfo);
+
+		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(editorSessionName);
+
+		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
+		MessageInformation response = messageEnvelope.getMessageInformation();
+		assertEquals(messageType, messageEnvelope.getMessageType());
+		assertEquals(editorSessionName, response.getValueAsString("editorName"));
+		assertEquals(editorSessionName, response.getValueAsString("topicName"));
+		
+		@SuppressWarnings("unchecked")
+		List<JsonObject> playerList = (List<JsonObject>) response.getValue("playerList");
+		
+		JsonObject hostPlayerData = playerList.get(0);
+		Player hostPlayer = editorSession.getPlayers().get(0);
+		assertEquals(hostPlayer.getId().toString(), hostPlayerData.get("playerId").getAsString());
+		assertEquals(hostPlayer.getName(), hostPlayerData.get("playerName").getAsString());
+		assertEquals(hostPlayer.getIsHost(), hostPlayerData.get("isHost").getAsBoolean());
+		
+		JsonObject joinedPlayerData = playerList.get(1);
+		Player joinedPlayer = editorSession.getPlayers().get(1);
+		assertEquals(joinedPlayer.getId().toString(), joinedPlayerData.get("playerId").getAsString());
+		assertEquals(joinedPlayer.getName(), joinedPlayerData.get("playerName").getAsString());
+		assertEquals(joinedPlayer.getIsHost(), joinedPlayerData.get("isHost").getAsBoolean());
+	}
+	
+	@Test
 	public void FromClientRequestQueueDispatcher_handleJoinGameSession_createsNewPlayerWithRightName() {
 		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
 		String messageType = "JoinGameSession";
@@ -157,6 +197,46 @@ public class FromClientRequestQueueDispatcherTests {
 		Player joinedPlayer = gameSession.getPlayers().stream().filter(x -> x.getName().equals(joinedPlayerName))
 				.findFirst().get();
 		assertNotNull(joinedPlayer);
+	}
+	
+	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinGameSession_createsResponseWithExpectedValues() {
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		dispatcher.addObserver(messageQueueStub);
+		String messageType = "JoinGameSession";
+		String gameSessionName = "TestSession";
+		String joinedPlayerName = "MyPlayer";
+
+		EditorSessionManager.getInstance().createNewEditorSession(gameSessionName, UUID.randomUUID(), "host");
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("gameName", gameSessionName);
+		messageInfo.putValue("playerName", joinedPlayerName);
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinGameSession(messageInfo);
+
+		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(gameSessionName);
+
+		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
+		MessageInformation response = messageEnvelope.getMessageInformation();
+		assertEquals(messageType, messageEnvelope.getMessageType());
+		assertEquals(gameSessionName, response.getValueAsString("gameName"));
+		assertEquals(gameSessionName, response.getValueAsString("topicName"));
+		
+		@SuppressWarnings("unchecked")
+		List<JsonObject> playerList = (List<JsonObject>) response.getValue("playerList");
+		
+		JsonObject hostPlayerData = playerList.get(0);
+		Player hostPlayer = gameSession.getPlayers().get(0);
+		assertEquals(hostPlayer.getId().toString(), hostPlayerData.get("playerId").getAsString());
+		assertEquals(hostPlayer.getName(), hostPlayerData.get("playerName").getAsString());
+		assertEquals(hostPlayer.getIsHost(), hostPlayerData.get("isHost").getAsBoolean());
+		
+		JsonObject joinedPlayerData = playerList.get(1);
+		Player joinedPlayer = gameSession.getPlayers().get(1);
+		assertEquals(joinedPlayer.getId().toString(), joinedPlayerData.get("playerId").getAsString());
+		assertEquals(joinedPlayer.getName(), joinedPlayerData.get("playerName").getAsString());
+		assertEquals(joinedPlayer.getIsHost(), joinedPlayerData.get("isHost").getAsBoolean());
 	}
 
 	@Test
