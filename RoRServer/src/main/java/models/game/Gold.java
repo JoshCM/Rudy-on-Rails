@@ -6,7 +6,6 @@ public class Gold extends Resource{
 
 	public Gold(String sessionName, Square square) {
 		super(sessionName, square);
-		// TODO Auto-generated constructor stub
 	}
 
 }
