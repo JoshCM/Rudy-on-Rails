@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Models.Game
 {
-    public class Gold : Resource
+    public class Gold : Resource, IPlaceableOnSquare
     {
 
         private Square square;
         public Gold(Guid id, Square square) : base(id, square)
         {
-
             this.square = square;
             this.id = id;
         }

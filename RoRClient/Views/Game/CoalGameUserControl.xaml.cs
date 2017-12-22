@@ -18,9 +18,9 @@ namespace RoRClient.Views.Game
     /// <summary>
     /// Interaktionslogik für CoalUserControl.xaml
     /// </summary>
-    public partial class CoalUserControl : UserControl
+    public partial class CoalGameUserControl : CanvasUserControl
     {
-        public CoalUserControl()
+        public CoalGameUserControl()
         {
             InitializeComponent();
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Models.Game
 {
-    public class Coal : Resource
+    public class Coal : Resource, IPlaceableOnSquare
     {
 
         private Square square;
