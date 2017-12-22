@@ -8,6 +8,7 @@ import java.util.List;
 import com.google.gson.JsonObject;
 
 import communication.MessageInformation;
+import models.session.RoRSession;
 
 /**
  * Klasse fuer Schienen, die einem Feld (Square) zugeordnet sind und ein
@@ -166,5 +167,23 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	public String toString() {
 		return "Rail [placeableOnRail=" + placeableOnRail + ", trainstationId=" + trainstationId + ", getXPos()="
 				+ getXPos() + ", getYPos()=" + getYPos() + ", getId()=" + getId() + "]";
+	}
+
+	@Override
+	public void loadFromMap(Square square, RoRSession session) {
+
+		Rail rail = (Rail)square.getPlaceableOnSquare();
+		
+		// Hole die SectionPositions aus den RailSections und speichere in Liste
+		List<Compass> railSectionPosition = new ArrayList<Compass>();
+		for (RailSection section : rail.getRailSectionList()) {
+			railSectionPosition.add(section.getNode1());
+			railSectionPosition.add(section.getNode2());
+		}
+		
+		// Neues Rail erstellen und damit an den Client schicken
+		Rail newRail = new Rail(session.getSessionName(), square, railSectionPosition);
+		System.out.println("Neue Rail erstellt: " + newRail.toString());
+		
 	}
 }

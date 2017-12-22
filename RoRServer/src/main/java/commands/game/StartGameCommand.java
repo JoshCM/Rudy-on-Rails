@@ -28,8 +28,10 @@ public class StartGameCommand extends CommandBase {
 	public void execute() {
 		System.out.println("Ich soll eine DefaultMap laden!");
 		
+		String mapName = "GameDefaultMap";
+		
 		// Map laden
-		Map map = MapManager.loadMap("GameDefaultMap");
+		Map map = MapManager.loadMap(mapName);
 		map.setSessionName(session.getSessionName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
@@ -43,16 +45,8 @@ public class StartGameCommand extends CommandBase {
 				Square square = squares[i][j];
 				// Wenn ein Rail auf dem Square liegt
 				if (square.getPlaceableOnSquare() != null) {
-					Rail rail = (Rail)square.getPlaceableOnSquare();
-					// Hole die SectionPositions aus den RailSections und speichere in Liste
-					List<Compass> railSectionPosition = new ArrayList<Compass>();
-					for (RailSection section : rail.getRailSectionList()) {
-						railSectionPosition.add(section.getNode1());
-						railSectionPosition.add(section.getNode2());
-					}
-					// Neues Rail erstellen und damit an den Client schicken
-					Rail newRail = new Rail(session.getSessionName(), square, railSectionPosition);
-					System.out.println("Neue Rail erstellt auf " + i + " " + j + ": " + newRail.toString());
+					PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
+					placeableOnSquare.loadFromMap(square, session);
 				}
 			}
 		}
