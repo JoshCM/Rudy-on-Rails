@@ -21,7 +21,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	
 	private final int CLOCKWISE = 90;
 	private final int COUNTER_CLOCKWISE = -90;
-	EditorSession editorSession;
+	transient EditorSession editorSession;
 	
 	public Trainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment) {
 		super(sessionName, square, id);

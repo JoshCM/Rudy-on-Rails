@@ -105,6 +105,7 @@
     <Compile Include="BindingConverter\TrainstationAlignmentToAngleConverter.cs" />
     <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Base\CreateRailCommandBase.cs" />
+    <Compile Include="Commands\Base\CreateTrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateTrainstationCommand.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Commands\Game\Create\CreateLocoCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateTrainstationCommand.cs" />
     <Compile Include="Commands\Game\Other\StartGameCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoPositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoSpeedCommand.cs" />
@@ -157,6 +159,7 @@
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
     <Compile Include="ViewModels\Game\RailGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TrainstationEditorViewModel.cs" />
+    <Compile Include="ViewModels\Game\TrainstationGameViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
     <Compile Include="ViewModels\Lobby\GameLobbyViewModel.cs" />
