@@ -21,6 +21,7 @@ public class CreateTrainstationCommand extends CommandBase {
 	private int yPos;
 	private Compass alignment;
 	private final static int TRAINSTATION_MARGIN = 1;
+	private Rail spawnPointforLoco;
 
 	public CreateTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
@@ -43,6 +44,7 @@ public class CreateTrainstationCommand extends CommandBase {
 			UUID trainstationId = UUID.randomUUID();
 			// Trainstation wird erzeugt und auf Square gesetzt
 			Trainstation trainstation = new Trainstation(session.getSessionName(), trainstationSquare, createTrainstationRails(map, trainstationSquare, trainstationId), trainstationId, alignment);
+			trainstation.setSpawnPointforLoco(spawnPointforLoco);
 			trainstationSquare.setPlaceable(trainstation);
 		}
 	}
@@ -69,6 +71,10 @@ public class CreateTrainstationCommand extends CommandBase {
 		for(int i = 0; i < 3; i++) {
 			Square trainstationRailSquare = trainstationRailSquares.get(i);
 			Rail rail = new Rail(session.getSessionName(), trainstationRailSquare, railSectionPositions);
+			// Mittlere Schiene des Bahnhofs (noch unschoen)
+			if (i == 1) {
+				spawnPointforLoco = rail;
+			}
 			trainstationRailSquare.setPlaceable(rail);
 			rail.setTrainstationId(trainstationId);
 			trainstationRailIds.add(rail.getId());

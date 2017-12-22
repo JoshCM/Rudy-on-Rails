@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import com.google.gson.JsonObject;
 
+import commands.game.CreateLocoCommand;
 import communication.MessageInformation;
 import helper.Geometry;
 import models.session.EditorSession;
@@ -21,6 +22,9 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	
 	private final int CLOCKWISE = 90;
 	private final int COUNTER_CLOCKWISE = -90;
+	private Rail spawnPointForLoco;
+	
+	// von Andreas: Habe ich auch transient erstellt, weil der Deserializer sonst wieder loopt
 	transient EditorSession editorSession;
 	
 	public Trainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment) {
@@ -29,6 +33,14 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		this.alignment = alignment;
 		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getSessionName());
 		notifyCreatedTrainstation();
+	}
+	
+	public void setSpawnPointforLoco(Rail rail) {
+		spawnPointForLoco = rail;
+	}
+	
+	public Rail getSpawnPointforLoco() {
+		return spawnPointForLoco;
 	}
 	
 	private void notifyCreatedTrainstation() {
