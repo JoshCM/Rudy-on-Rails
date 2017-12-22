@@ -37,10 +37,6 @@
                                 <vg:LocoGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
-                    </ItemsControl.Resources>
-                </ItemsControl>
-                <ItemsControl ItemsSource="{Binding PlaceableOnRailCollection}">
-                    <ItemsControl.Resources>
                         <DataTemplate DataType="{x:Type game:CartGameViewModel}">
                             <Canvas>
                                 <vg:CartGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
