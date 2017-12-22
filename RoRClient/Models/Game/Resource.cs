@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Models.Game
 {
+    /// <summary>
+    /// Oberklasse für Ressourcen
+    /// </summary>
     public abstract class Resource : InteractiveGameObject
     {
         private Square square;

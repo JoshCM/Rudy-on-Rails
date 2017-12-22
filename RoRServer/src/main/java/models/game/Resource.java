@@ -2,6 +2,10 @@ package models.game;
 
 import communication.MessageInformation;
 
+/**
+ * @author Andreas Pöhler, Juliane Lies, Isabell Rott
+ * Oberklasse für Ressourcen (Aktuell: Kohle und Gold)
+ */
 public abstract class Resource extends InteractiveGameObject implements PlaceableOnSquare {
 	
 	protected int quantity;
@@ -13,6 +17,9 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
 		notifyCreatedResource();	
 	}
 	
+	/**
+	 * Erstellen einer neuen Message an die Clients
+	 */
 	private void notifyCreatedResource() {
 		MessageInformation message = new MessageInformation("CreateResource");
 		message.putValue("resourceId", getId());

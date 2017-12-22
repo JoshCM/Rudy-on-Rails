@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Models.Game
 {
+    /// <summary>
+    /// Klasse für Ressource Kohle
+    /// </summary>
     public class Coal : Resource, IPlaceableOnSquare
     {
 

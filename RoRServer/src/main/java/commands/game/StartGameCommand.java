@@ -7,6 +7,7 @@ import java.util.UUID;
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.topic.TopicMessageQueue;
+import models.game.Coal;
 import models.game.Compass;
 import models.game.Gold;
 import models.game.Map;
@@ -58,7 +59,10 @@ public class StartGameCommand extends CommandBase {
 			}
 		}
 
+		// Loco erstellen
 		createLocoForPlayers(session);
+		
+		// Ein paar Resourcen verteilen
 		constructAdditionalPylons(session);
 		
 		((GameSession)session).startGame();
@@ -78,7 +82,9 @@ public class StartGameCommand extends CommandBase {
 	}
 	
 	private void constructAdditionalPylons(RoRSession session) {
-		Square square = session.getMap().getSquare(0, 0);
-		Gold gold = new Gold(session.getSessionName(), square);
+		Square goldSquare = session.getMap().getSquare(0, 0);
+		Square coalSquare = session.getMap().getSquare(0, 1);
+		Gold gold = new Gold(session.getSessionName(), goldSquare);
+		Coal coal = new Coal(session.getSessionName(), coalSquare);
 	}
 }

@@ -10,6 +10,9 @@ using RoRClient.Models.Game;
 
 namespace RoRClient.Commands.Game.Create
 {
+    /// <summary>
+    /// Command zum Erstellen von Resourcen auf der GameMap (Aktuell: Kohle und Gold)
+    /// </summary>
     class CreateResourceCommand : CommandBase
     {
         private Guid resourceId;
