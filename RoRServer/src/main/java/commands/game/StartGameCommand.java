@@ -48,7 +48,7 @@ public class StartGameCommand extends CommandBase {
 				
 				// Square holen 
 				Square square = squares[i][j];
-				// Wenn ein Rail auf dem Square liegt
+				// Wenn etwas auf dem Square liegt
 				if (square.getPlaceableOnSquare() != null) {
 					PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
 					placeableOnSquare.loadFromMap(square, session);
