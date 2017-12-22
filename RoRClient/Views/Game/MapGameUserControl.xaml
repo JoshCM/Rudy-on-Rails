@@ -30,6 +30,19 @@
                                 <vg:RailGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type game:GoldGameViewModel}">
+                            <Canvas>
+                                <vg:GoldUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type game:CoalGameViewModel}">
+                            <Canvas>
+                                <vg:CoalUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
+
                     </ItemsControl.Resources>
                 </ItemsControl>
                 <ItemsControl ItemsSource="{Binding PlaceableOnRailCollection}">

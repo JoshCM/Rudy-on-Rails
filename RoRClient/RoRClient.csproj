@@ -216,8 +216,14 @@
     <Compile Include="Views\Editor\AttributeSelectionUserControl.xaml.cs">
       <DependentUpon>AttributeSelectionUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\CoalUserControl.xaml.cs">
+      <DependentUpon>CoalUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\GameInteractionUserControl.xaml.cs">
       <DependentUpon>GameInteractionUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\GoldUserControl.xaml.cs">
+      <DependentUpon>GoldUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\LocoGameUserControl.xaml.cs">
       <DependentUpon>LocoGameUserControl.xaml</DependentUpon>
@@ -259,7 +265,15 @@
       <DependentUpon>AskUserForStringPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Popup\PopupCreator.cs" />
+    <Page Include="Views\Game\CoalUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Game\GameInteractionUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\GoldUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -425,6 +439,8 @@
     <Resource Include="Resources\Images\delete.png" />
     <Resource Include="Resources\Images\Tools\loco.png" />
     <Resource Include="Resources\Images\loco.png" />
+    <Resource Include="Resources\Images\container_coal.png" />
+    <Resource Include="Resources\Images\container_gold.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

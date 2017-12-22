@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Models.Game
 {
-    public abstract class Ressource : InteractiveGameObject
+    public abstract class Resource : InteractiveGameObject
     {
         private Square square;
-        public Ressource(Guid id, Square square) : base(square)
+        public Resource(Guid id, Square square) : base(square)
         {
             this.id = id;
             this.square = square;

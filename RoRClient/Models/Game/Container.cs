@@ -9,10 +9,10 @@ namespace RoRClient.Models.Game
     public class Container : InteractiveGameObject, IPlaceableOnSquare
     {
         private Square square;
-        private Ressource ressource;
+        private Resource ressource;
 
 
-        public Container(Guid id, Square square, Ressource ressource) : base(square)
+        public Container(Guid id, Square square, Resource ressource) : base(square)
         {
             this.id = id;
             this.square = square;
