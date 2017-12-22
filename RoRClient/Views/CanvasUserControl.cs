@@ -2,6 +2,7 @@
 using RoRClient.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace RoRClient.Views
 {
@@ -30,8 +31,8 @@ namespace RoRClient.Views
 
         private static void OnXchanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CanvasUserControl CanvasUserControl = (CanvasUserControl)d;
-            CanvasUserControl.RealX = CanvasUserControl.X * ViewConstants.SQUARE_DIM;
+            CanvasUserControl canvasUserControl = (CanvasUserControl)d;
+            canvasUserControl.RealX = canvasUserControl.X * ViewConstants.SQUARE_DIM;
         }
 
 
@@ -50,8 +51,8 @@ namespace RoRClient.Views
 
         private static void OnYchanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            CanvasUserControl CanvasUserControl = (CanvasUserControl)d;
-            CanvasUserControl.RealY = CanvasUserControl.Y * ViewConstants.SQUARE_DIM;
+            CanvasUserControl canvasUserControl = (CanvasUserControl)d;
+            canvasUserControl.RealY = canvasUserControl.Y * ViewConstants.SQUARE_DIM;
         }
 
         public int RealX

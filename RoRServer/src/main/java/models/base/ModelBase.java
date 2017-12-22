@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import communication.MessageEnvelope;
 import communication.MessageInformation;
-import communication.topic.MessageQueue;
+import communication.topic.TopicMessageQueue;
 
 /**
  * Base-Klasse für alle Models, damit alle Models eine Id und die zugehörige
@@ -18,14 +18,14 @@ public abstract class ModelBase extends ObservableModel implements Model{
 	protected String sessionName;
 
 	public ModelBase(String sessionName) {
-		this.addObserver(MessageQueue.getInstance());
+		this.addObserver(TopicMessageQueue.getInstance());
 		this.id = UUID.randomUUID();
 		this.sessionName = sessionName;
 	}
 	
 	// Konstruktur um eine vordefinierte UUID zu setzen
 	public ModelBase(String sessionName, UUID id) {
-		this.addObserver(MessageQueue.getInstance());
+		this.addObserver(TopicMessageQueue.getInstance());
 		this.id = id;
 		this.sessionName = sessionName;
 	}
@@ -41,7 +41,7 @@ public abstract class ModelBase extends ObservableModel implements Model{
 	public String getSessionName() {
 		return sessionName;
 	}
-
+	
 	/**
 	 * Hier werden Nachrichten hinzugefügt, die an die verbundenen Clients geschickt
 	 * werden sollen

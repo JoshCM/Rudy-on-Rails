@@ -13,18 +13,20 @@ public class EditorSessionManagerTests {
 	@Test
 	public void EditorSessionManager_CreatesEditorSession() {
 		String editorSessionName = "TestEditorSession";
-		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName);
-		assertEquals(editorSessionName, editorSession.getName());
+		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName,
+				UUID.randomUUID(), "HostPlayer");
+		assertEquals(editorSessionName, editorSession.getSessionName());
 	}
-	
+
 	@Test
 	public void EditorSessionManager_AddsPlayer() {
 		String editorSessionName = "TestEditorSession";
-		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName);
-		Player player = new Player(editorSessionName, "Neuer Spieler", UUID.randomUUID(), true);
-		editorSession.addPlayer(player);
-		
-		assertEquals(1, editorSession.getPlayers().size());
-		assertEquals("Neuer Spieler", editorSession.getPlayers().get(0).getName());
+		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName,
+				UUID.randomUUID(), "HostPlayer");
+		Player player = editorSession.createPlayer(UUID.randomUUID(), "Neuer Spieler");
+
+		assertEquals(2, editorSession.getPlayers().size());
+		assertEquals("HostPlayer", editorSession.getPlayers().get(0).getName());
+		assertEquals("Neuer Spieler", editorSession.getPlayers().get(1).getName());
 	}
 }

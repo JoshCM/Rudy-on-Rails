@@ -28,7 +28,7 @@ public class TopicSender {
 			String content = requestSerializer.serialize(messageEnvelope.getMessageInformation());
 			TextMessage textMessage = session.createTextMessage(content);
 			textMessage.setJMSType(messageEnvelope.getMessageType());
-			Topic topic = session.createTopic(messageEnvelope.getTopicName());
+			Topic topic = session.createTopic(messageEnvelope.getDestinationName());
 			publisher = session.createProducer(topic);
 			publisher.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 			publisher.send(topic, textMessage);

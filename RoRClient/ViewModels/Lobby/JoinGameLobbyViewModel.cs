@@ -119,6 +119,24 @@ namespace RoRClient.ViewModels.Lobby
             }
         }
 
+        private ICommand refreshGameSessionsCommand;
+        public ICommand RefreshGameSessionsCommand
+        {
+            get
+            {
+                if (refreshGameSessionsCommand == null)
+                {
+                    refreshGameSessionsCommand = new ActionCommand(param => RefreshGameSessionInfos());
+                }
+                return refreshGameSessionsCommand;
+            }
+        }
+
+        public void RefreshGameSessionInfos()
+        {
+            lobbyModel.ReadGameSessions();
+        }
+
         private void OnClientModelChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Connected_Game")

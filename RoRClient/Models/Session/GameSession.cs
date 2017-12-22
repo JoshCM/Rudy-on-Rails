@@ -34,6 +34,12 @@ namespace RoRClient.Models.Session
                 return locos;
             }
         }
+
+        public Loco GetLocoById(Guid locoId)
+        {
+            return locos.Where(x => x.Id == locoId).First();
+        }
+
         public ObservableCollection<Loco> Carts
         {
             get

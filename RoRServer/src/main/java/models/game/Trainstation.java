@@ -94,7 +94,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		tempRail.rotate(right, right);
 		
 		// bekomme sessionname für neue Rail
-		String sessionName = editorSession.getName();
+		String sessionName = editorSession.getSessionName();
 		
 		// nehme section1 von RailSection
 		RailSection sectionOne = tempRail.getFirstSection();

@@ -7,6 +7,9 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
+import communication.topic.TopicMessageQueue;
+import models.base.ModelBase;
+import models.base.ObservableModel;
 import models.game.Map;
 import models.game.Player;
 import persistent.MapManager;
@@ -15,28 +18,32 @@ import persistent.MapManager;
  * Oberklasse von EditorSession und GameSession
  * 
  */
-public abstract class RoRSession {
-	private String name;
+public abstract class RoRSession extends ModelBase {
 	private ArrayList<Player> players = new ArrayList<>();
 	private Map map;
+	protected boolean started;
 	
 	protected QueueReceiver queueReceiver;
 	
-	public RoRSession(String name) {
-		this.name = name;
+	public RoRSession(String name, UUID hostPlayerId, String hostPlayerName) {
+		super(name);
 		map = new Map(name);
+		createHostPlayer(hostPlayerId, hostPlayerName);
 	}
 	
-	public String getName() {
-		return name;
+	private void createHostPlayer(UUID playerId, String playerName) {
+		Player player = new Player(getSessionName(), playerName, playerId, true);
+		players.add(player);
+	}
+	
+	public Player createPlayer(UUID playerId, String playerName) {
+		Player player = new Player(getSessionName(), playerName, playerId, false);
+		players.add(player);
+		return player;
 	}
 		
 	public void setup() {
 		queueReceiver.setup();
-	}
-	
-	public void addPlayer(Player player) {
-		this.players.add(player);
 	}
 
 	public void removePlayer(Player player) {
@@ -57,5 +64,9 @@ public abstract class RoRSession {
 
 	public List<Player> getPlayers() {
 		return Collections.unmodifiableList(players);
+	}
+	
+	public boolean isStarted() {
+		return started;
 	}
 }

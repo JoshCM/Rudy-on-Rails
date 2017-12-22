@@ -23,6 +23,6 @@ public class ChangeSpeedOfLocomotiveCommand extends CommandBase {
     public void execute() {
         GameSession gameSession = (GameSession)session;
         Loco loco = gameSession.getLocomotiveByPlayerId(UUID.fromString(clientId));
-        loco.setSpeed(locoSpeed);
+        loco.changeSpeed(locoSpeed);
     }
 }
