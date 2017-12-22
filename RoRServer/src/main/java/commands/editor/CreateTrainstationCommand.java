@@ -21,7 +21,7 @@ public class CreateTrainstationCommand extends CommandBase {
 	private int yPos;
 	private Compass alignment;
 	private final static int TRAINSTATION_MARGIN = 1;
-	private Rail spawnPointforLoco;
+	private Square spawnPointforLoco;
 
 	public CreateTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
@@ -61,6 +61,7 @@ public class CreateTrainstationCommand extends CommandBase {
 		Square squareTop = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN,
 				square.getYIndex() - TRAINSTATION_MARGIN);
 		Square squareMid = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN, square.getYIndex());
+		spawnPointforLoco = squareMid;
 		Square squareBottom = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN,
 				square.getYIndex() + TRAINSTATION_MARGIN);
 		
@@ -71,10 +72,6 @@ public class CreateTrainstationCommand extends CommandBase {
 		for(int i = 0; i < 3; i++) {
 			Square trainstationRailSquare = trainstationRailSquares.get(i);
 			Rail rail = new Rail(session.getSessionName(), trainstationRailSquare, railSectionPositions);
-			// Mittlere Schiene des Bahnhofs (noch unschoen)
-			if (i == 1) {
-				spawnPointforLoco = rail;
-			}
 			trainstationRailSquare.setPlaceable(rail);
 			rail.setTrainstationId(trainstationId);
 			trainstationRailIds.add(rail.getId());
