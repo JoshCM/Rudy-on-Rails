@@ -239,6 +239,9 @@
     <Compile Include="Views\Game\RailGameUserControl.xaml.cs">
       <DependentUpon>RailGameUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\TrainstationGameUserControl.xaml.cs">
+      <DependentUpon>TrainstationGameUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Lobby\JoinGameLobbyView.xaml.cs">
       <DependentUpon>JoinGameLobbyView.xaml</DependentUpon>
     </Compile>
@@ -294,6 +297,10 @@
     <Page Include="Views\Editor\TrainstationEditorUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Game\TrainstationGameUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Lobby\JoinGameLobbyView.xaml">
       <Generator>MSBuild:Compile</Generator>
