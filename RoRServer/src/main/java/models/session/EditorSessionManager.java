@@ -27,8 +27,8 @@ public class EditorSessionManager {
      * @param editorName
      * @return
      */
-    public EditorSession createNewEditorSession(String editorName){
-        EditorSession editorSession = new EditorSession(editorName);
+    public EditorSession createNewEditorSession(String editorName, UUID hostPlayerId, String hostPlayerName){
+        EditorSession editorSession = new EditorSession(editorName, hostPlayerId, hostPlayerName);
         editorSessionMap.put(editorName, editorSession);
         return editorSession;
     }
@@ -37,7 +37,7 @@ public class EditorSessionManager {
      * @param editorSession
      */
     public void removeEditorSession(EditorSession editorSession){
-        editorSessionMap.remove(editorSession.getName());
+        editorSessionMap.remove(editorSession.getSessionName());
     }
     
     //aktuell wird immer die erste EditorSession in der HashMap zurueckgegeben
@@ -54,7 +54,6 @@ public class EditorSessionManager {
     public EditorSession getEditorSessionByName(String name) {
     	return editorSessionMap.get(name);
     }
-
     
     public List<EditorSession> getEditorSessionsAsList(){
     	List<EditorSession> result = new ArrayList<EditorSession>();

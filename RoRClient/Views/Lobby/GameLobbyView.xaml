@@ -7,5 +7,5 @@
              xmlns:vm ="clr-namespace:RoRClient.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600" Background="BlanchedAlmond">
-        <Button x:Name="startGame" Command="{Binding StartGameCommand}" Content="Starte das verdammte Spiel!"/>
+        <Button x:Name="startGame" Command="{Binding StartGameCommand}" Content="Starte das verdammte Spiel!" IsEnabled="{Binding IsHost}"/>
 </UserControl>

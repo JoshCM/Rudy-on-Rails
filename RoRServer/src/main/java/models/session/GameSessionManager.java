@@ -30,8 +30,8 @@ public class GameSessionManager {
 	 * @param gameName
 	 * @return
 	 */
-	public GameSession createNewGameSession(String gameName) {
-		GameSession gameSession = new GameSession(gameName);
+	public GameSession createNewGameSession(String gameName, UUID hostPlayerId, String hostPlayerName) {
+		GameSession gameSession = new GameSession(gameName, hostPlayerId, hostPlayerName);
 		gameSessionMap.put(gameName, gameSession);
 		return gameSession;
 	}
@@ -42,7 +42,7 @@ public class GameSessionManager {
 	 * @param gameSession
 	 */
 	public void removeGameSession(GameSession gameSession) {
-		gameSessionMap.remove(gameSession.getName());
+		gameSessionMap.remove(gameSession.getSessionName());
 	}
 
 	// aktuell wird immer die erste GameSession in der HashMap zurueckgegeben

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
 
+import communication.MessageEnvelope;
+import communication.MessageInformation;
+
 /**
  * Eine eigene Implementierung von Observable
  * Wird gebraucht, damit die Observer nicht mitserialisiert werden, wenn eine Map gespeichert wird

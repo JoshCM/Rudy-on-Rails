@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import communication.MessageInformation;
-import communication.topic.MessageQueue;
+import communication.topic.TopicMessageQueue;
 
 public class MapTests {
 	@Test
@@ -23,7 +23,7 @@ public class MapTests {
 		Map map = new Map("testSession");
 		map.ChangeName(newName);
 		
-		MessageInformation messageInfo = MessageQueue.getInstance().getFirstFoundMessageInformationForMessageType("UpdateNameOfMap");
+		MessageInformation messageInfo = TopicMessageQueue.getInstance().getFirstFoundMessageInformationForMessageType("UpdateNameOfMap");
 		assertEquals(newName, messageInfo.getValueAsString("mapName"));
 	}
 }
