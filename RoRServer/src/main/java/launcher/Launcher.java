@@ -1,7 +1,8 @@
 package launcher;
 
 import communication.broker.MessageBroker;
-import communication.topic.MessageQueue;
+import communication.queue.QueueMessageQueue;
+import communication.topic.TopicMessageQueue;
 
 /**
  * Der Launcher startet den BrokerService und somit die gesamte Anwendung
@@ -9,6 +10,7 @@ import communication.topic.MessageQueue;
 public class Launcher {
 	public static void main(String[] args) {
 		MessageBroker.getInstance();
-		MessageQueue.getInstance().setup();
+		TopicMessageQueue.getInstance().setup();
+		QueueMessageQueue.getInstance().setup();
 	}
 }

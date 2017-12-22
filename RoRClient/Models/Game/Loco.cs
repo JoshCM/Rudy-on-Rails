@@ -12,9 +12,27 @@ namespace RoRClient.Models.Game
     /// </summary>
     public class Loco : InteractiveGameObject, IPlaceableOnRail
     {
+        private int speed;
+
         public Loco(Guid id, Square square) : base(square)
         {
             this.id = id;
+        }
+
+        public int Speed
+        {
+            get
+            {
+                return speed;
+            }
+            set
+            {
+                if(speed != value)
+                {
+                    speed = value;
+                    NotifyPropertyChanged("Speed");
+                }
+            }
         }
 
         private List<Cart> carts = new List<Cart>();

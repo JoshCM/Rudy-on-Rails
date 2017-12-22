@@ -141,6 +141,18 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		messageInfo.putValue("playerId", this.playerId);
 		notifyChange(messageInfo);
 	}
+	
+	public void changeSpeed(int speed) {
+		this.speed = speed;
+		notifySpeedChanged();
+	}
+	
+	private void notifySpeedChanged() {
+		MessageInformation messageInfo = new MessageInformation("UpdateLocoSpeed");
+		messageInfo.putValue("locoId", getId());
+		messageInfo.putValue("speed", speed);
+		notifyChange(messageInfo);
+	}
 
 	// Getter und Setter
 	public void setSpeed(int speed) {

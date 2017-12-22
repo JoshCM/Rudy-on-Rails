@@ -1,5 +1,7 @@
 package models.session;
 
+import java.util.UUID;
+
 import communication.dispatcher.EditorSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
 
@@ -9,8 +11,8 @@ import communication.queue.receiver.QueueReceiver;
  * Erhält über einen QueueReceiver Anfragen von Clients, die mit der EditorSession verbunden sind
  */
 public class EditorSession extends RoRSession {
-	public EditorSession(String name) {
-		super(name);
+	public EditorSession(String name, UUID hostPlayerId, String hostPlayerName) {
+		super(name, hostPlayerId, hostPlayerName);
 	
 		EditorSessionDispatcher dispatcher = new EditorSessionDispatcher(this);
 		this.queueReceiver = new QueueReceiver(name, dispatcher);

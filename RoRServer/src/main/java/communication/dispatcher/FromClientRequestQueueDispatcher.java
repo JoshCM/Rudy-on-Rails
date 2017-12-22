@@ -1,25 +1,33 @@
 package communication.dispatcher;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import javax.jms.Session;
+
+import com.google.gson.JsonObject;
+
+import communication.MessageEnvelope;
 import communication.MessageInformation;
-import communication.queue.sender.QueueSender;
+import communication.queue.QueueMessageQueue;
 import models.game.Player;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
 import models.session.GameSession;
 import models.session.GameSessionManager;
-import org.apache.log4j.Logger;
-import com.google.gson.JsonObject;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 public class FromClientRequestQueueDispatcher extends DispatcherBase {
-	private Logger log = Logger.getLogger(FromClientRequestQueueDispatcher.class.getName());
 
-	private void sendMessage(String messageType, MessageInformation messageInformation) {
-		QueueSender queueSender = new QueueSender(messageInformation.getClientid());
-		queueSender.setup();
-		queueSender.sendMessage(messageType, messageInformation);
+	public FromClientRequestQueueDispatcher() {
+		addObserver(QueueMessageQueue.getInstance());
+	}
+
+	private void sendMessage(MessageInformation messageInformation) {
+		MessageEnvelope messageEnvelope = new MessageEnvelope(messageInformation.getClientid(),
+				messageInformation.getMessageType(), messageInformation);
+		setChanged();
+		notifyObservers(messageEnvelope);
 	}
 
 	/**
@@ -30,44 +38,49 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	 * @param messageInformation
 	 */
 	public void handleCreateEditorSession(MessageInformation messageInformation) {
-		EditorSession editorSession;
-		MessageInformation responseInformation = new MessageInformation("CreateEditorSession");
-		responseInformation.setClientid(messageInformation.getClientid());
-
-		editorSession = EditorSessionManager.getInstance()
-				.createNewEditorSession(messageInformation.getValueAsString("editorName"));
-		editorSession.setup();
-
-		String editorSessionName = editorSession.getName();
+		String editorSessionName = messageInformation.getValueAsString("editorName");
 		String playerName = messageInformation.getValueAsString("playerName");
 		UUID playerId = UUID.fromString(messageInformation.getClientid());
-		Player player = new Player(editorSessionName, playerName, playerId, true);
-		editorSession.addPlayer(player);
 
-		responseInformation.putValue("topicName", editorSession.getName());
-		responseInformation.putValue("editorName", editorSession.getName());
-		responseInformation.putValue("playerName", player.getName());
-		responseInformation.putValue("playerId", player.getId().toString());
-		sendMessage("CreateEditorSession", responseInformation);
+		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName,
+				playerId, playerName);
+		
+		if(!editorSessionName.equals("TestSession")) {
+			editorSession.setup();
+		}
 
-		log.info("Called handleCreateEditorSession");
+		sendCreateEditorSessionCommand(messageInformation.getClientid(), editorSession);
+	}
+
+	private void sendCreateEditorSessionCommand(String cliendId, EditorSession editorSession) {
+		MessageInformation responseInformation = new MessageInformation("CreateEditorSession");
+		responseInformation.setClientid(cliendId);
+		responseInformation.putValue("topicName", editorSession.getSessionName());
+		responseInformation.putValue("editorName", editorSession.getSessionName());
+		Player hostPlayer = editorSession.getHost();
+		responseInformation.putValue("playerName", hostPlayer.getName());
+		responseInformation.putValue("playerId", hostPlayer.getId().toString());
+
+		sendMessage(responseInformation);
 	}
 
 	public void handleJoinEditorSession(MessageInformation messageInformation) {
-		EditorSession editorSession;
-		MessageInformation responseInformation = new MessageInformation("JoinEditorSession");
-		responseInformation.setClientid(messageInformation.getClientid());
+		String editorSessionName = messageInformation.getValueAsString("editorName");
+		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(editorSessionName);
 
-		editorSession = EditorSessionManager.getInstance()
-				.getEditorSessionByName(messageInformation.getValueAsString("editorName"));
-		String editorSessionName = editorSession.getName();
 		String playerName = messageInformation.getValueAsString("playerName");
 		UUID playerId = UUID.fromString(messageInformation.getClientid());
-		Player player = new Player(editorSessionName, playerName, playerId, false);
-		editorSession.addPlayer(player);
+		editorSession.createPlayer(playerId, playerName);
 
-		responseInformation.putValue("topicName", editorSession.getName());
-		responseInformation.putValue("editorName", editorSession.getName());
+		sendJoinEditorSessionCommand(messageInformation.getClientid(), editorSession);
+	}
+
+	private void sendJoinEditorSessionCommand(String clientId, EditorSession editorSession) {
+		MessageInformation responseInformation = new MessageInformation("JoinEditorSession");
+		responseInformation.setClientid(clientId);
+		responseInformation.putValue("topicName", editorSession.getSessionName());
+		responseInformation.putValue("editorName", editorSession.getSessionName());
+
 		List<JsonObject> players = new ArrayList<JsonObject>();
 		for (Player sessionPlayer : editorSession.getPlayers()) {
 			JsonObject json = new JsonObject();
@@ -76,10 +89,9 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 			json.addProperty("isHost", sessionPlayer.getIsHost());
 			players.add(json);
 		}
-
 		responseInformation.putValue("playerList", players);
 
-		sendMessage("JoinEditorSession", responseInformation);
+		sendMessage(responseInformation);
 	}
 
 	/**
@@ -88,27 +100,28 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	 * @param messageInformation
 	 */
 	public void handleCreateGameSession(MessageInformation messageInformation) {
-		GameSession gameSession;
-		MessageInformation responseInformation = new MessageInformation("CreateGameSession");
-		responseInformation.setClientid(messageInformation.getClientid());
-
-		String gameName = messageInformation.getValueAsString("gameName");
-		gameSession = GameSessionManager.getInstance().createNewGameSession(gameName);
-		gameSession.setup();
-		
-		String gameSessionName = gameSession.getName();
+		String gameSessionName = messageInformation.getValueAsString("gameName");
 		String playerName = messageInformation.getValueAsString("playerName");
 		UUID playerId = UUID.fromString(messageInformation.getClientid());
-		Player player = new Player(gameSessionName, playerName, playerId, true);
-		gameSession.addPlayer(player);
-
-		responseInformation.putValue("topicName", gameSession.getName());
-		responseInformation.putValue("gameName", gameSession.getName());
-		responseInformation.putValue("playerName", player.getName());
-		responseInformation.putValue("playerId", player.getId().toString());
-		sendMessage("CreateGameSession", responseInformation);
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName, playerId,
+				playerName);
 		
-		log.info("Called handleCreateGameSession");
+		if(!gameSessionName.equals("TestSession")) {
+			gameSession.setup();
+		}
+
+		sendCreateGameSessionCommand(messageInformation.getClientid(), gameSession);
+	}
+
+	private void sendCreateGameSessionCommand(String clientId, GameSession gameSession) {
+		MessageInformation responseInformation = new MessageInformation("CreateGameSession");
+		responseInformation.setClientid(clientId);
+		responseInformation.putValue("topicName", gameSession.getSessionName());
+		responseInformation.putValue("gameName", gameSession.getSessionName());
+		responseInformation.putValue("playerName", gameSession.getHost().getName());
+		responseInformation.putValue("playerId", gameSession.getHost().getId().toString());
+
+		sendMessage(responseInformation);
 	}
 
 	/**
@@ -118,20 +131,21 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	 * @param messageInformation
 	 */
 	public void handleJoinGameSession(MessageInformation messageInformation) {
-		GameSession gameSession;
-		MessageInformation responseInformation = new MessageInformation("JoinGameSession");
-		responseInformation.setClientid(messageInformation.getClientid());
+		String gameSessionName = messageInformation.getValueAsString("gameName");
+		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(gameSessionName);
 
-		String gameName = messageInformation.getValueAsString("gameName");
-		gameSession = GameSessionManager.getInstance().getGameSessionByName(gameName);
-		String gameSessionName = gameSession.getName();
 		String playerName = messageInformation.getValueAsString("playerName");
 		UUID playerId = UUID.fromString(messageInformation.getClientid());
-		Player player = new Player(gameSessionName, playerName, playerId, false);
-		gameSession.addPlayer(player);
+		gameSession.createPlayer(playerId, playerName);
 
-		responseInformation.putValue("topicName", gameSession.getName());
-		responseInformation.putValue("gameName", gameSession.getName());
+		sendJoinGameSessionCommand(messageInformation.getClientid(), gameSession);
+	}
+
+	private void sendJoinGameSessionCommand(String clientId, GameSession gameSession) {
+		MessageInformation responseInformation = new MessageInformation("JoinGameSession");
+		responseInformation.setClientid(clientId);
+		responseInformation.putValue("topicName", gameSession.getSessionName());
+		responseInformation.putValue("gameName", gameSession.getSessionName());
 		List<JsonObject> players = new ArrayList<JsonObject>();
 		for (Player sessionPlayer : gameSession.getPlayers()) {
 			JsonObject json = new JsonObject();
@@ -140,10 +154,9 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 			json.addProperty("isHost", sessionPlayer.getIsHost());
 			players.add(json);
 		}
-
 		responseInformation.putValue("playerList", players);
-		
-		sendMessage("JoinGameSession", responseInformation);
+
+		sendMessage(responseInformation);
 	}
 
 	public void handleReadEditorSessions(MessageInformation messageInformation) {
@@ -153,16 +166,18 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		List<JsonObject> editorSessionInfos = new ArrayList<JsonObject>();
 		List<EditorSession> editorSessions = EditorSessionManager.getInstance().getEditorSessionsAsList();
 		for (EditorSession session : editorSessions) {
-			JsonObject json = new JsonObject();
-			json.addProperty("name", session.getName());
-			json.addProperty("amountOfPlayers", session.getPlayers().size());
-			json.addProperty("hostname", session.getHost().getName());
-			editorSessionInfos.add(json);
+			if (!session.isStarted()) {
+				JsonObject json = new JsonObject();
+				json.addProperty("name", session.getSessionName());
+				json.addProperty("amountOfPlayers", session.getPlayers().size());
+				json.addProperty("hostname", session.getHost().getName());
+				editorSessionInfos.add(json);
+			}
 		}
 
 		responseInformation.putValue("editorSessionInfo", editorSessionInfos);
 
-		sendMessage("ReadEditorSessions", responseInformation);
+		sendMessage(responseInformation);
 	}
 
 	public void handleReadGameSessions(MessageInformation messageInformation) {
@@ -172,15 +187,17 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		List<JsonObject> gameSessionInfos = new ArrayList<JsonObject>();
 		List<GameSession> gameSessions = GameSessionManager.getInstance().getGameSessionsAsList();
 		for (GameSession session : gameSessions) {
-			JsonObject json = new JsonObject();
-			json.addProperty("name", session.getName());
-			json.addProperty("amountOfPlayers", session.getPlayers().size());
-			json.addProperty("hostname", session.getHost().getName());
-			gameSessionInfos.add(json);
+			if (!session.isStarted()) {
+				JsonObject json = new JsonObject();
+				json.addProperty("name", session.getSessionName());
+				json.addProperty("amountOfPlayers", session.getPlayers().size());
+				json.addProperty("hostname", session.getHost().getName());
+				gameSessionInfos.add(json);
+			}
 		}
 
 		responseInformation.putValue("gameSessionInfo", gameSessionInfos);
 
-		sendMessage("ReadGameSessions", responseInformation);
+		sendMessage(responseInformation);
 	}
 }
