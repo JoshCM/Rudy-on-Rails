@@ -8,6 +8,7 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.topic.TopicMessageQueue;
 import models.game.Compass;
+import models.game.Gold;
 import models.game.Map;
 import models.game.PlaceableOnSquare;
 import models.game.Player;
@@ -58,6 +59,7 @@ public class StartGameCommand extends CommandBase {
 		}
 
 		createLocoForPlayers(session);
+		constructAdditionalPylons(session);
 		
 		((GameSession)session).startGame();
 	}
@@ -73,5 +75,10 @@ public class StartGameCommand extends CommandBase {
 			System.out.println();
 			createLocoCommand.execute();
 		}
+	}
+	
+	private void constructAdditionalPylons(RoRSession session) {
+		Square square = session.getMap().getSquare(0, 0);
+		Gold gold = new Gold(session.getSessionName(), square);
 	}
 }

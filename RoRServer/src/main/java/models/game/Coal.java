@@ -1,19 +1,8 @@
 package models.game;
 
-public class Coal extends Resource{
-	
-	private String name = "Coal";
+public class Coal extends Resource {
 
 	public Coal(String sessionName, Square square) {
-		super(sessionName, square);
+		super(sessionName, square, "Coal");
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 }
