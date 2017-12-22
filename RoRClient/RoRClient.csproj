@@ -134,8 +134,12 @@
     <Compile Include="Models\Base\ModelBase.cs" />
     <Compile Include="Models\Base\ObservableBase.cs" />
     <Compile Include="Models\Game\Cart.cs" />
+    <Compile Include="Models\Game\Coal.cs" />
+    <Compile Include="Models\Game\Container.cs" />
+    <Compile Include="Models\Game\Gold.cs" />
     <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Player.cs" />
+    <Compile Include="Models\Game\Ressource.cs" />
     <Compile Include="Models\Game\Trainstation.cs" />
     <Compile Include="Models\Lobby\GameSessionInfo.cs" />
     <Compile Include="Models\Lobby\EditorSessionInfo.cs" />
