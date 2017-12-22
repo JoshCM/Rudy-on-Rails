@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Models.Game
 {
-    class Gold : Resource
+    public class Gold : Resource
     {
 
         private Square square;

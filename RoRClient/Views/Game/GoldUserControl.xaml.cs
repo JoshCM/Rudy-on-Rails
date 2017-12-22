@@ -18,7 +18,7 @@ namespace RoRClient.Views.Game
     /// <summary>
     /// Interaktionslogik für GoldUserControl.xaml
     /// </summary>
-    public partial class GoldUserControl : UserControl
+    public partial class GoldUserControl : CanvasUserControl
     {
         public GoldUserControl()
         {

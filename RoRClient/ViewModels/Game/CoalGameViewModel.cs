@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModels.Game
 {
-    class CoalGameViewModel : CanvasGameViewModel
+    public class CoalGameViewModel : CanvasGameViewModel
     {
         private Coal c;
         public CoalGameViewModel(Coal coal) : base(coal.Id)

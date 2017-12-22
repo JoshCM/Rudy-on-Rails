@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModels.Game
 {
-    class GoldGameViewModel : CanvasGameViewModel
+    public class GoldGameViewModel : CanvasGameViewModel
     {
         private Gold g;
         public GoldGameViewModel(Gold gold) : base(gold.Id)
@@ -18,7 +18,7 @@ namespace RoRClient.ViewModels.Game
         }
 
 
-        public Gold gold
+        public Gold Gold
         {
             get
             {
