@@ -33,7 +33,7 @@ public class StartGameCommand extends CommandBase {
 		
 		// Wenn der MapName für das Laden mitgeschickt wird
 		// String mapName = messageInfo.getValueAsString("mapName");
-		String mapName = "NeueTolleMap";
+		String mapName = "GameDefaultMap";
 		
 		// Map laden
 		Map map = MapManager.loadMap(mapName);
