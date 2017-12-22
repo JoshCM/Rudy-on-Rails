@@ -115,6 +115,7 @@
     <Compile Include="Commands\Game\Create\CreateLocoCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateResourceCommand.cs" />
     <Compile Include="Commands\Game\Other\StartGameCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoPositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoSpeedCommand.cs" />
@@ -139,7 +140,7 @@
     <Compile Include="Models\Game\Gold.cs" />
     <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Player.cs" />
-    <Compile Include="Models\Game\Ressource.cs" />
+    <Compile Include="Models\Game\Resource.cs" />
     <Compile Include="Models\Game\Trainstation.cs" />
     <Compile Include="Models\Lobby\GameSessionInfo.cs" />
     <Compile Include="Models\Lobby\EditorSessionInfo.cs" />
