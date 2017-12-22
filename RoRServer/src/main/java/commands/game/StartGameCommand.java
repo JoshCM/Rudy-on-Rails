@@ -19,15 +19,20 @@ import models.session.RoRSession;
 import persistent.MapManager;
 
 public class StartGameCommand extends CommandBase {
+	
+	MessageInformation messageInfo;
 
 	public StartGameCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
+		this.messageInfo = messageInfo;
 	}
 
 	@Override
 	public void execute() {
-		System.out.println("Ich soll eine DefaultMap laden!");
+		System.out.println("Map laden ...");
 		
+		// Wenn der MapName für das Laden mitgeschickt wird
+		// String mapName = messageInfo.getValueAsString("mapName");
 		String mapName = "GameDefaultMap";
 		
 		// Map laden
