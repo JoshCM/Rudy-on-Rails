@@ -78,7 +78,6 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		this.setXPos(this.rail.getXPos());
 		this.setYPos(this.rail.getYPos());
 		SendUpdateLocoMessage();
-
 	}
 
 	/**
