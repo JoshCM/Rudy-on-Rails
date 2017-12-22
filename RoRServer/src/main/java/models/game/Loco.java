@@ -58,7 +58,6 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		}
 		else {
 			
-			//Wenn du mehrere Carts haben willst, musst du hier programmieren. 
 		}
 		carts.add(new Cart(this.sessionName, cartSquare));
 		SendAddCartMessage(cartSquare);
@@ -85,12 +84,28 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	 */
 	public void drive() {
 		Rail nextRail = getNextRail();
+		moveCarts(this.rail);
 		this.compass = nextRail.getExitDirection(getCompassNegation());
 		this.rail = nextRail;
 		this.setXPos(this.rail.getXPos());
 		this.setYPos(this.rail.getYPos());
 		SendUpdateLocoMessage();
 
+	}
+	
+	/**
+	 * bewegt alle Wagons, die an einer Lok hängen, sobald sich eine Lok um ein Feld weiter bewegt hat
+	 * 
+	 * @param forward
+	 */
+	public void moveCarts(Rail forward) {
+		Square newSquare = this.map.getSquare(forward.getXPos(), forward.getYPos());
+		Square tempSquare = null;
+		for(Cart c: carts) {
+			tempSquare = this.map.getSquareById(c.getSquareId());
+			c.updateSquare(newSquare);
+			newSquare = tempSquare;
+		}
 	}
 
 	/**

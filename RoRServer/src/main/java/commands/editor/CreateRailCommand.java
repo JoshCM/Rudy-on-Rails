@@ -1,4 +1,4 @@
-package commands.editor;
+-package commands.editor;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -52,4 +52,10 @@ public abstract class InteractiveGameObject extends ModelBase {
 	public void setYPos(int yPos) {
 		this.yPos = yPos;
 	}
+	
+	public void updateSquare(Square s) {
+		this.squareId = s.getId();
+		this.setXPos(s.getXIndex());
+		this.setYPos(s.getYIndex());
+	}
 }
