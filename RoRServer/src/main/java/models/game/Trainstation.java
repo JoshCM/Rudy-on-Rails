@@ -12,6 +12,7 @@ import communication.MessageInformation;
 import helper.Geometry;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
+import models.session.RoRSession;
 
 public class Trainstation extends InteractiveGameObject implements PlaceableOnSquare {
 
@@ -196,5 +197,11 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 					return false;
 		}
 		return true;
+	}
+
+	@Override
+	public void loadFromMap(Square square, RoRSession session) {
+		Trainstation trainStation = (Trainstation) square.getPlaceableOnSquare();
+		Trainstation newTrainStation = new Trainstation(session.getSessionName(), square, trainStation.getTrainstationRailIds(), trainStation.getId(), trainStation.alignment);	
 	}
 }

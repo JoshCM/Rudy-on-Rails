@@ -8,6 +8,7 @@ import java.util.List;
 import com.google.gson.JsonObject;
 
 import communication.MessageInformation;
+import communication.topic.TopicMessageQueue;
 import models.session.RoRSession;
 
 /**
@@ -36,7 +37,6 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	
 	public Rail(String sessionName, Square square, List<Compass> railSectionPositions, UUID trainstationId, UUID id) {
 		super(sessionName, square, id);
-		
 		setTrainstationId(trainstationId);
 		railSections = new ArrayList<RailSection>();
 		createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
@@ -173,7 +173,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 	public void loadFromMap(Square square, RoRSession session) {
 
 		Rail rail = (Rail)square.getPlaceableOnSquare();
-		
+
 		// Hole die SectionPositions aus den RailSections und speichere in Liste
 		List<Compass> railSectionPosition = new ArrayList<Compass>();
 		for (RailSection section : rail.getRailSectionList()) {
@@ -184,6 +184,6 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 		// Neues Rail erstellen und damit an den Client schicken
 		Rail newRail = new Rail(session.getSessionName(), square, railSectionPosition);
 		System.out.println("Neue Rail erstellt: " + newRail.toString());
-		
+				
 	}
 }
