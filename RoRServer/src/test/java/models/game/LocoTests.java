@@ -6,13 +6,47 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import communication.topic.TopicMessageQueue;
+import helper.MessageQueueStub;
 import models.session.GameSession;
 import models.session.GameSessionManager;
 
 public class LocoTests {
 
+	@Before
+	public void intiTests() {
+		TopicMessageQueue.getInstance().clear();
+	}
+	
+	/**
+	 * Loco sendet richtige Nachricht an Client
+	 */
+	@Test
+	public void SendUpdateLocoMessage() {
+		int squarePosX = 0;
+		int squarePosY = 0;
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(),
+				UUID.randomUUID(), "HostPlayer");
+
+		Player player = new Player(gameSession.getSessionName(), "Hans", UUID.randomUUID(), true);
+
+		Map map = gameSession.getMap();
+		Square square = map.getSquare(squarePosX, squarePosY);
+		Loco loco = new Loco(gameSession.getSessionName(), square, map, player.getId());
+		
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		loco.addObserver(messageQueueStub);
+		
+		loco.drive();
+		
+		String messageType = messageQueueStub.messages.get(0).getMessageType();
+
+		assertEquals("UpdateLocoPosition", messageType);
+	}
+	
 	/**
 	 * Besitzt die erzeugte Loco initial ein Cart?
 	 */
@@ -21,7 +55,7 @@ public class LocoTests {
 		int squarePosX = 0;
 		int squarePosY = 0;
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(),
-				UUID.randomUUID(), "Player");
+				UUID.randomUUID(), "HostPlayer");
 		Player player = new Player(gameSession.getSessionName(), "Hans", UUID.randomUUID(), true);
 
 		Map map = gameSession.getMap();
@@ -29,7 +63,6 @@ public class LocoTests {
 		Loco loco = new Loco(gameSession.getSessionName(), square, map, player.getId());
 
 		assertEquals(1, loco.getCarts().size());
-
 	}
 
 	/**
@@ -56,7 +89,5 @@ public class LocoTests {
 		Loco loco = new Loco(gameSession.getSessionName(), square, map, player.getId());
 
 		assertEquals(rail, loco.getRail());
-
 	}
-
 }
