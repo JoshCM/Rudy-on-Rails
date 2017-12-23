@@ -1,18 +1,10 @@
 package commands.game;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.topic.TopicMessageQueue;
-import models.game.Compass;
 import models.game.Map;
 import models.game.PlaceableOnSquare;
 import models.game.Player;
-import models.game.Rail;
-import models.game.RailSection;
 import models.game.Square;
 import models.session.GameSession;
 import models.session.RoRSession;
@@ -33,7 +25,12 @@ public class StartGameCommand extends CommandBase {
 		
 		// Wenn der MapName für das Laden mitgeschickt wird
 		// String mapName = messageInfo.getValueAsString("mapName");
-		String mapName = "GameDefaultMap";
+		
+		// Map: Zug fährt im Kreis
+		//String mapName = "GameDefaultMap";
+		
+		// Map: Zug steht + Bahnhöfe
+		String mapName = "GameDefaultMap2";
 		
 		// Map laden
 		Map map = MapManager.loadMap(mapName);
