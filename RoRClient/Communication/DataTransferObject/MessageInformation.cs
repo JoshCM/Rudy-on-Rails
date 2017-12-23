@@ -102,5 +102,5 @@ namespace RoRClient.Communication.DataTransferObject
         {
             return Guid.Parse(GetValueAsString(key));
         }
-    }
+	}
 }

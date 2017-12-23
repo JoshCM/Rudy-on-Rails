@@ -61,7 +61,7 @@ namespace RoRClient.ViewModels.Editor
             // Anzeigen der Quicknavigation
             MapViewModel.SwitchQuickNavigationForCanvasViewModel();
 
-            // Danach das EditorCanvasViewModel als vorheriges EditorCanvasViewModel merken, wenn es sich geänder hat
+            // Danach das EditorCanvasViewModel als vorheriges EditorCanvasViewModel merken, wenn es sich geändert hat
             if (this != MapViewModel.PreviousSelectedEditorCanvasViewModel)
             {
                 MapViewModel.PreviousSelectedEditorCanvasViewModel = this;
@@ -78,6 +78,11 @@ namespace RoRClient.ViewModels.Editor
         /// Methode zum Rotieren eines EditorCanvasViewModel nach rechts / Muss in der jeweiligen Unterklasse überschrieben werden
         /// </summary>
         public abstract void RotateRight();
+
+        /// <summary>
+        /// Methode zum Verschieben eines EditorCanvasViewModel / Muss in der jeweiligen Unterklasse überschrieben werden
+        /// </summary>
+        public abstract void Move();
 
         /// <summary>
         /// Methode zum Löschen eines EditorCanvasViewModel / Muss in der jeweiligen Unterklasse überschrieben werden

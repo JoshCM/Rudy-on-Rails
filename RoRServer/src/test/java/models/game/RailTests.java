@@ -55,11 +55,10 @@ public class RailTests {
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
 		UUID railId = UUID.randomUUID();
-		Rail rail = new Rail(editorSession.getSessionName(), square, railSectionPositions, UUID.randomUUID(), railId);
-
-		MessageInformation messageInfo = TopicMessageQueue.getInstance()
-				.getFirstFoundMessageInformationForMessageType("CreateRail");
-
+		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions, UUID.randomUUID(), railId);
+		
+		MessageInformation messageInfo = MessageQueue.getInstance().getFirstFoundMessageInformationForAttribute(railId);
+	
 		UUID messageInfoRailId = messageInfo.getValueAsUUID("railId");
 		UUID messageInfoSquareId = messageInfo.getValueAsUUID("squareId");
 		int messageInfoXPos = messageInfo.getValueAsInt("xPos");
