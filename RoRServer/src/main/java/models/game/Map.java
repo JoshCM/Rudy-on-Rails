@@ -1,6 +1,7 @@
 package models.game;
 
 import models.base.ModelBase;
+import models.helper.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -145,7 +146,7 @@ public class Map extends ModelBase {
 	 * @param newSquareOfPlaceable Neues Square auf den das PlaceableOnSquare verschoben werden soll
 	 */
 	public void movePlaceableOnSquare(Square oldSquareOfPlaceable, Square newSquareOfPlaceable) {
-		if (validateMovePlaceableOnSquare(oldSquareOfPlaceable, newSquareOfPlaceable)) {
+		if (Validator.validateMovePlaceableOnSquare(oldSquareOfPlaceable, newSquareOfPlaceable, this)) {
 			InteractiveGameObject placeableOnSquare = (InteractiveGameObject) oldSquareOfPlaceable.getPlaceableOnSquare();
 			int oldPlaceableOnSquareXPos = placeableOnSquare.getXPos();
 			int oldPlaceableOnSquareYPos = placeableOnSquare.getYPos();
@@ -211,146 +212,5 @@ public class Map extends ModelBase {
 		messageInformation.putValue("newXPos", newSquare.getXIndex());
 		messageInformation.putValue("newYPos", newSquare.getYIndex());
 		notifyChange(messageInformation);
-	}
-
-	/**
-	 * Validiert ob das PlaceableOnSquare von oldSquare auf newSquare gesetzt werden kann
-	 * @param oldSquare
-	 * @param newSquare
-	 * @return boolean
-	 */
-	private boolean validateMovePlaceableOnSquare(Square oldSquare, Square newSquare) {
-		InteractiveGameObject placeableOnSquare = (InteractiveGameObject) oldSquare.getPlaceableOnSquare();
-		if (placeableOnSquare instanceof Rail) {
-			return validateSetRailOnMap(newSquare);
-		} else if (placeableOnSquare instanceof Trainstation) {
-			Trainstation possibleTrainstation = (Trainstation) placeableOnSquare;
-			return validateSetTrainstationOnMap(newSquare, possibleTrainstation.getAlignment());
-		}
-		return false;
-	}
-
-	/**
-	 * Validiert ob eine Rail auf newSquare gesetzt werden kann
-	 * @param newSquare
-	 * @return boolean
-	 */
-	private boolean validateSetRailOnMap(Square newSquare) {
-		if (newSquare.getPlaceableOnSquare() != null)
-			return false;
-		return true;
-	}
-
-	/**
-	 * Validiert ob eine Trainstation auf newSquare gesetzt werden kann
-	 * @param newSquare Neues Square 
-	 * @param alignment Ausrichtung der Trainstation
-	 * @return boolean
-	 */
-	public boolean validateSetTrainstationOnMap(Square newSquare, Compass alignment) {
-		// TODO: ist noch zu konfus das height auch width sein kann und andersherum
-		int trainstationRailsHeight = 3;
-		int trainstationRailsWidth = 1;
-
-		int trainstationHeight = 0;
-		int trainstationWidth = 0;
-
-		if (alignment.equals(Compass.EAST) || alignment.equals(Compass.WEST)) {
-			trainstationHeight = trainstationRailsHeight;
-			trainstationWidth = trainstationRailsWidth + 1; // +1 für das trainstation feld
-		} else if (alignment.equals(Compass.NORTH) || alignment.equals(Compass.SOUTH)) {
-			trainstationHeight = trainstationRailsWidth + 1; // +1 für das trainstation feld
-			trainstationWidth = trainstationRailsHeight;
-		}
-
-		if (!validatePossibleTrainstation(newSquare))
-			return false;
-		if (!validateWindowEdges(newSquare, trainstationHeight, trainstationWidth))
-			return false;
-		if (!validatePossibleRails(newSquare, alignment))
-			return false;
-		return true;
-	}
-
-	/**
-	 * Validiert ob das Trainstation-Gebäude auf das newSquare gesetzt werden kann
-	 * @param newSquare
-	 * @return boolean
-	 */
-	private boolean validatePossibleTrainstation(Square newSquare) {
-		if (newSquare != null) {
-			if (newSquare.getPlaceableOnSquare() != null) {
-				return false;
-			}
-		} else {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Gibt an ob die Trainstation zu nahe an den Kanten der Map ist
-	 * @param newSquare
-	 * @param trainstationHeight
-	 * @param trainstationWidth
-	 * @return boolean
-	 */
-	private boolean validateWindowEdges(Square newSquare, int trainstationHeight, int trainstationWidth) {
-		// TODO: muss noch an die ränder optimal angepasst werden
-
-		// wenn y kleiner ist als die höhe minus das trainstation-feld
-		if (newSquare.getYIndex() < (trainstationHeight - 1))
-			return false;
-		// wenn y größer ist als höhe der map minus die höhe minus das trainstation-feld
-		if (newSquare.getYIndex() > (this.getSquares().length - 1) - (trainstationHeight + 1))
-			return false;
-		// wenn x kleiner ist als breite der map minus die breite minus das
-		// trainstation-feld
-		if (newSquare.getXIndex() < (trainstationWidth - 1))
-			return false;
-		// wenn x kleiner ist als anzahl der horizontalen rails
-		if (newSquare.getXIndex() > (this.getSquares().length - 1) - (trainstationWidth + 1))
-			return false;
-		return true;
-	}
-
-	/**
-	 * Gibt an ob die neuen Squares der TrainstationRails einer neuen Trainstation platzierbar sind
-	 * @param newSquare
-	 * @param alignment Ausrichtung der Trainstation
-	 * @return boolean
-	 */
-	private boolean validatePossibleRails(Square newSquare, Compass alignment) {
-
-		// Iteriert über die Squares für die möglichen Rails der Trainstation
-		for (int i = 0; i <= 2; i++) {
-
-			Square possibleRailSquare = null;
-			switch (alignment) {
-			case EAST:
-				possibleRailSquare = this.getSquare(newSquare.getXIndex() + 1, newSquare.getYIndex() + (i - 1));
-				break;
-			case SOUTH:
-				possibleRailSquare = this.getSquare(newSquare.getXIndex() + (i - 1), newSquare.getYIndex() + 1);
-				break;
-			case WEST:
-				possibleRailSquare = this.getSquare(newSquare.getXIndex() - 1, newSquare.getYIndex() + (i - 1));
-				break;
-			case NORTH:
-				possibleRailSquare = this.getSquare(newSquare.getXIndex() + (i - 1), newSquare.getYIndex() - 1);
-				break;
-			}
-
-			// Square für Rail ist vorhanden
-			if (possibleRailSquare != null) {
-				// Square für Rail ist belegt
-				if (possibleRailSquare.getPlaceableOnSquare() != null) {
-					return false;
-				}
-			} else {
-				return false;
-			}
-		}
-		return true;
 	}
 }

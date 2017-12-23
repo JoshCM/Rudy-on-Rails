@@ -28,6 +28,10 @@ public class MessageInformation {
     	messageId = UUID.randomUUID().toString();
         this.messageType = messageType;
     }
+    
+    public Map<String, Object> getAttributes(){
+    	return attributes;
+    }
 
     public String getClientid() {
         return clientId;

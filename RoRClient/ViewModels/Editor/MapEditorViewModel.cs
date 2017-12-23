@@ -229,7 +229,10 @@ namespace RoRClient.ViewModels.Editor
             if (IsQuickNavigationVisible)
             {
                 Console.WriteLine("Quicknavigation deaktiviert");
-                IsQuickNavigationVisible = false;
+
+				// SelectedEditorCanvasViewModel muss auf null zurückgesetzt werden damit man den Scope nicht mehr auf dieses Objekt hat
+	            SelectedEditorCanvasViewModel = null;
+				IsQuickNavigationVisible = false;
 
             }
             else
@@ -238,7 +241,8 @@ namespace RoRClient.ViewModels.Editor
                 IsQuickNavigationVisible = true;
             }
 
-            Console.WriteLine("Selected ViewModel: " + SelectedEditorCanvasViewModel.ToString() + " / ID: " + SelectedEditorCanvasViewModel.Id);
+			if(SelectedEditorCanvasViewModel != null)
+				Console.WriteLine("Selected ViewModel: " + SelectedEditorCanvasViewModel.ToString() + " / ID: " + SelectedEditorCanvasViewModel.Id);
         }
 
         /// <summary>
@@ -357,9 +361,9 @@ namespace RoRClient.ViewModels.Editor
         /// </summary>
         private void Move()
         {
-            SelectedEditorCanvasViewModel.Move();
+	        SelectedEditorCanvasViewModel?.Move();
 
-            // Quicknavigation nach dem Verschieben nicht mehr anzeigen
+	        // Quicknavigation nach dem Verschieben nicht mehr anzeigen
             IsQuickNavigationVisible = false;
         }
     }

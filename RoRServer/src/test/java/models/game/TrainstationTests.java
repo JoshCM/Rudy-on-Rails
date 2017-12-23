@@ -18,6 +18,8 @@ import commands.editor.CreateTrainstationCommand;
 import commands.editor.DeleteTrainstationCommand;
 import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
+import exceptions.NotRemoveableException;
+import exceptions.NotRotateableException;
 import models.session.EditorSessionManager;
 import models.session.RoRSession;
 
@@ -25,10 +27,10 @@ public class TrainstationTests {
 	
 	RoRSession session;
 	
-	public void initValidTrainstationCommand() {
+	public void initValidTrainstationCommand(int x, int y) {
 		MessageInformation messageInformation = new MessageInformation();
-		messageInformation.putValue("xPos", 1);
-		messageInformation.putValue("yPos", 2);
+		messageInformation.putValue("xPos", x);
+		messageInformation.putValue("yPos", y);
 		messageInformation.putValue("alignment", Compass.EAST.toString());
 		
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString());
@@ -46,8 +48,10 @@ public class TrainstationTests {
 	
 	@Test
 	public void TrainstationIsCreatedWithRightValuesOverCommand() {
-		initValidTrainstationCommand();
-		Square square = session.getMap().getSquare(1, 2);
+		int x = 1;
+		int y = 2;
+		initValidTrainstationCommand(x, y);
+		Square square = session.getMap().getSquare(x, y);
 		Assert.assertNotNull(square.getPlaceableOnSquare());
 		Assert.assertEquals(Trainstation.class, square.getPlaceableOnSquare().getClass());
 		List<UUID> railIds = ((Trainstation)square.getPlaceableOnSquare()).getTrainstationRailIds();
@@ -287,8 +291,6 @@ public class TrainstationTests {
 			Compass notExpectedNode2 = beforeRotationTrainstationRails.get(i).getFirstSection().getNode2();
 			Compass actualNode2 = trainstationRails.get(i).getFirstSection().getNode2();
 			Assert.assertNotEquals(notExpectedNode2, actualNode2);
-		}
-		
-	}
-	
+		}	
+	}	
 }

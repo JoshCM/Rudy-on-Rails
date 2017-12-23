@@ -17,6 +17,7 @@ import models.session.EditorSessionManager;
 
 public class Trainstation extends InteractiveGameObject implements PlaceableOnSquare {
 
+	public static final int RAIL_COUNT = 3;
 	private List<UUID> trainstationRailIds;
 	private Compass alignment;
 	

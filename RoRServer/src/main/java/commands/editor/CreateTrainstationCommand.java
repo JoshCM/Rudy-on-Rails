@@ -13,6 +13,7 @@ import models.game.Rail;
 import models.game.Compass;
 import models.game.Square;
 import models.game.Trainstation;
+import models.helper.Validator;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
@@ -34,16 +35,16 @@ public class CreateTrainstationCommand extends CommandBase {
 	public void execute() {
 		EditorSession editorSession = (EditorSession) session;
 		Map map = editorSession.getMap();
-		Square trainstationSquare = map.getSquare(xPos, yPos);
+		Square newSquare = map.getSquare(xPos, yPos);
 
-		if (!map.validateSetTrainstationOnMap(trainstationSquare, alignment)) {
+		if (!Validator.validateTrainstationOnMap(newSquare,alignment, editorSession.getMap())) {
 			throw new InvalidModelOperationException(String.format("Trainstation(x:%s,y:%s) konnte nicht angelegt werden", xPos, yPos));
 		} else {
 			// generiere UUID für Trainstation
 			UUID trainstationId = UUID.randomUUID();
 			// Trainstation wird erzeugt und auf Square gesetzt
-			Trainstation trainstation = new Trainstation(session.getName(), trainstationSquare, createTrainstationRails(map, trainstationSquare, trainstationId), trainstationId, alignment);
-			trainstationSquare.setPlaceableOnSquare(trainstation);
+			Trainstation trainstation = new Trainstation(session.getName(), newSquare, createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment);
+			newSquare.setPlaceableOnSquare(trainstation);
 		}
 	}
 
