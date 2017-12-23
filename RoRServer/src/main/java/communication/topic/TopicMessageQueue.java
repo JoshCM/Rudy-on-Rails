@@ -69,6 +69,26 @@ public class TopicMessageQueue implements ModelObserver {
 		return null;
 	}
 	
+	/**
+	 * Wird für UnitTests genutzt, um zu überprüfen, ob auch alle wichtigen
+	 * Informationen in der Nachricht stehen anhand eines Attributes
+	 * 
+	 * @param messageType
+	 * @return
+	 */
+	public MessageInformation getFirstFoundMessageInformationForAttribute(Object attribute) {
+		Object[] messages;
+		messages = messagesToSendOnTopicQueue.toArray();
+
+		for (Object obj : messages) {
+			MessageInformation messageInfo = ((MessageEnvelope) obj).getMessageInformation();
+			if (messageInfo.getAttributes().values().contains(attribute)) {
+				return messageInfo;
+			}
+		}
+		return null;
+	}
+	
 	public void clear() {
 		messagesToSendOnTopicQueue.clear();
 	}

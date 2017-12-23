@@ -48,10 +48,10 @@ public class LocoTests {
 
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
-		Player player = new Player(gameSession.getSessionName(), "Hans", UUID.randomUUID(), true);
+		Player player = new Player(gameSession.getName(), "Hans", UUID.randomUUID(), true);
 		Map map = gameSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Rail rail = new Rail(gameSession.getSessionName(), square, directions);
+		Rail rail = new Rail(gameSession.getName(), square, directions);
 
 		square.setPlaceableOnSquare(rail);
 		Loco loco = new Loco(gameSession.getName(), square, map, player.getId());

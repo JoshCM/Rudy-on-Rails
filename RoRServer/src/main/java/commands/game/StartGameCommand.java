@@ -30,7 +30,7 @@ public class StartGameCommand extends CommandBase {
 		
 		// Map laden
 		Map map = MapManager.loadMap("GameDefaultMap");
-		map.setSessionName(session.getSessionName());
+		map.setSessionName(session.getName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
 		
@@ -51,7 +51,7 @@ public class StartGameCommand extends CommandBase {
 						railSectionPosition.add(section.getNode2());
 					}
 					// Neues Rail erstellen und damit an den Client schicken
-					Rail newRail = new Rail(session.getSessionName(), square, railSectionPosition);
+					Rail newRail = new Rail(session.getName(), square, railSectionPosition);
 					System.out.println("Neue Rail erstellt auf " + i + " " + j + ": " + newRail.toString());
 				}
 			}

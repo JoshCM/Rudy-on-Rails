@@ -29,11 +29,11 @@ public class CommandDeleterTests {
 
 		// generiere trainstationRails
 		List<Rail> trainstationRails = Arrays.asList(
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 0),
+				new Rail(session.getName(), session.getMap().getSquare(2, 0),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 1),
+				new Rail(session.getName(), session.getMap().getSquare(2, 1),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 2),
+				new Rail(session.getName(), session.getMap().getSquare(2, 2),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		// setzt die rails als placeable und generiert trainstationRailIds

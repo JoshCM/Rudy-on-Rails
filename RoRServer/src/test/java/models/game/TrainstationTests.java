@@ -169,11 +169,11 @@ public class TrainstationTests {
 
 		// generiere trainstationRails
 		List<Rail> trainstationRails = Arrays.asList(
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 0),
+				new Rail(session.getName(), session.getMap().getSquare(2, 0),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 1),
+				new Rail(session.getName(), session.getMap().getSquare(2, 1),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 2),
+				new Rail(session.getName(), session.getMap().getSquare(2, 2),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		// setzt die rails als placeable und generiert trainstationRailIds
@@ -200,11 +200,11 @@ public class TrainstationTests {
 
 		// generiere trainstationRails
 		List<Rail> trainstationRails = Arrays.asList(
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 0),
+				new Rail(session.getName(), session.getMap().getSquare(2, 0),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 1),
+				new Rail(session.getName(), session.getMap().getSquare(2, 1),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 2),
+				new Rail(session.getName(), session.getMap().getSquare(2, 2),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		// setzt die rails als placeable und generiert trainstationRailIds
@@ -231,17 +231,17 @@ public class TrainstationTests {
 
 		// generiere trainstationRails
 		List<Rail> trainstationRails = Arrays.asList(
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 0),
+				new Rail(session.getName(), session.getMap().getSquare(2, 0),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 1),
+				new Rail(session.getName(), session.getMap().getSquare(2, 1),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 2),
+				new Rail(session.getName(), session.getMap().getSquare(2, 2),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		// geklonte liste um alte werte zu haben
 		List<Rail> beforeRotationTrainstationRails = new ArrayList<>();
 		for (Rail trainstationRail : trainstationRails) {
-			beforeRotationTrainstationRails.add(new Rail(session.getSessionName(), session.getMap().getSquare(20, 20),
+			beforeRotationTrainstationRails.add(new Rail(session.getName(), session.getMap().getSquare(20, 20),
 					Arrays.asList(trainstationRail.getFirstSection().getNode1(),
 							trainstationRail.getFirstSection().getNode2())));
 		}
@@ -283,17 +283,17 @@ public class TrainstationTests {
 
 		// generiere trainstationRails
 		List<Rail> trainstationRails = Arrays.asList(
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 0),
+				new Rail(session.getName(), session.getMap().getSquare(2, 0),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 1),
+				new Rail(session.getName(), session.getMap().getSquare(2, 1),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 2),
+				new Rail(session.getName(), session.getMap().getSquare(2, 2),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		// geklonte liste um alte werte zu haben
 		List<Rail> beforeRotationTrainstationRails = new ArrayList<>();
 		for (Rail trainstationRail : trainstationRails) {
-			beforeRotationTrainstationRails.add(new Rail(session.getSessionName(), session.getMap().getSquare(20, 20),
+			beforeRotationTrainstationRails.add(new Rail(session.getName(), session.getMap().getSquare(20, 20),
 					Arrays.asList(trainstationRail.getFirstSection().getNode1(),
 							trainstationRail.getFirstSection().getNode2())));
 		}

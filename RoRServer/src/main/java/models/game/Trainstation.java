@@ -29,7 +29,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		super(sessionName, square, id);
 		this.trainstationRailIds = trainstationRailIds;
 		this.alignment = alignment;
-		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getSessionName());
+		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getName());
 		notifyCreatedTrainstation();
 	}
 	
@@ -63,7 +63,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	 */
 	public List<Rail> getTrainstationRails(){
 		List<Rail> trainstationRails = new ArrayList<Rail>();
-		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getSessionName());
+		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getName());
 		for(UUID railId : trainstationRailIds) {
 			trainstationRails.add((Rail) editorSession.getMap().getPlaceableById(railId));
 		}
