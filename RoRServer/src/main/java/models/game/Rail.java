@@ -54,21 +54,31 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		return resource;
 	}
 	
+	/**
+	 * Platziert auf den benachbarten Squares (sofern frei) anhand der Schwierigkeit des Spiels entweder Kohle oder Gold
+	 */
 	public void generateResourcesNextToRail() {
 		Square square = getSquareFromGameSession();
-		int xPos = square.getXIndex();
-		int yPos = square.getYIndex();
 		
+		// Durchgehen der benachbarten Squares, um Ressourcen zu platzieren
 		List<Square> squares = square.getNeighbouringSquares();
 		if (!squares.isEmpty()) {
 			for (Square s : squares) {
-				if (s.getPlaceableOnSquare() == null) {
-					Gold gold = new Gold(GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(), s);
+				if (s.getPlaceableOnSquare() == null && Math.random() < Difficulty.MEDIUM.getPercentageToSpawnResource() / 100.0) {
+					if (Math.random() < 0.5) {
+						Gold gold = new Gold(GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(), s);
+					} else {
+						Coal coal = new Coal(GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(), s);
+					}
 				}
 			}
 		}	
 	}
 	
+	/**
+	 * Gibt das Square zurück, auf welchem die Rail liegt
+	 * @return Square auf welchen die Rail liegt
+	 */
 	public Square getSquareFromGameSession() {
 		return GameSessionManager.getInstance().getGameSessionByName(sessionName).getMap().getSquareById(getSquareId());
 	}
@@ -232,9 +242,11 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		
 		// Neues Rail erstellen und damit an den Client schicken
 		Rail newRail = new Rail(session.getName(), square, railSectionPosition);
-		newRail.generateResourcesNextToRail();
 		System.out.println("Neue Rail erstellt: " + newRail.toString());
 		
+		// Ressourcen setzen
+		newRail.generateResourcesNextToRail();
+
 		return newRail;	
 	}
 }
