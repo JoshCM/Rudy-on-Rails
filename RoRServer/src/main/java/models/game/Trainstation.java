@@ -227,7 +227,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	@Override
 	public Trainstation loadFromMap(Square square, RoRSession session) {
 		Trainstation trainStation = (Trainstation) square.getPlaceableOnSquare();
-		Trainstation newTrainStation = new Trainstation(session.getSessionName(), square, trainStation.getTrainstationRailIds(), trainStation.getId(), trainStation.alignment);	
+		Trainstation newTrainStation = new Trainstation(session.getName(), square, trainStation.getTrainstationRailIds(), trainStation.getId(), trainStation.alignment);	
 		System.out.println("Neue TrainStation erstellt: " + newTrainStation.toString());
 		return newTrainStation;
 	}

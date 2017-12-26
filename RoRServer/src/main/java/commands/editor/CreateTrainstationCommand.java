@@ -44,9 +44,9 @@ public class CreateTrainstationCommand extends CommandBase {
 			// generiere UUID für Trainstation
 			UUID trainstationId = UUID.randomUUID();
 			// Trainstation wird erzeugt und auf Square gesetzt
-			Trainstation trainstation = new Trainstation(session.getSessionName(), trainstationSquare, createTrainstationRails(map, trainstationSquare, trainstationId), trainstationId, alignment);
+			Trainstation trainstation = new Trainstation(session.getName(), newSquare, createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment);
 			trainstation.setSpawnPointforLoco(spawnPointforLoco);
-			trainstationSquare.setPlaceable(trainstation);
+			newSquare.setPlaceableOnSquare(trainstation);
 		}
 	}
 

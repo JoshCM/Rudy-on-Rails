@@ -34,7 +34,7 @@ public class StartGameCommand extends CommandBase {
 		
 		// Map laden
 		Map map = MapManager.loadMap(mapName);
-		map.setSessionName(session.getSessionName());
+		map.setSessionName(session.getName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
 		

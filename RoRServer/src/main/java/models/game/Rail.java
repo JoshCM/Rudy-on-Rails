@@ -202,7 +202,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		}
 		
 		// Neues Rail erstellen und damit an den Client schicken
-		Rail newRail = new Rail(session.getSessionName(), square, railSectionPosition);
+		Rail newRail = new Rail(session.getName(), square, railSectionPosition);
 		System.out.println("Neue Rail erstellt: " + newRail.toString());
 		
 		return newRail;	

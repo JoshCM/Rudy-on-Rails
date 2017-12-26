@@ -26,15 +26,15 @@ public class StartGameCommandTest {
 		
 		// GameSession und Square erstellen
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
-		Square square = new Square(gameSession.getSessionName(), 0, 0);
+		Square square = new Square(gameSession.getName(), 0, 0);
 		
 		// Erstellen einer neuen Rail
 		List<Compass> railSectionPositions = new ArrayList<Compass>();
 		railSectionPositions.add(Compass.NORTH);
 		railSectionPositions.add(Compass.SOUTH);
 
-		Rail loadedRail = new Rail(gameSession.getSessionName(), square, railSectionPositions);
-		square.setPlaceable(loadedRail);
+		Rail loadedRail = new Rail(gameSession.getName(), square, railSectionPositions);
+		square.setPlaceableOnSquare(loadedRail);
 		
 		Rail createdRail = loadedRail.loadFromMap(square, gameSession);
 		
@@ -48,13 +48,13 @@ public class StartGameCommandTest {
 		
 		// GameSession und Square erstellen
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
-		Square square = new Square(gameSession.getSessionName(), 0, 0);
+		Square square = new Square(gameSession.getName(), 0, 0);
 		
 		// Erstellen eines neuen Bahnhofes
 		List<UUID> uuids = new ArrayList<UUID>();
 		uuids.add(UUID.randomUUID());
-		Trainstation loadedTrainstation = new Trainstation(gameSession.getSessionName(), square, uuids, UUID.randomUUID(), Compass.NORTH);
-		square.setPlaceable(loadedTrainstation);
+		Trainstation loadedTrainstation = new Trainstation(gameSession.getName(), square, uuids, UUID.randomUUID(), Compass.NORTH);
+		square.setPlaceableOnSquare(loadedTrainstation);
 		
 		Trainstation createdTrainstation = loadedTrainstation.loadFromMap(square, gameSession);
 		//assertEquals(loadedTrainstation, createdTrainstation);
