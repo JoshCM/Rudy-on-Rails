@@ -12,6 +12,7 @@ import models.game.Map;
 import models.game.Rail;
 import models.game.RailSection;
 import models.game.Square;
+import models.game.Trainstation;
 import models.session.GameSession;
 import models.session.GameSessionManager;
 import models.session.RoRSession;
@@ -44,6 +45,20 @@ public class StartGameCommandTest {
 	
 	@Test
 	public void testLoadedTrainStationEqualsToCreatedTrainStation() {
+		
+		// GameSession und Square erstellen
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
+		Square square = new Square(gameSession.getSessionName(), 0, 0);
+		
+		// Erstellen eines neuen Bahnhofes
+		List<UUID> uuids = new ArrayList<UUID>();
+		uuids.add(UUID.randomUUID());
+		Trainstation loadedTrainstation = new Trainstation(gameSession.getSessionName(), square, uuids, UUID.randomUUID(), Compass.NORTH);
+		square.setPlaceable(loadedTrainstation);
+		
+		Trainstation createdTrainstation = loadedTrainstation.loadFromMap(square, gameSession);
+		//assertEquals(loadedTrainstation, createdTrainstation);
+		assertEquals(loadedTrainstation, createdTrainstation);
 		
 	}
 
