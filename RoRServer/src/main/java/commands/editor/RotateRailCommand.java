@@ -3,6 +3,7 @@ package commands.editor;
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import exceptions.NotRemoveableException;
+import exceptions.NotRotateableException;
 import models.game.Map;
 import models.game.Rail;
 import models.game.Square;
@@ -39,7 +40,7 @@ public class RotateRailCommand extends CommandBase {
 		if (rotateable) {
 			rail.rotate(right);
 		} else {
-			throw new NotRemoveableException(
+			throw new NotRotateableException(
 					String.format("%s(Id:%s)%s", 
 							square.getPlaceableOnSquare().getClass().getName(),
 							square.getPlaceableOnSquare().getId(), 

@@ -38,7 +38,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		this.rail = (Rail) square.getPlaceableOnSquare();
 		this.map = map;
 		this.compass = rail.getFirstSection().getNode1();
-		this.speed = 1; // Nur zu testzwecken
+		this.speed = 0; // Nur zu testzwecken
 		this.playerId = playerId;
 		SendCreatedLocoMessage();
 	}

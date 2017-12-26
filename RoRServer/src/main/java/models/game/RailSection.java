@@ -114,5 +114,10 @@ public class RailSection extends ModelBase {
 		
 		return Compass.values()[newIndex];
 	}
-
+	
+	public void changeSquare(Square newSquare) {
+		this.squareId = newSquare.getId();
+		this.squareXPos = newSquare.getXIndex();
+		this.squareYPos = newSquare.getYIndex();
+	}
 }
