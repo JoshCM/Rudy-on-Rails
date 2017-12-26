@@ -18,17 +18,19 @@ import commands.editor.CreateTrainstationCommand;
 import commands.editor.DeleteTrainstationCommand;
 import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
+import exceptions.NotRemoveableException;
+import exceptions.NotRotateableException;
 import models.session.EditorSessionManager;
 import models.session.RoRSession;
 
 public class TrainstationTests {
 
 	RoRSession session;
-
-	public void initValidTrainstationCommand() {
+	
+	public void initValidTrainstationCommand(int x, int y) {
 		MessageInformation messageInformation = new MessageInformation();
-		messageInformation.putValue("xPos", 0);
-		messageInformation.putValue("yPos", 1);
+		messageInformation.putValue("xPos", x);
+		messageInformation.putValue("yPos", y);
 		messageInformation.putValue("alignment", Compass.EAST.toString());
 
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
@@ -47,8 +49,10 @@ public class TrainstationTests {
 
 	@Test
 	public void TrainstationIsCreatedWithRightValuesOverCommand() {
-		initValidTrainstationCommand();
-		Square square = session.getMap().getSquare(0, 1);
+		int x = 1;
+		int y = 2;
+		initValidTrainstationCommand(x, y);
+		Square square = session.getMap().getSquare(x, y);
 		Assert.assertNotNull(square.getPlaceableOnSquare());
 		Assert.assertEquals(Trainstation.class, square.getPlaceableOnSquare().getClass());
 		List<UUID> railIds = ((Trainstation) square.getPlaceableOnSquare()).getTrainstationRailIds();
@@ -92,7 +96,7 @@ public class TrainstationTests {
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 		Square square = session.getMap().getSquare(1, 0);
-		square.setPlaceable(new Rail(session.getSessionName(), square, Arrays.asList(Compass.NORTH, Compass.SOUTH)));
+		square.setPlaceableOnSquare(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
 
@@ -117,7 +121,7 @@ public class TrainstationTests {
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 		Square square = session.getMap().getSquare(1, 1);
-		square.setPlaceable(new Rail(session.getSessionName(), square, Arrays.asList(Compass.NORTH, Compass.SOUTH)));
+		square.setPlaceableOnSquare(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
 
@@ -142,7 +146,7 @@ public class TrainstationTests {
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 		Square square = session.getMap().getSquare(1, 2);
-		square.setPlaceable(new Rail(session.getSessionName(), square, Arrays.asList(Compass.NORTH, Compass.SOUTH)));
+		square.setPlaceableOnSquare(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
 
@@ -165,27 +169,25 @@ public class TrainstationTests {
 
 		// generiere trainstationRails
 		List<Rail> trainstationRails = Arrays.asList(
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 0),
+				new Rail(session.getName(), session.getMap().getSquare(2, 0),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 1),
+				new Rail(session.getName(), session.getMap().getSquare(2, 1),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 2),
+				new Rail(session.getName(), session.getMap().getSquare(2, 2),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		// setzt die rails als placeable und generiert trainstationRailIds
 		List<UUID> trainstationRailIds = new ArrayList<UUID>();
 		List<String> trainstationRailIdStrings = new ArrayList<String>();
-		for (Rail trainstationRail : trainstationRails) {
-			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos())
-					.setPlaceable(trainstationRail);
+		for(Rail trainstationRail : trainstationRails) {
+			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceableOnSquare(trainstationRail);
 			trainstationRailIds.add(trainstationRail.getId());
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
-		Trainstation trainstation = new Trainstation(session.getSessionName(), session.getMap().getSquare(1, 1),
-				trainstationRailIds, trainstationId, Compass.EAST);
-		session.getMap().getSquare(1, 1).setPlaceable(trainstation);
-
+		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
+		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
+		
 		Assert.assertTrue(trainstation.validateRotation(true));
 	}
 
@@ -198,27 +200,25 @@ public class TrainstationTests {
 
 		// generiere trainstationRails
 		List<Rail> trainstationRails = Arrays.asList(
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 0),
+				new Rail(session.getName(), session.getMap().getSquare(2, 0),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 1),
+				new Rail(session.getName(), session.getMap().getSquare(2, 1),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 2),
+				new Rail(session.getName(), session.getMap().getSquare(2, 2),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		// setzt die rails als placeable und generiert trainstationRailIds
 		List<UUID> trainstationRailIds = new ArrayList<UUID>();
 		List<String> trainstationRailIdStrings = new ArrayList<String>();
-		for (Rail trainstationRail : trainstationRails) {
-			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos())
-					.setPlaceable(trainstationRail);
+		for(Rail trainstationRail : trainstationRails) {
+			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceableOnSquare(trainstationRail);
 			trainstationRailIds.add(trainstationRail.getId());
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
-		Trainstation trainstation = new Trainstation(session.getSessionName(), session.getMap().getSquare(1, 1),
-				trainstationRailIds, trainstationId, Compass.EAST);
-		session.getMap().getSquare(1, 1).setPlaceable(trainstation);
-
+		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
+		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
+		
 		Assert.assertTrue(trainstation.validateRotation(false));
 	}
 
@@ -231,34 +231,32 @@ public class TrainstationTests {
 
 		// generiere trainstationRails
 		List<Rail> trainstationRails = Arrays.asList(
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 0),
+				new Rail(session.getName(), session.getMap().getSquare(2, 0),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 1),
+				new Rail(session.getName(), session.getMap().getSquare(2, 1),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 2),
+				new Rail(session.getName(), session.getMap().getSquare(2, 2),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		// geklonte liste um alte werte zu haben
 		List<Rail> beforeRotationTrainstationRails = new ArrayList<>();
 		for (Rail trainstationRail : trainstationRails) {
-			beforeRotationTrainstationRails.add(new Rail(session.getSessionName(), session.getMap().getSquare(20, 20),
+			beforeRotationTrainstationRails.add(new Rail(session.getName(), session.getMap().getSquare(20, 20),
 					Arrays.asList(trainstationRail.getFirstSection().getNode1(),
 							trainstationRail.getFirstSection().getNode2())));
 		}
 		// setzt die rails als placeable und generiert trainstationRailIds
 		List<UUID> trainstationRailIds = new ArrayList<UUID>();
 		List<String> trainstationRailIdStrings = new ArrayList<String>();
-		for (Rail trainstationRail : trainstationRails) {
-			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos())
-					.setPlaceable(trainstationRail);
+		for(Rail trainstationRail : trainstationRails) {
+			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceableOnSquare(trainstationRail);
 			trainstationRailIds.add(trainstationRail.getId());
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
-		Trainstation trainstation = new Trainstation(session.getSessionName(), session.getMap().getSquare(1, 1),
-				trainstationRailIds, trainstationId, Compass.EAST);
-		session.getMap().getSquare(1, 1).setPlaceable(trainstation);
-
+		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
+		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
+		
 		trainstation.rotate(true);
 
 		// testen der einzelnen squares ob die richtigen placeables draufstehen
@@ -285,34 +283,32 @@ public class TrainstationTests {
 
 		// generiere trainstationRails
 		List<Rail> trainstationRails = Arrays.asList(
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 0),
+				new Rail(session.getName(), session.getMap().getSquare(2, 0),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 1),
+				new Rail(session.getName(), session.getMap().getSquare(2, 1),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 2),
+				new Rail(session.getName(), session.getMap().getSquare(2, 2),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		// geklonte liste um alte werte zu haben
 		List<Rail> beforeRotationTrainstationRails = new ArrayList<>();
 		for (Rail trainstationRail : trainstationRails) {
-			beforeRotationTrainstationRails.add(new Rail(session.getSessionName(), session.getMap().getSquare(20, 20),
+			beforeRotationTrainstationRails.add(new Rail(session.getName(), session.getMap().getSquare(20, 20),
 					Arrays.asList(trainstationRail.getFirstSection().getNode1(),
 							trainstationRail.getFirstSection().getNode2())));
 		}
 		// setzt die rails als placeable und generiert trainstationRailIds
 		List<UUID> trainstationRailIds = new ArrayList<UUID>();
 		List<String> trainstationRailIdStrings = new ArrayList<String>();
-		for (Rail trainstationRail : trainstationRails) {
-			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos())
-					.setPlaceable(trainstationRail);
+		for(Rail trainstationRail : trainstationRails) {
+			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceableOnSquare(trainstationRail);
 			trainstationRailIds.add(trainstationRail.getId());
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
-		Trainstation trainstation = new Trainstation(session.getSessionName(), session.getMap().getSquare(1, 1),
-				trainstationRailIds, trainstationId, Compass.EAST);
-		session.getMap().getSquare(1, 1).setPlaceable(trainstation);
-
+		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
+		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
+		
 		trainstation.rotate(false);
 
 		// testen der einzelnen squares ob die richtigen placeables draufstehen
@@ -326,8 +322,6 @@ public class TrainstationTests {
 			Compass notExpectedNode2 = beforeRotationTrainstationRails.get(i).getFirstSection().getNode2();
 			Compass actualNode2 = trainstationRails.get(i).getFirstSection().getNode2();
 			Assert.assertNotEquals(notExpectedNode2, actualNode2);
-		}
-
-	}
-
+		}	
+	}	
 }

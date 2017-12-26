@@ -99,6 +99,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BindingConverter\ObjectEqualsConverter.cs" />
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
     <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
@@ -109,6 +110,8 @@
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateTrainstationCommand.cs" />
+    <Compile Include="Commands\Editor\Move\MoveTrainstationCommand.cs" />
+    <Compile Include="Commands\Editor\Move\MoveRailCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateAlignmentOfTrainstation.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNodesOfRailSectionCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
@@ -159,6 +162,7 @@
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
     <Compile Include="ViewModels\Game\RailGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TrainstationEditorViewModel.cs" />
+    <Compile Include="ViewModels\Helper\TypeHelper.cs" />
     <Compile Include="ViewModels\Game\TrainstationGameViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
@@ -426,6 +430,7 @@
     <Resource Include="Resources\Images\rotate_right.png" />
     <Resource Include="Resources\Images\rotate_left.png" />
     <Resource Include="Resources\Images\delete.png" />
+    <Resource Include="Resources\Images\move.png" />
     <Resource Include="Resources\Images\Tools\loco.png" />
     <Resource Include="Resources\Images\loco.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />

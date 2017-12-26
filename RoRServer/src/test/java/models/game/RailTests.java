@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import communication.MessageInformation;
+import communication.queue.QueueMessageQueue;
 import communication.topic.TopicMessageQueue;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
@@ -34,7 +35,7 @@ public class RailTests {
 				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "Player");
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Rail rail = new Rail(editorSession.getSessionName(), square, railSectionPositions);
+		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions);
 
 		assertEquals(node1, rail.getFirstSection().getNode1());
 		assertEquals(node2, rail.getFirstSection().getNode2());
@@ -55,11 +56,10 @@ public class RailTests {
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
 		UUID railId = UUID.randomUUID();
-		Rail rail = new Rail(editorSession.getSessionName(), square, railSectionPositions, UUID.randomUUID(), railId);
-
-		MessageInformation messageInfo = TopicMessageQueue.getInstance()
-				.getFirstFoundMessageInformationForMessageType("CreateRail");
-
+		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions, UUID.randomUUID(), railId);
+		
+		MessageInformation messageInfo = TopicMessageQueue.getInstance().getFirstFoundMessageInformationForAttribute(railId);
+	
 		UUID messageInfoRailId = messageInfo.getValueAsUUID("railId");
 		UUID messageInfoSquareId = messageInfo.getValueAsUUID("squareId");
 		int messageInfoXPos = messageInfo.getValueAsInt("xPos");
@@ -107,7 +107,7 @@ public class RailTests {
 				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "Player");
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Rail rail = new Rail(editorSession.getSessionName(), square, railSectionPositions);
+		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions);
 		return rail;
 	}
 }

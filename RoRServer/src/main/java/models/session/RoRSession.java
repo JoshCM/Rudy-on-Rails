@@ -32,12 +32,12 @@ public abstract class RoRSession extends ModelBase {
 	}
 	
 	private void createHostPlayer(UUID playerId, String playerName) {
-		Player player = new Player(getSessionName(), playerName, playerId, true);
+		Player player = new Player(getName(), playerName, playerId, true);
 		players.add(player);
 	}
 	
 	public Player createPlayer(UUID playerId, String playerName) {
-		Player player = new Player(getSessionName(), playerName, playerId, false);
+		Player player = new Player(getName(), playerName, playerId, false);
 		players.add(player);
 		return player;
 	}

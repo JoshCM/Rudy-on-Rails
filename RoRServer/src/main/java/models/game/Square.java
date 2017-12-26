@@ -32,7 +32,7 @@ public class Square extends ModelBase {
 		notifyChange(messageInfo);
 	}
 	
-	public void setPlaceable(PlaceableOnSquare placeable) {
+	public void setPlaceableOnSquare(PlaceableOnSquare placeable) {
 		this.placeableOnSquare = placeable;
 	}
 	

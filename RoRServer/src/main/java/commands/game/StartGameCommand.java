@@ -23,13 +23,13 @@ public class StartGameCommand extends CommandBase {
 	public void execute() {
 		System.out.println("Map laden ...");
 		
-		// Wenn der MapName für das Laden mitgeschickt wird
+		// Wenn der MapName fï¿½r das Laden mitgeschickt wird
 		// String mapName = messageInfo.getValueAsString("mapName");
 		
-		// Map: Zug fährt im Kreis
+		// Map: Zug fï¿½hrt im Kreis
 		//String mapName = "GameDefaultMap";
 		
-		// Map: Zug steht + Bahnhöfe
+		// Map: Zug steht + Bahnhï¿½fe
 		String mapName = "GameDefaultMap2";
 		
 		// Map laden

@@ -14,7 +14,7 @@ public class GameSessionManagerTests {
 	public void EditorSessionManager_CreatesEditorSession() {
 		String gameSessionName = "TestGameSession";
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), "HostPlayer");
-		assertEquals(gameSessionName, gameSession.getSessionName());
+		assertEquals(gameSessionName, gameSession.getName());
 	}
 	
 	@Test
