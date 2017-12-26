@@ -37,7 +37,7 @@ public class StartGameCommand extends CommandBase {
 		
 		// Map laden
 		Map map = MapManager.loadMap(mapName);
-		map.setSessionName(session.getName());
+		map.setSessionNameForMapAndSquares(session.getName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
 		
@@ -59,8 +59,8 @@ public class StartGameCommand extends CommandBase {
 		// Loco erstellen
 		createLocoForPlayers(session);
 		
-		// Ein paar Resourcen verteilen
-		constructAdditionalPylons(session);
+		// Ein paar Ressourcen verteilen
+		// constructAdditionalPylons(session);
 		
 		((GameSession)session).startGame();
 	}

@@ -1,7 +1,12 @@
 package models.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import communication.MessageInformation;
 import models.base.ModelBase;
+import models.session.GameSessionManager;
+import models.session.RoRSession;
 
 /**
  * Klasse fuer ein Feld (Square), dass auf der Map liegt und eine Position hat.
@@ -23,6 +28,10 @@ public class Square extends ModelBase {
 		notifyDeletePlaceable();
 	}
 	
+	public void setSessionName(String sessionName) {
+		this.sessionName = sessionName;
+	}
+	
 	private void notifyDeletePlaceable() {
 		MessageInformation messageInfo = new MessageInformation("DeletePlaceable");
 		// TODO: Später haben wir die richtigen SquareIds im Client, im Moment noch nicht!!!
@@ -30,6 +39,27 @@ public class Square extends ModelBase {
 		messageInfo.putValue("yPos", this.getYIndex());
 		
 		notifyChange(messageInfo);
+	}
+	
+	public List<Square> getNeighbouringSquares(){
+		
+		List<Square> neighbouringSquares = new ArrayList<Square>();
+		RoRSession session = GameSessionManager.getInstance().getGameSessionByName(sessionName);
+		System.out.println(session);
+		Map map = session.getMap();
+		
+		int startIndexX = (xIndex - 1 < 0) ? xIndex : xIndex - 1;
+		int startIndexY = (yIndex - 1 < 0) ? yIndex : yIndex - 1;
+		int endIndexX = (xIndex + 1 < map.getMapSize()) ? xIndex : xIndex + 1;
+		int endIndexY = (yIndex + 1 < map.getMapSize()) ? yIndex : yIndex + 1;
+
+		for (int i = startIndexX; i <= endIndexX; i++) {
+			for (int j = startIndexY; j <= endIndexY; j++) {
+				neighbouringSquares.add(map.getSquare(i, j));
+			}
+		}
+		
+		return neighbouringSquares;
 	}
 	
 	public void setPlaceableOnSquare(PlaceableOnSquare placeable) {

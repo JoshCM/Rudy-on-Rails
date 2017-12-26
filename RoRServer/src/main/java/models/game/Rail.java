@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 
 import communication.MessageInformation;
 import communication.topic.TopicMessageQueue;
+import models.session.GameSessionManager;
 import models.session.RoRSession;
 
 /**
@@ -24,6 +25,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	protected RailSection section2;
 	private UUID trainstationId;
 	protected List<RailSection> railSections;
+	private Resource resource;
 
 	/**
 	 * Konstruktor für Geraden oder Kurven
@@ -42,6 +44,33 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		railSections = new ArrayList<RailSection>();
 		createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
 		notifyCreatedRail();
+	}
+	
+	public void setResource(Resource resource) {
+		this.resource = resource;
+	}
+	
+	public Resource getResource() {
+		return resource;
+	}
+	
+	public void generateResourcesNextToRail() {
+		Square square = getSquareFromGameSession();
+		int xPos = square.getXIndex();
+		int yPos = square.getYIndex();
+		
+		List<Square> squares = square.getNeighbouringSquares();
+		if (!squares.isEmpty()) {
+			for (Square s : squares) {
+				if (s.getPlaceableOnSquare() == null) {
+					Gold gold = new Gold(GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(), s);
+				}
+			}
+		}	
+	}
+	
+	public Square getSquareFromGameSession() {
+		return GameSessionManager.getInstance().getGameSessionByName(sessionName).getMap().getSquareById(getSquareId());
 	}
 
 	/**
@@ -203,6 +232,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		
 		// Neues Rail erstellen und damit an den Client schicken
 		Rail newRail = new Rail(session.getName(), square, railSectionPosition);
+		newRail.generateResourcesNextToRail();
 		System.out.println("Neue Rail erstellt: " + newRail.toString());
 		
 		return newRail;	
