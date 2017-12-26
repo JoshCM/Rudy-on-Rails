@@ -81,7 +81,7 @@ public class StartGameCommand extends CommandBase {
 	private void constructAdditionalPylons(RoRSession session) {
 		Square goldSquare = session.getMap().getSquare(0, 0);
 		Square coalSquare = session.getMap().getSquare(0, 1);
-		Gold gold = new Gold(session.getSessionName(), goldSquare);
-		Coal coal = new Coal(session.getSessionName(), coalSquare);
+		Gold gold = new Gold(session.getName(), goldSquare);
+		Coal coal = new Coal(session.getName(), coalSquare);
 	}
 }

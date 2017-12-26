@@ -1,5 +1,7 @@
 package models.game;
 
+import models.session.RoRSession;
+
 public class Container extends InteractiveGameObject implements PlaceableOnSquare {
 
 	private Resource resource;
@@ -14,5 +16,11 @@ public class Container extends InteractiveGameObject implements PlaceableOnSquar
 
 	public void setResource(Resource resource) {
 		this.resource = resource;
+	}
+
+	@Override
+	public PlaceableOnSquare loadFromMap(Square square, RoRSession session) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
