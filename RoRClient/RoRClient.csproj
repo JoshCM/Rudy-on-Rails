@@ -106,6 +106,7 @@
     <Compile Include="BindingConverter\TrainstationAlignmentToAngleConverter.cs" />
     <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Base\CreateRailCommandBase.cs" />
+    <Compile Include="Commands\Base\CreateTrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateTrainstationCommand.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Commands\Game\Create\CreateLocoCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateTrainstationCommand.cs" />
     <Compile Include="Commands\Game\Other\StartGameCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoPositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoSpeedCommand.cs" />
@@ -161,6 +163,7 @@
     <Compile Include="ViewModels\Game\RailGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TrainstationEditorViewModel.cs" />
     <Compile Include="ViewModels\Helper\TypeHelper.cs" />
+    <Compile Include="ViewModels\Game\TrainstationGameViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
     <Compile Include="ViewModels\Lobby\GameLobbyViewModel.cs" />
@@ -240,6 +243,9 @@
     <Compile Include="Views\Game\RailGameUserControl.xaml.cs">
       <DependentUpon>RailGameUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\TrainstationGameUserControl.xaml.cs">
+      <DependentUpon>TrainstationGameUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Lobby\JoinGameLobbyView.xaml.cs">
       <DependentUpon>JoinGameLobbyView.xaml</DependentUpon>
     </Compile>
@@ -295,6 +301,10 @@
     <Page Include="Views\Editor\TrainstationEditorUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Game\TrainstationGameUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Lobby\JoinGameLobbyView.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -1,35 +1,39 @@
 package commands.game;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.topic.TopicMessageQueue;
-import models.game.Compass;
 import models.game.Map;
 import models.game.PlaceableOnSquare;
 import models.game.Player;
-import models.game.Rail;
-import models.game.RailSection;
 import models.game.Square;
 import models.session.GameSession;
 import models.session.RoRSession;
 import persistent.MapManager;
 
 public class StartGameCommand extends CommandBase {
+	
+	MessageInformation messageInfo;
 
 	public StartGameCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
+		this.messageInfo = messageInfo;
 	}
 
 	@Override
 	public void execute() {
-		System.out.println("Ich soll eine DefaultMap laden!");
+		System.out.println("Map laden ...");
+		
+		// Wenn der MapName f�r das Laden mitgeschickt wird
+		// String mapName = messageInfo.getValueAsString("mapName");
+		
+		// Map: Zug f�hrt im Kreis
+		//String mapName = "GameDefaultMap";
+		
+		// Map: Zug steht + Bahnh�fe
+		String mapName = "GameDefaultMap2";
 		
 		// Map laden
-		Map map = MapManager.loadMap("GameDefaultMap");
+		Map map = MapManager.loadMap(mapName);
 		map.setSessionName(session.getName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
@@ -41,18 +45,10 @@ public class StartGameCommand extends CommandBase {
 				
 				// Square holen 
 				Square square = squares[i][j];
-				// Wenn ein Rail auf dem Square liegt
+				// Wenn etwas auf dem Square liegt
 				if (square.getPlaceableOnSquare() != null) {
-					Rail rail = (Rail)square.getPlaceableOnSquare();
-					// Hole die SectionPositions aus den RailSections und speichere in Liste
-					List<Compass> railSectionPosition = new ArrayList<Compass>();
-					for (RailSection section : rail.getRailSectionList()) {
-						railSectionPosition.add(section.getNode1());
-						railSectionPosition.add(section.getNode2());
-					}
-					// Neues Rail erstellen und damit an den Client schicken
-					Rail newRail = new Rail(session.getName(), square, railSectionPosition);
-					System.out.println("Neue Rail erstellt auf " + i + " " + j + ": " + newRail.toString());
+					PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
+					placeableOnSquare.loadFromMap(square, session);
 				}
 			}
 		}

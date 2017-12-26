@@ -9,11 +9,13 @@ import java.util.UUID;
 
 import com.google.gson.JsonObject;
 
+import commands.game.CreateLocoCommand;
 import communication.MessageInformation;
 import helper.Geometry;
 import helper.Geometry.Coordinate;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
+import models.session.RoRSession;
 
 public class Trainstation extends InteractiveGameObject implements PlaceableOnSquare {
 
@@ -23,7 +25,10 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	
 	private final int CLOCKWISE = 90;
 	private final int COUNTER_CLOCKWISE = -90;
-	EditorSession editorSession;
+	private Square spawnPointForLoco;
+	
+	// von Andreas: Habe ich auf transient gesetzt, weil der Deserializer sonst wieder loopt
+	transient EditorSession editorSession;
 	
 	public Trainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment) {
 		super(sessionName, square, id);
@@ -35,6 +40,14 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	
 	public Compass getAlignment() {
 		return alignment;
+	}
+	
+	public void setSpawnPointforLoco(Square square) {
+		spawnPointForLoco = square;
+	}
+	
+	public Square getSpawnPointforLoco() {
+		return spawnPointForLoco;
 	}
 	
 	private void notifyCreatedTrainstation() {
@@ -208,6 +221,54 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 				if(!trainstationRailIds.contains(newRailSquare.getPlaceableOnSquare().getId()))
 					return false;
 		}
+		return true;
+	}
+
+	@Override
+	public Trainstation loadFromMap(Square square, RoRSession session) {
+		Trainstation trainStation = (Trainstation) square.getPlaceableOnSquare();
+		Trainstation newTrainStation = new Trainstation(session.getName(), square, trainStation.getTrainstationRailIds(), trainStation.getId(), trainStation.alignment);	
+		System.out.println("Neue TrainStation erstellt: " + newTrainStation.toString());
+		return newTrainStation;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + CLOCKWISE;
+		result = prime * result + COUNTER_CLOCKWISE;
+		result = prime * result + ((alignment == null) ? 0 : alignment.hashCode());
+		result = prime * result + ((spawnPointForLoco == null) ? 0 : spawnPointForLoco.hashCode());
+		result = prime * result + ((trainstationRailIds == null) ? 0 : trainstationRailIds.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Trainstation other = (Trainstation) obj;
+		if (CLOCKWISE != other.CLOCKWISE)
+			return false;
+		if (COUNTER_CLOCKWISE != other.COUNTER_CLOCKWISE)
+			return false;
+		if (alignment != other.alignment)
+			return false;
+		if (spawnPointForLoco == null) {
+			if (other.spawnPointForLoco != null)
+				return false;
+		} else if (!spawnPointForLoco.equals(other.spawnPointForLoco))
+			return false;
+		if (trainstationRailIds == null) {
+			if (other.trainstationRailIds != null)
+				return false;
+		} else if (!trainstationRailIds.equals(other.trainstationRailIds))
+			return false;
 		return true;
 	}
 }

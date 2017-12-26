@@ -30,6 +30,11 @@
                                 <vg:RailGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
+                        <DataTemplate DataType="{x:Type game:TrainstationGameViewModel}">
+                            <Canvas>
+                                <vg:TrainstationGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
                     </ItemsControl.Resources>
                 </ItemsControl>
                 <ItemsControl ItemsSource="{Binding PlaceableOnRailCollection}">
