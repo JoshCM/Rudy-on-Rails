@@ -10,7 +10,7 @@ import exceptions.InvalidModelOperationException;
  */
 public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 	
-	private Container container;
+	private Resource resource;
 
 	/**
 	 * Konstruktor eines Carts
@@ -22,22 +22,36 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 	}
 	
 	/**
-	 * Container mit einer Ressource beladen
+	 * Cart mit einer Ressource beladen
 	 * @param resource zu beladene Resource
 	 */
-	public void loadResourceIntoContainer(Resource resource) {
-		if (container.getResource() != null) {
-			container.setResource(resource);
+	public void loadResourceOntoCart(Resource resource) {
+		if (resource != null) {
+			this.resource = resource;
 		} else {
-			throw new InvalidModelOperationException("Container bereits voll.");
+			throw new InvalidModelOperationException("Cart bereits beladen");
 		}
 	}
 	
 	/**
-	 * Container wird geleert
+	 * Cart wird geleert
 	 */
-	public void unloadResourceFromContainer() {
-		container.setResource(null);
+	public void removeResourceFromCart() {
+		resource = null;
+	}
+	
+	public Resource getResource() {
+		return resource;
+	}
+	
+	/**
+	 * Entfernt die Ressource auf dem Cart und gibt diese zurück
+	 * @return Ressource auf auf dem Cart
+	 */
+	public Resource unloadResourceFromCart() {
+		Resource unloadedResource = resource;
+		resource = null;
+		return unloadedResource;
 	}
 
 }
