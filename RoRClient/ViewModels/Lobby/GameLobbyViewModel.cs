@@ -5,6 +5,7 @@ using RoRClient.ViewModels.Commands;
 using RoRClient.ViewModels.Helper;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -17,15 +18,18 @@ namespace RoRClient.ViewModels.Lobby
     {
         private UIState uiState;
         private bool isHost;
+	    private LobbyModel lobbyModel;
 
-        public GameLobbyViewModel(UIState uiState)
+	    public GameLobbyViewModel(UIState uiState, LobbyModel lobbyModel)
         {
             this.uiState = uiState;
+	        this.lobbyModel = lobbyModel;
+
             GameSession.GetInstance().PropertyChanged += OnGameStarted;
             uiState.OnUiStateChanged += OnUiStateChanged;
         }
 
-        public bool IsHost
+		public bool IsHost
         {
             get
             {
@@ -37,6 +41,7 @@ namespace RoRClient.ViewModels.Lobby
                 OnPropertyChanged("IsHost");
             }
         }
+
 
         private ICommand startGameCommand;
         public ICommand StartGameCommand
@@ -50,10 +55,32 @@ namespace RoRClient.ViewModels.Lobby
                 return startGameCommand;
             }
         }
-        /// <summary>
-        /// Wird von CreateEditorSessionCommand aufgerufen schickt passende Nachricht an Server
-        /// </summary>
-        private void StartGame()
+
+	    public LobbyModel LobbyModel
+	    {
+		    get { return lobbyModel; }
+		    set { lobbyModel = value; }
+	    }
+
+	    private ICommand refreshGameInfosCommand;
+	    public ICommand RefreshGameInfosCommand
+		{
+		    get
+		    {
+			    if (refreshGameInfosCommand == null)
+			    {
+				    refreshGameInfosCommand = new ActionCommand(param => RefreshGameInfos());
+			    }
+			    return refreshGameInfosCommand;
+		    }
+	    }
+
+	    public void RefreshGameInfos()
+	    {
+		    lobbyModel.ReadGameInfos();
+	    }
+
+		private void StartGame()
         {
             if (GameSession.GetInstance().OwnPlayer.IsHost)
             {

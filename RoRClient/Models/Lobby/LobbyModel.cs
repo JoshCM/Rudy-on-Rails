@@ -6,6 +6,7 @@ using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Lobby;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using RoRClient.Models.Session;
 
 namespace RoRClient.Models.Game
 {
@@ -15,7 +16,9 @@ namespace RoRClient.Models.Game
 
         private ObservableCollection<EditorSessionInfo> editorSessionInfos = new ObservableCollection<EditorSessionInfo>();
         private ObservableCollection<GameSessionInfo> gameSessionInfos = new ObservableCollection<GameSessionInfo>();
-        private string playerName = "Fresh Meat";
+	    private ObservableCollection<GameInfo> gameInfos = new ObservableCollection<GameInfo>();
+
+		private string playerName = "fresh_meat_" + Guid.NewGuid().ToString();
 
         private QueueSender fromClientRequestSender;
         private FromServerResponseReceiver queueReceiver;
@@ -59,7 +62,15 @@ namespace RoRClient.Models.Game
             }
         }
 
-        public void StartConnection()
+	    public ObservableCollection<GameInfo> GameInfos
+	    {
+		    get
+		    {
+			    return gameInfos;
+		    }
+	    }
+
+		public void StartConnection()
         {
             ClientConnection.GetInstance().Setup();
 
@@ -97,8 +108,14 @@ namespace RoRClient.Models.Game
             MessageInformation messageInformation = new MessageInformation();
             fromClientRequestSender.SendMessage("ReadGameSessions", messageInformation);
         }
+	    public void ReadGameInfos()
+	    {
+			MessageInformation messageInformation = new MessageInformation();
+			messageInformation.PutValue("sessionName", GameSession.GetInstance().Name);
+		    fromClientRequestSender.SendMessage("ReadGameInfos", messageInformation);
+		}
 
-        public bool Connected_Editor
+		public bool Connected_Editor
         {
             get
             {
@@ -152,5 +169,17 @@ namespace RoRClient.Models.Game
             taskFactory.StartNew(() => gameSessionInfos.Clear());
             NotifyPropertyChanged("GameSessionInfos");
         }
+
+	    public void AddGameInfo(GameInfo gameInfo)
+	    {
+		    taskFactory.StartNew(() => gameInfos.Add(gameInfo));
+		    NotifyPropertyChanged("GameInfos");
+	    }
+
+	    public void ClearGameInfos()
+	    {
+		    taskFactory.StartNew(() => gameInfos.Clear());
+		    NotifyPropertyChanged("GameInfos");
+	    }
     }
 }
