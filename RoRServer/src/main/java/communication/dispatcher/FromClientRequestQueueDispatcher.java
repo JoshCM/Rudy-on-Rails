@@ -200,4 +200,21 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 
 		sendMessage(responseInformation);
 	}
+	
+	public void handleReadGameInfos(MessageInformation messageInformation) {
+		MessageInformation responseInformation = new MessageInformation("ReadGameInfos");
+		responseInformation.setClientid(messageInformation.getClientid());
+
+		List<JsonObject> gameInfos = new ArrayList<JsonObject>();
+		String sessionName = messageInformation.getValueAsString("sessionName");
+		List<Player> gamePlayers = GameSessionManager.getInstance().getGameSessionByName(sessionName).getPlayers();
+		for (Player player : gamePlayers) {
+			JsonObject json = new JsonObject();
+			json.addProperty("playerId", player.getId().toString());
+			gameInfos.add(json);
+		}
+
+		responseInformation.putValue("gameInfo", gameInfos);
+		sendMessage(responseInformation);
+	}
 }
