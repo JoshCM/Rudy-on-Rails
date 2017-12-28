@@ -20,6 +20,7 @@ namespace RoRClientTests.ViewModels.Editor
             expectedToolbarViewModel.ToolItems.Add(new ToolItem("railcurve_sw", imageFolderPath + "railcurve_sw.png"));
             expectedToolbarViewModel.ToolItems.Add(new ToolItem("railcurve_ne", imageFolderPath + "railcurve_ne.png"));
             expectedToolbarViewModel.ToolItems.Add(new ToolItem("railcurve_nw", imageFolderPath + "railcurve_nw.png"));
+            expectedToolbarViewModel.ToolItems.Add(new ToolItem("trainstation", imageFolderPath + "trainstation.png"));
 
             ToolbarViewModel actualToolbarViewModel = new ToolbarViewModel(imageFolderPath, true);
             List<String> excpectedToolItemNames = new List<string>();

@@ -10,12 +10,9 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
-import models.game.Compass;
 import models.game.Map;
 import models.game.PlaceableOnSquare;
 import models.game.Player;
-import models.game.Rail;
-import models.game.RailSection;
 import models.game.Square;
 import models.session.GameSession;
 import models.session.RoRSession;
@@ -26,6 +23,7 @@ public class StartGameCommand extends CommandBase {
 	
 	public StartGameCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
+		this.messageInfo = messageInfo;
 	}
 
 	@Override
@@ -44,18 +42,10 @@ public class StartGameCommand extends CommandBase {
 				
 				// Square holen 
 				Square square = squares[i][j];
-				// Wenn ein Rail auf dem Square liegt
+				// Wenn etwas auf dem Square liegt
 				if (square.getPlaceableOnSquare() != null) {
-					Rail rail = (Rail)square.getPlaceableOnSquare();
-					// Hole die SectionPositions aus den RailSections und speichere in Liste
-					List<Compass> railSectionPosition = new ArrayList<Compass>();
-					for (RailSection section : rail.getRailSectionList()) {
-						railSectionPosition.add(section.getNode1());
-						railSectionPosition.add(section.getNode2());
-					}
-					// Neues Rail erstellen und damit an den Client schicken
-					Rail newRail = new Rail(session.getSessionName(), square, railSectionPosition);
-					log.info("Neue Rail erstellt auf " + i + " " + j + ": " + newRail.toString());
+					PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
+					placeableOnSquare.loadFromMap(square, session);
 				}
 			}
 		}

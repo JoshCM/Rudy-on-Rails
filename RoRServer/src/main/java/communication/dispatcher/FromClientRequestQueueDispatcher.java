@@ -56,8 +56,8 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	private void sendCreateEditorSessionCommand(String cliendId, EditorSession editorSession) {
 		MessageInformation responseInformation = new MessageInformation("CreateEditorSession");
 		responseInformation.setClientid(cliendId);
-		responseInformation.putValue("topicName", editorSession.getSessionName());
-		responseInformation.putValue("editorName", editorSession.getSessionName());
+		responseInformation.putValue("topicName", editorSession.getName());
+		responseInformation.putValue("editorName", editorSession.getName());
 		Player hostPlayer = editorSession.getHost();
 		responseInformation.putValue("playerName", hostPlayer.getName());
 		responseInformation.putValue("playerId", hostPlayer.getId().toString());
@@ -90,8 +90,8 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	private void sendJoinEditorSessionCommand(String clientId, EditorSession editorSession) {
 		MessageInformation responseInformation = new MessageInformation("JoinEditorSession");
 		responseInformation.setClientid(clientId);
-		responseInformation.putValue("topicName", editorSession.getSessionName());
-		responseInformation.putValue("editorName", editorSession.getSessionName());
+		responseInformation.putValue("topicName", editorSession.getName());
+		responseInformation.putValue("editorName", editorSession.getName());
 
 		List<JsonObject> players = new ArrayList<JsonObject>();
 		for (Player sessionPlayer : editorSession.getPlayers()) {
@@ -128,8 +128,8 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	private void sendCreateGameSessionCommand(String clientId, GameSession gameSession) {
 		MessageInformation responseInformation = new MessageInformation("CreateGameSession");
 		responseInformation.setClientid(clientId);
-		responseInformation.putValue("topicName", gameSession.getSessionName());
-		responseInformation.putValue("gameName", gameSession.getSessionName());
+		responseInformation.putValue("topicName", gameSession.getName());
+		responseInformation.putValue("gameName", gameSession.getName());
 		responseInformation.putValue("playerName", gameSession.getHost().getName());
 		responseInformation.putValue("playerId", gameSession.getHost().getId().toString());
 
@@ -174,8 +174,8 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	private void sendJoinGameSessionCommand(String clientId, GameSession gameSession) {
 		MessageInformation responseInformation = new MessageInformation("JoinGameSession");
 		responseInformation.setClientid(clientId);
-		responseInformation.putValue("topicName", gameSession.getSessionName());
-		responseInformation.putValue("gameName", gameSession.getSessionName());
+		responseInformation.putValue("topicName", gameSession.getName());
+		responseInformation.putValue("gameName", gameSession.getName());
 		List<JsonObject> players = new ArrayList<JsonObject>();
 		for (Player sessionPlayer : gameSession.getPlayers()) {
 			JsonObject json = new JsonObject();
@@ -198,7 +198,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		for (EditorSession session : editorSessions) {
 			if (!session.isStarted()) {
 				JsonObject json = new JsonObject();
-				json.addProperty("name", session.getSessionName());
+				json.addProperty("name", session.getName());
 				json.addProperty("amountOfPlayers", session.getPlayers().size());
 				json.addProperty("hostname", session.getHost().getName());
 				editorSessionInfos.add(json);
@@ -219,7 +219,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		for (GameSession session : gameSessions) {
 			if (!session.isStarted()) {
 				JsonObject json = new JsonObject();
-				json.addProperty("name", session.getSessionName());
+				json.addProperty("name", session.getName());
 				json.addProperty("amountOfPlayers", session.getPlayers().size());
 				json.addProperty("hostname", session.getHost().getName());
 				gameSessionInfos.add(json);

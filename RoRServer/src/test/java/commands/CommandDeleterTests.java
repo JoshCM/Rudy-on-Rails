@@ -29,19 +29,18 @@ public class CommandDeleterTests {
 
 		// generiere trainstationRails
 		List<Rail> trainstationRails = Arrays.asList(
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 0),
+				new Rail(session.getName(), session.getMap().getSquare(2, 0),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 1),
+				new Rail(session.getName(), session.getMap().getSquare(2, 1),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getSessionName(), session.getMap().getSquare(2, 2),
+				new Rail(session.getName(), session.getMap().getSquare(2, 2),
 						Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		// setzt die rails als placeable und generiert trainstationRailIds
 		List<UUID> trainstationRailIds = new ArrayList<UUID>();
 		List<String> trainstationRailIdStrings = new ArrayList<String>();
-		for (Rail trainstationRail : trainstationRails) {
-			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos())
-					.setPlaceable(trainstationRail);
+		for(Rail trainstationRail : trainstationRails) {
+			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceableOnSquare(trainstationRail);
 			trainstationRailIds.add(trainstationRail.getId());
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
@@ -49,10 +48,9 @@ public class CommandDeleterTests {
 		MessageInformation messageInformation = new MessageInformation();
 		messageInformation.putValue("id", trainstationId);
 		messageInformation.putValue("trainstationRailIds", trainstationRailIdStrings);
-
-		Trainstation trainstation = new Trainstation(session.getSessionName(), session.getMap().getSquare(1, 1),
-				trainstationRailIds, trainstationId, Compass.EAST);
-		session.getMap().getSquare(1, 1).setPlaceable(trainstation);
+		
+		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
+		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		DeleteTrainstationCommand command = new DeleteTrainstationCommand(session, messageInformation);
 
 		String commandName = command.getClass().getName();

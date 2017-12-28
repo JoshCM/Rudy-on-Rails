@@ -10,7 +10,7 @@
         xmlns:converter="clr-namespace:RoRClient.BindingConverter"
         mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="1200">
 
-	<UserControl.Resources>
+    <UserControl.Resources>
         <converter:ObjectIsNullToBoolConverter  x:Key="ObjectIsNullToBoolConverter"/>
     </UserControl.Resources>
 
@@ -57,7 +57,14 @@
                                 Width="20">
                             </Image>
                         </Button>
-                        <Button  Command="{Binding DeleteCommand}">
+                        <Button Command="{Binding MoveCommand}">
+                            <Image 
+                                Source="/RoRClient;component/Resources/Images/move.png"
+                                Height="20" 
+                                Width="20" >
+                            </Image>
+                        </Button>
+                        <Button Command="{Binding DeleteCommand}">
                             <Image 
                                 Source="/RoRClient;component/Resources/Images/delete.png"
                                 Height="20" 
