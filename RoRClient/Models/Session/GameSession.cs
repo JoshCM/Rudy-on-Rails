@@ -1,4 +1,5 @@
-﻿using RoRClient.Communication.Dispatcher;
+﻿using RoRClient.Communication.DataTransferObject;
+using RoRClient.Communication.Dispatcher;
 using RoRClient.Communication.Topic;
 using RoRClient.Models.Game;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace RoRClient.Models.Session
 {
@@ -70,5 +72,35 @@ namespace RoRClient.Models.Session
             }
             return gameSession;
         }
-    }
+
+	    private string mapName;
+	    public string MapName
+	    {
+		    get { return mapName; }
+		    set
+		    {
+			    if (mapName != value)
+			    {
+				    mapName = value;
+				    changeMapName();
+				    NotifyPropertyChanged("MapName");
+			    }
+		    }
+	    }
+
+		/// <summary>
+		/// Wenn der Player der Host der GameSession ist, dann wird die MapName-Änderung
+		/// and den Server geschickt und über den Topic der Session an alle Clients der
+		/// GameSession verteilt
+		/// </summary>
+	    private void changeMapName()
+	    {
+		    if (GameSession.GetInstance().OwnPlayer.IsHost)
+		    {
+			    MessageInformation messageInformation = new MessageInformation();
+			    messageInformation.PutValue("mapName", gameSession.MapName);
+			    GameSession.GetInstance().QueueSender.SendMessage("ChangeMapName", messageInformation);
+		    }
+	    }
+	}
 }

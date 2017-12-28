@@ -1,7 +1,11 @@
 package models.session;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
+import com.google.gson.JsonObject;
+
 import communication.MessageInformation;
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
@@ -114,6 +118,16 @@ public class GameSession extends RoRSession{
 
 	public void setMapName(String mapName) {
 		this.mapName = mapName;
+		notifyChangedMapName();
+	}
+	
+	/**
+	 * Schickt eine Message mit dem neuen MapName, über den Topic der GameSession, an alle angemeldeten Clients
+	 */
+	private void notifyChangedMapName() {
+		MessageInformation messageInfo = new MessageInformation("ChangeMapName");
+		messageInfo.putValue("mapName", getMapName());
+		notifyChange(messageInfo);
 	}
 }
 

@@ -122,6 +122,11 @@ namespace RoRClient.Communication.Dispatcher
             }
         }
 
+		/// <summary>
+		/// Setzt die ankommenden Players mithilfe der PlayerIds in die 
+		/// ObservableCollection von Players im LobbyModel
+		/// </summary>
+		/// <param name="messageInformation"></param>
 	    public void HandleReadGameInfos(MessageInformation messageInformation)
 	    {
 			lobbyModel.ClearGameInfos();
@@ -138,18 +143,22 @@ namespace RoRClient.Communication.Dispatcher
 		    }
 		}
 
+		/// <summary>
+		/// Setzt die ankommenden MapNames in die ObservableCollection von MapNames
+		/// im LobbyModel
+		/// </summary>
+		/// <param name="messageInformation"></param>
 	    public void HandleReadMapInfos(MessageInformation messageInformation)
 	    {
-		    lobbyModel.ClearMapInfos();
+		    lobbyModel.ClearMapNames();
 
 		    GameSession gameSession = GameSession.GetInstance();
 
 		    List<JObject> mapInfoList = messageInformation.GetValueAsJObjectList("mapInfo");
 		    foreach (JObject obj in mapInfoList)
 		    {
-			    string name = obj.GetValue("mapName").ToString();
-			    MapInfo mapInfo = new MapInfo(name);
-			    lobbyModel.AddMapInfo(mapInfo);
+			    string mapName = obj.GetValue("mapName").ToString();
+			    lobbyModel.AddMapName(mapName);
 		    }
 	    }
 

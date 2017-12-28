@@ -115,6 +115,7 @@
     <Compile Include="Commands\Game\Create\CreateLocoCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
+    <Compile Include="Commands\Game\Other\ChangeMapNameCommand.cs" />
     <Compile Include="Commands\Game\Other\StartGameCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoPositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoSpeedCommand.cs" />

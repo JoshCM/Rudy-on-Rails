@@ -20,40 +20,27 @@ namespace RoRClient.ViewModels.Lobby
         private UIState uiState;
         private bool isHost;
 	    private LobbyModel lobbyModel;
-	    private MapInfo selectedMapInfo;
+	    private GameSession gameSession;
 
 		public GameLobbyViewModel(UIState uiState, LobbyModel lobbyModel)
         {
             this.uiState = uiState;
 	        this.lobbyModel = lobbyModel;
+	        this.gameSession = GameSession.GetInstance();
 
-            GameSession.GetInstance().PropertyChanged += OnGameStarted;
+			GameSession.GetInstance().PropertyChanged += OnGameStarted;
             uiState.OnUiStateChanged += OnUiStateChanged;
         }
 
-	    public MapInfo SelectedMapInfo
+		/// <summary>
+		/// DieGameSession muss hier als Property vorhanden sein, damit der MapName
+		/// in der MapListBox gebindet werden kann
+		/// </summary>
+	    public GameSession GameSession
 	    {
-		    get { return selectedMapInfo; }
-		    set
-		    {
-			    if (selectedMapInfo != value)
-			    {
-				    selectedMapInfo = value;
-				    OnPropertyChanged("SelectedMapInfo");
-				    changeMapName();
-				}
-			}
+		    get { return gameSession; }
+		    set { gameSession = value; }
 	    }
-
-	    private void changeMapName()
-	    {
-		    if (GameSession.GetInstance().OwnPlayer.IsHost)
-		    {
-			    MessageInformation messageInformation = new MessageInformation();
-				messageInformation.PutValue("mapName", selectedMapInfo.Name);
-				GameSession.GetInstance().QueueSender.SendMessage("ChangeMapName", messageInformation);
-		    }
-		}
 
 		public bool IsHost
         {
@@ -127,16 +114,8 @@ namespace RoRClient.ViewModels.Lobby
         {
             if (uiState.State == "gameLobby")
             {
-                isHost = GameSession.GetInstance().OwnPlayer.IsHost;
+	            isHost = GameSession.GetInstance().OwnPlayer.IsHost;
 				lobbyModel.ReadMapInfos();
-	            if(isHost)
-	            {
-		            SelectedMapInfo = lobbyModel.MapInfos.FirstOrDefault();
-	            }
-	            else
-	            {
-		            //SelectedMapInfo
-				}
             }
         }
     }

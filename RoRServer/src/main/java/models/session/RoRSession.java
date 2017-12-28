@@ -66,6 +66,14 @@ public abstract class RoRSession extends ModelBase {
 		return Collections.unmodifiableList(players);
 	}
 	
+	public Player getPlayerById(UUID id) {
+		for(Player player : getPlayers()) {
+			if(player.getId().equals(id))
+				return player;
+		}
+		return null;
+	}
+	
 	public boolean isStarted() {
 		return started;
 	}

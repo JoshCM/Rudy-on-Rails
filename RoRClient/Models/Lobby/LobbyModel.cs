@@ -17,7 +17,7 @@ namespace RoRClient.Models.Game
         private ObservableCollection<EditorSessionInfo> editorSessionInfos = new ObservableCollection<EditorSessionInfo>();
         private ObservableCollection<GameSessionInfo> gameSessionInfos = new ObservableCollection<GameSessionInfo>();
 	    private ObservableCollection<GameInfo> gameInfos = new ObservableCollection<GameInfo>();
-	    private ObservableCollection<MapInfo> mapInfos = new ObservableCollection<MapInfo>();
+	    private ObservableCollection<string> mapNames = new ObservableCollection<string>();
 
 		private string playerName = "fresh_meat_" + Guid.NewGuid().ToString();
 
@@ -71,9 +71,9 @@ namespace RoRClient.Models.Game
 		    }
 	    }
 
-	    public ObservableCollection<MapInfo> MapInfos
+	    public ObservableCollection<string> MapNames
 	    {
-		    get { return mapInfos; }
+		    get { return mapNames; }
 	    }
 
 		public void StartConnection()
@@ -114,6 +114,10 @@ namespace RoRClient.Models.Game
             MessageInformation messageInformation = new MessageInformation();
             fromClientRequestSender.SendMessage("ReadGameSessions", messageInformation);
         }
+
+		/// <summary>
+		/// Fragt den Server nach der Liste von GameInfos an (momentan nur Players innerhalb der GameInfos)
+		/// </summary>
 	    public void ReadGameInfos()
 	    {
 			MessageInformation messageInformation = new MessageInformation();
@@ -121,6 +125,9 @@ namespace RoRClient.Models.Game
 		    fromClientRequestSender.SendMessage("ReadGameInfos", messageInformation);
 		}
 
+		/// <summary>
+		/// Fragt den Server nach der Liste von Maps an
+		/// </summary>
 	    public void ReadMapInfos()
 	    {
 		    MessageInformation messageInformation = new MessageInformation();
@@ -194,16 +201,16 @@ namespace RoRClient.Models.Game
 		    NotifyPropertyChanged("GameInfos");
 	    }
 
-	    public void AddMapInfo(MapInfo mapInfo)
+	    public void AddMapName(string mapName)
 	    {
-		    taskFactory.StartNew(() => mapInfos.Add(mapInfo));
-		    NotifyPropertyChanged("MapInfos");
+		    taskFactory.StartNew(() => mapNames.Add(mapName));
+		    NotifyPropertyChanged("MapNames");
 	    }
 
-	    public void ClearMapInfos()
+	    public void ClearMapNames()
 	    {
-		    taskFactory.StartNew(() => mapInfos.Clear());
-		    NotifyPropertyChanged("MapInfos");
+		    taskFactory.StartNew(() => mapNames.Clear());
+		    NotifyPropertyChanged("MapNames");
 	    }
 	}
 }

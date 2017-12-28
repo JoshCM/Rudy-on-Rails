@@ -2,8 +2,10 @@ package communication;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,6 +22,7 @@ import models.session.EditorSession;
 import models.session.EditorSessionManager;
 import models.session.GameSession;
 import models.session.GameSessionManager;
+import persistent.MapManager;
 
 public class FromClientRequestQueueDispatcherTests {
 
@@ -504,5 +507,65 @@ public class FromClientRequestQueueDispatcherTests {
 		assertEquals(editorSessionName, editorSessionInfo.get("name").getAsString());
 		assertEquals(hostPlayerName, editorSessionInfo.get("hostname").getAsString());
 		assertEquals(1, editorSessionInfo.get("amountOfPlayers").getAsInt());
+	}
+	
+	@Test
+	public void FromClientRequestQueueDispatcher_handleReadGameInfos_createsResonseWithExpectedValues() {
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		dispatcher.addObserver(messageQueueStub);
+		
+		List<String> playerNames = Arrays.asList("HostPlayer", "TestPlayer");
+		String messageType = "ReadGameInfos";
+		String gameSessionName = "TestSession";
+		String hostPlayerName = playerNames.get(0);
+
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), hostPlayerName);
+		gameSession.createPlayer(UUID.randomUUID(), playerNames.get(1));
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		messageInfo.putValue("sessionName", gameSessionName);
+		dispatcher.handleReadGameInfos(messageInfo);
+
+		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
+		MessageInformation response = messageEnvelope.getMessageInformation();
+		assertEquals(messageType, messageEnvelope.getMessageType());
+
+		List<String> expectedPlayerNames = new ArrayList<String>();
+		@SuppressWarnings("unchecked")
+		List<JsonObject> gameInfos = (List<JsonObject>) response.getValue("gameInfo");
+		for(JsonObject obj : gameInfos) {
+			expectedPlayerNames.add(gameSession.getPlayerById(UUID.fromString(obj.get("playerId").getAsString())).getName());
+		}
+		assertTrue(expectedPlayerNames.contains(playerNames.get(0)));
+		assertTrue(expectedPlayerNames.contains(playerNames.get(1)));
+	}
+	
+	@Test
+	public void FromClientRequestQueueDispatcher_handleReadMapInfos_createsResonseWithExpectedValues() {
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		dispatcher.addObserver(messageQueueStub);
+		
+		String messageType = "ReadMapInfos";
+		String gameSessionName = "TestSession";
+		String hostPlayerName = "HostPlayer";
+
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), hostPlayerName);
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleReadMapInfos(messageInfo);
+
+		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
+		MessageInformation response = messageEnvelope.getMessageInformation();
+		assertEquals(messageType, messageEnvelope.getMessageType());
+
+		List<String> expectedMapNames = new ArrayList<String>();
+		@SuppressWarnings("unchecked")
+		List<JsonObject> mapInfos = (List<JsonObject>) response.getValue("mapInfo");
+		for(JsonObject obj : mapInfos) {
+			expectedMapNames.add(obj.get("mapName").getAsString());
+		}
+		assertEquals(expectedMapNames, MapManager.readMapNames());
 	}
 }

@@ -23,7 +23,7 @@
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 			</ListBox>
-			<ListBox Margin="10" Width="600" x:Name="GameMapsListBox" ItemsSource="{Binding LobbyModel.MapInfos}" SelectedItem="{Binding Path=SelectedMapInfo, Mode=TwoWay}" IsEnabled="{Binding IsHost}">
+			<ListBox SelectedIndex="0" Margin="10" Width="600" x:Name="GameMapsListBox" ItemsSource="{Binding LobbyModel.MapNames}" SelectedItem="{Binding Path=GameSession.MapName, Mode=TwoWay}" IsEnabled="{Binding IsHost}">
 				<ListBox.ItemContainerStyle>
 					<Style TargetType="ListBoxItem">
 						<Style.Triggers>
@@ -43,7 +43,7 @@
 									<Setter Property="Margin" Value="10,10,0,0" />
 								</Style>
 							</StackPanel.Resources>
-							<TextBlock Text="{Binding Name}" />
+							<TextBlock Text="{Binding}" />
 						</StackPanel>
 					</DataTemplate>
 				</ListBox.ItemTemplate>
