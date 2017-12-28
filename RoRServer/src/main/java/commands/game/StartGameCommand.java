@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import commands.base.CommandBase;
 import communication.MessageInformation;
+import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
 import models.game.Compass;
 import models.game.Map;
@@ -19,17 +22,17 @@ import models.session.RoRSession;
 import persistent.MapManager;
 
 public class StartGameCommand extends CommandBase {
-
+	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
+	
 	public StartGameCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 	}
 
 	@Override
 	public void execute() {
-		System.out.println("Ich soll eine DefaultMap laden!");
-		
+		log.info("loading map: " + ((GameSession)session).getMapName());
 		// Map laden
-		Map map = MapManager.loadMap("GameDefaultMap");
+		Map map = MapManager.loadMap(((GameSession)session).getMapName());
 		map.setSessionName(session.getSessionName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
@@ -52,7 +55,7 @@ public class StartGameCommand extends CommandBase {
 					}
 					// Neues Rail erstellen und damit an den Client schicken
 					Rail newRail = new Rail(session.getSessionName(), square, railSectionPosition);
-					System.out.println("Neue Rail erstellt auf " + i + " " + j + ": " + newRail.toString());
+					log.info("Neue Rail erstellt auf " + i + " " + j + ": " + newRail.toString());
 				}
 			}
 		}
@@ -70,7 +73,6 @@ public class StartGameCommand extends CommandBase {
 	private void createLocoForPlayers(RoRSession session) {
 		for(Player p : session.getPlayers()) {		
 			CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, p.getId());
-			System.out.println();
 			createLocoCommand.execute();
 		}
 	}

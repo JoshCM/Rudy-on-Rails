@@ -140,6 +140,7 @@
     <Compile Include="Models\Lobby\GameInfo.cs" />
     <Compile Include="Models\Lobby\GameSessionInfo.cs" />
     <Compile Include="Models\Lobby\EditorSessionInfo.cs" />
+    <Compile Include="Models\Lobby\MapInfo.cs" />
     <Compile Include="Models\Session\EditorSession.cs" />
     <Compile Include="Models\Session\GameSession.cs" />
     <Compile Include="Models\Session\RoRSession.cs" />

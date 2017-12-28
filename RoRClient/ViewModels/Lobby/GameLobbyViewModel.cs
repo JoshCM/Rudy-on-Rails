@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using RoRClient.Models.Lobby;
 
 namespace RoRClient.ViewModels.Lobby
 {
@@ -19,8 +20,9 @@ namespace RoRClient.ViewModels.Lobby
         private UIState uiState;
         private bool isHost;
 	    private LobbyModel lobbyModel;
+	    private MapInfo selectedMapInfo;
 
-	    public GameLobbyViewModel(UIState uiState, LobbyModel lobbyModel)
+		public GameLobbyViewModel(UIState uiState, LobbyModel lobbyModel)
         {
             this.uiState = uiState;
 	        this.lobbyModel = lobbyModel;
@@ -28,6 +30,30 @@ namespace RoRClient.ViewModels.Lobby
             GameSession.GetInstance().PropertyChanged += OnGameStarted;
             uiState.OnUiStateChanged += OnUiStateChanged;
         }
+
+	    public MapInfo SelectedMapInfo
+	    {
+		    get { return selectedMapInfo; }
+		    set
+		    {
+			    if (selectedMapInfo != value)
+			    {
+				    selectedMapInfo = value;
+				    OnPropertyChanged("SelectedMapInfo");
+				    changeMapName();
+				}
+			}
+	    }
+
+	    private void changeMapName()
+	    {
+		    if (GameSession.GetInstance().OwnPlayer.IsHost)
+		    {
+			    MessageInformation messageInformation = new MessageInformation();
+				messageInformation.PutValue("mapName", selectedMapInfo.Name);
+				GameSession.GetInstance().QueueSender.SendMessage("ChangeMapName", messageInformation);
+		    }
+		}
 
 		public bool IsHost
         {
@@ -84,7 +110,8 @@ namespace RoRClient.ViewModels.Lobby
         {
             if (GameSession.GetInstance().OwnPlayer.IsHost)
             {
-                GameSession.GetInstance().QueueSender.SendMessage("StartGame", new MessageInformation());
+				MessageInformation messageInformation = new MessageInformation();
+                GameSession.GetInstance().QueueSender.SendMessage("StartGame", messageInformation);
             }
         }
 
@@ -101,6 +128,15 @@ namespace RoRClient.ViewModels.Lobby
             if (uiState.State == "gameLobby")
             {
                 isHost = GameSession.GetInstance().OwnPlayer.IsHost;
+				lobbyModel.ReadMapInfos();
+	            if(isHost)
+	            {
+		            SelectedMapInfo = lobbyModel.MapInfos.FirstOrDefault();
+	            }
+	            else
+	            {
+		            //SelectedMapInfo
+				}
             }
         }
     }

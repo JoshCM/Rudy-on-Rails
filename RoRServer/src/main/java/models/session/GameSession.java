@@ -21,6 +21,7 @@ public class GameSession extends RoRSession{
 	private long lastTimeUpdatedInNanoSeconds;
 	private Ticker ticker;
 	private ArrayList<Loco> locomotives = new ArrayList<>();
+	private String mapName;
 
 	public GameSession(String name, UUID hostPlayerId, String hostPlayerName) {
 		super(name, hostPlayerId, hostPlayerName);
@@ -111,6 +112,14 @@ public class GameSession extends RoRSession{
 		started = true;
 		MessageInformation messageInfo = new MessageInformation("StartGame");
 		notifyChange(messageInfo);
+	}
+
+	public String getMapName() {
+		return mapName;
+	}
+
+	public void setMapName(String mapName) {
+		this.mapName = mapName;
 	}
 }
 

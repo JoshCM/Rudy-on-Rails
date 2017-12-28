@@ -136,5 +136,20 @@ namespace RoRClient.Communication.Dispatcher
 			    lobbyModel.AddGameInfo(gameInfo);
 		    }
 		}
-    }
+
+	    public void HandleReadMapInfos(MessageInformation messageInformation)
+	    {
+		    lobbyModel.ClearMapInfos();
+
+		    GameSession gameSession = GameSession.GetInstance();
+
+		    List<JObject> mapInfoList = messageInformation.GetValueAsJObjectList("mapInfo");
+		    foreach (JObject obj in mapInfoList)
+		    {
+			    string name = obj.GetValue("mapName").ToString();
+			    MapInfo mapInfo = new MapInfo(name);
+			    lobbyModel.AddMapInfo(mapInfo);
+		    }
+	    }
+	}
 }

@@ -8,24 +8,53 @@
              mc:Ignorable="d"
              d:DesignHeight="900" d:DesignWidth="1600" Background="BlanchedAlmond">
 	<DockPanel>
-		<ListBox Height="500" x:Name="GamePlayersListBox" DockPanel.Dock="Top" ItemsSource="{Binding LobbyModel.GameInfos}">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<StackPanel Orientation="Horizontal">
-						<StackPanel.Resources>
-							<Style TargetType="{x:Type TextBlock}">
-								<Setter Property="Margin" Value="10,10,0,0" />
-							</Style>
-						</StackPanel.Resources>
-						<TextBlock Text="{Binding Player.Name}" />
-					</StackPanel>
-				</DataTemplate>
-			</ListBox.ItemTemplate>
-		</ListBox>
-		<StackPanel Height="60"  Orientation="Horizontal" DockPanel.Dock="Bottom" >
-			<Button Margin="10" Width="200" x:Name="startGame" Command="{Binding StartGameCommand}" Content="Starte das verdammte Spiel!" IsEnabled="{Binding IsHost}" />
-			<Button Margin="10" Width="200" x:Name="refreshGameInfosButton" Command="{Binding RefreshGameInfosCommand}" Content="Aktualisieren"/>
+		<StackPanel Height="500" Orientation="Horizontal" DockPanel.Dock="Top">
+			<ListBox Margin="10" Width="600" x:Name="GamePlayersListBox" ItemsSource="{Binding LobbyModel.GameInfos}">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal">
+							<StackPanel.Resources>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="Margin" Value="10,10,0,0" />
+								</Style>
+							</StackPanel.Resources>
+							<TextBlock Text="{Binding Player.Name}" />
+						</StackPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+			<ListBox Margin="10" Width="600" x:Name="GameMapsListBox" ItemsSource="{Binding LobbyModel.MapInfos}" SelectedItem="{Binding Path=SelectedMapInfo, Mode=TwoWay}" IsEnabled="{Binding IsHost}">
+				<ListBox.ItemContainerStyle>
+					<Style TargetType="ListBoxItem">
+						<Style.Triggers>
+							<Trigger Property="IsSelected" Value="True" >
+								<Setter Property="FontWeight" Value="Bold" />
+								<Setter Property="Background" Value="Transparent" />
+								<Setter Property="Foreground" Value="Black" />
+							</Trigger>
+						</Style.Triggers>
+					</Style>
+				</ListBox.ItemContainerStyle>
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal">
+							<StackPanel.Resources>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="Margin" Value="10,10,0,0" />
+								</Style>
+							</StackPanel.Resources>
+							<TextBlock Text="{Binding Name}" />
+						</StackPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
 		</StackPanel>
-		
+		<StackPanel Height="60" Orientation="Horizontal" DockPanel.Dock="Bottom">
+			<Button Margin="10" Width="200" x:Name="startGame" Command="{Binding StartGameCommand}"
+			        Content="Starte das verdammte Spiel!" IsEnabled="{Binding IsHost}" />
+			<Button Margin="10" Width="200" x:Name="refreshGameInfosButton" Command="{Binding RefreshGameInfosCommand}"
+			        Content="Aktualisieren" />
+		</StackPanel>
+
 	</DockPanel>
 </UserControl>

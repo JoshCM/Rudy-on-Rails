@@ -16,6 +16,7 @@ import models.session.EditorSession;
 import models.session.EditorSessionManager;
 import models.session.GameSession;
 import models.session.GameSessionManager;
+import persistent.MapManager;
 
 public class FromClientRequestQueueDispatcher extends DispatcherBase {
 
@@ -215,6 +216,22 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		}
 
 		responseInformation.putValue("gameInfo", gameInfos);
+		sendMessage(responseInformation);
+	}
+	
+	public void handleReadMapInfos(MessageInformation messageInformation) {
+		MessageInformation responseInformation = new MessageInformation("ReadMapInfos");
+		responseInformation.setClientid(messageInformation.getClientid());
+
+		List<JsonObject> mapInfos = new ArrayList<JsonObject>();
+		List<String> mapNames = MapManager.readMapNames();
+		for (String mapName : mapNames) {
+			JsonObject json = new JsonObject();
+			json.addProperty("mapName", mapName);
+			mapInfos.add(json);
+		}
+
+		responseInformation.putValue("mapInfo", mapInfos);
 		sendMessage(responseInformation);
 	}
 }

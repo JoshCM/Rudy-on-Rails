@@ -17,6 +17,7 @@ namespace RoRClient.Models.Game
         private ObservableCollection<EditorSessionInfo> editorSessionInfos = new ObservableCollection<EditorSessionInfo>();
         private ObservableCollection<GameSessionInfo> gameSessionInfos = new ObservableCollection<GameSessionInfo>();
 	    private ObservableCollection<GameInfo> gameInfos = new ObservableCollection<GameInfo>();
+	    private ObservableCollection<MapInfo> mapInfos = new ObservableCollection<MapInfo>();
 
 		private string playerName = "fresh_meat_" + Guid.NewGuid().ToString();
 
@@ -70,6 +71,11 @@ namespace RoRClient.Models.Game
 		    }
 	    }
 
+	    public ObservableCollection<MapInfo> MapInfos
+	    {
+		    get { return mapInfos; }
+	    }
+
 		public void StartConnection()
         {
             ClientConnection.GetInstance().Setup();
@@ -113,6 +119,12 @@ namespace RoRClient.Models.Game
 			MessageInformation messageInformation = new MessageInformation();
 			messageInformation.PutValue("sessionName", GameSession.GetInstance().Name);
 		    fromClientRequestSender.SendMessage("ReadGameInfos", messageInformation);
+		}
+
+	    public void ReadMapInfos()
+	    {
+		    MessageInformation messageInformation = new MessageInformation();
+		    fromClientRequestSender.SendMessage("ReadMapInfos", messageInformation);
 		}
 
 		public bool Connected_Editor
@@ -181,5 +193,17 @@ namespace RoRClient.Models.Game
 		    taskFactory.StartNew(() => gameInfos.Clear());
 		    NotifyPropertyChanged("GameInfos");
 	    }
-    }
+
+	    public void AddMapInfo(MapInfo mapInfo)
+	    {
+		    taskFactory.StartNew(() => mapInfos.Add(mapInfo));
+		    NotifyPropertyChanged("MapInfos");
+	    }
+
+	    public void ClearMapInfos()
+	    {
+		    taskFactory.StartNew(() => mapInfos.Clear());
+		    NotifyPropertyChanged("MapInfos");
+	    }
+	}
 }
