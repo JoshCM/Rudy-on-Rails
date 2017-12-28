@@ -69,4 +69,10 @@ public abstract class RoRSession extends ModelBase {
 	public boolean isStarted() {
 		return started;
 	}
+	
+	public void start() {
+		started = true;
+		MessageInformation messageInfo = new MessageInformation("StartGame");
+		notifyChange(messageInfo);
+	}
 }

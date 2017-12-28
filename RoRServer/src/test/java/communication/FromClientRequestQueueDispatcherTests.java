@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import com.google.gson.JsonObject;
@@ -21,6 +22,17 @@ import models.session.GameSession;
 import models.session.GameSessionManager;
 
 public class FromClientRequestQueueDispatcherTests {
+
+	@Before
+	public void init() {
+		for (GameSession gameSession : GameSessionManager.getInstance().getGameSessionsAsList()) {
+			GameSessionManager.getInstance().removeGameSession(gameSession);
+		}
+
+		for (EditorSession editorSession : EditorSessionManager.getInstance().getEditorSessionsAsList()) {
+			EditorSessionManager.getInstance().removeEditorSession(editorSession);
+		}
+	}
 
 	@Test
 	public void FromClientRequestQueueDispatcher_handleCreateEditorSession_createsEditorSessionAndHostPlayer() {
@@ -178,6 +190,92 @@ public class FromClientRequestQueueDispatcherTests {
 	}
 
 	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinEditorSession_doesNotWorkForNonExistingSession() {
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		String messageType = "JoinEditorSession";
+		String editorSessionName = "TestSession";
+		String wrongEditorSessionName = "IchExistiereEigentlichGarNicht";
+
+		EditorSessionManager.getInstance().createNewEditorSession(editorSessionName, UUID.randomUUID(), "host");
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("editorName", wrongEditorSessionName);
+		messageInfo.putValue("playerName", "NonRelevantPlayer");
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinEditorSession(messageInfo);
+
+		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(editorSessionName);
+
+		assertEquals(1, editorSession.getPlayers().size());
+	}
+
+	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinEditorSession_createsErrorMessageForNonExistingSession() {
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		dispatcher.addObserver(messageQueueStub);
+
+		String messageType = "JoinEditorSession";
+		String editorSessionName = "TestSession";
+		String wrongEditorSessionName = "IchExistiereEigentlichGarNicht";
+
+		EditorSessionManager.getInstance().createNewEditorSession(editorSessionName, UUID.randomUUID(), "host");
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("editorName", wrongEditorSessionName);
+		messageInfo.putValue("playerName", "NonRelevantPlayer");
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinEditorSession(messageInfo);
+
+		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
+		MessageInformation response = messageEnvelope.getMessageInformation();
+		assertEquals("Error", messageEnvelope.getMessageType());
+		assertEquals("SessionNotFound", response.getValueAsString("type"));
+	}
+
+	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinEditorSession_doesNotWorkForStartedSession() {
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		String messageType = "JoinEditorSession";
+		String editorSessionName = "TestSession";
+
+		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName,
+				UUID.randomUUID(), "host");
+		editorSession.start();
+
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("editorName", editorSessionName);
+		messageInfo.putValue("playerName", "NonRelevantPlayer");
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinEditorSession(messageInfo);
+
+		assertEquals(1, editorSession.getPlayers().size());
+	}
+
+	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinEditorSession_createsErrorMessageForAlreadyStartedSession() {
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		dispatcher.addObserver(messageQueueStub);
+
+		String messageType = "JoinEditorSession";
+		String editorSessionName = "TestSession";
+
+		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName,
+				UUID.randomUUID(), "host");
+		editorSession.start();
+
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("editorName", editorSessionName);
+		messageInfo.putValue("playerName", "NonRelevantPlayer");
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinEditorSession(messageInfo);
+
+		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
+		MessageInformation response = messageEnvelope.getMessageInformation();
+		assertEquals("Error", messageEnvelope.getMessageType());
+		assertEquals("SessionAlreadyStarted", response.getValueAsString("type"));
+	}
+
+	@Test
 	public void FromClientRequestQueueDispatcher_handleJoinGameSession_createsNewPlayerWithRightName() {
 		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
 		String messageType = "JoinGameSession";
@@ -209,14 +307,13 @@ public class FromClientRequestQueueDispatcherTests {
 		String gameSessionName = "TestSession";
 		String joinedPlayerName = "MyPlayer";
 
-		EditorSessionManager.getInstance().createNewEditorSession(gameSessionName, UUID.randomUUID(), "host");
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName,
+				UUID.randomUUID(), "host");
 		MessageInformation messageInfo = new MessageInformation(messageType);
 		messageInfo.putValue("gameName", gameSessionName);
 		messageInfo.putValue("playerName", joinedPlayerName);
 		messageInfo.setClientid(UUID.randomUUID().toString());
 		dispatcher.handleJoinGameSession(messageInfo);
-
-		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(gameSessionName);
 
 		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
 		MessageInformation response = messageEnvelope.getMessageInformation();
@@ -238,6 +335,92 @@ public class FromClientRequestQueueDispatcherTests {
 		assertEquals(joinedPlayer.getId().toString(), joinedPlayerData.get("playerId").getAsString());
 		assertEquals(joinedPlayer.getName(), joinedPlayerData.get("playerName").getAsString());
 		assertEquals(joinedPlayer.getIsHost(), joinedPlayerData.get("isHost").getAsBoolean());
+	}
+
+	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinGameSession_doesNotWorkForNonExistingSession() {
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		String messageType = "JoinGameSession";
+		String gameSessionName = "TestSession";
+		String wrongGameSessionName = "IchExistiereEigentlichGarNicht";
+
+		GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), "host");
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("gameName", wrongGameSessionName);
+		messageInfo.putValue("playerName", "NonRelevantPlayer");
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinGameSession(messageInfo);
+
+		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(gameSessionName);
+
+		assertEquals(1, gameSession.getPlayers().size());
+	}
+
+	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinGameSession_createsErrorMessageForNonExistingSession() {
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		dispatcher.addObserver(messageQueueStub);
+
+		String messageType = "JoinGameSession";
+		String gameSessionName = "TestSession";
+		String wrongGameSessionName = "IchExistiereEigentlichGarNicht";
+
+		GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), "host");
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("gameName", wrongGameSessionName);
+		messageInfo.putValue("playerName", "NonRelevantPlayer");
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinGameSession(messageInfo);
+
+		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
+		MessageInformation response = messageEnvelope.getMessageInformation();
+		assertEquals("Error", messageEnvelope.getMessageType());
+		assertEquals("SessionNotFound", response.getValueAsString("type"));
+	}
+
+	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinGameSession_doesNotWorkForStartedSession() {
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		String messageType = "JoinGameSession";
+		String gameSessionName = "TestSession";
+
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName,
+				UUID.randomUUID(), "host");
+		gameSession.start();
+
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("gameName", gameSessionName);
+		messageInfo.putValue("playerName", "NonRelevantPlayer");
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinGameSession(messageInfo);
+
+		assertEquals(1, gameSession.getPlayers().size());
+	}
+
+	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinGameSession_createsErrorMessageForAlreadyStartedSession() {
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		dispatcher.addObserver(messageQueueStub);
+
+		String messageType = "JoinGameSession";
+		String gameSessionName = "TestSession";
+
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName,
+				UUID.randomUUID(), "host");
+		gameSession.start();
+
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("gameName", gameSessionName);
+		messageInfo.putValue("playerName", "NonRelevantPlayer");
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinGameSession(messageInfo);
+
+		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
+		MessageInformation response = messageEnvelope.getMessageInformation();
+		assertEquals("Error", messageEnvelope.getMessageType());
+		assertEquals("SessionAlreadyStarted", response.getValueAsString("type"));
 	}
 
 	@Test
@@ -278,7 +461,7 @@ public class FromClientRequestQueueDispatcherTests {
 		GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), hostPlayerName);
 		GameSession startedGameSession = GameSessionManager.getInstance().createNewGameSession("StartedGame",
 				UUID.randomUUID(), "NewPlayer");
-		startedGameSession.startGame();
+		startedGameSession.start();
 
 		MessageInformation messageInfo = new MessageInformation(messageType);
 		messageInfo.setClientid(UUID.randomUUID().toString());

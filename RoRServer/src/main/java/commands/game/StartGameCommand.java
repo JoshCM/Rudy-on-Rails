@@ -62,7 +62,7 @@ public class StartGameCommand extends CommandBase {
 
 		createLocoForPlayers(session);
 		
-		((GameSession)session).startGame();
+		session.start();
 	}
 
 	/**

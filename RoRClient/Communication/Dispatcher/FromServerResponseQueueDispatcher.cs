@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using RoRClient.Models.Lobby;
+using System.Windows;
 
 namespace RoRClient.Communication.Dispatcher
 {
@@ -151,5 +152,28 @@ namespace RoRClient.Communication.Dispatcher
 			    lobbyModel.AddMapInfo(mapInfo);
 		    }
 	    }
+
+        /// <summary>
+        /// Für Fehler auf dem Server wird erst einmal eine MessageBox aufgerufen mit dem Fehlertyp als Inhalt
+        /// ToDo: Dies sollte noch eleganter gelöst werden! Für den Moment erstmal ausreichend.
+        /// </summary>
+        /// <param name="messageInformation"></param>
+        public void HandleError(MessageInformation messageInformation)
+        {
+            String type = messageInformation.GetValueAsString("type");
+
+            switch (type)
+            {
+                case "SessionNotFound":
+                    MessageBox.Show(type);
+                    break;
+                case "SessionAlreadyStarted":
+                    MessageBox.Show(type);
+                    break;
+                default:
+                    MessageBox.Show(type);
+                    break;
+            }
+        }
 	}
 }

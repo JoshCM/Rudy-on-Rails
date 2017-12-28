@@ -68,6 +68,17 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	public void handleJoinEditorSession(MessageInformation messageInformation) {
 		String editorSessionName = messageInformation.getValueAsString("editorName");
 		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(editorSessionName);
+		String clientId = messageInformation.getClientid();
+		
+		if(editorSession == null) {
+			sendErrorMessage(clientId, "SessionNotFound");
+			return;
+		}
+		
+		if(editorSession.isStarted()) {
+			sendErrorMessage(clientId, "SessionAlreadyStarted");
+			return;
+		}
 
 		String playerName = messageInformation.getValueAsString("playerName");
 		UUID playerId = UUID.fromString(messageInformation.getClientid());
@@ -134,12 +145,30 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	public void handleJoinGameSession(MessageInformation messageInformation) {
 		String gameSessionName = messageInformation.getValueAsString("gameName");
 		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(gameSessionName);
+		String clientId = messageInformation.getClientid();
+		
+		if(gameSession == null) {
+			sendErrorMessage(clientId, "SessionNotFound");
+			return;
+		}
+		
+		if(gameSession.isStarted()) {
+			sendErrorMessage(clientId, "SessionAlreadyStarted");
+			return;
+		}
 
 		String playerName = messageInformation.getValueAsString("playerName");
 		UUID playerId = UUID.fromString(messageInformation.getClientid());
 		gameSession.createPlayer(playerId, playerName);
 
 		sendJoinGameSessionCommand(messageInformation.getClientid(), gameSession);
+	}
+	
+	private void sendErrorMessage(String clientId, String type) {
+		MessageInformation responseInformation = new MessageInformation("Error");
+		responseInformation.setClientid(clientId);
+		responseInformation.putValue("type", type);
+		sendMessage(responseInformation);
 	}
 
 	private void sendJoinGameSessionCommand(String clientId, GameSession gameSession) {

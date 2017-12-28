@@ -107,12 +107,6 @@ public class GameSession extends RoRSession{
 			ticker.addObserver(locomotive);
 		}
 	}
-	
-	public void startGame() {
-		started = true;
-		MessageInformation messageInfo = new MessageInformation("StartGame");
-		notifyChange(messageInfo);
-	}
 
 	public String getMapName() {
 		return mapName;
