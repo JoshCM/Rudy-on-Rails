@@ -1,9 +1,5 @@
 package commands.game;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import org.apache.log4j.Logger;
 
 import commands.base.CommandBase;
@@ -23,7 +19,6 @@ public class StartGameCommand extends CommandBase {
 	
 	public StartGameCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
-		this.messageInfo = messageInfo;
 	}
 
 	@Override
@@ -31,7 +26,7 @@ public class StartGameCommand extends CommandBase {
 		log.info("loading map: " + ((GameSession)session).getMapName());
 		// Map laden
 		Map map = MapManager.loadMap(((GameSession)session).getMapName());
-		map.setSessionName(session.getSessionName());
+		map.setSessionName(session.getName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
 		

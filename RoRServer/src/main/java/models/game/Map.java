@@ -52,7 +52,9 @@ public class Map extends ModelBase {
 	}
 	
 	public Square getSquare(int x, int y) {
-		return squares[x][y];
+		if(x >= 0 && x < squares.length && y >= 0 && y < squares.length)
+			return squares[x][y];
+		return null;
 	}
 	
 	public Square[][] getSquares() {

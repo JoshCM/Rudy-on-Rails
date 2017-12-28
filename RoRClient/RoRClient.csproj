@@ -434,7 +434,6 @@
     <Resource Include="Resources\Images\rotate_left.png" />
     <Resource Include="Resources\Images\delete.png" />
     <Resource Include="Resources\Images\move.png" />
-    <Resource Include="Resources\Images\Tools\loco.png" />
     <Resource Include="Resources\Images\loco.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />

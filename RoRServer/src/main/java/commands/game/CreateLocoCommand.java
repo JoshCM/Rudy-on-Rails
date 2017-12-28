@@ -24,7 +24,7 @@ public class CreateLocoCommand implements Command {
 	private UUID playerId;
 	protected RoRSession session;
 	/**
-	 * yPos, xPos m�ssen von den Bahnh�fen rausgelesen werden
+	 * yPos, xPos müssen von den Bahnhöfen rausgelesen werden
 	 * @param session
 	 * @param messageInfo
 	 */
