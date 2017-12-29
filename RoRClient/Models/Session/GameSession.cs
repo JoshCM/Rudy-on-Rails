@@ -41,23 +41,6 @@ namespace RoRClient.Models.Session
             return locos.Where(x => x.Id == locoId).First();
         }
 
-        private bool started;
-        public bool Started
-        {
-            get
-            {
-                return started;
-            }
-            set
-            {
-                if(started != value)
-                {
-                    started = value;
-                    NotifyPropertyChanged("Started");
-                }
-            }
-        }
-
         public void AddLoco(Loco loco)
         {
             locos.Add(loco);
@@ -72,35 +55,5 @@ namespace RoRClient.Models.Session
             }
             return gameSession;
         }
-
-	    private string mapName;
-	    public string MapName
-	    {
-		    get { return mapName; }
-		    set
-		    {
-			    if (mapName != value)
-			    {
-				    mapName = value;
-				    changeMapName();
-				    NotifyPropertyChanged("MapName");
-			    }
-		    }
-	    }
-
-		/// <summary>
-		/// Wenn der Player der Host der GameSession ist, dann wird die MapName-Änderung
-		/// and den Server geschickt und über den Topic der Session an alle Clients der
-		/// GameSession verteilt
-		/// </summary>
-	    private void changeMapName()
-	    {
-		    if (GameSession.GetInstance().OwnPlayer.IsHost)
-		    {
-			    MessageInformation messageInformation = new MessageInformation();
-			    messageInformation.PutValue("mapName", gameSession.MapName);
-			    GameSession.GetInstance().QueueSender.SendMessage("ChangeMapName", messageInformation);
-		    }
-	    }
 	}
 }

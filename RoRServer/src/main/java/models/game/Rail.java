@@ -192,6 +192,8 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	@Override
 	public Rail loadFromMap(Square square, RoRSession session) {
 
+		
+		
 		Rail rail = (Rail)square.getPlaceableOnSquare();
 
 		// Hole die SectionPositions aus den RailSections und speichere in Liste
@@ -201,8 +203,13 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 			railSectionPosition.add(section.getNode2());
 		}
 		
+		
 		// Neues Rail erstellen und damit an den Client schicken
-		Rail newRail = new Rail(session.getName(), square, railSectionPosition);
+		Rail newRail = new Rail(session.getName(), square, railSectionPosition, rail.getTrainstationId(), rail.getId());
+		
+		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
+		newRail.setName(session.getName());
+		
 		System.out.println("Neue Rail erstellt: " + newRail.toString());
 		
 		return newRail;	

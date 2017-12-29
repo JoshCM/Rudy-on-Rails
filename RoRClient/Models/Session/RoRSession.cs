@@ -17,7 +17,9 @@ namespace RoRClient.Models.Session
     {
         protected string name;
         protected Map map;
-        protected ObservableCollection<Player> players = new ObservableCollection<Player>();
+	    protected string mapName;
+
+		protected ObservableCollection<Player> players = new ObservableCollection<Player>();
 
         protected QueueSender queueSender;
         protected TopicReceiver topicReceiver;
@@ -44,6 +46,7 @@ namespace RoRClient.Models.Session
         {
             queueSender = new QueueSender(topicName);
         }
+
 
         public Map Map
         {
@@ -99,5 +102,51 @@ namespace RoRClient.Models.Session
                 return queueSender;
             }
         }
-    }
+
+	    public string MapName
+	    {
+		    get { return mapName; }
+		    set
+		    {
+			    if (mapName != value)
+			    {
+				    mapName = value;
+				    changeMapName();
+				    NotifyPropertyChanged("MapName");
+			    }
+		    }
+	    }
+
+	    /// <summary>
+	    /// Wenn der Player der Host der GameSession ist, dann wird die MapName-Änderung
+	    /// and den Server geschickt und über den Topic der Session an alle Clients der
+	    /// GameSession verteilt
+	    /// </summary>
+	    private void changeMapName()
+	    {
+		    if (OwnPlayer.IsHost)
+		    {
+			    MessageInformation messageInformation = new MessageInformation();
+			    messageInformation.PutValue("mapName", MapName);
+			    QueueSender.SendMessage("ChangeMapName", messageInformation);
+		    }
+	    }
+
+	    private bool started;
+	    public bool Started
+	    {
+		    get
+		    {
+			    return started;
+		    }
+		    set
+		    {
+			    if (started != value)
+			    {
+				    started = value;
+				    NotifyPropertyChanged("Started");
+			    }
+		    }
+	    }
+	}
 }

@@ -248,6 +248,23 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		sendMessage(responseInformation);
 	}
 	
+	public void handleReadEditorInfos(MessageInformation messageInformation) {
+		MessageInformation responseInformation = new MessageInformation("ReadEditorInfos");
+		responseInformation.setClientid(messageInformation.getClientid());
+
+		List<JsonObject> editorInfos = new ArrayList<JsonObject>();
+		String sessionName = messageInformation.getValueAsString("sessionName");
+		List<Player> editorPlayers = EditorSessionManager.getInstance().getEditorSessionByName(sessionName).getPlayers();
+		for (Player player : editorPlayers) {
+			JsonObject json = new JsonObject();
+			json.addProperty("playerId", player.getId().toString());
+			editorInfos.add(json);
+		}
+
+		responseInformation.putValue("editorInfo", editorInfos);
+		sendMessage(responseInformation);
+	}
+	
 	public void handleReadMapInfos(MessageInformation messageInformation) {
 		MessageInformation responseInformation = new MessageInformation("ReadMapInfos");
 		responseInformation.setClientid(messageInformation.getClientid());

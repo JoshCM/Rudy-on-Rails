@@ -25,7 +25,6 @@ public class GameSession extends RoRSession{
 	private long lastTimeUpdatedInNanoSeconds;
 	private Ticker ticker;
 	private ArrayList<Loco> locomotives = new ArrayList<>();
-	private String mapName;
 
 	public GameSession(String name, UUID hostPlayerId, String hostPlayerName) {
 		super(name, hostPlayerId, hostPlayerName);
@@ -111,24 +110,8 @@ public class GameSession extends RoRSession{
 			ticker.addObserver(locomotive);
 		}
 	}
-
-	public String getMapName() {
-		return mapName;
-	}
-
-	public void setMapName(String mapName) {
-		this.mapName = mapName;
-		notifyChangedMapName();
-	}
 	
-	/**
-	 * Schickt eine Message mit dem neuen MapName, über den Topic der GameSession, an alle angemeldeten Clients
-	 */
-	private void notifyChangedMapName() {
-		MessageInformation messageInfo = new MessageInformation("ChangeMapName");
-		messageInfo.putValue("mapName", getMapName());
-		notifyChange(messageInfo);
-	}
+
 }
 
 

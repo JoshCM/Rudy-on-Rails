@@ -3,19 +3,12 @@ using RoRClient.Models.Game;
 using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
 using RoRClient.ViewModels.Helper;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using RoRClient.Models.Lobby;
 
 namespace RoRClient.ViewModels.Lobby
 {
-    class GameLobbyViewModel : ViewModelBase
+	class GameLobbyViewModel : ViewModelBase
     {
         private UIState uiState;
         private bool isHost;
@@ -33,7 +26,7 @@ namespace RoRClient.ViewModels.Lobby
         }
 
 		/// <summary>
-		/// DieGameSession muss hier als Property vorhanden sein, damit der MapName
+		/// Die GameSession muss hier als Property vorhanden sein, damit der MapName
 		/// in der MapListBox gebindet werden kann
 		/// </summary>
 	    public GameSession GameSession
@@ -42,6 +35,15 @@ namespace RoRClient.ViewModels.Lobby
 		    set { gameSession = value; }
 	    }
 
+	    public LobbyModel LobbyModel
+	    {
+		    get { return lobbyModel; }
+		    set { lobbyModel = value; }
+	    }
+
+		/// <summary>
+		/// Setzt den boolean, ob der User Host ist oder nicht
+		/// </summary>
 		public bool IsHost
         {
             get
@@ -54,7 +56,6 @@ namespace RoRClient.ViewModels.Lobby
                 OnPropertyChanged("IsHost");
             }
         }
-
 
         private ICommand startGameCommand;
         public ICommand StartGameCommand
@@ -69,11 +70,6 @@ namespace RoRClient.ViewModels.Lobby
             }
         }
 
-	    public LobbyModel LobbyModel
-	    {
-		    get { return lobbyModel; }
-		    set { lobbyModel = value; }
-	    }
 
 	    private ICommand refreshGameInfosCommand;
 	    public ICommand RefreshGameInfosCommand

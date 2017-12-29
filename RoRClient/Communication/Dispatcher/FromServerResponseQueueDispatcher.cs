@@ -143,12 +143,33 @@ namespace RoRClient.Communication.Dispatcher
 		    }
 		}
 
+	    /// <summary>
+	    /// Setzt die ankommenden Players mithilfe der PlayerIds in die 
+	    /// ObservableCollection von Players im LobbyModel
+	    /// </summary>
+	    /// <param name="messageInformation"></param>
+	    public void HandleReadEditorInfos(MessageInformation messageInformation)
+	    {
+		    lobbyModel.ClearEditorInfos();
+
+		    EditorSession editorSession = EditorSession.GetInstance();
+
+		    List<JObject> gameInfoList = messageInformation.GetValueAsJObjectList("editorInfo");
+		    foreach (JObject obj in gameInfoList)
+		    {
+			    Guid playerId = Guid.Parse(obj.GetValue("playerId").ToString());
+			    Player player = editorSession.GetPlayerById(playerId);
+			    EditorInfo editorInfo = new EditorInfo(player);
+			    lobbyModel.AddEditorInfo(editorInfo);
+		    }
+	    }
+
 		/// <summary>
 		/// Setzt die ankommenden MapNames in die ObservableCollection von MapNames
 		/// im LobbyModel
 		/// </summary>
 		/// <param name="messageInformation"></param>
-	    public void HandleReadMapInfos(MessageInformation messageInformation)
+		public void HandleReadMapInfos(MessageInformation messageInformation)
 	    {
 		    lobbyModel.ClearMapNames();
 

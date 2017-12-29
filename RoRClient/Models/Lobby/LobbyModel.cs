@@ -17,7 +17,8 @@ namespace RoRClient.Models.Game
         private ObservableCollection<EditorSessionInfo> editorSessionInfos = new ObservableCollection<EditorSessionInfo>();
         private ObservableCollection<GameSessionInfo> gameSessionInfos = new ObservableCollection<GameSessionInfo>();
 	    private ObservableCollection<GameInfo> gameInfos = new ObservableCollection<GameInfo>();
-	    private ObservableCollection<string> mapNames = new ObservableCollection<string>();
+	    private ObservableCollection<EditorInfo> editorInfos = new ObservableCollection<EditorInfo>();
+		private ObservableCollection<string> mapNames = new ObservableCollection<string>();
 
 		private string playerName = "fresh_meat_" + Guid.NewGuid().ToString();
 
@@ -63,7 +64,15 @@ namespace RoRClient.Models.Game
             }
         }
 
-	    public ObservableCollection<GameInfo> GameInfos
+	    public ObservableCollection<EditorInfo> EditorInfos
+	    {
+		    get
+		    {
+			    return editorInfos;
+		    }
+	    }
+
+		public ObservableCollection<GameInfo> GameInfos
 	    {
 		    get
 		    {
@@ -109,6 +118,7 @@ namespace RoRClient.Models.Game
             MessageInformation messageInformation = new MessageInformation();
             fromClientRequestSender.SendMessage("ReadEditorSessions", messageInformation);
         }
+
         public void ReadGameSessions()
         {
             MessageInformation messageInformation = new MessageInformation();
@@ -125,14 +135,25 @@ namespace RoRClient.Models.Game
 		    fromClientRequestSender.SendMessage("ReadGameInfos", messageInformation);
 		}
 
+	    /// <summary>
+	    /// Fragt den Server nach der Liste von EditorInfos an (momentan nur Players innerhalb der EditorInfos)
+	    /// </summary>
+		public void ReadEditorInfos()
+	    {
+		    MessageInformation messageInformation = new MessageInformation();
+		    messageInformation.PutValue("sessionName", EditorSession.GetInstance().Name);
+		    fromClientRequestSender.SendMessage("ReadEditorInfos", messageInformation);
+	    }
+
 		/// <summary>
 		/// Fragt den Server nach der Liste von Maps an
 		/// </summary>
-	    public void ReadMapInfos()
+		public void ReadMapInfos()
 	    {
 		    MessageInformation messageInformation = new MessageInformation();
 		    fromClientRequestSender.SendMessage("ReadMapInfos", messageInformation);
 		}
+
 
 		public bool Connected_Editor
         {
@@ -195,13 +216,25 @@ namespace RoRClient.Models.Game
 		    NotifyPropertyChanged("GameInfos");
 	    }
 
-	    public void ClearGameInfos()
+	    public void AddEditorInfo(EditorInfo editorInfo)
+	    {
+		    taskFactory.StartNew(() => editorInfos.Add(editorInfo));
+		    NotifyPropertyChanged("EditorInfos");
+	    }
+
+		public void ClearGameInfos()
 	    {
 		    taskFactory.StartNew(() => gameInfos.Clear());
 		    NotifyPropertyChanged("GameInfos");
 	    }
 
-	    public void AddMapName(string mapName)
+	    public void ClearEditorInfos()
+	    {
+		    taskFactory.StartNew(() => editorInfos.Clear());
+		    NotifyPropertyChanged("EditorInfos");
+	    }
+
+		public void AddMapName(string mapName)
 	    {
 		    taskFactory.StartNew(() => mapNames.Add(mapName));
 		    NotifyPropertyChanged("MapNames");

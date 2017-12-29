@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Session;
 
-namespace RoRClient.Commands.Game.Other
+namespace RoRClient.Commands.Editor.Other
 {
 	class ChangeMapNameCommand : CommandBase
 	{

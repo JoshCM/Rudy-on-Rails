@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +8,10 @@ using RoRClient.Models.Game;
 
 namespace RoRClient.Models.Lobby
 {
-	class GameInfo : ModelBase
+	class EditorInfo : ModelBase
 	{
 		private Player player;
-		public GameInfo(Player player)
+		public EditorInfo(Player player)
 		{
 			this.player = player;
 		}
