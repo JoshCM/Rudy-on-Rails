@@ -18,6 +18,7 @@ namespace RoRClient.Models.Game
         public Loco(Guid id, Compass drivingDirection, Square square) : base(square)
         {
             this.id = id;
+            this.drivingDirection = drivingDirection;
         }
 
         public int Speed
