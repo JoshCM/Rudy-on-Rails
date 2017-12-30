@@ -2,13 +2,15 @@ package models.game;
 
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.JsonObject;
 
 import communication.MessageInformation;
-import communication.topic.TopicMessageQueue;
+import communication.queue.receiver.QueueReceiver;
 import models.session.RoRSession;
 
 /**
@@ -17,7 +19,8 @@ import models.session.RoRSession;
  * Weiche) besitzen
  */
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Comparable<Rail> {
-
+	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
+	
 	// muss hier raus und eine Ebene tiefer(RailSection)
 	protected PlaceableOnRail placeableOnRail = null;
 	protected RailSection section1;
@@ -210,7 +213,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
 		newRail.setName(session.getName());
 		
-		System.out.println("Neue Rail erstellt: " + newRail.toString());
+		log.info("Rail erstellt: " + newRail.toString());
 		
 		return newRail;	
 	}

@@ -7,11 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.JsonObject;
 
-import commands.game.CreateLocoCommand;
 import communication.MessageInformation;
-import communication.topic.TopicMessageQueue;
+import communication.queue.receiver.QueueReceiver;
 import helper.Geometry;
 import helper.Geometry.Coordinate;
 import models.session.EditorSession;
@@ -19,7 +20,8 @@ import models.session.EditorSessionManager;
 import models.session.RoRSession;
 
 public class Trainstation extends InteractiveGameObject implements PlaceableOnSquare {
-
+	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
+	
 	public static final int RAIL_COUNT = 3;
 	private List<UUID> trainstationRailIds;
 	private Compass alignment;
@@ -28,7 +30,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	private final int COUNTER_CLOCKWISE = -90;
 	private Square spawnPointForLoco;
 
-	// von Andreas: Habe ich auf transient gesetzt, weil der Deserializer sonst
+	// Andreas: Habe ich auf transient gesetzt, weil der Deserializer sonst
 	// wieder loopt
 	transient EditorSession editorSession;
 
@@ -249,7 +251,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
 		newTrainStation.setName(session.getName());
 
-		System.out.println("Neue TrainStation erstellt: " + newTrainStation.toString());
+		log.info("TrainStation erstellt: " + newTrainStation.toString());
 		return newTrainStation;
 	}
 
@@ -291,5 +293,11 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		} else if (!trainstationRailIds.equals(other.trainstationRailIds))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Trainstation [trainstationRailIds=" + trainstationRailIds + ", alignment=" + alignment
+				+ ", spawnPointForLoco=" + spawnPointForLoco + "]";
 	}
 }

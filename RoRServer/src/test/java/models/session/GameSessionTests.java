@@ -26,6 +26,6 @@ public class GameSessionTests {
 		gameSession.start();
 		
 		String messageType = messageQueueStub.messages.get(0).getMessageType();
-		assertEquals("StartGame", messageType);
+		assertEquals("Start", messageType);
 	}
 }
