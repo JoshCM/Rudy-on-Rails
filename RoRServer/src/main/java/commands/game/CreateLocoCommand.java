@@ -47,12 +47,8 @@ public class CreateLocoCommand implements Command {
 		//pr�fen ob auf dem Square eine Rail liegt
 		if(square.getPlaceableOnSquare() != null) {
 			Rail rail = (Rail) square.getPlaceableOnSquare();
-			Loco loco = new Loco(session.getName(),square, map, playerId);
+			Loco loco = new Loco(session.getName(),square, playerId);
 			((GameSession) session).addLocomotive(loco);
-			rail.setPlaceableOnRail(loco);
 		}
-		
-		
 	}
-
 }

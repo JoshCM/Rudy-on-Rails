@@ -13,8 +13,9 @@ namespace RoRClient.Models.Game
     public class Loco : InteractiveGameObject, IPlaceableOnRail
     {
         private int speed;
+        private Compass drivingDirection;
 
-        public Loco(Guid id, Square square) : base(square)
+        public Loco(Guid id, Compass drivingDirection, Square square) : base(square)
         {
             this.id = id;
         }
@@ -31,6 +32,22 @@ namespace RoRClient.Models.Game
                 {
                     speed = value;
                     NotifyPropertyChanged("Speed");
+                }
+            }
+        }
+
+        public Compass DrivingDirection
+        {
+            get
+            {
+                return drivingDirection;
+            }
+            set
+            {
+                if(drivingDirection != value)
+                {
+                    drivingDirection = value;
+                    NotifyPropertyChanged("DrivingDirection");
                 }
             }
         }
