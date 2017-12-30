@@ -112,6 +112,7 @@ namespace RoRClient.ViewModels.Lobby
             {
 	            isHost = GameSession.GetInstance().OwnPlayer.IsHost;
 				lobbyModel.ReadMapInfos();
+				lobbyModel.ReadGameInfos();
             }
         }
     }

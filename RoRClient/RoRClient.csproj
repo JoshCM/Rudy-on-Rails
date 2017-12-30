@@ -104,6 +104,7 @@
     <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
     <Compile Include="BindingConverter\CompassToAngleConverter.cs" />
+    <Compile Include="Commands\Base\ChangeMapNameCommandBase.cs" />
     <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Base\CreateRailCommandBase.cs" />
     <Compile Include="Commands\Base\CreateTrainstationCommandBase.cs" />

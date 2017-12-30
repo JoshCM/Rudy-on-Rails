@@ -116,6 +116,7 @@ namespace RoRClient.ViewModels.Lobby
 			{
 				isHost = EditorSession.GetInstance().OwnPlayer.IsHost;
 				lobbyModel.ReadMapInfos();
+				lobbyModel.ReadEditorInfos();
 			}
 		}
 	}

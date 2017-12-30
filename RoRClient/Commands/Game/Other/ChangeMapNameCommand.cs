@@ -9,17 +9,10 @@ using RoRClient.Models.Session;
 
 namespace RoRClient.Commands.Game.Other
 {
-	class ChangeMapNameCommand : CommandBase
+	class ChangeMapNameCommand : ChangeMapNameCommandBase
 	{
-		private string mapName;
 		public ChangeMapNameCommand(RoRSession session, MessageInformation message) : base(session, message)
 		{
-			mapName = message.GetValueAsString("mapName");
 		}
-		public override void Execute()
-		{
-			session.MapName = mapName;
-		}
-
 	}
 }
