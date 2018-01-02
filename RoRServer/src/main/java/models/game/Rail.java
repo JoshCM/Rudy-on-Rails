@@ -67,15 +67,17 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 			List<Square> squares = square.getNeighbouringSquares();
 			for (Square s : squares) {
 				
-				Double chanceToSpawn = Difficulty.MEDIUM.getChanceToSpawnResource();
+				Double chanceToSpawn = Difficulty.EASY.getChanceToSpawnResource();
 
-				if (s.getPlaceableOnSquare() == null && Math.random() < chanceToSpawn) {
+				if (s.getPlaceableOnSquare() == null && Math.random() < chanceToSpawn / 100) {
 					if (Math.random() < 0.5) {
 						Gold gold = new Gold(
 								GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(), s);
+						s.setPlaceableOnSquare(gold);
 					} else {
 						Coal coal = new Coal(
 								GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(), s);
+						s.setPlaceableOnSquare(coal);
 					}
 				}
 			}
