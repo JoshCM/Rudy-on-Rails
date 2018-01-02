@@ -2,6 +2,9 @@ package commands.game;
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.topic.TopicMessageQueue;
+import models.game.Coal;
+import models.game.Compass;
+import models.game.Gold;
 import models.game.Map;
 import models.game.PlaceableOnSquare;
 import models.game.Player;
@@ -34,7 +37,7 @@ public class StartGameCommand extends CommandBase {
 		
 		// Map laden
 		Map map = MapManager.loadMap(mapName);
-		map.setSessionName(session.getName());
+		map.setSessionNameForMapAndSquares(session.getName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
 		
@@ -53,6 +56,7 @@ public class StartGameCommand extends CommandBase {
 			}
 		}
 
+		// Loco erstellen
 		createLocoForPlayers(session);
 		
 		((GameSession)session).startGame();

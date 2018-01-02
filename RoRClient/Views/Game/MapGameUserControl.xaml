@@ -21,6 +21,7 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+                
                 <ItemsControl ItemsSource="{Binding PlaceableOnSquareCollection}">
                     <!-- Muss al Resource angelegt werden damit die Liste sich selbstständig ihr richtiges DataTemplate für jedes ViewModel nimmt -->
                     <ItemsControl.Resources>
@@ -33,6 +34,16 @@
                         <DataTemplate DataType="{x:Type game:TrainstationGameViewModel}">
                             <Canvas>
                                 <vg:TrainstationGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type game:GoldGameViewModel}">
+                            <Canvas>
+                                <vg:GoldGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type game:CoalGameViewModel}">
+                            <Canvas>
+                                <vg:CoalGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.Resources>

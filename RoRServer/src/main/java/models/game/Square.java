@@ -1,7 +1,12 @@
 package models.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import communication.MessageInformation;
 import models.base.ModelBase;
+import models.session.GameSessionManager;
+import models.session.RoRSession;
 
 /**
  * Klasse fuer ein Feld (Square), dass auf der Map liegt und eine Position hat.
@@ -23,6 +28,10 @@ public class Square extends ModelBase {
 		notifyDeletePlaceable();
 	}
 	
+	public void setSessionName(String sessionName) {
+		this.sessionName = sessionName;
+	}
+	
 	private void notifyDeletePlaceable() {
 		MessageInformation messageInfo = new MessageInformation("DeletePlaceable");
 		// TODO: SpÃ¤ter haben wir die richtigen SquareIds im Client, im Moment noch nicht!!!
@@ -30,6 +39,39 @@ public class Square extends ModelBase {
 		messageInfo.putValue("yPos", this.getYIndex());
 		
 		notifyChange(messageInfo);
+	}
+	
+	/**
+	 * Gibt die benachbarten Squares zurück (Links, Rechts, Oben, Unten)
+	 * @return Die Squares werden als Liste zurückgegeben
+	 */
+	public List<Square> getNeighbouringSquares(){
+		
+		List<Square> neighbouringSquares = new ArrayList<Square>();
+		RoRSession session = GameSessionManager.getInstance().getGameSessionByName(sessionName);
+		Map map = session.getMap();
+		
+		// Linkes Square
+		if (xIndex - 1 >= 0) {
+			neighbouringSquares.add(map.getSquare(xIndex - 1, yIndex));
+		}
+		
+		// Rechtes Square
+		if (xIndex + 1 < map.getMapSize()) {
+			neighbouringSquares.add(map.getSquare(xIndex + 1, yIndex));
+		}
+		
+		// Oberes Square
+		if (yIndex - 1 >= 0) {
+			neighbouringSquares.add(map.getSquare(xIndex, yIndex - 1));
+		}
+		
+		// Unteres Square
+		if (yIndex + 1 < map.getMapSize()) {
+			neighbouringSquares.add(map.getSquare(xIndex, yIndex + 1));
+		}
+		
+		return neighbouringSquares;
 	}
 	
 	public void setPlaceableOnSquare(PlaceableOnSquare placeable) {
