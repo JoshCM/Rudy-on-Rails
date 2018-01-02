@@ -23,9 +23,11 @@ public class CreateMineCommand extends CommandBase {
 	public void execute() {
 		EditorSession editorSession = (EditorSession) session;
 		Square square = editorSession.getMap().getSquare(xPos, yPos);
-		Mine mine = new Mine(editorSession.getName(), square);
+		
+		// Hier prüfen wir, ob auf dem Square ein Rail liegt, ansonsten wird auf dem Client keine Mine erstellt
 		if (square.getPlaceableOnSquare() instanceof Rail) {
 			Rail rail = (Rail) square.getPlaceableOnSquare();
+			Mine mine = new Mine(editorSession.getName(), square);
 			rail.setPlaceableOnRail(mine);
 		}
 	}

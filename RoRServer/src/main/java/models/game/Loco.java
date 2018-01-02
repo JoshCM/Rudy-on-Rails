@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import communication.MessageInformation;
+import models.session.RoRSession;
 
 /**
  * 
@@ -182,5 +183,11 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 
 	public UUID getPlayerId() {
 		return playerId;
+	}
+
+	@Override
+	public PlaceableOnSquare loadFromMap(Square square, RoRSession session) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
