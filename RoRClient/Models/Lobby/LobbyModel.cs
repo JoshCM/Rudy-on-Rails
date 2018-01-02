@@ -15,7 +15,7 @@ namespace RoRClient.Models.Game
 
         private ObservableCollection<EditorSessionInfo> editorSessionInfos = new ObservableCollection<EditorSessionInfo>();
         private ObservableCollection<GameSessionInfo> gameSessionInfos = new ObservableCollection<GameSessionInfo>();
-        private string playerName = "Fresh Meat";
+        private string playerName = "fresh_meat_" + Guid.NewGuid();
 
         private QueueSender fromClientRequestSender;
         private FromServerResponseReceiver queueReceiver;

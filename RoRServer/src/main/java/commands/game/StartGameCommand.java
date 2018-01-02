@@ -33,7 +33,7 @@ public class StartGameCommand extends CommandBase {
 		//String mapName = "GameDefaultMap";
 		
 		// Map: Zug steht + Bahnh�fe
-		String mapName = "GameDefaultMap2";
+		String mapName = "GameDefaultMap";
 		
 		// Map laden
 		Map map = MapManager.loadMap(mapName);
