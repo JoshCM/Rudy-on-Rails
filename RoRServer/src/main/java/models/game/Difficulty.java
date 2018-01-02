@@ -13,14 +13,14 @@ public enum Difficulty {
 	MEDIUM(10.0), 
 	HARD(5.0);
 	
-	private Double percenageToSpawnResource;
+	private Double chanceToSpawnResource;
 	
-	Difficulty(Double percentageToSpawnResource){
-		this.percenageToSpawnResource = percentageToSpawnResource;
+	Difficulty(Double chanceToSpawnResource){
+		this.chanceToSpawnResource = chanceToSpawnResource;
 	}
 	
-	public Double getPercentageToSpawnResource() {
-		return percenageToSpawnResource;
+	public Double getChanceToSpawnResource() {
+		return chanceToSpawnResource;
 	}
 
 }
