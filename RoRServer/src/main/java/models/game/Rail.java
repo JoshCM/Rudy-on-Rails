@@ -61,17 +61,20 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	public void generateResourcesNextToRail() {
 		Square square = getSquareFromGameSession();
 
-		// Durchgehen der benachbarten Squares, um Ressourcen zu platzieren
-		List<Square> squares = square.getNeighbouringSquares();
-		for (Square s : squares) {
-			if (s.getPlaceableOnSquare() == null
-					&& Math.random() < Difficulty.MEDIUM.getPercentageToSpawnResource() / 100.0) {
-				if (Math.random() < 0.5) {
-					Gold gold = new Gold(GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(),
-							s);
-				} else {
-					Coal coal = new Coal(GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(),
-							s);
+		if (square != null) {
+
+			// Durchgehen der benachbarten Squares, um Ressourcen zu platzieren
+			List<Square> squares = square.getNeighbouringSquares();
+			for (Square s : squares) {
+				if (s.getPlaceableOnSquare() == null
+						&& Math.random() < Difficulty.MEDIUM.getPercentageToSpawnResource() / 100.0) {
+					if (Math.random() < 0.5) {
+						Gold gold = new Gold(
+								GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(), s);
+					} else {
+						Coal coal = new Coal(
+								GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(), s);
+					}
 				}
 			}
 		}
