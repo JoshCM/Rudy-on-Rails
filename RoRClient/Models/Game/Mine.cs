@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RoRClient.Models.Game
+{
+    public class Mine : InteractiveGameObject, IPlaceableOnRail
+    {
+        public Mine(Guid id, Square square) : base(square)
+        {
+            this.id = id;
+        }
+    }
+}
