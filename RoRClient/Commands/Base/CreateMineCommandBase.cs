@@ -28,6 +28,9 @@ namespace RoRClient.Commands.Base
         {
             Square square = session.Map.GetSquare(xPos, yPos);
             Mine mine = new Mine(mineId, square);
+            Rail rail = (Rail)square.PlaceableOnSquare;
+            rail.PlaceableOnRail = mine;
+            Console.WriteLine("Neue Mine gesetzt");
 
         }
     }

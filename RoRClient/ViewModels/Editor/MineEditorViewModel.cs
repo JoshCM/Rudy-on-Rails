@@ -20,8 +20,9 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
-        public MineEditorViewModel(Guid modelId) : base(modelId)
+        public MineEditorViewModel(Mine mine) : base(mine.Id)
         {
+            this.mine = mine;
         }
 
         public override void Delete()

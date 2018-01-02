@@ -14,6 +14,7 @@ namespace RoRClient.Commands.Editor.Create
     /// </summary>
     public class CreateMineCommand : CreateMineCommandBase
     {
+
         public CreateMineCommand(RoRSession session, MessageInformation message) : base(session, message)
         {
         }
