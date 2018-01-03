@@ -8,7 +8,6 @@ import java.util.List;
 import com.google.gson.JsonObject;
 
 import communication.MessageInformation;
-import communication.topic.TopicMessageQueue;
 import models.session.GameSessionManager;
 import models.session.RoRSession;
 
@@ -18,11 +17,7 @@ import models.session.RoRSession;
  * Weiche) besitzen
  */
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Comparable<Rail> {
-
-	// muss hier raus und eine Ebene tiefer(RailSection)
 	protected PlaceableOnRail placeableOnRail = null;
-	protected RailSection section1;
-	protected RailSection section2;
 	private UUID trainstationId;
 	protected List<RailSection> railSections;
 	private Resource resource;
@@ -46,10 +41,10 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		notifyCreatedRail();
 	}
 
+	// TODO: Welche Ressourcen kann eine Schiene haben und wann?
 	public void setResource(Resource resource) {
 		this.resource = resource;
 	}
-
 	public Resource getResource() {
 		return resource;
 	}
@@ -97,9 +92,8 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	 * Erstellt für die hereingegebenen RailSectionPositions die jeweiligen
 	 * RailSections Dabei werden für jede RailSection immer zwei
 	 * RailSectionPositions benötigt
-	 * 
 	 * @param sessionName
-	 * @param directions
+	 * @param railSectionPositions
 	 */
 	private void createRailSectionsForRailSectionPositions(String sessionName, List<Compass> railSectionPositions) {
 		for (int i = 0; i < railSectionPositions.size(); i += 2) {
@@ -109,6 +103,9 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		}
 	}
 
+    /**
+     * Schickt Nachricht an Observer, wenn Schiene erstellt wurde.
+     */
 	private void notifyCreatedRail() {
 		MessageInformation messageInfo = new MessageInformation("CreateRail");
 		messageInfo.putValue("railId", getId());
@@ -153,7 +150,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	}
 
 	/**
-	 * Gibt den Ausgang der Rail, und damit auch die Zukünftige Fahrtrichtugn der
+	 * Gibt den Ausgang der Rail, und damit auch die Zukünftige Fahrtrichtung der
 	 * Lok zurück.
 	 * 
 	 * @param direction

@@ -16,9 +16,9 @@ public class RailSection extends ModelBase {
 	private UUID railId;
 	private Compass node1;
 	private Compass node2;
+	private boolean isDrivable;
 	
 	// TODO: hier muss placeableOnSquareSection
-
 	public RailSection(String sessionName, Rail rail, Compass node1, Compass node2) {
 		super(sessionName);
 		
@@ -33,32 +33,10 @@ public class RailSection extends ModelBase {
 		this.squareYPos = rail.getYPos();
 		this.node1 = node1;
 		this.node2 = node2;
+		this.isDrivable = true;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((node1 == null) ? 0 : node1.hashCode());
-		result = prime * result + ((node2 == null) ? 0 : node2.hashCode());
-		return result;
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		RailSection other = (RailSection) obj;
-		if (node1 != other.node1)
-			return false;
-		if (node2 != other.node2)
-			return false;
-		return true;
-	}
 
 	public UUID getId() {
 		return railId;
@@ -88,7 +66,34 @@ public class RailSection extends ModelBase {
 		node1 = rotateRailSectionPosition(node1, right);
 		node2 = rotateRailSectionPosition(node2, right);
 	}
-	
+
+
+    /**
+     * @return String, der sagt ob Schiene Befahrbar ist oder nicht.
+     */
+	public String getDrivableString() {
+	   if (this.isDrivable) {
+	       return "true";
+       } else {
+	       return "false";
+       }
+    }
+
+
+    /**
+     * Wenn eine Schienensektion befahrbar war, dann stelle das Verhalten um.
+     */
+    public void toggleIsDrivable() {
+	    this.isDrivable = !this.isDrivable;
+    }
+
+    public boolean getIsDrivable() {
+        return this.isDrivable;
+    }
+
+	/**
+	 * Benachrichtigt alle Observer auf eine Änderung eines Parameters.
+	 */
 	private void notifyNodesUpdated() {
 		MessageInformation messageInformation = new MessageInformation("UpdateNodesOfRailSection");
 		messageInformation.putValue("squareId", squareId);
@@ -97,9 +102,17 @@ public class RailSection extends ModelBase {
 		messageInformation.putValue("railSectionId", getId().toString());
 		messageInformation.putValue("node1", node1.toString());
 		messageInformation.putValue("node2", node2.toString());
+		messageInformation.putValue("isDrivable", getDrivableString());
 		notifyChange(messageInformation);
 	}
-	
+
+
+	/**
+	 * Rotiert eine Railsection nach rechts, wenn right True ist.
+	 * @param railSectionPosition
+	 * @param right
+	 * @return
+	 */
 	private Compass rotateRailSectionPosition(Compass railSectionPosition, boolean right) {
 		int newIndex;
 		
@@ -114,10 +127,41 @@ public class RailSection extends ModelBase {
 		
 		return Compass.values()[newIndex];
 	}
-	
+
+	/**
+	 * Verschiebt eine RailSection auf ein neues Square.
+	 * @param newSquare
+	 */
 	public void changeSquare(Square newSquare) {
 		this.squareId = newSquare.getId();
 		this.squareXPos = newSquare.getXIndex();
 		this.squareYPos = newSquare.getYIndex();
 	}
+
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((node1 == null) ? 0 : node1.hashCode());
+        result = prime * result + ((node2 == null) ? 0 : node2.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        RailSection other = (RailSection) obj;
+        if (node1 != other.node1)
+            return false;
+        if (node2 != other.node2)
+            return false;
+        return true;
+    }
+
 }
