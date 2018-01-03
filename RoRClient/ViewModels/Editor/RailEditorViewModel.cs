@@ -105,7 +105,7 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
-        private void SendCreatePlaceableOnRailCommand ()
+        private void SendCreatePlaceableOnRailCommand()
         {
             if (toolbarViewModel != null)
             {

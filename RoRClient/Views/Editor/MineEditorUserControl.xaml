@@ -16,7 +16,7 @@
                Height="{Binding SquareDim, ElementName=mineUserControl}" 
                Source="/RoRClient;component/Resources/Images/mine.png" Stretch="Fill">
             <Image.InputBindings>
-                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+                <MouseBinding MouseAction="RightClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
             </Image.InputBindings>
         </Image>
     </Canvas>

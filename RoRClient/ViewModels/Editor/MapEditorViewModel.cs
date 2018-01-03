@@ -132,7 +132,7 @@ namespace RoRClient.ViewModels.Editor
                 squareViewModels.Add(squareViewModel);
                 square.PropertyChanged += OnSquarePropertyChanged;
 
-
+                /*
                 if (square.PlaceableOnSquare != null)
                 {
                     switch (square.PlaceableOnSquare.GetType().Name)
@@ -152,6 +152,7 @@ namespace RoRClient.ViewModels.Editor
                             break;
                     }
                 }
+                */
             }
         }
 
