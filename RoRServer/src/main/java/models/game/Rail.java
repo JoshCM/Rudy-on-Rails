@@ -249,7 +249,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
 		newRail.setName(session.getName());
 
-		newRail.generateResourcesNextToRail();
+		//newRail.generateResourcesNextToRail();
 
 		return newRail;
 	}
