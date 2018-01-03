@@ -85,7 +85,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	}
 
 	/**
-	 * Gibt das Square zur�ck, auf welchem die Rail liegt
+	 * Gibt das Square zurück, auf welchem die Rail liegt
 	 * 
 	 * @return Square auf welchen die Rail liegt
 	 */
@@ -153,8 +153,8 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	}
 
 	/**
-	 * Gibt den Ausgang der Rail, und damit auch die Zuk�nftige Fahrtrichtugn der
-	 * Lok zur�ck.
+	 * Gibt den Ausgang der Rail, und damit auch die Zukünftige Fahrtrichtugn der
+	 * Lok zurück.
 	 * 
 	 * @param direction
 	 * @return exitDirection

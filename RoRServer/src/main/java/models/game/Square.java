@@ -42,8 +42,8 @@ public class Square extends ModelBase {
 	}
 	
 	/**
-	 * Gibt die benachbarten Squares zurück (Links, Rechts, Oben, Unten)
-	 * @return Die Squares werden als Liste zurückgegeben
+	 * Gibt die benachbarten Squares zurÃ¼ck (Links, Rechts, Oben, Unten)
+	 * @return Die Squares werden als Liste zurÃ¼ckgegeben
 	 */
 	public List<Square> getNeighbouringSquares(){
 		

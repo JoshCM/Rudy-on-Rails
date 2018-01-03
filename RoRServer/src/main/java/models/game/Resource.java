@@ -3,8 +3,8 @@ package models.game;
 import communication.MessageInformation;
 
 /**
- * @author Andreas Pöhler, Juliane Lies, Isabell Rott
- * Oberklasse für Ressourcen (Aktuell: Kohle und Gold)
+ * @author Andreas PÃ¶hler, Juliane Lies, Isabell Rott
+ * Oberklasse fÃ¼r Ressourcen (Aktuell: Kohle und Gold)
  */
 public abstract class Resource extends InteractiveGameObject implements PlaceableOnSquare {
 	

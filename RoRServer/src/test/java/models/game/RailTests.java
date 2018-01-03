@@ -110,4 +110,5 @@ public class RailTests {
 		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions);
 		return rail;
 	}
+
 }
