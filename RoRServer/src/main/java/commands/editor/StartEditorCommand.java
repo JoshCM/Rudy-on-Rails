@@ -32,7 +32,7 @@ public class StartEditorCommand extends CommandBase {
 
 		// Map laden
 		Map map = MapManager.loadMap(((EditorSession) session).getMapName());
-		map.setSessionName(session.getName());
+		map.setSessionNameForMapAndSquares(session.getName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
 

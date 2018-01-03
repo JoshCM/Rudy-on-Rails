@@ -13,7 +13,7 @@ namespace RoRClient.Commands.Game.Other
 
 {
     /// <summary>
-    /// CreateRailCommand für Game
+    /// StartCommand für Game
     /// </summary>
     public class StartCommand : CommandBase
     {

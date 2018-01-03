@@ -126,6 +126,7 @@
     <Compile Include="Commands\Game\Create\CreateTrainstationCommand.cs" />
     <Compile Include="Commands\Game\Other\ChangeMapNameCommand.cs" />
     <Compile Include="Commands\Game\Other\StartCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateResourceCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoPositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoSpeedCommand.cs" />
     <Compile Include="Communication\Dispatcher\QueueDispatcherBase.cs" />
@@ -144,8 +145,12 @@
     <Compile Include="Models\Base\ModelBase.cs" />
     <Compile Include="Models\Base\ObservableBase.cs" />
     <Compile Include="Models\Game\Cart.cs" />
+    <Compile Include="Models\Game\Coal.cs" />
+    <Compile Include="Models\Game\Container.cs" />
+    <Compile Include="Models\Game\Gold.cs" />
     <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Player.cs" />
+    <Compile Include="Models\Game\Resource.cs" />
     <Compile Include="Models\Game\Trainstation.cs" />
     <Compile Include="Models\Lobby\EditorInfo.cs" />
     <Compile Include="Models\Lobby\GameInfo.cs" />
@@ -162,6 +167,9 @@
     </Compile>
     <Compile Include="ViewModels\Base\CanvasViewModelBase.cs" />
     <Compile Include="ViewModels\Game\CanvasGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\CoalGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\ContainerGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\GoldGameViewModel.cs" />
     <Compile Include="ViewModels\Game\LocoGameViewModel.cs" />
     <Compile Include="ViewModels\Game\MapGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
@@ -225,8 +233,14 @@
     <Compile Include="Views\Editor\AttributeSelectionUserControl.xaml.cs">
       <DependentUpon>AttributeSelectionUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\CoalGameUserControl.xaml.cs">
+      <DependentUpon>CoalGameUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\GameInteractionUserControl.xaml.cs">
       <DependentUpon>GameInteractionUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\GoldGameUserControl.xaml.cs">
+      <DependentUpon>GoldGameUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\LocoGameUserControl.xaml.cs">
       <DependentUpon>LocoGameUserControl.xaml</DependentUpon>
@@ -274,7 +288,15 @@
       <DependentUpon>AskUserForStringPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Popup\PopupCreator.cs" />
+    <Page Include="Views\Game\CoalGameUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Game\GameInteractionUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\GoldGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -448,6 +470,8 @@
     <Resource Include="Resources\Images\delete.png" />
     <Resource Include="Resources\Images\move.png" />
     <Resource Include="Resources\Images\loco.png" />
+    <Resource Include="Resources\Images\container_coal.png" />
+    <Resource Include="Resources\Images\container_gold.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

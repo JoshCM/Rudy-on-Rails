@@ -35,6 +35,10 @@ public class Map extends ModelBase {
 			}
 		}
 	}
+	
+	public int getMapSize() {
+		return mapSize;
+	}
 
 	public String getName() {
 		return name;
@@ -115,8 +119,18 @@ public class Map extends ModelBase {
 		return null;
 	}
 	
-	public void setSessionName(String sessionName) {
+	/**
+	 * Setzt den Session Name für die Map und jedes Square
+	 * @param sessionName
+	 */
+	public void setSessionNameForMapAndSquares(String sessionName) {
 		this.sessionName = sessionName;
+		
+		for (Square[] squares : getSquares()) {
+			for (Square square : squares) {
+				square.setSessionName(sessionName);
+			}
+		}
 	}
 
 	/**
