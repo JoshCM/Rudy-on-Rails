@@ -25,13 +25,17 @@ public class StartEditorCommand extends CommandBase {
 	public StartEditorCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 	}
+	
+	private void startNewMap() {
+		Map map = new Map(session.getName());
+		session.setMap(map);
+		log.info("create new map");
+	}
+	
+	private void startLoadedMap(String mapName) {
+		Map map = MapManager.loadMap(mapName);
+		log.info("loading map: " + mapName);
 
-	@Override
-	public void execute() {
-		log.info("loading map: " + ((EditorSession) session).getMapName());
-
-		// Map laden
-		Map map = MapManager.loadMap(((EditorSession) session).getMapName());
 		map.setSessionNameForMapAndSquares(session.getName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
@@ -70,7 +74,21 @@ public class StartEditorCommand extends CommandBase {
 
 		// erzeugen der neuen Trainstations auf deren Squares
 		for (Square trainstationSquare : trainstationSquaresToCreate) {
-			trainstationSquare.setPlaceableOnSquare(trainstationSquare.getPlaceableOnSquare().loadFromMap(trainstationSquare, session));
+			trainstationSquare.setPlaceableOnSquare(
+					trainstationSquare.getPlaceableOnSquare().loadFromMap(trainstationSquare, session));
+		}
+	}
+
+	@Override
+	public void execute() {
+		String mapName = ((EditorSession) session).getMapName();
+
+		if (mapName.startsWith("#")) {
+			// eine neue map wird erstellt
+			startNewMap();
+		} else {
+			// eine map wird geladen
+			startLoadedMap(mapName);
 		}
 		session.start();
 	}

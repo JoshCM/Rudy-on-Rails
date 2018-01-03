@@ -15,6 +15,7 @@ namespace RoRClient.ViewModels.Lobby
 {
 	class EditorLobbyViewModel : ViewModelBase
 	{
+		private string newMapName = "#neue_map_erstellen";
 		private UIState uiState;
 		private bool isHost;
 		private LobbyModel lobbyModel;
@@ -117,6 +118,7 @@ namespace RoRClient.ViewModels.Lobby
 				isHost = EditorSession.GetInstance().OwnPlayer.IsHost;
 				lobbyModel.ReadMapInfos();
 				lobbyModel.ReadEditorInfos();
+				lobbyModel.AddMapName(newMapName);
 			}
 		}
 	}

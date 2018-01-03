@@ -22,7 +22,7 @@
 					</DataTemplate>
 				</ListBox.ItemTemplate>
 			</ListBox>
-			<ListBox SelectedIndex="0" Margin="10" Width="600" x:Name="EditorMapsListBox" ItemsSource="{Binding LobbyModel.MapNames}" SelectedItem="{Binding Path=EditorSession.MapName, Mode=TwoWay}" IsEnabled="{Binding IsHost}">
+			<ListBox IsSynchronizedWithCurrentItem="True" Margin="10" Width="600" x:Name="EditorMapsListBox" ItemsSource="{Binding LobbyModel.MapNames}" SelectedItem="{Binding Path=EditorSession.MapName, Mode=TwoWay}" IsEnabled="{Binding IsHost}">
 				<ListBox.ItemContainerStyle>
 					<Style TargetType="ListBoxItem">
 						<Style.Triggers>
@@ -42,7 +42,7 @@
 									<Setter Property="Margin" Value="10,10,0,0" />
 								</Style>
 							</StackPanel.Resources>
-							<TextBlock Text="{Binding}" />
+							<TextBlock Text="{Binding}"/>
 						</StackPanel>
 					</DataTemplate>
 				</ListBox.ItemTemplate>
