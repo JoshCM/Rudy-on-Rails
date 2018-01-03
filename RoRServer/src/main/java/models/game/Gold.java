@@ -3,8 +3,8 @@ package models.game;
 import models.session.RoRSession;
 
 /**
- * @author Andreas Pöhler, Isabell Rott, Juliane Lies
- * Klasse für Ressource Kohle
+ * @author Andreas PÃ¶hler, Isabell Rott, Juliane Lies
+ * Klasse fÃ¼r Ressource Kohle
  */
 public class Gold extends Resource{
 	

@@ -118,7 +118,7 @@ public class Map extends ModelBase {
 	}
 	
 	/**
-	 * Setzt den Session Name für die Map und jedes Square
+	 * Setzt den Session Name fÃ¼r die Map und jedes Square
 	 * @param sessionName
 	 */
 	public void setSessionNameForMapAndSquares(String sessionName) {

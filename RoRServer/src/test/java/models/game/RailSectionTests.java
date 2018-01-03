@@ -1,9 +1,12 @@
 package models.game;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import org.junit.Test;
 
@@ -96,4 +99,30 @@ public class RailSectionTests {
 		assertEquals(Compass.NORTH, section.getNode1());
 		assertEquals(Compass.SOUTH, section.getNode2());
 	}
+
+	@Test
+	public void RailSectionDrivableToggle() {
+		Compass node1 = Compass.EAST;
+		Compass node2 = Compass.SOUTH;
+		Rail rail = createTestRail(node1, node2);
+		RailSection section = new RailSection("test", rail, node1, node2);
+		Random generator = new Random();
+		int togglecount = generator.nextInt(17);
+
+		for (int i=0; i<togglecount; i++) {
+		    section.toggleIsDrivable();
+        }
+
+		if (section.getIsDrivable()) {
+		    section.toggleIsDrivable();
+		    assertFalse(section.getIsDrivable());
+        } else {
+		    section.toggleIsDrivable();
+		    assertTrue(section.getIsDrivable());
+        }
+
+	}
+
+
+
 }
