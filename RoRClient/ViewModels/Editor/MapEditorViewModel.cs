@@ -81,6 +81,15 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
+        private ObservableCollection<CanvasEditorViewModel> placeableOnRailCollection = new ObservableCollection<CanvasEditorViewModel>();
+        public ObservableCollection<CanvasEditorViewModel> PlaceableOnRailCollection
+        {
+            get
+            {
+                return placeableOnRailCollection;
+            }
+        }
+
         private int mapWidth;
         public int MapWidth
         {
@@ -131,6 +140,7 @@ namespace RoRClient.ViewModels.Editor
                         case "Rail":
                             Rail rail = (Rail)square.PlaceableOnSquare;
                             RailEditorViewModel railViewModel = new RailEditorViewModel(rail);
+                            railViewModel.ToolbarViewModel = toolbarViewModel;
                             placeableOnSquareCollection.Add(railViewModel);
                             rail.PropertyChanged += OnRailPropertyChanged;
                             break;

@@ -18,6 +18,8 @@ namespace RoRClient.ViewModels.Editor
     public class RailEditorViewModel : CanvasEditorViewModel
     {
         private Rail rail;
+        private ToolbarViewModel toolbarViewModel;
+
         public RailEditorViewModel(Rail rail) : base(rail.Id)
         {
             this.rail = rail;
@@ -32,6 +34,21 @@ namespace RoRClient.ViewModels.Editor
                 return rail;
             }
         }
+
+        public ToolbarViewModel ToolbarViewModel
+        {
+            get
+            {
+                return toolbarViewModel;
+            }
+
+            set
+            {
+                toolbarViewModel = value;
+            }
+        }
+
+
 
         public override void Delete()
         {
@@ -71,6 +88,47 @@ namespace RoRClient.ViewModels.Editor
         public override void Move()
         {
 
+        }
+
+        private ICommand createPlaceableOnRailCommand;
+
+        public ICommand CreatePlaceableOnRailCommand
+        {
+            get
+            {
+                Console.WriteLine("Create something on Rail...");
+                if (createPlaceableOnRailCommand == null)
+                {
+                    createPlaceableOnRailCommand = new ActionCommand(param => SendCreatePlaceableOnRailCommand());
+                }
+                return createPlaceableOnRailCommand;
+            }
+        }
+
+        private void SendCreatePlaceableOnRailCommand ()
+        {
+            if (toolbarViewModel != null)
+            {
+                if (toolbarViewModel.SelectedTool.Name.Contains("mine"))
+                {
+                    SendCreateMineCommand();
+                }
+
+                // weitere Commands...
+
+            }
+
+        }
+
+        private void SendCreateMineCommand()
+        {
+            MessageInformation message = new MessageInformation();
+            message.PutValue("xPos", rail.Square.PosX);
+            message.PutValue("yPos", rail.Square.PosY);
+
+            EditorSession session = EditorSession.GetInstance();
+            session.QueueSender.SendMessage("CreateMine", message);
+            Console.WriteLine("New SendMineCommand");
         }
     }
 }
