@@ -5,6 +5,7 @@ import java.util.UUID;
 import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
 import models.base.ModelBase;
+import models.helper.CompassHelper;
 
 /**
  * Klasse für ein Schienenstueck mit "Eingang" und "Ausgang"
@@ -35,6 +36,17 @@ public class RailSection extends ModelBase {
 		this.node2 = node2;
 		this.isDrivable = true;
 	}
+
+    /**
+     * @param sessionName
+     * @param rail
+     * @param node1 Gültige Werte sind N,E,S,W und NORTH, EAST, WEST, SOUTH
+     * @param node2 Gültige Werte sind N,E,S,W und NORTH, EAST, WEST, SOUTH
+     */
+	public RailSection(String sessionName, Rail rail, String node1, String node2) {
+        this(sessionName, rail,CompassHelper.convertStringToNode(node1),CompassHelper.convertStringToNode(node2));
+    }
+
 
 
 

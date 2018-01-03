@@ -17,9 +17,9 @@ import models.session.RoRSession;
  * Weiche) besitzen
  */
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Comparable<Rail> {
-	protected PlaceableOnRail placeableOnRail = null;
+	private PlaceableOnRail placeableOnRail = null;
 	private UUID trainstationId;
-	protected List<RailSection> railSections;
+	private List<RailSection> railSectionList;
 	private Resource resource;
 
 	/**
@@ -27,7 +27,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	 */
 	public Rail(String sessionName, Square square, List<Compass> railSectionPositions) {
 		super(sessionName, square);
-		railSections = new ArrayList<RailSection>();
+		railSectionList = new ArrayList<RailSection>();
 		createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
 		notifyCreatedRail();
 	}
@@ -36,7 +36,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		super(sessionName, square, id);
 
 		setTrainstationId(trainstationId);
-		railSections = new ArrayList<RailSection>();
+		railSectionList = new ArrayList<RailSection>();
 		createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
 		notifyCreatedRail();
 	}
@@ -99,7 +99,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		for (int i = 0; i < railSectionPositions.size(); i += 2) {
 			RailSection section = new RailSection(sessionName, this, railSectionPositions.get(i),
 					railSectionPositions.get(i + 1));
-			railSections.add(section);
+			railSectionList.add(section);
 		}
 	}
 
@@ -117,14 +117,14 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		messageInfo.putValue("yPos", getYPos());
 
 		List<JsonObject> railSectionJsons = new ArrayList<JsonObject>();
-		for (RailSection section : railSections) {
+		for (RailSection section : railSectionList) {
 			JsonObject json = new JsonObject();
 			json.addProperty("railSectionId", section.getId().toString());
 			json.addProperty("node1", section.getNode1().toString());
 			json.addProperty("node2", section.getNode2().toString());
 			railSectionJsons.add(json);
 		}
-		messageInfo.putValue("railSections", railSectionJsons);
+		messageInfo.putValue("railSectionList", railSectionJsons);
 
 		notifyChange(messageInfo);
 	}
@@ -134,11 +134,11 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	}
 
 	public RailSection getFirstSection() {
-		return railSections.get(0);
+		return railSectionList.get(0);
 	}
 
 	public List<RailSection> getRailSectionList() {
-		return railSections;
+		return railSectionList;
 	}
 
 	public UUID getTrainstationId() {
@@ -157,7 +157,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	 * @return exitDirection
 	 */
 	public Compass getExitDirection(Compass direction) {
-		for (RailSection r : railSections) {
+		for (RailSection r : railSectionList) {
 			if (r.getNode1() == direction)
 				return r.getNode2();
 			if (r.getNode2() == direction)
@@ -166,13 +166,22 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		return null;
 	}
 
+    /**
+     * Stellt alle Sections der Rail um.
+     */
+	public void toggleAllDirectionsOfSections() {
+	    for (RailSection r: railSectionList) {
+	        r.toggleIsDrivable();
+        }
+    }
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((placeableOnRail == null) ? 0 : placeableOnRail.hashCode());
 
-		for (RailSection section : railSections) {
+		for (RailSection section : railSectionList) {
 			result = prime * result + ((section == null) ? 0 : section.hashCode());
 		}
 
@@ -203,13 +212,13 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	 * @param right
 	 */
 	public void rotate(boolean right) {
-		for (RailSection section : railSections) {
+		for (RailSection section : railSectionList) {
 			section.rotate(right);
 		}
 	}
 
 	public void rotate(boolean right, boolean notYet) {
-		for (RailSection section : railSections) {
+		for (RailSection section : railSectionList) {
 			section.rotate(right, notYet);
 		}
 	}
