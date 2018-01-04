@@ -48,17 +48,17 @@ namespace RoRClient.Commands.Base
         {
             Square square = session.Map.GetSquare(xPos, yPos);
             Rail rail = (Rail)square.PlaceableOnSquare;
-            Signals signals = new Signals(signalsId)
-            {
-                AutoSwitchIntervalInSeconds = autoSwitchIntervalInSeconds,
-                Penalty = penalty,
-                SwitchCost = switchCost,
-                NorthSignalActive = northSignalActive,
-                EastSignalActive = eastSignalActive,
-                SouthSignalActive = southSignalActive,
-                WestSignalActive = westSignalActive
-            };
-            rail.Signals = signals;
+            Signals signals = rail.Signals;
+
+            //signals.Id = signalsId; // Eventuell nicht nötig
+            signals.Exists = true;
+            signals.AutoSwitchIntervalInSeconds = autoSwitchIntervalInSeconds;
+            signals.Penalty = penalty;
+            signals.SwitchCost = switchCost;
+            signals.NorthSignalActive = northSignalActive;
+            signals.EastSignalActive = eastSignalActive;
+            signals.SouthSignalActive = southSignalActive;
+            signals.WestSignalActive = westSignalActive;
         }
     }
 }

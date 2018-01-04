@@ -18,12 +18,28 @@ namespace RoRClient.Models.Game
         private bool southSignalActive;
         private bool westSignalActive;
 
+        private bool exists;
+
         public Signals(Guid id)
         {
             this.id = id;
+            Exists = false;
         }
 
         #region Properties
+        public bool Exists
+        {
+            get
+            {
+                return exists;
+            }
+            set
+            {
+                exists = value;
+                NotifyPropertyChanged("Exists");
+            }
+        }
+
         public int AutoSwitchIntervalInSeconds
         {
             get

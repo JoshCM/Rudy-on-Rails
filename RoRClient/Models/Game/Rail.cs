@@ -30,7 +30,7 @@ namespace RoRClient.Models.Game
             }
 
             this.square = square;
-
+            Signals = new Signals(Guid.Empty); 
         }
 
         public void AddRailSection(RailSection railSection)
