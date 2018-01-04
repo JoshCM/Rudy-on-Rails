@@ -6,6 +6,7 @@ using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Lobby;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using RoRClient.Models.Session;
 
 namespace RoRClient.Models.Game
 {
@@ -15,7 +16,11 @@ namespace RoRClient.Models.Game
 
         private ObservableCollection<EditorSessionInfo> editorSessionInfos = new ObservableCollection<EditorSessionInfo>();
         private ObservableCollection<GameSessionInfo> gameSessionInfos = new ObservableCollection<GameSessionInfo>();
-        private string playerName = "fresh_meat_" + Guid.NewGuid();
+	    private ObservableCollection<GameInfo> gameInfos = new ObservableCollection<GameInfo>();
+	    private ObservableCollection<EditorInfo> editorInfos = new ObservableCollection<EditorInfo>();
+		private ObservableCollection<string> mapNames = new ObservableCollection<string>();
+
+		private string playerName = "fresh_meat_" + Guid.NewGuid().ToString();
 
         private QueueSender fromClientRequestSender;
         private FromServerResponseReceiver queueReceiver;
@@ -59,7 +64,28 @@ namespace RoRClient.Models.Game
             }
         }
 
-        public void StartConnection()
+	    public ObservableCollection<EditorInfo> EditorInfos
+	    {
+		    get
+		    {
+			    return editorInfos;
+		    }
+	    }
+
+		public ObservableCollection<GameInfo> GameInfos
+	    {
+		    get
+		    {
+			    return gameInfos;
+		    }
+	    }
+
+	    public ObservableCollection<string> MapNames
+	    {
+		    get { return mapNames; }
+	    }
+
+		public void StartConnection()
         {
             ClientConnection.GetInstance().Setup();
 
@@ -92,13 +118,44 @@ namespace RoRClient.Models.Game
             MessageInformation messageInformation = new MessageInformation();
             fromClientRequestSender.SendMessage("ReadEditorSessions", messageInformation);
         }
+
         public void ReadGameSessions()
         {
             MessageInformation messageInformation = new MessageInformation();
             fromClientRequestSender.SendMessage("ReadGameSessions", messageInformation);
         }
 
-        public bool Connected_Editor
+		/// <summary>
+		/// Fragt den Server nach der Liste von GameInfos an (momentan nur Players innerhalb der GameInfos)
+		/// </summary>
+	    public void ReadGameInfos()
+	    {
+			MessageInformation messageInformation = new MessageInformation();
+			messageInformation.PutValue("sessionName", GameSession.GetInstance().Name);
+		    fromClientRequestSender.SendMessage("ReadGameInfos", messageInformation);
+		}
+
+	    /// <summary>
+	    /// Fragt den Server nach der Liste von EditorInfos an (momentan nur Players innerhalb der EditorInfos)
+	    /// </summary>
+		public void ReadEditorInfos()
+	    {
+		    MessageInformation messageInformation = new MessageInformation();
+		    messageInformation.PutValue("sessionName", EditorSession.GetInstance().Name);
+		    fromClientRequestSender.SendMessage("ReadEditorInfos", messageInformation);
+	    }
+
+		/// <summary>
+		/// Fragt den Server nach der Liste von Maps an
+		/// </summary>
+		public void ReadMapInfos()
+	    {
+		    MessageInformation messageInformation = new MessageInformation();
+		    fromClientRequestSender.SendMessage("ReadMapInfos", messageInformation);
+		}
+
+
+		public bool Connected_Editor
         {
             get
             {
@@ -152,5 +209,41 @@ namespace RoRClient.Models.Game
             taskFactory.StartNew(() => gameSessionInfos.Clear());
             NotifyPropertyChanged("GameSessionInfos");
         }
-    }
+
+	    public void AddGameInfo(GameInfo gameInfo)
+	    {
+		    taskFactory.StartNew(() => gameInfos.Add(gameInfo));
+		    NotifyPropertyChanged("GameInfos");
+	    }
+
+	    public void AddEditorInfo(EditorInfo editorInfo)
+	    {
+		    taskFactory.StartNew(() => editorInfos.Add(editorInfo));
+		    NotifyPropertyChanged("EditorInfos");
+	    }
+
+		public void ClearGameInfos()
+	    {
+		    taskFactory.StartNew(() => gameInfos.Clear());
+		    NotifyPropertyChanged("GameInfos");
+	    }
+
+	    public void ClearEditorInfos()
+	    {
+		    taskFactory.StartNew(() => editorInfos.Clear());
+		    NotifyPropertyChanged("EditorInfos");
+	    }
+
+		public void AddMapName(string mapName)
+	    {
+		    taskFactory.StartNew(() => mapNames.Add(mapName));
+		    NotifyPropertyChanged("MapNames");
+	    }
+
+	    public void ClearMapNames()
+	    {
+		    taskFactory.StartNew(() => mapNames.Clear());
+		    NotifyPropertyChanged("MapNames");
+	    }
+	}
 }

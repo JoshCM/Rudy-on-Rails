@@ -1,4 +1,4 @@
-package commands.game;
+package commands.editor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,26 +10,32 @@ import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
 import models.game.Map;
-import models.game.Player;
+import models.game.PlaceableOnSquare;
 import models.game.Rail;
 import models.game.Square;
 import models.game.Trainstation;
+import models.session.EditorSession;
 import models.session.GameSession;
 import models.session.RoRSession;
 import persistent.MapManager;
 
-public class StartGameCommand extends CommandBase {
+public class StartEditorCommand extends CommandBase {
 	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
 
-	public StartGameCommand(RoRSession session, MessageInformation messageInfo) {
+	public StartEditorCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 	}
+	
+	private void startNewMap() {
+		Map map = new Map(session.getName());
+		session.setMap(map);
+		log.info("create new map");
+	}
+	
+	private void startLoadedMap(String mapName) {
+		Map map = MapManager.loadMap(mapName);
+		log.info("loading map: " + mapName);
 
-	@Override
-	public void execute() {
-		log.info("loading map: " + ((GameSession) session).getMapName());
-		// Map laden
-		Map map = MapManager.loadMap(((GameSession) session).getMapName());
 		map.setSessionNameForMapAndSquares(session.getName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
@@ -71,23 +77,20 @@ public class StartGameCommand extends CommandBase {
 			trainstationSquare.setPlaceableOnSquare(
 					trainstationSquare.getPlaceableOnSquare().loadFromMap(trainstationSquare, session));
 		}
+	}
 
-		createLocoForPlayers(session);
+	@Override
+	public void execute() {
+		String mapName = ((EditorSession) session).getMapName();
 
+		if (mapName.startsWith("#")) {
+			// eine neue map wird erstellt
+			startNewMap();
+		} else {
+			// eine map wird geladen
+			startLoadedMap(mapName);
+		}
 		session.start();
 	}
 
-	/**
-	 * Sobald ein Player der GameSession gejoined ist, soll eine Loco erstellt
-	 * werden, die dem Player zugeordnet ist
-	 * 
-	 * @param messageInformation
-	 */
-
-	private void createLocoForPlayers(RoRSession session) {
-		for (Player p : session.getPlayers()) {
-			CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, p.getId());
-			createLocoCommand.execute();
-		}
-	}
 }

@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -131,5 +134,15 @@ public class MapManager {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static List<String> readMapNames(){
+		List<String> mapList = new ArrayList<String>();
+		File folder = new File(OUTPUT_DIR_PATH);
+		for(File fileEntry : folder.listFiles()) {
+			if(fileEntry.isFile())
+				mapList.add(fileEntry.getName().replace(ext, ""));
+		}
+		return mapList;
 	}
 }

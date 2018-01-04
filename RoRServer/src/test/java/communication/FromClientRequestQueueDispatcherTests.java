@@ -2,25 +2,39 @@ package communication;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import com.google.gson.JsonObject;
 
 import communication.dispatcher.FromClientRequestQueueDispatcher;
-import communication.dispatcher.RequestSerializer;
 import helper.MessageQueueStub;
 import models.game.Player;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
 import models.session.GameSession;
 import models.session.GameSessionManager;
+import persistent.MapManager;
 
 public class FromClientRequestQueueDispatcherTests {
+
+	@Before
+	public void init() {
+		for (GameSession gameSession : GameSessionManager.getInstance().getGameSessionsAsList()) {
+			GameSessionManager.getInstance().removeGameSession(gameSession);
+		}
+
+		for (EditorSession editorSession : EditorSessionManager.getInstance().getEditorSessionsAsList()) {
+			EditorSessionManager.getInstance().removeEditorSession(editorSession);
+		}
+	}
 
 	@Test
 	public void FromClientRequestQueueDispatcher_handleCreateEditorSession_createsEditorSessionAndHostPlayer() {
@@ -178,6 +192,92 @@ public class FromClientRequestQueueDispatcherTests {
 	}
 
 	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinEditorSession_doesNotWorkForNonExistingSession() {
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		String messageType = "JoinEditorSession";
+		String editorSessionName = "TestSession";
+		String wrongEditorSessionName = "IchExistiereEigentlichGarNicht";
+
+		EditorSessionManager.getInstance().createNewEditorSession(editorSessionName, UUID.randomUUID(), "host");
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("editorName", wrongEditorSessionName);
+		messageInfo.putValue("playerName", "NonRelevantPlayer");
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinEditorSession(messageInfo);
+
+		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(editorSessionName);
+
+		assertEquals(1, editorSession.getPlayers().size());
+	}
+
+	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinEditorSession_createsErrorMessageForNonExistingSession() {
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		dispatcher.addObserver(messageQueueStub);
+
+		String messageType = "JoinEditorSession";
+		String editorSessionName = "TestSession";
+		String wrongEditorSessionName = "IchExistiereEigentlichGarNicht";
+
+		EditorSessionManager.getInstance().createNewEditorSession(editorSessionName, UUID.randomUUID(), "host");
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("editorName", wrongEditorSessionName);
+		messageInfo.putValue("playerName", "NonRelevantPlayer");
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinEditorSession(messageInfo);
+
+		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
+		MessageInformation response = messageEnvelope.getMessageInformation();
+		assertEquals("Error", messageEnvelope.getMessageType());
+		assertEquals("SessionNotFound", response.getValueAsString("type"));
+	}
+
+	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinEditorSession_doesNotWorkForStartedSession() {
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		String messageType = "JoinEditorSession";
+		String editorSessionName = "TestSession";
+
+		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName,
+				UUID.randomUUID(), "host");
+		editorSession.start();
+
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("editorName", editorSessionName);
+		messageInfo.putValue("playerName", "NonRelevantPlayer");
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinEditorSession(messageInfo);
+
+		assertEquals(1, editorSession.getPlayers().size());
+	}
+
+	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinEditorSession_createsErrorMessageForAlreadyStartedSession() {
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		dispatcher.addObserver(messageQueueStub);
+
+		String messageType = "JoinEditorSession";
+		String editorSessionName = "TestSession";
+
+		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName,
+				UUID.randomUUID(), "host");
+		editorSession.start();
+
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("editorName", editorSessionName);
+		messageInfo.putValue("playerName", "NonRelevantPlayer");
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinEditorSession(messageInfo);
+
+		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
+		MessageInformation response = messageEnvelope.getMessageInformation();
+		assertEquals("Error", messageEnvelope.getMessageType());
+		assertEquals("SessionAlreadyStarted", response.getValueAsString("type"));
+	}
+
+	@Test
 	public void FromClientRequestQueueDispatcher_handleJoinGameSession_createsNewPlayerWithRightName() {
 		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
 		String messageType = "JoinGameSession";
@@ -209,14 +309,13 @@ public class FromClientRequestQueueDispatcherTests {
 		String gameSessionName = "TestSession";
 		String joinedPlayerName = "MyPlayer";
 
-		EditorSessionManager.getInstance().createNewEditorSession(gameSessionName, UUID.randomUUID(), "host");
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName,
+				UUID.randomUUID(), "host");
 		MessageInformation messageInfo = new MessageInformation(messageType);
 		messageInfo.putValue("gameName", gameSessionName);
 		messageInfo.putValue("playerName", joinedPlayerName);
 		messageInfo.setClientid(UUID.randomUUID().toString());
 		dispatcher.handleJoinGameSession(messageInfo);
-
-		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(gameSessionName);
 
 		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
 		MessageInformation response = messageEnvelope.getMessageInformation();
@@ -238,6 +337,92 @@ public class FromClientRequestQueueDispatcherTests {
 		assertEquals(joinedPlayer.getId().toString(), joinedPlayerData.get("playerId").getAsString());
 		assertEquals(joinedPlayer.getName(), joinedPlayerData.get("playerName").getAsString());
 		assertEquals(joinedPlayer.getIsHost(), joinedPlayerData.get("isHost").getAsBoolean());
+	}
+
+	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinGameSession_doesNotWorkForNonExistingSession() {
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		String messageType = "JoinGameSession";
+		String gameSessionName = "TestSession";
+		String wrongGameSessionName = "IchExistiereEigentlichGarNicht";
+
+		GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), "host");
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("gameName", wrongGameSessionName);
+		messageInfo.putValue("playerName", "NonRelevantPlayer");
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinGameSession(messageInfo);
+
+		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(gameSessionName);
+
+		assertEquals(1, gameSession.getPlayers().size());
+	}
+
+	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinGameSession_createsErrorMessageForNonExistingSession() {
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		dispatcher.addObserver(messageQueueStub);
+
+		String messageType = "JoinGameSession";
+		String gameSessionName = "TestSession";
+		String wrongGameSessionName = "IchExistiereEigentlichGarNicht";
+
+		GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), "host");
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("gameName", wrongGameSessionName);
+		messageInfo.putValue("playerName", "NonRelevantPlayer");
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinGameSession(messageInfo);
+
+		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
+		MessageInformation response = messageEnvelope.getMessageInformation();
+		assertEquals("Error", messageEnvelope.getMessageType());
+		assertEquals("SessionNotFound", response.getValueAsString("type"));
+	}
+
+	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinGameSession_doesNotWorkForStartedSession() {
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		String messageType = "JoinGameSession";
+		String gameSessionName = "TestSession";
+
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName,
+				UUID.randomUUID(), "host");
+		gameSession.start();
+
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("gameName", gameSessionName);
+		messageInfo.putValue("playerName", "NonRelevantPlayer");
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinGameSession(messageInfo);
+
+		assertEquals(1, gameSession.getPlayers().size());
+	}
+
+	@Test
+	public void FromClientRequestQueueDispatcher_handleJoinGameSession_createsErrorMessageForAlreadyStartedSession() {
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		dispatcher.addObserver(messageQueueStub);
+
+		String messageType = "JoinGameSession";
+		String gameSessionName = "TestSession";
+
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName,
+				UUID.randomUUID(), "host");
+		gameSession.start();
+
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.putValue("gameName", gameSessionName);
+		messageInfo.putValue("playerName", "NonRelevantPlayer");
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleJoinGameSession(messageInfo);
+
+		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
+		MessageInformation response = messageEnvelope.getMessageInformation();
+		assertEquals("Error", messageEnvelope.getMessageType());
+		assertEquals("SessionAlreadyStarted", response.getValueAsString("type"));
 	}
 
 	@Test
@@ -278,7 +463,7 @@ public class FromClientRequestQueueDispatcherTests {
 		GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), hostPlayerName);
 		GameSession startedGameSession = GameSessionManager.getInstance().createNewGameSession("StartedGame",
 				UUID.randomUUID(), "NewPlayer");
-		startedGameSession.startGame();
+		startedGameSession.start();
 
 		MessageInformation messageInfo = new MessageInformation(messageType);
 		messageInfo.setClientid(UUID.randomUUID().toString());
@@ -321,5 +506,97 @@ public class FromClientRequestQueueDispatcherTests {
 		assertEquals(editorSessionName, editorSessionInfo.get("name").getAsString());
 		assertEquals(hostPlayerName, editorSessionInfo.get("hostname").getAsString());
 		assertEquals(1, editorSessionInfo.get("amountOfPlayers").getAsInt());
+	}
+	
+	@Test
+	public void FromClientRequestQueueDispatcher_handleReadGameInfos_createsResonseWithExpectedValues() {
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		dispatcher.addObserver(messageQueueStub);
+		
+		List<String> playerNames = Arrays.asList("HostPlayer", "TestPlayer");
+		String messageType = "ReadGameInfos";
+		String gameSessionName = "TestSession";
+		String hostPlayerName = playerNames.get(0);
+
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), hostPlayerName);
+		gameSession.createPlayer(UUID.randomUUID(), playerNames.get(1));
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		messageInfo.putValue("sessionName", gameSessionName);
+		dispatcher.handleReadGameInfos(messageInfo);
+
+		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
+		MessageInformation response = messageEnvelope.getMessageInformation();
+		assertEquals(messageType, messageEnvelope.getMessageType());
+
+		List<String> expectedPlayerNames = new ArrayList<String>();
+		@SuppressWarnings("unchecked")
+		List<JsonObject> gameInfos = (List<JsonObject>) response.getValue("gameInfo");
+		for(JsonObject obj : gameInfos) {
+			expectedPlayerNames.add(gameSession.getPlayerById(UUID.fromString(obj.get("playerId").getAsString())).getName());
+		}
+		assertTrue(expectedPlayerNames.contains(playerNames.get(0)));
+		assertTrue(expectedPlayerNames.contains(playerNames.get(1)));
+	}
+	
+	@Test
+	public void FromClientRequestQueueDispatcher_handleReadMapInfos_createsResonseWithExpectedValues() {
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		dispatcher.addObserver(messageQueueStub);
+		
+		String messageType = "ReadMapInfos";
+		String gameSessionName = "TestSession";
+		String hostPlayerName = "HostPlayer";
+
+		GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), hostPlayerName);
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		dispatcher.handleReadMapInfos(messageInfo);
+
+		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
+		MessageInformation response = messageEnvelope.getMessageInformation();
+		assertEquals(messageType, messageEnvelope.getMessageType());
+
+		List<String> expectedMapNames = new ArrayList<String>();
+		@SuppressWarnings("unchecked")
+		List<JsonObject> mapInfos = (List<JsonObject>) response.getValue("mapInfo");
+		for(JsonObject obj : mapInfos) {
+			expectedMapNames.add(obj.get("mapName").getAsString());
+		}
+		assertEquals(expectedMapNames, MapManager.readMapNames());
+	}
+	
+	@Test
+	public void FromClientRequestQueueDispatcher_handleReadEditorInfos_createsResonseWithExpectedValues() {
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		dispatcher.addObserver(messageQueueStub);
+		
+		List<String> playerNames = Arrays.asList("HostPlayer", "TestPlayer");
+		String messageType = "ReadEditorInfos";
+		String editorSessionName = "TestSession";
+		String hostPlayerName = playerNames.get(0);
+
+		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName, UUID.randomUUID(), hostPlayerName);
+		editorSession.createPlayer(UUID.randomUUID(), playerNames.get(1));
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		messageInfo.putValue("sessionName", editorSessionName);
+		dispatcher.handleReadEditorInfos(messageInfo);
+
+		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
+		MessageInformation response = messageEnvelope.getMessageInformation();
+		assertEquals(messageType, messageEnvelope.getMessageType());
+
+		List<String> expectedPlayerNames = new ArrayList<String>();
+		@SuppressWarnings("unchecked")
+		List<JsonObject> editorInfos = (List<JsonObject>) response.getValue("editorInfo");
+		for(JsonObject obj : editorInfos) {
+			expectedPlayerNames.add(editorSession.getPlayerById(UUID.fromString(obj.get("playerId").getAsString())).getName());
+		}
+		assertTrue(expectedPlayerNames.contains(playerNames.get(0)));
+		assertTrue(expectedPlayerNames.contains(playerNames.get(1)));
 	}
 }
