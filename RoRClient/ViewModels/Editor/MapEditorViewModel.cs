@@ -186,6 +186,30 @@ namespace RoRClient.ViewModels.Editor
         private void OnRailPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             Rail rail = (Rail)sender;
+
+            if (e.PropertyName == "PlaceableOnRail")
+            {
+                PropertyChangedExtendedEventArgs<IPlaceableOnRail> eventArgs = (PropertyChangedExtendedEventArgs<IPlaceableOnRail>)e;
+
+                if (rail.PlaceableOnRail == null)
+                {
+                    IModel model = (IModel)eventArgs.OldValue;
+                    CanvasEditorViewModel result = placeableOnRailCollection.Where(x => x.Id == model.Id).First();
+
+                    if (result != null)
+                    {
+                        taskFactory.StartNew(() => placeableOnRailCollection.Remove(result));
+                    }
+                }
+                else
+                {
+                    ViewModelFactory factory = new ViewModelFactory();
+                    CanvasEditorViewModel viewModel = factory.CreateEditorViewModelForModel(rail.PlaceableOnRail, this);
+
+                    taskFactory.StartNew(() => placeableOnRailCollection.Add(viewModel));
+                }
+            }
+
         }
 
         private void OnTrainstationPropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -96,7 +96,6 @@ namespace RoRClient.ViewModels.Editor
         {
             get
             {
-                Console.WriteLine("Create something on Rail...");
                 if (createPlaceableOnRailCommand == null)
                 {
                     createPlaceableOnRailCommand = new ActionCommand(param => SendCreatePlaceableOnRailCommand());
@@ -107,10 +106,13 @@ namespace RoRClient.ViewModels.Editor
 
         private void SendCreatePlaceableOnRailCommand()
         {
+            Console.WriteLine("Send Create Plabeable on Rail...");
+            SendCreateMineCommand();
             if (toolbarViewModel != null)
             {
                 if (toolbarViewModel.SelectedTool.Name.Contains("mine"))
                 {
+                    Console.WriteLine("Send Create Mine on Rail...");
                     SendCreateMineCommand();
                 }
 
