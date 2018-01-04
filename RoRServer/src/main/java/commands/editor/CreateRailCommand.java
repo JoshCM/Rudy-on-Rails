@@ -25,7 +25,7 @@ public class CreateRailCommand extends CommandBase {
 
 		xPos = messageInfo.getValueAsInt("xPos");
 		yPos = messageInfo.getValueAsInt("yPos");
-		railSectionData = messageInfo.getValueAsList("railSectionList");
+		railSectionData = messageInfo.getValueAsList("railSections");
 	}
 
 	@Override

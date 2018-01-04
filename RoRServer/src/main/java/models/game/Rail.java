@@ -127,7 +127,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
             json.addProperty("node2", section.getNode2().toString());
             railSectionJsons.add(json);
         }
-        messageInfo.putValue("railSectionList", railSectionJsons);
+        messageInfo.putValue("railSections", railSectionJsons);
 
         notifyChange(messageInfo);
     }
