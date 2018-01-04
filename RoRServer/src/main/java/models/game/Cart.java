@@ -45,7 +45,7 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 	}
 	
 	/**
-	 * Entfernt die Ressource auf dem Cart und gibt diese zurück
+	 * Entfernt die Ressource auf dem Cart und gibt diese zurÃ¼ck
 	 * @return Ressource auf auf dem Cart
 	 */
 	public Resource unloadResourceFromCart() {

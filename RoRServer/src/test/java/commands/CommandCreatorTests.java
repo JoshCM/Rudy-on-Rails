@@ -33,7 +33,7 @@ public class CommandCreatorTests {
 		MessageInformation messageInformation = new MessageInformation();
 		messageInformation.putValue("xPos", 0);
 		messageInformation.putValue("yPos", 0);
-		messageInformation.putValue("railSections", new ArrayList<JsonObject>());
+		messageInformation.putValue("railSectionList", new ArrayList<JsonObject>());
 
 		RoRSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");

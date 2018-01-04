@@ -36,7 +36,7 @@ public class GameSession extends RoRSession{
 	}
 	
 	/**
-	 * startet den Thread der f�r das Ticking verantwortlich ist 
+	 * startet den Thread der für das Ticking verantwortlich ist
 	 * und ruft die tick()-Methode der Ticker-Klasse auf
 	 */
 	private void startTicking() {
@@ -68,7 +68,7 @@ public class GameSession extends RoRSession{
 	
 
 	/**
-	 * F�gt dem Ticker eine Collection von TickableGameObjects hinzu
+	 * Fügt dem Ticker eine Collection von TickableGameObjects hinzu
 	 * @param tgos
 	 */
 	public void addAll(TickableGameObject...tgos ) {
