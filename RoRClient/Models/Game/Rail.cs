@@ -13,13 +13,7 @@ namespace RoRClient.Models.Game
         protected IPlaceableOnRail placeableOnRail = null;
         private Square square;
         private ObservableCollection<RailSection> railSections = new ObservableCollection<RailSection>();
-        public ObservableCollection<RailSection> RailSections
-        {
-            get
-            {
-                return railSections;
-            }
-        }
+        private Signals signals;
 
         /// <summary>
         /// Konstruktor für Geraden oder Kurven
@@ -36,6 +30,7 @@ namespace RoRClient.Models.Game
             }
 
             this.square = square;
+
         }
 
         public void AddRailSection(RailSection railSection)
@@ -43,7 +38,32 @@ namespace RoRClient.Models.Game
             railSections.Add(railSection);
             NotifyPropertyChanged("RailSections");
         }
-        
+
+        #region Properties
+        public ObservableCollection<RailSection> RailSections
+        {
+            get
+            {
+                return railSections;
+            }
+        }
+
+        public Signals Signals
+        {
+            get
+            {
+                return signals;
+            }
+            set
+            {
+                if(signals != value)
+                {
+                    signals = value;
+                    NotifyPropertyChanged("Signals");
+                }
+            }
+        }
+
         public IPlaceableOnRail PlaceableOnRail
         {
             get
@@ -60,5 +80,6 @@ namespace RoRClient.Models.Game
                 }
             }
         }
+        #endregion
     }
 }

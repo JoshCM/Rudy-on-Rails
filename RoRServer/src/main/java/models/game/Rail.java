@@ -22,6 +22,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     private UUID trainstationId;
     private List<RailSection> railSectionList;
     private Resource resource;
+    private Signals signals;
 
     /**
      * Konstruktor für Geraden oder Kurven
@@ -31,6 +32,15 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         railSectionList = new ArrayList<RailSection>();
         createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
         notifyCreatedRail();
+    }
+    
+    public Rail(String sessionName, Square square, List<Compass> railSectionPositions, boolean withSignals) {
+        this(sessionName, square, railSectionPositions);
+        
+        if(withSignals) {
+        	Signals signals = new Signals(sessionName, square);
+        	this.signals = signals;
+        };
     }
 
     public Rail(String sessionName, Square square, List<Compass> railSectionPositions, UUID trainstationId, UUID id) {
