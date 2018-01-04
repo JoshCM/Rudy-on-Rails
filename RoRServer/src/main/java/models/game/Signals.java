@@ -1,10 +1,5 @@
 package models.game;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.google.gson.JsonObject;
-
 import communication.MessageInformation;
 import models.base.ModelBase;
 
