@@ -15,7 +15,6 @@ import org.junit.Test;
 import com.google.gson.JsonObject;
 
 import communication.dispatcher.FromClientRequestQueueDispatcher;
-import communication.dispatcher.RequestSerializer;
 import helper.MessageQueueStub;
 import models.game.Player;
 import models.session.EditorSession;
@@ -551,7 +550,7 @@ public class FromClientRequestQueueDispatcherTests {
 		String gameSessionName = "TestSession";
 		String hostPlayerName = "HostPlayer";
 
-		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), hostPlayerName);
+		GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), hostPlayerName);
 		MessageInformation messageInfo = new MessageInformation(messageType);
 		messageInfo.setClientid(UUID.randomUUID().toString());
 		dispatcher.handleReadMapInfos(messageInfo);
@@ -567,5 +566,37 @@ public class FromClientRequestQueueDispatcherTests {
 			expectedMapNames.add(obj.get("mapName").getAsString());
 		}
 		assertEquals(expectedMapNames, MapManager.readMapNames());
+	}
+	
+	@Test
+	public void FromClientRequestQueueDispatcher_handleReadEditorInfos_createsResonseWithExpectedValues() {
+		MessageQueueStub messageQueueStub = new MessageQueueStub();
+		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
+		dispatcher.addObserver(messageQueueStub);
+		
+		List<String> playerNames = Arrays.asList("HostPlayer", "TestPlayer");
+		String messageType = "ReadEditorInfos";
+		String editorSessionName = "TestSession";
+		String hostPlayerName = playerNames.get(0);
+
+		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName, UUID.randomUUID(), hostPlayerName);
+		editorSession.createPlayer(UUID.randomUUID(), playerNames.get(1));
+		MessageInformation messageInfo = new MessageInformation(messageType);
+		messageInfo.setClientid(UUID.randomUUID().toString());
+		messageInfo.putValue("sessionName", editorSessionName);
+		dispatcher.handleReadEditorInfos(messageInfo);
+
+		MessageEnvelope messageEnvelope = messageQueueStub.messages.get(0);
+		MessageInformation response = messageEnvelope.getMessageInformation();
+		assertEquals(messageType, messageEnvelope.getMessageType());
+
+		List<String> expectedPlayerNames = new ArrayList<String>();
+		@SuppressWarnings("unchecked")
+		List<JsonObject> editorInfos = (List<JsonObject>) response.getValue("editorInfo");
+		for(JsonObject obj : editorInfos) {
+			expectedPlayerNames.add(editorSession.getPlayerById(UUID.fromString(obj.get("playerId").getAsString())).getName());
+		}
+		assertTrue(expectedPlayerNames.contains(playerNames.get(0)));
+		assertTrue(expectedPlayerNames.contains(playerNames.get(1)));
 	}
 }

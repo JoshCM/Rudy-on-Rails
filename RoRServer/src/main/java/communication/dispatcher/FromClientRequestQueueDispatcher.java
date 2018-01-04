@@ -16,7 +16,9 @@ import models.session.EditorSession;
 import models.session.EditorSessionManager;
 import models.session.GameSession;
 import models.session.GameSessionManager;
+import models.session.RoRSession;
 import persistent.MapManager;
+import resources.PropertyManager;
 
 public class FromClientRequestQueueDispatcher extends DispatcherBase {
 
@@ -265,6 +267,10 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		sendMessage(responseInformation);
 	}
 	
+	/**
+	 * Sendet eine JsonObject-Liste mit MapNames an den Client
+	 * @param messageInformation
+	 */
 	public void handleReadMapInfos(MessageInformation messageInformation) {
 		MessageInformation responseInformation = new MessageInformation("ReadMapInfos");
 		responseInformation.setClientid(messageInformation.getClientid());
@@ -274,6 +280,15 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		for (String mapName : mapNames) {
 			JsonObject json = new JsonObject();
 			json.addProperty("mapName", mapName);
+			mapInfos.add(json);
+		}
+		
+		// wenn die Session des Clients eine EditorSession ist
+		// wird ein MapName für das erstellen einer neuen Map hinzugefügt
+		EditorSessionManager possibleEditorSessionManager = EditorSessionManager.getInstance();
+		if(possibleEditorSessionManager.getEditorSessionByName(messageInformation.getValueAsString("sessionName")) != null){
+			JsonObject json = new JsonObject();
+			json.addProperty("mapName", PropertyManager.getProperty("newMap"));
 			mapInfos.add(json);
 		}
 
