@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.gson.JsonObject;
 import communication.MessageInformation;
 import exceptions.RailSectionException;
+import models.session.GameSession;
 import models.session.GameSessionManager;
 import models.session.RoRSession;
 
@@ -20,282 +21,295 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	protected RailSection section1;
 	protected RailSection section2;
 	private UUID trainstationId;
-	protected List<RailSection> railSections;
+	protected List<RailSection> railSectionList;
 	private Resource resource;
 
-    public Rail(String sessionName, Square square, List<Compass> railSectionPositions, UUID trainstationId, UUID id) {
-        super(sessionName, square, id);
+	/**
+	 * Konstruktor für Geraden oder Kurven
+	 */
+	public Rail(String sessionName, Square square, List<Compass> railSectionPositions) {
+		super(sessionName, square);
+		railSectionList = new ArrayList<RailSection>();
+		createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
+		notifyCreatedRail();
+	}
 
-        setTrainstationId(trainstationId);
-        railSectionList = new ArrayList<RailSection>();
-        createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
-        notifyCreatedRail();
-    }
+	public Rail(String sessionName, Square square, List<Compass> railSectionPositions, UUID trainstationId, UUID id) {
+		super(sessionName, square, id);
 
-    // TODO: Welche Ressourcen kann eine Schiene haben und wann?
-    public void setResource(Resource resource) {
-        this.resource = resource;
-    }
+		setTrainstationId(trainstationId);
+		railSectionList = new ArrayList<RailSection>();
+		createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
+		notifyCreatedRail();
+	}
 
-    public Resource getResource() {
-        return resource;
-    }
+	// TODO: Welche Ressourcen kann eine Schiene haben und wann?
+	public void setResource(Resource resource) {
+		this.resource = resource;
+	}
 
-    /**
-     * Platziert auf den benachbarten Squares (sofern frei) anhand der Schwierigkeit
-     * des Spiels entweder Kohle oder Gold
-     */
-    public void generateResourcesNextToRail() {
-        Square square = getSquareFromGameSession();
+	public Resource getResource() {
+		return resource;
+	}
 
-        if (square != null) {
+	/**
+	 * Platziert auf den benachbarten Squares (sofern frei) anhand der Schwierigkeit
+	 * des Spiels entweder Kohle oder Gold
+	 */
+	public void generateResourcesNextToRail() {
+		Square square = getSquareFromGameSession();
 
-            // Durchgehen der benachbarten Squares, um Ressourcen zu platzieren
-            List<Square> squares = square.getNeighbouringSquares();
-            for (Square s : squares) {
+		if (square != null) {
 
-                Double chanceToSpawn = Difficulty.EASY.getChanceToSpawnResource();
+			// Durchgehen der benachbarten Squares, um Ressourcen zu platzieren
+			List<Square> squares = square.getNeighbouringSquares();
+			for (Square s : squares) {
 
-                if (s.getPlaceableOnSquare() == null && Math.random() < chanceToSpawn / 100) {
-                    if (Math.random() < 0.5) {
-                        Gold gold = new Gold(
-                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(), s);
-                        s.setPlaceableOnSquare(gold);
-                    } else {
-                        Coal coal = new Coal(
-                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(), s);
-                        s.setPlaceableOnSquare(coal);
-                    }
-                }
-            }
-        }
-    }
+				Double chanceToSpawn = Difficulty.EASY.getChanceToSpawnResource();
 
-    /**
-     * Gibt das Square zurück, auf welchem die Rail liegt
-     *
-     * @return Square auf welchen die Rail liegt
-     */
-    public Square getSquareFromGameSession() {
-        return GameSessionManager.getInstance().getGameSessionByName(sessionName).getMap().getSquareById(getSquareId());
-    }
+				if (s.getPlaceableOnSquare() == null && Math.random() < chanceToSpawn / 100) {
+					if (Math.random() < 0.5) {
+						Gold gold = new Gold(
+								GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(), s);
+						s.setPlaceableOnSquare(gold);
+					} else {
+						Coal coal = new Coal(
+								GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(), s);
+						s.setPlaceableOnSquare(coal);
+					}
+				}
+			}
+		}
+	}
 
-    /**
-     * Erstellt für die hereingegebenen RailSectionPositions die jeweiligen
-     * RailSections Dabei werden für jede RailSection immer zwei
-     * RailSectionPositions benötigt
-     *
-     * @param sessionName
-     * @param railSectionPositions
-     */
-    private void createRailSectionsForRailSectionPositions(String sessionName, List<Compass> railSectionPositions) {
-        for (int i = 0; i < railSectionPositions.size(); i += 2) {
-            RailSection section = new RailSection(sessionName, this, railSectionPositions.get(i),
-                    railSectionPositions.get(i + 1));
-            railSectionList.add(section);
-        }
-    }
+	/**
+	 * Gibt das Square zurück, auf welchem die Rail liegt
+	 *
+	 * @return Square auf welchen die Rail liegt
+	 */
+	public Square getSquareFromGameSession() {
+		return GameSessionManager.getInstance().getGameSessionByName(sessionName).getMap().getSquareById(getSquareId());
+	}
 
-    /**
-     * Schickt Nachricht an Observer, wenn Schiene erstellt wurde.
-     */
-    private void notifyCreatedRail() {
-        MessageInformation messageInfo = new MessageInformation("CreateRail");
-        messageInfo.putValue("railId", getId());
+	/**
+	 * Erstellt für die hereingegebenen RailSectionPositions die jeweiligen
+	 * RailSections Dabei werden für jede RailSection immer zwei
+	 * RailSectionPositions benötigt
+	 *
+	 * @param sessionName
+	 * @param railSectionPositions
+	 */
+	private void createRailSectionsForRailSectionPositions(String sessionName, List<Compass> railSectionPositions) {
+		for (int i = 0; i < railSectionPositions.size(); i += 2) {
+			RailSection section = new RailSection(sessionName, this, railSectionPositions.get(i),
+					railSectionPositions.get(i + 1));
+			railSectionList.add(section);
+		}
+	}
 
-        messageInfo.putValue("squareId", getSquareId());
-        // TODO: Später haben wir die richtigen SquareIds im Client, im Moment noch
-        // nicht!!
-        messageInfo.putValue("xPos", getXPos());
-        messageInfo.putValue("yPos", getYPos());
+	/**
+	 * Schickt Nachricht an Observer, wenn Schiene erstellt wurde.
+	 */
+	private void notifyCreatedRail() {
+		MessageInformation messageInfo = new MessageInformation("CreateRail");
+		messageInfo.putValue("railId", getId());
 
-        List<JsonObject> railSectionJsons = new ArrayList<JsonObject>();
-        for (RailSection section : railSectionList) {
-            JsonObject json = new JsonObject();
-            json.addProperty("railSectionId", section.getId().toString());
-            json.addProperty("node1", section.getNode1().toString());
-            json.addProperty("node2", section.getNode2().toString());
-            railSectionJsons.add(json);
-        }
-        messageInfo.putValue("railSections", railSectionJsons);
+		messageInfo.putValue("squareId", getSquareId());
+		// TODO: Später haben wir die richtigen SquareIds im Client, im Moment noch
+		// nicht!!
+		messageInfo.putValue("xPos", getXPos());
+		messageInfo.putValue("yPos", getYPos());
 
-        notifyChange(messageInfo);
-    }
+		List<JsonObject> railSectionJsons = new ArrayList<JsonObject>();
+		for (RailSection section : railSectionList) {
+			JsonObject json = new JsonObject();
+			json.addProperty("railSectionId", section.getId().toString());
+			json.addProperty("node1", section.getNode1().toString());
+			json.addProperty("node2", section.getNode2().toString());
+			railSectionJsons.add(json);
+		}
+		messageInfo.putValue("railSections", railSectionJsons);
 
-    public void setPlaceableOnRail(PlaceableOnRail placeableOnRail) {
-        this.placeableOnRail = placeableOnRail;
-    }
+		notifyChange(messageInfo);
+	}
 
-    public RailSection getFirstSection() {
-        return railSectionList.get(0);
-    }
+	public void setPlaceableOnRail(PlaceableOnRail placeableOnRail) {
+		this.placeableOnRail = placeableOnRail;
+	}
 
-    public List<RailSection> getRailSectionList() {
-        return railSectionList;
-    }
+	public RailSection getFirstSection() {
+		return railSectionList.get(0);
+	}
 
-    public UUID getTrainstationId() {
-        return trainstationId;
-    }
+	public List<RailSection> getRailSectionList() {
+		return railSectionList;
+	}
 
-    public void setTrainstationId(UUID trainstationId) {
-        this.trainstationId = trainstationId;
-    }
+	public UUID getTrainstationId() {
+		return trainstationId;
+	}
 
-    /**
-     * Gibt den Ausgang der Rail, und damit auch die Zukünftige Fahrtrichtung der
-     * Lok zurück.
-     *
-     * @param direction
-     * @return exitDirection
-     */
-    public Compass getExitDirection(Compass direction) {
-        for (RailSection r : railSectionList) {
-            if (r.getNode1() == direction)
-                return r.getNode2();
-            if (r.getNode2() == direction)
-                return r.getNode1();
-        }
-        return null;
-    }
+	public void setTrainstationId(UUID trainstationId) {
+		this.trainstationId = trainstationId;
+	}
 
-    /**
-     * Stellt alle Sections der Rail um.
-     */
-    public void toggleAllDirectionsOfSections() {
-        for (RailSection r : railSectionList) {
-            r.toggleIsDrivable();
-        }
-    }
+	/**
+	 * Gibt den Ausgang der Rail, und damit auch die Zukünftige Fahrtrichtung der
+	 * Lok zurück.
+	 *
+	 * @param direction
+	 * @return exitDirection
+	 */
+	public Compass getExitDirection(Compass direction) {
+		for (RailSection r : railSectionList) {
+			if (r.getNode1() == direction)
+				return r.getNode2();
+			if (r.getNode2() == direction)
+				return r.getNode1();
+		}
+		return null;
+	}
 
-    /**
-     * Gibt alle befahrbaren RailSections einer Rail zurück.
-     *
-     * @return ArrayList mit allen befahrbaren RailSections
-     */
-    public List<RailSection> getAllDrivableRailSections() {
-        List<RailSection> drivableRailSections = new ArrayList<>();
-        for (RailSection r : railSectionList) {
-            if (r.getIsDrivable()) drivableRailSections.add(r);
-        }
-        return drivableRailSections;
-    }
+	/**
+	 * Stellt alle Sections der Rail um.
+	 */
+	public void toggleAllDirectionsOfSections() {
+		for (RailSection r : railSectionList) {
+			r.toggleIsDrivable();
+		}
+	}
 
-    /**
-     * Gibt alle existierenden RailSections einer Rail zurück.
-     *
-     * @return ArrayList mit allen befahrbaren RailSections
-     */
-    public List<RailSection> getAllRailSections() {
-        return this.railSectionList;
-    }
+	/**
+	 * Gibt alle befahrbaren RailSections einer Rail zurück.
+	 *
+	 * @return ArrayList mit allen befahrbaren RailSections
+	 */
+	public List<RailSection> getAllDrivableRailSections() {
+		List<RailSection> drivableRailSections = new ArrayList<>();
+		for (RailSection r : railSectionList) {
+			if (r.getIsDrivable())
+				drivableRailSections.add(r);
+		}
+		return drivableRailSections;
+	}
 
-    public void addRailSection(RailSection rs)  {
-        if (this.railSectionList.contains(rs)) {
-            throw new RailSectionException("This kind of RailSection already exists in this Rail");
-        } else {
-            this.railSectionList.add(rs);
-        }
-    }
+	/**
+	 * Gibt alle existierenden RailSections einer Rail zurück.
+	 *
+	 * @return ArrayList mit allen befahrbaren RailSections
+	 */
+	public List<RailSection> getAllRailSections() {
+		return this.railSectionList;
+	}
 
-    public void deleteRailSection(RailSection rs) {
-        if (!this.railSectionList.contains(rs)) {
-            throw new RailSectionException("Couldn't find this Railsection " + rs.toString());
-        } else {
-            this.railSectionList.remove(rs);
-        }
-    }
+	public void addRailSection(RailSection rs) {
+		if (this.railSectionList.contains(rs)) {
+			throw new RailSectionException("This kind of RailSection already exists in this Rail");
+		} else {
+			this.railSectionList.add(rs);
+		}
+	}
 
+	public void deleteRailSection(RailSection rs) {
+		if (!this.railSectionList.contains(rs)) {
+			throw new RailSectionException("Couldn't find this Railsection " + rs.toString());
+		} else {
+			this.railSectionList.remove(rs);
+		}
+	}
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((placeableOnRail == null) ? 0 : placeableOnRail.hashCode());
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((placeableOnRail == null) ? 0 : placeableOnRail.hashCode());
 
-        for (RailSection section : railSectionList) {
-            result = prime * result + ((section == null) ? 0 : section.hashCode());
-        }
+		for (RailSection section : railSectionList) {
+			result = prime * result + ((section == null) ? 0 : section.hashCode());
+		}
 
-        return result;
-    }
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Rail other = (Rail) obj;
-        if (placeableOnRail == null) {
-            if (other.placeableOnRail != null)
-                return false;
-        } else if (!placeableOnRail.equals(other.placeableOnRail))
-            return false;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Rail other = (Rail) obj;
+		if (placeableOnRail == null) {
+			if (other.placeableOnRail != null)
+				return false;
+		} else if (!placeableOnRail.equals(other.placeableOnRail))
+			return false;
 
-        return true;
-    }
+		return true;
+	}
 
-    /**
-     * Rotiert alle RailSections der Rail
-     *
-     * @param right
-     */
-    public void rotate(boolean right) {
-        for (RailSection section : railSectionList) {
-            section.rotate(right);
-        }
-    }
+	/**
+	 * Rotiert alle RailSections der Rail
+	 *
+	 * @param right
+	 */
+	public void rotate(boolean right) {
+		for (RailSection section : railSectionList) {
+			section.rotate(right);
+		}
+	}
 
-    public void rotate(boolean right, boolean notYet) {
-        for (RailSection section : railSectionList) {
-            section.rotate(right, notYet);
-        }
-    }
+	public void rotate(boolean right, boolean notYet) {
+		for (RailSection section : railSectionList) {
+			section.rotate(right, notYet);
+		}
+	}
 
-    @Override
-    public String toString() {
-        return "Rail [placeableOnRail=" + placeableOnRail + ", trainstationId=" + trainstationId + ", getXPos()="
-                + getXPos() + ", getYPos()=" + getYPos() + ", getId()=" + getId() + "]";
-    }
+	@Override
+	public String toString() {
+		return "Rail [placeableOnRail=" + placeableOnRail + ", trainstationId=" + trainstationId + ", getXPos()="
+				+ getXPos() + ", getYPos()=" + getYPos() + ", getId()=" + getId() + "]";
+	}
+
+	public void changeSquare(Square newSquare) {
+		this.setSquareId(newSquare.getId());
+		this.setXPos(newSquare.getXIndex());
+		this.setYPos(newSquare.getYIndex());
+	}
+
+	@Override
+	public int compareTo(Rail o) {
+		if (this.getXPos() == o.getXPos()) {
+			return o.getYPos() - this.getYPos();
+		} else {
+			return o.getXPos() - this.getXPos();
+		}
+	}
+
+	@Override
+	public Rail loadFromMap(Square square, RoRSession session) {
+
+		Rail rail = (Rail) square.getPlaceableOnSquare();
+
+		// Hole die SectionPositions aus den RailSections und speichere in Liste
+		List<Compass> railSectionPosition = new ArrayList<Compass>();
 		for (RailSection section : rail.getRailSectionList()) {
+			railSectionPosition.add(section.getNode1());
+			railSectionPosition.add(section.getNode2());
+		}
 
-    public void changeSquare(Square newSquare) {
-        this.setSquareId(newSquare.getId());
-        this.setXPos(newSquare.getXIndex());
-        this.setYPos(newSquare.getYIndex());
-    }
+		// Neues Rail erstellen und damit an den Client schicken
+		Rail newRail = new Rail(session.getName(), square, railSectionPosition, rail.getTrainstationId(), rail.getId());
 
-    @Override
-    public int compareTo(Rail o) {
-        if (this.getXPos() == o.getXPos()) {
-            return o.getYPos() - this.getYPos();
-        } else {
-            return o.getXPos() - this.getXPos();
-        }
-    }
+		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses
+		// Objekts mitbekommen kann
+		newRail.setName(session.getName());
+		
+		// Ressourcen setzen, wenn die Session eine GameSession ist
+		if(session instanceof GameSession)
+		newRail.generateResourcesNextToRail();
 
-    @Override
-    public Rail loadFromMap(Square square, RoRSession session) {
-
-        Rail rail = (Rail) square.getPlaceableOnSquare();
-
-        // Hole die SectionPositions aus den RailSections und speichere in Liste
-        List<Compass> railSectionPosition = new ArrayList<Compass>();
-        for (RailSection section : rail.getRailSectionList()) {
-            railSectionPosition.add(section.getNode1());
-            railSectionPosition.add(section.getNode2());
-        }
-
-        // Neues Rail erstellen und damit an den Client schicken
-        Rail newRail = new Rail(session.getName(), square, railSectionPosition);
-        System.out.println("Neue Rail erstellt: " + newRail.toString());
-
-        // Ressourcen setzen
-        newRail.generateResourcesNextToRail();
-
-        return newRail;
-    }
+		return newRail;
+	}
 }
