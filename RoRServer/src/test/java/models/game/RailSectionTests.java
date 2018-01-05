@@ -1,9 +1,5 @@
 package models.game;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,7 +10,16 @@ import exceptions.InvalidModelOperationException;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
 
+import static org.junit.Assert.*;
+
 public class RailSectionTests {
+	@Test
+	public void createARailSection() {
+		RailSection rs = new RailSection("NORTH", "SOUTH");
+		assertNotNull(rs.getUUID());
+	}  
+
+
 	@Test(expected = InvalidModelOperationException.class)
 	public void RailSectionWithEqualNodesThrowsException() {
 		Compass node1 = Compass.NORTH;

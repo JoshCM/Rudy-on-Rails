@@ -29,11 +29,11 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	 *            auf dem die Lok steht wird mitgegeben
 	 */
 	public Loco(String sessionName, Square square, Map map, UUID playerId) {
-		super(sessionName, square);
+		// super(sessionName, square);
 		this.setCarts(new ArrayList<Cart>());
 		// TODO: Wenn Zug Richtung implementiert ist, muss der Wagon so initialisiert
 		// werden, dass er ein Feld hinter der Lok steht
-		this.addCart(new Cart(sessionName, square));
+		this.addCart(new Cart());
 		this.square = square;// Das hier muss noch raus, aber erst testen
 		this.rail = (Rail) square.getPlaceableOnSquare();
 		this.map = map;
@@ -75,8 +75,8 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		Rail nextRail = getNextRail();
 		this.compass = nextRail.getExitDirection(getDirectionNegation());
 		this.rail = nextRail;
-		this.setXPos(this.rail.getXPos());
-		this.setYPos(this.rail.getYPos());
+		// this.setXPos(this.rail.getXPos());
+		// this.setYPos(this.rail.getYPos());
 		SendUpdateLocoMessage();
 
 	}

@@ -18,9 +18,10 @@ import exceptions.NotMoveableException;
  * Klasse, die das Spielfeld darstellt und aus Feldern (Squares) besteht
  */
 public class Map extends ModelBase {
-    private String name;
+    private String mapName;
     private Square squares[][];
     private final int mapSize = 50;
+
 
     /**
      * Jedes Square auf der Map braucht einen Index, um jedem Objekt, das auf einem
@@ -31,28 +32,37 @@ public class Map extends ModelBase {
 
         for (int x = 0; x < mapSize; x++) {
             for (int y = 0; y < mapSize; y++) {
-                Square s = new Square(x, y);
+                Square s = new Square();
                 squares[x][y] = s;
             }
         }
+    }
+
+    public Map() {
+        this("DEFAULTMAPNAME");
+    }
+
+    // TODO: Methode, die für eine UUID die X und Y Position zurückgibt.
+    public int getXPos() {
+
     }
 
     public int getMapSize() {
         return mapSize;
     }
 
-    public String getName() {
-        return name;
+    public String getMapName() {
+        return mapName;
     }
 
     public void ChangeName(String name) {
-        this.name = name;
+        this.mapName = name;
         notifyChangedName();
     }
 
     private void notifyChangedName() {
         MessageInformation messageInformation = new MessageInformation("UpdateNameOfMap");
-        messageInformation.putValue("mapName", name);
+        messageInformation.putValue("mapName", mapName);
         notifyObservers();
         // notifyChange(messageInformation);
     }

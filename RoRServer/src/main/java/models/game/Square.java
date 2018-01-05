@@ -13,14 +13,14 @@ import models.base.ModelBase;
  * Ein Square ist Observable.
  */
 public class Square extends ModelBase {
-    private PlaceableOnSquare placeableOnSquare = null;
+    private PlaceableOnSquare placeableOnSquare;
 
-    public Square(int xIndex, int yIndex) {
-        // müsste übergeben werden an Oberklasse, die was damit anfangen kann. Könnte ganz nützlich sein.
+    public Square(PlaceableOnSquare placableOnSquare) {
+        this.placeableOnSquare = placableOnSquare;
     }
 
     public Square() {
-
+        this(null);
     }
 
 

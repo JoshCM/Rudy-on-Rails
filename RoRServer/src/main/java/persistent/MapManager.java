@@ -10,12 +10,10 @@ import org.apache.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import communication.queue.receiver.QueueReceiver;
-import models.base.Model;
 import models.game.Map;
 import models.game.Placeable;
 import models.game.PlaceableOnRail;
 import models.game.PlaceableOnSquare;
-import models.game.RailSection;
 
 /**
  * 
@@ -95,7 +93,7 @@ public class MapManager {
 	public static void saveMap(Map map) {
 		String jsonMap = convertMapToJson(map);
 		log.info("Gespeicherte Map: " + jsonMap);
-		saveToFile(jsonMap, map.getName());
+		saveToFile(jsonMap, map.getMapName());
 	}
 
 	public static String convertMapToJson(Map map) {

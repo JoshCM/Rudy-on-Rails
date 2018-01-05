@@ -22,6 +22,7 @@ public abstract class RoRSession extends ModelBase {
     protected QueueReceiver queueReceiver;
 
     public RoRSession(String mapName, String hostPlayerName) {
+        this.sessionName = this.getUUID().toString()+"SESSION";
         map = new Map(mapName);
         createHostPlayer(hostPlayerName);
     }

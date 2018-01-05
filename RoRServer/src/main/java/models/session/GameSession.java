@@ -22,8 +22,8 @@ public class GameSession extends RoRSession{
 	private Ticker ticker;
 	private ArrayList<Loco> locomotives = new ArrayList<>();
 
-	public GameSession(String name, UUID hostPlayerId, String hostPlayerName) {
-		super(name, hostPlayerId, hostPlayerName);
+	public GameSession(String name, String hostPlayerName) {
+		super(name, hostPlayerName);
 		GameSessionDispatcher dispatcher = new GameSessionDispatcher(this);
 		this.queueReceiver = new QueueReceiver(name, dispatcher);
 		this.ticker = new Ticker();
@@ -110,7 +110,8 @@ public class GameSession extends RoRSession{
 	public void startGame() {
 		running = true;
 		MessageInformation messageInfo = new MessageInformation("StartGame");
-		notifyChange(messageInfo);
+		notifyObservers();
+		// notifyChange(messageInfo);
 	}
 }
 
