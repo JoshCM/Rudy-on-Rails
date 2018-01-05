@@ -1,6 +1,7 @@
 package models.game;
 
 import exceptions.InvalidModelOperationException;
+import models.session.RoRSession;
 
 /**
  * 
@@ -52,6 +53,12 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 		Resource unloadedResource = resource;
 		resource = null;
 		return unloadedResource;
+	}
+
+	@Override
+	public PlaceableOnSquare loadFromMap(Square square, RoRSession session) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -136,6 +136,10 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	public void setPlaceableOnRail(PlaceableOnRail placeableOnRail) {
 		this.placeableOnRail = placeableOnRail;
 	}
+	
+	public PlaceableOnRail getPlaceableOnrail() {
+		return placeableOnRail;
+	}
 
 	public RailSection getFirstSection() {
 		return railSectionList.get(0);
@@ -307,8 +311,9 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		newRail.setName(session.getName());
 		
 		// Ressourcen setzen, wenn die Session eine GameSession ist
-		if(session instanceof GameSession)
-		newRail.generateResourcesNextToRail();
+		if(session instanceof GameSession) {
+			newRail.generateResourcesNextToRail();
+		}
 
 		return newRail;
 	}
