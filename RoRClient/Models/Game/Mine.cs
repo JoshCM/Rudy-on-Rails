@@ -11,8 +11,9 @@ namespace RoRClient.Models.Game
 
         private Compass alignment;
 
-        public Mine(Guid id, Square square) : base(square)
+        public Mine(Guid id, Square square, Compass alignment) : base(square)
         {
+            this.alignment = alignment;
             this.id = id;
         }
 

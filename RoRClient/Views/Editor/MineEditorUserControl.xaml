@@ -4,6 +4,7 @@
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                      xmlns:v="clr-namespace:RoRClient.Views"
+                     xmlns:converter="clr-namespace:RoRClient.BindingConverter"
              x:Name="mineUserControl"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
@@ -23,7 +24,7 @@
             </Image.InputBindings>
             <Image.LayoutTransform>
                 <TransformGroup>
-                    <RotateTransform Angle="{Binding Trainstation.Alignment, Mode=OneWay, Converter={StaticResource CompassAlignmentToAngleConverter}}" />
+                    <RotateTransform Angle="{Binding Mine.Alignment, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" />
                 </TransformGroup>
             </Image.LayoutTransform>
         </Image>

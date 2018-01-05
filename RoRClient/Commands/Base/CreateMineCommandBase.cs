@@ -17,17 +17,21 @@ namespace RoRClient.Commands.Base
         private Guid mineId;
         private int xPos;
         private int yPos;
+        private Compass alignment;
+
         public CreateMineCommandBase(RoRSession session, MessageInformation message) : base(session, message)
         {
             mineId = message.GetValueAsGuid("mineId");
             xPos = message.GetValueAsInt("xPos");
             yPos = message.GetValueAsInt("yPos");
+            alignment = (Compass)Enum.Parse(typeof(Compass), message.GetValueAsString("alignment"));
+
         }
 
         public override void Execute()
         {
             Square square = session.Map.GetSquare(xPos, yPos);
-            Mine mine = new Mine(mineId, square);
+            Mine mine = new Mine(mineId, square, alignment);
             Rail rail = (Rail)square.PlaceableOnSquare;
             rail.PlaceableOnRail = mine;
             Console.WriteLine("Neue Mine gesetzt");

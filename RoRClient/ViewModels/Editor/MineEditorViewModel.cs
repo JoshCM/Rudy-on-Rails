@@ -47,6 +47,8 @@ namespace RoRClient.ViewModels.Editor
             MessageInformation message = new MessageInformation();
             message.PutValue("xPos", mine.Square.PosX);
             message.PutValue("yPos", mine.Square.PosY);
+            message.PutValue("mineId", mine.Id);
+            message.PutValue("railId", mine.Square.PlaceableOnSquare.Id);
             message.PutValue("right", false);
             EditorSession.GetInstance().QueueSender.SendMessage("RotateMine", message);
 
@@ -57,6 +59,8 @@ namespace RoRClient.ViewModels.Editor
             MessageInformation message = new MessageInformation();
             message.PutValue("xPos", mine.Square.PosX);
             message.PutValue("yPos", mine.Square.PosY);
+            message.PutValue("mineId", mine.Id);
+            message.PutValue("railId", mine.Square.PlaceableOnSquare.Id);
             message.PutValue("right", true);
             EditorSession.GetInstance().QueueSender.SendMessage("RotateMine", message);
         }
