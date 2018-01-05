@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.Commands.Game.Update
+namespace RoRClient.Commands.Game.Create
 {
     class CreateLocoCommand : CommandBase
     {
