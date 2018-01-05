@@ -19,7 +19,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	private UUID playerId;
 	private long timeDeltaCounter = 0;// Summe der Zeit zwischen den Ticks
 	private long speed;
-	private Compass compass;
+	private Compass drivingDirection;
 	private boolean reversed = false;
 	private Map map;
 	private Square square;
@@ -38,7 +38,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		this.square = square;// Das hier muss noch raus? Sollte man nicht an das InteractivGameoObject das Square packen?
 		this.rail = (Rail) square.getPlaceableOnSquare();
 		this.map = map;
-		this.compass = rail.getFirstSection().getNode1();
+		this.drivingDirection = rail.getFirstSection().getNode1();
 		this.speed = 0; // Nur zu testzwecken
 		this.playerId = playerId;
 		SendCreatedLocoMessage();
@@ -66,12 +66,12 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	}
 
 	/**
-	 * ÃœberfÃ¼hrt die Lok in das nÃ¤chste mÃ¶gliche Feld in Fahrtrichtung
+	 * Ueberfuehrt die Lok in das naechste moegliche Feld in Fahrtrichtung
 	 */
 	public void drive() {
 		Rail nextRail = getNextRail();
-		moveCarts(this.rail,this.compass);
-		this.compass = nextRail.getExitDirection(getCompassNegation());
+		moveCarts(this.rail,this.drivingDirection);
+		this.drivingDirection = nextRail.getExitDirection(getCompassNegation());
 		this.rail = nextRail;
 		this.setXPos(this.rail.getXPos());
 		this.setYPos(this.rail.getYPos());
@@ -79,7 +79,9 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 
 	}
 
-
+	/**
+	 * lok und ihre Wagons fahren "rueckwaerts" d.h. ein Feld zurueck
+	 */
 	public void reversedDrive() {
 
 		
@@ -115,15 +117,18 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 
 		this.updateSquare(newSquare);
 		this.rail = (Rail)newSquare.getPlaceableOnSquare();
-		compass = this.rail.getExitDirection(getCompassNegation(actCart.getCompass()));
+		drivingDirection = this.rail.getExitDirection(getCompassNegation(actCart.getCompass()));
 		SendUpdateLocoMessage();
 		
 		
 	}
 	
+	/**
+	 * fügt der Lok initial ein Cart hinzu auf das vorige Feld 
+	 */
 	public void addInitialCart() {
 		if(carts.isEmpty()) {
-			Compass back = this.rail.getExitDirection(this.compass);
+			Compass back = this.rail.getExitDirection(this.drivingDirection);
 			Rail prevRail = getPreviousRail(back);
 			Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
 			Cart cart = new Cart(this.sessionName,cartSquare,getCompassNegation(back),playerId,prevRail);
@@ -159,7 +164,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	 * @return nextRail
 	 */
 	public Rail getNextRail() {
-		switch (this.compass) {
+		switch (this.drivingDirection) {
 		case NORTH:
 			this.square = this.map.getSquare(this.square.getXIndex(), this.square.getYIndex() - 1);
 			return (Rail) this.square.getPlaceableOnSquare();
@@ -176,7 +181,11 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		return null;
 	}
 
-	
+	/**
+	 * gibt das Rail zurück, dass in angegebener Richtung an das Feld, auf der die Lok steht, angekoppelt ist
+	 * @param compass Himmelsrichtung in die man nach dem Feld schauen soll
+	 * @return die Rail, die in angegebener Richtung steht
+	 */
 	public Rail getPreviousRail(Compass compass) {
 		Square square;
 		switch (compass) {
@@ -196,6 +205,11 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		return null;
 	}
 	
+	/**
+	 * gibt das Rail zurück, dass in angegebener Richtung an das Feld, das mitgegeben wird, angekoppelt ist
+	 * @param compass Himmelsrichtung in die man nach dem Feld schauen soll
+	 * @return die Rail, die in angegebener Richtung steht
+	 */
 	public Rail getPreviousRail(Compass compass, Square square) {
 		Square retSquare;
 		switch (compass) {
@@ -222,7 +236,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	 * @return negated Direction
 	 */
 	public Compass getCompassNegation() {
-		switch (this.compass) {
+		switch (this.drivingDirection) {
 		case NORTH:
 			return Compass.SOUTH;
 		case EAST:
