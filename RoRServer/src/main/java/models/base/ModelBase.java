@@ -42,6 +42,10 @@ public abstract class ModelBase extends ObservableModel implements Model{
 		return sessionName;
 	}
 	
+	public void setName(String sessionName) {
+		this.sessionName = sessionName;
+	}
+	
 	/**
 	 * Hier werden Nachrichten hinzugefügt, die an die verbundenen Clients geschickt
 	 * werden sollen

@@ -75,11 +75,11 @@ namespace RoRClient.ViewModels.Editor
                     {
                         SendCreateCrossingWithSignalsCommand();
                     }
-                    else if (toolbarViewModel.SelectedTool.Name.Contains("rail"))
+                    else if (selectedToolName.Contains("rail"))
                     {
                         SendCreateRailCommand();
                     }
-                    else if (toolbarViewModel.SelectedTool.Name.Contains("trainstation"))
+                    else if (selectedToolName.Contains("trainstation"))
                     {
                         SendCreateTrainstationCommand();
                     }
@@ -110,7 +110,7 @@ namespace RoRClient.ViewModels.Editor
             railSectionObject.Add("node2", railSection.Node2.ToString());
             railSections.Add(railSectionObject);
 
-            messageInformation.PutValue("railSections", railSections);
+            messageInformation.PutValue("railSectionList", railSections);
 
             editorSession.QueueSender.SendMessage("CreateRail", messageInformation);
         }

@@ -34,7 +34,10 @@
         <DataTemplate x:Name="GameLobbyTemplate" DataType="{x:Type vml:GameLobbyViewModel}">
             <vl:GameLobbyView DataContext="{Binding}"/>
         </DataTemplate>
-    </Window.Resources>
+	    <DataTemplate x:Name="EditorLobbyTemplate" DataType="{x:Type vml:EditorLobbyViewModel}">
+		    <vl:EditorLobbyView DataContext="{Binding}"/>
+	    </DataTemplate>
+	</Window.Resources>
 
 
     <Grid>

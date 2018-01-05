@@ -1,7 +1,11 @@
 package models.session;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
+import com.google.gson.JsonObject;
+
 import communication.MessageInformation;
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
@@ -107,11 +111,7 @@ public class GameSession extends RoRSession{
 		}
 	}
 	
-	public void startGame() {
-		started = true;
-		MessageInformation messageInfo = new MessageInformation("StartGame");
-		notifyChange(messageInfo);
-	}
+
 }
 
 

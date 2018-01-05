@@ -108,7 +108,7 @@ namespace RoRClient.ViewModels.Lobby
         /// </summary>
         private void SendCreateEditorSessionCommand()
         {
-            string editorName = PopupCreator.AskUserToInputString("Gib einer EditorSession einen Namen!");
+            string editorName = PopupCreator.AskUserToInputString("Gib deiner EditorSession einen Namen!");
 
             if(editorName != "")
             {
@@ -125,7 +125,7 @@ namespace RoRClient.ViewModels.Lobby
             {
                 if (lobbyModel.Connected_Editor)
                 {
-                    uiState.State = "editor";
+                    uiState.State = "editorLobby";
                 }
             }
         }

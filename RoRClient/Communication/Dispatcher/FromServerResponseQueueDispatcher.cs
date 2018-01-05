@@ -4,7 +4,9 @@ using RoRClient.Models.Session;
 using RoRClient.Models.Game;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using RoRClient.Models.Lobby;
+using System.Windows;
 
 namespace RoRClient.Communication.Dispatcher
 {
@@ -14,7 +16,7 @@ namespace RoRClient.Communication.Dispatcher
 
         public FromServerResponseQueueDispatcher(LobbyModel lobbyModel)
         {
-            this.lobbyModel = lobbyModel;
+			this.lobbyModel = lobbyModel;
         }
 
         public void HandleCreateEditorSession(MessageInformation messageInformation)
@@ -60,9 +62,13 @@ namespace RoRClient.Communication.Dispatcher
             Guid playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             string playerName = messageInformation.GetValueAsString("playerName");
             Player player = new Player(playerId, playerName, true);
-            gameSession.AddPlayer(player);
 
-            lobbyModel.Connected_Game = true;
+	        gameSession.AddPlayer(player);
+
+	        GameInfo gameInfo = new GameInfo(player);
+	        lobbyModel.AddGameInfo(gameInfo);
+
+			lobbyModel.Connected_Game = true;
         }
 
         public void HandleJoinGameSession(MessageInformation messageInformation)
@@ -80,10 +86,12 @@ namespace RoRClient.Communication.Dispatcher
                 string playerName = obj.GetValue("playerName").ToString();
                 bool isHost = Boolean.Parse(obj.GetValue("isHost").ToString());
                 Player player = new Player(playerId, playerName, isHost);
-                gameSession.AddPlayer(player);
-            }
+	            gameSession.AddPlayer(player);
+	            GameInfo gameInfo = new GameInfo(player);
+	            lobbyModel.AddGameInfo(gameInfo);
 
-            lobbyModel.Connected_Game = true;
+			}
+			lobbyModel.Connected_Game = true;
         }
 
         public void HandleReadEditorSessions(MessageInformation messageInformation)
@@ -113,5 +121,89 @@ namespace RoRClient.Communication.Dispatcher
                 lobbyModel.AddGameSessionInfo(gameSessionInfo);
             }
         }
-    }
+
+		/// <summary>
+		/// Setzt die ankommenden Players mithilfe der PlayerIds in die 
+		/// ObservableCollection von Players im LobbyModel
+		/// </summary>
+		/// <param name="messageInformation"></param>
+	    public void HandleReadGameInfos(MessageInformation messageInformation)
+	    {
+			lobbyModel.ClearGameInfos();
+
+		    GameSession gameSession = GameSession.GetInstance();
+
+		    List<JObject> gameInfoList = messageInformation.GetValueAsJObjectList("gameInfo");
+		    foreach (JObject obj in gameInfoList)
+		    {
+			    Guid playerId = Guid.Parse(obj.GetValue("playerId").ToString());
+			    Player player = gameSession.GetPlayerById(playerId);
+				GameInfo gameInfo = new GameInfo(player);
+			    lobbyModel.AddGameInfo(gameInfo);
+		    }
+		}
+
+	    /// <summary>
+	    /// Setzt die ankommenden Players mithilfe der PlayerIds in die 
+	    /// ObservableCollection von Players im LobbyModel
+	    /// </summary>
+	    /// <param name="messageInformation"></param>
+	    public void HandleReadEditorInfos(MessageInformation messageInformation)
+	    {
+		    lobbyModel.ClearEditorInfos();
+
+		    EditorSession editorSession = EditorSession.GetInstance();
+
+		    List<JObject> gameInfoList = messageInformation.GetValueAsJObjectList("editorInfo");
+		    foreach (JObject obj in gameInfoList)
+		    {
+			    Guid playerId = Guid.Parse(obj.GetValue("playerId").ToString());
+			    Player player = editorSession.GetPlayerById(playerId);
+			    EditorInfo editorInfo = new EditorInfo(player);
+			    lobbyModel.AddEditorInfo(editorInfo);
+		    }
+	    }
+
+		/// <summary>
+		/// Setzt die ankommenden MapNames in die ObservableCollection von MapNames
+		/// im LobbyModel
+		/// </summary>
+		/// <param name="messageInformation"></param>
+		public void HandleReadMapInfos(MessageInformation messageInformation)
+	    {
+		    lobbyModel.ClearMapNames();
+
+		    GameSession gameSession = GameSession.GetInstance();
+
+		    List<JObject> mapInfoList = messageInformation.GetValueAsJObjectList("mapInfo");
+		    foreach (JObject obj in mapInfoList)
+		    {
+			    string mapName = obj.GetValue("mapName").ToString();
+			    lobbyModel.AddMapName(mapName);
+		    }
+	    }
+
+        /// <summary>
+        /// Für Fehler auf dem Server wird erst einmal eine MessageBox aufgerufen mit dem Fehlertyp als Inhalt
+        /// ToDo: Dies sollte noch eleganter gelöst werden! Für den Moment erstmal ausreichend.
+        /// </summary>
+        /// <param name="messageInformation"></param>
+        public void HandleError(MessageInformation messageInformation)
+        {
+            String type = messageInformation.GetValueAsString("type");
+
+            switch (type)
+            {
+                case "SessionNotFound":
+                    MessageBox.Show(type);
+                    break;
+                case "SessionAlreadyStarted":
+                    MessageBox.Show(type);
+                    break;
+                default:
+                    MessageBox.Show(type);
+                    break;
+            }
+        }
+	}
 }

@@ -1,14 +1,12 @@
 package models.game;
 
 import java.util.UUID;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import com.google.gson.JsonObject;
-
 import communication.MessageInformation;
 import exceptions.RailSectionException;
+import models.session.GameSession;
 import models.session.GameSessionManager;
 import models.session.RoRSession;
 
@@ -313,6 +311,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         System.out.println("Neue Rail erstellt: " + newRail.toString());
 
         // Ressourcen setzen
+        if(session instanceof GameSession)
         newRail.generateResourcesNextToRail();
 
         return newRail;

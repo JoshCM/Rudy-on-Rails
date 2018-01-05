@@ -12,7 +12,7 @@ public class GameSessionTests {
 	public void GameSession_StartGame_StartedIsSet() {
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
 		
-		gameSession.startGame();
+		gameSession.start();
 		
 		assertTrue(gameSession.isStarted());
 	}
@@ -23,9 +23,9 @@ public class GameSessionTests {
 		MessageQueueStub messageQueueStub = new MessageQueueStub();
 		gameSession.addObserver(messageQueueStub);
 		
-		gameSession.startGame();
+		gameSession.start();
 		
 		String messageType = messageQueueStub.messages.get(0).getMessageType();
-		assertEquals("StartGame", messageType);
+		assertEquals("Start", messageType);
 	}
 }

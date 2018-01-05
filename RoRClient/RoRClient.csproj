@@ -104,17 +104,21 @@
     <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
     <Compile Include="BindingConverter\BooleanToColorConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
-    <Compile Include="BindingConverter\TrainstationAlignmentToAngleConverter.cs" />
+    <Compile Include="BindingConverter\CompassToAngleConverter.cs" />
+    <Compile Include="Commands\Base\ChangeMapNameCommandBase.cs" />
     <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Base\CreateSignalsCommandBase.cs" />
     <Compile Include="Commands\Base\CreateRailCommandBase.cs" />
     <Compile Include="Commands\Base\CreateTrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateSignalsCommand.cs" />
+    <Compile Include="Commands\Editor\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateTrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Move\MoveTrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Move\MoveRailCommand.cs" />
+    <Compile Include="Commands\Editor\Other\ChangeMapNameCommand.cs" />
+    <Compile Include="Commands\Editor\Other\StartCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateAlignmentOfTrainstation.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNodesOfRailSectionCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
@@ -124,8 +128,9 @@
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateSignalsCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateTrainstationCommand.cs" />
+    <Compile Include="Commands\Game\Other\ChangeMapNameCommand.cs" />
+    <Compile Include="Commands\Game\Other\StartCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateResourceCommand.cs" />
-    <Compile Include="Commands\Game\Other\StartGameCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoPositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoSpeedCommand.cs" />
     <Compile Include="Communication\Dispatcher\QueueDispatcherBase.cs" />
@@ -152,8 +157,11 @@
     <Compile Include="Models\Game\Resource.cs" />
     <Compile Include="Models\Game\Signals.cs" />
     <Compile Include="Models\Game\Trainstation.cs" />
+    <Compile Include="Models\Lobby\EditorInfo.cs" />
+    <Compile Include="Models\Lobby\GameInfo.cs" />
     <Compile Include="Models\Lobby\GameSessionInfo.cs" />
     <Compile Include="Models\Lobby\EditorSessionInfo.cs" />
+    <Compile Include="Models\Lobby\MapInfo.cs" />
     <Compile Include="Models\Session\EditorSession.cs" />
     <Compile Include="Models\Session\GameSession.cs" />
     <Compile Include="Models\Session\RoRSession.cs" />
@@ -179,6 +187,7 @@
     <Compile Include="ViewModels\Game\TrainstationGameViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
+    <Compile Include="ViewModels\Lobby\EditorLobbyViewModel.cs" />
     <Compile Include="ViewModels\Lobby\GameLobbyViewModel.cs" />
     <Compile Include="ViewModels\Lobby\JoinGameLobbyViewModel.cs" />
     <Compile Include="ViewModels\Lobby\JoinEditorLobbyViewModel.cs" />
@@ -265,6 +274,9 @@
     <Compile Include="Views\Game\TrainstationGameUserControl.xaml.cs">
       <DependentUpon>TrainstationGameUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Lobby\EditorLobbyView.xaml.cs">
+      <DependentUpon>EditorLobbyView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Lobby\JoinGameLobbyView.xaml.cs">
       <DependentUpon>JoinGameLobbyView.xaml</DependentUpon>
     </Compile>
@@ -330,6 +342,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Game\TrainstationGameUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Lobby\EditorLobbyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -16,6 +16,9 @@ import models.session.EditorSession;
 import models.session.EditorSessionManager;
 import models.session.GameSession;
 import models.session.GameSessionManager;
+import models.session.RoRSession;
+import persistent.MapManager;
+import resources.PropertyManager;
 
 public class FromClientRequestQueueDispatcher extends DispatcherBase {
 
@@ -67,6 +70,17 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	public void handleJoinEditorSession(MessageInformation messageInformation) {
 		String editorSessionName = messageInformation.getValueAsString("editorName");
 		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(editorSessionName);
+		String clientId = messageInformation.getClientid();
+		
+		if(editorSession == null) {
+			sendErrorMessage(clientId, "SessionNotFound");
+			return;
+		}
+		
+		if(editorSession.isStarted()) {
+			sendErrorMessage(clientId, "SessionAlreadyStarted");
+			return;
+		}
 
 		String playerName = messageInformation.getValueAsString("playerName");
 		UUID playerId = UUID.fromString(messageInformation.getClientid());
@@ -133,12 +147,30 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	public void handleJoinGameSession(MessageInformation messageInformation) {
 		String gameSessionName = messageInformation.getValueAsString("gameName");
 		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(gameSessionName);
+		String clientId = messageInformation.getClientid();
+		
+		if(gameSession == null) {
+			sendErrorMessage(clientId, "SessionNotFound");
+			return;
+		}
+		
+		if(gameSession.isStarted()) {
+			sendErrorMessage(clientId, "SessionAlreadyStarted");
+			return;
+		}
 
 		String playerName = messageInformation.getValueAsString("playerName");
 		UUID playerId = UUID.fromString(messageInformation.getClientid());
 		gameSession.createPlayer(playerId, playerName);
 
 		sendJoinGameSessionCommand(messageInformation.getClientid(), gameSession);
+	}
+	
+	private void sendErrorMessage(String clientId, String type) {
+		MessageInformation responseInformation = new MessageInformation("Error");
+		responseInformation.setClientid(clientId);
+		responseInformation.putValue("type", type);
+		sendMessage(responseInformation);
 	}
 
 	private void sendJoinGameSessionCommand(String clientId, GameSession gameSession) {
@@ -198,6 +230,69 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 
 		responseInformation.putValue("gameSessionInfo", gameSessionInfos);
 
+		sendMessage(responseInformation);
+	}
+	
+	public void handleReadGameInfos(MessageInformation messageInformation) {
+		MessageInformation responseInformation = new MessageInformation("ReadGameInfos");
+		responseInformation.setClientid(messageInformation.getClientid());
+
+		List<JsonObject> gameInfos = new ArrayList<JsonObject>();
+		String sessionName = messageInformation.getValueAsString("sessionName");
+		List<Player> gamePlayers = GameSessionManager.getInstance().getGameSessionByName(sessionName).getPlayers();
+		for (Player player : gamePlayers) {
+			JsonObject json = new JsonObject();
+			json.addProperty("playerId", player.getId().toString());
+			gameInfos.add(json);
+		}
+
+		responseInformation.putValue("gameInfo", gameInfos);
+		sendMessage(responseInformation);
+	}
+	
+	public void handleReadEditorInfos(MessageInformation messageInformation) {
+		MessageInformation responseInformation = new MessageInformation("ReadEditorInfos");
+		responseInformation.setClientid(messageInformation.getClientid());
+
+		List<JsonObject> editorInfos = new ArrayList<JsonObject>();
+		String sessionName = messageInformation.getValueAsString("sessionName");
+		List<Player> editorPlayers = EditorSessionManager.getInstance().getEditorSessionByName(sessionName).getPlayers();
+		for (Player player : editorPlayers) {
+			JsonObject json = new JsonObject();
+			json.addProperty("playerId", player.getId().toString());
+			editorInfos.add(json);
+		}
+
+		responseInformation.putValue("editorInfo", editorInfos);
+		sendMessage(responseInformation);
+	}
+	
+	/**
+	 * Sendet eine JsonObject-Liste mit MapNames an den Client
+	 * @param messageInformation
+	 */
+	public void handleReadMapInfos(MessageInformation messageInformation) {
+		MessageInformation responseInformation = new MessageInformation("ReadMapInfos");
+		responseInformation.setClientid(messageInformation.getClientid());
+
+		List<JsonObject> mapInfos = new ArrayList<JsonObject>();
+		List<String> mapNames = MapManager.readMapNames();
+		for (String mapName : mapNames) {
+			JsonObject json = new JsonObject();
+			json.addProperty("mapName", mapName);
+			mapInfos.add(json);
+		}
+		
+		// wenn die Session des Clients eine EditorSession ist
+		// wird ein MapName für das erstellen einer neuen Map hinzugefügt
+		EditorSessionManager possibleEditorSessionManager = EditorSessionManager.getInstance();
+		if(possibleEditorSessionManager.getEditorSessionByName(messageInformation.getValueAsString("sessionName")) != null){
+			JsonObject json = new JsonObject();
+			json.addProperty("mapName", PropertyManager.getProperty("newMap"));
+			mapInfos.add(json);
+		}
+
+		responseInformation.putValue("mapInfo", mapInfos);
 		sendMessage(responseInformation);
 	}
 }
