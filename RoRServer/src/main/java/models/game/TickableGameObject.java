@@ -1,8 +1,5 @@
 package models.game;
 
-import java.util.Observable;
-import java.util.Observer;
-
 import models.base.ModelObserver;
 import models.base.ObservableModel;
 
@@ -10,8 +7,8 @@ public abstract class TickableGameObject extends InteractiveGameObject implement
 	
 	protected long timeDeltaInNanoSeconds;//Zeit zwischen den Ticks
 	
-	public TickableGameObject(String sessionName, Square square) {
-		super(sessionName, square);
+	public TickableGameObject() {
+
 	}
 	
 	

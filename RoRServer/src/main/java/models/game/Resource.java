@@ -1,14 +1,13 @@
 package models.game;
 
 import communication.MessageInformation;
-
+import models.helper.StringConverter;
 
 /**
  * @author Andreas Pöhler, Juliane Lies, Isabell Rott
  * Oberklasse für Ressourcen (Aktuell: Kohle und Gold)
  */
 public abstract class Resource extends InteractiveGameObject implements PlaceableOnSquare {
-    // TODO: Sollten ENUMs sein statt Namen für x-beliebige Ressourcen.
     protected int quantity;
     protected ResourceType resourceType;
 
@@ -19,15 +18,15 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
     }
 
     protected Resource(String resourceTypeString, int quanitty) {
-        this(convertToResourceType(resourceTypeString), quanitty);
+        this(convertStringToResourceType(resourceTypeString), quanitty);
     }
 
     protected Resource(String resourceTypeString) {
-        this(convertToResourceType(resourceTypeString), 0);
+        this(convertStringToResourceType(resourceTypeString), 0);
     }
 
-    private static ResourceType convertToResourceType(String resourceTypeString) {
-
+    private static ResourceType convertStringToResourceType(String resourceTypeString) {
+        return StringConverter.convertToResource(resourceTypeString);
     }
 
     protected Resource(ResourceType ressourceType) {
@@ -41,7 +40,7 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
         MessageInformation message = new MessageInformation("CreateResource");
         message.putValue("resourceId", getUUID());
         message.putValue("quantity", getQuantity());
-        message.putValue("resource", getName());
+        message.putValue("resource", getResourceTypeString());
         notifyObservers();
         // notifyChange(message);
     }
@@ -62,11 +61,12 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
         this.quantity -= decreaseValue;
     }
 
-    public String getName() {
-        return ressourceType;
+    public String getResourceTypeString() {
+        return StringConverter.toString(resourceType);
     }
 
-    public void setName(String name) {
-        this.ressourceType = name;
+    public PlaceableOnSquare loadFromMap() {
+        return null;
     }
+
 }

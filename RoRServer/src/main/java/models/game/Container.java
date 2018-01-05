@@ -1,26 +1,31 @@
 package models.game;
 
-import models.session.RoRSession;
+
+import exceptions.ContainerException;
+import models.helper.StringConverter;
 
 public class Container extends InteractiveGameObject implements PlaceableOnSquare {
 
     private Resource resource;
 
-    public Container(String RessourceType) {
+    public Container(String resourceTypeString, int quantity) {
+        if (StringConverter.convertToResource(resourceTypeString).equals(ResourceType.COAL)) {
+            this.resource = new Coal(quantity);
+        }
 
+        if (StringConverter.convertToResource(resourceTypeString).equals(ResourceType.GOLD)) {
+            this.resource = new Gold(quantity);
+        }
+
+        throw new ContainerException("Could not create Container");
     }
 
     public Resource getResource() {
         return resource;
     }
 
-    public void setResource(Resource resource) {
-        this.resource = resource;
-    }
-
     @Override
-    public PlaceableOnSquare loadFromMap(Square square, RoRSession session) {
-        // TODO Auto-generated method stub
+    public PlaceableOnSquare loadFromMap() {
         return null;
     }
 }

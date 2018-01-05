@@ -23,4 +23,10 @@ public class StringConverter {
         if (node.equalsIgnoreCase("WEST") || node.equalsIgnoreCase("W")) return Compass.WEST;
         throw new InvalidCompassDirectionString("The Compass Direction you tried to use is invalid");
     }
+
+    public static String toString(ResourceType rt) {
+        if (rt.equals(ResourceType.COAL)) return "COAL";
+        if (rt.equals(ResourceType.GOLD)) return "GOLD";
+        throw new ResourceException("Couldn't convert ResourceType to String!");
+    }
 }
