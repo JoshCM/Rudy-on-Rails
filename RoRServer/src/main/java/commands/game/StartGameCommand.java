@@ -80,7 +80,8 @@ public class StartGameCommand extends CommandBase {
 			Trainstation newTrainStation = oldTrainStation.loadFromMap(trainstationSquare, gameSession);
 			trainstationSquare.setPlaceableOnSquare(newTrainStation);
 			UUID locoSpawnPointRailId = oldTrainStation.getSpawnPointforLoco();
-			Square locoSpawnPointSquare = ((Rail)gameSession.getMap().getPlaceableById(locoSpawnPointRailId)).getSquareFromGameSession();
+			Rail rail = (Rail)map.getPlaceableById(locoSpawnPointRailId);
+			Square locoSpawnPointSquare = rail.getSquareFromGameSession();
 			if(playerIterator.hasNext()) {
 				// Loco wird erstellt und zur Liste der Locos hinzugefügt
 				gameSession.addLocomotive(new Loco(gameSession.getName(), locoSpawnPointSquare, playerIterator.next().getId()));
