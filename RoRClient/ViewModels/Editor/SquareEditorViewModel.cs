@@ -79,6 +79,10 @@ namespace RoRClient.ViewModels.Editor
                     {
                         SendCreateTrainstationCommand();
                     }
+                    else if (selectedToolName.Contains("switch"))
+                    {
+                        SendCreateSwitchCommand();
+                    }
                 }
             }   
         }
@@ -128,6 +132,32 @@ namespace RoRClient.ViewModels.Editor
             messageInformation.PutValue("yPos", yPos);
 
             editorSession.QueueSender.SendMessage("CreateCrossing", messageInformation);
+        }
+
+        private void SendCreateSwitchCommand()
+        {
+            // Quick-Navigation von einem möglich vorherigen angeklicken EditorCanvasViewModel ausblenden
+            MapViewModel.IsQuickNavigationVisible = false;
+
+            int xPos = square.PosX;
+            int yPos = square.PosY;
+            EditorSession editorSession = EditorSession.GetInstance();
+            List <RailSection> railSectionList = ToolConverter.ConvertSwitchToRailSections(toolbarViewModel.SelectedTool.Name);
+
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("xPos", xPos);
+            messageInformation.PutValue("yPos", yPos);
+
+            List<JObject> railSections = new List<JObject>();
+            JObject railSectionObject = new JObject();
+            railSectionObject.Add("node1", railSectionList[0].Node1.ToString());
+            railSectionObject.Add("node2", railSectionList[0].Node2.ToString());
+            railSectionObject.Add("node2", railSectionList[1].Node2.ToString());
+            railSections.Add(railSectionObject);
+
+            messageInformation.PutValue("railSectionList", railSections);
+
+            editorSession.QueueSender.SendMessage("CreateSwitch", messageInformation);
         }
 
         /// <summary>

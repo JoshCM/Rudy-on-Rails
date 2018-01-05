@@ -53,6 +53,12 @@ namespace RoRClient.Views.Editor.Helper
             return new RailSection(Guid.NewGuid(), node1, node2);
         }
 
+        /// <summary>
+        /// Erzeugt aus einem definierten Namen zwei Railsection mit jeweils zwei RailSectionPositions.  
+        /// Node1 ist jeweils mit node2 und node3 verknüpft und bildet so die Weiche.
+        /// </summary>
+        /// <param name="toolName">Name des selectedTool</param>
+        /// <returns>Railsection</returns>
         public static List<RailSection> ConvertSwitchToRailSections(String toolName)
         {
             Compass node1;
