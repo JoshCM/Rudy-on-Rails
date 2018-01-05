@@ -59,7 +59,7 @@
                 Source="{Binding Rail.Signals.EastSignalActive, Converter={StaticResource BooleanToSignalImagePathConverter}}">
             <Image.LayoutTransform>
                 <TransformGroup>
-                    <RotateTransform Angle="90" CenterX="0" CenterY="0"/>
+                    <RotateTransform Angle="270" CenterX="0" CenterY="0"/>
                 </TransformGroup>
             </Image.LayoutTransform>
         </Image>
@@ -73,7 +73,7 @@
                 Source="{Binding Rail.Signals.WestSignalActive, Converter={StaticResource BooleanToSignalImagePathConverter}}">
             <Image.LayoutTransform>
                 <TransformGroup>
-                    <RotateTransform Angle="270" CenterX="0" CenterY="0"/>
+                    <RotateTransform Angle="90" CenterX="0" CenterY="0"/>
                 </TransformGroup>
             </Image.LayoutTransform>
         </Image>

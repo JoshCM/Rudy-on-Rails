@@ -25,10 +25,10 @@ namespace RoRClient.BindingConverter
 
             if(boolValue)
             {
-                return IMAGE_FOLDER_PATH + "container_coal.png";
+                return IMAGE_FOLDER_PATH + "signal_green.png";
             } else
             {
-                return IMAGE_FOLDER_PATH + "container_gold.png";
+                return IMAGE_FOLDER_PATH + "signal_red.png";
             }
         }
 
