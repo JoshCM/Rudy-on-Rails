@@ -183,6 +183,11 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
+        /// <summary>
+        /// Wenn sich das PlaceableOnRail im Rail ändert wird diese Methode aufgerufen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnRailPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             Rail rail = (Rail)sender;
@@ -249,6 +254,8 @@ namespace RoRClient.ViewModels.Editor
 
                     if (viewModel is RailEditorViewModel)
                     {
+
+                        // Sollte es sich um ein Rail handeln, muss die OnRailPropertyChanged registiert werden und das ToolBarViewModel übergeben werden
                         RailEditorViewModel railEditorViewModel = (RailEditorViewModel)viewModel;
                         railEditorViewModel.Rail.PropertyChanged += OnRailPropertyChanged;
                         railEditorViewModel.ToolbarViewModel = toolbarViewModel;

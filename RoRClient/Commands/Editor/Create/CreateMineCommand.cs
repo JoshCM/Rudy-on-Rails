@@ -10,7 +10,7 @@ using RoRClient.Models.Session;
 namespace RoRClient.Commands.Editor.Create
 {
     /// <summary>
-    /// Command zum Erstellen einer Mine im Editor
+    /// Command zum Erstellen einer Mine im Editor (s. Base-Klasse)
     /// </summary>
     public class CreateMineCommand : CreateMineCommandBase
     {

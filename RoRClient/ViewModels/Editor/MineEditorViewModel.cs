@@ -1,4 +1,6 @@
-﻿using RoRClient.Models.Game;
+﻿using RoRClient.Communication.DataTransferObject;
+using RoRClient.Models.Game;
+using RoRClient.Models.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModels.Editor
 {
+    /// <summary>
+    /// ViewModel für Mine
+    /// </summary>
     public class MineEditorViewModel : CanvasEditorViewModel
     {
 
@@ -39,12 +44,21 @@ namespace RoRClient.ViewModels.Editor
 
         public override void RotateLeft()
         {
-            throw new NotImplementedException();
+            MessageInformation message = new MessageInformation();
+            message.PutValue("xPos", mine.Square.PosX);
+            message.PutValue("yPos", mine.Square.PosY);
+            message.PutValue("right", false);
+            EditorSession.GetInstance().QueueSender.SendMessage("RotateMine", message);
+
         }
 
         public override void RotateRight()
         {
-            throw new NotImplementedException();
+            MessageInformation message = new MessageInformation();
+            message.PutValue("xPos", mine.Square.PosX);
+            message.PutValue("yPos", mine.Square.PosY);
+            message.PutValue("right", true);
+            EditorSession.GetInstance().QueueSender.SendMessage("RotateMine", message);
         }
     }
 }

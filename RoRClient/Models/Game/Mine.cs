@@ -8,9 +8,25 @@ namespace RoRClient.Models.Game
 {
     public class Mine : InteractiveGameObject, IPlaceableOnRail
     {
+
+        private Compass alignment;
+
         public Mine(Guid id, Square square) : base(square)
         {
             this.id = id;
+        }
+
+        public Compass Alignment
+        {
+            get
+            {
+                return alignment;
+            }
+            set
+            {
+                alignment = value;
+                NotifyPropertyChanged("Alignment");
+            }
         }
     }
 }
