@@ -62,7 +62,6 @@ public class CreateTrainstationCommand extends CommandBase {
 		Square squareTop = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN,
 				square.getYIndex() - TRAINSTATION_MARGIN);
 		Square squareMid = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN, square.getYIndex());
-		spawnPointforLoco = squareMid.getId();
 		Square squareBottom = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN,
 				square.getYIndex() + TRAINSTATION_MARGIN);
 		
@@ -73,6 +72,10 @@ public class CreateTrainstationCommand extends CommandBase {
 		for(int i = 0; i < 3; i++) {
 			Square trainstationRailSquare = trainstationRailSquares.get(i);
 			Rail rail = new Rail(session.getName(), trainstationRailSquare, railSectionPositions);
+			// Merke RailId der mittleren Rail als Spawnpoint der Loco, muss noch schön gemacht werden
+			if (i == 1) {
+				spawnPointforLoco = rail.getId();
+			}
 			rail.setSquareId(trainstationRailSquare.getId());
 			trainstationRailSquare.setPlaceableOnSquare(rail);
 			rail.setTrainstationId(trainstationId);
