@@ -57,10 +57,17 @@ namespace RoRClient.BindingConverter
                 {
                     bool northSouth = railSections.Where(x => x.GetNodesAsList().Contains(Compass.NORTH) && x.GetNodesAsList().Contains(Compass.SOUTH)).Any();
                     bool eastWest = railSections.Where(x => x.GetNodesAsList().Contains(Compass.EAST) && x.GetNodesAsList().Contains(Compass.WEST)).Any();
+                    bool southEast = railSections.Where(x => x.GetNodesAsList().Contains(Compass.SOUTH) && x.GetNodesAsList().Contains(Compass.EAST)).Any();
+
+
 
                     if (northSouth && eastWest)
                     {
                         return IMAGE_FOLDER_PATH + "rail_crossing.png";
+                    }
+                    else if (northSouth && southEast)
+                    {
+                        return IMAGE_FOLDER_PATH + "switch_sn_se.png";
                     }
                 }
             }

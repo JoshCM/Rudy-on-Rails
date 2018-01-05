@@ -474,6 +474,9 @@
     <Resource Include="Resources\Images\container_gold.png" />
     <Resource Include="Resources\Images\Tools\rail_crossing.png" />
     <Resource Include="Resources\Images\rail_crossing.png" />
+    <Resource Include="Resources\Images\switch_curve_right_1.png" />
+    <Resource Include="Resources\Images\Tools\switch_sn_se.png" />
+    <Resource Include="Resources\Images\switch_sn_se.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

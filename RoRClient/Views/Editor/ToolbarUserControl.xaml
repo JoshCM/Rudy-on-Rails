@@ -17,7 +17,7 @@
     <ListView ItemsSource="{Binding ToolItems}" SelectedItem="{Binding SelectedTool, UpdateSourceTrigger=PropertyChanged}" x:Name="ToolbarListView" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="auto">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <UniformGrid Columns="2" Rows="5" Margin="15"/>
+                <UniformGrid Columns="2" Rows="6" Margin="15"/>
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ListView.ItemTemplate>

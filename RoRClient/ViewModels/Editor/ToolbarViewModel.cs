@@ -32,6 +32,7 @@ namespace RoRClient.ViewModels.Editor
             toolItems.Add(new ToolItem("railcurve_ne", imageFolderPath + "railcurve_ne.png"));
             toolItems.Add(new ToolItem("railcurve_nw", imageFolderPath + "railcurve_nw.png"));
             toolItems.Add(new ToolItem("rail_crossing", imageFolderPath + "rail_crossing.png"));
+            toolItems.Add(new ToolItem("switch_sn_se", imageFolderPath + "switch_sn_se.png"));
             selectedTool = toolItems[0];
         }
 
