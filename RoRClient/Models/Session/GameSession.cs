@@ -1,4 +1,5 @@
-﻿using RoRClient.Communication.Dispatcher;
+﻿using RoRClient.Communication.DataTransferObject;
+using RoRClient.Communication.Dispatcher;
 using RoRClient.Communication.Topic;
 using RoRClient.Models.Game;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace RoRClient.Models.Session
 {
@@ -84,5 +86,5 @@ namespace RoRClient.Models.Session
             }
             return gameSession;
         }
-    }
+	}
 }

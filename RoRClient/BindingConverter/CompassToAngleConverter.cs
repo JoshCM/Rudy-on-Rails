@@ -9,7 +9,7 @@ using System.Windows.Data;
 
 namespace RoRClient.BindingConverter
 {
-    class TrainstationAlignmentToAngleConverter : IValueConverter
+    class CompassToAngleConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

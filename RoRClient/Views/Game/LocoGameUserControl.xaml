@@ -7,16 +7,22 @@
              xmlns:local="clr-namespace:RoRClient.Views.Game"
              x:Name="locoGameUserControl"
              mc:Ignorable="d" 
+             xmlns:converter="clr-namespace:RoRClient.BindingConverter"
             Canvas.Top="{Binding RealY, ElementName=locoGameUserControl}"
             Canvas.Left="{Binding RealX, ElementName=locoGameUserControl}">
     <UserControl.Resources>
-
+        <converter:CompassToAngleConverter x:Key="CompassToAngleConverter"/>
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=locoGameUserControl}"
             Height="{Binding SquareDim, ElementName=locoGameUserControl}">
         <Image Width="{Binding SquareDim, ElementName=locoGameUserControl}" 
                Height="{Binding SquareDim, ElementName=locoGameUserControl}" 
-                Source="/RoRClient;component/Resources/Images/loco.png" Stretch="Fill">
+               Source="/RoRClient;component/Resources/Images/loco.png" Stretch="Fill">
+            <Image.LayoutTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="{Binding Loco.DrivingDirection, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" CenterX="0" CenterY="0"/>
+                </TransformGroup>
+            </Image.LayoutTransform>
         </Image>
     </Canvas>
 </UserControl>

@@ -38,19 +38,24 @@ public abstract class InteractiveGameObject extends ModelBase {
 		return xPos;
 	}
 	
+	public void setXPos(int xPos) {
+		this.xPos = xPos;
+	}
+	
 	public int getYPos() {
 		return yPos;
+	}
+	
+	public void setYPos(int yPos) {
+		this.yPos = yPos;
 	}
 	
 	public UUID getSquareId() {
 		return squareId;
 	}
 	
-	public void setXPos(int xPos) {
-		this.xPos = xPos;
-	}
-	public void setYPos(int yPos) {
-		this.yPos = yPos;
+	public void setSquareId(UUID id) {
+		this.squareId = id;
 	}
 	
 	public void updateSquare(Square s) {

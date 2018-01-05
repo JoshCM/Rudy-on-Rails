@@ -16,12 +16,14 @@ namespace RoRClient.Commands.Game.Create
         private Guid playerId;
         private int xPos;
         private int yPos;
+        private Compass drivingDirection;
 
         public CreateLocoCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             locoId = Guid.Parse(messageInformation.GetValueAsString("locoId"));
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
+            drivingDirection = (Compass)Enum.Parse(typeof(Compass), messageInformation.GetValueAsString("drivingDirection"));
             playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
         }
 
@@ -30,9 +32,8 @@ namespace RoRClient.Commands.Game.Create
             Player player = session.GetPlayerById(playerId);
             Square square = session.Map.GetSquare(xPos, yPos);
             
-            Loco loco = new Loco(locoId, square);
+            Loco loco = new Loco(locoId, drivingDirection, square);
             player.Loco = loco;
-
 
             ((GameSession)session).AddLoco(loco);
         }

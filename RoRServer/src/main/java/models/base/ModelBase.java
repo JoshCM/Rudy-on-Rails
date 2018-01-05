@@ -15,7 +15,7 @@ import communication.topic.TopicMessageQueue;
 public abstract class ModelBase extends ObservableModel implements Model{
 
 	private UUID id;
-	protected String sessionName;
+	public String sessionName;
 
 	public ModelBase(String sessionName) {
 		this.addObserver(TopicMessageQueue.getInstance());
@@ -38,8 +38,12 @@ public abstract class ModelBase extends ObservableModel implements Model{
 		return id;
 	}
 	
-	public String getSessionName() {
+	public String getName() {
 		return sessionName;
+	}
+	
+	public void setName(String sessionName) {
+		this.sessionName = sessionName;
 	}
 	
 	/**

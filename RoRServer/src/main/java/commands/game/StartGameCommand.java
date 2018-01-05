@@ -2,23 +2,24 @@ package commands.game;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
+import org.apache.log4j.Logger;
 
 import commands.base.CommandBase;
 import communication.MessageInformation;
+import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
-import models.game.Compass;
 import models.game.Map;
-import models.game.PlaceableOnSquare;
 import models.game.Player;
 import models.game.Rail;
-import models.game.RailSection;
 import models.game.Square;
+import models.game.Trainstation;
 import models.session.GameSession;
 import models.session.RoRSession;
 import persistent.MapManager;
 
 public class StartGameCommand extends CommandBase {
+	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
 
 	public StartGameCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
@@ -26,51 +27,66 @@ public class StartGameCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		System.out.println("Ich soll eine DefaultMap laden!");
-		
+		log.info("loading map: " + ((GameSession) session).getMapName());
 		// Map laden
-		Map map = MapManager.loadMap("GameDefaultMap");
-		map.setSessionName(session.getSessionName());
+		Map map = MapManager.loadMap(((GameSession) session).getMapName());
+		map.setSessionNameForMapAndSquares(session.getName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
-		
+
+		// hier müssen die Rails zuerst erstellt werden, danach die Trainstations
+		// da die Trainstations die Referenzen der noch nicht vorhandenen Rails an den
+		// Client schicken würden
+		List<Square> railSquaresToCreate = new ArrayList<Square>();
+		List<Square> trainstationSquaresToCreate = new ArrayList<Square>();
+
 		// Jedes Square durchgehen
-		Square [][] squares = map.getSquares();
+		Square[][] squares = map.getSquares();
 		for (int i = 0; i < squares.length; i++) {
 			for (int j = 0; j < squares[i].length; j++) {
-				
-				// Square holen 
+
+				// Square holen
 				Square square = squares[i][j];
-				// Wenn ein Rail auf dem Square liegt
+				// square bekommt sessionName und observer
+				square.setName(session.getName());
+				square.addObserver(TopicMessageQueue.getInstance());
+
+				// Wenn etwas auf dem Square liegt
 				if (square.getPlaceableOnSquare() != null) {
-					Rail rail = (Rail)square.getPlaceableOnSquare();
-					// Hole die SectionPositions aus den RailSections und speichere in Liste
-					List<Compass> railSectionPosition = new ArrayList<Compass>();
-					for (RailSection section : rail.getRailSectionList()) {
-						railSectionPosition.add(section.getNode1());
-						railSectionPosition.add(section.getNode2());
-					}
-					// Neues Rail erstellen und damit an den Client schicken
-					Rail newRail = new Rail(session.getSessionName(), square, railSectionPosition);
-					System.out.println("Neue Rail erstellt auf " + i + " " + j + ": " + newRail.toString());
+					if (square.getPlaceableOnSquare() instanceof Rail)
+						railSquaresToCreate.add(square);
+					if (square.getPlaceableOnSquare() instanceof Trainstation)
+						trainstationSquaresToCreate.add(square);
 				}
 			}
 		}
 
+		// erzeugen der neuen Rails auf deren Squares
+		for (Square railSquare : railSquaresToCreate) {
+			railSquare.setPlaceableOnSquare(railSquare.getPlaceableOnSquare().loadFromMap(railSquare, session));
+		}
+
+		// erzeugen der neuen Trainstations auf deren Squares
+		for (Square trainstationSquare : trainstationSquaresToCreate) {
+			trainstationSquare.setPlaceableOnSquare(
+					trainstationSquare.getPlaceableOnSquare().loadFromMap(trainstationSquare, session));
+		}
+
 		createLocoForPlayers(session);
-		
-		((GameSession)session).startGame();
+
+		session.start();
 	}
 
 	/**
-	 * Sobald ein Player der GameSession gejoined ist, soll eine Loco erstellt werden, die dem Player zugeordnet ist
+	 * Sobald ein Player der GameSession gejoined ist, soll eine Loco erstellt
+	 * werden, die dem Player zugeordnet ist
+	 * 
 	 * @param messageInformation
 	 */
-	
+
 	private void createLocoForPlayers(RoRSession session) {
-		for(Player p : session.getPlayers()) {		
+		for (Player p : session.getPlayers()) {
 			CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, p.getId());
-			System.out.println();
 			createLocoCommand.execute();
 		}
 	}

@@ -99,15 +99,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BindingConverter\ObjectEqualsConverter.cs" />
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
     <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
-    <Compile Include="BindingConverter\TrainstationAlignmentToAngleConverter.cs" />
+    <Compile Include="BindingConverter\CompassToAngleConverter.cs" />
+    <Compile Include="Commands\Base\ChangeMapNameCommandBase.cs" />
     <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Base\CreateRailCommandBase.cs" />
+    <Compile Include="Commands\Base\CreateTrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
+    <Compile Include="Commands\Editor\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateTrainstationCommand.cs" />
+    <Compile Include="Commands\Editor\Move\MoveTrainstationCommand.cs" />
+    <Compile Include="Commands\Editor\Move\MoveRailCommand.cs" />
+    <Compile Include="Commands\Editor\Other\ChangeMapNameCommand.cs" />
+    <Compile Include="Commands\Editor\Other\StartCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateAlignmentOfTrainstation.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNodesOfRailSectionCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
@@ -116,8 +124,11 @@
     <Compile Include="Commands\Game\Create\CreateLocoCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
-    <Compile Include="Commands\Game\Other\StartGameCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateTrainstationCommand.cs" />
+    <Compile Include="Commands\Game\Other\ChangeMapNameCommand.cs" />
+    <Compile Include="Commands\Game\Other\StartCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateResourceCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoPositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoSpeedCommand.cs" />
     <Compile Include="Communication\Dispatcher\QueueDispatcherBase.cs" />
@@ -136,11 +147,18 @@
     <Compile Include="Models\Base\ModelBase.cs" />
     <Compile Include="Models\Base\ObservableBase.cs" />
     <Compile Include="Models\Game\Cart.cs" />
+    <Compile Include="Models\Game\Coal.cs" />
+    <Compile Include="Models\Game\Container.cs" />
+    <Compile Include="Models\Game\Gold.cs" />
     <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Player.cs" />
+    <Compile Include="Models\Game\Resource.cs" />
     <Compile Include="Models\Game\Trainstation.cs" />
+    <Compile Include="Models\Lobby\EditorInfo.cs" />
+    <Compile Include="Models\Lobby\GameInfo.cs" />
     <Compile Include="Models\Lobby\GameSessionInfo.cs" />
     <Compile Include="Models\Lobby\EditorSessionInfo.cs" />
+    <Compile Include="Models\Lobby\MapInfo.cs" />
     <Compile Include="Models\Session\EditorSession.cs" />
     <Compile Include="Models\Session\GameSession.cs" />
     <Compile Include="Models\Session\RoRSession.cs" />
@@ -151,7 +169,9 @@
     </Compile>
     <Compile Include="ViewModels\Base\CanvasViewModelBase.cs" />
     <Compile Include="ViewModels\Game\CanvasGameViewModel.cs" />
-    <Compile Include="ViewModels\Game\CartGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\CoalGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\ContainerGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\GoldGameViewModel.cs" />
     <Compile Include="ViewModels\Game\LocoGameViewModel.cs" />
     <Compile Include="ViewModels\Game\MapGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
@@ -160,8 +180,11 @@
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
     <Compile Include="ViewModels\Game\RailGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TrainstationEditorViewModel.cs" />
+    <Compile Include="ViewModels\Helper\TypeHelper.cs" />
+    <Compile Include="ViewModels\Game\TrainstationGameViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
+    <Compile Include="ViewModels\Lobby\EditorLobbyViewModel.cs" />
     <Compile Include="ViewModels\Lobby\GameLobbyViewModel.cs" />
     <Compile Include="ViewModels\Lobby\JoinGameLobbyViewModel.cs" />
     <Compile Include="ViewModels\Lobby\JoinEditorLobbyViewModel.cs" />
@@ -212,11 +235,14 @@
     <Compile Include="Views\Editor\AttributeSelectionUserControl.xaml.cs">
       <DependentUpon>AttributeSelectionUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Game\CartGameUserControl.xaml.cs">
-      <DependentUpon>CartGameUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Game\CoalGameUserControl.xaml.cs">
+      <DependentUpon>CoalGameUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\GameInteractionUserControl.xaml.cs">
       <DependentUpon>GameInteractionUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\GoldGameUserControl.xaml.cs">
+      <DependentUpon>GoldGameUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\LocoGameUserControl.xaml.cs">
       <DependentUpon>LocoGameUserControl.xaml</DependentUpon>
@@ -242,6 +268,12 @@
     <Compile Include="Views\Game\RailGameUserControl.xaml.cs">
       <DependentUpon>RailGameUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\TrainstationGameUserControl.xaml.cs">
+      <DependentUpon>TrainstationGameUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Lobby\EditorLobbyView.xaml.cs">
+      <DependentUpon>EditorLobbyView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Lobby\JoinGameLobbyView.xaml.cs">
       <DependentUpon>JoinGameLobbyView.xaml</DependentUpon>
     </Compile>
@@ -258,11 +290,15 @@
       <DependentUpon>AskUserForStringPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Popup\PopupCreator.cs" />
-    <Page Include="Views\Game\CartGameUserControl.xaml">
+    <Page Include="Views\Game\CoalGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Game\GameInteractionUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\GoldGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -301,6 +337,14 @@
     <Page Include="Views\Editor\TrainstationEditorUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Game\TrainstationGameUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Lobby\EditorLobbyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Lobby\JoinGameLobbyView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -426,8 +470,12 @@
     <Resource Include="Resources\Images\rotate_right.png" />
     <Resource Include="Resources\Images\rotate_left.png" />
     <Resource Include="Resources\Images\delete.png" />
-    <Resource Include="Resources\Images\Tools\loco.png" />
+    <Resource Include="Resources\Images\move.png" />
     <Resource Include="Resources\Images\loco.png" />
+    <Resource Include="Resources\Images\container_coal.png" />
+    <Resource Include="Resources\Images\container_gold.png" />
+    <Resource Include="Resources\Images\Tools\rail_crossing.png" />
+    <Resource Include="Resources\Images\rail_crossing.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

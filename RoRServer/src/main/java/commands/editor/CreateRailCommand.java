@@ -25,7 +25,7 @@ public class CreateRailCommand extends CommandBase {
 
 		xPos = messageInfo.getValueAsInt("xPos");
 		yPos = messageInfo.getValueAsInt("yPos");
-		railSectionData = messageInfo.getValueAsList("railSections");
+		railSectionData = messageInfo.getValueAsList("railSectionList");
 	}
 
 	@Override
@@ -42,6 +42,7 @@ public class CreateRailCommand extends CommandBase {
 			railSectionPositions.add(node2);
 		}
 		
-		Rail rail = new Rail(session.getSessionName(), square, railSectionPositions);
+		Rail rail = new Rail(session.getName(), square, railSectionPositions);
+		square.setPlaceableOnSquare(rail);
 	}
 }

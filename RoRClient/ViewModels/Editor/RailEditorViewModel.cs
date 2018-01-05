@@ -43,9 +43,12 @@ namespace RoRClient.ViewModels.Editor
             messageInformation.PutValue("xPos", xPos);
             messageInformation.PutValue("yPos", yPos);
 
-            // TODO: Message sollte mithilfe CommandManager oder so geschickt werden
             editorSession.QueueSender.SendMessage("DeletePlaceable", messageInformation);
-        }
+
+			// setze das Selektierte Objekt auf null
+			MapViewModel.SelectedEditorCanvasViewModel = null;
+
+		}
 
         public override void RotateLeft()
         {
@@ -63,6 +66,11 @@ namespace RoRClient.ViewModels.Editor
             messageInformation.PutValue("yPos", rail.Square.PosY);
             messageInformation.PutValue("right", true);
             EditorSession.GetInstance().QueueSender.SendMessage("RotateRail", messageInformation);
+        }
+
+        public override void Move()
+        {
+
         }
     }
 }

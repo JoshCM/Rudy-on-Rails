@@ -22,6 +22,7 @@ public abstract class RoRSession extends ModelBase {
 	private ArrayList<Player> players = new ArrayList<>();
 	private Map map;
 	protected boolean started;
+	private String mapName;
 	
 	protected QueueReceiver queueReceiver;
 	
@@ -32,12 +33,12 @@ public abstract class RoRSession extends ModelBase {
 	}
 	
 	private void createHostPlayer(UUID playerId, String playerName) {
-		Player player = new Player(getSessionName(), playerName, playerId, true);
+		Player player = new Player(getName(), playerName, playerId, true);
 		players.add(player);
 	}
 	
 	public Player createPlayer(UUID playerId, String playerName) {
-		Player player = new Player(getSessionName(), playerName, playerId, false);
+		Player player = new Player(getName(), playerName, playerId, false);
 		players.add(player);
 		return player;
 	}
@@ -66,7 +67,40 @@ public abstract class RoRSession extends ModelBase {
 		return Collections.unmodifiableList(players);
 	}
 	
+	public Player getPlayerById(UUID id) {
+		for(Player player : getPlayers()) {
+			if(player.getId().equals(id))
+				return player;
+		}
+		return null;
+	}
+	
 	public boolean isStarted() {
 		return started;
+	}
+	
+	public void start() {
+		started = true;
+		MessageInformation messageInfo = new MessageInformation("Start");
+		notifyChange(messageInfo);
+	}
+	
+
+	public String getMapName() {
+		return mapName;
+	}
+
+	public void setMapName(String mapName) {
+		this.mapName = mapName;
+		notifyChangedMapName();
+	}
+	
+	/**
+	 * Schickt eine Message mit dem neuen MapName, über den Topic der GameSession, an alle angemeldeten Clients
+	 */
+	private void notifyChangedMapName() {
+		MessageInformation messageInfo = new MessageInformation("ChangeMapName");
+		messageInfo.putValue("mapName", getMapName());
+		notifyChange(messageInfo);
 	}
 }

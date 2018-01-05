@@ -1,7 +1,11 @@
 package models.session;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
+import com.google.gson.JsonObject;
+
 import communication.MessageInformation;
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
@@ -32,7 +36,7 @@ public class GameSession extends RoRSession{
 	}
 	
 	/**
-	 * startet den Thread der f�r das Ticking verantwortlich ist 
+	 * startet den Thread der für das Ticking verantwortlich ist
 	 * und ruft die tick()-Methode der Ticker-Klasse auf
 	 */
 	private void startTicking() {
@@ -64,7 +68,7 @@ public class GameSession extends RoRSession{
 	
 
 	/**
-	 * F�gt dem Ticker eine Collection von TickableGameObjects hinzu
+	 * Fügt dem Ticker eine Collection von TickableGameObjects hinzu
 	 * @param tgos
 	 */
 	public void addAll(TickableGameObject...tgos ) {
@@ -107,11 +111,7 @@ public class GameSession extends RoRSession{
 		}
 	}
 	
-	public void startGame() {
-		started = true;
-		MessageInformation messageInfo = new MessageInformation("StartGame");
-		notifyChange(messageInfo);
-	}
+
 }
 
 

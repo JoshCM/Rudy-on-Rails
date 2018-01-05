@@ -1,5 +1,7 @@
 package models.game;
 
+import exceptions.InvalidModelOperationException;
+
 import java.util.UUID;
 
 import communication.MessageInformation;
@@ -11,6 +13,8 @@ import communication.MessageInformation;
  * Auf einem Cart koennen Container geladen werden
  */
 public class Cart extends InteractiveGameObject implements PlaceableOnRail {
+	
+	private Resource resource;
 
 	private Compass compass;
 	private UUID playerId;
@@ -24,6 +28,39 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 		this.setCompass(compass);
 		this.playerId = playerId;
 		this.setRail(rail);
+	}
+	
+	/**
+	 * Cart mit einer Ressource beladen
+	 * @param resource zu beladene Resource
+	 */
+	public void loadResourceOntoCart(Resource resource) {
+		if (resource != null) {
+			this.resource = resource;
+		} else {
+			throw new InvalidModelOperationException("Cart bereits beladen");
+		}
+	}
+	
+	/**
+	 * Cart wird geleert
+	 */
+	public void removeResourceFromCart() {
+		resource = null;
+	}
+	
+	public Resource getResource() {
+		return resource;
+	}
+	
+	/**
+	 * Entfernt die Ressource auf dem Cart und gibt diese zurück
+	 * @return Ressource auf auf dem Cart
+	 */
+	public Resource unloadResourceFromCart() {
+		Resource unloadedResource = resource;
+		resource = null;
+		return unloadedResource;
 	}
 	
 	

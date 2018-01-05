@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import exceptions.RailSectionException;
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.MessageInformation;
+import communication.queue.QueueMessageQueue;
 import communication.topic.TopicMessageQueue;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
@@ -34,7 +36,7 @@ public class RailTests {
 				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "Player");
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Rail rail = new Rail(editorSession.getSessionName(), square, railSectionPositions);
+		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions);
 
 		assertEquals(node1, rail.getFirstSection().getNode1());
 		assertEquals(node2, rail.getFirstSection().getNode2());
@@ -55,11 +57,10 @@ public class RailTests {
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
 		UUID railId = UUID.randomUUID();
-		Rail rail = new Rail(editorSession.getSessionName(), square, railSectionPositions, UUID.randomUUID(), railId);
-
-		MessageInformation messageInfo = TopicMessageQueue.getInstance()
-				.getFirstFoundMessageInformationForMessageType("CreateRail");
-
+		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions, UUID.randomUUID(), railId);
+		
+		MessageInformation messageInfo = TopicMessageQueue.getInstance().getFirstFoundMessageInformationForAttribute(railId);
+	
 		UUID messageInfoRailId = messageInfo.getValueAsUUID("railId");
 		UUID messageInfoSquareId = messageInfo.getValueAsUUID("squareId");
 		int messageInfoXPos = messageInfo.getValueAsInt("xPos");
@@ -90,6 +91,41 @@ public class RailTests {
 		assertEquals(Compass.EAST, rail.getFirstSection().getNode2());
 	}
 
+	@Test
+    public void addRailSectionToRail() {
+	    Rail rail = createCrossRail();
+        RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "EAST");
+        rail.addRailSection(rs);
+        assertTrue(rail.getAllRailSections().contains(rs));
+    }
+
+    @Test(expected = RailSectionException.class)
+    public void addExistingRailSectionToRail() {
+        Rail rail = createCrossRail();
+        RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "EAST");
+        rail.addRailSection(rs);
+        RailSection rs2 = new RailSection(rail.sessionName, rail, "EAST", "NORTH");
+        rail.addRailSection(rs2);
+    }
+
+    @Test
+    public void removeExistingRailSectionFromRail() {
+	    Rail rail = createCrossRail();
+	    RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "SOUTH");
+	    rail.deleteRailSection(rs);
+	    assertFalse(rail.getAllRailSections().contains(rs));
+    }
+
+    @Test(expected = RailSectionException.class)
+    public void removeExistingRailSectionFromRailTwice() {
+        Rail rail = createCrossRail();
+        RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "SOUTH");
+        RailSection rs2 = new RailSection(rail.sessionName, rail, "SOUTH", "NORTH");
+        rail.deleteRailSection(rs);
+        rail.deleteRailSection(rs2);
+    }
+
+
 	private Rail createCrossRail() {
 		Compass node1 = Compass.NORTH;
 		Compass node2 = Compass.SOUTH;
@@ -107,7 +143,12 @@ public class RailTests {
 				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "Player");
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Rail rail = new Rail(editorSession.getSessionName(), square, railSectionPositions);
+		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions);
 		return rail;
 	}
+
+
+
+
+
 }

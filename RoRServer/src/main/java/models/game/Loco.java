@@ -5,14 +5,14 @@ import java.util.Collections;
 import java.util.UUID;
 
 import communication.MessageInformation;
+import models.session.GameSessionManager;
 
 /**
  * 
  * @author Isabel Rott, Michelle Le Klasse fuer eine Lok, zu der eine Liste von
  *         Carts gehoert
  */
-public class Loco extends TickableGameObject implements PlaceableOnRail {
-
+public class Loco extends TickableGameObject {
 	private final long SEC_IN_NANO = 1000000000;
 	private ArrayList<Cart> carts;
 	private Rail rail;
@@ -30,18 +30,18 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	 * @param square
 	 *            auf dem die Lok steht wird mitgegeben
 	 */
-	public Loco(String sessionName, Square square, Map map, UUID playerId) {
+	public Loco(String sessionName, Square square, UUID playerId) {
 		super(sessionName, square);
 		this.setCarts(new ArrayList<Cart>());
 		// TODO: Wenn Zug Richtung implementiert ist, muss der Wagon so initialisiert
 		// werden, dass er ein Feld hinter der Lok steht
 		this.square = square;// Das hier muss noch raus? Sollte man nicht an das InteractivGameoObject das Square packen?
 		this.rail = (Rail) square.getPlaceableOnSquare();
-		this.map = map;
+		this.map = GameSessionManager.getInstance().getGameSessionByName(sessionName).getMap();
 		this.drivingDirection = rail.getFirstSection().getNode1();
-		this.speed = 0; // Nur zu testzwecken
+		this.speed = 0; 
 		this.playerId = playerId;
-		SendCreatedLocoMessage();
+		NotifyLocoCreated();
 		this.addInitialCart();
 	}
 
@@ -71,12 +71,11 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	public void drive() {
 		Rail nextRail = getNextRail();
 		moveCarts(this.rail,this.drivingDirection);
-		this.drivingDirection = nextRail.getExitDirection(getCompassNegation());
+		this.drivingDirection = nextRail.getExitDirection(getDirectionNegation());
 		this.rail = nextRail;
 		this.setXPos(this.rail.getXPos());
 		this.setYPos(this.rail.getYPos());
-		SendUpdateLocoMessage();
-
+		NotifyLocoPositionChanged();
 	}
 
 	/**
@@ -100,7 +99,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		actCart.SendUpdateCartMessage();
 		newSquare = tempSquare;
 		
-		//ist noch nicht getestet für mehrere Carts
+		//ist noch nicht getestet fï¿½r mehrere Carts
 		for(int i = carts.size()-2 ; i>=0 ; i--) {
 			actCart = carts.get(i);
 			back = actCart.getRail().getExitDirection(actCart.getCompass());
@@ -118,13 +117,13 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		this.updateSquare(newSquare);
 		this.rail = (Rail)newSquare.getPlaceableOnSquare();
 		drivingDirection = this.rail.getExitDirection(getCompassNegation(actCart.getCompass()));
-		SendUpdateLocoMessage();
+		NotifyLocoPositionChanged();
 		
 		
 	}
 	
 	/**
-	 * fügt der Lok initial ein Cart hinzu auf das vorige Feld 
+	 * fï¿½gt der Lok initial ein Cart hinzu auf das vorige Feld 
 	 */
 	public void addInitialCart() {
 		if(carts.isEmpty()) {
@@ -138,7 +137,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		
 	}
 	/**
-	 * bewegt alle Wagons, die an einer Lok hängen, sobald sich eine Lok um ein Feld weiter bewegt hat
+	 * bewegt alle Wagons, die an einer Lok hï¿½ngen, sobald sich eine Lok um ein Feld weiter bewegt hat
 	 * 
 	 * @param forward
 	 */
@@ -182,7 +181,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	}
 
 	/**
-	 * gibt das Rail zurück, dass in angegebener Richtung an das Feld, auf der die Lok steht, angekoppelt ist
+	 * gibt das Rail zurï¿½ck, dass in angegebener Richtung an das Feld, auf der die Lok steht, angekoppelt ist
 	 * @param compass Himmelsrichtung in die man nach dem Feld schauen soll
 	 * @return die Rail, die in angegebener Richtung steht
 	 */
@@ -206,7 +205,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	}
 	
 	/**
-	 * gibt das Rail zurück, dass in angegebener Richtung an das Feld, das mitgegeben wird, angekoppelt ist
+	 * gibt das Rail zurï¿½ck, dass in angegebener Richtung an das Feld, das mitgegeben wird, angekoppelt ist
 	 * @param compass Himmelsrichtung in die man nach dem Feld schauen soll
 	 * @return die Rail, die in angegebener Richtung steht
 	 */
@@ -235,7 +234,8 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	 * 
 	 * @return negated Direction
 	 */
-	public Compass getCompassNegation() {
+
+	public Compass getDirectionNegation() {
 		switch (this.drivingDirection) {
 		case NORTH:
 			return Compass.SOUTH;
@@ -263,20 +263,22 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		return null;
 	}
 
-	private void SendCreatedLocoMessage() {
+	private void NotifyLocoCreated() {
 		MessageInformation messageInfo = new MessageInformation("CreateLoco");
 		messageInfo.putValue("locoId", getId());
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
+		messageInfo.putValue("drivingDirection", drivingDirection.toString());
 		messageInfo.putValue("playerId", this.playerId);
 		notifyChange(messageInfo);
 	}
 
-	private void SendUpdateLocoMessage() {
+	private void NotifyLocoPositionChanged() {
 		MessageInformation messageInfo = new MessageInformation("UpdateLocoPosition");
 		messageInfo.putValue("locoId", getId());
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
+		messageInfo.putValue("drivingDirection", drivingDirection.toString());
 		messageInfo.putValue("playerId", this.playerId);
 		notifyChange(messageInfo);
 	}

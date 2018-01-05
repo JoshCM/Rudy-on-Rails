@@ -43,11 +43,12 @@ public class LocoTests {
 	}
 	
 	/**
-	 * Loco sendet richtige Nachricht an Client, wenn sie fährt
+	 * Loco sendet richtige Nachricht an Client, wenn sie fï¿½hrt
 	 */
+	/* es mÃ¼ssten die Rails erstellt werden um keine NullPointerExceptions zu bekommen
 	@Test
 	public void LocoSendsUpdateLocoMessage() {
-		// Square, auf das die Loco fährt
+		// Square, auf das die Loco fï¿½hrt
 		int squarePosXNext = 0;
 		int squarePosYNext = 0;
 		// Square, auf dem die Loco steht
