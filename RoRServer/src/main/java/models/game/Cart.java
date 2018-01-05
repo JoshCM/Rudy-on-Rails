@@ -56,7 +56,7 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 	}
 
 	@Override
-	public PlaceableOnSquare loadFromMap(Square square, RoRSession session) {
+	public PlaceableOnRail loadFromMap(Square square, RoRSession session) {
 		// TODO Auto-generated method stub
 		return null;
 	}

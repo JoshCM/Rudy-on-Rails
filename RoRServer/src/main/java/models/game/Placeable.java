@@ -8,7 +8,4 @@ import models.session.RoRSession;
  *
  */
 public interface Placeable extends Model {
-	
-	PlaceableOnSquare loadFromMap(Square square, RoRSession session);
-	
 }
