@@ -1,5 +1,6 @@
 ﻿using RoRClient.Models.Game;
 using System;
+using System.Collections.Generic;
 
 namespace RoRClient.Views.Editor.Helper
 {
@@ -51,5 +52,38 @@ namespace RoRClient.Views.Editor.Helper
             }
             return new RailSection(Guid.NewGuid(), node1, node2);
         }
+
+        public static List<RailSection> ConvertSwitchToRailSections(String toolName)
+        {
+            Compass node1;
+            Compass node2;
+            Compass node3;
+            List <RailSection> railSections = new List<RailSection>();
+
+            switch (toolName)
+            {
+                case "switch_sn_se":
+                    node1 = Compass.SOUTH;
+                    node2 = Compass.NORTH;
+                    node3 = Compass.EAST;
+                    break;
+                case "switch_sw_se":
+                    node1 = Compass.SOUTH;
+                    node2 = Compass.WEST;
+                    node3 = Compass.EAST;
+                    break;
+                default:
+                    node1 = new Compass();
+                    node2 = new Compass();
+                    node3 = new Compass();
+                    break;
+            }
+
+            railSections.Add(new RailSection(Guid.NewGuid(), node1, node2));
+            railSections.Add(new RailSection(Guid.NewGuid(), node1, node3));
+
+            return railSections;
+        }
+
     }
 }
