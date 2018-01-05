@@ -52,8 +52,38 @@ public class Validator {
 
 		if (!validatePossibleTrainstation(newSquare))
 			return false;
+		if(!validatePossibleStock(newSquare, alignment, map))
+			return false;
 		if (!validatePossibleRails(newSquare, alignment, railCount, map))
 			return false;
+		return true;
+	}
+
+	private static boolean validatePossibleStock(Square newSquare, Compass alignment, Map map) {
+		int xShifting = 0;
+		int yShifting = 0;
+		switch(alignment) {
+		case NORTH:
+			xShifting = -1;
+			break;
+		case EAST:
+			yShifting = -1;
+			break;
+		case SOUTH:
+			xShifting = +1;
+			break;
+		case WEST:
+			yShifting = +1;
+		}
+		Square stockSquare = map.getSquare(newSquare.getXIndex() + xShifting, newSquare.getYIndex() + yShifting);
+		
+		if (stockSquare != null) {
+			if (stockSquare.getPlaceableOnSquare() != null) {
+				return false;
+			}
+		} else {
+			return false;
+		}
 		return true;
 	}
 

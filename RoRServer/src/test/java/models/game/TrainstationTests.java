@@ -185,7 +185,7 @@ public class TrainstationTests {
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
-		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
+		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, Compass.EAST));
 		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		
 		Assert.assertTrue(trainstation.validateRotation(true));
@@ -216,7 +216,7 @@ public class TrainstationTests {
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
-		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
+		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, Compass.EAST));
 		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		
 		Assert.assertTrue(trainstation.validateRotation(false));
@@ -254,7 +254,7 @@ public class TrainstationTests {
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
-		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
+		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, Compass.EAST));
 		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		
 		trainstation.rotate(true);
@@ -306,7 +306,7 @@ public class TrainstationTests {
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
-		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
+		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, Compass.EAST));
 		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		
 		trainstation.rotate(false);

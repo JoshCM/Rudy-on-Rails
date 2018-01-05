@@ -107,16 +107,19 @@
     <Compile Include="Commands\Base\ChangeMapNameCommandBase.cs" />
     <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Base\CreateRailCommandBase.cs" />
+    <Compile Include="Commands\Base\CreateStockCommandBase.cs" />
     <Compile Include="Commands\Base\CreateTrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateRailCommand.cs" />
+    <Compile Include="Commands\Editor\Create\CreateStockCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateTrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Move\MoveTrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Move\MoveRailCommand.cs" />
     <Compile Include="Commands\Editor\Other\ChangeMapNameCommand.cs" />
     <Compile Include="Commands\Editor\Other\StartCommand.cs" />
-    <Compile Include="Commands\Editor\Update\UpdateAlignmentOfTrainstation.cs" />
+    <Compile Include="Commands\Editor\Update\UpdateAlignmentOfStockCommand.cs" />
+    <Compile Include="Commands\Editor\Update\UpdateAlignmentOfTrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNodesOfRailSectionCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
@@ -151,6 +154,7 @@
     <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Player.cs" />
     <Compile Include="Models\Game\Resource.cs" />
+    <Compile Include="Models\Game\Stock.cs" />
     <Compile Include="Models\Game\Trainstation.cs" />
     <Compile Include="Models\Lobby\EditorInfo.cs" />
     <Compile Include="Models\Lobby\GameInfo.cs" />
@@ -166,6 +170,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Base\CanvasViewModelBase.cs" />
+    <Compile Include="ViewModels\Editor\StockEditorViewModel.cs" />
     <Compile Include="ViewModels\Game\CanvasGameViewModel.cs" />
     <Compile Include="ViewModels\Game\CoalGameViewModel.cs" />
     <Compile Include="ViewModels\Game\ContainerGameViewModel.cs" />
@@ -199,6 +204,9 @@
     <Compile Include="Views\CanvasUserControl.cs" />
     <Compile Include="Views\Editor\Helper\RegexValidator.cs" />
     <Compile Include="Views\Editor\Helper\ToolConverter.cs" />
+    <Compile Include="Views\Editor\StockEditorUserControl.xaml.cs">
+      <DependentUpon>StockEditorUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Editor\TrainstationEditorUserControl.xaml.cs">
       <DependentUpon>TrainstationEditorUserControl.xaml</DependentUpon>
     </Compile>
@@ -288,6 +296,10 @@
       <DependentUpon>AskUserForStringPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Popup\PopupCreator.cs" />
+    <Page Include="Views\Editor\StockEditorUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Game\CoalGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -474,6 +486,7 @@
     <Resource Include="Resources\Images\container_gold.png" />
     <Resource Include="Resources\Images\Tools\rail_crossing.png" />
     <Resource Include="Resources\Images\rail_crossing.png" />
+    <Resource Include="Resources\Images\stock.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

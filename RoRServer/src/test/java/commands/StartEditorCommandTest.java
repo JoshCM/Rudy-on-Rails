@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import models.game.Rail;
 import models.game.Square;
+import models.game.Stock;
 import models.game.Trainstation;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
@@ -42,12 +43,14 @@ public class StartEditorCommandTest {
 		
 		// EditorSession und Square erstellen
 		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
-		Square square = new Square(editorSession.getName(), 0, 0);
+		Square square = new Square(editorSession.getName(), 1, 1);
 		
 		// Erstellen eines neuen Bahnhofes
 		List<UUID> uuids = new ArrayList<UUID>();
 		uuids.add(UUID.randomUUID());
-		Trainstation loadedTrainstation = new Trainstation(editorSession.getName(), square, uuids, UUID.randomUUID(), Compass.NORTH);
+		
+		UUID trainstationId = UUID.randomUUID();
+		Trainstation loadedTrainstation = new Trainstation(editorSession.getName(), square, uuids, trainstationId, Compass.NORTH, new Stock(editorSession.getName(), editorSession.getMap().getSquare(1, 0), trainstationId, Compass.NORTH));
 		square.setPlaceableOnSquare(loadedTrainstation);
 		
 		Trainstation createdTrainstation = loadedTrainstation.loadFromMap(square, editorSession);

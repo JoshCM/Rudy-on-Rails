@@ -21,9 +21,10 @@ import models.session.RoRSession;
 
 public class Trainstation extends InteractiveGameObject implements PlaceableOnSquare {
 	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
-	
+
 	public static final int RAIL_COUNT = 3;
 	private List<UUID> trainstationRailIds;
+	private Stock stock;
 	private Compass alignment;
 
 	private final int CLOCKWISE = 90;
@@ -34,8 +35,10 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	// wieder loopt
 	transient EditorSession editorSession;
 
-	public Trainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment) {
+	public Trainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment,
+			Stock stock) {
 		super(sessionName, square, id);
+		this.stock = stock;
 		this.trainstationRailIds = trainstationRailIds;
 		this.alignment = alignment;
 		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getName());
@@ -67,11 +70,17 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 			rails.add(json);
 		}
 		messageInfo.putValue("trainstationRails", rails);
+		messageInfo.putValue("stockId", getStock().getId());
+
 		notifyChange(messageInfo);
 	}
 
 	public List<UUID> getTrainstationRailIds() {
 		return trainstationRailIds;
+	}
+
+	public Stock getStock() {
+		return this.stock;
 	}
 
 	/**
@@ -119,46 +128,63 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	 * @param right
 	 *            Uhrzeigersinn/Gegen Uhrzeigersinn
 	 */
-	private void rotateTrainstationRails(List<Rail> trainstationRails, int pivotXPos, int pivotYPos, boolean right) {
-		HashMap<Coordinate, Rail> tempRailMap = new HashMap<Coordinate, Rail>();
-		for (Rail trainstationRail : trainstationRails) {
-			int railXpos = trainstationRail.getXPos();
-			int railYpos = trainstationRail.getYPos();
+	private void rotateTrainstationInteractiveGameObjects(List<InteractiveGameObject> trainstationGameObjects, int pivotXPos,
+			int pivotYPos, boolean right) {
+		HashMap<Coordinate, InteractiveGameObject> temptrainstationGameObjectMap = new HashMap<Coordinate, InteractiveGameObject>();
+		for (InteractiveGameObject trainstationGameObject : trainstationGameObjects) {
+			int objectXpos = trainstationGameObject.getXPos();
+			int objectYpos = trainstationGameObject.getYPos();
 
 			// rotiert die koordinaten
 			Geometry.Coordinate newCoordinate;
 			if (right)
-				newCoordinate = Geometry.rotate(railXpos, railYpos, CLOCKWISE, pivotXPos, pivotYPos);
+				newCoordinate = Geometry.rotate(objectXpos, objectYpos, CLOCKWISE, pivotXPos, pivotYPos);
 			else
-				newCoordinate = Geometry.rotate(railXpos, railYpos, COUNTER_CLOCKWISE, pivotXPos, pivotYPos);
+				newCoordinate = Geometry.rotate(objectXpos, objectYpos, COUNTER_CLOCKWISE, pivotXPos, pivotYPos);
 
-			Square oldRailSquare = (Square) editorSession.getMap().getSquareById(trainstationRail.getSquareId());
+			Square oldSquare = (Square) editorSession.getMap().getSquareById(trainstationGameObject.getSquareId());
 
-			// rotiere und adde trainstationRail der tempList
-			trainstationRail.rotate(right, right);
-			tempRailMap.put(newCoordinate, trainstationRail);
+			// rotiere und adde der tempList
+			if (trainstationGameObject instanceof Rail) {
+				Rail tmpRail = (Rail) trainstationGameObject;
+				tmpRail.rotate(right, right);
+			} else if (trainstationGameObject instanceof Stock) {
+				Stock tmpStock = (Stock) trainstationGameObject;
+				tmpStock.rotate(right);
+			}
+
+			temptrainstationGameObjectMap.put(newCoordinate, trainstationGameObject);
 
 			// lösche das Rail aus dem alten Square
-			oldRailSquare.deletePlaceable();
+			oldSquare.deletePlaceable();
 		}
 
-		for (Coordinate railCoordinate : tempRailMap.keySet()) {
+		for (Coordinate coordinate : temptrainstationGameObjectMap.keySet()) {
 
-			Rail tempRail = tempRailMap.get(railCoordinate);
+			InteractiveGameObject tmpTrainstationGameObject = temptrainstationGameObjectMap.get(coordinate);
 			// bekomme sessionname für neue Rail
 			String sessionName = editorSession.getName();
-
-			// nehme section1 von RailSection
-			RailSection sectionOne = tempRail.getFirstSection();
-
 			// bekomme newSquare
-			Square newRailSquare = (Square) editorSession.getMap().getSquare(railCoordinate.x, railCoordinate.y);
+			Square newSquare = (Square) editorSession.getMap().getSquare(coordinate.x, coordinate.y);
 
-			// erzeuge neue Rail und setze intern das Square.PlacableOnSquare
-			Rail newRail = new Rail(sessionName, newRailSquare,
-					Arrays.asList(sectionOne.getNode1(), sectionOne.getNode2()), tempRail.getTrainstationId(),
-					tempRail.getId());
-			newRailSquare.setPlaceableOnSquare(newRail);
+			if (tmpTrainstationGameObject instanceof Rail) {
+				Rail tmpRail = (Rail)tmpTrainstationGameObject;
+				// nehme section1 von RailSection
+				RailSection sectionOne = tmpRail.getFirstSection();
+
+				// erzeuge neue Rail und setze intern das Square.PlacableOnSquare
+				Rail newRail = new Rail(sessionName, newSquare,
+						Arrays.asList(sectionOne.getNode1(), sectionOne.getNode2()),
+						tmpRail.getTrainstationId(), tmpRail.getId());
+				newSquare.setPlaceableOnSquare(newRail);
+			}else if(tmpTrainstationGameObject instanceof Stock) {
+				Stock tmpStock = (Stock)tmpTrainstationGameObject;
+
+				// erzeuge neuen Stock und setze intern das Square.PlacableOnSquare
+				Stock newStock = new Stock(sessionName, newSquare, tmpStock.getTrainstationId(), tmpStock.getId(), tmpStock.getAlignment());
+				newSquare.setPlaceableOnSquare(newStock);
+				this.stock = newStock;
+			}
 		}
 	}
 
@@ -204,7 +230,11 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		if (right)
 			trainstationRails = getReverseTrainstationRails();
 
-		rotateTrainstationRails(trainstationRails, pivotXPos, pivotYPos, right);
+		List<InteractiveGameObject> trainstationInteractiveGameObjects = new ArrayList<InteractiveGameObject>();
+		trainstationInteractiveGameObjects.addAll(trainstationRails);
+		trainstationInteractiveGameObjects.add(stock);
+
+		rotateTrainstationInteractiveGameObjects(trainstationInteractiveGameObjects, pivotXPos, pivotYPos, right);
 	}
 
 	/**
@@ -237,8 +267,22 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 				return false;
 			if (newRailSquare.getPlaceableOnSquare() != null)
 				if (!trainstationRailIds.contains(newRailSquare.getPlaceableOnSquare().getId()))
-					return false;
+					if(!stock.getId().equals(newRailSquare.getPlaceableOnSquare().getId()))
+						return false;
 		}
+
+		// validiert die rotation des Stocks
+		Geometry.Coordinate newStockCoordinate;
+		if (right)
+			newStockCoordinate = Geometry.rotate(stock.getXPos(), stock.getYPos(), CLOCKWISE, pivotXPos, pivotYPos);
+		else
+			newStockCoordinate = Geometry.rotate(stock.getXPos(), stock.getYPos(), COUNTER_CLOCKWISE, pivotXPos,
+					pivotYPos);
+		Square newStockSquare = (Square) editorSession.getMap().getSquare(newStockCoordinate.x, newStockCoordinate.y);
+		if (newStockSquare.getPlaceableOnSquare() != null)
+			if (!trainstationRailIds.contains(newStockSquare.getPlaceableOnSquare().getId()))
+				return false;
+
 		return true;
 	}
 
@@ -246,9 +290,11 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	public Trainstation loadFromMap(Square square, RoRSession session) {
 		Trainstation trainStation = (Trainstation) square.getPlaceableOnSquare();
 		Trainstation newTrainStation = new Trainstation(session.getName(), square,
-				trainStation.getTrainstationRailIds(), trainStation.getId(), trainStation.alignment);
-		
-		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
+				trainStation.getTrainstationRailIds(), trainStation.getId(), trainStation.alignment,
+				trainStation.getStock());
+
+		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses
+		// Objekts mitbekommen kann
 		newTrainStation.setName(session.getName());
 
 		log.info("TrainStation erstellt: " + newTrainStation.toString());

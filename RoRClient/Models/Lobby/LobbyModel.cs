@@ -151,7 +151,8 @@ namespace RoRClient.Models.Game
 		public void ReadMapInfos()
 	    {
 		    MessageInformation messageInformation = new MessageInformation();
-		    fromClientRequestSender.SendMessage("ReadMapInfos", messageInformation);
+            messageInformation.PutValue("sessionName", EditorSession.GetInstance().Name);
+            fromClientRequestSender.SendMessage("ReadMapInfos", messageInformation);
 		}
 
 

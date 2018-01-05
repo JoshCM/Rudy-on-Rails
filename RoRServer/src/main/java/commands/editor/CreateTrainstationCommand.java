@@ -12,6 +12,7 @@ import models.game.Map;
 import models.game.Rail;
 import models.game.Compass;
 import models.game.Square;
+import models.game.Stock;
 import models.game.Trainstation;
 import models.helper.Validator;
 import models.session.EditorSession;
@@ -43,8 +44,15 @@ public class CreateTrainstationCommand extends CommandBase {
 		} else {
 			// generiere UUID für Trainstation
 			UUID trainstationId = UUID.randomUUID();
+			
+			// neuer Stock wird erstellt 
+			// y-1 da die anfangsausrichtung der trainstation immer EAST ist
+			Square stockSquare = map.getSquare(xPos, yPos - 1);
+			Stock newStock = new Stock(session.getName(), stockSquare, trainstationId, alignment);
+			stockSquare.setPlaceableOnSquare(newStock);
+			
 			// Trainstation wird erzeugt und auf Square gesetzt
-			Trainstation trainstation = new Trainstation(session.getName(), newSquare, createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment);
+			Trainstation trainstation = new Trainstation(session.getName(), newSquare, createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment, newStock);
 			trainstation.setSpawnPointforLoco(spawnPointforLoco);
 			newSquare.setPlaceableOnSquare(trainstation);
 		}
