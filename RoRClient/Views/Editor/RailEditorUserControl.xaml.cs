@@ -10,8 +10,8 @@ namespace RoRClient.Views.Editor
         {
             InitializeComponent();
             SignalDimension = ViewConstants.SIGNAL_DIMENSION;
-            UpperSignalPos = 5;
-            LowerSignalPos = ViewConstants.SQUARE_DIM - UpperSignalPos - SignalDimension;
+            UpperSignalPos = ViewConstants.UPPER_SIGNAL_POS;
+            LowerSignalPos = ViewConstants.LOWER_SIGNAL_POS;
         }
 
         public int SignalDimension

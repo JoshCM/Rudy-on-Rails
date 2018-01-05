@@ -13,11 +13,11 @@ namespace RoRClient.Commands.Game.Update
 
 {
     /// <summary>
-    /// CreateRailCommand für Game
+    /// CreateRailCommand für Editor
     /// </summary>
-    public class CreateRailCommand : CreateRailCommandBase
+    public class UpdateActivityOfSignalsCommand : UpdateActivityOfSignalsCommandBase
     {
-        public CreateRailCommand(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        public UpdateActivityOfSignalsCommand(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
 
         }

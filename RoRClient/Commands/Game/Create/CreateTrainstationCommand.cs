@@ -9,7 +9,7 @@ using RoRClient.Models.Session;
 using RoRClient.Models.Game;
 using Newtonsoft.Json.Linq;
 
-namespace RoRClient.Commands.Game.Create
+namespace RoRClient.Commands.Game.Update
 {
     class CreateTrainstationCommand : CreateTrainstationCommandBase
     {

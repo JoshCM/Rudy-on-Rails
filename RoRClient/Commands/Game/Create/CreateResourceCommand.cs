@@ -8,7 +8,7 @@ using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Session;
 using RoRClient.Models.Game;
 
-namespace RoRClient.Commands.Game.Create
+namespace RoRClient.Commands.Game.Update
 {
     /// <summary>
     /// Command zum Erstellen von Resourcen auf der GameMap (Aktuell: Kohle und Gold)

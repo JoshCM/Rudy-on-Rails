@@ -9,15 +9,15 @@ using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Game;
 using Newtonsoft.Json.Linq;
 
-namespace RoRClient.Commands.Game.Update
+namespace RoRClient.Commands.Editor.Update
 
 {
     /// <summary>
-    /// CreateRailCommand für Game
+    /// CreateRailCommand für Editor
     /// </summary>
-    public class CreateRailCommand : CreateRailCommandBase
+    public class UpdateActivityOfSignalsCommand : UpdateActivityOfSignalsCommandBase
     {
-        public CreateRailCommand(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        public UpdateActivityOfSignalsCommand(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
 
         }

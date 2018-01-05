@@ -65,6 +65,21 @@ public class Signals extends ModelBase {
 			eastSignalActive = false;
 			westSignalActive = false;
 		}
+		
+		notifySignalsSwitched();
+	};
+	
+	private void notifySignalsSwitched() {
+		MessageInformation messageInfo = new MessageInformation("UpdateActivityOfSignals");
+		messageInfo.putValue("signalsId", getId());
+		messageInfo.putValue("xPos", squarePosX);
+		messageInfo.putValue("yPos", squarePosY);
+		messageInfo.putValue("northSignalActive", northSignalActive);
+		messageInfo.putValue("eastSignalActive", eastSignalActive);
+		messageInfo.putValue("southSignalActive", southSignalActive);
+		messageInfo.putValue("westSignalActive", westSignalActive);
+
+		notifyChange(messageInfo);
 	};
 
 	public int getSquarePosX() {

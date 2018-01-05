@@ -265,12 +265,14 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         for (RailSection section : railSectionList) {
             section.rotate(right);
         }
+        signals.switchSignals();
     }
 
     public void rotate(boolean right, boolean notYet) {
         for (RailSection section : railSectionList) {
             section.rotate(right, notYet);
         }
+        signals.switchSignals();
     }
 
     @Override
@@ -309,11 +311,20 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         // Neues Rail erstellen und damit an den Client schicken
         Rail newRail = new Rail(session.getName(), square, railSectionPosition);
         System.out.println("Neue Rail erstellt: " + newRail.toString());
-
-        // Ressourcen setzen
-        if(session instanceof GameSession)
-        newRail.generateResourcesNextToRail();
-
+        
+        if(rail.getSignals() != null) {
+        	Signals newSignals = new Signals(session.getName(), square);
+        	
+        	// Der einfachhalthalber nur für Kreuzungen
+        	if(newSignals.isWestSignalActive() && newSignals.isEastSignalActive()) {
+        		newSignals.switchSignals();
+        	}
+        }
+        
         return newRail;
+    }
+    
+    public Signals getSignals() {
+    	return signals;
     }
 }
