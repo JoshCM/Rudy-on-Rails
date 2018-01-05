@@ -12,5 +12,6 @@ namespace RoRClient.ViewModels
     static class ViewConstants
     {
         public const int SQUARE_DIM = 150;
+        public const int SIGNAL_DIMENSION = 35;
     }
 }

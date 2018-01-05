@@ -27,37 +27,37 @@
             x:Name="SignalNorth"
             Fill="{Binding Rail.Signals.NorthSignalActive, Mode=OneWay, Converter={StaticResource BooleanToColorConverter}}"
             Visibility="{Binding Rail.Signals.Exists, Converter={StaticResource BoolToVisibilityConverter}}"
-            Canvas.Top="4"
-            Canvas.Left="4"
-            Height="12"
-            Width="12"
+            Canvas.Top="{Binding UpperSignalPos, ElementName=railUserControl}"
+            Canvas.Left="{Binding UpperSignalPos, ElementName=railUserControl}"
+            Height="{Binding SignalDimension, ElementName=railUserControl}"
+            Width="{Binding SignalDimension, ElementName=railUserControl}"
             StrokeThickness="0"/>
         <Ellipse
             x:Name="SignalSouth"
             Fill="{Binding Rail.Signals.SouthSignalActive, Mode=OneWay, Converter={StaticResource BooleanToColorConverter}}"
             Visibility="{Binding Rail.Signals.Exists, Converter={StaticResource BoolToVisibilityConverter}}"
-            Canvas.Top="34"
-            Canvas.Left="34"
-            Height="12"
-            Width="12"
+            Canvas.Top="{Binding LowerSignalPos, ElementName=railUserControl}"
+            Canvas.Left="{Binding LowerSignalPos, ElementName=railUserControl}"
+            Height="{Binding SignalDimension, ElementName=railUserControl}"
+            Width="{Binding SignalDimension, ElementName=railUserControl}"
             StrokeThickness="0"/>
         <Ellipse
             x:Name="SignalEast"
             Fill="{Binding Rail.Signals.EastSignalActive, Converter={StaticResource BooleanToColorConverter}}"
             Visibility="{Binding Rail.Signals.Exists, Converter={StaticResource BoolToVisibilityConverter}}"
-            Canvas.Top="4"
-            Canvas.Left="34"
-            Height="12"
-            Width="12"
+            Canvas.Top="{Binding UpperSignalPos, ElementName=railUserControl}"
+            Canvas.Left="{Binding LowerSignalPos, ElementName=railUserControl}"
+            Height="{Binding SignalDimension, ElementName=railUserControl}"
+            Width="{Binding SignalDimension, ElementName=railUserControl}"
             StrokeThickness="0"/>
         <Ellipse
             x:Name="SignalWest"
             Fill="{Binding Rail.Signals.WestSignalActive, Converter={StaticResource BooleanToColorConverter}}"
             Visibility="{Binding Rail.Signals.Exists, Converter={StaticResource BoolToVisibilityConverter}}"
-            Canvas.Top="34"
-            Canvas.Left="4"
-            Height="12"
-            Width="12"
+            Canvas.Top="{Binding LowerSignalPos, ElementName=railUserControl}"
+            Canvas.Left="{Binding UpperSignalPos, ElementName=railUserControl}"
+            Height="{Binding SignalDimension, ElementName=railUserControl}"
+            Width="{Binding SignalDimension, ElementName=railUserControl}"
             StrokeThickness="0"/>
     </Canvas>
 </v:CanvasUserControl>
