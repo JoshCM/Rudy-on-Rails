@@ -111,5 +111,40 @@ namespace RoRClient.Views.Game
             }
         }
         public static readonly DependencyProperty SquareDimProperty = DependencyProperty.Register("SquareDim", typeof(int), typeof(LocoGameUserControl), new UIPropertyMetadata(0));
+
+
+        public int RotationAngle
+        {
+            get
+            {
+                return (int)GetValue(RotationAngleProperty);
+            }
+            set
+            {
+                SetValue(RotationAngleProperty, value);
+            }
+        }
+        public static readonly DependencyProperty RotationAngleProperty = DependencyProperty.Register("RotationAngle", typeof(int), typeof(LocoGameUserControl), new UIPropertyMetadata(0, OnRotationAngleChanged));
+
+        private static void OnRotationAngleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            LocoGameUserControl locoGameUserControl = (LocoGameUserControl)d;
+            LocoGameViewModel locoGameViewModel = (LocoGameViewModel)locoGameUserControl.DataContext;
+            double speedRatio = locoGameViewModel.Loco.Speed > 0 ? locoGameViewModel.Loco.Speed * speedFactor : 1;
+            locoGameUserControl.BeginAnimation(LocoGameUserControl.RealRotationAngleProperty, new Int32Animation { From = locoGameUserControl.RealRotationAngle, To = locoGameUserControl.RotationAngle, SpeedRatio = speedRatio, EasingFunction=new QuadraticEase() });
+        }
+
+        public int RealRotationAngle
+        {
+            get
+            {
+                return (int)GetValue(RealRotationAngleProperty);
+            }
+            set
+            {
+                SetValue(RealRotationAngleProperty, value);
+            }
+        }
+        public static readonly DependencyProperty RealRotationAngleProperty = DependencyProperty.Register("RealRotationAngle", typeof(int), typeof(LocoGameUserControl), new UIPropertyMetadata(0));
     }
 }

@@ -53,7 +53,7 @@
                         <!-- Hier muss dann auch das LocoGameUserControl hin mit dem DataType des LocoGameViewModels, was ja in der PlaceableOnSquareCollection drin sein sollte -->
                         <DataTemplate DataType="{x:Type game:LocoGameViewModel}">
                             <Canvas>
-                                <vg:LocoGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                                <vg:LocoGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}" RotationAngle="{Binding Loco.RealDrivingDirection, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.Resources>
