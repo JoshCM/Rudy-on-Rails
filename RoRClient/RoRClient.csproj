@@ -124,6 +124,7 @@
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateLocoCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateMineCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateTrainstationCommand.cs" />
@@ -178,6 +179,7 @@
     <Compile Include="ViewModels\Game\LocoGameViewModel.cs" />
     <Compile Include="ViewModels\Game\MapGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
+    <Compile Include="ViewModels\Game\MineGameViewModel.cs" />
     <Compile Include="ViewModels\Game\SpeedSliderViewModel.cs" />
     <Compile Include="ViewModels\Game\SquareGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
@@ -259,6 +261,9 @@
     <Compile Include="Views\Game\GameMiniMapUserControl.xaml.cs">
       <DependentUpon>GameMiniMapUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\MineGameUserControl.xaml.cs">
+      <DependentUpon>MineGameUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\SquareGameUserControl.xaml.cs">
       <DependentUpon>SquareGameUserControl.xaml</DependentUpon>
     </Compile>
@@ -321,6 +326,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Game\GameMiniMapUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\MineGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
