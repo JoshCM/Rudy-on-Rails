@@ -136,8 +136,44 @@ namespace RoRClient.ViewModels.Game
                     CanvasGameViewModel viewModel = factory.CreateGameViewModelForModel(square.PlaceableOnSquare, this);
 
                     taskFactory.StartNew(() => placeableOnSquareCollection.Add(viewModel));
+
+                    if (viewModel is RailGameViewModel)
+                    { 
+                        // Sollte es sich um eine Rail handeln, muss die OnRailPropertyChanged registiert werden und das ToolBarViewModel übergeben werden
+                        RailGameViewModel railGameViewModel = (RailGameViewModel)viewModel;
+                        railGameViewModel.Rail.PropertyChanged += OnRailPropertyChanged;
+                    }
                 }
             }
+        }
+
+        private void OnRailPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Rail rail = (Rail)sender;
+
+            if (e.PropertyName == "PlaceableOnRail")
+            {
+                PropertyChangedExtendedEventArgs<IPlaceableOnRail> eventArgs = (PropertyChangedExtendedEventArgs<IPlaceableOnRail>)e;
+
+                if (rail.PlaceableOnRail == null)
+                {
+                    IModel model = (IModel)eventArgs.OldValue;
+                    CanvasGameViewModel result = placeableOnRailCollection.Where(x => x.Id == model.Id).First();
+
+                    if (result != null)
+                    {
+                        taskFactory.StartNew(() => placeableOnRailCollection.Remove(result));
+                    }
+                }
+                else
+                {
+                    ViewModelFactory factory = new ViewModelFactory();
+                    CanvasGameViewModel viewModel = factory.CreateGameViewModelForModel(rail.PlaceableOnRail, this);
+
+                    taskFactory.StartNew(() => placeableOnRailCollection.Add(viewModel));
+                }
+            }
+
         }
 
 
