@@ -23,7 +23,7 @@ namespace RoRClient.Views.Game
     /// </summary>
     public partial class LocoGameUserControl : UserControl
     {
-        private const double speedFactor = 0.5;
+        private const double speedFactor = 0.7;
         public LocoGameUserControl()
         {
             InitializeComponent();

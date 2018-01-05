@@ -487,6 +487,8 @@
     <Resource Include="Resources\Images\Tools\rail_crossing_with_signals.png" />
     <Resource Include="Resources\Images\signal_green.png" />
     <Resource Include="Resources\Images\signal_red.png" />
+    <Resource Include="Resources\Images\loco_debug.png" />
+    <Resource Include="Resources\Images\loco_4.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
