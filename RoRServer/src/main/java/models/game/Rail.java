@@ -20,27 +20,35 @@ import models.session.RoRSession;
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Comparable<Rail> {
     private PlaceableOnRail placeableOnRail = null;
     private UUID trainstationId;
+    private UUID mineID;
     private List<RailSection> railSectionList;
-    private Resource resource;
+    private Resource resource; // TODO: Wie kann eine Schiene eine Ressource halten?
+
+
+    /**
+     * Konstruktor, falls die Schiene zu einem Bahnhof gehört
+     * @param railSectionList
+     * @param ueberObjekt
+     */
+    public Rail(List<RailSection> railSectionList, UUID ueberObjekt) {
+        if () {
+            setTrainstationID(ueberObjekt);
+        }
+
+        this.railSectionList = railSectionList;
+        notifyCreatedRail();
+    }
+
 
     /**
      * Konstruktor für Geraden oder Kurven
      */
-    public Rail(String sessionName, Square square, List<Compass> railSectionPositions) {
-        super(sessionName, square);
-        railSectionList = new ArrayList<RailSection>();
-        createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
+    public Rail(List<RailSection> railSectionList) {
+        this.railSectionList = new ArrayList<RailSection>();
         notifyCreatedRail();
     }
 
-    public Rail(String sessionName, Square square, List<Compass> railSectionPositions, UUID trainstationId, UUID id) {
-        super(sessionName, square, id);
 
-        setTrainstationId(trainstationId);
-        railSectionList = new ArrayList<RailSection>();
-        createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
-        notifyCreatedRail();
-    }
 
     // TODO: Welche Ressourcen kann eine Schiene haben und wann?
     public void setResource(Resource resource) {
@@ -148,7 +156,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         return trainstationId;
     }
 
-    public void setTrainstationId(UUID trainstationId) {
+    public void setTrainstationID(UUID trainstationId) {
         this.trainstationId = trainstationId;
     }
 

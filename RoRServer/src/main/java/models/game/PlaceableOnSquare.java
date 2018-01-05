@@ -7,6 +7,6 @@ import models.session.RoRSession;
  */
 public interface PlaceableOnSquare extends Placeable {
 
-	PlaceableOnSquare loadFromMap(Square square, RoRSession session);
+	PlaceableOnSquare loadFromMap();
 	
 }

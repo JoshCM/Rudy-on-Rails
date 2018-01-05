@@ -12,46 +12,42 @@ import communication.topic.TopicMessageQueue;
  * RoRSession kennen Die RoRSession wird aktuell gebraucht, damit die Models
  * Änderungen an den Client geben können über die Methode addMessage()
  */
-public abstract class ModelBase extends ObservableModel implements Model{
+public abstract class ModelBase extends ObservableModel implements Model {
 
-	private UUID id;
-	public String sessionName;
+    private UUID id;
 
-	public ModelBase(String sessionName) {
-		this.addObserver(TopicMessageQueue.getInstance());
-		this.id = UUID.randomUUID();
-		this.sessionName = sessionName;
-	}
-	
-	// Konstruktur um eine vordefinierte UUID zu setzen
-	public ModelBase(String sessionName, UUID id) {
-		this.addObserver(TopicMessageQueue.getInstance());
-		this.id = id;
-		this.sessionName = sessionName;
-	}
+    public ModelBase() {
+        this.addObserver(TopicMessageQueue.getInstance());
+        this.id = UUID.randomUUID();
+    }
 
-	protected void setId(UUID id) {
-		this.id = id;
-	}
+    public ModelBase(UUID id) {
+        this.addObserver(TopicMessageQueue.getInstance());
+        this.id = id;
+    }
 
-	public UUID getId() {
-		return id;
-	}
-	
-	public String getName() {
-		return sessionName;
-	}
-	
-	/**
-	 * Hier werden Nachrichten hinzugefügt, die an die verbundenen Clients geschickt
-	 * werden sollen
-	 * 
-	 * @param messageInformation
-	 */
-	protected void notifyChange(MessageInformation messageInformation) {
-		MessageEnvelope messageEnvelope = new MessageEnvelope(sessionName, messageInformation.getMessageType(),
-				messageInformation);
-		setChanged();
-		notifyObservers(messageEnvelope);
-	}
+    // TODO: Wieso ein Setter? Wird doch entweder so mit ID konstruiert oder serialisiert? Durch Setter kann man id-Konflikte erzeugen -> Wäre böse!
+    protected void setId(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    // TODO: sessionName muss noch irgendwo anders hin gepackt werden.
+
+    /**
+     * Hier werden Nachrichten hinzugefügt, die an die verbundenen Clients geschickt
+     * werden sollen
+     *
+     * @param messageInformation
+     */
+    // TODO: SessionName hier rausmachen -> Die Session sollte Map halten Map hält ModelBase Objekte
+    protected void notifyChange(MessageInformation messageInformation) {
+        MessageEnvelope messageEnvelope = new MessageEnvelope(sessionName, messageInformation.getMessageType(),
+                messageInformation);
+        setChanged();
+        notifyObservers(messageEnvelope);
+    }
 }

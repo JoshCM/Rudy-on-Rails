@@ -2,10 +2,7 @@ package models.base;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
-
-import communication.MessageEnvelope;
-import communication.MessageInformation;
+import java.util.Observable;
 
 /**
  * Eine eigene Implementierung von Observable
@@ -13,7 +10,7 @@ import communication.MessageInformation;
  * @author micha
  *
  */
-public class ObservableModel {
+public class ObservableModel extends Observable {
 	private transient List<ModelObserver> observers = new ArrayList<ModelObserver>();
 	private boolean changed = false;
 	
