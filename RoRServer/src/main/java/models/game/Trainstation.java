@@ -28,7 +28,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 	private final int CLOCKWISE = 90;
 	private final int COUNTER_CLOCKWISE = -90;
-	private Square spawnPointForLoco;
+	private UUID spawnPointForLoco;
 
 	// Andreas: Habe ich auf transient gesetzt, weil der Deserializer sonst
 	// wieder loopt
@@ -46,11 +46,11 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		return alignment;
 	}
 
-	public void setSpawnPointforLoco(Square square) {
-		spawnPointForLoco = square;
+	public void setSpawnPointforLoco(UUID squareId) {
+		spawnPointForLoco = squareId;
 	}
 
-	public Square getSpawnPointforLoco() {
+	public UUID getSpawnPointforLoco() {
 		return spawnPointForLoco;
 	}
 

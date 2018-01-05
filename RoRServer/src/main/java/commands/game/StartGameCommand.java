@@ -3,6 +3,7 @@ package commands.game;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
@@ -75,9 +76,11 @@ public class StartGameCommand extends CommandBase {
 		
 		// erzeugen der neuen Trainstations auf deren Squares
 		for (Square trainstationSquare : trainstationSquaresToCreate) {
-			Trainstation trainStation = (Trainstation) trainstationSquare.getPlaceableOnSquare();
-			trainstationSquare.setPlaceableOnSquare(trainStation.loadFromMap(trainstationSquare, gameSession));
-			Square locoSpawnPointSquare = trainStation.getSpawnPointforLoco();
+			Trainstation oldTrainStation = (Trainstation) trainstationSquare.getPlaceableOnSquare();
+			Trainstation newTrainStation = oldTrainStation.loadFromMap(trainstationSquare, gameSession);
+			trainstationSquare.setPlaceableOnSquare(newTrainStation);
+			UUID locoSpawnPointSquareId = oldTrainStation.getSpawnPointforLoco();
+			Square locoSpawnPointSquare = gameSession.getMap().getSquareById(locoSpawnPointSquareId);
 			if(playerIterator.hasNext()) {
 				// Loco wird erstellt und zur Liste der Locos hinzugefügt
 				gameSession.addLocomotive(new Loco(gameSession.getName(), locoSpawnPointSquare, playerIterator.next().getId()));

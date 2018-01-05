@@ -22,7 +22,7 @@ public class CreateTrainstationCommand extends CommandBase {
 	private int yPos;
 	private Compass alignment;
 	private final static int TRAINSTATION_MARGIN = 1;
-	private Square spawnPointforLoco;
+	private UUID spawnPointforLoco;
 
 	public CreateTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
@@ -62,7 +62,7 @@ public class CreateTrainstationCommand extends CommandBase {
 		Square squareTop = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN,
 				square.getYIndex() - TRAINSTATION_MARGIN);
 		Square squareMid = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN, square.getYIndex());
-		spawnPointforLoco = squareMid;
+		spawnPointforLoco = squareMid.getId();
 		Square squareBottom = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN,
 				square.getYIndex() + TRAINSTATION_MARGIN);
 		
