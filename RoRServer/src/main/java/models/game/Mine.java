@@ -30,12 +30,14 @@ public class Mine extends InteractiveGameObject implements PlaceableOnRail {
 
 	@Override
 	public PlaceableOnRail loadFromMap(Square square, RoRSession session) {
-		
+				
 		// Neue Mine erstellen und damit an den Client schicken
-		Mine newMine = new Mine(session.getName(), square);
+		Mine newMine = new Mine(session.getName(), square, alignment, railId);
 		
 		//sessionName neu setzen, damit Observer Änderung dieses Objekts mitbekommen kann
 		newMine.setName(session.getName());
+		Rail rail = (Rail)session.getMap().getPlaceableById(railId);
+		rail.setPlaceableOnRail(newMine);
 		
 		return newMine;
 	}

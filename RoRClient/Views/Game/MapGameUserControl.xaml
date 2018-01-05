@@ -56,6 +56,11 @@
                                 <vg:LocoGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
+                        <DataTemplate DataType="{x:Type game:MineGameViewModel}">
+                            <Canvas>
+                                <vg:MineGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
                     </ItemsControl.Resources>
                 </ItemsControl>
             </Canvas>

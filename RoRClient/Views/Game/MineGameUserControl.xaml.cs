@@ -18,7 +18,7 @@ namespace RoRClient.Views.Game
     /// <summary>
     /// Interaktionslogik für MineGameUserControl.xaml
     /// </summary>
-    public partial class MineGameUserControl : UserControl
+    public partial class MineGameUserControl : CanvasUserControl
     {
         public MineGameUserControl()
         {
