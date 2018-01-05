@@ -41,8 +41,8 @@ public class CommandDeleterTests {
 		List<String> trainstationRailIdStrings = new ArrayList<String>();
 		for(Rail trainstationRail : trainstationRails) {
 			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceableOnSquare(trainstationRail);
-			trainstationRailIds.add(trainstationRail.getId());
-			trainstationRailIdStrings.add(trainstationRail.getId().toString());
+			trainstationRailIds.add(trainstationRail.getUUID());
+			trainstationRailIdStrings.add(trainstationRail.getUUID().toString());
 		}
 
 		MessageInformation messageInformation = new MessageInformation();

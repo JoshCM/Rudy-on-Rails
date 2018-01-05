@@ -5,8 +5,7 @@ import java.util.List;
 
 import communication.MessageInformation;
 import models.base.ModelBase;
-import models.session.GameSessionManager;
-import models.session.RoRSession;
+
 
 /**
  * Ein Square hält alle relevanten Objekte.
@@ -15,12 +14,13 @@ import models.session.RoRSession;
  */
 public class Square extends ModelBase {
     private PlaceableOnSquare placeableOnSquare = null;
-    private int x, y;
-
 
     public Square(int xIndex, int yIndex) {
-        this.x = xIndex;
-        this.y = yIndex;
+        // müsste übergeben werden an Oberklasse, die was damit anfangen kann. Könnte ganz nützlich sein.
+    }
+
+    public Square() {
+
     }
 
 
@@ -33,10 +33,8 @@ public class Square extends ModelBase {
     private void notifyDeletePlaceable() {
         MessageInformation messageInfo = new MessageInformation("DeletePlaceable");
         // TODO: Später haben wir die richtigen SquareIds im Client, im Moment noch nicht!!!
-        messageInfo.putValue("xPos", this.getXIndex());
-        messageInfo.putValue("yPos", this.getYIndex());
-
-        notifyChange(messageInfo);
+        notifyObservers();
+        // notifyChange(messageInfo);
     }
 
     /**
@@ -47,9 +45,8 @@ public class Square extends ModelBase {
     public List<Square> getNeighbouringSquares() {
 
         List<Square> neighbouringSquares = new ArrayList<Square>();
-        RoRSession session = GameSessionManager.getInstance().getGameSessionByName(sessionName);
-        Map map = session.getMap();
 
+        /* TODO: Wieso kennt ein Square seinen Nachbar und die ganze Map und wofür? Ahh... Wahrscheinlich für die Jython-Sachen später? Sollte aber nicht hier stehen.
         // Linkes Square
         if (xIndex - 1 >= 0) {
             neighbouringSquares.add(map.getSquare(xIndex - 1, yIndex));
@@ -68,7 +65,7 @@ public class Square extends ModelBase {
         // Unteres Square
         if (yIndex + 1 < map.getMapSize()) {
             neighbouringSquares.add(map.getSquare(xIndex, yIndex + 1));
-        }
+        }*/
 
         return neighbouringSquares;
     }
@@ -81,24 +78,6 @@ public class Square extends ModelBase {
         return placeableOnSquare;
     }
 
-    public int getXIndex() {
-        return xIndex;
-    }
-
-    public int getYIndex() {
-        return yIndex;
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((placeableOnSquare == null) ? 0 : placeableOnSquare.hashCode());
-        result = prime * result + xIndex;
-        result = prime * result + yIndex;
-        return result;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -108,20 +87,21 @@ public class Square extends ModelBase {
         if (getClass() != obj.getClass())
             return false;
         Square other = (Square) obj;
+
+        // TODO: Muss eventuell angepasst werden.
         if (placeableOnSquare == null) {
             if (other.placeableOnSquare != null)
                 return false;
-        } else if (!placeableOnSquare.equals(other.placeableOnSquare))
+        } else if (!placeableOnSquare.equals(other.placeableOnSquare)) {
             return false;
-        if (xIndex != other.xIndex)
-            return false;
-        if (yIndex != other.yIndex)
-            return false;
-        return true;
+        } else {
+            return true;
+        }
+        return false;
     }
 
     @Override
     public String toString() {
-        return "Square [placeableOnSquare=" + placeableOnSquare + ", xIndex=" + xIndex + ", yIndex=" + yIndex + "]";
+        return "Square [placeableOnSquare=" + placeableOnSquare + "]";
     }
 }

@@ -10,14 +10,13 @@ import com.google.gson.JsonObject;
 import communication.MessageInformation;
 import exceptions.RailSectionException;
 import models.session.GameSessionManager;
-import models.session.RoRSession;
 
 /**
  * Klasse fuer Schienen, die einem Feld (Square) zugeordnet sind und ein
  * Schienenstueck (= Gerade, Kurve) bzw. zwei Schienenstuecke (= Kreuzung,
  * Weiche) besitzen
  */
-public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Comparable<Rail> {
+public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
     private PlaceableOnRail placeableOnRail = null;
     private UUID trainstationId;
     private UUID mineID;
@@ -31,10 +30,8 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
      * @param ueberObjekt
      */
     public Rail(List<RailSection> railSectionList, UUID ueberObjekt) {
-        if () {
-            setTrainstationID(ueberObjekt);
-        }
-
+        // Todo: Wenn Überobjekt setze transtationID oder minenID je nachdem was ueberobjekt dingens ist.
+        setTrainstationID(ueberObjekt);
         this.railSectionList = railSectionList;
         notifyCreatedRail();
     }
@@ -59,11 +56,14 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         return resource;
     }
 
+
+    //TODO: Gehört eigentlich in die Ressourcenklasse oder in Railressourcen oder so...
     /**
      * Platziert auf den benachbarten Squares (sofern frei) anhand der Schwierigkeit
      * des Spiels entweder Kohle oder Gold
      */
-    public void generateResourcesNextToRail() {
+   /* public void generateResourcesNextToRail() {
+        // TODO: Ressource immer Bestandteil einer bestimmten Session, Maps, Square, also muss es davon gelöst werden.
         Square square = getSquareFromGameSession();
 
         if (square != null) {
@@ -77,26 +77,26 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
                 if (s.getPlaceableOnSquare() == null && Math.random() < chanceToSpawn / 100) {
                     if (Math.random() < 0.5) {
                         Gold gold = new Gold(
-                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(), s);
+                                GameSessionManager.getInstance().getGameSessionByName("DUMMER SESSIONNAME").getPlayerName(), s);
                         s.setPlaceableOnSquare(gold);
                     } else {
                         Coal coal = new Coal(
-                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(), s);
+                                GameSessionManager.getInstance().getGameSessionByName("DUMMER SESSIONNAME").getPlayerName(), s);
                         s.setPlaceableOnSquare(coal);
                     }
                 }
             }
         }
-    }
+    }*/
 
     /**
      * Gibt das Square zurück, auf welchem die Rail liegt
      *
      * @return Square auf welchen die Rail liegt
      */
-    public Square getSquareFromGameSession() {
-        return GameSessionManager.getInstance().getGameSessionByName(sessionName).getMap().getSquareById(getSquareId());
-    }
+/*    public Square getSquareFromGameSession() {
+         return GameSessionManager.getInstance().getGameSessionByName(sessionName).getMap().getSquareById(getSquareId());
+    }*/
 
     /**
      * Erstellt für die hereingegebenen RailSectionPositions die jeweiligen
@@ -106,38 +106,35 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
      * @param sessionName
      * @param railSectionPositions
      */
+/*
     private void createRailSectionsForRailSectionPositions(String sessionName, List<Compass> railSectionPositions) {
         for (int i = 0; i < railSectionPositions.size(); i += 2) {
             RailSection section = new RailSection(sessionName, this, railSectionPositions.get(i),
-                    railSectionPositions.get(i + 1));
+                   railSectionPositions.get(i + 1));
             railSectionList.add(section);
         }
     }
+*/
 
     /**
      * Schickt Nachricht an Observer, wenn Schiene erstellt wurde.
      */
+    // TODO: ist nur für Geraden und Kurven und muss gefixt werden. Sollte auch nicht unbedingt hier serialisiert werden...
     private void notifyCreatedRail() {
         MessageInformation messageInfo = new MessageInformation("CreateRail");
-        messageInfo.putValue("railId", getId());
-
-        messageInfo.putValue("squareId", getSquareId());
-        // TODO: Später haben wir die richtigen SquareIds im Client, im Moment noch
-        // nicht!!
-        messageInfo.putValue("xPos", getXPos());
-        messageInfo.putValue("yPos", getYPos());
 
         List<JsonObject> railSectionJsons = new ArrayList<JsonObject>();
         for (RailSection section : railSectionList) {
             JsonObject json = new JsonObject();
-            json.addProperty("railSectionId", section.getId().toString());
+            json.addProperty("railSectionId", section.getUUID().toString());
             json.addProperty("node1", section.getNode1().toString());
             json.addProperty("node2", section.getNode2().toString());
             railSectionJsons.add(json);
         }
         messageInfo.putValue("railSectionList", railSectionJsons);
 
-        notifyChange(messageInfo);
+        notifyObservers();
+        // notifyChange(messageInfo);
     }
 
     public void setPlaceableOnRail(PlaceableOnRail placeableOnRail) {
@@ -224,38 +221,6 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         }
     }
 
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((placeableOnRail == null) ? 0 : placeableOnRail.hashCode());
-
-        for (RailSection section : railSectionList) {
-            result = prime * result + ((section == null) ? 0 : section.hashCode());
-        }
-
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Rail other = (Rail) obj;
-        if (placeableOnRail == null) {
-            if (other.placeableOnRail != null)
-                return false;
-        } else if (!placeableOnRail.equals(other.placeableOnRail))
-            return false;
-
-        return true;
-    }
-
     /**
      * Rotiert alle RailSections der Rail
      *
@@ -275,26 +240,11 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 
     @Override
     public String toString() {
-        return "Rail [placeableOnRail=" + placeableOnRail + ", trainstationId=" + trainstationId + ", getXPos()="
-                + getXPos() + ", getYPos()=" + getYPos() + ", getId()=" + getId() + "]";
+        return " Rail ID()=\" + getUUID() + [placeableOnRail=" + placeableOnRail + ", trainstationId=" + trainstationId + "minesID=" + mineID + "]";
     }
 
-    public void changeSquare(Square newSquare) {
-        this.setSquareId(newSquare.getId());
-        this.setXPos(newSquare.getXIndex());
-        this.setYPos(newSquare.getYIndex());
-    }
 
-    @Override
-    public int compareTo(Rail o) {
-        if (this.getXPos() == o.getXPos()) {
-            return o.getYPos() - this.getYPos();
-        } else {
-            return o.getXPos() - this.getXPos();
-        }
-    }
-
-    @Override
+   /* @Override
     public Rail loadFromMap(Square square, RoRSession session) {
 
         Rail rail = (Rail) square.getPlaceableOnSquare();
@@ -307,12 +257,18 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         }
 
         // Neues Rail erstellen und damit an den Client schicken
-        Rail newRail = new Rail(session.getName(), square, railSectionPosition);
+        Rail newRail = new Rail(session.getPlayerName(), square, railSectionPosition);
         System.out.println("Neue Rail erstellt: " + newRail.toString());
 
         // Ressourcen setzen
         newRail.generateResourcesNextToRail();
 
         return newRail;
+    }*/
+
+
+    @Override
+    public PlaceableOnSquare loadFromMap() {
+        return null;
     }
 }

@@ -1,7 +1,5 @@
 package models.game;
 
-import models.session.RoRSession;
-
 /**
  * Interface fuer Objekte, die auf einer Rail platziert werden
  */

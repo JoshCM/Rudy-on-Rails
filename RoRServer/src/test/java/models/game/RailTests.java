@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import communication.MessageInformation;
-import communication.queue.QueueMessageQueue;
 import communication.topic.TopicMessageQueue;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
@@ -67,7 +66,7 @@ public class RailTests {
 		int messageInfoYPos = messageInfo.getValueAsInt("yPos");
 
 		// warum nicht die richtige ?
-		assertEquals(rail.getId(), messageInfoRailId);
+		assertEquals(rail.getUUID(), messageInfoRailId);
 		assertEquals(rail.getXPos(), messageInfoXPos);
 		assertEquals(rail.getYPos(), messageInfoYPos);
 		assertEquals(rail.getSquareId(), messageInfoSquareId);

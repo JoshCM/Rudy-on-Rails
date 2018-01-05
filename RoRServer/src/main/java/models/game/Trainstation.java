@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import com.google.gson.JsonObject;
 
-import commands.game.CreateLocoCommand;
 import communication.MessageInformation;
 import helper.Geometry;
 import helper.Geometry.Coordinate;
@@ -52,7 +51,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	
 	private void notifyCreatedTrainstation() {
 		MessageInformation messageInfo = new MessageInformation("CreateTrainstation");
-		messageInfo.putValue("trainstationId", getId());
+		messageInfo.putValue("trainstationId", getUUID());
 		messageInfo.putValue("alignment", alignment);
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
@@ -96,7 +95,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	
 	private void notifyTrainstationAlignmentUpdated() {
 		MessageInformation messageInformation = new MessageInformation("UpdateAlignmentOfTrainstation");
-		messageInformation.putValue("id", this.getId());
+		messageInformation.putValue("id", this.getUUID());
 		messageInformation.putValue("alignment", this.alignment.toString());
 		notifyChange(messageInformation);
 	}
@@ -121,7 +120,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 			else
 				newCoordinate = Geometry.rotate(railXpos, railYpos, COUNTER_CLOCKWISE, pivotXPos, pivotYPos);
 			
-			Square oldRailSquare = (Square)editorSession.getMap().getSquareById(trainstationRail.getSquareId());
+			Square oldRailSquare = editorSession.getMap().getSquareById(trainstationRail.getSquareId());
 			
 			// rotiere und adde trainstationRail der tempList
 			trainstationRail.rotate(right, right);
@@ -141,10 +140,10 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 			RailSection sectionOne = tempRail.getFirstSection();
 			
 			// bekomme newSquare
-			Square newRailSquare = (Square)editorSession.getMap().getSquare(railCoordinate.x, railCoordinate.y);
+			Square newRailSquare = editorSession.getMap().getSquare(railCoordinate.x, railCoordinate.y);
 			
 			// erzeuge neue Rail und setze intern das Square.PlacableOnSquare
-			Rail newRail = new Rail(sessionName, newRailSquare, Arrays.asList(sectionOne.getNode1(), sectionOne.getNode2()), tempRail.getTrainstationId(), tempRail.getId());
+			Rail newRail = new Rail(sessionName, newRailSquare, Arrays.asList(sectionOne.getNode1(), sectionOne.getNode2()), tempRail.getTrainstationId(), tempRail.getUUID());
 			newRailSquare.setPlaceableOnSquare(newRail);
 		}		
 	}
@@ -214,11 +213,11 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 			else
 				newCoordinate = Geometry.rotate(railXpos, railYpos, COUNTER_CLOCKWISE, pivotXPos, pivotYPos);
 			
-			Square newRailSquare = (Square)editorSession.getMap().getSquare(newCoordinate.x, newCoordinate.y);
+			Square newRailSquare = editorSession.getMap().getSquare(newCoordinate.x, newCoordinate.y);
 			if(newRailSquare == null)
 				return false;
 			if(newRailSquare.getPlaceableOnSquare() != null)
-				if(!trainstationRailIds.contains(newRailSquare.getPlaceableOnSquare().getId()))
+				if(!trainstationRailIds.contains(newRailSquare.getPlaceableOnSquare().getUUID()))
 					return false;
 		}
 		return true;
@@ -227,7 +226,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	@Override
 	public Trainstation loadFromMap(Square square, RoRSession session) {
 		Trainstation trainStation = (Trainstation) square.getPlaceableOnSquare();
-		Trainstation newTrainStation = new Trainstation(session.getName(), square, trainStation.getTrainstationRailIds(), trainStation.getId(), trainStation.alignment);	
+		Trainstation newTrainStation = new Trainstation(session.getName(), square, trainStation.getTrainstationRailIds(), trainStation.getUUID(), trainStation.alignment);
 		System.out.println("Neue TrainStation erstellt: " + newTrainStation.toString());
 		return newTrainStation;
 	}
@@ -265,10 +264,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		} else if (!spawnPointForLoco.equals(other.spawnPointForLoco))
 			return false;
 		if (trainstationRailIds == null) {
-			if (other.trainstationRailIds != null)
-				return false;
-		} else if (!trainstationRailIds.equals(other.trainstationRailIds))
-			return false;
-		return true;
+			return other.trainstationRailIds == null;
+		} else return trainstationRailIds.equals(other.trainstationRailIds);
 	}
 }

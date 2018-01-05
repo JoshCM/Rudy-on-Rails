@@ -1,11 +1,8 @@
 package models.game;
 
-import java.util.UUID;
-
-import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
 import models.base.ModelBase;
-import models.helper.CompassHelper;
+import models.helper.orientationHelper;
 
 /**
  * Klasse für ein Schienenstueck mit "Eingang" und "Ausgang"
@@ -33,7 +30,7 @@ public class RailSection extends ModelBase {
      * @param node2
      */
     public RailSection(String node1, String node2) {
-        this(CompassHelper.convertStringToNode(node1), CompassHelper.convertStringToNode(node2));
+        this(orientationHelper.convertStringToNode(node1), orientationHelper.convertStringToNode(node2));
     }
 
     /**
@@ -145,17 +142,10 @@ public class RailSection extends ModelBase {
             if (node2.equals(other.node2)) {
                 return true;
             } else {
-                if (node2.equals(other.node1) && node1.equals(other.node2)) {
-                    return true;
-                }
-                return false;
+                return node2.equals(other.node1) && node1.equals(other.node2);
             }
         } else {
-            if (node2.equals(other.node1) && node1.equals(other.node2)) {
-                return true;
-            } else {
-                return false;
-            }
+            return node2.equals(other.node1) && node1.equals(other.node2);
         }
     }
 

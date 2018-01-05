@@ -3,7 +3,6 @@ package communication;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,7 +11,6 @@ import org.junit.Test;
 import com.google.gson.JsonObject;
 
 import communication.dispatcher.FromClientRequestQueueDispatcher;
-import communication.dispatcher.RequestSerializer;
 import helper.MessageQueueStub;
 import models.game.Player;
 import models.session.EditorSession;
@@ -132,7 +130,7 @@ public class FromClientRequestQueueDispatcherTests {
 
 		assertEquals(2, editorSession.getPlayers().size());
 
-		Player joinedPlayer = editorSession.getPlayers().stream().filter(x -> x.getName().equals(joinedPlayerName))
+		Player joinedPlayer = editorSession.getPlayers().stream().filter(x -> x.getPlayerName().equals(joinedPlayerName))
 				.findFirst().get();
 		assertNotNull(joinedPlayer);
 	}
@@ -166,14 +164,14 @@ public class FromClientRequestQueueDispatcherTests {
 
 		JsonObject hostPlayerData = playerList.get(0);
 		Player hostPlayer = editorSession.getPlayers().get(0);
-		assertEquals(hostPlayer.getId().toString(), hostPlayerData.get("playerId").getAsString());
-		assertEquals(hostPlayer.getName(), hostPlayerData.get("playerName").getAsString());
+		assertEquals(hostPlayer.getUUID().toString(), hostPlayerData.get("playerId").getAsString());
+		assertEquals(hostPlayer.getPlayerName(), hostPlayerData.get("playerName").getAsString());
 		assertEquals(hostPlayer.getIsHost(), hostPlayerData.get("isHost").getAsBoolean());
 
 		JsonObject joinedPlayerData = playerList.get(1);
 		Player joinedPlayer = editorSession.getPlayers().get(1);
-		assertEquals(joinedPlayer.getId().toString(), joinedPlayerData.get("playerId").getAsString());
-		assertEquals(joinedPlayer.getName(), joinedPlayerData.get("playerName").getAsString());
+		assertEquals(joinedPlayer.getUUID().toString(), joinedPlayerData.get("playerId").getAsString());
+		assertEquals(joinedPlayer.getPlayerName(), joinedPlayerData.get("playerName").getAsString());
 		assertEquals(joinedPlayer.getIsHost(), joinedPlayerData.get("isHost").getAsBoolean());
 	}
 
@@ -195,7 +193,7 @@ public class FromClientRequestQueueDispatcherTests {
 
 		assertEquals(2, gameSession.getPlayers().size());
 
-		Player joinedPlayer = gameSession.getPlayers().stream().filter(x -> x.getName().equals(joinedPlayerName))
+		Player joinedPlayer = gameSession.getPlayers().stream().filter(x -> x.getPlayerName().equals(joinedPlayerName))
 				.findFirst().get();
 		assertNotNull(joinedPlayer);
 	}
@@ -229,14 +227,14 @@ public class FromClientRequestQueueDispatcherTests {
 
 		JsonObject hostPlayerData = playerList.get(0);
 		Player hostPlayer = gameSession.getPlayers().get(0);
-		assertEquals(hostPlayer.getId().toString(), hostPlayerData.get("playerId").getAsString());
-		assertEquals(hostPlayer.getName(), hostPlayerData.get("playerName").getAsString());
+		assertEquals(hostPlayer.getUUID().toString(), hostPlayerData.get("playerId").getAsString());
+		assertEquals(hostPlayer.getPlayerName(), hostPlayerData.get("playerName").getAsString());
 		assertEquals(hostPlayer.getIsHost(), hostPlayerData.get("isHost").getAsBoolean());
 
 		JsonObject joinedPlayerData = playerList.get(1);
 		Player joinedPlayer = gameSession.getPlayers().get(1);
-		assertEquals(joinedPlayer.getId().toString(), joinedPlayerData.get("playerId").getAsString());
-		assertEquals(joinedPlayer.getName(), joinedPlayerData.get("playerName").getAsString());
+		assertEquals(joinedPlayer.getUUID().toString(), joinedPlayerData.get("playerId").getAsString());
+		assertEquals(joinedPlayer.getPlayerName(), joinedPlayerData.get("playerName").getAsString());
 		assertEquals(joinedPlayer.getIsHost(), joinedPlayerData.get("isHost").getAsBoolean());
 	}
 

@@ -3,38 +3,44 @@ package models.game;
 import communication.MessageInformation;
 import models.base.ModelBase;
 
-import java.util.UUID;
 
 public class Player extends ModelBase {
-    private String name;
+    private String playerName;
     private boolean isHost;
 
-    public Player(String sessionName, String name, UUID id, boolean isHost) {
-    	super(sessionName);
-        this.name = name;
-        this.setId(id);
+    public Player(String playerName, boolean isHost) {
+        this.playerName = playerName;
         this.isHost = isHost;
-        
         notifyCreated();
     }
-    
-    public String getName() {
-        return name;
+
+    public Player(String playerName) {
+        this(playerName, false);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Player() {
+        this("DEFAULTNAME");
     }
-    
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
     public boolean getIsHost() {
-    	return isHost;
+        return isHost;
     }
-    
+
+    // TODO: Serialisierung vereinheitlichen.
     private void notifyCreated() {
-    	MessageInformation messageInfo = new MessageInformation("CreatePlayer");
-    	messageInfo.putValue("playerId", getId());
-    	messageInfo.putValue("playerName", name);
-    	messageInfo.putValue("isHost", isHost);
-    	notifyChange(messageInfo);
+        MessageInformation messageInfo = new MessageInformation("CreatePlayer");
+        messageInfo.putValue("playerId", getUUID());
+        messageInfo.putValue("playerName", playerName);
+        messageInfo.putValue("isHost", isHost);
+        notifyObservers();
+        //notifyChange(messageInfo);
     }
 }

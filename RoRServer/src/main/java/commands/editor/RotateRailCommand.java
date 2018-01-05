@@ -2,7 +2,6 @@ package commands.editor;
 
 import commands.base.CommandBase;
 import communication.MessageInformation;
-import exceptions.NotRemoveableException;
 import exceptions.NotRotateableException;
 import models.game.Map;
 import models.game.Rail;
@@ -43,7 +42,7 @@ public class RotateRailCommand extends CommandBase {
 			throw new NotRotateableException(
 					String.format("%s(Id:%s)%s", 
 							square.getPlaceableOnSquare().getClass().getName(),
-							square.getPlaceableOnSquare().getId(), 
+							square.getPlaceableOnSquare().getUUID(),
 							" kann nicht rotiert werden"));
 		}
 	}

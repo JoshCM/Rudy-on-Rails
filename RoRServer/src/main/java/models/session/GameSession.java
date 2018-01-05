@@ -108,7 +108,7 @@ public class GameSession extends RoRSession{
 	}
 	
 	public void startGame() {
-		started = true;
+		running = true;
 		MessageInformation messageInfo = new MessageInformation("StartGame");
 		notifyChange(messageInfo);
 	}

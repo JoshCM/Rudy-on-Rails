@@ -44,7 +44,7 @@ public class DeletePlaceableCommand extends CommandBase {
 			throw new NotRemoveableException(
 					String.format("%s(Id:%s)%s", 
 							square.getPlaceableOnSquare().getClass().getName(),
-							square.getPlaceableOnSquare().getId(), 
+							square.getPlaceableOnSquare().getUUID(),
 							" kann nicht entfernt werden"));
 		}
 	}

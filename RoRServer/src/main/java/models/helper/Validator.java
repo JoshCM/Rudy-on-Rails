@@ -36,10 +36,8 @@ public class Validator {
 	 * @return boolean
 	 */
 	public static boolean validateRailOnMap(Square newSquare) {
-		if (newSquare.getPlaceableOnSquare() != null)
-			return false;
-		return true;
-	}
+        return newSquare.getPlaceableOnSquare() == null;
+    }
 
 	/**
 	 * Validiert ob eine Trainstation auf newSquare gesetzt werden kann
@@ -52,10 +50,8 @@ public class Validator {
 
 		if (!validatePossibleTrainstation(newSquare))
 			return false;
-		if (!validatePossibleRails(newSquare, alignment, railCount, map))
-			return false;
-		return true;
-	}
+        return validatePossibleRails(newSquare, alignment, railCount, map);
+    }
 
 	/**
 	 * Validiert ob das Trainstation-Gebäude auf das newSquare gesetzt werden kann
@@ -64,14 +60,11 @@ public class Validator {
 	 */
 	private static boolean validatePossibleTrainstation(Square newSquare) {
 		if (newSquare != null) {
-			if (newSquare.getPlaceableOnSquare() != null) {
-				return false;
-			}
+            return newSquare.getPlaceableOnSquare() == null;
 		} else {
 			return false;
 		}
-		return true;
-	}
+    }
 
 	/**
 	 * Gibt an ob die neuen Squares der TrainstationRails einer neuen Trainstation platzierbar sind

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.jms.Session;
-
 import com.google.gson.JsonObject;
 
 import communication.MessageEnvelope;
@@ -58,8 +56,8 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		responseInformation.putValue("topicName", editorSession.getName());
 		responseInformation.putValue("editorName", editorSession.getName());
 		Player hostPlayer = editorSession.getHost();
-		responseInformation.putValue("playerName", hostPlayer.getName());
-		responseInformation.putValue("playerId", hostPlayer.getId().toString());
+		responseInformation.putValue("playerName", hostPlayer.getPlayerName());
+		responseInformation.putValue("playerId", hostPlayer.getUUID().toString());
 
 		sendMessage(responseInformation);
 	}
@@ -84,8 +82,8 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		List<JsonObject> players = new ArrayList<JsonObject>();
 		for (Player sessionPlayer : editorSession.getPlayers()) {
 			JsonObject json = new JsonObject();
-			json.addProperty("playerId", sessionPlayer.getId().toString());
-			json.addProperty("playerName", sessionPlayer.getName());
+			json.addProperty("playerId", sessionPlayer.getUUID().toString());
+			json.addProperty("playerName", sessionPlayer.getPlayerName());
 			json.addProperty("isHost", sessionPlayer.getIsHost());
 			players.add(json);
 		}
@@ -118,8 +116,8 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		responseInformation.setClientid(clientId);
 		responseInformation.putValue("topicName", gameSession.getName());
 		responseInformation.putValue("gameName", gameSession.getName());
-		responseInformation.putValue("playerName", gameSession.getHost().getName());
-		responseInformation.putValue("playerId", gameSession.getHost().getId().toString());
+		responseInformation.putValue("playerName", gameSession.getHost().getPlayerName());
+		responseInformation.putValue("playerId", gameSession.getHost().getUUID().toString());
 
 		sendMessage(responseInformation);
 	}
@@ -149,8 +147,8 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		List<JsonObject> players = new ArrayList<JsonObject>();
 		for (Player sessionPlayer : gameSession.getPlayers()) {
 			JsonObject json = new JsonObject();
-			json.addProperty("playerId", sessionPlayer.getId().toString());
-			json.addProperty("playerName", sessionPlayer.getName());
+			json.addProperty("playerId", sessionPlayer.getUUID().toString());
+			json.addProperty("playerName", sessionPlayer.getPlayerName());
 			json.addProperty("isHost", sessionPlayer.getIsHost());
 			players.add(json);
 		}
@@ -166,11 +164,11 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		List<JsonObject> editorSessionInfos = new ArrayList<JsonObject>();
 		List<EditorSession> editorSessions = EditorSessionManager.getInstance().getEditorSessionsAsList();
 		for (EditorSession session : editorSessions) {
-			if (!session.isStarted()) {
+			if (!session.isRunning()) {
 				JsonObject json = new JsonObject();
 				json.addProperty("name", session.getName());
 				json.addProperty("amountOfPlayers", session.getPlayers().size());
-				json.addProperty("hostname", session.getHost().getName());
+				json.addProperty("hostname", session.getHost().getPlayerName());
 				editorSessionInfos.add(json);
 			}
 		}
@@ -187,11 +185,11 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		List<JsonObject> gameSessionInfos = new ArrayList<JsonObject>();
 		List<GameSession> gameSessions = GameSessionManager.getInstance().getGameSessionsAsList();
 		for (GameSession session : gameSessions) {
-			if (!session.isStarted()) {
+			if (!session.isRunning()) {
 				JsonObject json = new JsonObject();
 				json.addProperty("name", session.getName());
 				json.addProperty("amountOfPlayers", session.getPlayers().size());
-				json.addProperty("hostname", session.getHost().getName());
+				json.addProperty("hostname", session.getHost().getPlayerName());
 				gameSessionInfos.add(json);
 			}
 		}

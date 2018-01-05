@@ -6,8 +6,6 @@ import java.util.UUID;
 
 import org.junit.Test;
 import models.game.Player;
-import models.session.EditorSession;
-import models.session.EditorSessionManager;
 
 public class EditorSessionManagerTests {
 	@Test
@@ -26,7 +24,7 @@ public class EditorSessionManagerTests {
 		Player player = editorSession.createPlayer(UUID.randomUUID(), "Neuer Spieler");
 
 		assertEquals(2, editorSession.getPlayers().size());
-		assertEquals("HostPlayer", editorSession.getPlayers().get(0).getName());
-		assertEquals("Neuer Spieler", editorSession.getPlayers().get(1).getName());
+		assertEquals("HostPlayer", editorSession.getPlayers().get(0).getPlayerName());
+		assertEquals("Neuer Spieler", editorSession.getPlayers().get(1).getPlayerName());
 	}
 }

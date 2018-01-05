@@ -14,7 +14,7 @@ public class GameSessionTests {
 		
 		gameSession.startGame();
 		
-		assertTrue(gameSession.isStarted());
+		assertTrue(gameSession.isRunning());
 	}
 	
 	@Test

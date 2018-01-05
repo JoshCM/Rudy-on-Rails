@@ -53,7 +53,8 @@ public class Map extends ModelBase {
     private void notifyChangedName() {
         MessageInformation messageInformation = new MessageInformation("UpdateNameOfMap");
         messageInformation.putValue("mapName", name);
-        notifyChange(messageInformation);
+        notifyObservers();
+        // notifyChange(messageInformation);
     }
 
     public Square getSquare(int x, int y) {
@@ -78,9 +79,7 @@ public class Map extends ModelBase {
         Map other = (Map) obj;
         if (mapSize != other.mapSize)
             return false;
-        if (!Arrays.deepEquals(squares, other.squares))
-            return false;
-        return true;
+        return Arrays.deepEquals(squares, other.squares);
     }
 
     // TODO: FIXME: Wofür braucht Map nen Hashcode?
@@ -98,7 +97,7 @@ public class Map extends ModelBase {
             for (Square square : squares) {
                 PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
                 if (placeableOnSquare != null) {
-                    if (placeableOnSquare.getId().equals(id)) {
+                    if (placeableOnSquare.getUUID().equals(id)) {
                         return placeableOnSquare;
                     }
                 }
@@ -110,7 +109,7 @@ public class Map extends ModelBase {
     public Square getSquareById(UUID id) {
         for (Square[] squares : getSquares()) {
             for (Square square : squares) {
-                if (square.getId().equals(id)) {
+                if (square.getUUID().equals(id)) {
                     return square;
                 }
             }
@@ -118,27 +117,12 @@ public class Map extends ModelBase {
         return null;
     }
 
-    /**
-     * Setzt den Session Name für die Map und jedes Square
-     *
-     * @param sessionName
-     */
-    public void setSessionNameForMapAndSquares(String sessionName) {
-
-        for (Square[] squares : getSquares()) {
-            for (Square square : squares) {
-                square.setSessionName(sessionName);
-            }
-        }
-    }
 
     // TODO: Muss gefixt werden.
     /**
      * Gibt ein zugehöriges neuse Square, nach dem Moven der Trainstation, für eine
      * Rail zurück
      *
-     * @param trainstationSquare
-     * @param alignment
      * @return Zugehöriges Square einer Rail
      */
     private Square getTrainstationRailSquare(Rail trainstationRail, Trainstation newTrainstation,
@@ -167,7 +151,7 @@ public class Map extends ModelBase {
             newSquareOfPlaceable.setPlaceableOnSquare((PlaceableOnSquare) placeableOnSquare);
 
             // entweder nur ids oder nur x und y, wir müssen uns entscheiden
-            placeableOnSquare.setSquareId(newSquareOfPlaceable.getId());
+            placeableOnSquare.setSquareId(newSquareOfPlaceable.getUUID());
             placeableOnSquare.setXPos(newSquareOfPlaceable.getXIndex());
             placeableOnSquare.setYPos(newSquareOfPlaceable.getYIndex());
 
@@ -209,7 +193,7 @@ public class Map extends ModelBase {
         for (Rail trainstationRail : trainstation.getTrainstationRails()) {
             List<String> trainstationRailCoordinates = new ArrayList<String>();
             Square newTrainstationRailSquare = this.getSquareById(trainstationRail.getSquareId());
-            trainstationRailCoordinates.add(trainstationRail.getId().toString());
+            trainstationRailCoordinates.add(trainstationRail.getUUID().toString());
             trainstationRailCoordinates.add(String.valueOf(newTrainstationRailSquare.getXIndex()));
             trainstationRailCoordinates.add(String.valueOf(newTrainstationRailSquare.getYIndex()));
             trainstationRailsCoordinateList.add(trainstationRailCoordinates);
