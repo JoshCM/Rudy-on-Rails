@@ -311,8 +311,9 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		newRail.setName(session.getName());
 		
 		// Ressourcen setzen, wenn die Session eine GameSession ist
-		if(session instanceof GameSession)
-		newRail.generateResourcesNextToRail();
+		if(session instanceof GameSession) {
+			newRail.generateResourcesNextToRail();
+		}
 
 		return newRail;
 	}

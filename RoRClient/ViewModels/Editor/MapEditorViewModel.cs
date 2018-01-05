@@ -246,6 +246,13 @@ namespace RoRClient.ViewModels.Editor
                     CanvasEditorViewModel viewModel = factory.CreateEditorViewModelForModel(square.PlaceableOnSquare, this);
 
                     taskFactory.StartNew(() => placeableOnSquareCollection.Add(viewModel));
+
+                    if (viewModel is RailEditorViewModel)
+                    {
+                        RailEditorViewModel railEditorViewModel = (RailEditorViewModel)viewModel;
+                        railEditorViewModel.Rail.PropertyChanged += OnRailPropertyChanged;
+                        railEditorViewModel.ToolbarViewModel = toolbarViewModel;
+                    }
                 }
             }
         }

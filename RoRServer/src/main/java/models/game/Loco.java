@@ -185,10 +185,4 @@ public class Loco extends TickableGameObject {
 	public UUID getPlayerId() {
 		return playerId;
 	}
-
-	@Override
-	public PlaceableOnSquare loadFromMap(Square square, RoRSession session) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

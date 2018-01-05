@@ -23,6 +23,8 @@ namespace RoRClient.ViewModels.Editor
         public MineEditorViewModel(Mine mine) : base(mine.Id)
         {
             this.mine = mine;
+            this.SquarePosX = mine.Square.PosX;
+            this.SquarePosY = mine.Square.PosY;
         }
 
         public override void Delete()
