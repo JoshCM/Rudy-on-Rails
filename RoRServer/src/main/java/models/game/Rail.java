@@ -307,17 +307,18 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
             railSectionPosition.add(section.getNode1());
             railSectionPosition.add(section.getNode2());
         }
+        
+        boolean createSignals = rail.getSignals() != null;
 
         // Neues Rail erstellen und damit an den Client schicken
-        Rail newRail = new Rail(session.getName(), square, railSectionPosition);
+        Rail newRail = new Rail(session.getName(), square, railSectionPosition, createSignals);
         System.out.println("Neue Rail erstellt: " + newRail.toString());
         
-        if(rail.getSignals() != null) {
-        	Signals newSignals = new Signals(session.getName(), square);
-        	
-        	// Der einfachhalthalber nur für Kreuzungen
-        	if(newSignals.isWestSignalActive() && newSignals.isEastSignalActive()) {
-        		newSignals.switchSignals();
+        // Sonderfall für Krezungen, die Signale haben
+        // ToDo: Refactoring, wenn die Modelstruktur umgebaut wurde!
+        if(createSignals) {
+        	if(rail.getSignals().isWestSignalActive() && rail.getSignals().isEastSignalActive()) {
+        		newRail.getSignals().switchSignals();
         	}
         }
         
