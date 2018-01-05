@@ -1,6 +1,7 @@
 package models.game;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.UUID;
 
 import communication.MessageInformation;
@@ -19,6 +20,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	private long timeDeltaCounter = 0;// Summe der Zeit zwischen den Ticks
 	private long speed;
 	private Compass compass;
+	private boolean reversed = false;
 	private Map map;
 	private Square square;
 
@@ -40,29 +42,9 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		this.speed = 0; // Nur zu testzwecken
 		this.playerId = playerId;
 		SendCreatedLocoMessage();
-		this.addCart();
+		this.addInitialCart();
 	}
 
-	/**
-	 * Fuege Carts zur Liste der Loco hinzu
-	 * 
-	 * @param cart
-	 */
-	public void addCart() {
-		Rail prevRail = null;
-		Square cartSquare = null;
-		if(carts.isEmpty()) {
-			Compass compass = this.getCompassNegation();
-			prevRail = getPreviousRail(compass);
-			cartSquare = map.getSquare(prevRail.getXPos(), prevRail.getYPos());
-		}
-		else {
-			
-		}
-		carts.add(new Cart(this.sessionName, cartSquare));
-		SendAddCartMessage(cartSquare);
-		
-	}
 
 	/**
 	 * steuert das spezifische verhalten der Lok beim eintreten eines Ticks
@@ -73,7 +55,11 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 			this.timeDeltaCounter += timeDeltaInNanoSeconds;
 			if (this.timeDeltaCounter >= SEC_IN_NANO / speed) {
 				timeDeltaCounter = 0;
-				drive();
+				if(reversed) {
+					reversedDrive();
+				}else {
+					drive();
+				}
 			}
 		}
 
@@ -84,7 +70,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	 */
 	public void drive() {
 		Rail nextRail = getNextRail();
-		moveCarts(this.rail);
+		moveCarts(this.rail,this.compass);
 		this.compass = nextRail.getExitDirection(getCompassNegation());
 		this.rail = nextRail;
 		this.setXPos(this.rail.getXPos());
@@ -92,18 +78,77 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		SendUpdateLocoMessage();
 
 	}
+
+
+	public void reversedDrive() {
+
+		
+		Cart actCart = carts.get(carts.size()-1);
+
+		Compass back = actCart.getRail().getExitDirection(actCart.getCompass());
+
+		Rail newCartRail = getPreviousRail(back,this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
+
+		Square newSquare = this.map.getSquare(newCartRail.getXPos(),newCartRail.getYPos());
+		Square tempSquare = this.map.getSquare(actCart.getXPos(), actCart.getYPos());
+		
+		actCart.updateSquare(newSquare);
+		actCart.setRail(newCartRail);
+		actCart.setCompass(getCompassNegation(back));
+		actCart.SendUpdateCartMessage();
+		newSquare = tempSquare;
+		
+		//ist noch nicht getestet f¸r mehrere Carts
+		for(int i = carts.size()-2 ; i>=0 ; i--) {
+			actCart = carts.get(i);
+			back = actCart.getRail().getExitDirection(actCart.getCompass());
+			tempSquare = this.map.getSquare(actCart.getXPos(), actCart.getYPos());
+			actCart.updateSquare(newSquare);
+			actCart.setRail((Rail)newSquare.getPlaceableOnSquare());
+			actCart.setCompass(getCompassNegation(back));
+			actCart.SendUpdateCartMessage();
+			newSquare = tempSquare;
+			
+		
+		}
+		
+
+		this.updateSquare(newSquare);
+		this.rail = (Rail)newSquare.getPlaceableOnSquare();
+		compass = this.rail.getExitDirection(getCompassNegation(actCart.getCompass()));
+		SendUpdateLocoMessage();
+		
+		
+	}
 	
+	public void addInitialCart() {
+		if(carts.isEmpty()) {
+			Compass back = this.rail.getExitDirection(this.compass);
+			Rail prevRail = getPreviousRail(back);
+			Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
+			Cart cart = new Cart(this.sessionName,cartSquare,getCompassNegation(back),playerId,prevRail);
+			carts.add(cart);
+			SendAddCartMessage(cartSquare,cart.getId());
+		}
+		
+	}
 	/**
 	 * bewegt alle Wagons, die an einer Lok h‰ngen, sobald sich eine Lok um ein Feld weiter bewegt hat
 	 * 
 	 * @param forward
 	 */
-	public void moveCarts(Rail forward) {
+	public void moveCarts(Rail forward,Compass compass) {
 		Square newSquare = this.map.getSquare(forward.getXPos(), forward.getYPos());
 		Square tempSquare = null;
+		Compass newCompass = compass;
+		Compass tempCompass = null;
 		for(Cart c: carts) {
 			tempSquare = this.map.getSquareById(c.getSquareId());
+			tempCompass = c.getCompass();
 			c.updateSquare(newSquare);
+			c.setCompass(newCompass);
+			c.SendUpdateCartMessage();
+			newCompass = tempCompass;
 			newSquare = tempSquare;
 		}
 	}
@@ -151,6 +196,25 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		return null;
 	}
 	
+	public Rail getPreviousRail(Compass compass, Square square) {
+		Square retSquare;
+		switch (compass) {
+		case NORTH:
+			retSquare = this.map.getSquare(square.getXIndex(), square.getYIndex() - 1);
+			return (Rail) retSquare.getPlaceableOnSquare();
+		case EAST:
+			retSquare = this.map.getSquare(square.getXIndex() + 1, square.getYIndex());
+			return (Rail) retSquare.getPlaceableOnSquare();
+		case SOUTH:
+			retSquare = this.map.getSquare(square.getXIndex(),square.getYIndex() + 1);
+			return (Rail) retSquare.getPlaceableOnSquare();
+		case WEST:
+			retSquare = this.map.getSquare(square.getXIndex() - 1, square.getYIndex());
+			return (Rail) retSquare.getPlaceableOnSquare();
+		}
+		return null;
+	}
+	
 	/**
 	 * Negiert die aktuelle Fahrtrichtung Ist ben√∂tigt um einen U-Turn zu
 	 * verhindern.
@@ -159,6 +223,20 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	 */
 	public Compass getCompassNegation() {
 		switch (this.compass) {
+		case NORTH:
+			return Compass.SOUTH;
+		case EAST:
+			return Compass.WEST;
+		case SOUTH:
+			return Compass.NORTH;
+		case WEST:
+			return Compass.EAST;
+		}
+		return null;
+	}
+	
+	public Compass getCompassNegation(Compass compass) {
+		switch (compass) {
 		case NORTH:
 			return Compass.SOUTH;
 		case EAST:
@@ -189,9 +267,10 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		notifyChange(messageInfo);
 	}
 	
-	private void SendAddCartMessage(Square square) {
+	private void SendAddCartMessage(Square square, UUID cartId) {
 		MessageInformation messageInfo = new MessageInformation("CreateCart");
 		messageInfo.putValue("playerId", this.playerId);
+		messageInfo.putValue("cartId", cartId);
 		messageInfo.putValue("xPos", square.getXIndex());
 		messageInfo.putValue("yPos", square.getYIndex());
 		notifyChange(messageInfo);

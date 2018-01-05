@@ -48,5 +48,18 @@ namespace RoRClient.Models.Game
                 carts = value;
             }
         }
+
+        public Cart getCartById(Guid cartId)
+        {
+            foreach(Cart c in Carts){
+                if (c.Id.Equals(cartId))
+                {
+                    return c;
+                }
+            }
+
+            return null;
+
+        }
     }
 }

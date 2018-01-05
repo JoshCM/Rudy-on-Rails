@@ -10,31 +10,33 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Commands.Game.Update
 {
-    class UpdateLocoPositionCommand : CommandBase
+    class UpdateCartPositionCommand : CommandBase
     {
         private Guid playerId;
         private int xPos;
         private int yPos;
+        private Guid cartId;
 
-        public UpdateLocoPositionCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
+
+        public UpdateCartPositionCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
             playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
-
+            cartId = Guid.Parse(messageInformation.GetValueAsString("cartId"));
         }
-
         public override void Execute()
         {
             GameSession gameSession = GameSession.GetInstance();
-            
+
 
             Square square = gameSession.Map.GetSquare(xPos, yPos);
             Player player = gameSession.GetPlayerById(playerId);
 
             Loco loco = player.Loco;
-         
-            loco.Square = square;
+
+            Cart cart =loco.getCartById(cartId);
+            cart.Square = square;
         }
     }
 }
