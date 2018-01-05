@@ -3,29 +3,48 @@ using RoRClient.Models.Game;
 using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
 using RoRClient.ViewModels.Helper;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace RoRClient.ViewModels.Lobby
 {
-    class GameLobbyViewModel : ViewModelBase
+	class GameLobbyViewModel : ViewModelBase
     {
         private UIState uiState;
         private bool isHost;
+	    private LobbyModel lobbyModel;
+	    private GameSession gameSession;
 
-        public GameLobbyViewModel(UIState uiState)
+		public GameLobbyViewModel(UIState uiState, LobbyModel lobbyModel)
         {
             this.uiState = uiState;
-            GameSession.GetInstance().PropertyChanged += OnGameStarted;
+	        this.lobbyModel = lobbyModel;
+	        this.gameSession = GameSession.GetInstance();
+
+			GameSession.GetInstance().PropertyChanged += OnGameStarted;
             uiState.OnUiStateChanged += OnUiStateChanged;
         }
 
-        public bool IsHost
+		/// <summary>
+		/// Die GameSession muss hier als Property vorhanden sein, damit der MapName
+		/// in der MapListBox gebindet werden kann
+		/// </summary>
+	    public GameSession GameSession
+	    {
+		    get { return gameSession; }
+		    set { gameSession = value; }
+	    }
+
+	    public LobbyModel LobbyModel
+	    {
+		    get { return lobbyModel; }
+		    set { lobbyModel = value; }
+	    }
+
+		/// <summary>
+		/// Setzt den boolean, ob der User Host ist oder nicht
+		/// </summary>
+		public bool IsHost
         {
             get
             {
@@ -50,14 +69,32 @@ namespace RoRClient.ViewModels.Lobby
                 return startGameCommand;
             }
         }
-        /// <summary>
-        /// Wird von CreateEditorSessionCommand aufgerufen schickt passende Nachricht an Server
-        /// </summary>
-        private void StartGame()
+
+
+	    private ICommand refreshGameInfosCommand;
+	    public ICommand RefreshGameInfosCommand
+		{
+		    get
+		    {
+			    if (refreshGameInfosCommand == null)
+			    {
+				    refreshGameInfosCommand = new ActionCommand(param => RefreshGameInfos());
+			    }
+			    return refreshGameInfosCommand;
+		    }
+	    }
+
+	    public void RefreshGameInfos()
+	    {
+		    lobbyModel.ReadGameInfos();
+	    }
+
+		private void StartGame()
         {
             if (GameSession.GetInstance().OwnPlayer.IsHost)
             {
-                GameSession.GetInstance().QueueSender.SendMessage("StartGame", new MessageInformation());
+				MessageInformation messageInformation = new MessageInformation();
+                GameSession.GetInstance().QueueSender.SendMessage("StartGame", messageInformation);
             }
         }
 
@@ -73,7 +110,9 @@ namespace RoRClient.ViewModels.Lobby
         {
             if (uiState.State == "gameLobby")
             {
-                isHost = GameSession.GetInstance().OwnPlayer.IsHost;
+	            isHost = GameSession.GetInstance().OwnPlayer.IsHost;
+				lobbyModel.ReadMapInfos();
+				lobbyModel.ReadGameInfos();
             }
         }
     }

@@ -56,7 +56,9 @@ public class Map extends ModelBase {
 	}
 	
 	public Square getSquare(int x, int y) {
-		return squares[x][y];
+		if(x >= 0 && x < squares.length && y >= 0 && y < squares.length)
+			return squares[x][y];
+		return null;
 	}
 	
 	public Square[][] getSquares() {
@@ -118,7 +120,7 @@ public class Map extends ModelBase {
 	}
 	
 	/**
-	 * Setzt den Session Name für die Map und jedes Square
+	 * Setzt den Session Name fÃ¼r die Map und jedes Square
 	 * @param sessionName
 	 */
 	public void setSessionNameForMapAndSquares(String sessionName) {

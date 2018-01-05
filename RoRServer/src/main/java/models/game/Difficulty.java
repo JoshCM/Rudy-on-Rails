@@ -1,10 +1,10 @@
 package models.game;
 
 /**
- * Enum für Schwierigkeit des Spiels
- * Hier können weitere Einstellungen für das Spiel vorgenommen werden (Start-Ressourcen, Punkte für Sieg etc...)
+ * Enum fÃ¼r Schwierigkeit des Spiels
+ * Hier kÃ¶nnen weitere Einstellungen fÃ¼r das Spiel vorgenommen werden (Start-Ressourcen, Punkte fÃ¼r Sieg etc...)
  * Muss noch in die GameSession integriert werden
- * @author Andreas Pöhler
+ * @author Andreas PÃ¶hler
  *
  */
 public enum Difficulty {

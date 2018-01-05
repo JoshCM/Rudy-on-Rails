@@ -10,7 +10,7 @@
                      Canvas.Top="{Binding RealY, ElementName=trainstationGameUserControl}"
                      Canvas.Left="{Binding RealX, ElementName=trainstationGameUserControl}">
     <UserControl.Resources>
-        <converter:TrainstationAlignmentToAngleConverter  x:Key="TrainstationAlignmentToAngleConverter"/>
+        <converter:CompassToAngleConverter  x:Key="TrainstationAlignmentToAngleConverter"/>
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=trainstationGameUserControl}"
             Height="{Binding SquareDim, ElementName=trainstationGameUserControl}">

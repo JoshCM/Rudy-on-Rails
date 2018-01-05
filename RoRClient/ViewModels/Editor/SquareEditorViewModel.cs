@@ -65,11 +65,17 @@ namespace RoRClient.ViewModels.Editor
                 }
                 else if (toolbarViewModel.SelectedTool != null)
                 {
-                    if (toolbarViewModel.SelectedTool.Name.Contains("rail"))
+                    string selectedToolName = toolbarViewModel.SelectedTool.Name;
+
+                    if (selectedToolName.Contains("rail_crossing"))
+                    {
+                        SendCreateCrossingCommand();
+                    }
+                    else if (selectedToolName.Contains("rail"))
                     {
                         SendCreateRailCommand();
                     }
-                    else if (toolbarViewModel.SelectedTool.Name.Contains("trainstation"))
+                    else if (selectedToolName.Contains("trainstation"))
                     {
                         SendCreateTrainstationCommand();
                     }
@@ -100,9 +106,28 @@ namespace RoRClient.ViewModels.Editor
             railSectionObject.Add("node2", railSection.Node2.ToString());
             railSections.Add(railSectionObject);
 
-            messageInformation.PutValue("railSections", railSections);
+            messageInformation.PutValue("railSectionList", railSections);
 
             editorSession.QueueSender.SendMessage("CreateRail", messageInformation);
+        }
+
+        /// <summary>
+        /// Sendet einen Anfrage-Command an den Server, der dort eine Crossing erstellen soll
+        /// </summary>
+        private void SendCreateCrossingCommand()
+        {
+            // Quick-Navigation von einem möglich vorherigen angeklicken EditorCanvasViewModel ausblenden
+            MapViewModel.IsQuickNavigationVisible = false;
+
+            int xPos = square.PosX;
+            int yPos = square.PosY;
+            EditorSession editorSession = EditorSession.GetInstance();
+
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("xPos", xPos);
+            messageInformation.PutValue("yPos", yPos);
+
+            editorSession.QueueSender.SendMessage("CreateCrossing", messageInformation);
         }
 
         /// <summary>

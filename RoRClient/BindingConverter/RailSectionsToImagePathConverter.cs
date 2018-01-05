@@ -22,35 +22,49 @@ namespace RoRClient.BindingConverter
             if (value != null)
             {
                 ObservableCollection<RailSection> railSections = (ObservableCollection<RailSection>)value;
-                RailSection railSection = railSections.First();
-                List<Compass> positionList = railSection.GetNodesAsList();
 
-                if (positionList.Contains(Compass.NORTH) && positionList.Contains(Compass.SOUTH))
+                if(railSections.Count == 1)
                 {
-                    return IMAGE_FOLDER_PATH + "rail_ns.png";
-                }else if(positionList.Contains(Compass.EAST) && positionList.Contains(Compass.WEST))
-                {
-                    return IMAGE_FOLDER_PATH + "rail_ew.png";
+                    RailSection railSection = railSections.First();
+                    List<Compass> positionList = railSection.GetNodesAsList();
+
+                    if (positionList.Contains(Compass.NORTH) && positionList.Contains(Compass.SOUTH))
+                    {
+                        return IMAGE_FOLDER_PATH + "rail_ns.png";
+                    }
+                    else if (positionList.Contains(Compass.EAST) && positionList.Contains(Compass.WEST))
+                    {
+                        return IMAGE_FOLDER_PATH + "rail_ew.png";
+                    }
+                    else if (positionList.Contains(Compass.SOUTH) && positionList.Contains(Compass.WEST))
+                    {
+                        return IMAGE_FOLDER_PATH + "railcurve_sw.png";
+                    }
+                    else if (positionList.Contains(Compass.SOUTH) && positionList.Contains(Compass.EAST))
+                    {
+                        return IMAGE_FOLDER_PATH + "railcurve_se.png";
+                    }
+                    else if (positionList.Contains(Compass.NORTH) && positionList.Contains(Compass.WEST))
+                    {
+                        return IMAGE_FOLDER_PATH + "railcurve_nw.png";
+                    }
+                    else if (positionList.Contains(Compass.NORTH) && positionList.Contains(Compass.EAST))
+                    {
+                        return IMAGE_FOLDER_PATH + "railcurve_ne.png";
+                    }
                 }
-                else if (positionList.Contains(Compass.SOUTH) && positionList.Contains(Compass.WEST))
+                else if (railSections.Count == 2)
                 {
-                    return IMAGE_FOLDER_PATH + "railcurve_sw.png";
-                }
-                else if (positionList.Contains(Compass.SOUTH) && positionList.Contains(Compass.EAST))
-                {
-                    return IMAGE_FOLDER_PATH + "railcurve_se.png";
-                }
-                else if (positionList.Contains(Compass.NORTH) && positionList.Contains(Compass.WEST))
-                {
-                    return IMAGE_FOLDER_PATH + "railcurve_nw.png";
-                }
-                else if (positionList.Contains(Compass.NORTH) && positionList.Contains(Compass.EAST))
-                {
-                    return IMAGE_FOLDER_PATH + "railcurve_ne.png";
+                    bool northSouth = railSections.Where(x => x.GetNodesAsList().Contains(Compass.NORTH) && x.GetNodesAsList().Contains(Compass.SOUTH)).Any();
+                    bool eastWest = railSections.Where(x => x.GetNodesAsList().Contains(Compass.EAST) && x.GetNodesAsList().Contains(Compass.WEST)).Any();
+
+                    if (northSouth && eastWest)
+                    {
+                        return IMAGE_FOLDER_PATH + "rail_crossing.png";
+                    }
                 }
             }
 
-            // ToDo: Hier brauchen wir ein Dummy-Bild oder so, das ganz total transparent ist
             return IMAGE_FOLDER_PATH + "dummy.png";
         }
 
