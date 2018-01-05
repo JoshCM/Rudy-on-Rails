@@ -72,9 +72,10 @@ public class CreateTrainstationCommand extends CommandBase {
 		for(int i = 0; i < 3; i++) {
 			Square trainstationRailSquare = trainstationRailSquares.get(i);
 			Rail rail = new Rail(session.getName(), trainstationRailSquare, railSectionPositions);
-			// Merke RailId der mittleren Rail als Spawnpoint der Loco, muss noch schön gemacht werden
+			// Merke RailId der mittleren Rail als Spawnpoint der Loco, muss noch schÃ¶n gemacht werden
 			if (i == 1) {
 				spawnPointforLoco = rail.getId();
+				System.out.println("SpawnPointForLoco beim Erstellen (RailID): " + spawnPointforLoco.toString());
 			}
 			rail.setSquareId(trainstationRailSquare.getId());
 			trainstationRailSquare.setPlaceableOnSquare(rail);

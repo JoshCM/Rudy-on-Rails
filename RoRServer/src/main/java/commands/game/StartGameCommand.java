@@ -84,7 +84,7 @@ public class StartGameCommand extends CommandBase {
 			Rail rail = (Rail)map.getPlaceableById(locoSpawnPointRailId);
 			Square locoSpawnPointSquare = rail.getSquareFromGameSession();
 			if(playerIterator.hasNext()) {
-				// Loco wird erstellt und zur Liste der Locos hinzugefügt
+				// Loco wird erstellt und zur Liste der Locos hinzugefÃ¼gt
 				gameSession.addLocomotive(new Loco(gameSession.getName(), locoSpawnPointSquare, playerIterator.next().getId()));
 			}
 		}

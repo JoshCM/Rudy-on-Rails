@@ -35,6 +35,7 @@ public class Loco extends TickableGameObject {
 		// werden, dass er ein Feld hinter der Lok steht
 		this.addCart(new Cart(sessionName, square));
 		this.square = square;// Das hier muss noch raus, aber erst testen
+		System.out.println("Placeable/Rail: " + square.getPlaceableOnSquare().toString());
 		this.rail = (Rail) square.getPlaceableOnSquare();
 		this.map = GameSessionManager.getInstance().getGameSessionByName(sessionName).getMap();
 		this.drivingDirection = rail.getFirstSection().getNode1();

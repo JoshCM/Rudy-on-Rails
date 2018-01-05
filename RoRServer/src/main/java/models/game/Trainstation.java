@@ -46,8 +46,8 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		return alignment;
 	}
 
-	public void setSpawnPointforLoco(UUID squareId) {
-		spawnPointForLoco = squareId;
+	public void setSpawnPointforLoco(UUID railId) {
+		spawnPointForLoco = railId;
 	}
 
 	public UUID getSpawnPointforLoco() {
