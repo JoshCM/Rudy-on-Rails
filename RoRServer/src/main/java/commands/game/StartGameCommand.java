@@ -80,6 +80,7 @@ public class StartGameCommand extends CommandBase {
 			Trainstation newTrainStation = oldTrainStation.loadFromMap(trainstationSquare, gameSession);
 			trainstationSquare.setPlaceableOnSquare(newTrainStation);
 			UUID locoSpawnPointRailId = oldTrainStation.getSpawnPointforLoco();
+			newTrainStation.setSpawnPointforLoco(locoSpawnPointRailId);
 			Rail rail = (Rail)map.getPlaceableById(locoSpawnPointRailId);
 			Square locoSpawnPointSquare = rail.getSquareFromGameSession();
 			if(playerIterator.hasNext()) {
