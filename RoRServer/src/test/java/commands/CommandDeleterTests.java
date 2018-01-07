@@ -24,6 +24,7 @@ public class CommandDeleterTests {
 	@Test
 	public void DeleteTrainstationCommandIsDeletedViaId() {
 		UUID trainstationId = UUID.randomUUID();
+		UUID stockId = UUID.randomUUID();
 
 		RoRSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
@@ -47,10 +48,11 @@ public class CommandDeleterTests {
 		}
 
 		MessageInformation messageInformation = new MessageInformation();
-		messageInformation.putValue("id", trainstationId);
+		messageInformation.putValue("trainstationId", trainstationId);
+		messageInformation.putValue("stockId", stockId);
 		messageInformation.putValue("trainstationRailIds", trainstationRailIdStrings);
 		
-		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, Compass.EAST));
+		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, stockId, Compass.EAST));
 		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		DeleteTrainstationCommand command = new DeleteTrainstationCommand(session, messageInformation);
 

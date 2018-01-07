@@ -1,5 +1,6 @@
 package models.game;
 
+import java.util.List;
 import java.util.UUID;
 import org.apache.log4j.Logger;
 import communication.MessageInformation;
@@ -8,12 +9,14 @@ import models.session.RoRSession;
 
 /**
  * Lager einer Trainstation
+ * Besitzt eine Ausrichtung, eine TrainstationId und eine Liste von Containers
  *
  */
 public class Stock extends InteractiveGameObject implements PlaceableOnSquare{
 	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
 	private Compass alignment;
 	private UUID trainstationId;
+	private List<Container> containers;
 	
 	public Stock(String sessionName, Square square, UUID trainstationId, Compass alignment) {
 		super(sessionName, square);
@@ -93,6 +96,14 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare{
 		this.setSquareId(newSquareOfStock.getId());
 		this.setXPos(newSquareOfStock.getXIndex());
 		this.setYPos(newSquareOfStock.getYIndex());
+	}
+
+	public List<Container> getContainers() {
+		return containers;
+	}
+	
+	public void addContainer(Container container) {
+		this.containers.add(container);
 	}
 
 }

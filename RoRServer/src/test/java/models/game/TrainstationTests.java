@@ -16,8 +16,10 @@ import commands.CommandCreator;
 import commands.base.Command;
 import commands.editor.CreateTrainstationCommand;
 import commands.editor.DeleteTrainstationCommand;
+import commands.editor.MoveTrainstationCommand;
 import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
+import exceptions.NotMoveableException;
 import exceptions.NotRemoveableException;
 import exceptions.NotRotateableException;
 import models.session.EditorSessionManager;
@@ -258,6 +260,10 @@ public class TrainstationTests {
 		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		
 		trainstation.rotate(true);
+		
+		// testen des Stocks ob an richtiger stelle
+		Square stockSquare = session.getMap().getSquare(2, 1);
+		Assert.assertEquals(stockSquare.getId(), trainstation.getStock().getSquareId());
 
 		// testen der einzelnen squares ob die richtigen placeables draufstehen
 		for (int i = 0; i <= 2; i++) {
@@ -310,6 +316,10 @@ public class TrainstationTests {
 		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		
 		trainstation.rotate(false);
+		
+		// testen des Stocks ob an richtiger stelle
+		Square stockSquare = session.getMap().getSquare(0, 1);
+		Assert.assertEquals(stockSquare.getId(), trainstation.getStock().getSquareId());
 
 		// testen der einzelnen squares ob die richtigen placeables draufstehen
 		for (int i = 0; i <= 2; i++) {
@@ -324,4 +334,108 @@ public class TrainstationTests {
 			Assert.assertNotEquals(notExpectedNode2, actualNode2);
 		}	
 	}	
+	
+	@Test
+	public void TrainstationMoveShouldBeDone() {
+		UUID trainstationId = UUID.randomUUID();
+		UUID stockId = UUID.randomUUID();
+		
+		int trainstationX = 0;
+		int trainstationY = 1;
+		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+				UUID.randomUUID(), "Player");
+
+		// generiere trainstationRails
+		List<Rail> trainstationRails = Arrays.asList(
+				new Rail(session.getName(), session.getMap().getSquare(1, 0),
+						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
+				new Rail(session.getName(), session.getMap().getSquare(1, 1),
+						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
+				new Rail(session.getName(), session.getMap().getSquare(1, 2),
+						Arrays.asList(Compass.NORTH, Compass.SOUTH)));
+
+		// setzt die rails als placeable und generiert trainstationRailIds
+		List<UUID> trainstationRailIds = new ArrayList<UUID>();
+		List<String> trainstationRailIdStrings = new ArrayList<String>();
+		for(Rail trainstationRail : trainstationRails) {
+			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceableOnSquare(trainstationRail);
+			trainstationRailIds.add(trainstationRail.getId());
+			trainstationRailIdStrings.add(trainstationRail.getId().toString());
+		}
+
+		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(trainstationX, trainstationY), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(0, 0), trainstationId, stockId, Compass.EAST));
+		session.getMap().getSquare(trainstationX, trainstationY).setPlaceableOnSquare(trainstation);
+		
+		MessageInformation messageInformation = new MessageInformation();
+		messageInformation.putValue("newXPos", 2);
+		messageInformation.putValue("newYPos", 1);
+		messageInformation.putValue("id", trainstation.getId());
+		
+		MoveTrainstationCommand command = new MoveTrainstationCommand(session, messageInformation);
+
+		String commandName = command.getClass().getName();
+		Command moveCommand = null;
+		try {
+			moveCommand = CommandCreator.createCommandForName(commandName, session, messageInformation);
+		} catch (Exception e) {
+
+		}
+		moveCommand.execute();
+		
+		Assert.assertEquals(session.getMap().getSquare(2, 1).getId(), trainstation.getSquareId());
+		Assert.assertEquals(session.getMap().getSquare(2, 0).getId(), trainstation.getStock().getSquareId());
+		
+		for(Rail trainstationRail : trainstation.getTrainstationRails()) {
+			Assert.assertTrue(session.getMap().getSquareById(trainstationRail.getSquareId()).getXIndex() == 3);
+			Assert.assertTrue(session.getMap().getSquareById(trainstationRail.getSquareId()).getYIndex() <= 2);
+		}
+	}
+	
+	@Test(expected = NotMoveableException.class)
+	public void TrainstationMoveShouldNotBeDone() {
+		UUID trainstationId = UUID.randomUUID();
+		UUID stockId = UUID.randomUUID();
+		
+		int trainstationX = 0;
+		int trainstationY = 1;
+		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+				UUID.randomUUID(), "Player");
+
+		// generiere trainstationRails
+		List<Rail> trainstationRails = Arrays.asList(
+				new Rail(session.getName(), session.getMap().getSquare(1, 0),
+						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
+				new Rail(session.getName(), session.getMap().getSquare(1, 1),
+						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
+				new Rail(session.getName(), session.getMap().getSquare(1, 2),
+						Arrays.asList(Compass.NORTH, Compass.SOUTH)));
+
+		// setzt die rails als placeable und generiert trainstationRailIds
+		List<UUID> trainstationRailIds = new ArrayList<UUID>();
+		List<String> trainstationRailIdStrings = new ArrayList<String>();
+		for(Rail trainstationRail : trainstationRails) {
+			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceableOnSquare(trainstationRail);
+			trainstationRailIds.add(trainstationRail.getId());
+			trainstationRailIdStrings.add(trainstationRail.getId().toString());
+		}
+
+		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(trainstationX, trainstationY), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(0, 0), trainstationId, stockId, Compass.EAST));
+		session.getMap().getSquare(trainstationX, trainstationY).setPlaceableOnSquare(trainstation);
+		
+		MessageInformation messageInformation = new MessageInformation();
+		messageInformation.putValue("newXPos", 2);
+		messageInformation.putValue("newYPos", 0);
+		messageInformation.putValue("id", trainstation.getId());
+		
+		MoveTrainstationCommand command = new MoveTrainstationCommand(session, messageInformation);
+
+		String commandName = command.getClass().getName();
+		Command moveCommand = null;
+		try {
+			moveCommand = CommandCreator.createCommandForName(commandName, session, messageInformation);
+		} catch (Exception e) {
+
+		}
+		moveCommand.execute();
+	}
 }
