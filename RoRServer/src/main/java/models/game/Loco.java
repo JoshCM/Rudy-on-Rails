@@ -132,7 +132,7 @@ public class Loco extends TickableGameObject {
 			Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
 			Cart cart = new Cart(this.sessionName,cartSquare,getCompassNegation(back),playerId,prevRail);
 			carts.add(cart);
-			SendAddCartMessage(cartSquare,cart.getId());
+			NotifyAddedCart(cartSquare,cart.getId());
 		}
 		
 	}
@@ -249,6 +249,11 @@ public class Loco extends TickableGameObject {
 		return null;
 	}
 	
+	/**
+	 * überladene Methode mit mitgegebenen Compass
+	 * @param compass der negiert werden soll
+	 * @return negierter Compass
+	 */
 	public Compass getCompassNegation(Compass compass) {
 		switch (compass) {
 		case NORTH:
@@ -262,7 +267,10 @@ public class Loco extends TickableGameObject {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * notifiziert wenn eine Lok erstellt wurde
+	 */
 	private void NotifyLocoCreated() {
 		MessageInformation messageInfo = new MessageInformation("CreateLoco");
 		messageInfo.putValue("locoId", getId());
@@ -273,6 +281,9 @@ public class Loco extends TickableGameObject {
 		notifyChange(messageInfo);
 	}
 
+	/**
+	 * notifiziert wenn die Position der Lok veraendert wurde
+	 */
 	private void NotifyLocoPositionChanged() {
 		MessageInformation messageInfo = new MessageInformation("UpdateLocoPosition");
 		messageInfo.putValue("locoId", getId());
@@ -283,7 +294,12 @@ public class Loco extends TickableGameObject {
 		notifyChange(messageInfo);
 	}
 	
-	private void SendAddCartMessage(Square square, UUID cartId) {
+	/**
+	 * notifiziert, wenn ein Wagon erstellt wurde
+	 * @param square Feld auf dem der Wagon steht				
+	 * @param cartId Id des Wagons
+	 */
+	private void NotifyAddedCart(Square square, UUID cartId) {
 		MessageInformation messageInfo = new MessageInformation("CreateCart");
 		messageInfo.putValue("playerId", this.playerId);
 		messageInfo.putValue("cartId", cartId);

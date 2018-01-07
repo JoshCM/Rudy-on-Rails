@@ -62,8 +62,6 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 		resource = null;
 		return unloadedResource;
 	}
-	
-	
 
 	public Compass getCompass() {
 		return compass;
@@ -73,6 +71,9 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 		this.compass = compass;
 	}
 	
+	/**
+	 * notifiziert wenn die Position des Wagons geändert wurde
+	 */
 	public void SendUpdateCartMessage() {
 		MessageInformation messageInfo = new MessageInformation("UpdateCartPosition");
 		messageInfo.putValue("cartId", getId());
