@@ -150,6 +150,20 @@ public class Map extends ModelBase {
 		int newSquareY = newTrainstation.getYPos() + trainstationRailYSpan;
 		return getSquare(newSquareX, newSquareY);
 	}
+	
+	public void movePlaceableOnRail(Square oldSquare, Square newSquare) {
+		
+		notifyMovedMine(oldSquare, newSquare);
+	}
+	
+	public void notifyMovedMine(Square oldSquare, Square newSquare) {
+		MessageInformation message = new MessageInformation("MoveMine");
+		message.putValue("oldXPos", oldSquare.getXIndex());
+		message.putValue("oldYPos", oldSquare.getYIndex());
+		message.putValue("newXPos", newSquare.getXIndex());
+		message.putValue("newYPos", newSquare.getYIndex());
+		notifyChange(message);
+	}
 
 	/**
 	 * Verschiebt ein PlaceableOnSquare von oldSquareOfPlaceable auf newSquareOfPlaceable

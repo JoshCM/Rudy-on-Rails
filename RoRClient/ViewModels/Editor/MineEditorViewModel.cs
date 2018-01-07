@@ -44,7 +44,7 @@ namespace RoRClient.ViewModels.Editor
 
         public override void Move()
         {
-            throw new NotImplementedException();
+
         }
 
         public override void RotateLeft()
