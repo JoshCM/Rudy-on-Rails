@@ -20,7 +20,7 @@ public class Loco extends TickableGameObject {
 	private long timeDeltaCounter = 0;// Summe der Zeit zwischen den Ticks
 	private long speed;
 	private Compass drivingDirection;
-	private boolean reversed = false;
+	private boolean reversed = true;
 	private Map map;
 	private Square square;
 
