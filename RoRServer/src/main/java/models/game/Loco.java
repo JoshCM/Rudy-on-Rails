@@ -75,8 +75,8 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 		Rail nextRail = getNextRail();
 		this.compass = nextRail.getExitDirection(getDirectionNegation());
 		this.rail = nextRail;
-		// this.setXPos(this.rail.getXPos());
-		// this.setYPos(this.rail.getYPos());
+		// this.setXPos(this.rail.getX());
+		// this.setYPos(this.rail.getY);
 		SendUpdateLocoMessage();
 
 	}
@@ -89,16 +89,16 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	public Rail getNextRail() {
 		switch (this.compass) {
 		case NORTH:
-			this.square = this.map.getSquare(this.square.getXIndex(), this.square.getYIndex() - 1);
+			this.square = this.map.getSquare(this.square.getX(), this.square.getY() - 1);
 			return (Rail) this.square.getPlaceableOnSquare();
 		case EAST:
-			this.square = this.map.getSquare(this.square.getXIndex() + 1, this.square.getYIndex());
+			this.square = this.map.getSquare(this.square.getX() + 1, this.square.getY());
 			return (Rail) this.square.getPlaceableOnSquare();
 		case SOUTH:
-			this.square = this.map.getSquare(this.square.getXIndex(), this.square.getYIndex() + 1);
+			this.square = this.map.getSquare(this.square.getX(), this.square.getY() + 1);
 			return (Rail) this.square.getPlaceableOnSquare();
 		case WEST:
-			this.square = this.map.getSquare(this.square.getXIndex() - 1, this.square.getYIndex());
+			this.square = this.map.getSquare(this.square.getX() - 1, this.square.getY());
 			return (Rail) this.square.getPlaceableOnSquare();
 		}
 		return null;
@@ -127,8 +127,8 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	private void SendCreatedLocoMessage() {
 		MessageInformation messageInfo = new MessageInformation("CreateLoco");
 		messageInfo.putValue("locoId", getUUID());
-		messageInfo.putValue("xPos", getXPos());
-		messageInfo.putValue("yPos", getYPos());
+		messageInfo.putValue("xPos", getX());
+		messageInfo.putValue("yPos", getY);
 		messageInfo.putValue("playerId", this.playerId);
 		notifyChange(messageInfo);
 	}
@@ -136,8 +136,8 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	private void SendUpdateLocoMessage() {
 		MessageInformation messageInfo = new MessageInformation("UpdateLocoPosition");
 		messageInfo.putValue("locoId", getUUID());
-		messageInfo.putValue("xPos", getXPos());
-		messageInfo.putValue("yPos", getYPos());
+		messageInfo.putValue("xPos", getX());
+		messageInfo.putValue("yPos", getY);
 		messageInfo.putValue("playerId", this.playerId);
 		notifyChange(messageInfo);
 	}

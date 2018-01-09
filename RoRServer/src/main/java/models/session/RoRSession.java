@@ -35,7 +35,7 @@ public abstract class RoRSession extends ModelBase implements RoRSessionState {
     }
 
     public RoRSession(Map map, Player hostPlayer) {
-        this(null, map, hostPlayer);
+        this(UUID.randomUUID().toString(), map, hostPlayer);
     }
 
     public RoRSession(String sessionName, Map map) {
@@ -94,6 +94,14 @@ public abstract class RoRSession extends ModelBase implements RoRSessionState {
 
     public SessionState getSessionState() {
         return sessionState;
+    }
+
+    public boolean getSessionState(SessionState sessionState) {
+        if (this.sessionState.equals(sessionState)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void setSessionState(SessionState sessionState) {

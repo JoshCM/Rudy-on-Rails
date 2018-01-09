@@ -26,7 +26,7 @@ public class CommandCreatorTests {
 		messageInformation.putValue("yPos", 0);
 		messageInformation.putValue("railSectionList", new ArrayList<JsonObject>());
 
-		RoRSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+		RoRSession session = EditorSessionManager.getInstance().createEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 		CreateRailCommand command = new CreateRailCommand(session, messageInformation);
 
@@ -50,7 +50,7 @@ public class CommandCreatorTests {
 		messageInformation.putValue("yPos", 1);
 		messageInformation.putValue("alignment", Compass.NORTH.toString());
 
-		RoRSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+		RoRSession session = EditorSessionManager.getInstance().createEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
 

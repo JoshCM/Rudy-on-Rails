@@ -11,7 +11,7 @@ public class EditorSessionManagerTests {
 	@Test
 	public void EditorSessionManager_CreatesEditorSession() {
 		String editorSessionName = "TestEditorSession";
-		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName,
+		EditorSession editorSession = EditorSessionManager.getInstance().createEditorSession(editorSessionName,
 				UUID.randomUUID(), "HostPlayer");
 		assertEquals(editorSessionName, editorSession.getName());
 	}
@@ -19,7 +19,7 @@ public class EditorSessionManagerTests {
 	@Test
 	public void EditorSessionManager_AddsPlayer() {
 		String editorSessionName = "TestEditorSession";
-		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName,
+		EditorSession editorSession = EditorSessionManager.getInstance().createEditorSession(editorSessionName,
 				UUID.randomUUID(), "HostPlayer");
 		Player player = editorSession.createPlayer(UUID.randomUUID(), "Neuer Spieler");
 

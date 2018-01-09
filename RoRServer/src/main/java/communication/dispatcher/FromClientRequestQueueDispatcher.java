@@ -39,7 +39,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		String playerName = messageInformation.getValueAsString("playerName");
 		UUID playerId = UUID.fromString(messageInformation.getClientid());
 
-		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName,
+		EditorSession editorSession = EditorSessionManager.getInstance().createEditorSession(editorSessionName,
 				playerId, playerName);
 		
 		if(!editorSessionName.equals("TestSession")) {

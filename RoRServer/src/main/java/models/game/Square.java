@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import communication.MessageInformation;
-import models.base.ModelBase;
+import models.base.PlaceableModel;
 
 
 /**
@@ -12,7 +12,7 @@ import models.base.ModelBase;
  * Ein Square ist Observer für alle beinhalteten Objekte
  * Ein Square ist Observable.
  */
-public class Square extends ModelBase {
+public class Square extends PlaceableModel {
     private PlaceableOnSquare placeableOnSquare;
 
     public Square(PlaceableOnSquare placableOnSquare) {

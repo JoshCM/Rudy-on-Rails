@@ -80,8 +80,8 @@ public class Validator {
 		int mapSize = map.getSquares().length;
 		
 		// X und Y der möglichen Trainstation
-		int trainstationX = newSquare.getXIndex();
-		int trainstationY = newSquare.getYIndex();
+		int trainstationX = newSquare.getX();
+		int trainstationY = newSquare.getY();
 		
 		// je nach Richtung der Trainstation werden ihre Rails oberhalb, unterhalb, rechts oder links davon angelegt
 		// der jeweilige wert(x oder y) muss dann daran angepasst werden

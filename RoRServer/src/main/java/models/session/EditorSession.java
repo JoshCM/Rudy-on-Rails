@@ -18,7 +18,7 @@ public class EditorSession extends RoRSession {
 		this.queueReceiver = new QueueReceiver(sessionName, dispatcher);
 	}
 
-	public EditorSession() {
-		super(null, null, null);
-	}
+	public EditorSession(String sessionName, Map map) {
+	    this(sessionName, map, null);
+    }
 }

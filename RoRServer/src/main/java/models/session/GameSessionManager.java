@@ -8,6 +8,7 @@ import java.util.UUID;
 /**
  * Hier werden alle GameSessions erzeugt und gehalten GameSessions duerfen
  * ausschliesslich ueber diesen Manager erzeugt werden!
+ * PATTERN: Singleton!!!
  */
 public class GameSessionManager {
 	private static GameSessionManager gameSessionManager;

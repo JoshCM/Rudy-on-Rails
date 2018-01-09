@@ -59,12 +59,12 @@ public class CreateTrainstationCommand extends CommandBase {
 		List<Compass> railSectionPositions = Arrays.asList(railSectionPositionNode1, railSectionPositionNode2);
 		
 		// Squares für die Rails der Trainstation werden gefunden
-		Square squareTop = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN,
-				square.getYIndex() - TRAINSTATION_MARGIN);
-		Square squareMid = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN, square.getYIndex());
+		Square squareTop = map.getSquare(square.getX() + TRAINSTATION_MARGIN,
+				square.getY() - TRAINSTATION_MARGIN);
+		Square squareMid = map.getSquare(square.getX() + TRAINSTATION_MARGIN, square.getY());
 		spawnPointforLoco = squareMid;
-		Square squareBottom = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN,
-				square.getYIndex() + TRAINSTATION_MARGIN);
+		Square squareBottom = map.getSquare(square.getX() + TRAINSTATION_MARGIN,
+				square.getY() + TRAINSTATION_MARGIN);
 		
 		// Squares werden in eine Liste geschrieben
 		List<Square> trainstationRailSquares = Arrays.asList(squareTop, squareMid, squareBottom);

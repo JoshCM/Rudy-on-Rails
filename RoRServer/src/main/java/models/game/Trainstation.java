@@ -113,8 +113,8 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
     private void rotateTrainstationRails(List<Rail> trainstationRails, int pivotXPos, int pivotYPos, boolean right) {
         HashMap<Coordinate, Rail> tempRailMap = new HashMap<Coordinate, Rail>();
         for (Rail trainstationRail : trainstationRails) {
-            int railXpos = trainstationRail.getXPos();
-            int railYpos = trainstationRail.getYPos();
+            int railXpos = trainstationRail.getX();
+            int railYpos = trainstationRail.getY;
 
             // rotiert die koordinaten
             Geometry.Coordinate newCoordinate;
@@ -183,8 +183,8 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
         rotateTrainstation(right);
 
         // X und Y der Trainstation
-        int pivotXPos = this.getXPos();
-        int pivotYPos = this.getYPos();
+        int pivotXPos = this.getX();
+        int pivotYPos = this.getY;
 
         List<Rail> trainstationRails = getTrainstationRails();
         // wenn im Uhzeigersinn gedreht werden soll, dann muss die liste der rails umgedreht werden
@@ -201,16 +201,16 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
      * @return (True)Validiert oder (False)nicht validiert
      */
     public boolean validateRotation(boolean right) {
-        int pivotXPos = this.getXPos();
-        int pivotYPos = this.getYPos();
+        int pivotXPos = this.getX();
+        int pivotYPos = this.getY;
 
         List<Rail> trainstationRails = getTrainstationRails();
         if (right)
             trainstationRails = getReverseTrainstationRails();
 
         for (Rail trainstationRail : trainstationRails) {
-            int railXpos = trainstationRail.getXPos();
-            int railYpos = trainstationRail.getYPos();
+            int railXpos = trainstationRail.getX();
+            int railYpos = trainstationRail.getY;
 
             Geometry.Coordinate newCoordinate;
             if (right)

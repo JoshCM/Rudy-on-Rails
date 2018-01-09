@@ -1,6 +1,7 @@
 package models.game;
 
 import models.base.ModelBase;
+import models.config.GameSettings;
 import models.helper.Validator;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.UUID;
 import com.google.gson.Gson;
 import communication.MessageInformation;
 import exceptions.NotMoveableException;
+
 
 // TODO: Messages für Beispielsweise Bahnhof müssen woanders erstellt werden.
 
@@ -39,12 +41,7 @@ public class Map extends ModelBase {
     }
 
     public Map() {
-        this("DEFAULTMAPNAME");
-    }
-
-    // TODO: Methode, die für eine UUID die X und Y Position zurückgibt.
-    public int getXPos() {
-
+        this(GameSettings.DEF_MAP_NAME);
     }
 
     public int getMapSize() {
@@ -137,11 +134,11 @@ public class Map extends ModelBase {
      */
     private Square getTrainstationRailSquare(Rail trainstationRail, Trainstation newTrainstation,
                                              int oldPlaceableOnSquareXPos, int oldPlaceableOnSquareYPos) {
-        int trainstationRailXSpan = trainstationRail.getXPos() - oldPlaceableOnSquareXPos;
-        int trainstationRailYSpan = trainstationRail.getYPos() - oldPlaceableOnSquareYPos;
+        int trainstationRailXSpan = trainstationRail.getX() - oldPlaceableOnSquareXPos;
+        int trainstationRailYSpan = trainstationRail.getY() - oldPlaceableOnSquareYPos;
 
-        int newSquareX = newTrainstation.getXPos() + trainstationRailXSpan;
-        int newSquareY = newTrainstation.getYPos() + trainstationRailYSpan;
+        int newSquareX = newTrainstation.getX() + trainstationRailXSpan;
+        int newSquareY = newTrainstation.getY() + trainstationRailYSpan;
         return getSquare(newSquareX, newSquareY);
     }
 
@@ -155,15 +152,14 @@ public class Map extends ModelBase {
     public void movePlaceableOnSquare(Square oldSquareOfPlaceable, Square newSquareOfPlaceable) {
         if (Validator.validateMovePlaceableOnSquare(oldSquareOfPlaceable, newSquareOfPlaceable, this)) {
             InteractiveGameObject placeableOnSquare = (InteractiveGameObject) oldSquareOfPlaceable.getPlaceableOnSquare();
-            int oldPlaceableOnSquareXPos = placeableOnSquare.getXPos();
-            int oldPlaceableOnSquareYPos = placeableOnSquare.getYPos();
+            int oldPlaceableOnSquareXPos = placeableOnSquare.getX();
+            int oldPlaceableOnSquareYPos = placeableOnSquare.getY;
             oldSquareOfPlaceable.setPlaceableOnSquare(null);
             newSquareOfPlaceable.setPlaceableOnSquare((PlaceableOnSquare) placeableOnSquare);
 
             // entweder nur ids oder nur x und y, wir müssen uns entscheiden
-            placeableOnSquare.setSquareId(newSquareOfPlaceable.getUUID());
-            placeableOnSquare.setXPos(newSquareOfPlaceable.getXIndex());
-            placeableOnSquare.setYPos(newSquareOfPlaceable.getYIndex());
+            placeableOnSquare.setX(newSquareOfPlaceable.getX());
+            placeableOnSquare.setY(newSquareOfPlaceable.getY());
 
             if (placeableOnSquare instanceof Rail) {
                 Rail rail = (Rail) placeableOnSquare;
@@ -176,7 +172,7 @@ public class Map extends ModelBase {
                 Trainstation trainstation = (Trainstation) placeableOnSquare;
                 // trainstationRails müssen auch die square-Änderung mitbekommen
                 for (Rail trainstationRail : trainstation.getTrainstationRails()) {
-                    Square oldSquareOfRail = getSquare(trainstationRail.getXPos(), trainstationRail.getYPos());
+                    Square oldSquareOfRail = getSquare(trainstationRail.getX(), trainstationRail.getY);
                     oldSquareOfRail.setPlaceableOnSquare(null);
                     Square newSquareOfRail = getTrainstationRailSquare(trainstationRail, trainstation,
                             oldPlaceableOnSquareXPos, oldPlaceableOnSquareYPos);
@@ -194,18 +190,18 @@ public class Map extends ModelBase {
     private void notifyMovedTrainstation(Square oldSquare, Square newSquare, Trainstation trainstation) {
         // TODO: Trainstation und Rails einzeln moven als Command
         MessageInformation messageInformation = new MessageInformation("MoveTrainstation");
-        messageInformation.putValue("oldXPos", oldSquare.getXIndex());
-        messageInformation.putValue("oldYPos", oldSquare.getYIndex());
-        messageInformation.putValue("newXPos", newSquare.getXIndex());
-        messageInformation.putValue("newYPos", newSquare.getYIndex());
+        messageInformation.putValue("oldXPos", oldSquare.getX());
+        messageInformation.putValue("oldYPos", oldSquare.getY());
+        messageInformation.putValue("newXPos", newSquare.getX());
+        messageInformation.putValue("newYPos", newSquare.getY());
 
         List<List<String>> trainstationRailsCoordinateList = new ArrayList<List<String>>();
         for (Rail trainstationRail : trainstation.getTrainstationRails()) {
             List<String> trainstationRailCoordinates = new ArrayList<String>();
             Square newTrainstationRailSquare = this.getSquareById(trainstationRail.getSquareId());
             trainstationRailCoordinates.add(trainstationRail.getUUID().toString());
-            trainstationRailCoordinates.add(String.valueOf(newTrainstationRailSquare.getXIndex()));
-            trainstationRailCoordinates.add(String.valueOf(newTrainstationRailSquare.getYIndex()));
+            trainstationRailCoordinates.add(String.valueOf(newTrainstationRailSquare.getX()));
+            trainstationRailCoordinates.add(String.valueOf(newTrainstationRailSquare.getY()));
             trainstationRailsCoordinateList.add(trainstationRailCoordinates);
         }
         messageInformation.putValue("trainstationRailsCoordinates", new Gson().toJson(trainstationRailsCoordinateList));
@@ -214,10 +210,22 @@ public class Map extends ModelBase {
 
     private void notifyMovedRail(Square oldSquare, Square newSquare) {
         MessageInformation messageInformation = new MessageInformation("MoveRail");
-        messageInformation.putValue("oldXPos", oldSquare.getXIndex());
-        messageInformation.putValue("oldYPos", oldSquare.getYIndex());
-        messageInformation.putValue("newXPos", newSquare.getXIndex());
-        messageInformation.putValue("newYPos", newSquare.getYIndex());
+        messageInformation.putValue("oldXPos", oldSquare.getX());
+        messageInformation.putValue("oldYPos", oldSquare.getY());
+        messageInformation.putValue("newXPos", newSquare.getX());
+        messageInformation.putValue("newYPos", newSquare.getY());
         notifyChange(messageInformation);
+    }
+
+    private void setX(int X) {
+        //
+    }
+
+    private void setY(int y) {
+        //
+    }
+
+    private int getX() {
+        return -1; // TODO: FALSCH!
     }
 }

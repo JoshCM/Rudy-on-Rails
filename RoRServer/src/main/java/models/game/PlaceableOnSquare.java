@@ -1,10 +1,13 @@
 package models.game;
 
+import models.base.PlaceableModel;
+
 /**
  * Interface fuer Objekte, die auf einer Rail platziert werden
  */
-public interface PlaceableOnSquare extends Placeable {
+public abstract class PlaceableOnSquare extends PlaceableModel {
 
-	PlaceableOnSquare loadFromMap();
-	
+	public PlaceableOnSquare(int x, int y) {
+		super(x, y);
+	}
 }

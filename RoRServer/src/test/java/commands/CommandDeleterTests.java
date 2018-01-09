@@ -24,7 +24,7 @@ public class CommandDeleterTests {
 	public void DeleteTrainstationCommandIsDeletedViaId() {
 		UUID trainstationId = UUID.randomUUID();
 
-		RoRSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+		RoRSession session = EditorSessionManager.getInstance().createEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 
 		// generiere trainstationRails

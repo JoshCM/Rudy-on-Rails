@@ -29,7 +29,7 @@ public class TrainstationTests {
 		messageInformation.putValue("yPos", y);
 		messageInformation.putValue("alignment", Compass.EAST.toString());
 
-		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+		session = EditorSessionManager.getInstance().createEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
 
@@ -67,7 +67,7 @@ public class TrainstationTests {
 		messageInformation.putValue("yPos", 0);
 		messageInformation.putValue("alignment", Compass.EAST.toString());
 
-		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+		session = EditorSessionManager.getInstance().createEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
 
@@ -89,7 +89,7 @@ public class TrainstationTests {
 		messageInformation.putValue("alignment", Compass.EAST.toString());
 
 		// setzen der rail die die exception verursacht
-		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+		session = EditorSessionManager.getInstance().createEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 		Square square = session.getMap().getSquare(1, 0);
 		square.setPlaceableOnSquare(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
@@ -114,7 +114,7 @@ public class TrainstationTests {
 		messageInformation.putValue("alignment", Compass.EAST.toString());
 
 		// setzen der rail die die exception verursacht
-		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+		session = EditorSessionManager.getInstance().createEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 		Square square = session.getMap().getSquare(1, 1);
 		square.setPlaceableOnSquare(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
@@ -139,7 +139,7 @@ public class TrainstationTests {
 		messageInformation.putValue("alignment", Compass.EAST.toString());
 
 		// setzen der rail die die exception verursacht
-		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+		session = EditorSessionManager.getInstance().createEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 		Square square = session.getMap().getSquare(1, 2);
 		square.setPlaceableOnSquare(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
@@ -160,7 +160,7 @@ public class TrainstationTests {
 	public void TrainstationRotationClockwiseShouldBeValid() {
 		UUID trainstationId = UUID.randomUUID();
 
-		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+		session = EditorSessionManager.getInstance().createEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 
 		// generiere trainstationRails
@@ -191,7 +191,7 @@ public class TrainstationTests {
 	public void TrainstationRotationCounterClockwiseShouldBeValid() {
 		UUID trainstationId = UUID.randomUUID();
 
-		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+		session = EditorSessionManager.getInstance().createEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 
 		// generiere trainstationRails
@@ -222,7 +222,7 @@ public class TrainstationTests {
 	public void TrainstationRotationClockwiseShouldBeDone() {
 		UUID trainstationId = UUID.randomUUID();
 
-		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+		session = EditorSessionManager.getInstance().createEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 
 		// generiere trainstationRails
@@ -274,7 +274,7 @@ public class TrainstationTests {
 	public void TrainstationRotationCounterClockwiseShouldBeDone() {
 		UUID trainstationId = UUID.randomUUID();
 
-		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+		session = EditorSessionManager.getInstance().createEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 
 		// generiere trainstationRails

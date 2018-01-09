@@ -119,7 +119,7 @@ public class FromClientRequestQueueDispatcherTests {
 		String editorSessionName = "TestSession";
 		String joinedPlayerName = "MyPlayer";
 
-		EditorSessionManager.getInstance().createNewEditorSession(editorSessionName, UUID.randomUUID(), "host");
+		EditorSessionManager.getInstance().createEditorSession(editorSessionName, UUID.randomUUID(), "host");
 		MessageInformation messageInfo = new MessageInformation(messageType);
 		messageInfo.putValue("editorName", editorSessionName);
 		messageInfo.putValue("playerName", joinedPlayerName);
@@ -144,7 +144,7 @@ public class FromClientRequestQueueDispatcherTests {
 		String editorSessionName = "TestSession";
 		String joinedPlayerName = "MyPlayer";
 
-		EditorSessionManager.getInstance().createNewEditorSession(editorSessionName, UUID.randomUUID(), "host");
+		EditorSessionManager.getInstance().createEditorSession(editorSessionName, UUID.randomUUID(), "host");
 		MessageInformation messageInfo = new MessageInformation(messageType);
 		messageInfo.putValue("editorName", editorSessionName);
 		messageInfo.putValue("playerName", joinedPlayerName);
@@ -207,7 +207,7 @@ public class FromClientRequestQueueDispatcherTests {
 		String gameSessionName = "TestSession";
 		String joinedPlayerName = "MyPlayer";
 
-		EditorSessionManager.getInstance().createNewEditorSession(gameSessionName, UUID.randomUUID(), "host");
+		EditorSessionManager.getInstance().createEditorSession(gameSessionName, UUID.randomUUID(), "host");
 		MessageInformation messageInfo = new MessageInformation(messageType);
 		messageInfo.putValue("gameName", gameSessionName);
 		messageInfo.putValue("playerName", joinedPlayerName);
@@ -303,7 +303,7 @@ public class FromClientRequestQueueDispatcherTests {
 		String editorSessionName = "TestSession";
 		String hostPlayerName = "HostPlayer";
 
-		EditorSessionManager.getInstance().createNewEditorSession(editorSessionName, UUID.randomUUID(), hostPlayerName);
+		EditorSessionManager.getInstance().createEditorSession(editorSessionName, UUID.randomUUID(), hostPlayerName);
 		MessageInformation messageInfo = new MessageInformation(messageType);
 		messageInfo.setClientid(UUID.randomUUID().toString());
 		dispatcher.handleReadEditorSessions(messageInfo);

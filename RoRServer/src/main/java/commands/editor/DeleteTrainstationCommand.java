@@ -35,13 +35,13 @@ public class DeleteTrainstationCommand extends CommandBase{
 		
 		// remove trainstation
 		Trainstation trainstation = (Trainstation) map.getPlaceableById(id);
-		Square trainstationSquare = map.getSquare(trainstation.getXPos(), trainstation.getYPos());
+		Square trainstationSquare = map.getSquare(trainstation.getX(), trainstation.getY);
 		trainstationSquare.deletePlaceable();
 		
 		// remove trainstationRails
 		for(UUID trainstationRailId : trainstationRailIds) {
 			Rail trainstationRail = (Rail)map.getPlaceableById(trainstationRailId);
-			Square railSquare = map.getSquare(trainstationRail.getXPos(), trainstationRail.getYPos());
+			Square railSquare = map.getSquare(trainstationRail.getX(), trainstationRail.getY);
 			railSquare.deletePlaceable();
 		}
 	}
