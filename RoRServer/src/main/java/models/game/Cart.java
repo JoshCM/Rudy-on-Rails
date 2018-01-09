@@ -54,4 +54,10 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 		return unloadedResource;
 	}
 
+	@Override
+	public void specificUpdate() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

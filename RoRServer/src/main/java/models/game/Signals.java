@@ -3,8 +3,8 @@ package models.game;
 import communication.MessageInformation;
 import models.base.ModelBase;
 
-public class Signals extends ModelBase {
-	private final static int DEFAULT_AUTO_SWITCH_INTERVAL_IN_SECONDS = 30;
+public class Signals extends TickableGameObject {
+	private final static int DEFAULT_AUTO_SWITCH_INTERVAL_IN_SECONDS = 5;
 	private final static int DEFAULT_PENALTY = 5;
 	private final static int DEFAULT_SWITCH_COST = 5;
 
@@ -19,6 +19,8 @@ public class Signals extends ModelBase {
 	private boolean eastSignalActive;
 	private boolean southSignalActive;
 	private boolean westSignalActive;
+	
+	private long timeDeltaCounter = 0;
 
 	public Signals(String sessionName, Square square) {
 		super(sessionName);
@@ -116,5 +118,14 @@ public class Signals extends ModelBase {
 
 	public boolean isWestSignalActive() {
 		return westSignalActive;
+	}
+
+	@Override
+	public void specificUpdate() {
+		this.timeDeltaCounter += timeDeltaInNanoSeconds;
+		if (this.timeDeltaCounter >= SEC_IN_NANO * autoSwitchIntervalInSeconds) {
+			timeDeltaCounter = 0;
+			switchSignals();
+		}
 	}
 }

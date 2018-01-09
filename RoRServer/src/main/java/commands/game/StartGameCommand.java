@@ -15,6 +15,7 @@ import models.game.Rail;
 import models.game.Square;
 import models.game.Trainstation;
 import models.session.GameSession;
+import models.session.GameSessionManager;
 import models.session.RoRSession;
 import persistent.MapManager;
 
@@ -66,6 +67,10 @@ public class StartGameCommand extends CommandBase {
 			Rail rail = (Rail)railSquare.getPlaceableOnSquare().loadFromMap(railSquare, session);
 			rail.generateResourcesNextToRail();
 			railSquare.setPlaceableOnSquare(rail);
+			
+			if(rail.getSignals() != null) {
+				((GameSession)session).registerTickableGameObject(rail.getSignals());
+			};
 		}
 
 		// erzeugen der neuen Trainstations auf deren Squares

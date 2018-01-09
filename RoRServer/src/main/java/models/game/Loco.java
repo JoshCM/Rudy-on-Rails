@@ -11,12 +11,11 @@ import models.session.GameSessionManager;
  * @author Isabel Rott, Michelle Le Klasse fuer eine Lok, zu der eine Liste von
  *         Carts gehoert
  */
-public class Loco extends TickableGameObject {
-	private final long SEC_IN_NANO = 1000000000;
+public class Loco extends InteractiveGameObject {
 	private ArrayList<Cart> carts;
 	private Rail rail;
 	private UUID playerId;
-	private long timeDeltaCounter = 0;// Summe der Zeit zwischen den Ticks
+	private long timeDeltaCounter = 0; // Summe der Zeit zwischen den Ticks
 	private long speed;
 	private Compass drivingDirection;
 	private Map map;
@@ -65,7 +64,6 @@ public class Loco extends TickableGameObject {
 				drive();
 			}
 		}
-
 	}
 
 	/**

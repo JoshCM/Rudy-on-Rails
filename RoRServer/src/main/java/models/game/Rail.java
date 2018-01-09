@@ -328,4 +328,10 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     public Signals getSignals() {
     	return signals;
     }
+
+	@Override
+	public void specificUpdate() {
+		// TODO Auto-generated method stub
+		
+	}
 }
