@@ -104,6 +104,14 @@ public abstract class RoRSession extends ModelBase implements RoRSessionState {
         }
     }
 
+    public boolean isRunning() {
+        if (sessionState == SessionState.RUNNING) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public void setSessionState(SessionState sessionState) {
         this.sessionState = sessionState;
     }

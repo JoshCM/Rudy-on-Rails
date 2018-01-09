@@ -182,7 +182,7 @@ public class FromClientRequestQueueDispatcherTests {
 		String gameSessionName = "TestSession";
 		String joinedPlayerName = "MyPlayer";
 
-		GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), "host");
+		GameSessionManager.getInstance().createGameSession(gameSessionName, UUID.randomUUID(), "host");
 		MessageInformation messageInfo = new MessageInformation(messageType);
 		messageInfo.putValue("gameName", gameSessionName);
 		messageInfo.putValue("playerName", joinedPlayerName);
@@ -247,7 +247,7 @@ public class FromClientRequestQueueDispatcherTests {
 		String gameSessionName = "TestSession";
 		String hostPlayerName = "HostPlayer";
 
-		GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), hostPlayerName);
+		GameSessionManager.getInstance().createGameSession(gameSessionName, UUID.randomUUID(), hostPlayerName);
 		MessageInformation messageInfo = new MessageInformation(messageType);
 		messageInfo.setClientid(UUID.randomUUID().toString());
 		dispatcher.handleReadGameSessions(messageInfo);
@@ -273,8 +273,8 @@ public class FromClientRequestQueueDispatcherTests {
 		String gameSessionName = "TestSession";
 		String hostPlayerName = "HostPlayer";
 
-		GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), hostPlayerName);
-		GameSession startedGameSession = GameSessionManager.getInstance().createNewGameSession("StartedGame",
+		GameSessionManager.getInstance().createGameSession(gameSessionName, UUID.randomUUID(), hostPlayerName);
+		GameSession startedGameSession = GameSessionManager.getInstance().createGameSession("StartedGame",
 				UUID.randomUUID(), "NewPlayer");
 		startedGameSession.startGame();
 

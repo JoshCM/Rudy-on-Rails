@@ -31,7 +31,11 @@ public class GameSession extends RoRSession {
         this.queueReceiver = new QueueReceiver(sessionName, dispatcher);
         this.ticker = new Ticker();
         setSessionState(SessionState.READYTOSTART);
+    }
 
+    public GameSession(String sessionName, Map map) {
+        super(sessionName, map, null);
+        setSessionState(SessionState.NOTENOUGHPLAYERS);
     }
 
 
@@ -83,7 +87,7 @@ public class GameSession extends RoRSession {
      * @param tgo
      */
     public void remove(TickableGameObject tgo) {
-        ticker.deleteObserver(tgo);
+        ticker.unregisterObserver(tgo);
     }
 
     /**

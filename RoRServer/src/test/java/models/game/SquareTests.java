@@ -16,7 +16,7 @@ public class SquareTests {
 	public void testGetNeighbouringSquaresAtCorner() {
 		
 		// GameSession und Square erstellen
-		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
+		GameSession gameSession = GameSessionManager.getInstance().createGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
 		
 		Square squareAtCorner = gameSession.getMap().getSquare(0, 0);
 		List<Square> squaresAroundCorner = squareAtCorner.getNeighbouringSquares();	
@@ -27,7 +27,7 @@ public class SquareTests {
 	public void testGetNeighbouringSquaresAtEdge() {
 		
 		// GameSession und Square erstellen
-		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
+		GameSession gameSession = GameSessionManager.getInstance().createGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
 		
 		Square squareAtEdge = gameSession.getMap().getSquare(0, 1);
 		List<Square> squaresAroundEdge = squareAtEdge.getNeighbouringSquares();	
@@ -38,7 +38,7 @@ public class SquareTests {
 	public void testGetNeighbouringSquaresNotOnEdge() {
 		
 		// GameSession und Square erstellen
-		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
+		GameSession gameSession = GameSessionManager.getInstance().createGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
 		
 		Square squareNotOnEdge = gameSession.getMap().getSquare(5, 5);
 		List<Square> squaresAroundNotOnEdge = squareNotOnEdge.getNeighbouringSquares();	

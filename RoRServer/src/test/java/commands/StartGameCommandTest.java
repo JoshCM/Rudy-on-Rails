@@ -19,7 +19,7 @@ public class StartGameCommandTest {
 	public void testLoadedRailEqualsToCreatedRail() {
 		
 		// GameSession und Square erstellen
-		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
+		GameSession gameSession = GameSessionManager.getInstance().createGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
 		Square square = new Square(gameSession.getName(), 0, 0);
 		
 		// Erstellen einer neuen Rail
@@ -41,7 +41,7 @@ public class StartGameCommandTest {
 	public void testLoadedTrainStationEqualsToCreatedTrainStation() {
 		
 		// GameSession und Square erstellen
-		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
+		GameSession gameSession = GameSessionManager.getInstance().createGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
 		Square square = new Square(gameSession.getName(), 0, 0);
 		
 		// Erstellen eines neuen Bahnhofes

@@ -52,9 +52,6 @@ public abstract class DispatcherBase extends ObservableModel {
 		RequestSerializer requestSerializer = RequestSerializer.getInstance();
 		MessageInformation messageInformation = requestSerializer.deserialize(message);
 
-		// Wird wahrscheinlich gar nicht gebraucht
-		// createRequestToFunctionMap(request,requestInformation);
-
 		callMethodFromString("handle" + messageType, messageInformation);  
 	}
 }

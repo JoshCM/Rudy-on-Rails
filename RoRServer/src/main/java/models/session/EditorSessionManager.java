@@ -50,9 +50,9 @@ public class EditorSessionManager {
         return createEditorSession( UUID.randomUUID().toString(), map);
     }
 
-    public EditorSession createEditorSession() {
+    public EditorSession createEditorSession(String sessionName) {
         Map map = new Map(GameSettings.DEF_MAP_NAME);
-        return createEditorSession(map);
+        return createEditorSession(sessionName, map);
     }
 
     public void removeEditorSession(EditorSession editorSession) {
