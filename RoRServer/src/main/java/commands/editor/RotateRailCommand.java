@@ -42,7 +42,7 @@ public class RotateRailCommand extends CommandBase {
 			throw new NotRotateableException(
 					String.format("%s(Id:%s)%s", 
 							square.getPlaceableOnSquare().getClass().getName(),
-							square.getPlaceableOnSquare().getUUID(),
+							square.getPlaceableOnSquare().getID(),
 							" kann nicht rotiert werden"));
 		}
 	}

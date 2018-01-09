@@ -1,7 +1,8 @@
 package models.game;
 
+import models.base.InteractiveGameObject;
 import models.base.ModelObserver;
-import models.base.ObservableModel;
+import models.base.InterActiveGameModel;
 
 public abstract class TickableGameObject extends InteractiveGameObject implements ModelObserver {
 	
@@ -14,7 +15,7 @@ public abstract class TickableGameObject extends InteractiveGameObject implement
 	
 	abstract public void specificUpdate();
 
-	public void update(ObservableModel o, Object arg) {
+	public void update(InterActiveGameModel o, Object arg) {
 		// reagiert auf die Tickänderung und ruft die specificUpdate-Methode auf
 		timeDeltaInNanoSeconds = (long)arg;
 		this.specificUpdate();

@@ -4,7 +4,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import communication.MessageEnvelope;
 import communication.MessageInformation;
 import models.base.ModelObserver;
-import models.base.ObservableModel;
+import models.base.InterActiveGameModel;
 
 public class TopicMessageQueue implements ModelObserver {
 	private TopicSender topicSender;
@@ -94,7 +94,7 @@ public class TopicMessageQueue implements ModelObserver {
 	}
 
 	@Override
-	public void update(ObservableModel observable, Object arg) {
+	public void update(InterActiveGameModel observable, Object arg) {
 		MessageEnvelope messageEnvelope = (MessageEnvelope) arg;
 		addMessage(messageEnvelope);
 	}

@@ -73,10 +73,10 @@ public class CreateTrainstationCommand extends CommandBase {
 		for(int i = 0; i < 3; i++) {
 			Square trainstationRailSquare = trainstationRailSquares.get(i);
 			Rail rail = new Rail(session.getName(), trainstationRailSquare, railSectionPositions);
-			rail.setSquareId(trainstationRailSquare.getUUID());
+			rail.setSquareId(trainstationRailSquare.getID());
 			trainstationRailSquare.setPlaceableOnSquare(rail);
 			rail.setTrainstationID(trainstationId);
-			trainstationRailIds.add(rail.getUUID());
+			trainstationRailIds.add(rail.getID());
 		}
 		
 		return trainstationRailIds;

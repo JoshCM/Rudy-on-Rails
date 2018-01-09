@@ -1,6 +1,6 @@
 package models.base;
 
-public abstract class PlaceableModel extends ObservableModel {
+public abstract class PlaceableModel extends InterActiveGameModel {
     int x, y;
 
     public PlaceableModel(int x, int y) {

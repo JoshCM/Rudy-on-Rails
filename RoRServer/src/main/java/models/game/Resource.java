@@ -1,20 +1,21 @@
 package models.game;
 
 import communication.MessageInformation;
+import models.base.InterActiveGameModel;
 import models.helper.StringConverter;
 
 /**
  * @author Andreas Pöhler, Juliane Lies, Isabell Rott
  * Oberklasse für Ressourcen (Aktuell: Kohle und Gold)
  */
-public abstract class Resource extends InteractiveGameObject implements PlaceableOnSquare {
+public abstract class Resource extends InterActiveGameModel {
     protected int quantity;
     protected ResourceType resourceType;
 
     protected Resource(ResourceType resourceType, int quantity) {
         this.resourceType = resourceType;
         this.quantity = quantity;
-        notifyObservers();
+        notifyObservers(this);
     }
 
     protected Resource(String resourceTypeString, int quanitty) {
@@ -38,10 +39,10 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
      */
     private void notifyCreatedResource() {
         MessageInformation message = new MessageInformation("CreateResource");
-        message.putValue("resourceId", getUUID());
+        message.putValue("resourceId", getID());
         message.putValue("quantity", getQuantity());
         message.putValue("resource", getResourceTypeString());
-        notifyObservers();
+        notifyObservers(this);
         // notifyChange(message);
     }
 
@@ -63,10 +64,6 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
 
     public String getResourceTypeString() {
         return StringConverter.toString(resourceType);
-    }
-
-    public PlaceableOnSquare loadFromMap() {
-        return null;
     }
 
 }

@@ -6,11 +6,12 @@ import java.util.UUID;
 import communication.MessageInformation;
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
+import models.base.InterActiveGameModel;
 import models.game.Loco;
 import models.game.Map;
 import models.game.Player;
 import models.game.TickableGameObject;
-import states.SessionState;
+import states.RoRState;
 
 import static models.config.GameSettings.TICKRATE;
 
@@ -30,12 +31,12 @@ public class GameSession extends RoRSession {
         GameSessionDispatcher dispatcher = new GameSessionDispatcher(this);
         this.queueReceiver = new QueueReceiver(sessionName, dispatcher);
         this.ticker = new Ticker();
-        setSessionState(SessionState.READYTOSTART);
+        setState(RoRState.READYTOSTART);
     }
 
     public GameSession(String sessionName, Map map) {
         super(sessionName, map, null);
-        setSessionState(SessionState.NOTENOUGHPLAYERS);
+        setState(RoRState.NOTENOUGHPLAYERS);
     }
 
 
@@ -47,7 +48,7 @@ public class GameSession extends RoRSession {
         tickingThread = new Thread() {
             @Override
             public void run() {
-                while (getSessionState(SessionState.RUNNING)) {
+                while (GameSession.this.getState(RoRState.RUNNING)) {
                     if (lastTimeUpdatedInNanoSeconds != 0)
                         ticker.tick(System.nanoTime() - lastTimeUpdatedInNanoSeconds);
                     lastTimeUpdatedInNanoSeconds = System.nanoTime();
@@ -66,7 +67,7 @@ public class GameSession extends RoRSession {
      * stoppt den TickingThread
      */
     public void stopTickingThread() {
-        setSessionState(SessionState.STOPPED);
+        setState(RoRState.STOPPED);
     }
 
 
@@ -119,12 +120,21 @@ public class GameSession extends RoRSession {
     }
 
     public void startGame() {
-        setSessionState(SessionState.RUNNING);
+        setState(RoRState.RUNNING);
         MessageInformation messageInfo = new MessageInformation("StartGame");
         this.startTickingThread();
-        notifyObservers();
-        // notifyChange(messageInfo);
+        notifyObservers(this);
     }
+
+
+    @Override
+    public void update(InterActiveGameModel o, Object arg) {
+
+        update(o, arg);
+        // Was macht GameSession, wenn Sie geupdatet wurde.
+        // Nachricht erstellen und an Clients schicken
+    }
+
 }
 
 

@@ -9,14 +9,14 @@ import com.google.gson.JsonObject;
 
 import communication.MessageInformation;
 import exceptions.RailSectionException;
-import models.session.GameSessionManager;
+import models.base.InteractiveGameObject;
 
 /**
  * Klasse fuer Schienen, die einem Feld (Square) zugeordnet sind und ein
  * Schienenstueck (= Gerade, Kurve) bzw. zwei Schienenstuecke (= Kreuzung,
  * Weiche) besitzen
  */
-public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
+public class Rail extends InteractiveGameObject {
     private PlaceableOnRail placeableOnRail = null;
     private UUID trainstationId;
     private UUID mineID;
@@ -126,7 +126,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
         List<JsonObject> railSectionJsons = new ArrayList<JsonObject>();
         for (RailSection section : railSectionList) {
             JsonObject json = new JsonObject();
-            json.addProperty("railSectionId", section.getUUID().toString());
+            json.addProperty("railSectionId", section.getID().toString());
             json.addProperty("node1", section.getNode1().toString());
             json.addProperty("node2", section.getNode2().toString());
             railSectionJsons.add(json);
@@ -240,7 +240,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare {
 
     @Override
     public String toString() {
-        return " Rail ID()=\" + getUUID() + [placeableOnRail=" + placeableOnRail + ", trainstationId=" + trainstationId + "minesID=" + mineID + "]";
+        return " Rail ID()=\" + getID() + [placeableOnRail=" + placeableOnRail + ", trainstationId=" + trainstationId + "minesID=" + mineID + "]";
     }
 
 

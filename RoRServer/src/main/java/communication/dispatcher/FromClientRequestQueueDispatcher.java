@@ -55,7 +55,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		responseInformation.putValue("editorName", editorSession.getSessionName());
 		Player hostPlayer = editorSession.getHost();
 		responseInformation.putValue("playerName", hostPlayer.getPlayerName());
-		responseInformation.putValue("playerId", hostPlayer.getUUID().toString());
+		responseInformation.putValue("playerId", hostPlayer.getID().toString());
 
 		sendMessage(responseInformation);
 	}
@@ -80,7 +80,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		List<JsonObject> players = new ArrayList<JsonObject>();
 		for (Player sessionPlayer : editorSession.getPlayerList()) {
 			JsonObject json = new JsonObject();
-			json.addProperty("playerId", sessionPlayer.getUUID().toString());
+			json.addProperty("playerId", sessionPlayer.getID().toString());
 			json.addProperty("playerName", sessionPlayer.getPlayerName());
 			json.addProperty("isHost", sessionPlayer.getIsHost());
 			players.add(json);
@@ -115,7 +115,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		responseInformation.putValue("topicName", gameSession.getSessionName());
 		responseInformation.putValue("gameName", gameSession.getSessionName());
 		responseInformation.putValue("playerName", gameSession.getHost().getPlayerName());
-		responseInformation.putValue("playerId", gameSession.getHost().getUUID().toString());
+		responseInformation.putValue("playerId", gameSession.getHost().getID().toString());
 
 		sendMessage(responseInformation);
 	}
@@ -145,7 +145,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		List<JsonObject> players = new ArrayList<JsonObject>();
 		for (Player sessionPlayer : gameSession.getPlayerList()) {
 			JsonObject json = new JsonObject();
-			json.addProperty("playerId", sessionPlayer.getUUID().toString());
+			json.addProperty("playerId", sessionPlayer.getID().toString());
 			json.addProperty("playerName", sessionPlayer.getPlayerName());
 			json.addProperty("isHost", sessionPlayer.getIsHost());
 			players.add(json);

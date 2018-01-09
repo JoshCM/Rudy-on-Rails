@@ -5,7 +5,7 @@ import communication.MessageEnvelope;
 import communication.MessageInformation;
 import communication.queue.sender.QueueSender;
 import models.base.ModelObserver;
-import models.base.ObservableModel;
+import models.base.InterActiveGameModel;
 
 public class QueueMessageQueue implements ModelObserver {
 	private QueueSender queueSender;
@@ -91,7 +91,7 @@ public class QueueMessageQueue implements ModelObserver {
 	}
 
 	@Override
-	public void update(ObservableModel observable, Object arg) {
+	public void update(InterActiveGameModel observable, Object arg) {
 		MessageEnvelope messageEnvelope = (MessageEnvelope) arg;
 		addMessage(messageEnvelope);
 	}

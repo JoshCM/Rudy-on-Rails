@@ -12,11 +12,13 @@ import com.google.gson.JsonObject;
 import communication.MessageInformation;
 import helper.Geometry;
 import helper.Geometry.Coordinate;
+import models.base.InteractiveGameObject;
+import models.base.PlaceableModel;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
 import models.session.RoRSession;
 
-public class Trainstation extends InteractiveGameObject implements PlaceableOnSquare {
+public class Trainstation extends InteractiveGameObject, PlaceableModel {
 
     public static final int RAIL_COUNT = 3;
     private List<UUID> trainstationRailIds;
@@ -51,7 +53,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
     private void notifyCreatedTrainstation() {
         MessageInformation messageInfo = new MessageInformation("CreateTrainstation");
-        messageInfo.putValue("trainstationId", getUUID());
+        messageInfo.putValue("trainstationId", getID());
         messageInfo.putValue("alignment", alignment);
         List<JsonObject> rails = new ArrayList<JsonObject>();
         for (UUID railId : getTrainstationRailIds()) {
@@ -96,7 +98,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
     private void notifyTrainstationAlignmentUpdated() {
         MessageInformation messageInformation = new MessageInformation("UpdateAlignmentOfTrainstation");
-        messageInformation.putValue("id", this.getUUID());
+        messageInformation.putValue("id", this.getID());
         messageInformation.putValue("alignment", this.alignment.toString());
         notifyObservers();
         //notifyChange(messageInformation);
@@ -146,7 +148,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
             Square newRailSquare = editorSession.getMap().getSquare(railCoordinate.x, railCoordinate.y);
 
             // erzeuge neue Rail und setze intern das Square.PlacableOnSquare
-            Rail newRail = new Rail(sessionName, newRailSquare, Arrays.asList(sectionOne.getNode1(), sectionOne.getNode2()), tempRail.getTrainstationId(), tempRail.getUUID());
+            Rail newRail = new Rail(sessionName, newRailSquare, Arrays.asList(sectionOne.getNode1(), sectionOne.getNode2()), tempRail.getTrainstationId(), tempRail.getID());
             newRailSquare.setPlaceableOnSquare(newRail);
         }
     }
@@ -222,7 +224,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
             if (newRailSquare == null)
                 return false;
             if (newRailSquare.getPlaceableOnSquare() != null)
-                if (!trainstationRailIds.contains(newRailSquare.getPlaceableOnSquare().getUUID()))
+                if (!trainstationRailIds.contains(newRailSquare.getPlaceableOnSquare().getID()))
                     return false;
         }
         return true;
@@ -231,7 +233,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
     @Override
     public Trainstation loadFromMap(Square square, RoRSession session) {
         Trainstation trainStation = (Trainstation) square.getPlaceableOnSquare();
-        Trainstation newTrainStation = new Trainstation(session.getName(), square, trainStation.getTrainstationRailIds(), trainStation.getUUID(), trainStation.alignment);
+        Trainstation newTrainStation = new Trainstation(session.getName(), square, trainStation.getTrainstationRailIds(), trainStation.getID(), trainStation.alignment);
         System.out.println("Neue TrainStation erstellt: " + newTrainStation.toString());
         return newTrainStation;
     }

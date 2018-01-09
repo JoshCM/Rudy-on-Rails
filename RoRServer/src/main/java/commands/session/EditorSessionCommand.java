@@ -1,10 +1,12 @@
 package commands.session;
 
-import commands.base.CommandBase;
+/**
+ * Deserialisiert die Nachricht und führt sie aus.
+ */
+public class EditorSessionCommand implements SessionCommand {
 
-public class EditorSessionCommand extends CommandBase {
     @Override
-    public void execute() {
+    public void execute(String sessionName, String command, Object argument) {
 
     }
 }

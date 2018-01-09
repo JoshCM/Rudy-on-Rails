@@ -38,7 +38,7 @@ public class Player extends ModelBase {
     // TODO: Serialisierung vereinheitlichen.
     private void notifyCreated() {
         MessageInformation messageInfo = new MessageInformation("CreatePlayer");
-        messageInfo.putValue("playerId", getUUID());
+        messageInfo.putValue("playerId", getID());
         messageInfo.putValue("playerName", playerName);
         messageInfo.putValue("isHost", isHost);
         notifyObservers();

@@ -1,8 +1,10 @@
 package models.base;
 
+import states.ModelStateInterface;
+import states.RoRState;
+
 import java.util.UUID;
 
-import communication.topic.TopicMessageQueue;
 
 /**
  * Base-Klasse für alle spielrelevanten Models
@@ -10,12 +12,12 @@ import communication.topic.TopicMessageQueue;
  * Sind Observable
  * Sind serialisierbar (ohne Observer)
  */
-public abstract class ModelBase extends ObservableModel {
-
+public abstract class ModelBase implements ModelStateInterface {
+    private RoRState state;
     private UUID id;
 
+
     public ModelBase() {
-        this.registerObserver(TopicMessageQueue.getInstance());
         this.id = UUID.randomUUID();
     }
 
@@ -24,13 +26,19 @@ public abstract class ModelBase extends ObservableModel {
      * @param id
      */
     public ModelBase(UUID id) {
-        this.registerObserver(TopicMessageQueue.getInstance());
         this.id = id;
     }
 
-    public UUID getUUID() {
+    public UUID getID() {
         return id;
     }
 
 
+    public RoRState getState() {
+        return state;
+    }
+
+    public void setState(RoRState state) {
+        this.state = state;
+    }
 }

@@ -8,6 +8,7 @@ package models.game;
 public class Gold extends Resource {
     public Gold(int quantity) {
         super(ResourceType.GOLD, quantity);
+        notifyObservers(this);
     }
 
 }

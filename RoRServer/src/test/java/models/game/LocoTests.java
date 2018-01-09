@@ -27,7 +27,7 @@ public class LocoTests {
 
 		Map map = gameSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Loco loco = new Loco(gameSession.getSessionName(), square, map, player.getUUID());
+		Loco loco = new Loco(gameSession.getSessionName(), square, map, player.getID());
 
 		assertEquals(1, loco.getCarts().size());
 
@@ -54,7 +54,7 @@ public class LocoTests {
 		Rail rail = new Rail(gameSession.getName(), square, directions);
 
 		square.setPlaceableOnSquare(rail);
-		Loco loco = new Loco(gameSession.getName(), square, map, player.getUUID());
+		Loco loco = new Loco(gameSession.getName(), square, map, player.getID());
 
 		assertEquals(rail, loco.getRail());
 

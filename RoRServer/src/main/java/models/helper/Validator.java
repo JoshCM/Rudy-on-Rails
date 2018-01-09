@@ -1,7 +1,7 @@
 package models.helper;
 
 import models.game.Compass;
-import models.game.InteractiveGameObject;
+import models.base.InteractiveGameObject;
 import models.game.Map;
 import models.game.Rail;
 import models.game.Square;

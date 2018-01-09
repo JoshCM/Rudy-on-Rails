@@ -3,7 +3,6 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.topic.TopicMessageQueue;
 import models.game.Map;
-import models.game.PlaceableOnSquare;
 import models.game.Player;
 import models.game.Square;
 import models.session.GameSession;
@@ -66,7 +65,7 @@ public class StartGameCommand extends CommandBase {
 	
 	private void createLocoForPlayers(RoRSession session) {
 		for(Player p : session.getPlayerList()) {
-			CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, p.getUUID());
+			CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, p.getID());
 			System.out.println();
 			createLocoCommand.execute();
 		}

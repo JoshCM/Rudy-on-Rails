@@ -10,20 +10,19 @@ import exceptions.SessionException;
 import models.base.ModelBase;
 import models.game.Map;
 import models.game.Player;
-import states.RoRSessionState;
-import states.SessionState;
+import states.RoRState;
 
 //TODO: States einpflegen und überprüfen.
 /**
  * Oberklasse von EditorSession und GameSession
  */
-public abstract class RoRSession extends ModelBase implements RoRSessionState {
+public abstract class RoRSession extends ModelBase {
     private ArrayList<Player> playerList;
     private Map map;
     QueueReceiver queueReceiver;
+    // TopicSender topicSender;
     private Player hostPlayer;
     private String sessionName;
-    private SessionState sessionState;
 
     public RoRSession(String sessionName, Map map, Player hostPlayer) {
         this.map = map;
@@ -31,7 +30,9 @@ public abstract class RoRSession extends ModelBase implements RoRSessionState {
         this.hostPlayer = hostPlayer;
         this.sessionName = sessionName;
         playerList.add(hostPlayer);
-        setSessionState(SessionState.READYTOSTART);
+        // queue erstellen + mittteilen
+        // topic erstellen + mitteilen
+        setState(RoRState.READYTOSTART);
     }
 
     public RoRSession(Map map, Player hostPlayer) {
@@ -92,12 +93,9 @@ public abstract class RoRSession extends ModelBase implements RoRSessionState {
         return Collections.unmodifiableList(playerList);
     }
 
-    public SessionState getSessionState() {
-        return sessionState;
-    }
 
-    public boolean getSessionState(SessionState sessionState) {
-        if (this.sessionState.equals(sessionState)) {
+    public boolean getState(RoRState sessionState) {
+        if (getState().equals(sessionState)) {
             return true;
         } else {
             return false;
@@ -105,15 +103,11 @@ public abstract class RoRSession extends ModelBase implements RoRSessionState {
     }
 
     public boolean isRunning() {
-        if (sessionState == SessionState.RUNNING) {
+        if (getState() == RoRState.RUNNING) {
             return false;
         } else {
             return true;
         }
-    }
-
-    public void setSessionState(SessionState sessionState) {
-        this.sessionState = sessionState;
     }
 
     public String getSessionName() {

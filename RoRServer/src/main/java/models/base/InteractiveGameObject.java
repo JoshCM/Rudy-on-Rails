@@ -1,14 +1,10 @@
-package models.game;
-
-import models.base.ModelBase;
-import models.base.PlaceableModel;
+package models.base;
 
 /**
  * Abstrakte Klasse fuer alle Objekte, mit denen interagiert werden kann.
- * TODO: Sollten Observable sein.
- * TODO: Sollten evtl. auch Observer sein!?
+ * Sind Observer und Observable
  */
-public abstract class InteractiveGameObject {
+public abstract class InteractiveGameObject extends InterActiveGameModel {
 	protected final String className;
     
 	public InteractiveGameObject() {

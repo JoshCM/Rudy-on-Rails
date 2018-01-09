@@ -17,7 +17,7 @@ public class RailSectionTests {
 	@Test
 	public void createARailSection() {
 		RailSection rs = new RailSection("NORTH", "SOUTH");
-		assertNotNull(rs.getUUID());
+		assertNotNull(rs.getID());
 	}  
 
 

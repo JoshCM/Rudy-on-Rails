@@ -164,13 +164,13 @@ public class FromClientRequestQueueDispatcherTests {
 
 		JsonObject hostPlayerData = playerList.get(0);
 		Player hostPlayer = editorSession.getPlayerList().get(0);
-		assertEquals(hostPlayer.getUUID().toString(), hostPlayerData.get("playerId").getAsString());
+		assertEquals(hostPlayer.getID().toString(), hostPlayerData.get("playerId").getAsString());
 		assertEquals(hostPlayer.getPlayerName(), hostPlayerData.get("playerName").getAsString());
 		assertEquals(hostPlayer.getIsHost(), hostPlayerData.get("isHost").getAsBoolean());
 
 		JsonObject joinedPlayerData = playerList.get(1);
 		Player joinedPlayer = editorSession.getPlayerList().get(1);
-		assertEquals(joinedPlayer.getUUID().toString(), joinedPlayerData.get("playerId").getAsString());
+		assertEquals(joinedPlayer.getID().toString(), joinedPlayerData.get("playerId").getAsString());
 		assertEquals(joinedPlayer.getPlayerName(), joinedPlayerData.get("playerName").getAsString());
 		assertEquals(joinedPlayer.getIsHost(), joinedPlayerData.get("isHost").getAsBoolean());
 	}
@@ -227,13 +227,13 @@ public class FromClientRequestQueueDispatcherTests {
 
 		JsonObject hostPlayerData = playerList.get(0);
 		Player hostPlayer = gameSession.getPlayerList().get(0);
-		assertEquals(hostPlayer.getUUID().toString(), hostPlayerData.get("playerId").getAsString());
+		assertEquals(hostPlayer.getID().toString(), hostPlayerData.get("playerId").getAsString());
 		assertEquals(hostPlayer.getPlayerName(), hostPlayerData.get("playerName").getAsString());
 		assertEquals(hostPlayer.getIsHost(), hostPlayerData.get("isHost").getAsBoolean());
 
 		JsonObject joinedPlayerData = playerList.get(1);
 		Player joinedPlayer = gameSession.getPlayerList().get(1);
-		assertEquals(joinedPlayer.getUUID().toString(), joinedPlayerData.get("playerId").getAsString());
+		assertEquals(joinedPlayer.getID().toString(), joinedPlayerData.get("playerId").getAsString());
 		assertEquals(joinedPlayer.getPlayerName(), joinedPlayerData.get("playerName").getAsString());
 		assertEquals(joinedPlayer.getIsHost(), joinedPlayerData.get("isHost").getAsBoolean());
 	}

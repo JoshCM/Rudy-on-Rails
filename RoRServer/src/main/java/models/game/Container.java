@@ -2,9 +2,11 @@ package models.game;
 
 
 import exceptions.ContainerException;
+import models.base.InterActiveGameModel;
+import models.base.PlaceableModel;
 import models.helper.StringConverter;
 
-public class Container extends InteractiveGameObject implements PlaceableOnSquare {
+public class Container extends PlaceableModel {
 
     private Resource resource;
 
@@ -25,7 +27,8 @@ public class Container extends InteractiveGameObject implements PlaceableOnSquar
     }
 
     @Override
-    public PlaceableOnSquare loadFromMap() {
-        return null;
+    public void update(InterActiveGameModel o, Object arg) {
+        // Ändere Inhalt?
+        // Gib Observern Bescheid!
     }
 }

@@ -126,7 +126,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 
 	private void SendCreatedLocoMessage() {
 		MessageInformation messageInfo = new MessageInformation("CreateLoco");
-		messageInfo.putValue("locoId", getUUID());
+		messageInfo.putValue("locoId", getID());
 		messageInfo.putValue("xPos", getX());
 		messageInfo.putValue("yPos", getY);
 		messageInfo.putValue("playerId", this.playerId);
@@ -135,7 +135,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 
 	private void SendUpdateLocoMessage() {
 		MessageInformation messageInfo = new MessageInformation("UpdateLocoPosition");
-		messageInfo.putValue("locoId", getUUID());
+		messageInfo.putValue("locoId", getID());
 		messageInfo.putValue("xPos", getX());
 		messageInfo.putValue("yPos", getY);
 		messageInfo.putValue("playerId", this.playerId);
@@ -149,7 +149,7 @@ public class Loco extends TickableGameObject implements PlaceableOnRail {
 	
 	private void notifySpeedChanged() {
 		MessageInformation messageInfo = new MessageInformation("UpdateLocoSpeed");
-		messageInfo.putValue("locoId", getUUID());
+		messageInfo.putValue("locoId", getID());
 		messageInfo.putValue("speed", speed);
 		notifyChange(messageInfo);
 	}

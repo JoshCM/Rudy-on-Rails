@@ -2,6 +2,7 @@ package models.session;
 
 import communication.dispatcher.EditorSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
+import models.base.InterActiveGameModel;
 import models.game.Map;
 import models.game.Player;
 
@@ -20,5 +21,10 @@ public class EditorSession extends RoRSession {
 
 	public EditorSession(String sessionName, Map map) {
 	    this(sessionName, map, null);
+    }
+
+    @Override
+    public void update(InterActiveGameModel o, Object arg) {
+        // Queue/Topic über Update informieren...
     }
 }

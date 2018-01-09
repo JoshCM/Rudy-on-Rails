@@ -2,6 +2,8 @@ package models.config;
 
 public class GameSettings {
 
+    //TODO: Gehört in config.properties
+
     // Ressourcen
     public static final int DEF_CONTAINER_GOLD = 5;
     public static final int DEF_CONTAINER_COAL = 100;
@@ -15,5 +17,12 @@ public class GameSettings {
 
     // Spielsettings
     public final static int TICKRATE = 100;
+
+    // DEBUG Settings
+    // TODO: Debug Settings gehören in eigenes File!
+    public final static boolean DISPATCHER_LOGGING = true;
+    public final static boolean QUEUERECEIVER_LOGGING = true;
+
+    public final static boolean DEBUGMODE = true;
 
 }

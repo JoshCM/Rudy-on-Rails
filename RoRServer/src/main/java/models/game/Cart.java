@@ -1,6 +1,8 @@
 package models.game;
 
 import exceptions.InvalidModelOperationException;
+import models.base.InteractiveGameObject;
+import models.base.InterActiveGameModel;
 
 /**
  * @author Isabel Rott, Michelle Le
@@ -56,4 +58,9 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
         return unloadedResource;
     }
 
+    @Override
+    public void update(InterActiveGameModel o, Object arg) {
+        // Mache, etwas wenn sich was geändert hat
+        // Sage den Observern Bescheid
+    }
 }

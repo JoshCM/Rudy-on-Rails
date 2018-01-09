@@ -6,13 +6,15 @@ import java.lang.reflect.Method;
 import org.apache.log4j.Logger;
 
 import communication.MessageInformation;
-import models.base.ObservableModel;
+import models.base.InterActiveGameModel;
+
+import static models.config.GameSettings.DISPATCHER_LOGGING;
 
 /**
  * Base-Klasse für alle spezifischen Dispatcher. Hier ist die grundsätzliche Verteilungslogik 
  * der Nachrichten für Dispatcher verankert.
  */
-public abstract class DispatcherBase extends ObservableModel {
+public abstract class DispatcherBase extends InterActiveGameModel {
 	private Logger log = Logger.getLogger(FromClientRequestQueueDispatcher.class.getName());
 	
 	public DispatcherBase() {
@@ -28,7 +30,11 @@ public abstract class DispatcherBase extends ObservableModel {
 			paramsObj[0] = messageInfo;
 			Method thisMethod = this.getClass().getDeclaredMethod(methodName, params);
 			thisMethod.invoke(this, paramsObj);
-			log.info("Called " + methodName);
+
+			if (DISPATCHER_LOGGING) {
+				log.info("Called " + methodName);
+			}
+
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {

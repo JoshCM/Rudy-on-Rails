@@ -1,10 +1,8 @@
 package models.session;
 
-import java.util.Observable;
+import models.base.InterActiveGameModel;
 
-import models.base.ObservableModel;
-
-public class Ticker extends ObservableModel{
+public class Ticker extends InterActiveGameModel {
 	/**
 	 * Benachrichtigt alle angemeldete TickableGameObjects, 
 	 * wenn sich das timeDelta geändert hat

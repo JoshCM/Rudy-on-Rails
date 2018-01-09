@@ -13,7 +13,6 @@ import communication.queue.receiver.QueueReceiver;
 import models.game.Map;
 import models.game.Placeable;
 import models.game.PlaceableOnRail;
-import models.game.PlaceableOnSquare;
 
 /**
  * 
@@ -29,7 +28,7 @@ public class MapManager {
 	private final static String ext = ".map";
 	private final static Gson gsonLoader = new GsonBuilder()
 			.registerTypeAdapter(Placeable.class, new PlaceableDeserializer<Placeable>())
-			.registerTypeAdapter(PlaceableOnSquare.class, new PlaceableDeserializer<PlaceableOnSquare>())
+			.registerTypeAdapter(Placeable.class, new PlaceableDeserializer<Placeable>())
 			.registerTypeAdapter(PlaceableOnRail.class, new PlaceableDeserializer<PlaceableOnRail>())
 			.setPrettyPrinting().create();
 	private final static Gson gsonSaver = new GsonBuilder().setPrettyPrinting().create();
@@ -45,7 +44,7 @@ public class MapManager {
 	 */
 	public static Map loadMap(String mapName) {
 		String jsonMap = readFromFile(mapName);
-		//log.info("Eingelesene Map: " + jsonMap);
+		//logger.info("Eingelesene Map: " + jsonMap);
 		Map map = convertJsonToMap(jsonMap);
 		return map;
 	}
@@ -87,8 +86,6 @@ public class MapManager {
 	 * 
 	 * @param map:
 	 *            Das zu speichernde Map-Objekt
-	 * @param mapName:
-	 *            Der Name der Map für das Dateisystem
 	 */
 	public static void saveMap(Map map) {
 		String jsonMap = convertMapToJson(map);

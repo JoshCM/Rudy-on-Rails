@@ -7,6 +7,7 @@ package models.game;
  * @author Andreas Pöhler
  *
  */
+// TODO: Gehört in GameSettings oder configs.property
 public enum Difficulty {
 	
 	EASY(15.0), 

@@ -1,6 +1,8 @@
 package models.game;
 
+import models.base.InteractiveGameObject;
 import models.base.ModelBase;
+import models.base.InterActiveGameModel;
 import models.config.GameSettings;
 import models.helper.Validator;
 
@@ -104,7 +106,7 @@ public class Map extends ModelBase {
             for (Square square : squares) {
                 PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
                 if (placeableOnSquare != null) {
-                    if (placeableOnSquare.getUUID().equals(id)) {
+                    if (placeableOnSquare.getID().equals(id)) {
                         return placeableOnSquare;
                     }
                 }
@@ -116,7 +118,7 @@ public class Map extends ModelBase {
     public Square getSquareById(UUID id) {
         for (Square[] squares : getSquares()) {
             for (Square square : squares) {
-                if (square.getUUID().equals(id)) {
+                if (square.getID().equals(id)) {
                     return square;
                 }
             }
@@ -199,7 +201,7 @@ public class Map extends ModelBase {
         for (Rail trainstationRail : trainstation.getTrainstationRails()) {
             List<String> trainstationRailCoordinates = new ArrayList<String>();
             Square newTrainstationRailSquare = this.getSquareById(trainstationRail.getSquareId());
-            trainstationRailCoordinates.add(trainstationRail.getUUID().toString());
+            trainstationRailCoordinates.add(trainstationRail.getID().toString());
             trainstationRailCoordinates.add(String.valueOf(newTrainstationRailSquare.getX()));
             trainstationRailCoordinates.add(String.valueOf(newTrainstationRailSquare.getY()));
             trainstationRailsCoordinateList.add(trainstationRailCoordinates);
@@ -227,5 +229,10 @@ public class Map extends ModelBase {
 
     private int getX() {
         return -1; // TODO: FALSCH!
+    }
+
+    @Override
+    public void update(InterActiveGameModel o, Object arg) {
+        // Informiere Session über Update
     }
 }
