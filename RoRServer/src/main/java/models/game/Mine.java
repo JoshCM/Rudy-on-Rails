@@ -38,7 +38,7 @@ public class Mine extends InteractiveGameObject implements PlaceableOnRail {
 	}
 
 	public void produce() {
-		Thread thread;
+		Thread thread=null;
 		Runnable myRunnable = new Runnable() {
 
 			public void run() {
@@ -50,7 +50,7 @@ public class Mine extends InteractiveGameObject implements PlaceableOnRail {
 						log.info("res=" + res.getName());
 					}
 					try {
-						Thread.sleep(1000);
+						thread.sleep(1000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -60,7 +60,7 @@ public class Mine extends InteractiveGameObject implements PlaceableOnRail {
 
 		};
 		thread=new Thread(myRunnable);
-		thread.run();
+		thread.start();
 		
 	}
 
