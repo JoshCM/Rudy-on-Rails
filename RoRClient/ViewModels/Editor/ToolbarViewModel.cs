@@ -37,7 +37,7 @@ namespace RoRClient.ViewModels.Editor
         }
 
         /// <summary>
-        /// Wird vielleicht für's Testen genutzt
+        /// Durchsucht den Ordner Resources/images/Tools und die darin liegenden Unterordner nach Bildern für die Toolbar
         /// </summary>
         private void GenerateToolbarItemsFromFolder()
         {
@@ -45,9 +45,10 @@ namespace RoRClient.ViewModels.Editor
             string path = Path.GetFullPath(Path.Combine(RunningPath, @"..\..\")) + imageFolderPath;
 
             string[] files = Directory.GetFiles(path);
-            foreach (string file in files)
+
+            foreach (string dir in Directory.GetDirectories(path))
             {
-                if (file.EndsWith(".png"))
+                foreach (string file in Directory.GetFiles(dir))
                 {
                     toolItems.Add(new ToolItem(Path.GetFileName(file).Split('.')[0], file));
                 }
