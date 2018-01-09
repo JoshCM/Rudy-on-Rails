@@ -10,12 +10,12 @@ import communication.topic.TopicMessageQueue;
  * Sind Observable
  * Sind serialisierbar (ohne Observer)
  */
-public abstract class ModelBase extends ObservableModel implements Model {
+public abstract class ModelBase extends ObservableModel {
 
     private UUID id;
 
     public ModelBase() {
-        this.addObserver(TopicMessageQueue.getInstance());
+        this.registerObserver(TopicMessageQueue.getInstance());
         this.id = UUID.randomUUID();
     }
 
@@ -24,7 +24,7 @@ public abstract class ModelBase extends ObservableModel implements Model {
      * @param id
      */
     public ModelBase(UUID id) {
-        this.addObserver(TopicMessageQueue.getInstance());
+        this.registerObserver(TopicMessageQueue.getInstance());
         this.id = id;
     }
 

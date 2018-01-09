@@ -1,0 +1,5 @@
+package states;
+
+public enum SessionState {
+    RUNNING, PAUSED, FINISHED, READYTOSTART, ERROR, NOPLAYERS, NOMAP, NOMAPANDNOPLAYERS
+}

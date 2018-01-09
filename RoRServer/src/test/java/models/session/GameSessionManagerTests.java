@@ -21,8 +21,8 @@ public class GameSessionManagerTests {
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(gameSessionName, UUID.randomUUID(), "HostPlayer");
 		Player player = gameSession.createPlayer(UUID.randomUUID(), "Neuer Spieler");
 
-		assertEquals(2, gameSession.getPlayers().size());
-		assertEquals("HostPlayer", gameSession.getPlayers().get(0).getPlayerName());
-		assertEquals("Neuer Spieler", gameSession.getPlayers().get(1).getPlayerName());
+		assertEquals(2, gameSession.getPlayerList().size());
+		assertEquals("HostPlayer", gameSession.getPlayerList().get(0).getPlayerName());
+		assertEquals("Neuer Spieler", gameSession.getPlayerList().get(1).getPlayerName());
 	}
 }

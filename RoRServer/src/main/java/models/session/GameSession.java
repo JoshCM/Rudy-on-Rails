@@ -13,7 +13,7 @@ import models.game.TickableGameObject;
  * Haelt die Map und die Liste von verbundenen Playern
  * Erhaelt ueber einen QueueReceiver Anfragen von Clients, die mit der GameSession verbunden sind
  */
-public class GameSession extends RoRSession{
+public class GameSession extends RoRSession {
 	private final static int TIME_BETWEEN_TICKS_IN_MILLISECONDS = 100;
 	
 	private Thread tickingThread;
@@ -69,7 +69,7 @@ public class GameSession extends RoRSession{
 	 */
 	public void addAll(TickableGameObject...tgos ) {
 		for(TickableGameObject tgo : tgos) {
-			ticker.addObserver(tgo);
+			ticker.registerObserver(tgo);
 		}
 	}
 	
@@ -103,7 +103,7 @@ public class GameSession extends RoRSession{
 
 		if(locomotive != null) {
 			this.locomotives.add(locomotive);
-			ticker.addObserver(locomotive);
+			ticker.registerObserver(locomotive);
 		}
 	}
 	

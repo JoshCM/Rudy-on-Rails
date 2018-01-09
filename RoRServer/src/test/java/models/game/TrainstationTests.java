@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import models.session.RoRSession;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,7 +18,6 @@ import commands.editor.CreateTrainstationCommand;
 import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
 import models.session.EditorSessionManager;
-import models.session.RoRSession;
 
 public class TrainstationTests {
 

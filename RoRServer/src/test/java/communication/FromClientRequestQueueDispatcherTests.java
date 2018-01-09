@@ -6,6 +6,8 @@ import static org.junit.Assert.assertNotNull;
 import java.util.List;
 import java.util.UUID;
 
+import models.session.EditorSession;
+import models.session.GameSession;
 import org.junit.Test;
 
 import com.google.gson.JsonObject;
@@ -13,9 +15,7 @@ import com.google.gson.JsonObject;
 import communication.dispatcher.FromClientRequestQueueDispatcher;
 import helper.MessageQueueStub;
 import models.game.Player;
-import models.session.EditorSession;
 import models.session.EditorSessionManager;
-import models.session.GameSession;
 import models.session.GameSessionManager;
 
 public class FromClientRequestQueueDispatcherTests {
@@ -24,7 +24,7 @@ public class FromClientRequestQueueDispatcherTests {
 	public void FromClientRequestQueueDispatcher_handleCreateEditorSession_createsEditorSessionAndHostPlayer() {
 		MessageQueueStub messageQueueStub = new MessageQueueStub();
 		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
-		dispatcher.addObserver(messageQueueStub);
+		dispatcher.registerObserver(messageQueueStub);
 		String messageType = "CreateEditorSession";
 		String editorSessionName = "TestSession";
 		String playerName = "MyPlayer";
@@ -38,7 +38,7 @@ public class FromClientRequestQueueDispatcherTests {
 		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(editorSessionName);
 		assertNotNull(editorSession);
 
-		Player player = editorSession.getPlayers().get(0);
+		Player player = editorSession.getPlayerList().get(0);
 		assertNotNull(player);
 	}
 
@@ -46,7 +46,7 @@ public class FromClientRequestQueueDispatcherTests {
 	public void FromClientRequestQueueDispatcher_handleCreateEditorSession_createsResponseWithExpectedValues() {
 		MessageQueueStub messageQueueStub = new MessageQueueStub();
 		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
-		dispatcher.addObserver(messageQueueStub);
+		dispatcher.registerObserver(messageQueueStub);
 		String messageType = "CreateEditorSession";
 		String editorSessionName = "TestSession";
 		String playerName = "MyPlayer";
@@ -70,7 +70,7 @@ public class FromClientRequestQueueDispatcherTests {
 	public void FromClientRequestQueueDispatcher_handleCreateGameSession_createsGameSessionAndHostPlayer() {
 		MessageQueueStub messageQueueStub = new MessageQueueStub();
 		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
-		dispatcher.addObserver(messageQueueStub);
+		dispatcher.registerObserver(messageQueueStub);
 		String messageType = "CreateGameSession";
 		String gameSessionName = "TestSession";
 		String playerName = "MyPlayer";
@@ -84,7 +84,7 @@ public class FromClientRequestQueueDispatcherTests {
 		GameSession editorSession = GameSessionManager.getInstance().getGameSessionByName(gameSessionName);
 		assertNotNull(editorSession);
 
-		Player player = editorSession.getPlayers().get(0);
+		Player player = editorSession.getPlayerList().get(0);
 		assertNotNull(player);
 	}
 
@@ -92,7 +92,7 @@ public class FromClientRequestQueueDispatcherTests {
 	public void FromClientRequestQueueDispatcher_handleCreateGameSession_createsResponseWithExpectedValues() {
 		MessageQueueStub messageQueueStub = new MessageQueueStub();
 		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
-		dispatcher.addObserver(messageQueueStub);
+		dispatcher.registerObserver(messageQueueStub);
 		String messageType = "CreateGameSession";
 		String gameSessionName = "TestSession";
 		String playerName = "MyPlayer";
@@ -128,9 +128,9 @@ public class FromClientRequestQueueDispatcherTests {
 
 		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(editorSessionName);
 
-		assertEquals(2, editorSession.getPlayers().size());
+		assertEquals(2, editorSession.getPlayerList().size());
 
-		Player joinedPlayer = editorSession.getPlayers().stream().filter(x -> x.getPlayerName().equals(joinedPlayerName))
+		Player joinedPlayer = editorSession.getPlayerList().stream().filter(x -> x.getPlayerName().equals(joinedPlayerName))
 				.findFirst().get();
 		assertNotNull(joinedPlayer);
 	}
@@ -139,7 +139,7 @@ public class FromClientRequestQueueDispatcherTests {
 	public void FromClientRequestQueueDispatcher_handleJoinEditorSession_createsResponseWithExpectedValues() {
 		MessageQueueStub messageQueueStub = new MessageQueueStub();
 		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
-		dispatcher.addObserver(messageQueueStub);
+		dispatcher.registerObserver(messageQueueStub);
 		String messageType = "JoinEditorSession";
 		String editorSessionName = "TestSession";
 		String joinedPlayerName = "MyPlayer";
@@ -163,13 +163,13 @@ public class FromClientRequestQueueDispatcherTests {
 		List<JsonObject> playerList = (List<JsonObject>) response.getValue("playerList");
 
 		JsonObject hostPlayerData = playerList.get(0);
-		Player hostPlayer = editorSession.getPlayers().get(0);
+		Player hostPlayer = editorSession.getPlayerList().get(0);
 		assertEquals(hostPlayer.getUUID().toString(), hostPlayerData.get("playerId").getAsString());
 		assertEquals(hostPlayer.getPlayerName(), hostPlayerData.get("playerName").getAsString());
 		assertEquals(hostPlayer.getIsHost(), hostPlayerData.get("isHost").getAsBoolean());
 
 		JsonObject joinedPlayerData = playerList.get(1);
-		Player joinedPlayer = editorSession.getPlayers().get(1);
+		Player joinedPlayer = editorSession.getPlayerList().get(1);
 		assertEquals(joinedPlayer.getUUID().toString(), joinedPlayerData.get("playerId").getAsString());
 		assertEquals(joinedPlayer.getPlayerName(), joinedPlayerData.get("playerName").getAsString());
 		assertEquals(joinedPlayer.getIsHost(), joinedPlayerData.get("isHost").getAsBoolean());
@@ -191,9 +191,9 @@ public class FromClientRequestQueueDispatcherTests {
 
 		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(gameSessionName);
 
-		assertEquals(2, gameSession.getPlayers().size());
+		assertEquals(2, gameSession.getPlayerList().size());
 
-		Player joinedPlayer = gameSession.getPlayers().stream().filter(x -> x.getPlayerName().equals(joinedPlayerName))
+		Player joinedPlayer = gameSession.getPlayerList().stream().filter(x -> x.getPlayerName().equals(joinedPlayerName))
 				.findFirst().get();
 		assertNotNull(joinedPlayer);
 	}
@@ -202,7 +202,7 @@ public class FromClientRequestQueueDispatcherTests {
 	public void FromClientRequestQueueDispatcher_handleJoinGameSession_createsResponseWithExpectedValues() {
 		MessageQueueStub messageQueueStub = new MessageQueueStub();
 		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
-		dispatcher.addObserver(messageQueueStub);
+		dispatcher.registerObserver(messageQueueStub);
 		String messageType = "JoinGameSession";
 		String gameSessionName = "TestSession";
 		String joinedPlayerName = "MyPlayer";
@@ -226,13 +226,13 @@ public class FromClientRequestQueueDispatcherTests {
 		List<JsonObject> playerList = (List<JsonObject>) response.getValue("playerList");
 
 		JsonObject hostPlayerData = playerList.get(0);
-		Player hostPlayer = gameSession.getPlayers().get(0);
+		Player hostPlayer = gameSession.getPlayerList().get(0);
 		assertEquals(hostPlayer.getUUID().toString(), hostPlayerData.get("playerId").getAsString());
 		assertEquals(hostPlayer.getPlayerName(), hostPlayerData.get("playerName").getAsString());
 		assertEquals(hostPlayer.getIsHost(), hostPlayerData.get("isHost").getAsBoolean());
 
 		JsonObject joinedPlayerData = playerList.get(1);
-		Player joinedPlayer = gameSession.getPlayers().get(1);
+		Player joinedPlayer = gameSession.getPlayerList().get(1);
 		assertEquals(joinedPlayer.getUUID().toString(), joinedPlayerData.get("playerId").getAsString());
 		assertEquals(joinedPlayer.getPlayerName(), joinedPlayerData.get("playerName").getAsString());
 		assertEquals(joinedPlayer.getIsHost(), joinedPlayerData.get("isHost").getAsBoolean());
@@ -242,7 +242,7 @@ public class FromClientRequestQueueDispatcherTests {
 	public void FromClientRequestQueueDispatcher_handleReadGameSessions_createsResonseWithExpectedValues() {
 		MessageQueueStub messageQueueStub = new MessageQueueStub();
 		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
-		dispatcher.addObserver(messageQueueStub);
+		dispatcher.registerObserver(messageQueueStub);
 		String messageType = "ReadGameSessions";
 		String gameSessionName = "TestSession";
 		String hostPlayerName = "HostPlayer";
@@ -268,7 +268,7 @@ public class FromClientRequestQueueDispatcherTests {
 	public void FromClientRequestQueueDispatcher_handleReadGameSessions_ignoresStartedGame() {
 		MessageQueueStub messageQueueStub = new MessageQueueStub();
 		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
-		dispatcher.addObserver(messageQueueStub);
+		dispatcher.registerObserver(messageQueueStub);
 		String messageType = "ReadGameSessions";
 		String gameSessionName = "TestSession";
 		String hostPlayerName = "HostPlayer";
@@ -298,7 +298,7 @@ public class FromClientRequestQueueDispatcherTests {
 	public void FromClientRequestQueueDispatcher_handleReadEditorSessions_createsResonseWithExpectedValues() {
 		MessageQueueStub messageQueueStub = new MessageQueueStub();
 		FromClientRequestQueueDispatcher dispatcher = new FromClientRequestQueueDispatcher();
-		dispatcher.addObserver(messageQueueStub);
+		dispatcher.registerObserver(messageQueueStub);
 		String messageType = "ReadEditorSessions";
 		String editorSessionName = "TestSession";
 		String hostPlayerName = "HostPlayer";

@@ -4,20 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import models.session.GameSession;
 import org.junit.Test;
 
-import commands.game.StartGameCommand;
-import communication.MessageInformation;
-import models.game.Map;
 import models.game.Rail;
-import models.game.RailSection;
 import models.game.Square;
 import models.game.Trainstation;
-import models.session.GameSession;
 import models.session.GameSessionManager;
-import models.session.RoRSession;
 import models.game.Compass;
-import persistent.MapManager;
 
 public class StartGameCommandTest {
 	

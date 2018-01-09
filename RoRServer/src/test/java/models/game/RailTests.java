@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.UUID;
 
 import exceptions.RailSectionException;
+import models.session.EditorSession;
 import org.junit.Before;
 import org.junit.Test;
 
 import communication.MessageInformation;
 import communication.topic.TopicMessageQueue;
-import models.session.EditorSession;
 import models.session.EditorSessionManager;
 
 public class RailTests {

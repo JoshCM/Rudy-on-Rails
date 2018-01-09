@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 public class QueueReceiver implements MessageListener {
 	protected Logger log = Logger.getLogger(QueueReceiver.class.getName());
 
-	private Session session;
+	private Session session; // falsch
 	private Queue queue;
 	private String queueName;
 	private MessageConsumer consumer;
@@ -44,8 +44,12 @@ public class QueueReceiver implements MessageListener {
 			e.printStackTrace();
 		}	
 	}
-	
-	/**
+
+    public String getQueueName() {
+        return queueName;
+    }
+
+    /**
 	 * Erzeugt den Consumer und dessen Listener
 	 */
 	public void setup() {

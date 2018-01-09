@@ -14,14 +14,14 @@ public class GameSessionTests {
 		
 		gameSession.startGame();
 		
-		assertTrue(gameSession.isRunning());
+		assertTrue(gameSession.isARunningSession());
 	}
 	
 	@Test
 	public void GameSession_StatGame_CreatesStartGameMessage() {
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
 		MessageQueueStub messageQueueStub = new MessageQueueStub();
-		gameSession.addObserver(messageQueueStub);
+		gameSession.registerObserver(messageQueueStub);
 		
 		gameSession.startGame();
 		

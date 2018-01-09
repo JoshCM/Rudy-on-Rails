@@ -34,6 +34,7 @@ public class Player extends ModelBase {
         return isHost;
     }
 
+
     // TODO: Serialisierung vereinheitlichen.
     private void notifyCreated() {
         MessageInformation messageInfo = new MessageInformation("CreatePlayer");

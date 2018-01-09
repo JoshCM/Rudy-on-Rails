@@ -23,8 +23,8 @@ public class EditorSessionManagerTests {
 				UUID.randomUUID(), "HostPlayer");
 		Player player = editorSession.createPlayer(UUID.randomUUID(), "Neuer Spieler");
 
-		assertEquals(2, editorSession.getPlayers().size());
-		assertEquals("HostPlayer", editorSession.getPlayers().get(0).getPlayerName());
-		assertEquals("Neuer Spieler", editorSession.getPlayers().get(1).getPlayerName());
+		assertEquals(2, editorSession.getPlayerList().size());
+		assertEquals("HostPlayer", editorSession.getPlayerList().get(0).getPlayerName());
+		assertEquals("Neuer Spieler", editorSession.getPlayerList().get(1).getPlayerName());
 	}
 }

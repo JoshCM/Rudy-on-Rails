@@ -9,7 +9,6 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import models.game.Map;
 import models.game.Rail;
-import models.game.RailSection;
 import models.game.Compass;
 import models.game.Square;
 import models.session.EditorSession;

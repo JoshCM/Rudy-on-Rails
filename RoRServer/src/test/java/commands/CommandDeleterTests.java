@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import models.session.RoRSession;
 import org.junit.Test;
 
 import commands.base.Command;
@@ -17,7 +18,6 @@ import models.game.Compass;
 import models.game.Rail;
 import models.game.Trainstation;
 import models.session.EditorSessionManager;
-import models.session.RoRSession;
 
 public class CommandDeleterTests {
 	@Test

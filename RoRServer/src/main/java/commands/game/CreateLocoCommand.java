@@ -3,15 +3,13 @@ package commands.game;
 import java.util.UUID;
 
 import commands.base.Command;
-import commands.base.CommandBase;
-import communication.MessageInformation;
 import models.game.Loco;
 import models.game.Map;
-import models.game.Player;
 import models.game.Rail;
 import models.game.Square;
 import models.session.GameSession;
 import models.session.RoRSession;
+
 /**
  * 
  * @author Isabel Rott, Michelle Le

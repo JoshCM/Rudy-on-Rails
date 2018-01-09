@@ -1,9 +1,9 @@
 package models.session;
 
-import java.util.UUID;
-
 import communication.dispatcher.EditorSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
+import models.game.Map;
+import models.game.Player;
 
 /**
  * Oberklasse vom Editor-Modus. 
@@ -11,10 +11,14 @@ import communication.queue.receiver.QueueReceiver;
  * Erhält über einen QueueReceiver Anfragen von Clients, die mit der EditorSession verbunden sind
  */
 public class EditorSession extends RoRSession {
-	public EditorSession(String name, UUID hostPlayerId, String hostPlayerName) {
-		super(name, hostPlayerId, hostPlayerName);
+	public EditorSession(String sessionName, Map map, Player hostPlayer) {
+		super(sessionName, map, hostPlayer);
 	
 		EditorSessionDispatcher dispatcher = new EditorSessionDispatcher(this);
-		this.queueReceiver = new QueueReceiver(name, dispatcher);
+		this.queueReceiver = new QueueReceiver(sessionName, dispatcher);
+	}
+
+	public EditorSession() {
+		super(null, null, null);
 	}
 }

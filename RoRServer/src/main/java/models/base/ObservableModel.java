@@ -1,5 +1,8 @@
 package models.base;
 
+import exceptions.ObservableModelException;
+import states.GameState;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -11,30 +14,51 @@ import java.util.Observable;
  *
  */
 public class ObservableModel extends Observable {
-	private transient List<ModelObserver> observers = new ArrayList<ModelObserver>();
-	private boolean changed = false;
+	private transient List<ModelObserver> observerList = new ArrayList<ModelObserver>();
+	private boolean changed = false; // müsste in einen State geändert werden.
+    private GameState status;
 	
-	public void addObserver(ModelObserver observer) {
-		if(observers == null) {
-			observers = new ArrayList<ModelObserver>();
+	public void registerObserver(ModelObserver newObserver) {
+		if(observerList == null) {
+			observerList = new ArrayList<ModelObserver>();
 		}
-		observers.add(observer);
+		if (observerList.contains(newObserver)) {
+		    throw new ObservableModelException("Observer is already in Observerlist");
+        }
+		observerList.add(newObserver);
 	}
-	
-	public void deleteObserver(ModelObserver observer) {
-		observers.remove(observer);
+
+
+    /**
+     * Works only if the Observer has 1 Observer
+     */
+	public void unregisterObserver() {
+        if (observerList.size()==1) {
+            unregisterAllObservers();
+        }
+    }
+
+    /**
+     * @param observer
+     * Removes specific Observer from Observerlist.
+     */
+	public void unregisterObserver(ModelObserver observer) {
+		if (observerList.contains(observer)) {
+		    observerList.remove(observer);
+        }
 	}
-	
-	public void deleteObservers() {
-		for(ModelObserver observer : observers) {
-			observers.remove(observer);
-		}
+
+    /**
+     * Removes ALL Observers from Observerlist
+     */
+	public void unregisterAllObservers() {
+	    observerList.clear();
 	}
 	
 	public void notifyObservers(Object arg) {
 		if(hasChanged()) {
-			for(ModelObserver observer : observers) {
-				observer.update(this, arg);
+			for(ModelObserver observer : observerList) {
+				observer.update(arg);
 			}
 		}
 		clearChanged();

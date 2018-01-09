@@ -3,7 +3,7 @@ package models.game;
 import models.base.ModelObserver;
 import models.base.ObservableModel;
 
-public abstract class TickableGameObject extends InteractiveGameObject implements ModelObserver{
+public abstract class TickableGameObject extends InteractiveGameObject implements ModelObserver {
 	
 	protected long timeDeltaInNanoSeconds;//Zeit zwischen den Ticks
 	

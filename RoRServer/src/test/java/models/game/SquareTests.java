@@ -5,9 +5,9 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.UUID;
 
+import models.session.GameSession;
 import org.junit.Test;
 
-import models.session.GameSession;
 import models.session.GameSessionManager;
 
 public class SquareTests {
@@ -16,7 +16,7 @@ public class SquareTests {
 	public void testGetNeighbouringSquaresAtCorner() {
 		
 		// GameSession und Square erstellen
-		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");	
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
 		
 		Square squareAtCorner = gameSession.getMap().getSquare(0, 0);
 		List<Square> squaresAroundCorner = squareAtCorner.getNeighbouringSquares();	

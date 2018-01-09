@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import models.session.GameSession;
 import org.junit.Test;
 
-import models.session.GameSession;
 import models.session.GameSessionManager;
 
 public class LocoTests {

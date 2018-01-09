@@ -37,7 +37,7 @@ public class EditorSessionManager {
      * @param editorSession
      */
     public void removeEditorSession(EditorSession editorSession){
-        editorSessionMap.remove(editorSession.getName());
+        editorSessionMap.remove(editorSession.getSessionName());
     }
     
     //aktuell wird immer die erste EditorSession in der HashMap zurueckgegeben

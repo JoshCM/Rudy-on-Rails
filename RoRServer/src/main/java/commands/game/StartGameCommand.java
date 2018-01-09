@@ -35,7 +35,7 @@ public class StartGameCommand extends CommandBase {
 		// Map laden
 		Map map = MapManager.loadMap(mapName);
 		map.setSessionNameForMapAndSquares(session.getName());
-		map.addObserver(TopicMessageQueue.getInstance());
+		map.registerObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
 		
 		// Jedes Square durchgehen
@@ -65,7 +65,7 @@ public class StartGameCommand extends CommandBase {
 	 */
 	
 	private void createLocoForPlayers(RoRSession session) {
-		for(Player p : session.getPlayers()) {		
+		for(Player p : session.getPlayerList()) {
 			CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, p.getUUID());
 			System.out.println();
 			createLocoCommand.execute();
