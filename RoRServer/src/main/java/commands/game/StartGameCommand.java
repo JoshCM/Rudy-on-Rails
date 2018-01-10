@@ -97,9 +97,9 @@ public class StartGameCommand extends CommandBase {
 			trainstationSquare.setPlaceableOnSquare(newTrainStation);
 			
 			// Square für Spawnpoint holen
-			//Rail rail = (Rail)map.getPlaceableOnSquareById(newTrainStation.getSpawnPointforLoco());
-			//Square locoSpawnPointSquare = rail.getSquareFromGameSession();
-			Square locoSpawnPointSquare = map.getSquareById(newTrainStation.getSpawnPointforLoco());
+			Rail rail = (Rail)map.getPlaceableOnSquareById(newTrainStation.getSpawnPointforLoco());
+			Square locoSpawnPointSquare = rail.getSquareFromGameSession();
+			//Square locoSpawnPointSquare = map.getSquareById(newTrainStation.getSpawnPointforLoco());
 			
 			// Für jeden Spieler eine Lok erstellen
 			if(playerIterator.hasNext()) {
