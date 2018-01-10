@@ -23,7 +23,7 @@ namespace RoRClient.Models.Game
             this.drivingDirection = drivingDirection;
             this.realDrivingDirection = drivingDirection;
 
-            base.PropertyChanged += OnBasePropertyChanged;
+            PropertyChanged += OnBasePropertyChanged;
         }
 
         private void OnBasePropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -104,7 +104,6 @@ namespace RoRClient.Models.Game
                     return c;
                 }
             }
-
             return null;
 
         }

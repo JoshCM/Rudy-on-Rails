@@ -42,7 +42,7 @@ namespace RoRClient.Models.Session
             return locos.Where(x => x.Id == locoId).First();
         }
 
-        public ObservableCollection<Loco> Carts
+        public ObservableCollection<Cart> Carts
         {
             get
             {

@@ -19,7 +19,7 @@ public class Loco extends InteractiveGameObject {
 	private long timeDeltaCounter = 0; // Summe der Zeit zwischen den Ticks
 	private long speed;
 	private Compass drivingDirection;
-	private boolean reversed = true;
+	private boolean reversed = false;
 	private Map map;
 	private Square square;
 
@@ -124,7 +124,7 @@ public class Loco extends InteractiveGameObject {
 	 * f�gt der Lok initial ein Cart hinzu auf das vorige Feld 
 	 */
 	public void addInitialCart() {
-		if(carts.isEmpty()) {
+		if(carts.isEmpty()){
 			Compass back = this.rail.getExitDirection(this.drivingDirection);
 			Rail prevRail = getPreviousRail(back);
 			Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
@@ -139,19 +139,20 @@ public class Loco extends InteractiveGameObject {
 	 * 
 	 * @param forward
 	 */
-	public void moveCarts(Rail forward,Compass compass) {
-		Square newSquare = this.map.getSquare(forward.getXPos(), forward.getYPos());
-		Square tempSquare = null;
-		Compass newCompass = compass;
-		Compass tempCompass = null;
-		for(Cart c: carts) {
-			tempSquare = this.map.getSquareById(c.getSquareId());
-			tempCompass = c.getCompass();
-			c.updateSquare(newSquare);
-			c.setCompass(newCompass);
-			c.SendUpdateCartMessage();
-			newCompass = tempCompass;
-			newSquare = tempSquare;
+	public void moveCarts(Rail forward,Compass actDirectionOfLoco) {
+		Square nextSquare = this.map.getSquare(forward.getXPos(), forward.getYPos());
+		Square actSquare = null;
+		Compass nextDirection = actDirectionOfLoco;
+		Compass actDirection = null;
+		
+		for(Cart cart: carts) {
+			actSquare = this.map.getSquareById(cart.getSquareId());
+			actDirection = cart.getCompass();
+			cart.updateSquare(nextSquare);
+			cart.setCompass(nextDirection);
+			cart.SendUpdateCartMessage();
+			nextDirection = actDirection;
+			nextSquare = actSquare;
 		}
 	}
 
@@ -303,8 +304,10 @@ public class Loco extends InteractiveGameObject {
 		messageInfo.putValue("cartId", cartId);
 		messageInfo.putValue("xPos", square.getXIndex());
 		messageInfo.putValue("yPos", square.getYIndex());
+		messageInfo.putValue("drivingDirection", getCartById(cartId).getCompass());
 		notifyChange(messageInfo);
 	}
+	
 	
 	public void changeSpeed(int speed) {
 		this.speed = speed;
@@ -325,6 +328,14 @@ public class Loco extends InteractiveGameObject {
 
 	public ArrayList<Cart> getCarts() {
 		return carts;
+	}
+	
+	public Cart getCartById(UUID cartID) {
+		for(Cart c : carts) {
+			if(c.getId().equals(cartID))
+				return c;
+		}
+		return null;
 	}
 
 	public void setCarts(ArrayList<Cart> carts) {
@@ -347,4 +358,6 @@ public class Loco extends InteractiveGameObject {
 	public UUID getPlayerId() {
 		return playerId;
 	}
+	
+
 }

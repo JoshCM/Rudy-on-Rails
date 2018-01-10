@@ -28,12 +28,9 @@ namespace RoRClient.Commands.Game.Update
         public override void Execute()
         {
             GameSession gameSession = GameSession.GetInstance();
-            
-
             Square square = gameSession.Map.GetSquare(xPos, yPos);
             Player player = gameSession.GetPlayerById(playerId);
             Loco loco = player.Loco;
-
             loco.Square = square;
             loco.DrivingDirection = drivingDirection;
         }
