@@ -32,7 +32,7 @@ public class CreateMineCommand extends CommandBase {
 		EditorSession editorSession = (EditorSession) session;
 		Square square = editorSession.getMap().getSquare(xPos, yPos);
 		
-		// Hier prüfen wir, ob auf dem Square ein Rail liegt, ansonsten wird auf dem Client keine Mine erstellt
+		// Hier prÃ¼fen wir, ob auf dem Square ein Rail liegt, ansonsten wird auf dem Client keine Mine erstellt
 		if (square.getPlaceableOnSquare() instanceof Rail) {
 			Rail rail = (Rail) square.getPlaceableOnSquare();	
 			// Das Rail muss eine Gerade sein

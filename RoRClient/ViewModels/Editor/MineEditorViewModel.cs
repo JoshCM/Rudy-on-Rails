@@ -34,12 +34,17 @@ namespace RoRClient.ViewModels.Editor
 
         public override void Delete()
         {
-            throw new NotImplementedException();
+            MessageInformation message = new MessageInformation();
+            message.PutValue("xPos", mine.Square.PosX);
+            message.PutValue("yPos", mine.Square.PosY);
+            message.PutValue("mineId", mine.Id);
+            message.PutValue("railId", mine.Square.PlaceableOnSquare.Id);
+            EditorSession.GetInstance().QueueSender.SendMessage("DeleteMine", message);
         }
 
         public override void Move()
         {
-            throw new NotImplementedException();
+
         }
 
         public override void RotateLeft()

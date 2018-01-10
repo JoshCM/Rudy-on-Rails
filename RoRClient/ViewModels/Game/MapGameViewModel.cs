@@ -73,6 +73,18 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
+        // Collections, die nur Locos hält
+        private ObservableCollection<CanvasGameViewModel> locoCollection = new ObservableCollection<CanvasGameViewModel>();
+        public ObservableCollection<CanvasGameViewModel> LocoCollection
+        {
+            get
+            {
+                return locoCollection;
+            }
+        }
+
+
+
         private int mapWidth;
         public int MapWidth
         {
@@ -173,7 +185,6 @@ namespace RoRClient.ViewModels.Game
                     taskFactory.StartNew(() => placeableOnRailCollection.Add(viewModel));
                 }
             }
-
         }
 
 
@@ -184,11 +195,11 @@ namespace RoRClient.ViewModels.Game
                 PropertyChangedExtendedEventArgs<Loco> eventArgs = (PropertyChangedExtendedEventArgs<Loco>)e;
                 Loco loco = eventArgs.NewValue;
                 LocoGameViewModel locoGameViewModel = new LocoGameViewModel(loco);
-                taskFactory.StartNew(() => placeableOnRailCollection.Add(locoGameViewModel));
+                taskFactory.StartNew(() => locoCollection.Add(locoGameViewModel));
             }
-            
-
         }
+
+
         
         private void CreateRandomRails()
         {

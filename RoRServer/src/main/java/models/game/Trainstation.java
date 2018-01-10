@@ -83,7 +83,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		List<Rail> trainstationRails = new ArrayList<Rail>();
 		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getName());
 		for (UUID railId : trainstationRailIds) {
-			trainstationRails.add((Rail) editorSession.getMap().getPlaceableById(railId));
+			trainstationRails.add((Rail) editorSession.getMap().getPlaceableOnSquareById(railId));
 		}
 		return trainstationRails;
 	}

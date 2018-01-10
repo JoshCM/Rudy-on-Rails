@@ -37,7 +37,6 @@ namespace RoRClient.Commands.Base
             gameSession.addMine(mine);
             Rail rail = (Rail)square.PlaceableOnSquare;
             rail.PlaceableOnRail = mine;
-            Console.WriteLine("Neue Mine gesetzt");
 
         }
     }

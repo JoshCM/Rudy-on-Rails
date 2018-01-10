@@ -34,7 +34,9 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 		this.railId = railId;
 		notifyCreatedMine();
 	}
-
+	public void setRailId(UUID id) {
+		this.railId = id;
+	}
 	public Compass getAlignment() {
 		return alignment;
 	}
@@ -50,11 +52,9 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 		Mine newMine = new Mine(session.getName(), square, alignment, railId);
 		((GameSession) session).addMine(newMine);
 		
-
-		// sessionName neu setzen, damit Observer �nderung dieses Objekts mitbekommen
-		// kann
+		// sessionName neu setzen, damit Observer Änderung dieses Objekts mitbekommen kann
 		newMine.setName(session.getName());
-		Rail rail = (Rail) session.getMap().getPlaceableById(railId);
+		Rail rail = (Rail)session.getMap().getPlaceableOnSquareById(railId);
 		rail.setPlaceableOnRail(newMine);
 
 		return newMine;
@@ -64,22 +64,19 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 	 * Methode zum Drehen der Mine nach Links (Dreht die Rail darunter gleich mit)
 	 */
 	public void rotateLeft() {
-
 		// Das Rail wird direkt mit verschoben
 		Square square = EditorSessionManager.getInstance().getEditorSessionByName(sessionName).getMap()
 				.getSquareById(getSquareId());
 		Rail rail = (Rail) square.getPlaceableOnSquare();
 		rail.rotate(false);
 		alignment = CompassHelper.rotateCompass(false, alignment);
-		notifyAlignmentUpdated();
-
+		notifyAlignmentUpdated();	
 	}
 
 	/**
 	 * Methode zum Drehen der Mine nach Rechts (Dreht die Rail darunter gleich mit)
 	 */
-	public void rotateRight() {
-
+	public void rotateRight() {		
 		// Das Rail wird direkt mit verschoben
 		Square square = EditorSessionManager.getInstance().getEditorSessionByName(sessionName).getMap()
 				.getSquareById(getSquareId());
@@ -99,8 +96,7 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 		message.putValue("mineId", getId());
 		message.putValue("squareId", getSquareId());
 		message.putValue("alignment", alignment.toString());
-		notifyChange(message);
-
+		notifyChange(message);		
 	}
 
 	/**
@@ -116,6 +112,15 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((alignment == null) ? 0 : alignment.hashCode());
+		result = prime * result + ((railId == null) ? 0 : railId.hashCode());
+		result = prime * result + ((resources == null) ? 0 : resources.hashCode());
+		return result;
+	}
+	@Override
 	public void specificUpdate() {
 		this.timeDeltaCounter += timeDeltaInNanoSeconds;
 		if(this.timeDeltaCounter>=SEC_IN_NANO*4) {
@@ -127,23 +132,47 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 				i+=1;
 			}
 		}
-
 	}
 
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Mine other = (Mine) obj;
+		if (alignment != other.alignment)
+		if (railId == null) {
+			return false;
+			if (other.railId != null)
+				return false;
+			return false;
+		} else if (!railId.equals(other.railId))
+		if (resources == null) {
+			if (other.resources != null)
+				return false;
+		} else if (!resources.equals(other.resources))
+			return false;
+		return true;
+	}
 	public Resource minedResource() {
 		Random random = new Random();
 		if (random.nextFloat() <= 0.7) {
 			res = new Coal(this.sessionName, this.square);
 		} else {
 			res = new Gold(this.sessionName, this.square);
-		}
 		return res;
+		}
 
 	}
-	
 	public UUID getRailId() {
+	
+		
 		return railId;
 		
-		
 	}
+	@Override
+
+
 }
