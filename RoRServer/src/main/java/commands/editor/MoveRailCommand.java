@@ -11,6 +11,7 @@ public class MoveRailCommand extends CommandBase{
 	
 	private Square oldSquare;
 	private Square newSquare;
+	
 	public MoveRailCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		EditorSession editorSession = (EditorSession) session;

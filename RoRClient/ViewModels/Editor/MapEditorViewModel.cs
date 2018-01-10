@@ -254,7 +254,6 @@ namespace RoRClient.ViewModels.Editor
 
                     if (viewModel is RailEditorViewModel)
                     {
-
                         // Sollte es sich um ein Rail handeln, muss die OnRailPropertyChanged registiert werden und das ToolBarViewModel übergeben werden
                         RailEditorViewModel railEditorViewModel = (RailEditorViewModel)viewModel;
                         railEditorViewModel.Rail.PropertyChanged += OnRailPropertyChanged;

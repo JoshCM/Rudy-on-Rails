@@ -34,7 +34,7 @@ public class Mine extends InteractiveGameObject implements PlaceableOnRail {
 		// Neue Mine erstellen und damit an den Client schicken
 		Mine newMine = new Mine(session.getName(), square, alignment, railId);
 		
-		//sessionName neu setzen, damit Observer Änderung dieses Objekts mitbekommen kann
+		// sessionName neu setzen, damit Observer Ã„nderung dieses Objekts mitbekommen kann
 		newMine.setName(session.getName());
 		Rail rail = (Rail)session.getMap().getPlaceableById(railId);
 		rail.setPlaceableOnRail(newMine);
@@ -46,21 +46,18 @@ public class Mine extends InteractiveGameObject implements PlaceableOnRail {
 	 * Methode zum Drehen der Mine nach Links (Dreht die Rail darunter gleich mit)
 	 */
 	public void rotateLeft() {
-		
 		// Das Rail wird direkt mit verschoben
 		Square square = EditorSessionManager.getInstance().getEditorSessionByName(sessionName).getMap().getSquareById(getSquareId());
 		Rail rail = (Rail)square.getPlaceableOnSquare();
 		rail.rotate(false);
 		alignment = CompassHelper.rotateCompass(false, alignment);
-		notifyAlignmentUpdated();
-		
+		notifyAlignmentUpdated();	
 	}
 	
 	/**
 	 * Methode zum Drehen der Mine nach Rechts (Dreht die Rail darunter gleich mit)
 	 */
-	public void rotateRight() {
-		
+	public void rotateRight() {		
 		// Das Rail wird direkt mit verschoben
 		Square square = EditorSessionManager.getInstance().getEditorSessionByName(sessionName).getMap().getSquareById(getSquareId());
 		Rail rail = (Rail)square.getPlaceableOnSquare();
@@ -79,12 +76,11 @@ public class Mine extends InteractiveGameObject implements PlaceableOnRail {
 		message.putValue("mineId", getId());
 		message.putValue("squareId", getSquareId());
 		message.putValue("alignment", alignment.toString());
-		notifyChange(message);
-		
+		notifyChange(message);		
 	}
 	
 	/**
-	 * Schickt eine Nachricht an den Client, wenn sich die Richtung der Mine geändert hat
+	 * Schickt eine Nachricht an den Client, wenn sich die Richtung der Mine geï¿½ndert hat
 	 */
 	private void notifyAlignmentUpdated() {
 		MessageInformation message = new MessageInformation("UpdateAlignmentOfMine");
@@ -94,4 +90,40 @@ public class Mine extends InteractiveGameObject implements PlaceableOnRail {
 		notifyChange(message);
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((alignment == null) ? 0 : alignment.hashCode());
+		result = prime * result + ((railId == null) ? 0 : railId.hashCode());
+		result = prime * result + ((resources == null) ? 0 : resources.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Mine other = (Mine) obj;
+		if (alignment != other.alignment)
+			return false;
+		if (railId == null) {
+			if (other.railId != null)
+				return false;
+		} else if (!railId.equals(other.railId))
+			return false;
+		if (resources == null) {
+			if (other.resources != null)
+				return false;
+		} else if (!resources.equals(other.resources))
+			return false;
+		return true;
+	}
+	
+	
+	
 }
