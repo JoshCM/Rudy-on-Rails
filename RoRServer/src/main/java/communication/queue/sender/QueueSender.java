@@ -43,7 +43,7 @@ public class QueueSender {
 	
 	public void setup() {
 		try {
-			session = ServerConnection.getInstance().getSession();
+			session = ServerConnection.getInstance().getDefaultSession();
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}

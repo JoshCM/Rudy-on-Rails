@@ -20,6 +20,7 @@ public class QueueMessageQueue implements ModelObserver {
 	public static QueueMessageQueue getInstance() {
 		if (instance == null) {
 			instance = new QueueMessageQueue();
+			instance.setup();
 		}
 		return instance;
 	}

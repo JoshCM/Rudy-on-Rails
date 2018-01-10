@@ -16,17 +16,17 @@ import org.apache.log4j.Logger;
 import static models.config.GameSettings.QUEUERECEIVER_LOGGING;
 
 /**
- * Base-Klasse für alle spezifischen QueueReceiver
+ * Base-Klasse für alle spezifischen ReceiverQueue
  */
-public class QueueReceiver implements MessageListener {
-    protected Logger logger = Logger.getLogger(QueueReceiver.class.getName());
+public class ReceiverQueue implements MessageListener {
+    protected Logger logger = Logger.getLogger(ReceiverQueue.class.getName());
 
     private Queue queue;
     private String queueName;
     private MessageConsumer consumer;
     private DispatcherBase dispatcher;
 
-    public QueueReceiver(String sessionname, DispatcherBase dispatcher) {
+    public ReceiverQueue(String sessionname, DispatcherBase dispatcher) {
         this.queueName = "QUEUE"+sessionname;
         this.dispatcher = dispatcher;
     }
@@ -55,7 +55,7 @@ public class QueueReceiver implements MessageListener {
      */
     public void setup() {
         try {
-            session = ServerConnection.getInstance().getSession();
+            session = ServerConnection.getInstance().getDefaultSession();
             queue = session.createQueue(queueName);
             consumer = session.createConsumer(queue);
             consumer.setMessageListener(this);

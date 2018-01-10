@@ -2,7 +2,6 @@ package communication.topic;
 import javax.jms.DeliveryMode;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
-import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
 
@@ -11,18 +10,18 @@ import communication.ServerConnection;
 import communication.dispatcher.RequestSerializer;
 
 /**
- * Über den TopicSender können Nachrichten an einen Topic gesendet werden mithilfe eines MessageTypes und einem 
+ * Über den SenderTopic können Nachrichten an einen Topic gesendet werden mithilfe eines MessageTypes und einem
  * MessageInformation-Objekt
  */
-public class TopicSender {
+public class SenderTopic {
 	private String topicname;
 	private MessageProducer publisher;
 	
-	public TopicSender() {
+	public SenderTopic() {
 
 	}
 
-	public TopicSender(String sessionName) {
+	public SenderTopic(String sessionName) {
 		this.topicname = "TOPIC"+sessionName;
 	}
 	
@@ -43,7 +42,7 @@ public class TopicSender {
 
 	public void setup() {
 		try {
-			session = ServerConnection.getInstance().getSession();
+			session = ServerConnection.getInstance().getDefaultSession();
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}

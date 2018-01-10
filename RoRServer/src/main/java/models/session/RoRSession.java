@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 import communication.dispatcher.SessionDispatcher;
-import communication.queue.receiver.QueueReceiver;
-import communication.topic.TopicSender;
+import communication.queue.receiver.ReceiverQueue;
+import communication.topic.SenderTopic;
 import exceptions.SessionException;
 import models.base.ModelBase;
 import models.game.Map;
@@ -21,8 +21,8 @@ import states.RoRState;
 public abstract class RoRSession extends ModelBase implements javax.jms.Session {
     ArrayList<Player> playerList;
     Map map;
-    QueueReceiver queueReceiver;
-    TopicSender topicSender;
+    ReceiverQueue receiverQueue;
+    SenderTopic senderTopic;
     Player hostPlayer;
     String sessionName;
     SessionDispatcher sessionDispatcher;
@@ -77,7 +77,7 @@ public abstract class RoRSession extends ModelBase implements javax.jms.Session 
     }
 
     public void setupQueueReceiver() {
-        queueReceiver.setup();
+        receiverQueue.setup();
     }
 
     public Player getHost() {

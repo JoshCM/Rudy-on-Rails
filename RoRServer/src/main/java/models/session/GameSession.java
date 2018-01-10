@@ -5,8 +5,8 @@ import java.util.UUID;
 
 import communication.MessageInformation;
 import communication.dispatcher.GameSessionDispatcher;
-import communication.queue.receiver.QueueReceiver;
-import communication.topic.TopicSender;
+import communication.queue.receiver.ReceiverQueue;
+import communication.topic.SenderTopic;
 import models.base.InterActiveGameModel;
 import models.game.Loco;
 import models.game.Map;
@@ -19,7 +19,7 @@ import static models.config.GameSettings.TICKRATE;
 /**
  * Oberklasse vom Game-Modus.
  * Haelt die Map und die Liste von verbundenen Playern
- * Erhaelt ueber einen QueueReceiver Anfragen von Clients, die mit der GameSession verbunden sind
+ * Erhaelt ueber einen ReceiverQueue Anfragen von Clients, die mit der GameSession verbunden sind
  */
 public class GameSession extends RoRSession {
     private Thread tickingThread;
@@ -30,8 +30,8 @@ public class GameSession extends RoRSession {
     public GameSession(String sessionName, Map map, Player hostPlayer) {
         super(sessionName, map, hostPlayer);
         sessionDispatcher = new GameSessionDispatcher();
-        queueReceiver = new QueueReceiver(sessionName, sessionDispatcher);
-        topicSender = new TopicSender(sessionName);
+        receiverQueue = new ReceiverQueue(sessionName, sessionDispatcher);
+        senderTopic = new SenderTopic(sessionName);
         ticker = new Ticker();
         setState(RoRState.READYTOSTART);
     }

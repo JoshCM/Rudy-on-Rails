@@ -7,7 +7,7 @@ import models.base.ModelObserver;
 import models.base.InterActiveGameModel;
 
 public class TopicMessageQueue implements ModelObserver {
-	private TopicSender topicSender;
+	private SenderTopic senderTopic;
 	private Thread sendMessageThread;
 	private ConcurrentLinkedQueue<MessageEnvelope> messagesToSendOnTopicQueue = new ConcurrentLinkedQueue<>();
 	private static TopicMessageQueue instance;
@@ -19,13 +19,14 @@ public class TopicMessageQueue implements ModelObserver {
 	public static TopicMessageQueue getInstance() {
 		if (instance == null) {
 			instance = new TopicMessageQueue();
+			instance.setup();
 		}
 		return instance;
 	}
 
 	public void setup() {
-		topicSender = new TopicSender();
-		topicSender.setup();
+		senderTopic = new SenderTopic();
+		senderTopic.setup();
 		startSendMessageThread();
 	}
 
@@ -41,7 +42,7 @@ public class TopicMessageQueue implements ModelObserver {
 			public void run() {
 				while (true) {
 					if (messagesToSendOnTopicQueue.peek() != null) {
-						topicSender.sendMessage(messagesToSendOnTopicQueue.poll());
+						senderTopic.sendMessage(messagesToSendOnTopicQueue.poll());
 					}
 				}
 			}

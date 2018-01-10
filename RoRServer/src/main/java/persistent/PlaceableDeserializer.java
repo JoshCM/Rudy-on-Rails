@@ -2,6 +2,7 @@ package persistent;
 
 import java.lang.reflect.Type;
 
+import communication.queue.receiver.ReceiverQueue;
 import org.apache.log4j.Logger;
 
 import com.google.gson.JsonDeserializationContext;
@@ -11,7 +12,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 
-import communication.queue.receiver.QueueReceiver;
 import models.game.Placeable;
 
 /**
@@ -19,7 +19,7 @@ import models.game.Placeable;
  */
 public class PlaceableDeserializer<T extends Placeable> implements JsonDeserializer<T>{
 
-	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
+	static Logger log = Logger.getLogger(ReceiverQueue.class.getName());
 	private static final String CLASS_NAME = "className";
 	
 	@Override

@@ -6,10 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import communication.queue.receiver.ReceiverQueue;
 import org.apache.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import communication.queue.receiver.QueueReceiver;
 import models.game.Map;
 import models.game.Placeable;
 import models.game.PlaceableOnRail;
@@ -23,7 +24,7 @@ import models.game.PlaceableOnRail;
  */
 
 public class MapManager {
-	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
+	static Logger log = Logger.getLogger(ReceiverQueue.class.getName());
 	private final static String OUTPUT_DIR_PATH = "maps\\";
 	private final static String ext = ".map";
 	private final static Gson gsonLoader = new GsonBuilder()
