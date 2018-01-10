@@ -50,7 +50,7 @@
                     <ItemsControl.Resources>
                         <DataTemplate DataType="{x:Type game:LocoGameViewModel}">
                             <Canvas>
-                                <vg:LocoGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                                <vg:LocoGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}" RotationAngle="{Binding Loco.RealDrivingDirection, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}"/>
                             </Canvas>
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type game:CartGameViewModel}">

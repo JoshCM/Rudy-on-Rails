@@ -63,6 +63,12 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 		return unloadedResource;
 	}
 
+	@Override
+	public void specificUpdate() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public Compass getCompass() {
 		return compass;
 	}
@@ -72,7 +78,7 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 	}
 	
 	/**
-	 * notifiziert wenn die Position des Wagons geändert wurde
+	 * notifiziert wenn die Position des Wagons geï¿½ndert wurde
 	 */
 	public void SendUpdateCartMessage() {
 		MessageInformation messageInfo = new MessageInformation("UpdateCartPosition");

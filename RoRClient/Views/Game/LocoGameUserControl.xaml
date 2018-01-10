@@ -17,12 +17,12 @@
             Height="{Binding SquareDim, ElementName=locoGameUserControl}">
         <Image Width="{Binding SquareDim, ElementName=locoGameUserControl}" 
                Height="{Binding SquareDim, ElementName=locoGameUserControl}" 
-               Source="/RoRClient;component/Resources/Images/loco.png" Stretch="Fill">
-            <Image.LayoutTransform>
+               Source="/RoRClient;component/Resources/Images/loco_4.png" Stretch="Fill" RenderTransformOrigin="0.5, 0.5">
+            <Image.RenderTransform>
                 <TransformGroup>
-                    <RotateTransform Angle="{Binding Loco.DrivingDirection, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" CenterX="0" CenterY="0"/>
+                    <RotateTransform Angle="{Binding RealRotationAngle, ElementName=locoGameUserControl}" />
                 </TransformGroup>
-            </Image.LayoutTransform>
+            </Image.RenderTransform>
         </Image>
     </Canvas>
 </UserControl>

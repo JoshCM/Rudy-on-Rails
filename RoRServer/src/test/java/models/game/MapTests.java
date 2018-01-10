@@ -12,7 +12,7 @@ public class MapTests {
 	public void MapChangeName_ChangesName() {
 		String newName = "NewName";
 		Map map = new Map("testSession");
-		map.ChangeName(newName);
+		map.changeName(newName);
 		
 		assertEquals(newName, map.getName());
 	}
@@ -21,7 +21,7 @@ public class MapTests {
 	public void MapChangeName_NotifiesCorrectValues() {
 		String newName = "NewName";
 		Map map = new Map("testSession");
-		map.ChangeName(newName);
+		map.changeName(newName);
 		
 		MessageInformation messageInfo = TopicMessageQueue.getInstance().getFirstFoundMessageInformationForMessageType("UpdateNameOfMap");
 		assertEquals(newName, messageInfo.getValueAsString("mapName"));

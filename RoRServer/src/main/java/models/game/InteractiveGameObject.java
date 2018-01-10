@@ -2,13 +2,11 @@ package models.game;
 
 import java.util.UUID;
 
-import models.base.ModelBase;
-
 /**
  * Abstrakte Klasse fuer alle Objekte, mit denen interagiert werden kann
  *
  */
-public abstract class InteractiveGameObject extends ModelBase {
+public abstract class InteractiveGameObject extends TickableGameObject {
 	protected final String className;
 	private UUID squareId;
 	private int xPos; // So lange, bis nur noch die id ausreicht
