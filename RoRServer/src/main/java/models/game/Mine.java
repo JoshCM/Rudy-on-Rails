@@ -133,7 +133,18 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 			}
 		}
 	}
+	public Resource minedResource() {
+		Random random = new Random();
+		if (random.nextFloat() <= 0.7) {
+			res = new Coal(this.sessionName, this.square);
+		} else {
+			res = new Gold(this.sessionName, this.square);
+		
+		}
+		return res;
+	}
 
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -143,12 +154,12 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 			return false;
 		Mine other = (Mine) obj;
 		if (alignment != other.alignment)
-		if (railId == null) {
 			return false;
+		if (railId == null) {
 			if (other.railId != null)
 				return false;
-			return false;
 		} else if (!railId.equals(other.railId))
+			return false;
 		if (resources == null) {
 			if (other.resources != null)
 				return false;
@@ -156,23 +167,14 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 			return false;
 		return true;
 	}
-	public Resource minedResource() {
-		Random random = new Random();
-		if (random.nextFloat() <= 0.7) {
-			res = new Coal(this.sessionName, this.square);
-		} else {
-			res = new Gold(this.sessionName, this.square);
-		return res;
-		}
 
-	}
 	public UUID getRailId() {
 	
 		
 		return railId;
 		
 	}
-	@Override
+
 
 
 }
