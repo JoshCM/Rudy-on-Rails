@@ -64,7 +64,7 @@ public class GameSessionManager {
      */
     public void removeGameSessionByName(GameSession gameSession) {
         if (gameSessionMap.containsKey(gameSession)) {
-        gameSessionMap.remove(gameSession.getSessionName());
+        gameSessionMap.remove(gameSession.getName());
         } else {
             throw new SessionManagerException("Coulnd't remove GameSession - GameSession not Found");
         }

@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import communication.dispatcher.SessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
+import communication.topic.TopicSender;
 import exceptions.SessionException;
 import models.base.ModelBase;
 import models.game.Map;
@@ -16,13 +18,14 @@ import states.RoRState;
 /**
  * Oberklasse von EditorSession und GameSession
  */
-public abstract class RoRSession extends ModelBase {
-    private ArrayList<Player> playerList;
-    private Map map;
+public abstract class RoRSession extends ModelBase implements javax.jms.Session {
+    ArrayList<Player> playerList;
+    Map map;
     QueueReceiver queueReceiver;
-    // TopicSender topicSender;
-    private Player hostPlayer;
-    private String sessionName;
+    TopicSender topicSender;
+    Player hostPlayer;
+    String sessionName;
+    SessionDispatcher sessionDispatcher;
 
     public RoRSession(String sessionName, Map map, Player hostPlayer) {
         this.map = map;
@@ -110,7 +113,7 @@ public abstract class RoRSession extends ModelBase {
         }
     }
 
-    public String getSessionName() {
+    public String getName() {
         return sessionName;
     }
 }

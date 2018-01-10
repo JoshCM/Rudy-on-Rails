@@ -12,7 +12,6 @@ import models.session.RoRSession;
 import org.junit.Test;
 
 import commands.base.Command;
-import commands.editor.DeleteTrainstationCommand;
 import communication.MessageInformation;
 import models.game.Compass;
 import models.game.Rail;
@@ -56,7 +55,7 @@ public class CommandDeleterTests {
 		String commandName = command.getClass().getName();
 		Command deletedCommand = null;
 		try {
-			deletedCommand = CommandCreator.createCommandForName(commandName, session, messageInformation);
+			deletedCommand = SessionCommandHandler.createCommandForName(commandName, session, messageInformation);
 		} catch (Exception e) {
 
 		}

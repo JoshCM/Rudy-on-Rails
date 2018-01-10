@@ -12,13 +12,11 @@ import org.junit.Test;
 import com.google.gson.JsonObject;
 
 import commands.base.Command;
-import commands.editor.CreateRailCommand;
-import commands.editor.CreateTrainstationCommand;
 import communication.MessageInformation;
 import models.game.Compass;
 import models.session.EditorSessionManager;
 
-public class CommandCreatorTests {
+public class SessionCommandHandlerTests {
 	@Test
 	public void CreateRailCommandIsCreatedViaName() {
 		MessageInformation messageInformation = new MessageInformation();
@@ -33,7 +31,7 @@ public class CommandCreatorTests {
 		String commandName = command.getClass().getName();
 		Command createdCommand = null;
 		try {
-			createdCommand = CommandCreator.createCommandForName(commandName, session, messageInformation);
+			createdCommand = SessionCommandHandler.createCommandForName(commandName, session, messageInformation);
 		} catch (Exception e) {
 
 		}
@@ -57,7 +55,7 @@ public class CommandCreatorTests {
 		String commandName = command.getClass().getName();
 		Command createdCommand = null;
 		try {
-			createdCommand = CommandCreator.createCommandForName(commandName, session, messageInformation);
+			createdCommand = SessionCommandHandler.createCommandForName(commandName, session, messageInformation);
 		} catch (Exception e) {
 
 		}

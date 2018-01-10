@@ -15,11 +15,15 @@ import communication.dispatcher.RequestSerializer;
  * MessageInformation-Objekt
  */
 public class TopicSender {
-	private Session session;
+	private String topicname;
 	private MessageProducer publisher;
 	
 	public TopicSender() {
 
+	}
+
+	public TopicSender(String sessionName) {
+		this.topicname = "TOPIC"+sessionName;
 	}
 	
 	public void sendMessage(MessageEnvelope messageEnvelope) {

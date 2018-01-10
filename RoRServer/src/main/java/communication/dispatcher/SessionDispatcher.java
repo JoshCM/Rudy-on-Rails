@@ -1,36 +1,30 @@
 package communication.dispatcher;
 
-import commands.CommandCreator;
-import commands.base.Command;
+import commands.base.Action;
+import commands.base.CommandHandler;
+import commands.base.SessionCommandHandler;
 import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
-import models.session.RoRSession;
 
 public abstract class SessionDispatcher extends DispatcherBase {
 	
 	private final static String COMMAND_SUFFIX = "Command";
 	private String commandPackageName;
-	private RoRSession roRSession;
+	private SessionCommandHandler commandHandler;
 	
-	public SessionDispatcher(RoRSession roRSession, String commandPackageName) {
-		this.roRSession = roRSession;
+	public SessionDispatcher(String commandPackageName) {
 		this.commandPackageName = commandPackageName;
 	}
 	
 	public void dispatch(String messageType, String message) {
 		RequestSerializer requestSerializer = RequestSerializer.getInstance();
 		MessageInformation messageInformation = requestSerializer.deserialize(message);
-
 		executeCommandForMessageType(messageType, messageInformation);
 	}
 
-	private void executeCommandForMessageType(String messageType, MessageInformation messageInformation) {
-		String commandName = commandPackageName + messageType + COMMAND_SUFFIX;
-		Command command = null;
-		
+	private void executeCommandForMessageType(Action action, MessageInformation messageInformation) {
 		try {
-			command = CommandCreator.createCommandForName(commandName, roRSession, messageInformation);
-			command.execute();
+		    commandHandler.handle(action, messageInformation);
 		} catch (InvalidModelOperationException e) {
 			e.printStackTrace();
 		} catch (Exception e) {

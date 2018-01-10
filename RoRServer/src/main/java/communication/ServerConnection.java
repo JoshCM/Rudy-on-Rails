@@ -10,6 +10,8 @@ import org.apache.log4j.Logger;
  * Die ServerConnection kümmert sich um den Verbindungsaufbau zum BrokerService
  * Wenn ein Receiver oder Sender für Queue/Topic angelegt wird, dann wird die Connection und die Session
  * aus dieser Klasse verwendet, damit für den ganzen Server nur jeweils eine Connection und eine Session genutzt werden
+ *
+ * TODO: Eine Connection ist okay... aber EINE Session ist ziemlich falsch!!!
  */
 public class ServerConnection {
 	

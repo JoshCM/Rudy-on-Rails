@@ -7,7 +7,6 @@ import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
 import javax.jms.Queue;
-import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import communication.ServerConnection;
@@ -22,14 +21,13 @@ import static models.config.GameSettings.QUEUERECEIVER_LOGGING;
 public class QueueReceiver implements MessageListener {
     protected Logger logger = Logger.getLogger(QueueReceiver.class.getName());
 
-    private Session session; // falsch
     private Queue queue;
     private String queueName;
     private MessageConsumer consumer;
     private DispatcherBase dispatcher;
 
-    public QueueReceiver(String queueName, DispatcherBase dispatcher) {
-        this.queueName = queueName;
+    public QueueReceiver(String sessionname, DispatcherBase dispatcher) {
+        this.queueName = "QUEUE"+sessionname;
         this.dispatcher = dispatcher;
     }
 

@@ -66,8 +66,6 @@ public abstract class InterActiveGameModel extends ModelBase implements ModelObs
     }
 
 
-
-
     public void setChanged() {
         setState(RoRState.CHANGED);
     }
@@ -79,6 +77,7 @@ public abstract class InterActiveGameModel extends ModelBase implements ModelObs
             return false;
         }
     }
+
 
     public void clearChanged() {
         setState(RoRState.CLEAR);

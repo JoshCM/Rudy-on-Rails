@@ -33,7 +33,7 @@ public class EditorSessionManager {
 
     public EditorSession createEditorSession(String sessionName, Map map, Player hostPlayer) {
         EditorSession editorSession = new EditorSession(sessionName, map, hostPlayer);
-        editorSessionMap.put(editorSession.getSessionName(), editorSession);
+        editorSessionMap.put(editorSession.getName(), editorSession);
         return editorSession;
     }
 
@@ -43,7 +43,7 @@ public class EditorSessionManager {
 
     public EditorSession createEditorSession(String sessionName, Map map) {
         EditorSession editorSession = new EditorSession(sessionName, map);
-        return editorSessionMap.put(editorSession.getSessionName(), editorSession);
+        return editorSessionMap.put(editorSession.getName(), editorSession);
     }
 
     public EditorSession createEditorSession(Map map) {
@@ -56,7 +56,7 @@ public class EditorSessionManager {
     }
 
     public void removeEditorSession(EditorSession editorSession) {
-        editorSessionMap.remove(editorSession.getSessionName());
+        editorSessionMap.remove(editorSession.getName());
     }
 
     public EditorSession getEditorSessionByName(String name) {

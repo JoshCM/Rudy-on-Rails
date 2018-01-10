@@ -23,11 +23,11 @@ public class LocoTests {
 		int squarePosY = 0;
 		GameSession gameSession = GameSessionManager.getInstance().createGameSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
-		Player player = new Player(gameSession.getSessionName(), "Hans", UUID.randomUUID(), true);
+		Player player = new Player(gameSession.getName(), "Hans", UUID.randomUUID(), true);
 
 		Map map = gameSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
-		Loco loco = new Loco(gameSession.getSessionName(), square, map, player.getID());
+		Loco loco = new Loco(gameSession.getName(), square, map, player.getID());
 
 		assertEquals(1, loco.getCarts().size());
 

@@ -6,6 +6,7 @@ import java.util.UUID;
 import communication.MessageInformation;
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
+import communication.topic.TopicSender;
 import models.base.InterActiveGameModel;
 import models.game.Loco;
 import models.game.Map;
@@ -28,9 +29,10 @@ public class GameSession extends RoRSession {
 
     public GameSession(String sessionName, Map map, Player hostPlayer) {
         super(sessionName, map, hostPlayer);
-        GameSessionDispatcher dispatcher = new GameSessionDispatcher(this);
-        this.queueReceiver = new QueueReceiver(sessionName, dispatcher);
-        this.ticker = new Ticker();
+        sessionDispatcher = new GameSessionDispatcher();
+        queueReceiver = new QueueReceiver(sessionName, sessionDispatcher);
+        topicSender = new TopicSender(sessionName);
+        ticker = new Ticker();
         setState(RoRState.READYTOSTART);
     }
 

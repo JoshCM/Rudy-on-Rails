@@ -14,7 +14,7 @@ import static models.config.GameSettings.DISPATCHER_LOGGING;
  * Base-Klasse für alle spezifischen Dispatcher. Hier ist die grundsätzliche Verteilungslogik 
  * der Nachrichten für Dispatcher verankert.
  */
-public abstract class DispatcherBase extends InterActiveGameModel {
+public abstract class DispatcherBase {
 	private Logger log = Logger.getLogger(FromClientRequestQueueDispatcher.class.getName());
 	
 	public DispatcherBase() {
@@ -32,7 +32,7 @@ public abstract class DispatcherBase extends InterActiveGameModel {
 			thisMethod.invoke(this, paramsObj);
 
 			if (DISPATCHER_LOGGING) {
-				log.info("Called " + methodName);
+				log.info("DISPATCHER: " + methodName);
 			}
 
 		} catch (NoSuchMethodException | SecurityException e) {

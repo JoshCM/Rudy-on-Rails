@@ -12,9 +12,7 @@ import models.session.RoRSession;
 import org.junit.Assert;
 import org.junit.Test;
 
-import commands.CommandCreator;
 import commands.base.Command;
-import commands.editor.CreateTrainstationCommand;
 import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
 import models.session.EditorSessionManager;
@@ -36,7 +34,7 @@ public class TrainstationTests {
 		String commandName = command.getClass().getName();
 		Command createdCommand = null;
 		try {
-			createdCommand = CommandCreator.createCommandForName(commandName, session, messageInformation);
+			createdCommand = SessionCommandHandler.createCommandForName(commandName, session, messageInformation);
 		} catch (Exception e) {
 
 		}
@@ -74,7 +72,7 @@ public class TrainstationTests {
 		String commandName = command.getClass().getName();
 		Command createdCommand = null;
 		try {
-			createdCommand = CommandCreator.createCommandForName(commandName, session, messageInformation);
+			createdCommand = SessionCommandHandler.createCommandForName(commandName, session, messageInformation);
 		} catch (Exception e) {
 
 		}
@@ -99,7 +97,7 @@ public class TrainstationTests {
 		String commandName = command.getClass().getName();
 		Command createdCommand = null;
 		try {
-			createdCommand = CommandCreator.createCommandForName(commandName, session, messageInformation);
+			createdCommand = SessionCommandHandler.createCommandForName(commandName, session, messageInformation);
 		} catch (Exception e) {
 
 		}
@@ -124,7 +122,7 @@ public class TrainstationTests {
 		String commandName = command.getClass().getName();
 		Command createdCommand = null;
 		try {
-			createdCommand = CommandCreator.createCommandForName(commandName, session, messageInformation);
+			createdCommand = SessionCommandHandler.createCommandForName(commandName, session, messageInformation);
 		} catch (Exception e) {
 
 		}
@@ -149,7 +147,7 @@ public class TrainstationTests {
 		String commandName = command.getClass().getName();
 		Command createdCommand = null;
 		try {
-			createdCommand = CommandCreator.createCommandForName(commandName, session, messageInformation);
+			createdCommand = SessionCommandHandler.createCommandForName(commandName, session, messageInformation);
 		} catch (Exception e) {
 
 		}

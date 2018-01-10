@@ -1,5 +1,5 @@
 package models.base;
 
 public interface ModelObserver {
-    void update(InterActiveGameModel o, Object arg);
+    void update(ModelObservable o, Object arg);
 }
