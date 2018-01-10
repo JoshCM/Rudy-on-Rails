@@ -26,20 +26,29 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-				<ItemsControl ItemsSource="{Binding PlaceableOnSquareCollection}">
-					<ItemsControl.Resources>
-						<DataTemplate DataType="{x:Type vm:RailEditorViewModel}">
-							<Canvas>
-								<ve:RailEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
-							</Canvas>
-						</DataTemplate>
-						<DataTemplate DataType="{x:Type vm:TrainstationEditorViewModel}">
-							<Canvas>
-								<ve:TrainstationEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
-							</Canvas>
-						</DataTemplate>
-					</ItemsControl.Resources>
-				</ItemsControl>
+                <ItemsControl ItemsSource="{Binding PlaceableOnSquareCollection}">
+                    <ItemsControl.Resources>
+                        <DataTemplate DataType="{x:Type vm:RailEditorViewModel}">
+                            <Canvas>
+                                <ve:RailEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:TrainstationEditorViewModel}">
+                            <Canvas>
+                                <ve:TrainstationEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+                </ItemsControl>
+                <ItemsControl ItemsSource="{Binding PlaceableOnRailCollection}">
+                    <ItemsControl.Resources>
+                        <DataTemplate DataType="{x:Type vm:MineEditorViewModel}">
+                            <Canvas>
+                                <ve:MineEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+                </ItemsControl>
 
                 <Popup Name="quickNavigation" IsOpen="{Binding IsQuickNavigationVisible}" Placement="Mouse" >
                     <StackPanel Orientation="Horizontal" >

@@ -29,5 +29,25 @@ public class CompassHelper {
         int x = generator.nextInt(Compass.values().length);
         return Compass.values()[x];
     }
+    
+    /**
+     * Gibt die nächste Richtung zurück (kann zum Drehen benutzt werden
+     * @param right true, wenn die übergebene Richtung nach rechts verschoben werden soll, false sonst
+     * @param alignment die zu drehende Richtung
+     * @return
+     */
+    public static Compass rotateCompass(boolean right, Compass alignment) {
+		int newIndex;
+
+		if (right) {
+			newIndex = ((alignment.ordinal() + 1) % Compass.values().length);
+		} else {
+			newIndex = ((alignment.ordinal() - 1) % Compass.values().length);
+			if (newIndex < 0) {
+				newIndex += Compass.values().length;
+			}
+		}
+		return Compass.values()[newIndex];
+    }
 
 }
