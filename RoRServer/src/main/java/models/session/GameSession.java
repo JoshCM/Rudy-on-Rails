@@ -10,6 +10,7 @@ import communication.MessageInformation;
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
 import models.game.Loco;
+import models.game.Mine;
 import models.game.TickableGameObject;
 
 /**
@@ -25,6 +26,7 @@ public class GameSession extends RoRSession{
 	private long lastTimeUpdatedInNanoSeconds;
 	private Ticker ticker;
 	private ArrayList<Loco> locomotives = new ArrayList<>();
+	private ArrayList<Mine> mines=new ArrayList<>();
 
 	public GameSession(String name, UUID hostPlayerId, String hostPlayerName) {
 		super(name, hostPlayerId, hostPlayerName);
@@ -109,6 +111,16 @@ public class GameSession extends RoRSession{
 			this.locomotives.add(locomotive);
 			ticker.addObserver(locomotive);
 		}
+	}
+	
+	
+	public void addMine(Mine mine) {
+		if(mine!=null) {
+			this.mines.add(mine);
+			ticker.addObserver(mine);
+		}
+		
+		
 	}
 	
 

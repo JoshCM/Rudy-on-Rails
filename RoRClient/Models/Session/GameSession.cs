@@ -16,6 +16,7 @@ namespace RoRClient.Models.Session
     {
         private static GameSession gameSession = null;
         protected ObservableCollection<Loco> locos = new ObservableCollection<Loco>();
+        protected ObservableCollection<Mine> mines = new ObservableCollection<Mine>();
 
         private GameSession() : base()
         {
@@ -47,6 +48,11 @@ namespace RoRClient.Models.Session
             NotifyPropertyChanged("Locos",null,loco);
             
         }
+
+        public void addMine(Mine mine)
+        {
+            mines.Add(mine);
+        }
         public static GameSession GetInstance()
         {
             if (gameSession == null)
@@ -55,5 +61,17 @@ namespace RoRClient.Models.Session
             }
             return gameSession;
         }
-	}
+
+        public Mine getMineByPosition(int xPos, int yPos)
+        {
+            foreach (Mine mine in mines)
+            {
+                if (mine.Square.PosX == xPos && mine.Square.PosY == yPos)
+                {
+                    return mine;
+                }
+            }
+            return null;
+        }
+    }
 }

@@ -10,15 +10,22 @@ import org.apache.log4j.Logger;
 import communication.MessageInformation;
 import models.helper.CompassHelper;
 import models.session.EditorSessionManager;
+import models.session.GameSession;
 import models.session.RoRSession;
 
-public class Mine extends InteractiveGameObject implements PlaceableOnRail {
+public class Mine extends TickableGameObject implements PlaceableOnRail {
 	private Logger log = Logger.getLogger(Mine.class.getName());
 	private List<Resource> resources = new ArrayList<Resource>();
 	private UUID railId;
 	private Compass alignment;
 	private final int maxNumberOfResource = 10;
 	private Square square;
+	private long timeDeltaCounter = 0;// Summe der Zeit zwischen den Ticks
+	private final long SEC_IN_NANO = 1000000000;
+	private Resource res = null;
+	protected RoRSession session;
+	int i=1;
+	
 
 	public Mine(String sessionName, Square square, Compass alignment, UUID railId) {
 		super(sessionName, square);
@@ -26,7 +33,6 @@ public class Mine extends InteractiveGameObject implements PlaceableOnRail {
 		this.alignment = alignment;
 		this.railId = railId;
 		notifyCreatedMine();
-		produce();
 	}
 
 	public Compass getAlignment() {
@@ -37,52 +43,15 @@ public class Mine extends InteractiveGameObject implements PlaceableOnRail {
 		this.alignment = alignment;
 	}
 
-	public void produce() {
-		Thread thread=null;
-		Runnable myRunnable = new Runnable() {
-
-			public void run() {
-				Resource res = null;
-				while (true) {
-					if (resources.size() <= maxNumberOfResource) {
-						res = minedResource();
-						resources.add(res);
-						log.info("res=" + res.getName());
-					}
-					try {
-						thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-
-		};
-		thread=new Thread(myRunnable);
-		thread.start();
-		
-	}
-
-	public Resource minedResource() {
-		Random random = new Random();
-		Resource res = null;
-		if (random.nextFloat() <= 0.5) {
-			res = new Coal(this.sessionName, this.square);
-		} else {
-			res = new Gold(this.sessionName, this.square);
-		}
-		return res;
-
-	}
-
 	@Override
 	public PlaceableOnRail loadFromMap(Square square, RoRSession session) {
 
 		// Neue Mine erstellen und damit an den Client schicken
 		Mine newMine = new Mine(session.getName(), square, alignment, railId);
+		((GameSession) session).addMine(newMine);
+		
 
-		// sessionName neu setzen, damit Observer Änderung dieses Objekts mitbekommen
+		// sessionName neu setzen, damit Observer ï¿½nderung dieses Objekts mitbekommen
 		// kann
 		newMine.setName(session.getName());
 		Rail rail = (Rail) session.getMap().getPlaceableById(railId);
@@ -136,7 +105,7 @@ public class Mine extends InteractiveGameObject implements PlaceableOnRail {
 
 	/**
 	 * Schickt eine Nachricht an den Client, wenn sich die Richtung der Mine
-	 * geändert hat
+	 * geï¿½ndert hat
 	 */
 	private void notifyAlignmentUpdated() {
 		MessageInformation message = new MessageInformation("UpdateAlignmentOfMine");
@@ -146,4 +115,35 @@ public class Mine extends InteractiveGameObject implements PlaceableOnRail {
 		notifyChange(message);
 	}
 
+	@Override
+	public void specificUpdate() {
+		this.timeDeltaCounter += timeDeltaInNanoSeconds;
+		if(this.timeDeltaCounter>=SEC_IN_NANO*4) {
+			this.timeDeltaCounter=0;
+			if (resources.size() < maxNumberOfResource) {
+				res= minedResource();
+				resources.add(res);
+				log.info("res=" + res.getName()+i);
+				i+=1;
+			}
+		}
+
+	}
+
+	public Resource minedResource() {
+		Random random = new Random();
+		if (random.nextFloat() <= 0.7) {
+			res = new Coal(this.sessionName, this.square);
+		} else {
+			res = new Gold(this.sessionName, this.square);
+		}
+		return res;
+
+	}
+	
+	public UUID getRailId() {
+		return railId;
+		
+		
+	}
 }

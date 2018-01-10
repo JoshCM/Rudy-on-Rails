@@ -11,7 +11,7 @@ namespace RoRClient.ViewModels.Game
     {
 
         private Mine m;
-
+        
         public MineGameViewModel(Mine mine) : base(mine.Id)
         {
             this.m = mine;
@@ -26,5 +26,6 @@ namespace RoRClient.ViewModels.Game
                 return m;
             }
         }
+
     }
 }

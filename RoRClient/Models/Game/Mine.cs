@@ -8,8 +8,11 @@ namespace RoRClient.Models.Game
 {
     public class Mine : InteractiveGameObject, IPlaceableOnRail
     {
-
+        private List<IPlaceableOnSquare> coals = new List<IPlaceableOnSquare>();
+        private List<IPlaceableOnSquare> golds = new List<IPlaceableOnSquare>();
         private Compass alignment;
+        private String coalCount;
+        private String goldCount;
 
         public Mine(Guid id, Square square, Compass alignment) : base(square)
         {
@@ -28,6 +31,48 @@ namespace RoRClient.Models.Game
                 alignment = value;
                 NotifyPropertyChanged("Alignment");
             }
+        }
+        public String GoldCount
+        {
+            get {
+                goldCount = golds.Count.ToString();
+                return goldCount;
+            }
+            set
+            {
+                goldCount = value;
+                NotifyPropertyChanged("GoldCount");
+            }
+                
+
+        }
+        public String CoalCount
+        {
+            get {
+                coalCount = coals.Count.ToString();
+                return coalCount;
+            }
+            set
+            {
+                coalCount = value;
+                NotifyPropertyChanged("CoalCount");
+            }
+
+        }
+        public void AddCoal(IPlaceableOnSquare coal) {
+            coals.Add(coal);
+        }
+        public void AddGold(IPlaceableOnSquare gold)
+        {
+            golds.Add(gold);
+        }
+        public List<IPlaceableOnSquare> GetCoals()
+        {
+            return coals;
+        }
+        public List<IPlaceableOnSquare> GetGolds()
+        {
+            return golds;
         }
     }
 }

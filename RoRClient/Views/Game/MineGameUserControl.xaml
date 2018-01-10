@@ -15,14 +15,29 @@
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=mineUserControl}"
             Height="{Binding SquareDim, ElementName=mineUserControl}">
+        <Grid x:Name="GridContainer" Height="Auto" Width="Auto">
+
         <Image Width="{Binding SquareDim, ElementName=mineUserControl}" 
                Height="{Binding SquareDim, ElementName=mineUserControl}" 
                 Source="/RoRClient;component/Resources/Images/mine.png" Stretch="Fill">
-            <Image.LayoutTransform>
-                <TransformGroup>
-                    <RotateTransform Angle="{Binding Mine.Alignment, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" />
-                </TransformGroup>
-            </Image.LayoutTransform>
-        </Image>
+                <Image.LayoutTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="{Binding Mine.Alignment, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" />
+                    </TransformGroup>
+                </Image.LayoutTransform>
+            </Image>
+            <Grid Height="25" Width="50">
+                <Grid.Background>
+                    <SolidColorBrush Color="White" Opacity="0.3"/>
+                </Grid.Background>
+                <Image x:Name="Bild0" Width="25" Height="25" HorizontalAlignment="left" Source="/RoRClient;component/Resources/Images/container_gold.png"/>
+                <TextBlock x:Name="Text0" FontSize="15" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Mine.GoldCount}"  VerticalAlignment="Center" Foreground="#FFF9F9F9" />
+           
+                <Image Width="25" Height="25" HorizontalAlignment="Right" Source="/RoRClient;component/Resources/Images/container_coal.png"/>
+                <TextBlock x:Name="Text1" FontSize="15" HorizontalAlignment="Right" TextWrapping="Wrap" Text="{Binding Mine.CoalCount}"  VerticalAlignment="Center" Foreground="#FFF9F9F9" />
+            </Grid>
+            
+            
+        </Grid>
     </Canvas>
  </v:CanvasUserControl>

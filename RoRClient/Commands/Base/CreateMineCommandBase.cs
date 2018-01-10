@@ -18,9 +18,11 @@ namespace RoRClient.Commands.Base
         private int xPos;
         private int yPos;
         private Compass alignment;
+        private GameSession gameSession;
 
         public CreateMineCommandBase(RoRSession session, MessageInformation message) : base(session, message)
         {
+            this.gameSession = (GameSession)session;
             mineId = message.GetValueAsGuid("mineId");
             xPos = message.GetValueAsInt("xPos");
             yPos = message.GetValueAsInt("yPos");
@@ -32,6 +34,7 @@ namespace RoRClient.Commands.Base
         {
             Square square = session.Map.GetSquare(xPos, yPos);
             Mine mine = new Mine(mineId, square, alignment);
+            gameSession.addMine(mine);
             Rail rail = (Rail)square.PlaceableOnSquare;
             rail.PlaceableOnRail = mine;
             Console.WriteLine("Neue Mine gesetzt");
