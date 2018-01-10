@@ -10,6 +10,7 @@ import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
 import models.game.Map;
+import models.game.Mine;
 import models.game.PlaceableOnSquare;
 import models.game.Rail;
 import models.game.Square;
@@ -69,7 +70,15 @@ public class StartEditorCommand extends CommandBase {
 
 		// erzeugen der neuen Rails auf deren Squares
 		for (Square railSquare : railSquaresToCreate) {
-			railSquare.setPlaceableOnSquare(railSquare.getPlaceableOnSquare().loadFromMap(railSquare, session));
+			Rail rail = (Rail)railSquare.getPlaceableOnSquare();
+			Rail newRail = (Rail)railSquare.getPlaceableOnSquare().loadFromMap(railSquare, session);
+			// liegt auf einer Rail eine Mine, muss diese darauf erzeugt werden
+			if (rail.getPlaceableOnrail() instanceof Mine) {
+				Mine mine = (Mine)rail.getPlaceableOnrail();
+				Mine newMine = (Mine)mine.loadFromMap(railSquare, session);
+				newRail.setPlaceableOnRail(newMine);
+			}
+			railSquare.setPlaceableOnSquare(newRail);
 		}
 
 		// erzeugen der neuen Trainstations auf deren Squares
