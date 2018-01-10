@@ -176,6 +176,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Base\CanvasViewModelBase.cs" />
+    <Compile Include="ViewModels\Editor\ObjectConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Game\CanvasGameViewModel.cs" />
     <Compile Include="ViewModels\Game\CoalGameViewModel.cs" />
     <Compile Include="ViewModels\Game\ContainerGameViewModel.cs" />
@@ -209,6 +210,9 @@
     <Compile Include="Views\CanvasUserControl.cs" />
     <Compile Include="Views\Editor\Helper\RegexValidator.cs" />
     <Compile Include="Views\Editor\Helper\ToolConverter.cs" />
+    <Compile Include="Views\Editor\ObjectConfiguration\RailConfigurationUserControl.xaml.cs">
+      <DependentUpon>RailConfigurationUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Editor\TrainstationEditorUserControl.xaml.cs">
       <DependentUpon>TrainstationEditorUserControl.xaml</DependentUpon>
     </Compile>
@@ -240,8 +244,8 @@
     </Compile>
     <Compile Include="ViewModels\Commands\ActionCommand.cs" />
     <Compile Include="ViewModels\Helper\ViewModelBase.cs" />
-    <Compile Include="Views\Editor\AttributeSelectionUserControl.xaml.cs">
-      <DependentUpon>AttributeSelectionUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Editor\ObjectConfigurationUserControl.xaml.cs">
+      <DependentUpon>ObjectConfigurationUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\CoalGameUserControl.xaml.cs">
       <DependentUpon>CoalGameUserControl.xaml</DependentUpon>
@@ -298,6 +302,10 @@
       <DependentUpon>AskUserForStringPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Popup\PopupCreator.cs" />
+    <Page Include="Views\Editor\ObjectConfiguration\RailConfigurationUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Game\CoalGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -394,7 +402,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Editor\AttributeSelectionUserControl.xaml">
+    <Page Include="Views\Editor\ObjectConfigurationUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

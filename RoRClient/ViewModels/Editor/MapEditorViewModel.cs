@@ -58,6 +58,7 @@ namespace RoRClient.ViewModels.Editor
             set
             {
                 _selectedEditorCanvasViewModel = value;
+                OnPropertyChanged("SelectedEditorCanvasViewModel");
             }
         }
 

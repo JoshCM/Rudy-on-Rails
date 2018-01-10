@@ -76,6 +76,18 @@ public class Signals extends TickableGameObject {
 		messageInfo.putValue("signalsId", getId());
 		messageInfo.putValue("xPos", squarePosX);
 		messageInfo.putValue("yPos", squarePosY);
+		messageInfo.putValue("autoSwitchIntervalInSeconds", autoSwitchIntervalInSeconds);
+		messageInfo.putValue("penalty", penalty);
+		messageInfo.putValue("switchCost", switchCost);
+
+		notifyChange(messageInfo);
+	};
+	
+	private void notifyConfigChanged() {
+		MessageInformation messageInfo = new MessageInformation("UpdateActivityOfSignals");
+		messageInfo.putValue("signalsId", getId());
+		messageInfo.putValue("xPos", squarePosX);
+		messageInfo.putValue("yPos", squarePosY);
 		messageInfo.putValue("northSignalActive", northSignalActive);
 		messageInfo.putValue("eastSignalActive", eastSignalActive);
 		messageInfo.putValue("southSignalActive", southSignalActive);
