@@ -16,6 +16,7 @@ namespace RoRClient.Commands.Editor.Move
         private int oldYPos;
         private int newXPos;
         private int newYPos;
+        private Compass alignment;
 
         public MoveMineCommand(RoRSession session, MessageInformation message) : base(session, message)
         {
@@ -23,21 +24,27 @@ namespace RoRClient.Commands.Editor.Move
             oldYPos = message.GetValueAsInt("oldYPos");
             newXPos = message.GetValueAsInt("newXPos");
             newYPos = message.GetValueAsInt("newYPos");
+            alignment = (Compass)Enum.Parse(typeof(Compass), message.GetValueAsString("alignment"));
         }
 
         public override void Execute()
         {
             // Mine merken und auf alter Rail löschen
             EditorSession editorSession = (EditorSession)session;
-            Rail rail = (Rail)editorSession.Map.GetSquare(oldXPos, oldYPos).PlaceableOnSquare;
-            Mine mine = (Mine)rail.PlaceableOnRail;
-            rail.PlaceableOnRail = null;
+            Square oldSquare = editorSession.Map.GetSquare(oldXPos, oldYPos);
+            Rail oldRail = (Rail)oldSquare.PlaceableOnSquare;
+            Mine mine = (Mine)oldRail.PlaceableOnRail;
 
-            mine.Square = editorSession.Map.GetSquare(newXPos, newYPos);
+            // Square und Alignment der Mine setzen
+            Square newSquare = editorSession.Map.GetSquare(newXPos, newYPos);
+            mine.Square = newSquare;
+            mine.Alignment = alignment;
 
             // Mine auf neue Rail setzen
-            Rail newRail = (Rail)editorSession.Map.GetSquare(newXPos, newYPos).PlaceableOnSquare;
+            Rail newRail = (Rail)newSquare.PlaceableOnSquare;
             newRail.PlaceableOnRail = mine;
+
+            oldRail.PlaceableOnRail = null;
         }
     }
 }

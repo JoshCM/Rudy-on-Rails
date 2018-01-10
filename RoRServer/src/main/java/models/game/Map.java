@@ -182,6 +182,8 @@ public class Map extends ModelBase {
 		message.putValue("oldYPos", oldSquare.getYIndex());
 		message.putValue("newXPos", newSquare.getXIndex());
 		message.putValue("newYPos", newSquare.getYIndex());
+		Rail rail = (Rail) newSquare.getPlaceableOnSquare();
+		message.putValue("alignment", rail.getAlignment().toString());
 		notifyChange(message);
 	}
 

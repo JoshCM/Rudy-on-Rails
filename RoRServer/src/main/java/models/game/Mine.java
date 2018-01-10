@@ -20,6 +20,10 @@ public class Mine extends InteractiveGameObject implements PlaceableOnRail {
 		notifyCreatedMine();
 	}
 	
+	public void setRailId(UUID id) {
+		this.railId = id;
+	}
+	
 	public Compass getAlignment() {
 		return alignment;
 	}

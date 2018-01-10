@@ -36,10 +36,16 @@ public class MoveMineCommand extends CommandBase {
 		if (newSquare.getPlaceableOnSquare() instanceof Rail) {
 			Rail rail = (Rail)oldSquare.getPlaceableOnSquare();
 			Rail newRail = (Rail)newSquare.getPlaceableOnSquare();
-			newRail.setPlaceableOnRail(mine);
-			mine.setSquareId(newSquare.getId());
-			rail.setPlaceableOnRail(null);
-			map.movePlaceableOnRail(oldSquare, newSquare);
+			if (newRail.railIsStraight()) {
+				newRail.setPlaceableOnRail(mine);
+				mine.setSquareId(newSquare.getId());
+				mine.setRailId(newRail.getId());
+				rail.setPlaceableOnRail(null);
+				map.movePlaceableOnRail(oldSquare, newSquare);
+			} else {
+				throw new NotMoveableException("Die Rail ist nicht gerade");
+			}
+
 		} else {
 			throw new NotMoveableException("Es befindet sich hier ein Rail / Andere Rail auswählen oder Mine löschen");
 		}
