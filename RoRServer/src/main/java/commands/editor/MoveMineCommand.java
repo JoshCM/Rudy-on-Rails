@@ -44,9 +44,11 @@ public class MoveMineCommand extends CommandBase {
 			// Nur etwas Platzieren, wenn die Rail eine Gerade ist
 			if (newRail.railIsStraight()) {
 				newRail.setPlaceableOnRail(mine);
-				// Die Mine benötigt die neue Square ID und die neue Rail ID
+				// Daten für Mine setzen
 				mine.setSquareId(newSquare.getId());
 				mine.setRailId(newRail.getId());
+				mine.setXPos(newSquare.getXIndex());
+				mine.setYPos(newSquare.getYIndex());
 				rail.setPlaceableOnRail(null);
 				map.movePlaceableOnRail(oldSquare, newSquare);
 			} else {
@@ -54,7 +56,7 @@ public class MoveMineCommand extends CommandBase {
 			}
 
 		} else {
-			throw new NotMoveableException("Es befindet sich hier ein Rail / Andere Rail auswählen oder Mine löschen");
+			throw new NotMoveableException("Es befindet sich hier kein Rail / Andere Rail auswählen oder Mine löschen");
 		}
 	}
 

@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModels.Game
 {
-    class MineGameViewModel : CanvasGameViewModel
+    public class MineGameViewModel : CanvasGameViewModel
     {
 
-        private Mine m;
+        private Mine mine;
 
         public MineGameViewModel(Mine mine) : base(mine.Id)
         {
-            this.m = mine;
+            this.mine = mine;
             this.SquarePosX = mine.Square.PosX;
             this.SquarePosY = mine.Square.PosY;
         }
@@ -23,7 +23,7 @@ namespace RoRClient.ViewModels.Game
         {
             get
             {
-                return m;
+                return mine;
             }
         }
     }

@@ -34,7 +34,6 @@ namespace RoRClient.Commands.Base
             Mine mine = new Mine(mineId, square, alignment);
             Rail rail = (Rail)square.PlaceableOnSquare;
             rail.PlaceableOnRail = mine;
-            Console.WriteLine("Neue Mine gesetzt");
 
         }
     }

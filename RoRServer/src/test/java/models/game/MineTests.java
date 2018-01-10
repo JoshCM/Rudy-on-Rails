@@ -18,14 +18,14 @@ import models.session.GameSessionManager;
 
 public class MineTests {
 
-	// vor jedem Test "aufräumen" (Instanz löschen)
+	// vor jedem Test "aufrï¿½umen" (Instanz lï¿½schen)
 	@Before
 	public void initTest() {
 		TopicMessageQueue.getInstance().clear();
 	}
 
 	@Test
-	public void MineCreatesMessageAfterCreation() {
+	public void mineCreatesMessageAfterCreation() {
 		Mine mine = createTestGameMine();
 
 		MessageInformation messageInfo = TopicMessageQueue.getInstance()
@@ -41,7 +41,7 @@ public class MineTests {
 		assertEquals(mine.getYPos(), messageInfoYPos);
 		assertEquals(mine.getSquareId(), messageInfoSquareId);
 	}
-
+	
 	private Mine createTestGameMine() {
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "HostPlayer");
@@ -60,7 +60,7 @@ public class MineTests {
 		return mine;
 	}
 
-	// man könnte noch Methode "createTestEditorMine(){} erstellen, um Code den man
+	// man kï¿½nnte noch Methode "createTestEditorMine(){} erstellen, um Code den man
 	// immer wieder verwendet, auszulagern
 
 	@Test
@@ -81,9 +81,7 @@ public class MineTests {
 		Mine mine = new Mine(editorSession.getName(), square, rail.getAlignment(), rail.getId());
 		rail.setPlaceableOnRail(mine);
 
-		System.out.println(rail.getAlignment() + " / " + mine.getAlignment());
 		mine.rotateLeft();
-		System.out.println(rail.getAlignment() + " / " + mine.getAlignment());
 
 		assertEquals(rail.getAlignment(), mine.getAlignment());
 	}
@@ -106,9 +104,7 @@ public class MineTests {
 		Mine mine = new Mine(editorSession.getName(), square, rail.getAlignment(), rail.getId());
 		rail.setPlaceableOnRail(mine);
 
-		System.out.println(rail.getAlignment() + " / " + mine.getAlignment());
 		mine.rotateRight();
-		System.out.println(rail.getAlignment() + " / " + mine.getAlignment());
 
 		assertEquals(rail.getAlignment(), mine.getAlignment());
 	}
