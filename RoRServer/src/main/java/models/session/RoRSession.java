@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import communication.ServerConnection;
 import communication.dispatcher.SessionDispatcher;
 import communication.queue.receiver.ReceiverQueue;
 import communication.topic.SenderTopic;
@@ -13,6 +14,9 @@ import models.base.ModelBase;
 import models.game.Map;
 import models.game.Player;
 import states.RoRState;
+
+import javax.jms.JMSException;
+import javax.jms.Session;
 
 //TODO: States einpflegen und überprüfen.
 /**
@@ -26,6 +30,7 @@ public abstract class RoRSession extends ModelBase implements javax.jms.Session 
     Player hostPlayer;
     String sessionName;
     SessionDispatcher sessionDispatcher;
+    Session session;
 
     public RoRSession(String sessionName, Map map, Player hostPlayer) {
         this.map = map;
@@ -75,6 +80,8 @@ public abstract class RoRSession extends ModelBase implements javax.jms.Session 
             throw new SessionException("Player is not in Playerlist");
         }
     }
+
+    private
 
     public void setupQueueReceiver() {
         receiverQueue.setup();
