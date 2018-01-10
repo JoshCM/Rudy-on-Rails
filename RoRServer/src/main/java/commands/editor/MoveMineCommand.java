@@ -35,9 +35,10 @@ public class MoveMineCommand extends CommandBase {
 		Map map = editorSession.getMap();
 		if (newSquare.getPlaceableOnSquare() instanceof Rail) {
 			Rail rail = (Rail)oldSquare.getPlaceableOnSquare();
-			rail.setPlaceableOnRail(null);
 			Rail newRail = (Rail)newSquare.getPlaceableOnSquare();
-			newRail.setPlaceableOnRail(mine);			
+			newRail.setPlaceableOnRail(mine);
+			mine.setSquareId(newSquare.getId());
+			rail.setPlaceableOnRail(null);
 			map.movePlaceableOnRail(oldSquare, newSquare);
 		} else {
 			throw new NotMoveableException("Es befindet sich hier ein Rail / Andere Rail auswählen oder Mine löschen");

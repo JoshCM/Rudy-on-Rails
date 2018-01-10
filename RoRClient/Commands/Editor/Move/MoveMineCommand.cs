@@ -33,7 +33,6 @@ namespace RoRClient.Commands.Editor.Move
             Mine mine = (Mine)rail.PlaceableOnRail;
             rail.PlaceableOnRail = null;
 
-
             mine.Square = editorSession.Map.GetSquare(newXPos, newYPos);
 
             // Mine auf neue Rail setzen
