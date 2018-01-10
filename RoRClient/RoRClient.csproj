@@ -126,6 +126,7 @@
     <Compile Include="Commands\Game\Create\CreateLocoCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateTrainstationCommand.cs" />
     <Compile Include="Commands\Game\Other\ChangeMapNameCommand.cs" />
     <Compile Include="Commands\Game\Other\StartCommand.cs" />
@@ -183,6 +184,7 @@
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
     <Compile Include="ViewModels\Game\RailGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TrainstationEditorViewModel.cs" />
+    <Compile Include="ViewModels\Game\StockGameViewModel.cs" />
     <Compile Include="ViewModels\Helper\TypeHelper.cs" />
     <Compile Include="ViewModels\Game\TrainstationGameViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
@@ -265,6 +267,9 @@
     <Compile Include="Views\Game\GameStatusUserControl.xaml.cs">
       <DependentUpon>GameStatusUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\StockGameUserControl.xaml.cs">
+      <DependentUpon>StockGameUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\TrainSpeedGameUserControl.xaml.cs">
       <DependentUpon>TrainSpeedGameUserControl.xaml</DependentUpon>
     </Compile>
@@ -329,6 +334,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Game\GameStatusUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\StockGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

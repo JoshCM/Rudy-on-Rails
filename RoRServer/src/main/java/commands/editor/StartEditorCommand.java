@@ -70,7 +70,7 @@ public class StartEditorCommand extends CommandBase {
 			}
 		}
 
-		// erzeugen der neuen Rails auf deren Squares
+		// erzeugen der neuen Stocks auf deren Squares
 		for (Square stockSquare : stockSquaresToCreate) {
 			stockSquare.setPlaceableOnSquare(stockSquare.getPlaceableOnSquare().loadFromMap(stockSquare, session));
 		}

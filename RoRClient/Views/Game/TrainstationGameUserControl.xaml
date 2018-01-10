@@ -14,7 +14,7 @@
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=trainstationGameUserControl}"
             Height="{Binding SquareDim, ElementName=trainstationGameUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=trainstationGameUserControl}" Height="{Binding SquareDim, ElementName=trainstationGameUserControl}" Source="pack://application:,,,/Resources/Images/Tools/trainstation.png">
+        <Image Width="{Binding SquareDim, ElementName=trainstationGameUserControl}" Height="{Binding SquareDim, ElementName=trainstationGameUserControl}" Source="pack://application:,,,/Resources/Images/trainstation.png">
             <Image.LayoutTransform>
                 <TransformGroup>
                     <RotateTransform Angle="{Binding Trainstation.Alignment, Mode=OneWay, Converter={StaticResource TrainstationAlignmentToAngleConverter}}" />
