@@ -123,6 +123,7 @@
     <Compile Include="Commands\Editor\Other\ChangeMapNameCommand.cs" />
     <Compile Include="Commands\Editor\Other\StartCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateAlignmentOfTrainstation.cs" />
+    <Compile Include="Commands\Editor\Update\UpdateConfigOfSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNodesOfRailSectionCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
@@ -177,6 +178,7 @@
     </Compile>
     <Compile Include="ViewModels\Base\CanvasViewModelBase.cs" />
     <Compile Include="ViewModels\Editor\ObjectConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\Editor\ObjectConfiguration\RailConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Game\CanvasGameViewModel.cs" />
     <Compile Include="ViewModels\Game\CoalGameViewModel.cs" />
     <Compile Include="ViewModels\Game\ContainerGameViewModel.cs" />

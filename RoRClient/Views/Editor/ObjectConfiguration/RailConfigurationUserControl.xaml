@@ -14,7 +14,8 @@
         <StackPanel x:Name="AutoSwitchIntervalInSecondsConfig"  Orientation="Vertical" Margin="10" Width="200">
             <TextBlock Text="Umschaltintervall" FontSize="14" FontWeight="DemiBold" Margin="0 0 0 10"/>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <ComboBox Margin="0 0 10 0 ">
+                <ComboBox Margin="0 0 10 0 " SelectedValue="{Binding SelectedAutoSwitchIntervalInSeconds}" SelectedValuePath="Content">
+                    <ComboBoxItem Content="3"/>
                     <ComboBoxItem Content="5"/>
                     <ComboBoxItem Content="10"/>
                     <ComboBoxItem Content="20"/>
@@ -29,7 +30,7 @@
         <StackPanel x:Name="PenaltyConfig"  Orientation="Vertical" Margin="10" Width="200">
             <TextBlock Text="Strafe bei rotem Signal" FontSize="14" FontWeight="DemiBold" Margin="0 0 0 10"/>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <ComboBox Margin="0 0 10 0 ">
+                <ComboBox Margin="0 0 10 0 " SelectedValue="{Binding SelectedPenalty}" SelectedValuePath="Content">
                     <ComboBoxItem Content="5"/>
                     <ComboBoxItem Content="10"/>
                     <ComboBoxItem Content="15"/>
@@ -44,7 +45,7 @@
         <StackPanel x:Name="SwitchCostConfig"  Orientation="Vertical" Margin="10" Width="200">
             <TextBlock Text="Kosten für das Umschalten" FontSize="14" FontWeight="DemiBold" Margin="0 0 0 10"/>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <ComboBox Margin="0 0 10 0 ">
+                <ComboBox Margin="0 0 10 0 " SelectedValue="{Binding SelectedSwitchCost}" SelectedValuePath="Content">
                     <ComboBoxItem Content="5"/>
                     <ComboBoxItem Content="10"/>
                     <ComboBoxItem Content="15"/>
@@ -57,7 +58,7 @@
         </StackPanel>
 
         <StackPanel>
-            <Button Content="Übernehmen" Padding="10" Margin="10" Height="40"/>
+            <Button Content="Übernehmen" Command="{Binding SaveSignalsConfigCommand}"  Padding="10" Margin="10" Height="40"/>
         </StackPanel>
     </StackPanel>
 </UserControl>

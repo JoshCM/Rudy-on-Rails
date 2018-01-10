@@ -18,6 +18,7 @@ namespace RoRClient.ViewModels.Editor
     public class RailEditorViewModel : CanvasEditorViewModel
     {
         private Rail rail;
+
         public RailEditorViewModel(Rail rail) : base(rail.Id)
         {
             this.rail = rail;
@@ -47,7 +48,6 @@ namespace RoRClient.ViewModels.Editor
 
 			// setze das Selektierte Objekt auf null
 			MapViewModel.SelectedEditorCanvasViewModel = null;
-
 		}
 
         public override void RotateLeft()
