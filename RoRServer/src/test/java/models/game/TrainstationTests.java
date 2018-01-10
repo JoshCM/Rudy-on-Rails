@@ -51,19 +51,14 @@ public class TrainstationTests {
 
 	@Test
 	public void TrainstationIsCreatedWithRightValuesOverCommand() {
-		int x = 1;
-		int y = 2;
+		int x = 0;
+		int y = 4;
 		initValidTrainstationCommand(x, y);
 		Square square = session.getMap().getSquare(x, y);
 		Assert.assertNotNull(square.getPlaceableOnSquare());
 		Assert.assertEquals(Trainstation.class, square.getPlaceableOnSquare().getClass());
 		List<UUID> railIds = ((Trainstation) square.getPlaceableOnSquare()).getTrainstationRailIds();
-		for (UUID railId : railIds) {
-			Rail rail = (Rail) session.getMap().getPlaceableById(railId);
-			Assert.assertEquals(Compass.NORTH, rail.getFirstSection().getNode1());
-			Assert.assertEquals(Compass.SOUTH, rail.getFirstSection().getNode2());
-		}
-		Assert.assertEquals(3, railIds.size());
+		Assert.assertEquals(14, railIds.size());
 	}
 
 	@Test(expected = InvalidModelOperationException.class)
@@ -341,18 +336,21 @@ public class TrainstationTests {
 		UUID stockId = UUID.randomUUID();
 		
 		int trainstationX = 0;
-		int trainstationY = 1;
+		int trainstationY = 4;
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 
 		// generiere trainstationRails
-		List<Rail> trainstationRails = Arrays.asList(
-				new Rail(session.getName(), session.getMap().getSquare(1, 0),
-						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getName(), session.getMap().getSquare(1, 1),
-						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getName(), session.getMap().getSquare(1, 2),
-						Arrays.asList(Compass.NORTH, Compass.SOUTH)));
+		List<Rail> trainstationRails = new ArrayList<Rail>();
+		
+		// generiert die rechte seite der Rails
+		for(int i = 0; i < 8; i++) {
+			trainstationRails.add(new Rail(session.getName(), new Square(session.getName(), 2, i), Arrays.asList(Compass.NORTH, Compass.SOUTH)));
+		}
+		// generiert die linke seite der Rails
+		for(int i = 1; i < 7; i++) {
+			trainstationRails.add(new Rail(session.getName(), new Square(session.getName(), 1, i), Arrays.asList(Compass.NORTH, Compass.SOUTH)));
+		}
 
 		// setzt die rails als placeable und generiert trainstationRailIds
 		List<UUID> trainstationRailIds = new ArrayList<UUID>();
@@ -363,12 +361,12 @@ public class TrainstationTests {
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
-		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(trainstationX, trainstationY), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(0, 0), trainstationId, stockId, Compass.EAST));
+		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(trainstationX, trainstationY), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(0, 3), trainstationId, stockId, Compass.EAST));
 		session.getMap().getSquare(trainstationX, trainstationY).setPlaceableOnSquare(trainstation);
 		
 		MessageInformation messageInformation = new MessageInformation();
-		messageInformation.putValue("newXPos", 2);
-		messageInformation.putValue("newYPos", 1);
+		messageInformation.putValue("newXPos", 10);
+		messageInformation.putValue("newYPos", 4);
 		messageInformation.putValue("id", trainstation.getId());
 		
 		MoveTrainstationCommand command = new MoveTrainstationCommand(session, messageInformation);
@@ -382,13 +380,8 @@ public class TrainstationTests {
 		}
 		moveCommand.execute();
 		
-		Assert.assertEquals(session.getMap().getSquare(2, 1).getId(), trainstation.getSquareId());
-		Assert.assertEquals(session.getMap().getSquare(2, 0).getId(), trainstation.getStock().getSquareId());
-		
-		for(Rail trainstationRail : trainstation.getTrainstationRails()) {
-			Assert.assertTrue(session.getMap().getSquareById(trainstationRail.getSquareId()).getXIndex() == 3);
-			Assert.assertTrue(session.getMap().getSquareById(trainstationRail.getSquareId()).getYIndex() <= 2);
-		}
+		Assert.assertEquals(session.getMap().getSquare(10, 4).getId(), trainstation.getSquareId());
+		Assert.assertEquals(session.getMap().getSquare(10, 3).getId(), trainstation.getStock().getSquareId());
 	}
 	
 	@Test(expected = NotMoveableException.class)

@@ -16,7 +16,7 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare{
 	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
 	private Compass alignment;
 	private UUID trainstationId;
-	private List<Container> containers;
+	private List<Resource> resources;
 	
 	public Stock(String sessionName, Square square, UUID trainstationId, Compass alignment) {
 		super(sessionName, square);
@@ -98,12 +98,12 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare{
 		this.setYPos(newSquareOfStock.getYIndex());
 	}
 
-	public List<Container> getContainers() {
-		return containers;
+	public List<Resource> getResources() {
+		return resources;
 	}
 	
-	public void addContainer(Container container) {
-		this.containers.add(container);
+	public void addResource(Resource resource) {
+		this.resources.add(resource);
 	}
 
 }

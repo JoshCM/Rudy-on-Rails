@@ -474,7 +474,7 @@
     <Resource Include="Resources\Images\Tools\railcurve_nw.png" />
     <Resource Include="Resources\Images\Tools\railcurve_se.png" />
     <Resource Include="Resources\Images\dummy.png" />
-    <Resource Include="Resources\Images\Tools\trainstation.png" />
+    <Resource Include="Resources\Images\trainstation.png" />
     <Resource Include="Resources\Images\game_minimap_dummy.png" />
     <Resource Include="Resources\Images\game_map_dummy.jpg" />
     <Resource Include="Resources\Images\rotate_right.png" />
@@ -487,6 +487,9 @@
     <Resource Include="Resources\Images\Tools\rail_crossing.png" />
     <Resource Include="Resources\Images\rail_crossing.png" />
     <Resource Include="Resources\Images\stock.png" />
+    <Resource Include="Resources\Images\stock_cart_1.png" />
+    <Resource Include="Resources\Images\Tools\trainstation1.png" />
+    <Resource Include="Resources\Images\stock_container_1.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

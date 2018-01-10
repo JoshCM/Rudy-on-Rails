@@ -1,7 +1,6 @@
 package models.game;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +21,8 @@ import models.session.RoRSession;
 public class Trainstation extends InteractiveGameObject implements PlaceableOnSquare {
 	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
 
-	public static final int RAIL_COUNT = 3;
+	public static final int RAIL_COUNT_RIGHT = 8;
+	public static final int RAIL_COUNT_LEFT = 6;
 	private List<UUID> trainstationRailIds;
 	private Stock stock;
 	private Compass alignment;
@@ -31,8 +31,6 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	private final int COUNTER_CLOCKWISE = -90;
 	private Square spawnPointForLoco;
 
-	// Andreas: Habe ich auf transient gesetzt, weil der Deserializer sonst
-	// wieder loopt
 	transient EditorSession editorSession;
 
 	public Trainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment,
@@ -45,14 +43,26 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		notifyCreatedTrainstation();
 	}
 
+	/**
+	 * Gibt die Ausrichtung der Trainstation zurück
+	 * @return Ausrichtung als Compass
+	 */
 	public Compass getAlignment() {
 		return alignment;
 	}
 
+	/**
+	 * Setzt den SpanPoint für die Loco
+	 * @param square
+	 */
 	public void setSpawnPointforLoco(Square square) {
 		spawnPointForLoco = square;
 	}
 
+	/**
+	 * Gibt den SpawnPoint für die Loco zurück
+	 * @return Square als Startposition
+	 */
 	public Square getSpawnPointforLoco() {
 		return spawnPointForLoco;
 	}
@@ -75,10 +85,18 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		notifyChange(messageInfo);
 	}
 
+	/**
+	 * Gibt alle IDs der Rails der Trainstation zurück
+	 * @return IDs der trainstationRails
+	 */
 	public List<UUID> getTrainstationRailIds() {
 		return trainstationRailIds;
 	}
 
+	/**
+	 * Gibt den Stock als Object zurück
+	 * @return Den Stock
+	 */
 	public Stock getStock() {
 		return this.stock;
 	}
@@ -169,12 +187,16 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 			if (tmpTrainstationGameObject instanceof Rail) {
 				Rail tmpRail = (Rail)tmpTrainstationGameObject;
-				// nehme section1 von RailSection
-				RailSection sectionOne = tmpRail.getFirstSection();
-
+				
+				// nehme RailSections und erzeuge eine Liste von Compass daraus
+				List<RailSection> railSections = tmpRail.getRailSectionList();
+				List<Compass> railSectionsCompass = new ArrayList<Compass>();
+				for(RailSection railsection : railSections) {
+					railSectionsCompass.addAll(railsection.getNodes());
+				}
+				
 				// erzeuge neue Rail und setze intern das Square.PlacableOnSquare
-				Rail newRail = new Rail(sessionName, newSquare,
-						Arrays.asList(sectionOne.getNode1(), sectionOne.getNode2()),
+				Rail newRail = new Rail(sessionName, newSquare, railSectionsCompass,
 						tmpRail.getTrainstationId(), tmpRail.getId());
 				newSquare.setPlaceableOnSquare(newRail);
 			}else if(tmpTrainstationGameObject instanceof Stock) {
@@ -309,6 +331,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		result = prime * result + COUNTER_CLOCKWISE;
 		result = prime * result + ((alignment == null) ? 0 : alignment.hashCode());
 		result = prime * result + ((spawnPointForLoco == null) ? 0 : spawnPointForLoco.hashCode());
+		result = prime * result + ((stock == null) ? 0 : stock.hashCode());
 		result = prime * result + ((trainstationRailIds == null) ? 0 : trainstationRailIds.hashCode());
 		return result;
 	}
@@ -332,6 +355,11 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 			if (other.spawnPointForLoco != null)
 				return false;
 		} else if (!spawnPointForLoco.equals(other.spawnPointForLoco))
+			return false;
+		if (stock == null) {
+			if (other.stock != null)
+				return false;
+		} else if (!stock.equals(other.stock))
 			return false;
 		if (trainstationRailIds == null) {
 			if (other.trainstationRailIds != null)

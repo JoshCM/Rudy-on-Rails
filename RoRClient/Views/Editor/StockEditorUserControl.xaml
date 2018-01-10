@@ -15,7 +15,7 @@
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=stockEditorUserControl}"
             Height="{Binding SquareDim, ElementName=stockEditorUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=stockEditorUserControl}" Height="{Binding SquareDim, ElementName=stockEditorUserControl}" Source="pack://application:,,,/Resources/Images/stock.png">
+        <Image Width="{Binding SquareDim, ElementName=stockEditorUserControl}" Height="{Binding SquareDim, ElementName=stockEditorUserControl}" Source="pack://application:,,,/Resources/Images/stock_container_1.png">
             <Image.LayoutTransform>
                 <TransformGroup>
                     <RotateTransform Angle="{Binding Stock.Alignment, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" />

@@ -115,8 +115,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		messageInfo.putValue("railId", getId());
 
 		messageInfo.putValue("squareId", getSquareId());
-		// TODO: Später haben wir die richtigen SquareIds im Client, im Moment noch
-		// nicht!!
+		messageInfo.putValue("trainstationId", getTrainstationId());
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
 
