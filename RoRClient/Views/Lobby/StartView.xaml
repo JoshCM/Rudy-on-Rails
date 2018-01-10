@@ -7,14 +7,33 @@
              xmlns:vm ="clr-namespace:RoRClient.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600" Background="BlanchedAlmond">
-    <StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="PlayerName"/>
-            <TextBox Text="{Binding LobbyModel.PlayerName, Mode=TwoWay}" Width="200"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Image Source=""></Image>
+        <Border Grid.Column="0" Grid.ColumnSpan="2" Background="#FF510404" Padding="0" Margin="600,100,600,50" >
+            <Label Content="Rudi On Rails" Foreground="White" FontFamily="Birch Std" FontSize="72" HorizontalAlignment="Center" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        </Border>
+
+        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Margin="350,0,10,0">
+            <TextBlock Text="Playername" Width="166" Height="50" FontFamily="Source Sans Pro" FontSize="30" Margin="0,125" Foreground="#FF510404"  />
+            <TextBox Text="{Binding LobbyModel.PlayerName, Mode=TwoWay}" Width="250" Height="50" BorderBrush="#FF510404" BorderThickness="2" Margin="0,125"/>
         </StackPanel>
-        
-        <Button x:Name="editorButton" Command="{Binding SwitchToJoinEditorLobbyView}" Content="Hier gehts zum Editor"/>
+
+        <Button Grid.Column="1" Grid.Row="1" x:Name="editorButton" Command="{Binding SwitchToJoinEditorLobbyView}" Content="ZUM BAU-MODUS" FontFamily="Source Sans Pro" FontSize="30" Background="White" Margin="100,100,350,120" BorderBrush="#FF510404" BorderThickness="5" />
         <!-- Binding muss noch eingerichtet werden -->
-        <Button x:Name="gameButton" Command="{Binding SwitchToJoinGameLobbyView}" Content="Hier gehts zum Dampf-Modus"/>
-    </StackPanel>
+        <Button Grid.Column="1" Grid.Row="1" x:Name="gameButton" Command="{Binding SwitchToJoinGameLobbyView}" Content="ZUM DAMPF-MODUS" FontFamily="Source Sans Pro" FontSize="30" Margin="100,200,350,20" BorderBrush="#FF510404" BorderThickness="5" Width="349" Background="White"/>
+
+
+
+    </Grid>
 </UserControl>
