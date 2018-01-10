@@ -101,6 +101,10 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		return this.stock;
 	}
 
+	public void setStock(Stock newStock) {
+		this.stock = newStock;
+	}
+
 	/**
 	 * Gibt die Liste von Rails der Trainstation zurück
 	 * 

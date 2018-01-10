@@ -56,7 +56,7 @@ public class StartGameCommand extends CommandBase {
 
 				// Wenn etwas auf dem Square liegt
 				if (square.getPlaceableOnSquare() != null) {
-					if (square.getPlaceableOnSquare() instanceof Rail) {
+					if (square.getPlaceableOnSquare() instanceof Rail)
 						railSquaresToCreate.add(square);
 					if (square.getPlaceableOnSquare() instanceof Stock)
 						stockSquaresToCreate.add(square);
@@ -76,8 +76,8 @@ public class StartGameCommand extends CommandBase {
 			Rail rail = (Rail)railSquare.getPlaceableOnSquare();
 			Rail newRail = (Rail)railSquare.getPlaceableOnSquare().loadFromMap(railSquare, session);
 			// liegt auf einer Rail eine Mine, muss diese darauf erzeugt werden
-			if (rail.getPlaceableOnrail() instanceof Mine) {
-				Mine mine = (Mine)rail.getPlaceableOnrail();
+			if (rail.getPlaceableOnRail() instanceof Mine) {
+				Mine mine = (Mine)rail.getPlaceableOnRail();
 				Mine newMine = (Mine)mine.loadFromMap(railSquare, session);
 				newRail.setPlaceableOnRail(newMine);
 			}

@@ -37,12 +37,12 @@ public class DeleteTrainstationCommand extends CommandBase{
 		Map map = editorSession.getMap();
 		
 		// remove trainstation
-		Trainstation trainstation = (Trainstation) map.getPlaceableOnSquareById(id);
+		Trainstation trainstation = (Trainstation) map.getPlaceableOnSquareById(trainstationId);
 		Square trainstationSquare = map.getSquare(trainstation.getXPos(), trainstation.getYPos());
 		trainstationSquare.deletePlaceable();
 		
 		// remove stock
-		Stock stock = (Stock) map.getPlaceableById(stockId);
+		Stock stock = (Stock) map.getPlaceableOnSquareById(stockId);
 		Square stockSquare = map.getSquare(stock.getXPos(), stock.getYPos());
 		stockSquare.deletePlaceable();
 		

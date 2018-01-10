@@ -180,7 +180,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		this.placeableOnRail = placeableOnRail;
 	}
 	
-	public PlaceableOnRail getPlaceableOnrail() {
+	public PlaceableOnRail getPlaceableOnRail() {
 		return placeableOnRail;
 	}
 	

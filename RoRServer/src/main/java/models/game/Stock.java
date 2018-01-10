@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.apache.log4j.Logger;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
+import communication.topic.TopicMessageQueue;
 import models.session.RoRSession;
 
 /**
@@ -50,6 +51,11 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare{
 		newStock.setName(session.getName());
 
 		log.info("Stock erstellt: " + newStock.toString());
+		
+		// die Trainstation die den Stock beinhaltet muss den neuen Stock gesetzt bekommen,#
+		// sonst hat der Stock der Trainstation keine Observer
+		((Trainstation)session.getMap().getPlaceableOnSquareById(getTrainstationId())).setStock(newStock);
+		
 		return newStock;
 	}
 
