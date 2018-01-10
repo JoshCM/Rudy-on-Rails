@@ -1,7 +1,4 @@
 package commands.editor;
-
-import java.util.UUID;
-
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import exceptions.NotMoveableException;
@@ -24,8 +21,7 @@ public class MoveMineCommand extends CommandBase {
 		super(session, messageInfo);
 		
 		EditorSession editorSession = (EditorSession) session;
-		
-		mine = (Mine)editorSession.getMap().getPlaceableById(messageInfo.getValueAsUUID("id"));
+		mine = (Mine)editorSession.getMap().getPlaceableOnRailById(messageInfo.getValueAsUUID("id"));
 		newXPos = messageInfo.getValueAsInt("newXPos");
 		newYPos = messageInfo.getValueAsInt("newYPos");
 		oldSquare = editorSession.getMap().getSquareById(mine.getSquareId());
@@ -39,6 +35,7 @@ public class MoveMineCommand extends CommandBase {
 		Map map = editorSession.getMap();
 		if (newSquare.getPlaceableOnSquare() instanceof Rail) {
 			Rail rail = (Rail)oldSquare.getPlaceableOnSquare();
+			rail.setPlaceableOnRail(null);
 			Rail newRail = (Rail)newSquare.getPlaceableOnSquare();
 			newRail.setPlaceableOnRail(mine);			
 			map.movePlaceableOnRail(oldSquare, newSquare);

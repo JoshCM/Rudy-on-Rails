@@ -11,7 +11,7 @@ import models.session.RoRSession;
 
 /**
  * Command zum Drehen der Mine im Editor
- * @author Andreas Pöhler
+ * @author Andreas Pï¿½hler
  *
  */
 public class RotateMineCommand extends CommandBase {
@@ -35,7 +35,7 @@ public class RotateMineCommand extends CommandBase {
 	public void execute() {
 		
 		EditorSession editorSession = (EditorSession) session;
-		Rail rail = (Rail)editorSession.getMap().getPlaceableById(railId);
+		Rail rail = (Rail)editorSession.getMap().getPlaceableOnSquareById(railId);
 		Mine mine = (Mine)rail.getPlaceableOnrail();
 		
 		if (rotateRight) {

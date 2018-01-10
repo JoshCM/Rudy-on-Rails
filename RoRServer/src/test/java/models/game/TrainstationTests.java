@@ -57,7 +57,7 @@ public class TrainstationTests {
 		Assert.assertEquals(Trainstation.class, square.getPlaceableOnSquare().getClass());
 		List<UUID> railIds = ((Trainstation) square.getPlaceableOnSquare()).getTrainstationRailIds();
 		for (UUID railId : railIds) {
-			Rail rail = (Rail) session.getMap().getPlaceableById(railId);
+			Rail rail = (Rail) session.getMap().getPlaceableOnSquareById(railId);
 			Assert.assertEquals(Compass.NORTH, rail.getFirstSection().getNode1());
 			Assert.assertEquals(Compass.SOUTH, rail.getFirstSection().getNode2());
 		}

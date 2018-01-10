@@ -2,6 +2,7 @@
 using RoRClient.Models.Game;
 using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
+using RoRClient.ViewModels.Helper;
 using RoRClient.Views.Editor.Helper;
 using System;
 using System.Collections.Generic;
@@ -85,9 +86,19 @@ namespace RoRClient.ViewModels.Editor
             EditorSession.GetInstance().QueueSender.SendMessage("RotateRail", messageInformation);
         }
 
+        /// <summary>
+        ///  Move-Methode für alle PlaceableOnRail
+        /// </summary>
         public override void Move()
         {
+            RoRSession editorSession = EditorSession.GetInstance();
 
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("newXPos", this.SquarePosX);
+            messageInformation.PutValue("newYPos", this.SquarePosY);
+            messageInformation.PutValue("id", MapViewModel.SelectedEditorCanvasViewModel.Id);
+            String viewModelType = TypeHelper.getTypeNameByViewModel(MapViewModel.SelectedEditorCanvasViewModel.GetType().Name);
+            EditorSession.GetInstance().QueueSender.SendMessage("Move" + viewModelType, messageInformation);
         }
 
         private ICommand createPlaceableOnRailCommand;
@@ -109,7 +120,11 @@ namespace RoRClient.ViewModels.Editor
             Console.WriteLine("Send Create Plabeable on Rail...");
             if (toolbarViewModel != null)
             {
-                if (toolbarViewModel.SelectedTool.Name.Contains("mine"))
+                if (MapViewModel.SelectedEditorCanvasViewModel != null)
+                {
+                    Move();
+                    MapViewModel.SelectedEditorCanvasViewModel = null;
+                } else if (toolbarViewModel.SelectedTool.Name.Contains("mine"))
                 {
                     Console.WriteLine("Send Create Mine on Rail...");
                     SendCreateMineCommand();

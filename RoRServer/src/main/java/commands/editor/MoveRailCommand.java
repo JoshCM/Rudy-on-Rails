@@ -15,7 +15,7 @@ public class MoveRailCommand extends CommandBase{
 	public MoveRailCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		EditorSession editorSession = (EditorSession) session;
-		Rail rail = (Rail)editorSession.getMap().getPlaceableById(messageInfo.getValueAsUUID("id"));
+		Rail rail = (Rail)editorSession.getMap().getPlaceableOnSquareById(messageInfo.getValueAsUUID("id"));
 		int newXPos = messageInfo.getValueAsInt("newXPos");
 		int newYPos = messageInfo.getValueAsInt("newYPos");
 		this.oldSquare = editorSession.getMap().getSquareById(rail.getSquareId());

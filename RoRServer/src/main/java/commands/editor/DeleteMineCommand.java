@@ -24,7 +24,7 @@ public class DeleteMineCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		Rail rail = (Rail)session.getMap().getPlaceableById(railId);
+		Rail rail = (Rail)session.getMap().getPlaceableOnSquareById(railId);
 		rail.deletePlaceableOnRail();
 	}
 

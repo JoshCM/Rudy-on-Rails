@@ -36,7 +36,7 @@ public class Mine extends InteractiveGameObject implements PlaceableOnRail {
 		
 		// sessionName neu setzen, damit Observer Änderung dieses Objekts mitbekommen kann
 		newMine.setName(session.getName());
-		Rail rail = (Rail)session.getMap().getPlaceableById(railId);
+		Rail rail = (Rail)session.getMap().getPlaceableOnSquareById(railId);
 		rail.setPlaceableOnRail(newMine);
 		
 		return newMine;

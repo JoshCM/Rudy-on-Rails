@@ -94,7 +94,7 @@ public class Map extends ModelBase {
 		return result;
 	}
 
-	public PlaceableOnSquare getPlaceableById(UUID id) {
+	public PlaceableOnSquare getPlaceableOnSquareById(UUID id) {
 		for (Square[] squares : getSquares()) {
 			for (Square square : squares) {
 				PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
@@ -102,6 +102,26 @@ public class Map extends ModelBase {
 					if (placeableOnSquare.getId().equals(id)) {
 						return placeableOnSquare;
 					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	public PlaceableOnRail getPlaceableOnRailById(UUID id) {
+		for (Square[] squares : getSquares()) {
+			for (Square square : squares) {
+				PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
+				if (placeableOnSquare != null) {
+					if (placeableOnSquare instanceof Rail) {
+						Rail rail = (Rail)placeableOnSquare;
+						if (rail.getPlaceableOnrail() instanceof Mine) {
+							Mine mine = (Mine)rail.getPlaceableOnrail();
+							if (mine.getId().equals(id)) {
+								return mine;
+							}
+						}
+					}	
 				}
 			}
 		}
