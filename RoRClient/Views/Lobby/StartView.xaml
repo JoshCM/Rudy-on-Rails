@@ -19,21 +19,21 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Image Source=""></Image>
+        <Image Source="/RoRClient;component/Resources/Images/start_background.png" Stretch="Fill" Grid.ColumnSpan="2" Margin="0,0,0,10" Grid.RowSpan="3"/>
         <Border Grid.Column="0" Grid.ColumnSpan="2" Background="#FF510404" Padding="0" Margin="600,100,600,50" >
             <Label Content="Rudi On Rails" Foreground="White" FontFamily="Birch Std" FontSize="72" HorizontalAlignment="Center" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         </Border>
 
         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Margin="350,0,10,0">
             <TextBlock Text="Playername" Width="166" Height="50" FontFamily="Source Sans Pro" FontSize="30" Margin="0,125" Foreground="#FF510404"  />
-            <TextBox Text="{Binding LobbyModel.PlayerName, Mode=TwoWay}" Width="250" Height="50" BorderBrush="#FF510404" BorderThickness="2" Margin="0,125"/>
+            <TextBox Text="{Binding LobbyModel.PlayerName, Mode=TwoWay}" Width="250" BorderBrush="#FF510404" BorderThickness="2" Margin="0,125" TextChanged="TextBox_TextChanged" FontFamily="Source Sans Pro" FontSize="24"/>
         </StackPanel>
 
         <Button Grid.Column="1" Grid.Row="1" x:Name="editorButton" Command="{Binding SwitchToJoinEditorLobbyView}" Content="ZUM BAU-MODUS" FontFamily="Source Sans Pro" FontSize="30" Background="White" Margin="100,100,350,120" BorderBrush="#FF510404" BorderThickness="5" />
         <!-- Binding muss noch eingerichtet werden -->
-        <Button Grid.Column="1" Grid.Row="1" x:Name="gameButton" Command="{Binding SwitchToJoinGameLobbyView}" Content="ZUM DAMPF-MODUS" FontFamily="Source Sans Pro" FontSize="30" Margin="100,200,350,20" BorderBrush="#FF510404" BorderThickness="5" Width="349" Background="White"/>
+        <Button Grid.Column="1" Grid.Row="1" x:Name="gameButton" Command="{Binding SwitchToJoinGameLobbyView}" Content="ZUM DAMPF-MODUS" FontFamily="Source Sans Pro" FontSize="30" Background="White" Margin="100,200,350,20" BorderBrush="#FF510404" BorderThickness="5"/>
 
-
+     
 
     </Grid>
 </UserControl>

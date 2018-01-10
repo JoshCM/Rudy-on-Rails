@@ -17,9 +17,9 @@
         <Rectangle
             Width="{Binding SquareDim, ElementName=squareUserControl}"
             Height="{Binding SquareDim, ElementName=squareUserControl}"
-            Fill="BROWN"
+            Fill="#f9f1df"
             Stroke="WHITE"
-            StrokeThickness="1">
+            StrokeThickness="0.5">
             <Rectangle.InputBindings>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding CreatePlaceableOnSquareCommand}"/>
             </Rectangle.InputBindings>

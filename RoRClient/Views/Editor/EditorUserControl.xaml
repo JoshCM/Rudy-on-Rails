@@ -40,7 +40,7 @@
                                Grid.Column="1"
                                Grid.ColumnSpan="2"
                                Grid.RowSpan="2"
-                               DataContext="{Binding MapViewModel}" />
+                               DataContext="{Binding MapViewModel}" Loaded="MapEditorUserControl_Loaded" />
 
         <!-- Werkzeugleiste -->
         <editor:ToolbarUserControl DataContext="{Binding ToolbarViewModel}" x:Name="ToolbarUserControlName"

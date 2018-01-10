@@ -16,7 +16,7 @@
 
     <DockPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Bottom">
-            <Canvas x:Name="thisCanvas" Background="Brown" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
+            <Canvas x:Name="thisCanvas" Background="White" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
                 <ItemsControl ItemsSource="{Binding SquareViewModels}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type vm:SquareEditorViewModel}">
