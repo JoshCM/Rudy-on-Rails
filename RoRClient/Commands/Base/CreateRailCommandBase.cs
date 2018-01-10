@@ -24,7 +24,7 @@ namespace RoRClient.Commands.Base
 
         public CreateRailCommandBase(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
-            if (messageInformation.attributes["trainstationId"] != null)
+            if (messageInformation.attributes.ContainsKey("trainstationId"))
                 trainstationId = Guid.Parse(messageInformation.GetValueAsString("trainstationId"));
 
             railId = Guid.Parse(messageInformation.GetValueAsString("railId"));

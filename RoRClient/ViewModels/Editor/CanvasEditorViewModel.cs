@@ -55,7 +55,7 @@ namespace RoRClient.ViewModels.Editor
             // checkt ob das CnavasViewModel ein RailViewModel ist
             // und ob dessen Rail eine trainstationId hat
             if (this is RailEditorViewModel){
-                if( ((RailEditorViewModel)this).Rail.TrainstationId != null)
+                if( ((RailEditorViewModel)this).Rail.TrainstationId != Guid.Empty) // ist nie null
                 {
                     showable = false;
                 }
