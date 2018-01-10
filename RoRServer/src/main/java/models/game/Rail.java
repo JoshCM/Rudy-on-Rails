@@ -51,6 +51,50 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	public Resource getResource() {
 		return resource;
 	}
+	
+	/**
+	 * Prüft, ob die Rail eine Gerade ist
+	 * @return Gibt true zurück, wenn die Rail eine Gerade ist
+	 */
+	public boolean railIsStraight() {
+		
+		boolean railIsStraight = false;
+		
+		RailSection railSection = getFirstSection();
+		Compass node1 = railSection.getNode1();
+		Compass node2 = railSection.getNode2();
+		if ((node1 == Compass.NORTH && node2 == Compass.SOUTH) || 
+			(node1 == Compass.SOUTH && node2 == Compass.NORTH) ||
+			(node1 == Compass.EAST && node2 == Compass.WEST) ||
+			(node1 == Compass.WEST && node2 == Compass.EAST)) {
+			railIsStraight = true;
+		}		
+		return railIsStraight;
+	}
+	
+	/**
+	 * Gibt die Richtung der Rail zurück: Dabei ist die Richtung 
+	 * - North, wenn die Rail nur eine Gerade besitzt, welche von Norden nach Süden oder Süden nach Norden geht
+	 * - South, wenn die Rail nur eine Gerade besitzt, welche von Westen nach Osten oder Osten nach Westen geht
+	 * @return South oder North, wenn es eine Gerade ist, ansonsten Null
+	 */
+	public Compass getAlignment() {
+		
+		Compass alignment = null;
+		
+		RailSection railSection = getFirstSection();
+		Compass node1 = railSection.getNode1();
+		Compass node2 = railSection.getNode2();
+		
+		if ((node1 == Compass.NORTH && node2 == Compass.SOUTH) || 
+				(node1 == Compass.SOUTH && node2 == Compass.NORTH) ||
+				(node1 == Compass.EAST && node2 == Compass.WEST) ||
+				(node1 == Compass.WEST && node2 == Compass.EAST)) {
+			alignment = node2;
+		}
+	
+		return alignment;
+	}
 
 	/**
 	 * Platziert auf den benachbarten Squares (sofern frei) anhand der Schwierigkeit
@@ -134,6 +178,21 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 
 	public void setPlaceableOnRail(PlaceableOnRail placeableOnRail) {
 		this.placeableOnRail = placeableOnRail;
+	}
+	
+	public PlaceableOnRail getPlaceableOnrail() {
+		return placeableOnRail;
+	}
+	
+	public void deletePlaceableOnRail() {
+		placeableOnRail = null;
+		notifyDeletePlaceableOnRail();
+	}
+	
+	public void notifyDeletePlaceableOnRail() {
+		MessageInformation message = new MessageInformation("DeleteMine");
+		message.putValue("railId", getId());
+		notifyChange(message);
 	}
 
 	public RailSection getFirstSection() {
@@ -306,8 +365,9 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		newRail.setName(session.getName());
 		
 		// Ressourcen setzen, wenn die Session eine GameSession ist
-		if(session instanceof GameSession)
-		newRail.generateResourcesNextToRail();
+		if(session instanceof GameSession) {
+			newRail.generateResourcesNextToRail();
+		}
 
 		return newRail;
 	}

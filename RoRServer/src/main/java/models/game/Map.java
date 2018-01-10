@@ -94,7 +94,7 @@ public class Map extends ModelBase {
 		return result;
 	}
 
-	public PlaceableOnSquare getPlaceableById(UUID id) {
+	public PlaceableOnSquare getPlaceableOnSquareById(UUID id) {
 		for (Square[] squares : getSquares()) {
 			for (Square square : squares) {
 				PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
@@ -102,6 +102,26 @@ public class Map extends ModelBase {
 					if (placeableOnSquare.getId().equals(id)) {
 						return placeableOnSquare;
 					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	public PlaceableOnRail getPlaceableOnRailById(UUID id) {
+		for (Square[] squares : getSquares()) {
+			for (Square square : squares) {
+				PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
+				if (placeableOnSquare != null) {
+					if (placeableOnSquare instanceof Rail) {
+						Rail rail = (Rail)placeableOnSquare;
+						if (rail.getPlaceableOnrail() instanceof Mine) {
+							Mine mine = (Mine)rail.getPlaceableOnrail();
+							if (mine.getId().equals(id)) {
+								return mine;
+							}
+						}
+					}	
 				}
 			}
 		}
@@ -149,6 +169,32 @@ public class Map extends ModelBase {
 		int newSquareX = newTrainstation.getXPos() + trainstationRailXSpan;
 		int newSquareY = newTrainstation.getYPos() + trainstationRailYSpan;
 		return getSquare(newSquareX, newSquareY);
+	}
+	
+	/**
+	 * Löst das Notify zum Verschieben einer Mine aus
+	 * @param oldSquare
+	 * @param newSquare
+	 */
+	public void movePlaceableOnRail(Square oldSquare, Square newSquare) {
+		
+		notifyMovedMine(oldSquare, newSquare);
+	}
+	
+	/**
+	 * Verschickt die Änderungen der verschobenen Mine an den Client
+	 * @param oldSquare
+	 * @param newSquare
+	 */
+	public void notifyMovedMine(Square oldSquare, Square newSquare) {
+		MessageInformation message = new MessageInformation("MoveMine");
+		message.putValue("oldXPos", oldSquare.getXIndex());
+		message.putValue("oldYPos", oldSquare.getYIndex());
+		message.putValue("newXPos", newSquare.getXIndex());
+		message.putValue("newYPos", newSquare.getYIndex());
+		Rail rail = (Rail) newSquare.getPlaceableOnSquare();
+		message.putValue("alignment", rail.getAlignment().toString());
+		notifyChange(message);
 	}
 
 	/**

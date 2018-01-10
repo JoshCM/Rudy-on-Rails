@@ -9,6 +9,7 @@ import org.junit.Test;
 import commands.game.StartGameCommand;
 import communication.MessageInformation;
 import models.game.Map;
+import models.game.Mine;
 import models.game.Rail;
 import models.game.RailSection;
 import models.game.Square;
@@ -27,7 +28,7 @@ public class StartGameCommandTest {
 		
 		// GameSession und Square erstellen
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
-		Square square = new Square(gameSession.getName(), 0, 0);
+		Square square = gameSession.getMap().getSquare(0, 0);
 		
 		// Erstellen einer neuen Rail
 		List<Compass> railSectionPositions = new ArrayList<Compass>();
@@ -63,6 +64,29 @@ public class StartGameCommandTest {
 		//assertEquals(loadedTrainstation, createdTrainstation);
 		assertEquals(loadedTrainstation, createdTrainstation);
 		
+	}
+	
+	@Test
+	public void testLoadedMineEqualsToCreatedMine() {
+		
+		// GameSession und Square erstellen
+		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
+		Square square = gameSession.getMap().getSquare(0, 0);
+		
+		// Neue Mine mit Rail erstellen
+		List<Compass> railSectionPositions = new ArrayList<Compass>();
+		railSectionPositions.add(Compass.NORTH);
+		railSectionPositions.add(Compass.SOUTH);
+		
+		Rail rail = new Rail(gameSession.getName(), square, railSectionPositions);
+		square.setPlaceableOnSquare(rail);
+		Mine loadedMine = new Mine(gameSession.getName(), square, rail.getAlignment(), rail.getId());
+		rail.setPlaceableOnRail(loadedMine);
+		
+		// Mine laden und vergleichen
+		Mine createdMine = (Mine)loadedMine.loadFromMap(square, gameSession);
+		assertEquals(loadedMine, createdMine);
+
 	}
 
 }

@@ -81,7 +81,7 @@ namespace RoRClient.ViewModels.Editor
                 }
             }
         }
-
+        
         /// <summary>
         /// Methode zum Rotieren eines EditorCanvasViewModel nach links / Muss in der jeweiligen Unterklasse überschrieben werden
         /// </summary>

@@ -16,7 +16,7 @@
             Height="{Binding SquareDim, ElementName=trainstationEditorUserControl}">
 		<Image Width="{Binding SquareDim, ElementName=trainstationEditorUserControl}" Height="{Binding SquareDim, ElementName=trainstationEditorUserControl}" Source="pack://application:,,,/Resources/Images/trainstation.png">
             <Image.InputBindings>
-                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+                <MouseBinding MouseAction="RightClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
             </Image.InputBindings>
             <Image.LayoutTransform>
                 <TransformGroup>

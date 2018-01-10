@@ -15,7 +15,7 @@ public class MoveTrainstationCommand extends CommandBase{
 	public MoveTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		EditorSession editorSession = (EditorSession) session;
-		Trainstation trainstation = (Trainstation)editorSession.getMap().getPlaceableById(messageInfo.getValueAsUUID("id"));
+		Trainstation trainstation = (Trainstation)editorSession.getMap().getPlaceableOnSquareById(messageInfo.getValueAsUUID("id"));
 		int newXPos = messageInfo.getValueAsInt("newXPos");
 		int newYPos = messageInfo.getValueAsInt("newYPos");
 		this.oldSquare = editorSession.getMap().getSquareById(trainstation.getSquareId());
