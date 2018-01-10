@@ -9,6 +9,11 @@ import models.game.Square;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
+/**
+ * Command zum Verschieben einer Mine im Editor
+ * @author apoeh001
+ *
+ */
 public class MoveMineCommand extends CommandBase {
 	
 	private Square oldSquare;
@@ -30,14 +35,16 @@ public class MoveMineCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		System.out.println("MOVE MINE");
 		EditorSession editorSession = (EditorSession) session;
 		Map map = editorSession.getMap();
+		// Nur etwas Platzieren, wenn auf dem Square eine Rail liegt
 		if (newSquare.getPlaceableOnSquare() instanceof Rail) {
 			Rail rail = (Rail)oldSquare.getPlaceableOnSquare();
 			Rail newRail = (Rail)newSquare.getPlaceableOnSquare();
+			// Nur etwas Platzieren, wenn die Rail eine Gerade ist
 			if (newRail.railIsStraight()) {
 				newRail.setPlaceableOnRail(mine);
+				// Die Mine benötigt die neue Square ID und die neue Rail ID
 				mine.setSquareId(newSquare.getId());
 				mine.setRailId(newRail.getId());
 				rail.setPlaceableOnRail(null);

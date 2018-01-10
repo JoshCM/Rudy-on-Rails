@@ -10,6 +10,9 @@ using RoRClient.Models.Game;
 
 namespace RoRClient.Commands.Editor.Move
 {
+    /// <summary>
+    /// Command zum Verschieben einer Mine im Editor
+    /// </summary>
     public class MoveMineCommand : CommandBase
     {
         private int oldXPos;

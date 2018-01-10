@@ -171,11 +171,21 @@ public class Map extends ModelBase {
 		return getSquare(newSquareX, newSquareY);
 	}
 	
+	/**
+	 * Löst das Notify zum Verschieben einer Mine aus
+	 * @param oldSquare
+	 * @param newSquare
+	 */
 	public void movePlaceableOnRail(Square oldSquare, Square newSquare) {
 		
 		notifyMovedMine(oldSquare, newSquare);
 	}
 	
+	/**
+	 * Verschickt die Änderungen der verschobenen Mine an den Client
+	 * @param oldSquare
+	 * @param newSquare
+	 */
 	public void notifyMovedMine(Square oldSquare, Square newSquare) {
 		MessageInformation message = new MessageInformation("MoveMine");
 		message.putValue("oldXPos", oldSquare.getXIndex());

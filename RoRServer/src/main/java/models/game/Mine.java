@@ -7,6 +7,11 @@ import models.helper.CompassHelper;
 import models.session.EditorSessionManager;
 import models.session.RoRSession;
 
+/**
+ * Model für Mine
+ * @author apoeh001
+ *
+ */
 public class Mine extends InteractiveGameObject implements PlaceableOnRail {
 	
 	private List<Resource> resources;
