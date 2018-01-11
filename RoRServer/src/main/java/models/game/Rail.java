@@ -264,14 +264,20 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         for (RailSection section : railSectionList) {
             section.rotate(right);
         }
-        signals.switchSignals();
+        
+        if(signals != null) {
+        	signals.switchSignals();
+        }
     }
 
     public void rotate(boolean right, boolean notYet) {
         for (RailSection section : railSectionList) {
             section.rotate(right, notYet);
         }
-        signals.switchSignals();
+
+        if(signals != null) {
+        	signals.switchSignals();
+        }
     }
 
     @Override
