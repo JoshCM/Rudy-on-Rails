@@ -1,12 +1,11 @@
 package models.game;
 
-import java.util.UUID;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import com.google.gson.JsonObject;
 import communication.MessageInformation;
 import exceptions.RailSectionException;
-import models.session.GameSession;
 import models.session.GameSessionManager;
 import models.session.RoRSession;
 
