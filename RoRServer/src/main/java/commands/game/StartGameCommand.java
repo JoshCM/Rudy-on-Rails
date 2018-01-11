@@ -2,20 +2,18 @@ package commands.game;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
 import models.game.Map;
+import models.game.Mine;
 import models.game.Player;
 import models.game.Rail;
 import models.game.Square;
 import models.game.Trainstation;
 import models.session.GameSession;
-import models.session.GameSessionManager;
 import models.session.RoRSession;
 import persistent.MapManager;
 
@@ -40,7 +38,8 @@ public class StartGameCommand extends CommandBase {
 		// Client schicken würden
 		List<Square> railSquaresToCreate = new ArrayList<Square>();
 		List<Square> trainstationSquaresToCreate = new ArrayList<Square>();
-
+		List<Square> mineSquaresToCreate = new ArrayList<Square>();
+		
 		// Jedes Square durchgehen
 		Square[][] squares = map.getSquares();
 		for (int i = 0; i < squares.length; i++) {
@@ -54,8 +53,9 @@ public class StartGameCommand extends CommandBase {
 
 				// Wenn etwas auf dem Square liegt
 				if (square.getPlaceableOnSquare() != null) {
-					if (square.getPlaceableOnSquare() instanceof Rail)
+					if (square.getPlaceableOnSquare() instanceof Rail) {
 						railSquaresToCreate.add(square);
+					}
 					if (square.getPlaceableOnSquare() instanceof Trainstation)
 						trainstationSquaresToCreate.add(square);
 				}
@@ -64,13 +64,20 @@ public class StartGameCommand extends CommandBase {
 
 		// erzeugen der neuen Rails auf deren Squares
 		for (Square railSquare : railSquaresToCreate) {
-			Rail rail = (Rail)railSquare.getPlaceableOnSquare().loadFromMap(railSquare, session);
-			rail.generateResourcesNextToRail();
-			railSquare.setPlaceableOnSquare(rail);
+			Rail rail = (Rail)railSquare.getPlaceableOnSquare();
+			Rail newRail = (Rail)railSquare.getPlaceableOnSquare().loadFromMap(railSquare, session);
+			newRail.generateResourcesNextToRail();
+			// liegt auf einer Rail eine Mine, muss diese darauf erzeugt werden
+			if (rail.getPlaceableOnrail() instanceof Mine) {
+				Mine mine = (Mine)rail.getPlaceableOnrail();
+				Mine newMine = (Mine)mine.loadFromMap(railSquare, session);
+				newRail.setPlaceableOnRail(newMine);
+			}
+			railSquare.setPlaceableOnSquare(newRail);
 			
-			if(rail.getSignals() != null) {
-				((GameSession)session).registerTickableGameObject(rail.getSignals());
-			};
+			if(newRail.getSignals() != null) {
+				((GameSession)session).registerTickableGameObject(newRail.getSignals());
+			}
 		}
 
 		// erzeugen der neuen Trainstations auf deren Squares
@@ -78,7 +85,7 @@ public class StartGameCommand extends CommandBase {
 			trainstationSquare.setPlaceableOnSquare(
 					trainstationSquare.getPlaceableOnSquare().loadFromMap(trainstationSquare, session));
 		}
-
+		
 		createLocoForPlayers(session);
 
 		session.start();
