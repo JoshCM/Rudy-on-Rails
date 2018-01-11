@@ -4,7 +4,13 @@ import communication.MessageInformation;
 import models.base.ModelBase;
 
 /**
- * ToDo: Kommentieren
+ * Die Signals werden in der Rail verwendet und stellen die vier Signale (Norden, Osten, Westen, Süden) dar.
+ * 
+ * Ein Signal kann aktiv (z.B. northSignalActive == true) sein, dies würde dann bedeuten, dass das Signal 
+ * grün leuchtet. 
+ * 
+ * Da wir zurzeit nur auf Kreuzungen Signale haben ist die Logik an manchen stellen stark auf diesen 
+ * Anwendungsfall reduziert, um die Logik überschaubar zu halten.
  */
 public class Signals extends TickableGameObject {
 	private final static int DEFAULT_AUTO_SWITCH_INTERVAL_IN_SECONDS = 5;
