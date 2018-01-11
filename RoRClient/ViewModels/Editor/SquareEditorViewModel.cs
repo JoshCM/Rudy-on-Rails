@@ -67,9 +67,13 @@ namespace RoRClient.ViewModels.Editor
                 {
                     string selectedToolName = toolbarViewModel.SelectedTool.Name;
 
-                    if (selectedToolName.Contains("rail_crossing"))
+                    if (selectedToolName == "rail_crossing")
                     {
                         SendCreateCrossingCommand();
+                    }
+                    else if (selectedToolName == "rail_crossing_with_signals")
+                    {
+                        SendCreateCrossingWithSignalsCommand();
                     }
                     else if (selectedToolName.Contains("rail"))
                     {
@@ -128,6 +132,26 @@ namespace RoRClient.ViewModels.Editor
             messageInformation.PutValue("yPos", yPos);
 
             editorSession.QueueSender.SendMessage("CreateCrossing", messageInformation);
+        }
+
+
+        /// <summary>
+        /// Sendet einen Anfrage-Command an den Server, der dort eine Crossing mit Signalen drauf erstellen soll
+        /// </summary>
+        private void SendCreateCrossingWithSignalsCommand()
+        {
+            // Quick-Navigation von einem möglich vorherigen angeklicken EditorCanvasViewModel ausblenden
+            MapViewModel.IsQuickNavigationVisible = false;
+
+            int xPos = square.PosX;
+            int yPos = square.PosY;
+            EditorSession editorSession = EditorSession.GetInstance();
+
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("xPos", xPos);
+            messageInformation.PutValue("yPos", yPos);
+
+            editorSession.QueueSender.SendMessage("CreateCrossingWithSignals", messageInformation);
         }
 
         /// <summary>
