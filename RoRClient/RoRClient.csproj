@@ -270,8 +270,12 @@
     <Compile Include="Views\Game\GoldGameUserControl.xaml.cs">
       <DependentUpon>GoldGameUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Game\LocoGameUserControl.xaml.cs">
-      <DependentUpon>LocoGameUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Game\GhostLocoGameUserControl.xaml.cs">
+      <DependentUpon>GhostLocoGameUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\LocoGameUserControl.cs" />
+    <Compile Include="Views\Game\PlayerLocoGameUserControl.xaml.cs">
+      <DependentUpon>PlayerLocoGameUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\MapGameUserControl.xaml.cs">
       <DependentUpon>MapGameUserControl.xaml</DependentUpon>
@@ -339,7 +343,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Game\LocoGameUserControl.xaml">
+    <Page Include="Views\Game\GhostLocoGameUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Game\PlayerLocoGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -524,6 +532,7 @@
     <Resource Include="Resources\Images\Tools\rail_crossing_with_signals.png" />
     <Resource Include="Resources\Images\mine.png" />
     <Resource Include="Resources\Images\Tools\mine.png" />
+    <Resource Include="Resources\Images\ghosttrain.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

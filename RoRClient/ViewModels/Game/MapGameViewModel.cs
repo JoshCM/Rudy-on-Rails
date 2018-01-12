@@ -198,8 +198,6 @@ namespace RoRClient.ViewModels.Game
                 taskFactory.StartNew(() => locoCollection.Add(locoGameViewModel));
             }
         }
-
-
         
         private void CreateRandomRails()
         {
