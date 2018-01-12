@@ -45,10 +45,9 @@ public class MoveMineCommand extends CommandBase {
 			if (newRail.railIsStraight()) {
 				newRail.setPlaceableOnRail(mine);
 				// Daten für Mine setzen
-				mine.setSquareId(newSquare.getId());
+				mine.setSquare(newSquare);
 				mine.setRailId(newRail.getId());
-				mine.setXPos(newSquare.getXIndex());
-				mine.setYPos(newSquare.getYIndex());
+				
 				rail.setPlaceableOnRail(null);
 				map.movePlaceableOnRail(oldSquare, newSquare);
 			} else {

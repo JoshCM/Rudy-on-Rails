@@ -50,7 +50,9 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 
 		// Neue Mine erstellen und damit an den Client schicken
 		Mine newMine = new Mine(session.getName(), square, alignment, railId);
-		((GameSession) session).addMine(newMine);
+		if(session instanceof GameSession) {
+			((GameSession) session).addMine(newMine);
+		}
 		
 		// sessionName neu setzen, damit Observer Änderung dieses Objekts mitbekommen kann
 		newMine.setName(session.getName());
@@ -86,6 +88,10 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 		notifyAlignmentUpdated();
 	}
 
+	public UUID getSquareId() {
+		// TODO Auto-generated method stub
+		return square.getId();
+	}
 	/**
 	 * Methode zum Erstellen einer Nachrichtm wenn eine neue Mine erstellt wurde
 	 */
@@ -99,6 +105,14 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 		notifyChange(message);		
 	}
 
+	public Object getXPos() {
+		// TODO Auto-generated method stub
+		return square.getXIndex();
+	}
+	public Object getYPos() {
+		// TODO Auto-generated method stub
+		return square.getYIndex();
+	}
 	/**
 	 * Schickt eine Nachricht an den Client, wenn sich die Richtung der Mine
 	 * ge�ndert hat
@@ -173,6 +187,10 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 		
 		return railId;
 		
+	}
+	public void setSquare(Square newSquare) {
+		// TODO Auto-generated method stub
+		square=newSquare;
 	}
 
 

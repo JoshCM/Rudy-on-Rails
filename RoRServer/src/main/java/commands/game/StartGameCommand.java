@@ -2,9 +2,7 @@ package commands.game;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
@@ -68,6 +66,7 @@ public class StartGameCommand extends CommandBase {
 		for (Square railSquare : railSquaresToCreate) {
 			Rail rail = (Rail)railSquare.getPlaceableOnSquare();
 			Rail newRail = (Rail)railSquare.getPlaceableOnSquare().loadFromMap(railSquare, session);
+			newRail.generateResourcesNextToRail();
 			// liegt auf einer Rail eine Mine, muss diese darauf erzeugt werden
 			if (rail.getPlaceableOnrail() instanceof Mine) {
 				Mine mine = (Mine)rail.getPlaceableOnrail();
@@ -75,7 +74,10 @@ public class StartGameCommand extends CommandBase {
 				newRail.setPlaceableOnRail(newMine);
 			}
 			railSquare.setPlaceableOnSquare(newRail);
-
+			
+			if(newRail.getSignals() != null) {
+				((GameSession)session).registerTickableGameObject(newRail.getSignals());
+			}
 		}
 
 		// erzeugen der neuen Trainstations auf deren Squares

@@ -14,11 +14,11 @@ import models.game.Square;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
-public class CreateCrossingCommand extends CommandBase {
+public class CreateCrossingWithSignalsCommand extends CommandBase {
 	private int xPos;
 	private int yPos;
-
-	public CreateCrossingCommand(RoRSession session, MessageInformation messageInfo) {
+	
+	public CreateCrossingWithSignalsCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 
 		xPos = messageInfo.getValueAsInt("xPos");
@@ -37,7 +37,7 @@ public class CreateCrossingCommand extends CommandBase {
 		railSectionPositions.add(Compass.EAST);
 		railSectionPositions.add(Compass.WEST);
 		
-		Rail rail = new Rail(session.getName(), square, railSectionPositions);
+		Rail rail = new Rail(session.getName(), square, railSectionPositions, true);
 		square.setPlaceableOnSquare(rail);
 	}
 }

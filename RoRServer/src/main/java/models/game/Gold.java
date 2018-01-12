@@ -17,4 +17,10 @@ public class Gold extends Resource{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void specificUpdate() {
+		// TODO Auto-generated method stub
+		
+	}
 }

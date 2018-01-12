@@ -73,10 +73,8 @@ public class GameSession extends RoRSession{
 	 * Fügt dem Ticker eine Collection von TickableGameObjects hinzu
 	 * @param tgos
 	 */
-	public void addAll(TickableGameObject...tgos ) {
-		for(TickableGameObject tgo : tgos) {
-			ticker.addObserver(tgo);
-		}
+	public void registerTickableGameObject(TickableGameObject tickableGameObject) {
+		ticker.addObserver(tickableGameObject);
 	}
 	
 	/**
