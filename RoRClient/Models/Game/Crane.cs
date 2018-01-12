@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Models.Game
 {
-    class Crane : InteractiveGameObject, IPlaceableOnRail
+    public class Crane : InteractiveGameObject, IPlaceableOnRail
     {
         private Compass alignment;
 

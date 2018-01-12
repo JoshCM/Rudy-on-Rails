@@ -325,7 +325,7 @@
     <Compile Include="Views\Popup\PopupCreator.cs" />
     <Page Include="Views\Editor\CraneEditorUserControl.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Views\Editor\MineEditorUserControl.xaml">
       <SubType>Designer</SubType>

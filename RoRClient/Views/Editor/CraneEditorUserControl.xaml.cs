@@ -18,7 +18,7 @@ namespace RoRClient.Views.Editor
     /// <summary>
     /// Interaktionslogik für CraneEditorUserControl.xaml
     /// </summary>
-    public partial class CraneEditorUserControl : UserControl
+    public partial class CraneEditorUserControl : CanvasUserControl
     {
         public CraneEditorUserControl()
         {

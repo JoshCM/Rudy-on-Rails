@@ -9,7 +9,7 @@ namespace RoRClient.ViewModels.Editor
 {
     class CraneEditorViewModel : CanvasEditorViewModel 
     {
-        public CraneEditorViewModel(Crane crane) : base(mine.id)
+        public CraneEditorViewModel(Crane crane) : base(crane.Id)
         {
             this.crane = crane;
             this.SquarePosX = crane.Square.PosX;

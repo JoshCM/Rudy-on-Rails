@@ -157,8 +157,8 @@ public class CreateTrainstationCommand extends CommandBase {
 		Square craneSquare = findCraneSquare(stock);
 		List<Rail> TrainstationRails = trainstation.getTrainstationRails();
 		Rail craneRail = findCraneRail(TrainstationRails, craneSquare);
-		
-		return new Crane(this.session.sessionName, craneSquare, trainstation.getId(),this.alignment, craneRail.getId());
+		Compass craneAlignment = getCraneAlignment();
+		return new Crane(this.session.sessionName, craneSquare, trainstation.getId(),craneAlignment, craneRail.getId());
 		
 		
 		
@@ -196,6 +196,23 @@ public class CreateTrainstationCommand extends CommandBase {
 			}
 		}	
 		return craneRail;
+	}
+	
+	public Compass getCraneAlignment() {
+		switch(this.alignment) {
+		case EAST:
+			return Compass.SOUTH;
+		case NORTH:
+			return Compass.WEST;
+		case SOUTH:
+			return Compass.EAST;
+		case WEST:
+			return Compass.NORTH;
+		default:
+			return Compass.EAST;
+		}
+			
+				
 	}
 	
 	
