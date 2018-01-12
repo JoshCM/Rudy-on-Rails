@@ -58,6 +58,7 @@ namespace RoRClient.Models.Session
 
         public void DeleteGameSession()
         {
+            topicReceiver.StopConnection();
             gameSession = null;
             NotifyPropertyChanged("GameSessionDeleted");
         }
