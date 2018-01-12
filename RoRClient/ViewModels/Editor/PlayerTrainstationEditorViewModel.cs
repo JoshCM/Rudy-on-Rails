@@ -13,18 +13,18 @@ namespace RoRClient.ViewModels.Editor
     /// <summary>
     /// Hält die zugehörige Trainstation und die Position (SquarePosX, SquarePosY) der Trainstation
     /// </summary>
-    public class TrainstationEditorViewModel : CanvasEditorViewModel
+    public class PlayerTrainstationEditorViewModel : CanvasEditorViewModel
     {
-        private Trainstation trainstation; 
+        private PlayerTrainstation trainstation; 
 
-        public TrainstationEditorViewModel(Trainstation trainstation) : base(trainstation.Id)
+        public PlayerTrainstationEditorViewModel(PlayerTrainstation trainstation) : base(trainstation.Id)
         {
             this.trainstation = trainstation;
             this.SquarePosX = trainstation.Square.PosX;
             this.SquarePosY = trainstation.Square.PosY;
         }
 
-        public Trainstation Trainstation
+        public PlayerTrainstation Trainstation
         {
             get
             {

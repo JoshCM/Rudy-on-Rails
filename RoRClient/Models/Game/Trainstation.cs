@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Models.Game
 {
-    /// <summary>
-    /// Klasse für Trainstations die einem Square zugeordnet sind
-    /// und eine Liste von Rails die zu der Trainstation gehören
-    /// </summary>
-    public class Trainstation : InteractiveGameObject, IPlaceableOnSquare
+    public abstract class Trainstation : InteractiveGameObject
     {
         private List<Rail> trainstationRails;
         private Compass alignment;
         private Stock stock;
+        private Square square;
+
         public Trainstation(Guid id, Square square, List<Rail> trainstationRails, Compass alignment, Stock stock) : base(square)
         {
             this.id = id;

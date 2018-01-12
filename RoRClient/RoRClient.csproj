@@ -171,9 +171,11 @@
     <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Mine.cs" />
     <Compile Include="Models\Game\Player.cs" />
+    <Compile Include="Models\Game\PublicTrainstation.cs" />
     <Compile Include="Models\Game\Resource.cs" />
     <Compile Include="Models\Game\Stock.cs" />
     <Compile Include="Models\Game\Signals.cs" />
+    <Compile Include="Models\Game\PlayerTrainstation.cs" />
     <Compile Include="Models\Game\Trainstation.cs" />
     <Compile Include="Models\Lobby\EditorInfo.cs" />
     <Compile Include="Models\Lobby\GameInfo.cs" />
@@ -205,7 +207,7 @@
     <Compile Include="ViewModels\Game\SquareGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
     <Compile Include="ViewModels\Game\RailGameViewModel.cs" />
-    <Compile Include="ViewModels\Editor\TrainstationEditorViewModel.cs" />
+    <Compile Include="ViewModels\Editor\PlayerTrainstationEditorViewModel.cs" />
     <Compile Include="ViewModels\Game\StockGameViewModel.cs" />
     <Compile Include="ViewModels\Helper\TypeHelper.cs" />
     <Compile Include="ViewModels\Game\TrainstationGameViewModel.cs" />

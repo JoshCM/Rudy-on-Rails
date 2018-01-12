@@ -9,16 +9,16 @@ namespace RoRClient.ViewModels.Game
 {
     class TrainstationGameViewModel : CanvasGameViewModel
     {
-        private Trainstation trainstation;
+        private PlayerTrainstation trainstation;
 
-        public TrainstationGameViewModel(Trainstation trainstation) : base(trainstation.Id)
+        public TrainstationGameViewModel(PlayerTrainstation trainstation) : base(trainstation.Id)
         {
             this.trainstation = trainstation;
             this.SquarePosX = trainstation.Square.PosX;
             this.SquarePosY = trainstation.Square.PosY;
         }
 
-        public Trainstation Trainstation
+        public PlayerTrainstation Trainstation
         {
             get
             {

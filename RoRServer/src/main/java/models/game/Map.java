@@ -161,7 +161,7 @@ public class Map extends ModelBase {
 	 * @param alignment
 	 * @return Zugehöriges Square einer Rail
 	 */
-	private Square getTrainstationInteractiveGameObjectSquare(InteractiveGameObject trainstationInteractiveGameObject, Trainstation newTrainstation,
+	private Square getTrainstationInteractiveGameObjectSquare(InteractiveGameObject trainstationInteractiveGameObject, PlayerTrainstation newTrainstation,
 			int oldPlaceableOnSquareXPos, int oldPlaceableOnSquareYPos) {
 		int trainstationRailXSpan = trainstationInteractiveGameObject.getXPos() - oldPlaceableOnSquareXPos;
 		int trainstationRailYSpan = trainstationInteractiveGameObject.getYPos() - oldPlaceableOnSquareYPos;
@@ -222,8 +222,8 @@ public class Map extends ModelBase {
 					railSection.changeSquare(newSquareOfPlaceable);
 				}
 				notifyMovedRail(oldSquareOfPlaceable, newSquareOfPlaceable);
-			} else if (placeableOnSquare instanceof Trainstation) {
-				Trainstation trainstation = (Trainstation) placeableOnSquare;
+			} else if (placeableOnSquare instanceof PlayerTrainstation) {
+				PlayerTrainstation trainstation = (PlayerTrainstation) placeableOnSquare;
 				// trainstationRails müssen auch die square-Änderung mitbekommen
 				for (Rail trainstationRail : trainstation.getTrainstationRails()) {
 					Square oldSquareOfRail = getSquare(trainstationRail.getXPos(), trainstationRail.getYPos());
@@ -250,7 +250,7 @@ public class Map extends ModelBase {
 		}
 	}
 
-	private void notifyMovedTrainstation(Square oldSquareOfStock, Square newSquareOfStock, Square oldSquareOfPlaceable, Square newSquareOfPlaceable, Trainstation trainstation) {
+	private void notifyMovedTrainstation(Square oldSquareOfStock, Square newSquareOfStock, Square oldSquareOfPlaceable, Square newSquareOfPlaceable, PlayerTrainstation trainstation) {
 		MessageInformation messageInformation = new MessageInformation("MoveTrainstation");
 		messageInformation.putValue("oldXPos", oldSquareOfPlaceable.getXIndex());
 		messageInformation.putValue("oldYPos", oldSquareOfPlaceable.getYIndex());

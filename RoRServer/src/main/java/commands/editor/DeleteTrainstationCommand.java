@@ -10,7 +10,7 @@ import models.game.Map;
 import models.game.Rail;
 import models.game.Square;
 import models.game.Stock;
-import models.game.Trainstation;
+import models.game.PlayerTrainstation;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
@@ -37,7 +37,7 @@ public class DeleteTrainstationCommand extends CommandBase{
 		Map map = editorSession.getMap();
 		
 		// remove trainstation
-		Trainstation trainstation = (Trainstation) map.getPlaceableOnSquareById(trainstationId);
+		PlayerTrainstation trainstation = (PlayerTrainstation) map.getPlaceableOnSquareById(trainstationId);
 		Square trainstationSquare = map.getSquare(trainstation.getXPos(), trainstation.getYPos());
 		trainstationSquare.deletePlaceable();
 		

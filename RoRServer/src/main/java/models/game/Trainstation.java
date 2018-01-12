@@ -16,25 +16,22 @@ import helper.Geometry;
 import helper.Geometry.Coordinate;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
-import models.session.RoRSession;
 
-public class Trainstation extends InteractiveGameObject implements PlaceableOnSquare {
+public abstract class Trainstation extends InteractiveGameObject implements PlaceableOnSquare {
 	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
 
 	public static final int RAIL_COUNT_RIGHT = 8;
 	public static final int RAIL_COUNT_LEFT = 6;
-	private List<UUID> trainstationRailIds;
-	private Stock stock;
-	private Compass alignment;
+	protected List<UUID> trainstationRailIds;
+	protected Stock stock;
+	protected Compass alignment;
 
-	private final int CLOCKWISE = 90;
-	private final int COUNTER_CLOCKWISE = -90;
-	private Square spawnPointForLoco;
+	protected final int CLOCKWISE = 90;
+	protected final int COUNTER_CLOCKWISE = -90;
 
 	transient EditorSession editorSession;
 
-	public Trainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment,
-			Stock stock) {
+	public Trainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment, Stock stock) {
 		super(sessionName, square, id);
 		this.stock = stock;
 		this.trainstationRailIds = trainstationRailIds;
@@ -44,27 +41,55 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	}
 
 	/**
-	 * Gibt die Ausrichtung der Trainstation zurÃ¼ck
+	 * Gibt die Ausrichtung der Trainstation zurück
 	 * @return Ausrichtung als Compass
 	 */
 	public Compass getAlignment() {
 		return alignment;
 	}
-
+	
 	/**
-	 * Setzt den SpanPoint fÃ¼r die Loco
-	 * @param square
+	 * Gibt alle IDs der Rails der Trainstation zurück
+	 * @return IDs der trainstationRails
 	 */
-	public void setSpawnPointforLoco(Square square) {
-		spawnPointForLoco = square;
+	public List<UUID> getTrainstationRailIds() {
+		return trainstationRailIds;
+	}
+	
+	/**
+	 * Gibt den Stock als Object zurück
+	 * @return Den Stock
+	 */
+	public Stock getStock() {
+		return this.stock;
+	}
+
+	public void setStock(Stock newStock) {
+		this.stock = newStock;
+	}
+	
+	/**
+	 * Gibt die Liste von Rails der Trainstation zurück
+	 * @return trainstationRails
+	 */
+	public List<Rail> getTrainstationRails() {
+		List<Rail> trainstationRails = new ArrayList<Rail>();
+		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getName());
+		for (UUID railId : trainstationRailIds) {
+			trainstationRails.add((Rail) editorSession.getMap().getPlaceableOnSquareById(railId));
+		}
+		return trainstationRails;
 	}
 
 	/**
-	 * Gibt den SpawnPoint fÃ¼r die Loco zurÃ¼ck
-	 * @return Square als Startposition
+	 * Gibt die Liste von Rails der Trainstation umgedreht zurück
+	 * @return
 	 */
-	public Square getSpawnPointforLoco() {
-		return spawnPointForLoco;
+	public List<Rail> getReverseTrainstationRails() {
+		List<Rail> trainstationRails = getTrainstationRails();
+		List<Rail> shallowCopy = trainstationRails.subList(0, trainstationRails.size());
+		Collections.reverse(shallowCopy);
+		return shallowCopy;
 	}
 
 	private void notifyCreatedTrainstation() {
@@ -85,52 +110,6 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		notifyChange(messageInfo);
 	}
 
-	/**
-	 * Gibt alle IDs der Rails der Trainstation zurÃ¼ck
-	 * @return IDs der trainstationRails
-	 */
-	public List<UUID> getTrainstationRailIds() {
-		return trainstationRailIds;
-	}
-
-	/**
-	 * Gibt den Stock als Object zurÃ¼ck
-	 * @return Den Stock
-	 */
-	public Stock getStock() {
-		return this.stock;
-	}
-
-	public void setStock(Stock newStock) {
-		this.stock = newStock;
-	}
-
-	/**
-	 * Gibt die Liste von Rails der Trainstation zurÃ¼ck
-	 * 
-	 * @return
-	 */
-	public List<Rail> getTrainstationRails() {
-		List<Rail> trainstationRails = new ArrayList<Rail>();
-		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getName());
-		for (UUID railId : trainstationRailIds) {
-			trainstationRails.add((Rail) editorSession.getMap().getPlaceableOnSquareById(railId));
-		}
-		return trainstationRails;
-	}
-
-	/**
-	 * Gibt die Liste von Rails der Trainstation umgedreht zurÃ¼ck
-	 * 
-	 * @return
-	 */
-	public List<Rail> getReverseTrainstationRails() {
-		List<Rail> trainstationRails = getTrainstationRails();
-		List<Rail> shallowCopy = trainstationRails.subList(0, trainstationRails.size());
-		Collections.reverse(shallowCopy);
-		return shallowCopy;
-	}
-
 	private void notifyTrainstationAlignmentUpdated() {
 		MessageInformation messageInformation = new MessageInformation("UpdateAlignmentOfTrainstation");
 		messageInformation.putValue("id", this.getId());
@@ -139,7 +118,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	}
 
 	/**
-	 * Rotiert die zugehÃ¶rigen Rails einer Trainstation
+	 * Rotiert die zugehörigen Rails einer Trainstation
 	 * 
 	 * @param trainstationRail
 	 *            Ein Rail der Trainstation
@@ -177,14 +156,14 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 			temptrainstationGameObjectMap.put(newCoordinate, trainstationGameObject);
 
-			// lÃ¶sche das Rail aus dem alten Square
+			// lösche das Rail aus dem alten Square
 			oldSquare.deletePlaceable();
 		}
 
 		for (Coordinate coordinate : temptrainstationGameObjectMap.keySet()) {
 
 			InteractiveGameObject tmpTrainstationGameObject = temptrainstationGameObjectMap.get(coordinate);
-			// bekomme sessionname fÃ¼r neue Rail
+			// bekomme sessionname für neue Rail
 			String sessionName = editorSession.getName();
 			// bekomme newSquare
 			Square newSquare = (Square) editorSession.getMap().getSquare(coordinate.x, coordinate.y);
@@ -203,7 +182,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 				Rail newRail = new Rail(sessionName, newSquare, railSectionsCompass, false,
 						tmpRail.getTrainstationId(), tmpRail.getId());
 				newSquare.setPlaceableOnSquare(newRail);
-			}else if(tmpTrainstationGameObject instanceof Stock) {
+			} else if(tmpTrainstationGameObject instanceof Stock) {
 				Stock tmpStock = (Stock)tmpTrainstationGameObject;
 
 				// erzeuge neuen Stock und setze intern das Square.PlacableOnSquare
@@ -237,7 +216,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	}
 
 	/**
-	 * Rotiert die Trainstation und alle zugehÃ¶rigen Rails
+	 * Rotiert die Trainstation und alle zugehörigen Rails
 	 * 
 	 * @param right
 	 *            Uhrzeigersinn/Gegen Uhrzeigersinn
@@ -310,73 +289,6 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 				return false;
 
 		return true;
-	}
-
-	@Override
-	public Trainstation loadFromMap(Square square, RoRSession session) {
-		Trainstation trainStation = (Trainstation) square.getPlaceableOnSquare();
-		Trainstation newTrainStation = new Trainstation(session.getName(), square,
-				trainStation.getTrainstationRailIds(), trainStation.getId(), trainStation.alignment,
-				trainStation.getStock());
-
-		// der sessionName muss neu gesetzt werden, damit der Observer Ã„nderungen dieses
-		// Objekts mitbekommen kann
-		newTrainStation.setName(session.getName());
-
-		log.info("TrainStation erstellt: " + newTrainStation.toString());
-		return newTrainStation;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + CLOCKWISE;
-		result = prime * result + COUNTER_CLOCKWISE;
-		result = prime * result + ((alignment == null) ? 0 : alignment.hashCode());
-		result = prime * result + ((spawnPointForLoco == null) ? 0 : spawnPointForLoco.hashCode());
-		result = prime * result + ((stock == null) ? 0 : stock.hashCode());
-		result = prime * result + ((trainstationRailIds == null) ? 0 : trainstationRailIds.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Trainstation other = (Trainstation) obj;
-		if (CLOCKWISE != other.CLOCKWISE)
-			return false;
-		if (COUNTER_CLOCKWISE != other.COUNTER_CLOCKWISE)
-			return false;
-		if (alignment != other.alignment)
-			return false;
-		if (spawnPointForLoco == null) {
-			if (other.spawnPointForLoco != null)
-				return false;
-		} else if (!spawnPointForLoco.equals(other.spawnPointForLoco))
-			return false;
-		if (stock == null) {
-			if (other.stock != null)
-				return false;
-		} else if (!stock.equals(other.stock))
-			return false;
-		if (trainstationRailIds == null) {
-			if (other.trainstationRailIds != null)
-				return false;
-		} else if (!trainstationRailIds.equals(other.trainstationRailIds))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Trainstation [trainstationRailIds=" + trainstationRailIds + ", alignment=" + alignment
-				+ ", spawnPointForLoco=" + spawnPointForLoco + "]";
 	}
 
 	@Override

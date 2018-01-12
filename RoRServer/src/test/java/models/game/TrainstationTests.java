@@ -56,8 +56,8 @@ public class TrainstationTests {
 		initValidTrainstationCommand(x, y);
 		Square square = session.getMap().getSquare(x, y);
 		Assert.assertNotNull(square.getPlaceableOnSquare());
-		Assert.assertEquals(Trainstation.class, square.getPlaceableOnSquare().getClass());
-		List<UUID> railIds = ((Trainstation) square.getPlaceableOnSquare()).getTrainstationRailIds();
+		Assert.assertEquals(PlayerTrainstation.class, square.getPlaceableOnSquare().getClass());
+		List<UUID> railIds = ((PlayerTrainstation) square.getPlaceableOnSquare()).getTrainstationRailIds();
 		Assert.assertEquals(14, railIds.size());
 	}
 
@@ -182,7 +182,7 @@ public class TrainstationTests {
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
-		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, Compass.EAST));
+		PlayerTrainstation trainstation = new PlayerTrainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, Compass.EAST));
 		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		
 		Assert.assertTrue(trainstation.validateRotation(true));
@@ -213,7 +213,7 @@ public class TrainstationTests {
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
-		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, Compass.EAST));
+		PlayerTrainstation trainstation = new PlayerTrainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, Compass.EAST));
 		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		
 		Assert.assertTrue(trainstation.validateRotation(false));
@@ -251,7 +251,7 @@ public class TrainstationTests {
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
-		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, Compass.EAST));
+		PlayerTrainstation trainstation = new PlayerTrainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, Compass.EAST));
 		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		
 		trainstation.rotate(true);
@@ -307,7 +307,7 @@ public class TrainstationTests {
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
-		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, Compass.EAST));
+		PlayerTrainstation trainstation = new PlayerTrainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, Compass.EAST));
 		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		
 		trainstation.rotate(false);
@@ -361,7 +361,7 @@ public class TrainstationTests {
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
-		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(trainstationX, trainstationY), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(0, 3), trainstationId, stockId, Compass.EAST));
+		PlayerTrainstation trainstation = new PlayerTrainstation(session.getName(), session.getMap().getSquare(trainstationX, trainstationY), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(0, 3), trainstationId, stockId, Compass.EAST));
 		session.getMap().getSquare(trainstationX, trainstationY).setPlaceableOnSquare(trainstation);
 		
 		MessageInformation messageInformation = new MessageInformation();
@@ -413,7 +413,7 @@ public class TrainstationTests {
 			trainstationRailIdStrings.add(trainstationRail.getId().toString());
 		}
 
-		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(trainstationX, trainstationY), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(0, 0), trainstationId, stockId, Compass.EAST));
+		PlayerTrainstation trainstation = new PlayerTrainstation(session.getName(), session.getMap().getSquare(trainstationX, trainstationY), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(0, 0), trainstationId, stockId, Compass.EAST));
 		session.getMap().getSquare(trainstationX, trainstationY).setPlaceableOnSquare(trainstation);
 		
 		MessageInformation messageInformation = new MessageInformation();

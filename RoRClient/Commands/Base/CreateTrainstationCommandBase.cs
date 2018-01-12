@@ -50,7 +50,7 @@ namespace RoRClient.Commands.Base
         {
             Square square = session.Map.GetSquare(xPos, yPos);
             Stock stock = (Stock)session.Map.GetPlaceableById(stockId);
-            Trainstation trainstation = new Trainstation(trainstationId, square, trainstationRails, alignment, stock);
+            PlayerTrainstation trainstation = new PlayerTrainstation(trainstationId, square, trainstationRails, alignment, stock);
             square.PlaceableOnSquare = trainstation;
         }
     }

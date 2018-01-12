@@ -33,7 +33,7 @@
                                 <ve:RailEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
-                        <DataTemplate DataType="{x:Type vm:TrainstationEditorViewModel}">
+                        <DataTemplate DataType="{x:Type vm:PlayerTrainstationEditorViewModel}">
                             <Canvas>
                                 <ve:TrainstationEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>

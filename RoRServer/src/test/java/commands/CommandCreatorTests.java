@@ -22,7 +22,7 @@ import communication.MessageInformation;
 import models.game.Compass;
 import models.game.Rail;
 import models.game.Square;
-import models.game.Trainstation;
+import models.game.PlayerTrainstation;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
 import models.session.RoRSession;

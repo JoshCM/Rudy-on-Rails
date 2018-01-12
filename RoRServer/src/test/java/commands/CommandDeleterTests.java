@@ -16,7 +16,7 @@ import communication.MessageInformation;
 import models.game.Compass;
 import models.game.Rail;
 import models.game.Stock;
-import models.game.Trainstation;
+import models.game.PlayerTrainstation;
 import models.session.EditorSessionManager;
 import models.session.RoRSession;
 
@@ -52,7 +52,7 @@ public class CommandDeleterTests {
 		messageInformation.putValue("stockId", stockId);
 		messageInformation.putValue("trainstationRailIds", trainstationRailIdStrings);
 		
-		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, stockId, Compass.EAST));
+		PlayerTrainstation trainstation = new PlayerTrainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, stockId, Compass.EAST));
 		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		DeleteTrainstationCommand command = new DeleteTrainstationCommand(session, messageInformation);
 

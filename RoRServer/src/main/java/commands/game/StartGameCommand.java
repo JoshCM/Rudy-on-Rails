@@ -13,7 +13,7 @@ import models.game.Player;
 import models.game.Rail;
 import models.game.Square;
 import models.game.Stock;
-import models.game.Trainstation;
+import models.game.PlayerTrainstation;
 import models.session.GameSession;
 import models.session.RoRSession;
 import persistent.MapManager;
@@ -58,7 +58,7 @@ public class StartGameCommand extends CommandBase {
 						railSquaresToCreate.add(square);
 					if (square.getPlaceableOnSquare() instanceof Stock)
 						stockSquaresToCreate.add(square);
-					if (square.getPlaceableOnSquare() instanceof Trainstation)
+					if (square.getPlaceableOnSquare() instanceof PlayerTrainstation)
 						trainstationSquaresToCreate.add(square);
 				}
 			}

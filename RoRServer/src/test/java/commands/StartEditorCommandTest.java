@@ -16,7 +16,7 @@ import junit.framework.Assert;
 import models.game.Rail;
 import models.game.Square;
 import models.game.Stock;
-import models.game.Trainstation;
+import models.game.PlayerTrainstation;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
 import models.session.GameSession;
@@ -125,12 +125,12 @@ public class StartEditorCommandTest {
 		uuids.add(UUID.randomUUID());
 
 		UUID trainstationId = UUID.randomUUID();
-		Trainstation loadedTrainstation = new Trainstation(editorSession.getName(), square, uuids, trainstationId,
+		PlayerTrainstation loadedTrainstation = new PlayerTrainstation(editorSession.getName(), square, uuids, trainstationId,
 				Compass.NORTH, new Stock(editorSession.getName(), editorSession.getMap().getSquare(1, 0),
 						trainstationId, Compass.NORTH));
 		square.setPlaceableOnSquare(loadedTrainstation);
 
-		Trainstation createdTrainstation = loadedTrainstation.loadFromMap(square, editorSession);
+		PlayerTrainstation createdTrainstation = loadedTrainstation.loadFromMap(square, editorSession);
 
 		assertEquals(loadedTrainstation, createdTrainstation);
 	}
