@@ -34,7 +34,7 @@ public class Loco extends InteractiveGameObject {
 		this.setCarts(new ArrayList<Cart>());
 		// TODO: Wenn Zug Richtung implementiert ist, muss der Wagon so initialisiert
 		// werden, dass er ein Feld hinter der Lok steht
-		this.square = square;// Das hier muss noch raus? Sollte man nicht an das InteractivGameoObject das Square packen?
+		//this.square = square;// Das hier muss noch raus? Sollte man nicht an das InteractivGameoObject das Square packen?
 		this.rail = (Rail) square.getPlaceableOnSquare();
 		this.map = GameSessionManager.getInstance().getGameSessionByName(sessionName).getMap();
 		this.drivingDirection = rail.getFirstSection().getNode1();
@@ -81,78 +81,66 @@ public class Loco extends InteractiveGameObject {
 	 * Ueberfuehrt die Lok in das naechste moegliche Feld in Fahrtrichtung
 	 */
 	public void drive() {
-		Rail nextRail = getNextRail();
+		Rail nextRail = getNextRail(this.drivingDirection, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 		moveCarts(this.rail,this.drivingDirection);
-		this.drivingDirection = nextRail.getExitDirection(getDirectionNegation());
+		this.drivingDirection = nextRail.getExitDirection(getDirectionNegation(this.drivingDirection));
 		this.rail = nextRail;
+		/*
 		this.setXPos(this.rail.getXPos());
 		this.setYPos(this.rail.getYPos());
+		*/
+		this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 		NotifyLocoPositionChanged();
 	}
 
 
-	
-	/**
-	 * lok und ihre Wagons fahren "rueckwaerts" d.h. ein Feld zurueck
-	 */
-	
-	
 	public void reversedDrive() {
-		
+
 		Cart actCart = null;
-		Rail nextCartRail;				
-		Rail tempCartRail = null;
-		for(int i = carts.size()-1 ; i>=0 ; i--) {
-			
+		for (int i = carts.size() - 1; i >= 0; i--) {
 			actCart = carts.get(i);
-			System.out.println("ReversedDrive: "+actCart.getDrivingDirection());
-			tempCartRail = actCart.getRail();
-			nextCartRail = getNextRail(actCart.getDrivingDirection(),this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
-			actCart.updateSquare(this.map.getSquare(nextCartRail.getXPos(),nextCartRail.getYPos()));
-			actCart.setDrivingDirection(nextCartRail.getExitDirection(getDirectionNegation(actCart.getDrivingDirection())));
-			actCart.setRail(nextCartRail);
+			Rail newRail = getNextRail(actCart.getDrivingDirection(),this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
+			Compass newDrivingDirection = newRail.getExitDirection(getDirectionNegation(actCart.getDrivingDirection()));
+
+			actCart.setDrivingDirection(newDrivingDirection);
+			actCart.setRail(newRail);
+			actCart.updateSquare(this.map.getSquare(newRail.getXPos(), newRail.getYPos()));
 			actCart.SendUpdateCartMessage();
-			System.out.println("ReversedDrive: "+actCart.getDrivingDirection());
-			System.out.println("");
 		}
-		
-		this.drivingDirection = this.rail.getExitDirection(getDirectionNegation());
-		this.rail = getNextRail();
-		this.setXPos(this.rail.getXPos());
-		this.setYPos(this.rail.getYPos());
+
+		this.rail = getNextRail(this.drivingDirection, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
+		this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(this.drivingDirection));
+		this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 		NotifyLocoPositionChanged();
+
 	}
+	
 	public void initialReversedDrive() {
 		
-		Cart actCart;
-		Compass newCartDirection;
-		Rail nextCartRail;				
-		Square newSquare;
-
-		for(int i = carts.size()-1 ; i>=0 ; i--) {
+		Cart actCart = null;
+		for(int i =  carts.size()-1; i >= 0; i--) {
 			actCart = carts.get(i);
-			System.out.println("InitialDrive (old): "+actCart.getDrivingDirection());
-			newCartDirection = actCart.getRail().getExitDirection(actCart.getDrivingDirection());
-			System.out.println("InitialDrive (new): "+newCartDirection);
-			nextCartRail = getNextRail(newCartDirection,this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
-			newSquare = this.map.getSquare(nextCartRail.getXPos(),nextCartRail.getYPos());
+			Compass tempDirection = actCart.getRail().getExitDirection(actCart.getDrivingDirection());
+			Rail newRail = getNextRail(tempDirection,this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
+			Compass newDrivingDirection = newRail.getExitDirection(getDirectionNegation(tempDirection));
 			
-			actCart.updateSquare(newSquare);
-			actCart.setRail(nextCartRail);
-			actCart.setDrivingDirection(newCartDirection);
+			actCart.setDrivingDirection(newDrivingDirection);
+			actCart.setRail(newRail);
+			actCart.updateSquare(this.map.getSquare(newRail.getXPos(), newRail.getYPos()));
 			actCart.SendUpdateCartMessage();
-			System.out.println("InitialDrive: "+actCart.getDrivingDirection());
-			System.out.println("");
+			
 		}
-				
-		this.drivingDirection = this.rail.getExitDirection(this.drivingDirection);
-		this.rail = getNextRail();
-		this.setXPos(this.rail.getXPos());
-		this.setYPos(this.rail.getYPos());
+		
+		
+		Compass tempDirection = this.rail.getExitDirection(this.drivingDirection);
+		this.rail = getNextRail(tempDirection, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
+		this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(tempDirection));
+		
+		this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
+		
 		NotifyLocoPositionChanged();
-	}
-	
 
+	}
 	
 	/**
 	 * f�gt der Lok initial ein Cart hinzu auf das vorige Feld 
@@ -160,7 +148,7 @@ public class Loco extends InteractiveGameObject {
 	public void addInitialCart() {
 		if(carts.isEmpty()){
 			Compass back = this.rail.getExitDirection(this.drivingDirection);
-			Rail prevRail = getNextRail(back);
+			Rail prevRail = getNextRail(back, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 			Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
 			Cart cart = new Cart(this.sessionName,cartSquare,getDirectionNegation(back),playerId,prevRail);
 			carts.add(cart);
@@ -193,52 +181,6 @@ public class Loco extends InteractiveGameObject {
 		}
 	}
 
-	/**
-	 * Gibt die nächste Rail in Fahrtrichtung zurück
-	 * 
-	 * @return nextRail
-	 */
-	public Rail getNextRail() {
-		switch (this.drivingDirection) {
-		case NORTH:
-			this.square = this.map.getSquare(this.square.getXIndex(), this.square.getYIndex() - 1);
-			return (Rail) this.square.getPlaceableOnSquare();
-		case EAST:
-			this.square = this.map.getSquare(this.square.getXIndex() + 1, this.square.getYIndex());
-			return (Rail) this.square.getPlaceableOnSquare();
-		case SOUTH:
-			this.square = this.map.getSquare(this.square.getXIndex(), this.square.getYIndex() + 1);
-			return (Rail) this.square.getPlaceableOnSquare();
-		case WEST:
-			this.square = this.map.getSquare(this.square.getXIndex() - 1, this.square.getYIndex());
-			return (Rail) this.square.getPlaceableOnSquare();
-		}
-		return null;
-	}
-
-	/**
-	 * gibt das Rail zur�ck, dass in angegebener Richtung an das Feld, auf der die Lok steht, angekoppelt ist
-	 * @param compass Himmelsrichtung in die man nach dem Feld schauen soll
-	 * @return die Rail, die in angegebener Richtung steht
-	 */
-	public Rail getNextRail(Compass compass) {
-		Square square;
-		switch (compass) {
-		case NORTH:
-			square = this.map.getSquare(this.square.getXIndex(), this.square.getYIndex() - 1);
-			return (Rail) square.getPlaceableOnSquare();
-		case EAST:
-			square = this.map.getSquare(this.square.getXIndex() + 1, this.square.getYIndex());
-			return (Rail) square.getPlaceableOnSquare();
-		case SOUTH:
-			square = this.map.getSquare(this.square.getXIndex(), this.square.getYIndex() + 1);
-			return (Rail) square.getPlaceableOnSquare();
-		case WEST:
-			square = this.map.getSquare(this.square.getXIndex() - 1, this.square.getYIndex());
-			return (Rail) square.getPlaceableOnSquare();
-		}
-		return null;
-	}
 	
 	/**
 	 * gibt das Rail zur�ck, dass in angegebener Richtung an das Feld, das mitgegeben wird, angekoppelt ist
@@ -260,27 +202,6 @@ public class Loco extends InteractiveGameObject {
 		case WEST:
 			retSquare = this.map.getSquare(square.getXIndex() - 1, square.getYIndex());
 			return (Rail) retSquare.getPlaceableOnSquare();
-		}
-		return null;
-	}
-	
-	/**
-	 * Negiert die aktuelle Fahrtrichtung Ist benötigt um einen U-Turn zu
-	 * verhindern.
-	 * 
-	 * @return negated Direction
-	 */
-
-	public Compass getDirectionNegation() {
-		switch (this.drivingDirection) {
-		case NORTH:
-			return Compass.SOUTH;
-		case EAST:
-			return Compass.WEST;
-		case SOUTH:
-			return Compass.NORTH;
-		case WEST:
-			return Compass.EAST;
 		}
 		return null;
 	}
