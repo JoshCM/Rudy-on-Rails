@@ -200,7 +200,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 				}
 				
 				// erzeuge neue Rail und setze intern das Square.PlacableOnSquare
-				Rail newRail = new Rail(sessionName, newSquare, railSectionsCompass,
+				Rail newRail = new Rail(sessionName, newSquare, railSectionsCompass, false,
 						tmpRail.getTrainstationId(), tmpRail.getId());
 				newSquare.setPlaceableOnSquare(newRail);
 			}else if(tmpTrainstationGameObject instanceof Stock) {

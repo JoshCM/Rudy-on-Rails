@@ -57,6 +57,9 @@ namespace RoRClient.Models.Game
 
             this.square = square;
             this.trainstationId = trainstationId;
+
+            // hier, weil base und this hintereinander nicht so klappen will
+            Signals = new Signals(Guid.Empty);
         }
 
         public void AddRailSection(RailSection railSection)

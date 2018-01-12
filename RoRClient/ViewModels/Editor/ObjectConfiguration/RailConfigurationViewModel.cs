@@ -92,15 +92,21 @@ namespace RoRClient.ViewModels.Editor.ObjectConfiguration
         {
             if (e.PropertyName == "SelectedEditorCanvasViewModel")
             {
-                if(mapViewModel.SelectedEditorCanvasViewModel != null)
+                CanvasEditorViewModel canvasEditorViewModel = mapViewModel.SelectedEditorCanvasViewModel;
+                if (canvasEditorViewModel != null)
                 {
-                    if (mapViewModel.SelectedEditorCanvasViewModel.GetType() == typeof(RailEditorViewModel))
+                    if (canvasEditorViewModel.GetType() == typeof(RailEditorViewModel))
                     {
-                        RailEditorViewModel railEditorViewModel = (RailEditorViewModel)mapViewModel.SelectedEditorCanvasViewModel;
-                        Rail = railEditorViewModel.Rail;
-                        SelectedAutoSwitchIntervalInSeconds = rail.Signals.AutoSwitchIntervalInSeconds;
-                        SelectedPenalty = rail.Signals.Penalty;
-                        SelectedSwitchCost = rail.Signals.SwitchCost;
+                        RailEditorViewModel railEditorViewModel = (RailEditorViewModel)canvasEditorViewModel;
+
+                        // wenn die TrainstationId leer ist
+                        if (railEditorViewModel.Rail.TrainstationId.Equals(Guid.Empty))
+                        {
+                            Rail = railEditorViewModel.Rail;
+                            SelectedAutoSwitchIntervalInSeconds = rail.Signals.AutoSwitchIntervalInSeconds;
+                            SelectedPenalty = rail.Signals.Penalty;
+                            SelectedSwitchCost = rail.Signals.SwitchCost;
+                        }
                     }
                 }
             }
