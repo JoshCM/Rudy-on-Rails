@@ -81,8 +81,8 @@ public class StartEditorCommand extends CommandBase {
 			Rail rail = (Rail)railSquare.getPlaceableOnSquare();
 			Rail newRail = (Rail)railSquare.getPlaceableOnSquare().loadFromMap(railSquare, session);
 			// liegt auf einer Rail eine Mine, muss diese darauf erzeugt werden
-			if (rail.getPlaceableOnRail() instanceof Mine) {
-				Mine mine = (Mine)rail.getPlaceableOnRail();
+			if (rail.getPlaceableOnrail() instanceof Mine) {
+				Mine mine = (Mine)rail.getPlaceableOnrail();
 				Mine newMine = (Mine)mine.loadFromMap(railSquare, session);
 				newRail.setPlaceableOnRail(newMine);
 			}

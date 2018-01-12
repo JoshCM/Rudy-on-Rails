@@ -115,8 +115,8 @@ public class Map extends ModelBase {
 				if (placeableOnSquare != null) {
 					if (placeableOnSquare instanceof Rail) {
 						Rail rail = (Rail)placeableOnSquare;
-						if (rail.getPlaceableOnRail() instanceof Mine) {
-							Mine mine = (Mine)rail.getPlaceableOnRail();
+						if (rail.getPlaceableOnrail() instanceof Mine) {
+							Mine mine = (Mine)rail.getPlaceableOnrail();
 							if (mine.getId().equals(id)) {
 								return mine;
 							}

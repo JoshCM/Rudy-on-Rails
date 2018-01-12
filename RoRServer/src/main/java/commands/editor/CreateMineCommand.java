@@ -38,7 +38,7 @@ public class CreateMineCommand extends CommandBase {
 			// Das Rail muss eine Gerade sein
 			if (rail.railIsStraight()) {
 				// und es darf noch nichts auf dem Rail liegen
-				if (rail.getPlaceableOnRail() == null) {
+				if (rail.getPlaceableOnrail() == null) {
 					Compass alignment = rail.getAlignment();
 					Mine mine = new Mine(editorSession.getName(), square, alignment, rail.getId());
 					rail.setPlaceableOnRail(mine);

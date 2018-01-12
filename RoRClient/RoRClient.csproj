@@ -129,7 +129,6 @@
     <Compile Include="Commands\Editor\Other\ChangeMapNameCommand.cs" />
     <Compile Include="Commands\Editor\Other\StartCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateAlignmentOfMineCommand.cs" />
-    <Compile Include="Commands\Editor\Update\UpdateAlignmentOfTrainstation.cs" />
     <Compile Include="Commands\Editor\Update\UpdateConfigOfSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateAlignmentOfStockCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateAlignmentOfTrainstationCommand.cs" />
