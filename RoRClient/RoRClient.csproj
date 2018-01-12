@@ -533,6 +533,7 @@
     <Resource Include="Resources\Images\mine.png" />
     <Resource Include="Resources\Images\Tools\mine.png" />
     <Resource Include="Resources\Images\ghosttrain.png" />
+    <Resource Include="Resources\Images\gras.jpg" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
