@@ -5,9 +5,9 @@ namespace RoRClient.Views.Editor
     /// <summary>
     /// Interaktionslogik für AttributeSelectionUserControl.xaml
     /// </summary>
-    public partial class AttributeSelectionUserControl : UserControl
+    public partial class RailConfigurationUserControl : UserControl
     {
-        public AttributeSelectionUserControl()
+        public RailConfigurationUserControl()
         {
             InitializeComponent();
         }

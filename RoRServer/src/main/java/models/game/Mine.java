@@ -132,6 +132,12 @@ public class Mine extends InteractiveGameObject implements PlaceableOnRail {
 			return false;
 		return true;
 	}
+
+	@Override
+	public void specificUpdate() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	
