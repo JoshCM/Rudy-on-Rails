@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RoRClient.Views.Lobby"
              mc:Ignorable="d" 
-             d:DesignHeight="900" d:DesignWidth="1600" Background="BlanchedAlmond">
+             d:DesignHeight="900" d:DesignWidth="1600">
     <DockPanel>
         <DockPanel.Background>
-            <ImageBrush ImageSource="/RoRClient;component/Resources/Images/start_background.png" />
+            <ImageBrush ImageSource="pack://application:,,,/Resources/Images/start_background.png"/>
         </DockPanel.Background>
 
         <Border DockPanel.Dock="Top" Background="#FF510404" Height="120" Width="350" Margin="0,120,0,0">
@@ -17,7 +17,6 @@
 
         <Label DockPanel.Dock="Top" Content="Bau-Modus" Foreground="#FF510404" FontFamily="Birch Std" FontSize="45" Margin="250,0,0,0" />
         <Border DockPanel.Dock="Top" BorderBrush="#FF510404" BorderThickness="2" Height="2" Margin="250,0,250,0" />
-
 
 
         <StackPanel DockPanel.Dock="Left" Margin="250,40,0,250" >
@@ -40,9 +39,9 @@
 
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Height="200" Margin="-400,0,250,0">
             <Button x:Name="startEditor" Command="{Binding StartEditorCommand}"
-			        Content="Editor starten" IsEnabled="{Binding IsHost}" FontFamily="Source Sans Pro" Height="55" Width="200"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Top" Margin="0,30,10,0"/>
+			        Content="Editor starten" IsEnabled="{Binding IsHost}" FontFamily="Source Sans Pro" Height="55" Width="200"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" VerticalAlignment="Top" Margin="0,30,10,0"/>
             <Button x:Name="refreshEditorInfosButton" Command="{Binding RefreshEditorInfosCommand}"
-			        Content="Aktualisieren" FontFamily="Source Sans Pro" Height="55" Width="200"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,30,0,0"/>
+			        Content="Aktualisieren" FontFamily="Source Sans Pro" Height="55" Width="200"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" VerticalAlignment="Top" Margin="10,30,0,0"/>
         </StackPanel>
         <Border DockPanel.Dock="Bottom" BorderBrush="#FF510404" BorderThickness="2" Height="2" Margin="-400,0,250,0" />
 

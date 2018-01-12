@@ -6,10 +6,10 @@
              xmlns:local="clr-namespace:RoRClient.Views"
              xmlns:vm ="clr-namespace:RoRClient.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="900" d:DesignWidth="1600" Background="BlanchedAlmond">
+             d:DesignHeight="900" d:DesignWidth="1600">
     <DockPanel>
         <DockPanel.Background>
-            <ImageBrush ImageSource="/RoRClient;component/Resources/Images/start_background.png" />
+            <ImageBrush ImageSource="pack://application:,,,/Resources/Images/start_background.png" />
         </DockPanel.Background>
 
         <Border DockPanel.Dock="Top" Background="#FF510404" Height="120" Width="350" Margin="0,120,0,0">
