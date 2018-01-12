@@ -48,7 +48,17 @@
                         </DataTemplate>
                     </ItemsControl.Resources>
                 </ItemsControl>
-                
+
+                <ItemsControl ItemsSource="{Binding GhostLocoCollection}">
+                    <ItemsControl.Resources>
+                        <DataTemplate DataType="{x:Type game:LocoGameViewModel}">
+                            <Canvas>
+                                <vg:GhostLocoGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}" RotationAngle="{Binding Loco.RealDrivingDirection, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}"/>
+                            </Canvas>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+                </ItemsControl>
+
                 <ItemsControl ItemsSource="{Binding LocoCollection}">
                     <ItemsControl.Resources>
                         <DataTemplate DataType="{x:Type game:LocoGameViewModel}">

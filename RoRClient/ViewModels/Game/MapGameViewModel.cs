@@ -83,7 +83,14 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
-
+        private ObservableCollection<CanvasGameViewModel> ghostLocoCollection = new ObservableCollection<CanvasGameViewModel>();
+        public ObservableCollection<CanvasGameViewModel> GhostLocoCollection
+        {
+            get
+            {
+                return ghostLocoCollection;
+            }
+        }
 
         private int mapWidth;
         public int MapWidth
@@ -187,7 +194,6 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
-
         private void OnLocoAddedInGameSession(object sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == "Locos")
@@ -197,8 +203,15 @@ namespace RoRClient.ViewModels.Game
                 LocoGameViewModel locoGameViewModel = new LocoGameViewModel(loco);
                 taskFactory.StartNew(() => locoCollection.Add(locoGameViewModel));
             }
+            if (e.PropertyName == "GhostLocos")
+            {
+                PropertyChangedExtendedEventArgs<Loco> eventArgs = (PropertyChangedExtendedEventArgs<Loco>)e;
+                Loco loco = eventArgs.NewValue;
+                LocoGameViewModel locoGameViewModel = new LocoGameViewModel(loco);
+                taskFactory.StartNew(() => ghostLocoCollection.Add(locoGameViewModel));
+            }
         }
-        
+
         private void CreateRandomRails()
         {
             Random rand = new Random();

@@ -16,6 +16,7 @@ namespace RoRClient.Models.Session
     {
         private static GameSession gameSession = null;
         protected ObservableCollection<Loco> locos = new ObservableCollection<Loco>();
+        protected ObservableCollection<Loco> ghostLocos = new ObservableCollection<Loco>();
 
         private GameSession() : base()
         {
@@ -29,6 +30,14 @@ namespace RoRClient.Models.Session
         }
 
         public ObservableCollection<Loco> Locos
+        {
+            get
+            {
+                return locos;
+            }
+        }
+
+        public ObservableCollection<Loco> GhostLocos
         {
             get
             {
