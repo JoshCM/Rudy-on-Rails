@@ -157,6 +157,7 @@
     <Compile Include="Models\Game\Cart.cs" />
     <Compile Include="Models\Game\Coal.cs" />
     <Compile Include="Models\Game\Container.cs" />
+    <Compile Include="Models\Game\Crane.cs" />
     <Compile Include="Models\Game\Gold.cs" />
     <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Mine.cs" />
@@ -213,6 +214,9 @@
     <Compile Include="ViewModels\ViewConstants.cs" />
     <Compile Include="ViewModels\Editor\MapEditorViewModel.cs" />
     <Compile Include="Views\CanvasUserControl.cs" />
+    <Compile Include="Views\Editor\CraneEditorUserControl.xaml.cs">
+      <DependentUpon>CraneEditorUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Editor\Helper\RegexValidator.cs" />
     <Compile Include="Views\Editor\Helper\ToolConverter.cs" />
     <Compile Include="Views\Editor\MineEditorUserControl.xaml.cs">
@@ -316,6 +320,10 @@
       <DependentUpon>AskUserForStringPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Popup\PopupCreator.cs" />
+    <Page Include="Views\Editor\CraneEditorUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Editor\MineEditorUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -31,6 +31,7 @@ public class CreateTrainstationCommand extends CommandBase {
 	private static final int EAST_NORTH_CURVED = 2;
 	private List<Integer> crossing = Arrays.asList(-3,2);
 	private Square spawnPointforLoco;
+	private Map map;
 
 	public CreateTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
@@ -43,7 +44,7 @@ public class CreateTrainstationCommand extends CommandBase {
 	@Override
 	public void execute() {
 		EditorSession editorSession = (EditorSession) session;
-		Map map = editorSession.getMap();
+		this.map = editorSession.getMap();
 		Square newSquare = map.getSquare(xPos, yPos);
 
 		if (!Validator.validateTrainstationOnMap(newSquare,alignment, editorSession.getMap())) {
@@ -57,6 +58,10 @@ public class CreateTrainstationCommand extends CommandBase {
 			Square stockSquare = map.getSquare(xPos, yPos - 1);
 			Stock newStock = new Stock(session.getName(), stockSquare, trainstationId, alignment);
 			stockSquare.setPlaceableOnSquare(newStock);
+			
+			//der Kran wird erstellt
+			setNewCraneInTrainstation(stockSquare);
+			
 			
 			// Trainstation wird erzeugt und auf Square gesetzt
 			Trainstation trainstation = new Trainstation(session.getName(), newSquare, createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment, newStock);
@@ -142,4 +147,30 @@ public class CreateTrainstationCommand extends CommandBase {
 		trainstationRailSquare.setPlaceableOnSquare(rail);
 		return rail.getId();
 	}
+	
+	public void setNewCraneInTrainstation(Square stock) {
+		Square squaretoSet = null;
+		
+		switch (this.alignment) {
+		case EAST:
+			this.map.getSquare(stock.getXIndex()+1, stock.getYIndex());
+			break;
+		case WEST:
+			this.map.getSquare(stock.getXIndex()-1, stock.getYIndex());
+			break;
+		case SOUTH:
+			this.map.getSquare(stock.getXIndex(), stock.getYIndex()+1);
+			break;
+		case NORTH:
+			this.map.getSquare(stock.getXIndex(), stock.getYIndex()-1);
+			break;
+		default:
+			break;
+		}
+	
+	}
+	
+	
+	
+	
 }
