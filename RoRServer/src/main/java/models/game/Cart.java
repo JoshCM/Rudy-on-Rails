@@ -25,7 +25,7 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 	 */
 	public Cart(String sessionName, Square square, Compass compass, UUID playerId, Rail rail) {
 		super(sessionName,square);
-		this.setCompass(compass);
+		this.setDrivingDirection(compass);
 		this.playerId = playerId;
 		this.setRail(rail);
 	}
@@ -69,11 +69,11 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 		
 	}
 
-	public Compass getCompass() {
+	public Compass getDrivingDirection() {
 		return drivingDirection;
 	}
 
-	public void setCompass(Compass compass) {
+	public void setDrivingDirection(Compass compass) {
 		this.drivingDirection = compass;
 	}
 	

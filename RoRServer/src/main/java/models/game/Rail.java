@@ -38,7 +38,6 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     
     public Rail(String sessionName, Square square, List<Compass> railSectionPositions, boolean withSignals) {
         this(sessionName, square, railSectionPositions);
-        
         if(withSignals) {
         	Signals signals = new Signals(sessionName, square);
         	this.signals = signals;

@@ -13,6 +13,8 @@ namespace RoRClient.BindingConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            return (int)value;
+
             Compass alignment = (Compass)value;
             switch (alignment)
             {
