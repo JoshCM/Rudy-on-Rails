@@ -28,6 +28,7 @@ public class GhostLocoProxy {
 	
 	public void changeSpeed(int speed) {
 		if(speed >= 0 && speed <= 5) {
+			System.out.println(speed);
 			loco.changeSpeed(speed);
 		}
 	}
@@ -44,12 +45,12 @@ public class GhostLocoProxy {
 		return result;
 	}
 	
-	public List<String> getObjectsOnSquare(int x, int y) {
+	public List<String> getObjectsOnSquare(int sideways, int forward) {
 		List<String> result = new ArrayList<String>();
 		
-		if(isSquareVisibleForProxy(x, y)) {
-			int squarePosX = loco.getXPos() + x;
-			int squarePosY = loco.getYPos() + y;
+		if(isSquareVisibleForProxy(sideways, forward)) {
+			int squarePosX = getRealXForDrivingDirection(sideways, forward);
+			int squarePosY = getRealYForDrivingDirection(sideways, forward);
 			
 			if(squarePosX <= map.getMapSize() && squarePosY <= map.getMapSize()) {
 				Square square = map.getSquare(squarePosX, squarePosY);
@@ -95,6 +96,36 @@ public class GhostLocoProxy {
 		return result;
 	}
 	
+	private int getRealXForDrivingDirection(int sideways, int forward) {
+		switch(loco.getDrivingDirection()) {
+		case NORTH:
+			return loco.getXPos() + sideways;
+		case EAST:
+			return loco.getXPos() + forward;
+		case SOUTH:
+			return loco.getXPos() - sideways;
+		case WEST:
+			return loco.getXPos() - forward;
+		default:
+			return -1;
+		}
+	}
+	
+	private int getRealYForDrivingDirection(int sideways, int forward) {
+		switch(loco.getDrivingDirection()) {
+		case NORTH:
+			return loco.getYPos() - forward;
+		case EAST:
+			return loco.getYPos() + sideways;
+		case SOUTH:
+			return loco.getYPos() + forward;
+		case WEST:
+			return loco.getYPos() - sideways;
+		default:
+			return -1;
+		}
+	}
+	
 	private boolean isSquareVisibleForProxy(int x, int y) {
 		if(x >= -VISIBLE_SQUARE_AMOUNT_SIDEWAYS && x <= VISIBLE_SQUARE_AMOUNT_SIDEWAYS) {
 			if(y <= VISIBLE_SQUARE_AMOUNT_FORWARD) {
@@ -102,5 +133,9 @@ public class GhostLocoProxy {
 			}
 		}
 		return false;
+	}
+	
+	public long getSpeed() {
+		return loco.getSpeed();
 	}
 }

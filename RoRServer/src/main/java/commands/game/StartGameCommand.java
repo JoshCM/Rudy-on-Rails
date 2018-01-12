@@ -101,12 +101,15 @@ public class StartGameCommand extends CommandBase {
 
 	private void createLocoForPlayers(RoRSession session) {
 		for (Player p : session.getPlayers()) {
-			CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, p.getId());
-			createLocoCommand.execute();
+			//CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, p.getId());
+			//createLocoCommand.execute();
 			
 			Map map = session.getMap();
 			Square square = map.getSquare(7, 3);
 			GhostLoco ghostLoco = new GhostLoco(session.getName(), square, p.getId());
+			
+			((GameSession)session).addLocomotive(ghostLoco);
+			((GameSession)session).registerTickableGameObject(ghostLoco);
 		}
 	}
 }
