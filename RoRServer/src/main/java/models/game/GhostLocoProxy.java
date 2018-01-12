@@ -12,8 +12,8 @@ public class GhostLocoProxy {
 	private GameSession gameSession;
 	private Map map;
 	
-	private int visibleSquareAmountSideways;
-	private int visibleSquareAmountForward;
+	private int VISIBLE_SQUARE_AMOUNT_SIDEWAYS = 2;
+	private int VISIBLE_SQUARE_AMOUNT_FORWARD = 5;
 	
 	public GhostLocoProxy(Loco loco) {
 		this.loco = loco;
@@ -24,7 +24,6 @@ public class GhostLocoProxy {
 	public void changeRandomSpeed() {
 		Random rand = new Random();
 		loco.changeSpeed(rand.nextInt(5));
-		System.out.println("neuer Speed: " + loco.getSpeed());
 	}
 	
 	public void changeSpeed(int speed) {
@@ -36,8 +35,8 @@ public class GhostLocoProxy {
 	public List<List<String>> getObjectsOnVisibleSquares() {
 		List<List<String>> result = new ArrayList<List<String>>();
 		
-		for(int y = 1; y < visibleSquareAmountForward; y++) {
-			for(int x = loco.getXPos() - visibleSquareAmountSideways; x < visibleSquareAmountSideways; x++) {
+		for(int y = 1; y <= VISIBLE_SQUARE_AMOUNT_FORWARD; y++) {
+			for(int x = -VISIBLE_SQUARE_AMOUNT_SIDEWAYS; x <= VISIBLE_SQUARE_AMOUNT_SIDEWAYS; x++) {
 				result.add(getObjectsOnSquare(x, y));
 			}
 		}
@@ -97,8 +96,8 @@ public class GhostLocoProxy {
 	}
 	
 	private boolean isSquareVisibleForProxy(int x, int y) {
-		if(x >= -visibleSquareAmountSideways && x <= visibleSquareAmountSideways) {
-			if(y <= visibleSquareAmountForward) {
+		if(x >= -VISIBLE_SQUARE_AMOUNT_SIDEWAYS && x <= VISIBLE_SQUARE_AMOUNT_SIDEWAYS) {
+			if(y <= VISIBLE_SQUARE_AMOUNT_FORWARD) {
 				return true;
 			}
 		}
