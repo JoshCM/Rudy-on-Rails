@@ -43,7 +43,6 @@ public class StartGameCommand extends CommandBase {
 		// Client schicken würden
 		List<Square> railSquaresToCreate = new ArrayList<Square>();
 		List<Square> trainstationSquaresToCreate = new ArrayList<Square>();
-		List<Square> mineSquaresToCreate = new ArrayList<Square>();
 		
 		// Jedes Square durchgehen
 		Square[][] squares = map.getSquares();

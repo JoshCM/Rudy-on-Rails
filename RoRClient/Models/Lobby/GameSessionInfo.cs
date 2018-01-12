@@ -11,11 +11,21 @@ namespace RoRClient.Models.Lobby
     {
         private string name;
         private int amountOfPlayers;
+        private int availablePlayerSlots;
 
-        public GameSessionInfo(string name, int amountOfPlayers)
+        public GameSessionInfo(string name, int amountOfPlayers, int availablePlayerSlots)
         {
             this.name = name;
             this.amountOfPlayers = amountOfPlayers;
+            this.availablePlayerSlots = availablePlayerSlots;
+        }
+
+        public int AvailablePlayerSlots
+        {
+            get
+            {
+                return availablePlayerSlots;
+            }
         }
 
         public string Name

@@ -139,6 +139,7 @@
     <Compile Include="Commands\Game\Create\CreateSignalsCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateTrainstationCommand.cs" />
     <Compile Include="Commands\Game\Other\ChangeMapNameCommand.cs" />
+    <Compile Include="Commands\Game\Other\LeavePlayerCommand.cs" />
     <Compile Include="Commands\Game\Other\StartCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateResourceCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateActivityOfSignalsCommand.cs" />

@@ -54,7 +54,9 @@
 			        Content="Starte das verdammte Spiel!" IsEnabled="{Binding IsHost}" />
 			<Button Margin="10" Width="200" x:Name="refreshGameInfosButton" Command="{Binding RefreshGameInfosCommand}"
 			        Content="Aktualisieren" />
-		</StackPanel>
+            <Button Margin="10" Width="200" x:Name="leaveGameInfosButton" Command="{Binding LeaveGameCommand}"
+			        Content="Tschüss" />
+        </StackPanel>
 
 	</DockPanel>
 </UserControl>

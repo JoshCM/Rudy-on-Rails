@@ -10,7 +10,9 @@ import communication.MessageInformation;
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
 import models.game.Loco;
+import models.game.Player;
 import models.game.TickableGameObject;
+import models.game.Trainstation;
 
 /**
  * Oberklasse vom Game-Modus. 
@@ -57,6 +59,18 @@ public class GameSession extends RoRSession{
 		};
 		tickingThread.start();
 		
+	}
+	
+	/**
+	 * Prüft, ob das Spiel die maximale Anzahl an verfügbaren Spielerslots erreicht wurde
+	 * @return
+	 */
+	public boolean isFull() {
+		boolean isFull = false;
+		if (getMap().getAvailablePlayerSlots() == getPlayers().size()) {
+			isFull = true;
+		}
+		return isFull;
 	}
 	
 	/**
@@ -108,8 +122,13 @@ public class GameSession extends RoRSession{
 			ticker.addObserver(locomotive);
 		}
 	}
-	
 
+	public void removePlayers() {
+		for(int i = getPlayers().size() - 1; i >= 0; i--) {
+			Player player = getPlayers().get(i);
+			removePlayer(player);
+		}
+	}
 }
 
 

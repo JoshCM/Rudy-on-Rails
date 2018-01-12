@@ -19,7 +19,7 @@ namespace RoRClient.Models.Session
 
         private GameSession() : base()
         {
-
+            
         }
 
         public new void Init(string topicName)
@@ -54,6 +54,12 @@ namespace RoRClient.Models.Session
                 gameSession = new GameSession();
             }
             return gameSession;
+        }
+
+        public void DeleteGameSession()
+        {
+            gameSession = null;
+            NotifyPropertyChanged("GameSessionDeleted");
         }
 	}
 }
