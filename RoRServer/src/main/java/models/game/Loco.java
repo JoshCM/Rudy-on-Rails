@@ -183,4 +183,8 @@ public class Loco extends InteractiveGameObject {
 	public UUID getPlayerId() {
 		return playerId;
 	}
+	
+	public Compass getDrivingDirection() {
+		return drivingDirection;
+	}
 }
