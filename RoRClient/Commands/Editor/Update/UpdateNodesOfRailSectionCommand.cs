@@ -18,6 +18,7 @@ namespace RoRClient.Commands.Editor.Update
         Guid railSectionId;
         Compass node1;
         Compass node2;
+        RailSectionStatus status;
 
         public UpdateNodesOfRailSectionCommand(EditorSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
@@ -27,6 +28,7 @@ namespace RoRClient.Commands.Editor.Update
             railSectionId = messageInformation.GetValueAsGuid("railSectionId");
             node1 = (Compass)Enum.Parse(typeof(Compass), messageInformation.GetValueAsString("node1"));
             node2 = (Compass)Enum.Parse(typeof(Compass), messageInformation.GetValueAsString("node2"));
+            status = (RailSectionStatus)Enum.Parse(typeof(RailSectionStatus), messageInformation.GetValueAsString("status"));
         }
 
         public override void Execute()
@@ -37,7 +39,7 @@ namespace RoRClient.Commands.Editor.Update
 
             RailSection railSection = rail.RailSections.Where(x => x.Id == railSectionId).First();
             rail.RailSections.Remove(railSection);
-            rail.AddRailSection(new RailSection(railSectionId, node1, node2));
+            rail.AddRailSection(new RailSection(railSectionId, node1, node2, status));
         }
     }
 }

@@ -48,6 +48,7 @@ namespace RoRClient.Communication.Topic
             ITextMessage textMessage = message as ITextMessage;
             string messageType = message.NMSType;
             MessageInformation messageInformation = MessageDeserializer.getInstance().Deserialize(textMessage.Text);
+
             // Der Dispatcher (Game/Editor) wird bei Erstellung mitgegeben
             dispatcher.Dispatch(messageType, messageInformation);
 

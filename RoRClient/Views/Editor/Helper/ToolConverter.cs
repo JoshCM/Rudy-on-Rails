@@ -55,7 +55,7 @@ namespace RoRClient.Views.Editor.Helper
 
         /// <summary>
         /// Erzeugt aus einem definierten Namen zwei Railsection mit jeweils zwei RailSectionPositions.  
-        /// Node1 ist jeweils mit node2 und node3 verknüpft und bildet so die Weiche.
+        /// Node1 ist jeweils mit node2 und node3 verknüpft und bildet so die Weiche
         /// </summary>
         /// <param name="toolName">Name des selectedTool</param>
         /// <returns>Railsection</returns>
@@ -73,9 +73,9 @@ namespace RoRClient.Views.Editor.Helper
                     node2 = Compass.NORTH;
                     node3 = Compass.EAST;
                     break;
-                case "switch_sw_se":
-                    node1 = Compass.SOUTH;
-                    node2 = Compass.WEST;
+                case "switch_wn_we":
+                    node1 = Compass.WEST;
+                    node2 = Compass.NORTH;
                     node3 = Compass.EAST;
                     break;
                 default:

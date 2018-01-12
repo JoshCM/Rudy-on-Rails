@@ -150,6 +150,7 @@
     <Compile Include="Models\Game\Gold.cs" />
     <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Player.cs" />
+    <Compile Include="Models\Game\RailSectionStatus.cs" />
     <Compile Include="Models\Game\Resource.cs" />
     <Compile Include="Models\Game\Trainstation.cs" />
     <Compile Include="Models\Lobby\EditorInfo.cs" />
@@ -447,7 +448,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Resources\Images\Tools\stations\" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\railcurve_ne.png" />
     <Resource Include="Resources\Images\railcurve_nw.png" />
@@ -462,7 +465,7 @@
     <Resource Include="Resources\Images\Tools\rails\railcurve_nw.png" />
     <Resource Include="Resources\Images\Tools\rails\railcurve_se.png" />
     <Resource Include="Resources\Images\dummy.png" />
-    <Resource Include="Resources\Images\Tools\stations\trainstation.png" />
+    <Resource Include="Resources\Images\Tools\trainstation.png" />
     <Resource Include="Resources\Images\game_minimap_dummy.png" />
     <Resource Include="Resources\Images\game_map_dummy.jpg" />
     <Resource Include="Resources\Images\rotate_right.png" />
@@ -476,33 +479,14 @@
     <Resource Include="Resources\Images\rail_crossing.png" />
     <Resource Include="Resources\Images\Tools\switches\switch_snA_se.png" />
     <Resource Include="Resources\Images\switch_sn_se.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch.png" />
     <Resource Include="Resources\Images\Tools\switches\switch_sn_swA.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_curve_left_2.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_curve_left_3.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_curve_left_4.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_curve_right_1.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_curve_right_2.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_curve_right_3.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_curve_right_4.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_left.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_left_1.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_left_2.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_left_3.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_left_4.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_right.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_right_1.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_right_2.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_right_3.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_right_4.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_straight_left_1.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_straight_left_2.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_straight_left_3.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_straight_left_4.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_straight_right_1.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_straight_right_2.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_straight_right_3.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_straight_right_4.png" />
+    <Resource Include="Resources\Images\Tools\switches\switch_snA_sw.png" />
+    <Resource Include="Resources\Images\Tools\switches\switch_sn_se.png" />
+    <Resource Include="Resources\Images\Tools\switches\switch_wn_we.png" />
+    <Resource Include="Resources\Images\switch_wn_we.png" />
+    <Resource Include="Resources\Images\railcurve_sw_transparent.png" />
+    <Resource Include="Resources\Images\rail_ns_transparent.png" />
+    <Resource Include="Resources\Images\trainstation.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

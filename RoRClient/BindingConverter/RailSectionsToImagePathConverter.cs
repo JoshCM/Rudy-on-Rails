@@ -22,10 +22,18 @@ namespace RoRClient.BindingConverter
             if (value != null)
             {
                 ObservableCollection<RailSection> railSections = (ObservableCollection<RailSection>)value;
+                String railsection = parameter as string;
+              
 
-                if(railSections.Count == 1)
+                if (railSections.Count == 1)
                 {
                     RailSection railSection = railSections.First();
+
+                    List<Compass> directionsLis = railSection.GetNodesAsList();
+                    directionsLis.
+
+
+
                     List<Compass> positionList = railSection.GetNodesAsList();
 
                     if (positionList.Contains(Compass.NORTH) && positionList.Contains(Compass.SOUTH))
@@ -57,19 +65,23 @@ namespace RoRClient.BindingConverter
                 {
                     bool northSouth = railSections.Where(x => x.GetNodesAsList().Contains(Compass.NORTH) && x.GetNodesAsList().Contains(Compass.SOUTH)).Any();
                     bool eastWest = railSections.Where(x => x.GetNodesAsList().Contains(Compass.EAST) && x.GetNodesAsList().Contains(Compass.WEST)).Any();
-                    bool southEast = railSections.Where(x => x.GetNodesAsList().Contains(Compass.SOUTH) && x.GetNodesAsList().Contains(Compass.EAST)).Any();
 
-
-
-                    if (northSouth && eastWest)
+                    /// To -Do 
+                    /// aus RS String generieren der imagepath entspricht und diesen auf bild mappen
+                    /// ausnahme für crossing hinzufügen
+                    if (railsection == "1")
                     {
-                        return IMAGE_FOLDER_PATH + "rail_crossing.png";
+
+                        return IMAGE_FOLDER_PATH + "rail_ns.png";
+
                     }
-                    else if (northSouth && southEast)
-                    {
-                        return IMAGE_FOLDER_PATH + "switch_sn_se.png";
+                    else if (railsection == "2") {
+                        return IMAGE_FOLDER_PATH + "rail_ew.png";
+
                     }
                 }
+
+                    
             }
 
             return IMAGE_FOLDER_PATH + "dummy.png";

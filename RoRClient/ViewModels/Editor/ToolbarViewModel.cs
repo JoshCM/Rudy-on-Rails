@@ -37,7 +37,7 @@ namespace RoRClient.ViewModels.Editor
         }
 
         /// <summary>
-        /// Durchsucht den Ordner Resources/images/Tools und die darin liegenden Unterordner nach Bildern für die Toolbar
+        /// Durchsucht den Ordner Resources/images/Tools und die darin liegenden Unterordner nach Bildern für die Toolbar und fügt diese hinzua
         /// </summary>
         private void GenerateToolbarItemsFromFolder()
         {
