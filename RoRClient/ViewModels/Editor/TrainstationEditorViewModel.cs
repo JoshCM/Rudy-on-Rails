@@ -38,7 +38,7 @@ namespace RoRClient.ViewModels.Editor
             MessageInformation messageInformation = new MessageInformation();
 
 			// Id der Trainstation
-			messageInformation.PutValue("id", trainstation.Id);
+			messageInformation.PutValue("trainstationId", trainstation.Id);
 
 			List<Guid> railGuids = new List<Guid>();
             // Iteriert über alle TrainstationRails
@@ -47,6 +47,7 @@ namespace RoRClient.ViewModels.Editor
                 railGuids.Add(trainstationRail.Id);
             }
             messageInformation.PutValue("trainstationRailIds", railGuids);
+            messageInformation.PutValue("stockId", trainstation.Stock.Id);
             editorSession.QueueSender.SendMessage("DeleteTrainstation", messageInformation);
 
 			// setze das Selektierte Objekt auf null

@@ -17,7 +17,13 @@ namespace RoRClient.Commands.Editor.Move
         private int oldYPos;
         private int newXPos;
         private int newYPos;
-		private List<Dictionary<string, object>> trainstationRailsCoordinates = new List<Dictionary<string, object>>();
+
+        private int oldStockXPos;
+        private int oldStockYPos;
+        private int newStockXPos;
+        private int newStockYPos;
+
+        private List<Dictionary<string, object>> trainstationRailsCoordinates = new List<Dictionary<string, object>>();
 
 		public MoveTrainstationCommand(RoRSession session, MessageInformation message) : base(session, message)
         {
@@ -25,7 +31,13 @@ namespace RoRClient.Commands.Editor.Move
             oldYPos = message.GetValueAsInt("oldYPos");
             newXPos = message.GetValueAsInt("newXPos");
             newYPos = message.GetValueAsInt("newYPos");
-			String jsonString = message.GetValueAsString("trainstationRailsCoordinates");
+
+            oldStockXPos = message.GetValueAsInt("oldStockXPos");
+            oldStockYPos = message.GetValueAsInt("oldStockYPos");
+            newStockXPos = message.GetValueAsInt("newStockXPos");
+            newStockYPos = message.GetValueAsInt("newStockYPos");
+
+            String jsonString = message.GetValueAsString("trainstationRailsCoordinates");
 			JArray jsonArray = JArray.Parse(jsonString);
 			foreach (JArray jsonList in jsonArray)
 			{
@@ -40,14 +52,21 @@ namespace RoRClient.Commands.Editor.Move
         public override void Execute()
         {
             EditorSession editorSession = (EditorSession)session;
-			Square oldSquare = editorSession.Map.GetSquare(oldXPos, oldYPos);
-			Square newSquare = editorSession.Map.GetSquare(newXPos, newYPos);
-			Trainstation trainstation = (Trainstation)oldSquare.PlaceableOnSquare;
-			trainstation.Square = newSquare;
-			newSquare.PlaceableOnSquare = trainstation;
-			oldSquare.PlaceableOnSquare = null;
+			Square oldTrainstationSquare = editorSession.Map.GetSquare(oldXPos, oldYPos);
+			Square newTrainstationSquare = editorSession.Map.GetSquare(newXPos, newYPos);
+			Trainstation trainstation = (Trainstation)oldTrainstationSquare.PlaceableOnSquare;
+			trainstation.Square = newTrainstationSquare;
+            newTrainstationSquare.PlaceableOnSquare = trainstation;
+            oldTrainstationSquare.PlaceableOnSquare = null;
 
-			foreach (Dictionary<string, object> trainstationRailCoordinate in trainstationRailsCoordinates)
+            Square oldStockSquare = editorSession.Map.GetSquare(oldStockXPos, oldStockYPos);
+            Square newStockSquare = editorSession.Map.GetSquare(newStockXPos, newStockYPos);
+            Stock stock = (Stock)oldStockSquare.PlaceableOnSquare;
+            stock.Square = newStockSquare;
+            newStockSquare.PlaceableOnSquare = stock;
+            oldStockSquare.PlaceableOnSquare = null;
+
+            foreach (Dictionary<string, object> trainstationRailCoordinate in trainstationRailsCoordinates)
 			{
 				Rail rail = (Rail)editorSession.Map.GetPlaceableById(Guid.Parse((String)trainstationRailCoordinate["railId"]));
 				int newXPos = (int)trainstationRailCoordinate["x"];

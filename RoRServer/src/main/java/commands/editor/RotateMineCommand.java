@@ -36,7 +36,7 @@ public class RotateMineCommand extends CommandBase {
 		
 		EditorSession editorSession = (EditorSession) session;
 		Rail rail = (Rail)editorSession.getMap().getPlaceableOnSquareById(railId);
-		Mine mine = (Mine)rail.getPlaceableOnrail();
+		Mine mine = (Mine)rail.getPlaceableOnRail();
 		
 		if (rotateRight) {
 			mine.rotateRight();
