@@ -25,7 +25,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	public static final int RAIL_COUNT = 3;
 	private List<UUID> trainstationRailIds;
 	private Compass alignment;
-
+	private Stock stock;
 	private final int CLOCKWISE = 90;
 	private final int COUNTER_CLOCKWISE = -90;
 	private Square spawnPointForLoco;
@@ -305,5 +305,13 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	public void specificUpdate() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
 	}
 }
