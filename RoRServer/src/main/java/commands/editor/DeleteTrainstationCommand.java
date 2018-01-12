@@ -9,19 +9,22 @@ import communication.MessageInformation;
 import models.game.Map;
 import models.game.Rail;
 import models.game.Square;
+import models.game.Stock;
 import models.game.Trainstation;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
 public class DeleteTrainstationCommand extends CommandBase{
 
-	UUID id;
+	UUID trainstationId;
+	UUID stockId;
 	int trainstationYPos;
 	List<UUID> trainstationRailIds = new ArrayList<UUID>();
 	
 	public DeleteTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
-		this.id = messageInfo.getValueAsUUID("id");
+		this.trainstationId = messageInfo.getValueAsUUID("trainstationId");
+		this.stockId = messageInfo.getValueAsUUID("stockId");
 		for(String railIdString : messageInfo.<String>getValueAsObjectList("trainstationRailIds")) {
 			UUID railId = UUID.fromString(railIdString);
 			trainstationRailIds.add(railId);
@@ -34,9 +37,14 @@ public class DeleteTrainstationCommand extends CommandBase{
 		Map map = editorSession.getMap();
 		
 		// remove trainstation
-		Trainstation trainstation = (Trainstation) map.getPlaceableOnSquareById(id);
+		Trainstation trainstation = (Trainstation) map.getPlaceableOnSquareById(trainstationId);
 		Square trainstationSquare = map.getSquare(trainstation.getXPos(), trainstation.getYPos());
 		trainstationSquare.deletePlaceable();
+		
+		// remove stock
+		Stock stock = (Stock) map.getPlaceableOnSquareById(stockId);
+		Square stockSquare = map.getSquare(stock.getXPos(), stock.getYPos());
+		stockSquare.deletePlaceable();
 		
 		// remove trainstationRails
 		for(UUID trainstationRailId : trainstationRailIds) {

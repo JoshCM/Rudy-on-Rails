@@ -14,6 +14,7 @@ import models.game.Mine;
 import models.game.PlaceableOnSquare;
 import models.game.Rail;
 import models.game.Square;
+import models.game.Stock;
 import models.game.Trainstation;
 import models.session.EditorSession;
 import models.session.GameSession;
@@ -26,13 +27,13 @@ public class StartEditorCommand extends CommandBase {
 	public StartEditorCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 	}
-	
+
 	private void startNewMap() {
 		Map map = new Map(session.getName());
 		session.setMap(map);
 		log.info("create new map");
 	}
-	
+
 	private void startLoadedMap(String mapName) {
 		Map map = MapManager.loadMap(mapName);
 		log.info("loading map: " + mapName);
@@ -40,14 +41,13 @@ public class StartEditorCommand extends CommandBase {
 		map.setSessionNameForMapAndSquares(session.getName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
-		map.changeName(map.getName());
 
 		// hier müssen die Rails zuerst erstellt werden, danach die Trainstations
 		// da die Trainstations die Referenzen der noch nicht vorhandenen Rails an den
 		// Client schicken würden
 		List<Square> railSquaresToCreate = new ArrayList<Square>();
 		List<Square> trainstationSquaresToCreate = new ArrayList<Square>();
-
+		List<Square> stockSquaresToCreate = new ArrayList<Square>();
 		// Jedes Square durchgehen
 		Square[][] squares = map.getSquares();
 		for (int i = 0; i < squares.length; i++) {
@@ -63,10 +63,17 @@ public class StartEditorCommand extends CommandBase {
 				if (square.getPlaceableOnSquare() != null) {
 					if (square.getPlaceableOnSquare() instanceof Rail)
 						railSquaresToCreate.add(square);
+					if (square.getPlaceableOnSquare() instanceof Stock)
+						stockSquaresToCreate.add(square);
 					if (square.getPlaceableOnSquare() instanceof Trainstation)
 						trainstationSquaresToCreate.add(square);
 				}
 			}
+		}
+
+		// erzeugen der neuen Stocks auf deren Squares
+		for (Square stockSquare : stockSquaresToCreate) {
+			stockSquare.setPlaceableOnSquare(stockSquare.getPlaceableOnSquare().loadFromMap(stockSquare, session));
 		}
 
 		// erzeugen der neuen Rails auf deren Squares
