@@ -11,6 +11,7 @@ import exceptions.InvalidModelOperationException;
 import models.game.Map;
 import models.game.Rail;
 import models.game.Compass;
+import models.game.Crane;
 import models.game.Square;
 import models.game.Stock;
 import models.game.Trainstation;
@@ -59,14 +60,18 @@ public class CreateTrainstationCommand extends CommandBase {
 			Stock newStock = new Stock(session.getName(), stockSquare, trainstationId, alignment);
 			stockSquare.setPlaceableOnSquare(newStock);
 			
-			//der Kran wird erstellt
-			setNewCraneInTrainstation(stockSquare);
-			
 			
 			// Trainstation wird erzeugt und auf Square gesetzt
-			Trainstation trainstation = new Trainstation(session.getName(), newSquare, createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment, newStock);
+			List<UUID> trainStationRails = createTrainstationRails(map, newSquare, trainstationId);
+			Trainstation trainstation = new Trainstation(session.getName(), newSquare, trainStationRails, trainstationId, alignment, newStock);
 			trainstation.setSpawnPointforLoco(spawnPointforLoco);
 			newSquare.setPlaceableOnSquare(trainstation);
+			
+			
+			//der Kran wird erstellt
+			createCrane(stockSquare, trainstation);
+			
+			
 		}
 	}
 
@@ -148,29 +153,50 @@ public class CreateTrainstationCommand extends CommandBase {
 		return rail.getId();
 	}
 	
-	public void setNewCraneInTrainstation(Square stock) {
-		Square squaretoSet = null;
+	public Crane createCrane(Square stock, Trainstation trainstation) {
+		Square craneSquare = findCraneSquare(stock);
+		List<Rail> TrainstationRails = trainstation.getTrainstationRails();
+		Rail craneRail = findCraneRail(TrainstationRails, craneSquare);
+		
+		return new Crane(this.session.sessionName, craneSquare, trainstation.getId(),this.alignment, craneRail.getId());
+		
+		
+		
+	}
+	
+	public Square findCraneSquare(Square stock) {
+		Square craneSquare = null;
 		
 		switch (this.alignment) {
 		case EAST:
-			this.map.getSquare(stock.getXIndex()+1, stock.getYIndex());
+			craneSquare = this.map.getSquare(stock.getXIndex()+1, stock.getYIndex());
 			break;
 		case WEST:
-			this.map.getSquare(stock.getXIndex()-1, stock.getYIndex());
+			craneSquare = this.map.getSquare(stock.getXIndex()-1, stock.getYIndex());
 			break;
 		case SOUTH:
-			this.map.getSquare(stock.getXIndex(), stock.getYIndex()+1);
+			craneSquare = this.map.getSquare(stock.getXIndex(), stock.getYIndex()+1);
 			break;
 		case NORTH:
-			this.map.getSquare(stock.getXIndex(), stock.getYIndex()-1);
+			craneSquare = this.map.getSquare(stock.getXIndex(), stock.getYIndex()-1);
 			break;
 		default:
 			break;
 		}
-	
+		
+		return craneSquare;
 	}
 	
-	
+	public Rail findCraneRail(List<Rail> trainstationRails, Square craneSquare) {
+		Rail craneRail = null;
+		for(Rail rail : trainstationRails) {
+			if(rail.getXPos() == craneSquare.getXIndex() && rail.getYPos() == craneSquare.getYIndex()) {
+				craneRail = rail;
+				return craneRail;
+			}
+		}	
+		return craneRail;
+	}
 	
 	
 }

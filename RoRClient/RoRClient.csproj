@@ -106,11 +106,13 @@
     <Compile Include="BindingConverter\CompassToAngleConverter.cs" />
     <Compile Include="Commands\Base\ChangeMapNameCommandBase.cs" />
     <Compile Include="Commands\Base\CommandBase.cs" />
+    <Compile Include="Commands\Base\CreateCraneCommandBase.cs" />
     <Compile Include="Commands\Base\CreateMineCommandBase.cs" />
     <Compile Include="Commands\Base\CreateRailCommandBase.cs" />
     <Compile Include="Commands\Base\CreateStockCommandBase.cs" />
     <Compile Include="Commands\Base\CreateTrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
+    <Compile Include="Commands\Editor\Create\CreateCraneCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateMineCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateRailCommand.cs" />
@@ -179,6 +181,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Base\CanvasViewModelBase.cs" />
+    <Compile Include="ViewModels\Editor\CraneEditorViewModel.cs" />
     <Compile Include="ViewModels\Editor\MineEditorViewModel.cs" />
     <Compile Include="ViewModels\Editor\StockEditorViewModel.cs" />
     <Compile Include="ViewModels\Game\CanvasGameViewModel.cs" />
@@ -532,6 +535,8 @@
     <Resource Include="Resources\Images\stock_cart_1.png" />
     <Resource Include="Resources\Images\Tools\trainstation1.png" />
     <Resource Include="Resources\Images\stock_container_1.png" />
+    <Resource Include="Resources\Images\crane.png" />
+    <Resource Include="Resources\Images\Tools\crane.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
