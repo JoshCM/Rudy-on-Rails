@@ -13,15 +13,17 @@ namespace RoRClient.BindingConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (int)value;
-
             Compass alignment = (Compass)value;
             switch (alignment)
             {
-                case Compass.NORTH: return -90;
-                case Compass.EAST: return 0;
-                case Compass.SOUTH: return 90;
-                case Compass.WEST: return -180;
+                case Compass.NORTH:
+                    return -90;
+                case Compass.EAST:
+                    return 0;
+                case Compass.SOUTH:
+                    return 90;
+                case Compass.WEST:
+                    return -180;
                 default: return 0;
             }
         }

@@ -29,7 +29,6 @@ namespace RoRClient.Commands.Game.Update
         }
         public override void Execute()
         {
-            System.Console.WriteLine(drivingDirection);
             GameSession gameSession = GameSession.GetInstance();
 
 
