@@ -11,22 +11,158 @@ namespace RoRClient.ViewModels.Game
     public class LocoGameViewModel : CanvasGameViewModel
     {
         private Loco loco;
+        private int angle;
+        private Compass realDrivingDirection;
 
         public LocoGameViewModel(Loco loco) : base(loco.Id)
         {
             this.loco = loco;
             this.SquarePosX = loco.Square.PosX;
             this.SquarePosY = loco.Square.PosY;
+            this.realDrivingDirection = loco.DrivingDirection;
+            SetAngleAccordingToDrivingDirection();
 
             loco.PropertyChanged += OnLocoChanged;
+        }
+        private void SetAngleAccordingToDrivingDirection()
+        {
+            switch (loco.DrivingDirection)
+            {
+                case Compass.EAST:
+                    angle = 0;
+                    break;
+                case Compass.SOUTH:
+                    angle = 90;
+                    break;
+                case Compass.WEST:
+                    angle = 180;
+                    break;
+                case Compass.NORTH:
+                    angle = 270;
+                    break;
+            }
         }
 
         private void OnLocoChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Square")
             {
-                this.SquarePosX = loco.Square.PosX;
-                this.SquarePosY = loco.Square.PosY;
+                SquarePosX = loco.Square.PosX;
+                SquarePosY = loco.Square.PosY;
+
+                if (RealDrivingDirection != loco.DrivingDirection)
+                {
+                    switch (loco.DrivingDirection)
+                    {
+                        case Compass.NORTH:
+                            if (RealDrivingDirection.Equals(Compass.EAST))
+                                Angle -= 90;
+                            else if (RealDrivingDirection.Equals(Compass.WEST))
+                                Angle += 90;
+                            break;
+                        case Compass.EAST:
+                            if (RealDrivingDirection.Equals(Compass.SOUTH))
+                                Angle -= 90;
+                            else if (RealDrivingDirection.Equals(Compass.NORTH))
+                                Angle += 90;
+                            break;
+                        case Compass.SOUTH:
+                            if (RealDrivingDirection.Equals(Compass.WEST))
+                                Angle -= 90;
+                            else if (RealDrivingDirection.Equals(Compass.EAST))
+                                Angle += 90;
+                            break;
+                        case Compass.WEST:
+                            if (RealDrivingDirection.Equals(Compass.NORTH))
+                                Angle -= 90;
+                            else if (RealDrivingDirection.Equals(Compass.SOUTH))
+                                Angle += 90;
+                            break;
+                        default:
+                            Angle = 0;
+                            break;
+                    }
+
+                    RealDrivingDirection = loco.DrivingDirection;
+                }
+            }
+
+            if(e.PropertyName == "Speed")
+            {
+                InvertDrivingDirectionIfDrivingDirectionHasChanged(loco.Speed);
+
+                if (loco.Speed != 0)
+                {
+                    lastSpeedValueGreaterOrLessThanZero = loco.Speed;
+                }
+            }
+        }
+
+        private void InvertDrivingDirection()
+        {
+            switch (RealDrivingDirection)
+            {
+                case Compass.NORTH:
+                    RealDrivingDirection = Compass.SOUTH;
+                    loco.DrivingDirection = Compass.SOUTH;
+                    break;
+                case Compass.EAST:
+                    RealDrivingDirection = Compass.WEST;
+                    loco.DrivingDirection = Compass.WEST;
+                    break;
+                case Compass.SOUTH:
+                    RealDrivingDirection = Compass.NORTH;
+                    loco.DrivingDirection = Compass.NORTH;
+                    break;
+                case Compass.WEST:
+                    RealDrivingDirection = Compass.EAST;
+                    loco.DrivingDirection = Compass.EAST;
+                    break;
+                default:
+                    Angle = 0;
+                    break;
+            }
+        }
+
+        int lastSpeedValueGreaterOrLessThanZero = 0;
+
+        private void InvertDrivingDirectionIfDrivingDirectionHasChanged(int value)
+        {
+            if (((loco.Speed > 0 && value < 0) || (loco.Speed < 0 && value > 0)) // Falls er direkt die Fahrtrichtung ändert
+            || ((value > 0 && lastSpeedValueGreaterOrLessThanZero < 0) || (value < 0 && lastSpeedValueGreaterOrLessThanZero > 0))) // oder die Fahrtrichtung nach einem Halt ändert
+            {
+                InvertDrivingDirection();
+            }
+        }
+
+        public Compass RealDrivingDirection
+        {
+            get
+            {
+                return realDrivingDirection;
+            }
+            set
+            {
+                if (realDrivingDirection != value)
+                {
+                    realDrivingDirection = value;
+                    OnPropertyChanged("RealDrivingDirection");
+                }
+            }
+        }
+        public int Angle
+        {
+            get
+            {
+                return angle;
+            }
+            set
+            {
+                if (angle != value)
+                {
+                    angle = value;
+                    OnPropertyChanged("Angle");
+                }
             }
         }
 
