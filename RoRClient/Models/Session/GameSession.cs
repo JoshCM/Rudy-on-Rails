@@ -15,8 +15,9 @@ namespace RoRClient.Models.Session
     public class GameSession : RoRSession
     {
         private static GameSession gameSession = null;
-        protected ObservableCollection<Loco> locos = new ObservableCollection<Loco>();
-        protected ObservableCollection<Loco> ghostLocos = new ObservableCollection<Loco>();
+        protected ObservableCollection<PlayerLoco> playerLocos = new ObservableCollection<PlayerLoco>();
+        protected ObservableCollection<GhostLoco> ghostLocos = new ObservableCollection<GhostLoco>();
+        protected ObservableCollection<Cart> carts = new ObservableCollection<Cart>();
 
         private GameSession() : base()
         {
@@ -29,32 +30,67 @@ namespace RoRClient.Models.Session
             topicReceiver = new TopicReceiver(topicName, new TopicGameDispatcher());
         }
 
-        public ObservableCollection<Loco> Locos
+        public ObservableCollection<PlayerLoco> PlayerLocos
         {
             get
             {
-                return locos;
+                return playerLocos;
             }
         }
 
-        public ObservableCollection<Loco> GhostLocos
+        public ObservableCollection<GhostLoco> GhostLocos
         {
             get
             {
-                return locos;
+                return ghostLocos;
             }
         }
 
         public Loco GetLocoById(Guid locoId)
         {
-            return locos.Where(x => x.Id == locoId).First();
+            return playerLocos.Where(x => x.Id == locoId).First();
         }
 
-        public void AddLoco(Loco loco)
+        public ObservableCollection<Cart> Carts
         {
-            locos.Add(loco);
-            NotifyPropertyChanged("Locos",null,loco);
-            
+            get
+            {
+                return Carts;
+            }
+        }
+        private bool started;
+        public bool Started
+        {
+            get
+            {
+                return started;
+            }
+            set
+            {
+                if(started != value)
+                {
+                    started = value;
+                    NotifyPropertyChanged("Started");
+                }
+            }
+        }
+
+        public void AddPlayerLoco(PlayerLoco loco)
+        {
+            playerLocos.Add(loco);
+            NotifyPropertyChanged("PlayerLocos", null, loco);
+        }
+        public void AddGhostLoco(GhostLoco loco)
+        {
+            ghostLocos.Add(loco);
+            NotifyPropertyChanged("GhostLocos", null, loco);
+        }
+
+        public void AddCart(Cart cart)
+        {
+            carts.Add(cart);
+            NotifyPropertyChanged("Carts", null, cart);
+
         }
         public static GameSession GetInstance()
         {

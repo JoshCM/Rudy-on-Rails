@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import org.python.util.PythonInterpreter;
 
+import communication.MessageInformation;
+
 public class GhostLoco extends Loco {
 	private PythonInterpreter pi = new PythonInterpreter();
 	private GhostLocoProxy ghostLocoProxy;
@@ -12,7 +14,10 @@ public class GhostLoco extends Loco {
 	public GhostLoco(String sessionName, Square square, UUID playerId) {
 		super(sessionName, square, playerId);
 		initGhostLocoProxy();
+		NotifyLocoCreated();
 		startUpdateThread();
+		
+		changeSpeed(1);
 	}
 	
 	private void initGhostLocoProxy() {
@@ -38,5 +43,15 @@ public class GhostLoco extends Loco {
 			}
 		});
 		updateThread.start();
+	}
+
+	private void NotifyLocoCreated() {
+		MessageInformation messageInfo = new MessageInformation("CreateGhostLoco");
+		messageInfo.putValue("locoId", getId());
+		messageInfo.putValue("xPos", getXPos());
+		messageInfo.putValue("yPos", getYPos());
+		messageInfo.putValue("drivingDirection", getDrivingDirection().toString());
+		messageInfo.putValue("playerId", getPlayerId());
+		notifyChange(messageInfo);
 	}
 }

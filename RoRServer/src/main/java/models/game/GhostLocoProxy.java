@@ -64,7 +64,7 @@ public class GhostLocoProxy {
 						
 						Rail rail = (Rail)placeableOnSquare;
 						if(rail.getSignals() != null) {
-							boolean activeSignal = rail.getSignals().isSignalActive(loco.getDirectionNegation());
+							boolean activeSignal = rail.getSignals().isSignalActive(loco.getDirectionNegation(loco.getDrivingDirection()));
 							if(activeSignal) {
 								result.add("ActiveSignal");
 							} else {
@@ -76,7 +76,7 @@ public class GhostLocoProxy {
 							result.add("Mine");
 						}
 						
-						for(Loco loco : gameSession.getLocomotives()) {
+						for(Loco loco : gameSession.getPlayerLocos()) {
 							if(loco.getRail().getId().equals(rail.getId())) {
 								result.add("Loco");
 							}

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Commands.Game.Create
 {
-    class CreateLocoCommand : CommandBase
+    class CreateGhostLocoCommand : CommandBase
     {
         private Guid locoId;
         private Guid playerId;
@@ -18,7 +18,7 @@ namespace RoRClient.Commands.Game.Create
         private int yPos;
         private Compass drivingDirection;
 
-        public CreateLocoCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        public CreateGhostLocoCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             locoId = Guid.Parse(messageInformation.GetValueAsString("locoId"));
             xPos = messageInformation.GetValueAsInt("xPos");
@@ -32,10 +32,8 @@ namespace RoRClient.Commands.Game.Create
             Player player = session.GetPlayerById(playerId);
             Square square = session.Map.GetSquare(xPos, yPos);
             
-            Loco loco = new Loco(locoId, drivingDirection, square);
-            player.Loco = loco;
-
-            ((GameSession)session).AddLoco(loco);
+            GhostLoco loco = new GhostLoco(locoId, drivingDirection, square);
+            ((GameSession)session).AddGhostLoco(loco);
         }
     }
 }

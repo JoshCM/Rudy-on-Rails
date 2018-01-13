@@ -30,6 +30,7 @@ namespace RoRClient.ViewModels.Game
             InitSquares();
 
             GameSession.GetInstance().PropertyChanged += OnLocoAddedInGameSession;
+            GameSession.GetInstance().PropertyChanged += OnCartAddedInGameSession;
             //TO-DO: nur zum Testen
             //CreateRandomRails();
 
@@ -73,22 +74,21 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
-        // Collections, die nur Locos hält
-        private ObservableCollection<CanvasGameViewModel> locoCollection = new ObservableCollection<CanvasGameViewModel>();
-        public ObservableCollection<CanvasGameViewModel> LocoCollection
+        private ObservableCollection<CanvasGameViewModel> playerLocos = new ObservableCollection<CanvasGameViewModel>();
+        public ObservableCollection<CanvasGameViewModel> PlayerLocos
         {
             get
             {
-                return locoCollection;
+                return playerLocos;
             }
         }
 
-        private ObservableCollection<CanvasGameViewModel> ghostLocoCollection = new ObservableCollection<CanvasGameViewModel>();
-        public ObservableCollection<CanvasGameViewModel> GhostLocoCollection
+        private ObservableCollection<CanvasGameViewModel> ghostLocos = new ObservableCollection<CanvasGameViewModel>();
+        public ObservableCollection<CanvasGameViewModel> GhostLocos
         {
             get
             {
-                return ghostLocoCollection;
+                return ghostLocos;
             }
         }
 
@@ -196,43 +196,30 @@ namespace RoRClient.ViewModels.Game
 
         private void OnLocoAddedInGameSession(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == "Locos")
+            if(e.PropertyName == "PlayerLocos")
             {
-                PropertyChangedExtendedEventArgs<Loco> eventArgs = (PropertyChangedExtendedEventArgs<Loco>)e;
+                PropertyChangedExtendedEventArgs<PlayerLoco> eventArgs = (PropertyChangedExtendedEventArgs<PlayerLoco>)e;
                 Loco loco = eventArgs.NewValue;
                 LocoGameViewModel locoGameViewModel = new LocoGameViewModel(loco);
-                taskFactory.StartNew(() => locoCollection.Add(locoGameViewModel));
+                taskFactory.StartNew(() => playerLocos.Add(locoGameViewModel));
             }
             if (e.PropertyName == "GhostLocos")
             {
-                PropertyChangedExtendedEventArgs<Loco> eventArgs = (PropertyChangedExtendedEventArgs<Loco>)e;
+                PropertyChangedExtendedEventArgs<GhostLoco> eventArgs = (PropertyChangedExtendedEventArgs<GhostLoco>)e;
                 Loco loco = eventArgs.NewValue;
                 LocoGameViewModel locoGameViewModel = new LocoGameViewModel(loco);
-                taskFactory.StartNew(() => ghostLocoCollection.Add(locoGameViewModel));
+                taskFactory.StartNew(() => ghostLocos.Add(locoGameViewModel));
             }
         }
 
-        private void CreateRandomRails()
+        private void OnCartAddedInGameSession(object sender, PropertyChangedEventArgs e)
         {
-            Random rand = new Random();
-            foreach (SquareGameViewModel squareViewModel in squareViewModels)
+            if (e.PropertyName == "Carts")
             {
-                squareViewModel.Square.PlaceableOnSquare = null;
-                if (rand.Next(3) == 0)
-                {
-                    List<RailSection> railSections = new List<RailSection>();
-                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.NORTH, Compass.SOUTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.WEST, Compass.SOUTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.EAST, Compass.WEST));
-                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.WEST, Compass.NORTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.EAST, Compass.SOUTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.EAST, Compass.NORTH));
-
-                    List<RailSection> actualRailSection = new List<RailSection>();
-                    actualRailSection.Add(railSections[rand.Next(railSections.Count)]);
-                    Rail rail = new Rail(Guid.NewGuid(), squareViewModel.Square, actualRailSection);
-                    squareViewModel.Square.PlaceableOnSquare = rail;
-                }
+                PropertyChangedExtendedEventArgs<Cart> eventArgs = (PropertyChangedExtendedEventArgs<Cart>)e;
+                Cart cart = eventArgs.NewValue;
+                CartGameViewModel cartGameViewModel = new CartGameViewModel(cart);
+                taskFactory.StartNew(() => playerLocos.Add(cartGameViewModel));
             }
         }
     }

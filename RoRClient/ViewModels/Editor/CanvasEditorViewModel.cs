@@ -50,22 +50,35 @@ namespace RoRClient.ViewModels.Editor
         /// </summary>
         public void SelectInteractiveGameObject()
         {
-            // Neues EditorCanvasViewModel im MapViewModel merken
-            MapViewModel.SelectedEditorCanvasViewModel = this;
-            // Initial das vorherige EditorCanvasViewModel auf das Neue setzen
-            if (MapViewModel.PreviousSelectedEditorCanvasViewModel == null)
-            {
-                MapViewModel.PreviousSelectedEditorCanvasViewModel = this;
-                Console.WriteLine("1. Mal");
+            Boolean showable = true;
+            
+            // checkt ob das CnavasViewModel ein RailViewModel ist
+            // und ob dessen Rail eine trainstationId hat
+            if (this is RailEditorViewModel){
+                if( ((RailEditorViewModel)this).Rail.TrainstationId != Guid.Empty) // ist nie null
+                {
+                    showable = false;
+                }
             }
-            // Anzeigen der Quicknavigation
-            MapViewModel.SwitchQuickNavigationForCanvasViewModel();
+            if (showable) {
+                // Neues EditorCanvasViewModel im MapViewModel merken
+                MapViewModel.SelectedEditorCanvasViewModel = this;
 
-            // Danach das EditorCanvasViewModel als vorheriges EditorCanvasViewModel merken, wenn es sich geändert hat
-            if (this != MapViewModel.PreviousSelectedEditorCanvasViewModel)
-            {
-                MapViewModel.PreviousSelectedEditorCanvasViewModel = this;
-                Console.WriteLine("Model hat sich geändert!");
+                // Initial das vorherige EditorCanvasViewModel auf das Neue setzen
+                if (MapViewModel.PreviousSelectedEditorCanvasViewModel == null)
+                {
+                    MapViewModel.PreviousSelectedEditorCanvasViewModel = this;
+                    Console.WriteLine("1. Mal");
+                }
+                // Anzeigen der Quicknavigation
+                MapViewModel.SwitchQuickNavigationForCanvasViewModel();
+
+                // Danach das EditorCanvasViewModel als vorheriges EditorCanvasViewModel merken, wenn es sich geändert hat
+                if (this != MapViewModel.PreviousSelectedEditorCanvasViewModel)
+                {
+                    MapViewModel.PreviousSelectedEditorCanvasViewModel = this;
+                    Console.WriteLine("Model hat sich geändert!");
+                }
             }
         }
         

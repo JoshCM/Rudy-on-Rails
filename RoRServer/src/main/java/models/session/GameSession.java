@@ -11,6 +11,7 @@ import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
 import models.game.GhostLoco;
 import models.game.Loco;
+import models.game.PlayerLoco;
 import models.game.TickableGameObject;
 
 /**
@@ -25,8 +26,8 @@ public class GameSession extends RoRSession{
 	private boolean stopped;
 	private long lastTimeUpdatedInNanoSeconds;
 	private Ticker ticker;
-	private ArrayList<Loco> locomotives = new ArrayList<>();
-	private ArrayList<Loco> ghostLocos = new ArrayList<>();
+	private ArrayList<PlayerLoco> playerLocos = new ArrayList<>();
+	private ArrayList<GhostLoco> ghostLocos = new ArrayList<>();
 
 	public GameSession(String name, UUID hostPlayerId, String hostPlayerName) {
 		super(name, hostPlayerId, hostPlayerName);
@@ -91,7 +92,7 @@ public class GameSession extends RoRSession{
 	 * @return
 	 */
 	public Loco getLocomotiveByPlayerId(UUID playerId) {
-		for (Loco loc : locomotives) {
+		for (Loco loc : playerLocos) {
 			if (loc.getPlayerId().toString().equals(playerId.toString())) {
 				return loc;
 			}
@@ -101,12 +102,12 @@ public class GameSession extends RoRSession{
 
 	/**
 	 * Fügt Locotmotive der ArrayList hinzu
-	 * @param locomotive
+	 * @param loco
 	 */
-	public void addLocomotive(Loco locomotive) {
-		if(locomotive != null) {
-			this.locomotives.add(locomotive);
-			ticker.addObserver(locomotive);
+	public void addPlayerLoco(PlayerLoco loco) {
+		if(loco != null) {
+			this.playerLocos.add(loco);
+			ticker.addObserver(loco);
 		}
 	}
 	
@@ -117,8 +118,8 @@ public class GameSession extends RoRSession{
 		}
 	}
 	
-	public List<Loco> getLocomotives() {
-		return locomotives;
+	public List<PlayerLoco> getPlayerLocos() {
+		return playerLocos;
 	}
 }
 
