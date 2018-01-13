@@ -128,8 +128,7 @@ namespace RoRClient.ViewModels.Game
 
         private void InvertDrivingDirectionIfDrivingDirectionHasChanged(int value)
         {
-            if (((loco.Speed > 0 && value < 0) || (loco.Speed < 0 && value > 0)) // Falls er direkt die Fahrtrichtung ändert
-            || ((value > 0 && lastSpeedValueGreaterOrLessThanZero < 0) || (value < 0 && lastSpeedValueGreaterOrLessThanZero > 0))) // oder die Fahrtrichtung nach einem Halt ändert
+            if ((value > 0 && lastSpeedValueGreaterOrLessThanZero < 0) || (value < 0 && lastSpeedValueGreaterOrLessThanZero > 0)) // falls er die Fahrtrichtung ändert
             {
                 InvertDrivingDirection();
             }
