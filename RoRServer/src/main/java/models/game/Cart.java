@@ -80,7 +80,7 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 	/**
 	 * notifiziert wenn die Position des Wagons ge�ndert wurde
 	 */
-	public void SendUpdateCartMessage() {
+	public void notifyUpdatedCart() {
 		MessageInformation messageInfo = new MessageInformation("UpdateCartPosition");
 		messageInfo.putValue("cartId", getId());
 		messageInfo.putValue("xPos", getXPos());

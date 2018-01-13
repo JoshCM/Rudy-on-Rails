@@ -24,6 +24,10 @@ namespace RoRClient.ViewModels.Game
 
             loco.PropertyChanged += OnLocoChanged;
         }
+
+        /// <summary>
+        /// setzt den Winkel der Ausrichtung der Lok, je nach Fahrrichtung der Lok
+        /// </summary>
         private void SetAngleAccordingToDrivingDirection()
         {
             switch (loco.DrivingDirection)

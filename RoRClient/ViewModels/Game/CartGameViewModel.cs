@@ -25,6 +25,9 @@ namespace RoRClient.ViewModels.Game
             cart.PropertyChanged += OnCartChanged;
         }
 
+        /// <summary>
+        /// setzt den Winkel der Ausrichtung des Wagons, je nach Fahrrichtung des Wagons
+        /// </summary>
         private void SetAngleAccordingToDrivingDirection()
         {
             switch (cart.DrivingDirection)

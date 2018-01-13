@@ -31,8 +31,6 @@ public class Loco extends InteractiveGameObject {
 	public Loco(String sessionName, Square square, UUID playerId) {
 		super(sessionName, square);
 		this.setCarts(new ArrayList<Cart>());
-		// TODO: Wenn Zug Richtung implementiert ist, muss der Wagon so initialisiert
-		// werden, dass er ein Feld hinter der Lok steht
 		this.rail = (Rail) square.getPlaceableOnSquare();
 		this.map = GameSessionManager.getInstance().getGameSessionByName(sessionName).getMap();
 		this.drivingDirection = rail.getFirstSection().getNode1();
@@ -86,7 +84,10 @@ public class Loco extends InteractiveGameObject {
 		this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 		NotifyLocoPositionChanged();
 	}
-
+	
+	/**
+	 * Zug fährt rückwerts(letzter Wagon führt)
+	 */
 	public void reversedDrive() {
 
 		Cart actCart = null;
@@ -99,7 +100,7 @@ public class Loco extends InteractiveGameObject {
 			actCart.setDrivingDirection(newDrivingDirection);
 			actCart.setRail(newRail);
 			actCart.updateSquare(this.map.getSquare(newRail.getXPos(), newRail.getYPos()));
-			actCart.SendUpdateCartMessage();
+			actCart.notifyUpdatedCart();
 		}
 
 		this.rail = getNextRail(this.drivingDirection, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
@@ -109,6 +110,9 @@ public class Loco extends InteractiveGameObject {
 
 	}
 
+	/**
+	 * wenn der Zug das erste mal rückwerts fahren soll(alle Fahrtrichtungen sollen umgedreht werden)
+	 */
 	public void initialReversedDrive() {
 
 		Cart actCart = null;
@@ -121,7 +125,7 @@ public class Loco extends InteractiveGameObject {
 			actCart.setDrivingDirection(newDrivingDirection);
 			actCart.setRail(newRail);
 			actCart.updateSquare(this.map.getSquare(newRail.getXPos(), newRail.getYPos()));
-			actCart.SendUpdateCartMessage();
+			actCart.notifyUpdatedCart();
 
 		}
 
@@ -167,7 +171,7 @@ public class Loco extends InteractiveGameObject {
 			cart.updateSquare(nextSquare);
 			cart.setRail((Rail) nextSquare.getPlaceableOnSquare());
 			cart.setDrivingDirection(nextDirection);
-			cart.SendUpdateCartMessage();
+			cart.notifyUpdatedCart();
 			nextDirection = actDirection;
 			nextSquare = actSquare;
 			System.out.println("Drive: " + cart.getDrivingDirection());
