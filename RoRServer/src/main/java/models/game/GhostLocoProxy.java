@@ -28,7 +28,6 @@ public class GhostLocoProxy {
 	
 	public void changeSpeed(int speed) {
 		if(speed >= 0 && speed <= 5) {
-			System.out.println(speed);
 			loco.changeSpeed(speed);
 		}
 	}
@@ -76,7 +75,7 @@ public class GhostLocoProxy {
 							result.add("Mine");
 						}
 						
-						for(Loco loco : gameSession.getPlayerLocos()) {
+						for(Loco loco : gameSession.getLocos()) {
 							if(loco.getRail().getId().equals(rail.getId())) {
 								result.add("Loco");
 							}

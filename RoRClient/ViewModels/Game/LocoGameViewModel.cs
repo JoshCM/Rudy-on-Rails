@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace RoRClient.ViewModels.Game
 {
-    public class LocoGameViewModel : CanvasGameViewModel
+    public abstract class LocoGameViewModel : CanvasGameViewModel
     {
         private Loco loco;
         private int angle;

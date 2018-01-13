@@ -74,21 +74,12 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
-        private ObservableCollection<CanvasGameViewModel> playerLocos = new ObservableCollection<CanvasGameViewModel>();
-        public ObservableCollection<CanvasGameViewModel> PlayerLocos
+        private ObservableCollection<CanvasGameViewModel> locos = new ObservableCollection<CanvasGameViewModel>();
+        public ObservableCollection<CanvasGameViewModel> Locos
         {
             get
             {
-                return playerLocos;
-            }
-        }
-
-        private ObservableCollection<CanvasGameViewModel> ghostLocos = new ObservableCollection<CanvasGameViewModel>();
-        public ObservableCollection<CanvasGameViewModel> GhostLocos
-        {
-            get
-            {
-                return ghostLocos;
+                return locos;
             }
         }
 
@@ -196,19 +187,20 @@ namespace RoRClient.ViewModels.Game
 
         private void OnLocoAddedInGameSession(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == "PlayerLocos")
+            if(e.PropertyName == "Locos")
             {
-                PropertyChangedExtendedEventArgs<PlayerLoco> eventArgs = (PropertyChangedExtendedEventArgs<PlayerLoco>)e;
+                PropertyChangedExtendedEventArgs<Loco> eventArgs = (PropertyChangedExtendedEventArgs<Loco>)e;
                 Loco loco = eventArgs.NewValue;
-                LocoGameViewModel locoGameViewModel = new LocoGameViewModel(loco);
-                taskFactory.StartNew(() => playerLocos.Add(locoGameViewModel));
-            }
-            if (e.PropertyName == "GhostLocos")
-            {
-                PropertyChangedExtendedEventArgs<GhostLoco> eventArgs = (PropertyChangedExtendedEventArgs<GhostLoco>)e;
-                Loco loco = eventArgs.NewValue;
-                LocoGameViewModel locoGameViewModel = new LocoGameViewModel(loco);
-                taskFactory.StartNew(() => ghostLocos.Add(locoGameViewModel));
+                if(loco is PlayerLoco)
+                {
+                    PlayerLocoGameViewModel locoGameViewModel = new PlayerLocoGameViewModel(loco);
+                    taskFactory.StartNew(() => locos.Add(locoGameViewModel));
+                } else
+                {
+                    GhostLocoGameViewModel locoGameViewModel = new GhostLocoGameViewModel(loco);
+                    taskFactory.StartNew(() => locos.Add(locoGameViewModel));
+                }
+                
             }
         }
 
@@ -219,7 +211,7 @@ namespace RoRClient.ViewModels.Game
                 PropertyChangedExtendedEventArgs<Cart> eventArgs = (PropertyChangedExtendedEventArgs<Cart>)e;
                 Cart cart = eventArgs.NewValue;
                 CartGameViewModel cartGameViewModel = new CartGameViewModel(cart);
-                taskFactory.StartNew(() => playerLocos.Add(cartGameViewModel));
+                taskFactory.StartNew(() => locos.Add(cartGameViewModel));
             }
         }
     }

@@ -114,7 +114,7 @@ public class StartGameCommand extends CommandBase {
 			Map map = session.getMap();
 			Square square = map.getSquare(7, 3);
 			GhostLoco ghostLoco = new GhostLoco(session.getName(), square, p.getId());
-			((GameSession)session).addGhostLoco(ghostLoco);
+			((GameSession)session).addLoco(ghostLoco);
 		}
 	}
 }

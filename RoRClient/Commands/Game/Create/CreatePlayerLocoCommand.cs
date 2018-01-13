@@ -35,7 +35,7 @@ namespace RoRClient.Commands.Game.Create
             PlayerLoco loco = new PlayerLoco(locoId, drivingDirection, square);
             player.Loco = loco;
 
-            ((GameSession)session).AddPlayerLoco(loco);
+            ((GameSession)session).AddLoco(loco);
         }
     }
 }

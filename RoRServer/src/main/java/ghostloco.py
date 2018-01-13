@@ -7,8 +7,8 @@ def update(proxy):
 
 	objectsOnSquare = proxy.getObjectsOnSquare(0, 1);
 
-	for value in objectsOnSquare:
-		print(value)
+	#for value in objectsOnSquare:
+		#print(value)
 
 	# Halte, wenn die Strecke zuende ist
 	if "Rail" not in objectsOnSquare:
@@ -19,4 +19,4 @@ def update(proxy):
 			proxy.changeSpeed(0)
 		# Fahre weiter, wenn ein Signal ausgeschaltet ist
 		elif "ActiveSignal" in objectsOnSquare:
-			proxy.changeSpeed(2)
+			proxy.changeSpeed(4)

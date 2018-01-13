@@ -233,7 +233,6 @@ public abstract class Loco extends InteractiveGameObject {
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
 		messageInfo.putValue("drivingDirection", drivingDirection.toString());
-		messageInfo.putValue("playerId", this.playerId);
 		notifyChange(messageInfo);
 	}
 

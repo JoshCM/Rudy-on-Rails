@@ -26,8 +26,7 @@ public class GameSession extends RoRSession{
 	private boolean stopped;
 	private long lastTimeUpdatedInNanoSeconds;
 	private Ticker ticker;
-	private ArrayList<PlayerLoco> playerLocos = new ArrayList<>();
-	private ArrayList<GhostLoco> ghostLocos = new ArrayList<>();
+	private ArrayList<Loco> locos = new ArrayList<>();
 
 	public GameSession(String name, UUID hostPlayerId, String hostPlayerName) {
 		super(name, hostPlayerId, hostPlayerName);
@@ -92,7 +91,7 @@ public class GameSession extends RoRSession{
 	 * @return
 	 */
 	public Loco getLocomotiveByPlayerId(UUID playerId) {
-		for (Loco loc : playerLocos) {
+		for (Loco loc : locos) {
 			if (loc.getPlayerId().toString().equals(playerId.toString())) {
 				return loc;
 			}
@@ -104,22 +103,15 @@ public class GameSession extends RoRSession{
 	 * Fügt Locotmotive der ArrayList hinzu
 	 * @param loco
 	 */
-	public void addPlayerLoco(PlayerLoco loco) {
+	public void addLoco(Loco loco) {
 		if(loco != null) {
-			this.playerLocos.add(loco);
+			locos.add(loco);
 			ticker.addObserver(loco);
 		}
 	}
 	
-	public void addGhostLoco(GhostLoco loco) {
-		if(loco != null) {
-			this.ghostLocos.add(loco);
-			ticker.addObserver(loco);
-		}
-	}
-	
-	public List<PlayerLoco> getPlayerLocos() {
-		return playerLocos;
+	public List<Loco> getLocos() {
+		return locos;
 	}
 }
 

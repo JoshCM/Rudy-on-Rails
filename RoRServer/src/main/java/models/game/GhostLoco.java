@@ -24,7 +24,6 @@ public class GhostLoco extends Loco {
 		ghostLocoProxy = new GhostLocoProxy(this);
         pi.exec("from ghostloco import update");
         pi.set("proxy", ghostLocoProxy);
-        pi.exec("print 'hallo', proxy");
 	}
 	
 	private void startUpdateThread() {

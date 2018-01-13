@@ -12,7 +12,7 @@ namespace RoRClient.Commands.Game.Update
 {
     class UpdateLocoPositionCommand : CommandBase
     {
-        private Guid playerId;
+        private Guid locoId;
         private int xPos;
         private int yPos;
         private Compass drivingDirection;
@@ -22,15 +22,14 @@ namespace RoRClient.Commands.Game.Update
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
             drivingDirection = (Compass)Enum.Parse(typeof(Compass), messageInformation.GetValueAsString("drivingDirection"));
-            playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
+            locoId = Guid.Parse(messageInformation.GetValueAsString("locoId"));
         }
 
         public override void Execute()
         {
             GameSession gameSession = GameSession.GetInstance();
             Square square = gameSession.Map.GetSquare(xPos, yPos);
-            Player player = gameSession.GetPlayerById(playerId);
-            Loco loco = player.Loco;
+            Loco loco = gameSession.GetLocoById(locoId);
             loco.Square = square;
             loco.DrivingDirection = drivingDirection;
         }

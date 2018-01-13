@@ -42,7 +42,7 @@ public class CreateLocoCommand implements Command {
 		//prüfen ob auf dem Square eine Rail liegt
 		if(square.getPlaceableOnSquare() != null) {
 			PlayerLoco loco = new PlayerLoco(session.getName(), square, playerId);
-			((GameSession) session).addPlayerLoco(loco);
+			((GameSession) session).addLoco(loco);
 		}
 	}
 }

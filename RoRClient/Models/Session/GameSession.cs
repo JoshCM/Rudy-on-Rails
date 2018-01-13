@@ -15,8 +15,7 @@ namespace RoRClient.Models.Session
     public class GameSession : RoRSession
     {
         private static GameSession gameSession = null;
-        protected ObservableCollection<PlayerLoco> playerLocos = new ObservableCollection<PlayerLoco>();
-        protected ObservableCollection<GhostLoco> ghostLocos = new ObservableCollection<GhostLoco>();
+        protected ObservableCollection<Loco> locos = new ObservableCollection<Loco>();
         protected ObservableCollection<Cart> carts = new ObservableCollection<Cart>();
 
         private GameSession() : base()
@@ -30,25 +29,17 @@ namespace RoRClient.Models.Session
             topicReceiver = new TopicReceiver(topicName, new TopicGameDispatcher());
         }
 
-        public ObservableCollection<PlayerLoco> PlayerLocos
+        public ObservableCollection<Loco> Locos
         {
             get
             {
-                return playerLocos;
-            }
-        }
-
-        public ObservableCollection<GhostLoco> GhostLocos
-        {
-            get
-            {
-                return ghostLocos;
+                return locos;
             }
         }
 
         public Loco GetLocoById(Guid locoId)
         {
-            return playerLocos.Where(x => x.Id == locoId).First();
+            return locos.Where(x => x.Id == locoId).First();
         }
 
         public ObservableCollection<Cart> Carts
@@ -75,15 +66,10 @@ namespace RoRClient.Models.Session
             }
         }
 
-        public void AddPlayerLoco(PlayerLoco loco)
+        public void AddLoco(Loco loco)
         {
-            playerLocos.Add(loco);
-            NotifyPropertyChanged("PlayerLocos", null, loco);
-        }
-        public void AddGhostLoco(GhostLoco loco)
-        {
-            ghostLocos.Add(loco);
-            NotifyPropertyChanged("GhostLocos", null, loco);
+            locos.Add(loco);
+            NotifyPropertyChanged("Locos", null, loco);
         }
 
         public void AddCart(Cart cart)
