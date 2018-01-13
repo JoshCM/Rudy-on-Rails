@@ -34,6 +34,11 @@
                                 <vg:TrainstationGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
+                        <DataTemplate DataType="{x:Type game:StockGameViewModel}">
+                            <Canvas>
+                                <vg:StockGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
                         <DataTemplate DataType="{x:Type game:GoldGameViewModel}">
                             <Canvas>
                                 <vg:GoldGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
@@ -46,7 +51,8 @@
                         </DataTemplate>
                     </ItemsControl.Resources>
                 </ItemsControl>
-                <ItemsControl ItemsSource="{Binding PlaceableOnRailCollection}">
+                
+                <ItemsControl ItemsSource="{Binding LocoCollection}">
                     <ItemsControl.Resources>
                         <DataTemplate DataType="{x:Type game:LocoGameViewModel}">
                             <Canvas>
@@ -56,6 +62,17 @@
                         <DataTemplate DataType="{x:Type game:CartGameViewModel}">
                             <Canvas>
                                 <vg:CartGameUserControl DataContext="{Binding }" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"  RotationAngle="{Binding Angle}"/>
+                            </Canvas>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+                </ItemsControl> 
+                
+                <ItemsControl ItemsSource="{Binding PlaceableOnRailCollection}">
+                    <ItemsControl.Resources>
+                        <!-- Hier muss dann auch das LocoGameUserControl hin mit dem DataType des LocoGameViewModels, was ja in der PlaceableOnSquareCollection drin sein sollte -->
+                        <DataTemplate DataType="{x:Type game:MineGameViewModel}">
+                            <Canvas>
+                                <vg:MineGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.Resources>

@@ -94,7 +94,7 @@ public class Map extends ModelBase {
 		return result;
 	}
 
-	public PlaceableOnSquare getPlaceableById(UUID id) {
+	public PlaceableOnSquare getPlaceableOnSquareById(UUID id) {
 		for (Square[] squares : getSquares()) {
 			for (Square square : squares) {
 				PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
@@ -102,6 +102,26 @@ public class Map extends ModelBase {
 					if (placeableOnSquare.getId().equals(id)) {
 						return placeableOnSquare;
 					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	public PlaceableOnRail getPlaceableOnRailById(UUID id) {
+		for (Square[] squares : getSquares()) {
+			for (Square square : squares) {
+				PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
+				if (placeableOnSquare != null) {
+					if (placeableOnSquare instanceof Rail) {
+						Rail rail = (Rail)placeableOnSquare;
+						if (rail.getPlaceableOnrail() instanceof Mine) {
+							Mine mine = (Mine)rail.getPlaceableOnrail();
+							if (mine.getId().equals(id)) {
+								return mine;
+							}
+						}
+					}	
 				}
 			}
 		}
@@ -141,14 +161,40 @@ public class Map extends ModelBase {
 	 * @param alignment
 	 * @return Zugehöriges Square einer Rail
 	 */
-	private Square getTrainstationRailSquare(Rail trainstationRail, Trainstation newTrainstation,
+	private Square getTrainstationInteractiveGameObjectSquare(InteractiveGameObject trainstationInteractiveGameObject, Trainstation newTrainstation,
 			int oldPlaceableOnSquareXPos, int oldPlaceableOnSquareYPos) {
-		int trainstationRailXSpan = trainstationRail.getXPos() - oldPlaceableOnSquareXPos;
-		int trainstationRailYSpan = trainstationRail.getYPos() - oldPlaceableOnSquareYPos;
+		int trainstationRailXSpan = trainstationInteractiveGameObject.getXPos() - oldPlaceableOnSquareXPos;
+		int trainstationRailYSpan = trainstationInteractiveGameObject.getYPos() - oldPlaceableOnSquareYPos;
 
 		int newSquareX = newTrainstation.getXPos() + trainstationRailXSpan;
 		int newSquareY = newTrainstation.getYPos() + trainstationRailYSpan;
 		return getSquare(newSquareX, newSquareY);
+	}
+	
+	/**
+	 * Löst das Notify zum Verschieben einer Mine aus
+	 * @param oldSquare
+	 * @param newSquare
+	 */
+	public void movePlaceableOnRail(Square oldSquare, Square newSquare) {
+		
+		notifyMovedMine(oldSquare, newSquare);
+	}
+	
+	/**
+	 * Verschickt die Änderungen der verschobenen Mine an den Client
+	 * @param oldSquare
+	 * @param newSquare
+	 */
+	public void notifyMovedMine(Square oldSquare, Square newSquare) {
+		MessageInformation message = new MessageInformation("MoveMine");
+		message.putValue("oldXPos", oldSquare.getXIndex());
+		message.putValue("oldYPos", oldSquare.getYIndex());
+		message.putValue("newXPos", newSquare.getXIndex());
+		message.putValue("newYPos", newSquare.getYIndex());
+		Rail rail = (Rail) newSquare.getPlaceableOnSquare();
+		message.putValue("alignment", rail.getAlignment().toString());
+		notifyChange(message);
 	}
 
 	/**
@@ -182,12 +228,21 @@ public class Map extends ModelBase {
 				for (Rail trainstationRail : trainstation.getTrainstationRails()) {
 					Square oldSquareOfRail = getSquare(trainstationRail.getXPos(), trainstationRail.getYPos());
 					oldSquareOfRail.setPlaceableOnSquare(null);
-					Square newSquareOfRail = getTrainstationRailSquare(trainstationRail, trainstation,
+					Square newSquareOfRail = getTrainstationInteractiveGameObjectSquare(trainstationRail, trainstation,
 							oldPlaceableOnSquareXPos, oldPlaceableOnSquareYPos);
 					trainstationRail.changeSquare(newSquareOfRail);
 					newSquareOfRail.setPlaceableOnSquare(trainstationRail);
 				}
-				notifyMovedTrainstation(oldSquareOfPlaceable, newSquareOfPlaceable, trainstation);
+				// der stock muss auch die square-Änderung mitbekommen
+				Stock stock = trainstation.getStock();
+				Square oldSquareOfStock = getSquare(stock.getXPos(), stock.getYPos());
+				oldSquareOfStock.setPlaceableOnSquare(null);
+				Square newSquareOfStock = getTrainstationInteractiveGameObjectSquare(stock, trainstation,
+						oldPlaceableOnSquareXPos, oldPlaceableOnSquareYPos);
+				stock.changeSquare(newSquareOfStock);
+				newSquareOfStock.setPlaceableOnSquare(stock);
+				
+				notifyMovedTrainstation(oldSquareOfStock, newSquareOfStock, oldSquareOfPlaceable, newSquareOfPlaceable, trainstation);
 			}
 		} else {
 			throw new NotMoveableException(String.format("PlaceableOnSquare von %s ist nicht auf %s verschiebbar",
@@ -195,13 +250,18 @@ public class Map extends ModelBase {
 		}
 	}
 
-	private void notifyMovedTrainstation(Square oldSquare, Square newSquare, Trainstation trainstation) {
-		// TODO: Trainstation und Rails einzeln moven als Command
+	private void notifyMovedTrainstation(Square oldSquareOfStock, Square newSquareOfStock, Square oldSquareOfPlaceable, Square newSquareOfPlaceable, Trainstation trainstation) {
 		MessageInformation messageInformation = new MessageInformation("MoveTrainstation");
-		messageInformation.putValue("oldXPos", oldSquare.getXIndex());
-		messageInformation.putValue("oldYPos", oldSquare.getYIndex());
-		messageInformation.putValue("newXPos", newSquare.getXIndex());
-		messageInformation.putValue("newYPos", newSquare.getYIndex());
+		messageInformation.putValue("oldXPos", oldSquareOfPlaceable.getXIndex());
+		messageInformation.putValue("oldYPos", oldSquareOfPlaceable.getYIndex());
+		messageInformation.putValue("newXPos", newSquareOfPlaceable.getXIndex());
+		messageInformation.putValue("newYPos", newSquareOfPlaceable.getYIndex());
+		
+		// Stock alte und neue Coords mitgeben
+		messageInformation.putValue("oldStockXPos", oldSquareOfStock.getXIndex());
+		messageInformation.putValue("oldStockYPos", oldSquareOfStock.getYIndex());
+		messageInformation.putValue("newStockXPos", newSquareOfStock.getXIndex());
+		messageInformation.putValue("newStockYPos", newSquareOfStock.getYIndex());
 
 		List<List<String>> trainstationRailsCoordinateList = new ArrayList<List<String>>();
 		for (Rail trainstationRail : trainstation.getTrainstationRails()) {

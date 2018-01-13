@@ -17,7 +17,7 @@ public class RotateTrainstationCommand extends CommandBase{
 		EditorSession editorSession = (EditorSession)session;
 		Map map = editorSession.getMap();
 		right = messageInfo.getValueAsBoolean("right");
-		trainstation = (Trainstation) map.getPlaceableById(messageInfo.getValueAsUUID("id"));
+		trainstation = (Trainstation) map.getPlaceableOnSquareById(messageInfo.getValueAsUUID("id"));
 	}
 
 	@Override

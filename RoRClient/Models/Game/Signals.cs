@@ -27,6 +27,9 @@ namespace RoRClient.Models.Game
         }
 
         #region Properties
+        /// <summary>
+        /// Wenn mindestens ein Signal auf der Rail aktiv ist, dann ist das hier true
+        /// </summary>
         public bool Exists
         {
             get

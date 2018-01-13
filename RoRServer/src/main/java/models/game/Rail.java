@@ -1,12 +1,11 @@
 package models.game;
 
-import java.util.UUID;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import com.google.gson.JsonObject;
 import communication.MessageInformation;
 import exceptions.RailSectionException;
-import models.session.GameSession;
 import models.session.GameSessionManager;
 import models.session.RoRSession;
 
@@ -30,27 +29,32 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
      * Konstruktor für Geraden oder Kurven
      */
     public Rail(String sessionName, Square square, List<Compass> railSectionPositions) {
-        super(sessionName, square);
-        railSectionList = new ArrayList<RailSection>();
-        createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
-        notifyCreatedRail();
+        this(sessionName, square, railSectionPositions, false, new UUID(0L, 0L), UUID.randomUUID());
     }
     
+    /**
+     * Konstruktor für Rails mit Signalen
+     */
     public Rail(String sessionName, Square square, List<Compass> railSectionPositions, boolean withSignals) {
-        this(sessionName, square, railSectionPositions);
+        this(sessionName, square, railSectionPositions, withSignals, new UUID(0L, 0L), UUID.randomUUID());
+    }
+    
+    public Rail(String sessionName, Square square, List<Compass> railSectionPositions, boolean withSignals, UUID trainstationId, UUID id) {
+        super(sessionName, square, id);
+        
+        railSectionList = new ArrayList<RailSection>();
+        createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
+        setTrainstationId(trainstationId);
+        notifyCreatedRail();
+        
         if(withSignals) {
         	Signals signals = new Signals(sessionName, square);
         	this.signals = signals;
         };
     }
-
+    
     public Rail(String sessionName, Square square, List<Compass> railSectionPositions, UUID trainstationId, UUID id) {
-        super(sessionName, square, id);
-
-        setTrainstationId(trainstationId);
-        railSectionList = new ArrayList<RailSection>();
-        createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
-        notifyCreatedRail();
+    	this(sessionName, square, railSectionPositions, false, trainstationId, id);
     }
 
     // TODO: Welche Ressourcen kann eine Schiene haben und wann?
@@ -116,33 +120,36 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
             railSectionList.add(section);
         }
     }
-
+    
     /**
-     * Schickt Nachricht an Observer, wenn Schiene erstellt wurde.
-     */
-    private void notifyCreatedRail() {
-        MessageInformation messageInfo = new MessageInformation("CreateRail");
-        messageInfo.putValue("railId", getId());
+	 * Schickt Nachricht an Observer, wenn Schiene erstellt wurde.
+	 */
+	private void notifyCreatedRail() {
+		MessageInformation messageInfo = new MessageInformation("CreateRail");
+		messageInfo.putValue("railId", getId());
 
-        messageInfo.putValue("squareId", getSquareId());
-        // TODO: Später haben wir die richtigen SquareIds im Client, im Moment noch
-        // nicht!!
-        messageInfo.putValue("xPos", getXPos());
-        messageInfo.putValue("yPos", getYPos());
+		messageInfo.putValue("squareId", getSquareId());
+		messageInfo.putValue("trainstationId", getTrainstationId());
+		messageInfo.putValue("xPos", getXPos());
+		messageInfo.putValue("yPos", getYPos());
 
-        List<JsonObject> railSectionJsons = new ArrayList<JsonObject>();
-        for (RailSection section : railSectionList) {
-            JsonObject json = new JsonObject();
-            json.addProperty("railSectionId", section.getId().toString());
-            json.addProperty("node1", section.getNode1().toString());
-            json.addProperty("node2", section.getNode2().toString());
-            railSectionJsons.add(json);
-        }
-        messageInfo.putValue("railSections", railSectionJsons);
+		List<JsonObject> railSectionJsons = new ArrayList<JsonObject>();
+		for (RailSection section : railSectionList) {
+			JsonObject json = new JsonObject();
+			json.addProperty("railSectionId", section.getId().toString());
+			json.addProperty("node1", section.getNode1().toString());
+			json.addProperty("node2", section.getNode2().toString());
+			railSectionJsons.add(json);
+		}
+		messageInfo.putValue("railSections", railSectionJsons);
 
-        notifyChange(messageInfo);
-    }
-
+		notifyChange(messageInfo);
+	}
+	
+	public PlaceableOnRail getPlaceableOnrail() {
+		return placeableOnRail;
+	}
+    
     public void setPlaceableOnRail(PlaceableOnRail placeableOnRail) {
         this.placeableOnRail = placeableOnRail;
     }
@@ -162,6 +169,17 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     public void setTrainstationId(UUID trainstationId) {
         this.trainstationId = trainstationId;
     }
+    
+    public void deletePlaceableOnRail() {
+		placeableOnRail = null;
+		notifyDeletePlaceableOnRail();
+	}
+	
+	public void notifyDeletePlaceableOnRail() {
+		MessageInformation message = new MessageInformation("DeleteMine");
+		message.putValue("railId", getId());
+		notifyChange(message);
+	}
 
     /**
      * Gibt den Ausgang der Rail, und damit auch die Zukünftige Fahrtrichtung der
@@ -268,14 +286,20 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         for (RailSection section : railSectionList) {
             section.rotate(right);
         }
-        signals.switchSignals();
+        
+        if(signals != null) {
+        	signals.switchSignals();
+        }
     }
 
     public void rotate(boolean right, boolean notYet) {
         for (RailSection section : railSectionList) {
             section.rotate(right, notYet);
         }
-        signals.switchSignals();
+
+        if(signals != null) {
+        	signals.switchSignals();
+        }
     }
 
     @Override
@@ -298,6 +322,50 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
             return o.getXPos() - this.getXPos();
         }
     }
+    
+    /**
+	 * Prüft, ob die Rail eine Gerade ist
+	 * @return Gibt true zurück, wenn die Rail eine Gerade ist
+	 */
+	public boolean railIsStraight() {
+		
+		boolean railIsStraight = false;
+		
+		RailSection railSection = getFirstSection();
+		Compass node1 = railSection.getNode1();
+		Compass node2 = railSection.getNode2();
+		if ((node1 == Compass.NORTH && node2 == Compass.SOUTH) || 
+			(node1 == Compass.SOUTH && node2 == Compass.NORTH) ||
+			(node1 == Compass.EAST && node2 == Compass.WEST) ||
+			(node1 == Compass.WEST && node2 == Compass.EAST)) {
+			railIsStraight = true;
+		}		
+		return railIsStraight;
+	}
+	
+	/**
+	 * Gibt die Richtung der Rail zurück: Dabei ist die Richtung 
+	 * - North, wenn die Rail nur eine Gerade besitzt, welche von Norden nach Süden oder Süden nach Norden geht
+	 * - South, wenn die Rail nur eine Gerade besitzt, welche von Westen nach Osten oder Osten nach Westen geht
+	 * @return South oder North, wenn es eine Gerade ist, ansonsten Null
+	 */
+	public Compass getAlignment() {
+		
+		Compass alignment = null;
+		
+		RailSection railSection = getFirstSection();
+		Compass node1 = railSection.getNode1();
+		Compass node2 = railSection.getNode2();
+		
+		if ((node1 == Compass.NORTH && node2 == Compass.SOUTH) || 
+				(node1 == Compass.SOUTH && node2 == Compass.NORTH) ||
+				(node1 == Compass.EAST && node2 == Compass.WEST) ||
+				(node1 == Compass.WEST && node2 == Compass.EAST)) {
+			alignment = node2;
+		}
+	
+		return alignment;
+	}
 
     @Override
     public Rail loadFromMap(Square square, RoRSession session) {
@@ -314,7 +382,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         boolean createSignals = rail.getSignals() != null;
 
         // Neues Rail erstellen und damit an den Client schicken
-        Rail newRail = new Rail(session.getName(), square, railSectionPosition, createSignals);
+        Rail newRail = new Rail(session.getName(), square, railSectionPosition, createSignals, trainstationId, rail.getId());
         System.out.println("Neue Rail erstellt: " + newRail.toString());
         
         // Sonderfall für Krezungen, die Signale haben
@@ -335,6 +403,6 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	@Override
 	public void specificUpdate() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

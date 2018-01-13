@@ -3,6 +3,15 @@ package models.game;
 import communication.MessageInformation;
 import models.base.ModelBase;
 
+/**
+ * Die Signals werden in der Rail verwendet und stellen die vier Signale (Norden, Osten, Westen, Süden) dar.
+ * 
+ * Ein Signal kann aktiv (z.B. northSignalActive == true) sein, dies würde dann bedeuten, dass das Signal 
+ * grün leuchtet. 
+ * 
+ * Da wir zurzeit nur auf Kreuzungen Signale haben ist die Logik an manchen stellen stark auf diesen 
+ * Anwendungsfall reduziert, um die Logik überschaubar zu halten.
+ */
 public class Signals extends TickableGameObject {
 	private final static int DEFAULT_AUTO_SWITCH_INTERVAL_IN_SECONDS = 5;
 	private final static int DEFAULT_PENALTY = 5;
@@ -128,4 +137,24 @@ public class Signals extends TickableGameObject {
 			switchSignals();
 		}
 	}
+
+	public void changeConfig(int autoSwitchIntervalInSeconds, int penalty, int switchCost) {
+		this.autoSwitchIntervalInSeconds = autoSwitchIntervalInSeconds;
+		this.penalty = penalty;
+		this.switchCost = switchCost;
+		
+		notifyConfigChanged();
+	}
+	
+	private void notifyConfigChanged() {
+		MessageInformation messageInfo = new MessageInformation("UpdateConfigOfSignals");
+		messageInfo.putValue("signalsId", getId());
+		messageInfo.putValue("xPos", squarePosX);
+		messageInfo.putValue("yPos", squarePosY);
+		messageInfo.putValue("autoSwitchIntervalInSeconds", autoSwitchIntervalInSeconds);
+		messageInfo.putValue("penalty", penalty);
+		messageInfo.putValue("switchCost", switchCost);
+
+		notifyChange(messageInfo);
+	};
 }

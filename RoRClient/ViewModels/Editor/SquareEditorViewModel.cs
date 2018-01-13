@@ -186,6 +186,9 @@ namespace RoRClient.ViewModels.Editor
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Move-Methode für alle PlaceableOnSquare
+        /// </summary>
         public override void Move()
         {
             RoRSession editorSession = EditorSession.GetInstance();

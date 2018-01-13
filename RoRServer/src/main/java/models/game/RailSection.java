@@ -1,5 +1,7 @@
 package models.game;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import communication.MessageInformation;
@@ -58,6 +60,10 @@ public class RailSection extends ModelBase {
 
     public Compass getNode2() {
         return node2;
+    }
+    
+    public List<Compass> getNodes(){
+    	return Arrays.asList(getNode1(), getNode2());
     }
 
     /**

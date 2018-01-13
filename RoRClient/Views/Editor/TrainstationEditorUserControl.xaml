@@ -10,17 +10,17 @@
                      Canvas.Top="{Binding RealY, ElementName=trainstationEditorUserControl}"
                      Canvas.Left="{Binding RealX, ElementName=trainstationEditorUserControl}">
     <UserControl.Resources>
-        <converter:CompassToAngleConverter  x:Key="TrainstationAlignmentToAngleConverter"/>
+        <converter:CompassToAngleConverter  x:Key="CompassToAngleConverter"/>
     </UserControl.Resources>
 	<Canvas Width="{Binding SquareDim, ElementName=trainstationEditorUserControl}"
             Height="{Binding SquareDim, ElementName=trainstationEditorUserControl}">
-		<Image Width="{Binding SquareDim, ElementName=trainstationEditorUserControl}" Height="{Binding SquareDim, ElementName=trainstationEditorUserControl}" Source="pack://application:,,,/Resources/Images/Tools/trainstation.png">
+		<Image Width="{Binding SquareDim, ElementName=trainstationEditorUserControl}" Height="{Binding SquareDim, ElementName=trainstationEditorUserControl}" Source="pack://application:,,,/Resources/Images/trainstation.png">
             <Image.InputBindings>
-                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+                <MouseBinding MouseAction="RightClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
             </Image.InputBindings>
             <Image.LayoutTransform>
                 <TransformGroup>
-                    <RotateTransform Angle="{Binding Trainstation.Alignment, Mode=OneWay, Converter={StaticResource TrainstationAlignmentToAngleConverter}}" />
+                    <RotateTransform Angle="{Binding Trainstation.Alignment, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" />
                 </TransformGroup>
             </Image.LayoutTransform>
         </Image>
