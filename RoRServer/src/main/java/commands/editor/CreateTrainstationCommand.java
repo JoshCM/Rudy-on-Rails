@@ -19,17 +19,17 @@ import models.session.EditorSession;
 import models.session.RoRSession;
 
 public class CreateTrainstationCommand extends CommandBase {
+	private final static int OUTER_RAILS_COUNT = 8;
+	private final static int INNER_RAILS_COUNT = 6;
+	private final static int OUTER_RAILS_Y = OUTER_RAILS_COUNT / 2 * (-1);
+	private final static int INNER_RAILS_Y = INNER_RAILS_COUNT / 2 * (-1);
+	private static final int CURVED_RAIL_EAST_SOUTH_Y = -3;
+	private static final int CURVED_RAIL_EAST_NORTH_Y = 2;
+	private static final List<Integer> CROSSING_COORDINATES = Arrays.asList(-3,2);
+	
 	private int xPos;
 	private int yPos;
 	private Compass alignment;
-	private final static int TRAINSTATION_MARGIN = 1;
-	private final static int RIGHT_STRAIGHT_RAILS_START_Y = -4;
-	private final static int LEFT_STRAIGHT_RAILS_START_Y = -3;
-	private final static int RIGHT_STRAIGHT_RAILS_COUNT = 8;
-	private final static int LEFT_STRAIGHT_RAILS_COUNT = 6;
-	private static final int EAST_SOUTH_CURVED = -3;
-	private static final int EAST_NORTH_CURVED = 2;
-	private List<Integer> crossing = Arrays.asList(-3,2);
 	private Square spawnPointforLoco;
 
 	public CreateTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
@@ -89,28 +89,28 @@ public class CreateTrainstationCommand extends CommandBase {
 		List<Square> crossingTrainstationRailSquares = new ArrayList<Square>();
 		
 		// alle außenliegenden Squares werden hinzugefügt
-		for(int i = RIGHT_STRAIGHT_RAILS_START_Y; i < RIGHT_STRAIGHT_RAILS_COUNT + RIGHT_STRAIGHT_RAILS_START_Y; i++) {
+		for(int i = OUTER_RAILS_Y; i < OUTER_RAILS_COUNT + OUTER_RAILS_Y; i++) {
 			int railX = square.getXIndex() + 2;
 			int railY = square.getYIndex() + i;
 			Square trainstationRailSquare = map.getSquare(railX, railY);
 			
 			// wenn die Rail eine Kreuzung werden soll oder eine gerade Rail
-			if(crossing.contains(i))
+			if(CROSSING_COORDINATES.contains(i))
 				crossingTrainstationRailSquares.add(trainstationRailSquare);
 			else
 				straightTrainstationRailSquares.add(trainstationRailSquare);
 		}
 		
 		// alle innenliegenden Squares werden hinzugefügt
-		for(int i = LEFT_STRAIGHT_RAILS_START_Y; i < LEFT_STRAIGHT_RAILS_COUNT + LEFT_STRAIGHT_RAILS_START_Y; i++) {
+		for(int i = INNER_RAILS_Y; i < INNER_RAILS_COUNT + INNER_RAILS_Y; i++) {
 			int railX = square.getXIndex() + 1;
 			int railY = square.getYIndex() + i;
 			Square trainstationRailSquare = map.getSquare(railX, railY);
 			
 			// wenn die Rail eine Kurve werden soll oder eine gerade Rail
-			if(i == EAST_SOUTH_CURVED)
+			if(i == CURVED_RAIL_EAST_SOUTH_Y)
 				trainstationRailIds.add(createRail(trainstationRailSquare, trainstationId, eastSouthRailSectionPositions));
-			else if(i == EAST_NORTH_CURVED)
+			else if(i == CURVED_RAIL_EAST_NORTH_Y)
 				trainstationRailIds.add(createRail(trainstationRailSquare, trainstationId, eastNorthRailSectionPositions));
 			else
 				straightTrainstationRailSquares.add(trainstationRailSquare);
