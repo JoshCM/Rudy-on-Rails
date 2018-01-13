@@ -24,6 +24,12 @@ namespace RoRClient.Models.Game
             this.id = id;
             this.drivingDirection = drivingDirection;
             this.realDrivingDirection = drivingDirection;
+            SetAngleAccordingToDrivingDirection();
+            PropertyChanged += OnBasePropertyChanged;
+        }
+
+        private void SetAngleAccordingToDrivingDirection()
+        {
             switch (drivingDirection)
             {
                 case Compass.EAST:
@@ -39,7 +45,6 @@ namespace RoRClient.Models.Game
                     this.angle = 270;
                     break;
             }
-            PropertyChanged += OnBasePropertyChanged;
         }
 
         private void OnBasePropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -128,6 +133,7 @@ namespace RoRClient.Models.Game
                 }
             }
         }
+        int lastSpeedValueGreaterOrLessThanZero = 0;
         public int Speed
         {
             get
@@ -136,10 +142,53 @@ namespace RoRClient.Models.Game
             }
             set
             {
-                if(speed != value)
+                if (speed != value)
                 {
+                    InvertDrivingDirectionIfDrivingDirectionHasChanged(value);
+
+                    if (value != 0)
+                    {
+                        lastSpeedValueGreaterOrLessThanZero = value;
+                    }
+
                     speed = value;
+                    NotifyPropertyChanged("Speed");
                 }
+            }
+        }
+
+        private void InvertDrivingDirectionIfDrivingDirectionHasChanged(int value)
+        {
+            if (((speed > 0 && value < 0) || (speed < 0 && value > 0)) // Falls er direkt die Fahrtrichtung ändert
+            || ((value > 0 && lastSpeedValueGreaterOrLessThanZero < 0) || (value < 0 && lastSpeedValueGreaterOrLessThanZero > 0))) // oder die Fahrtrichtung nach einem Halt ändert
+            {
+                InvertDrivingDirection();
+            }
+        }
+
+        private void InvertDrivingDirection()
+        {
+            switch (RealDrivingDirection)
+            {
+                case Compass.NORTH:
+                    RealDrivingDirection = Compass.SOUTH;
+                    DrivingDirection = Compass.SOUTH;
+                    break;
+                case Compass.EAST:
+                    RealDrivingDirection = Compass.WEST;
+                    DrivingDirection = Compass.WEST;
+                    break;
+                case Compass.SOUTH:
+                    RealDrivingDirection = Compass.NORTH;
+                    DrivingDirection = Compass.NORTH;
+                    break;
+                case Compass.WEST:
+                    RealDrivingDirection = Compass.EAST;
+                    DrivingDirection = Compass.EAST;
+                    break;
+                default:
+                    Angle = 0;
+                    break;
             }
         }
     }
