@@ -1,12 +1,10 @@
 package models.game;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.UUID;
 
 import communication.MessageInformation;
 import models.session.GameSessionManager;
-import models.session.RoRSession;
 
 /**
  * 
@@ -87,7 +85,7 @@ public class Loco extends InteractiveGameObject {
 	}
 	
 	/**
-	 * Zug fährt rückwerts(letzter Wagon führt)
+	 * Zug fï¿½hrt rï¿½ckwerts(letzter Wagon fï¿½hrt)
 	 */
 	public void reversedDrive() {
 
@@ -112,7 +110,7 @@ public class Loco extends InteractiveGameObject {
 	}
 
 	/**
-	 * wenn der Zug das erste mal rückwerts fahren soll(alle Fahrtrichtungen sollen umgedreht werden)
+	 * wenn der Zug das erste mal rï¿½ckwerts fahren soll(alle Fahrtrichtungen sollen umgedreht werden)
 	 */
 	public void initialReversedDrive() {
 
