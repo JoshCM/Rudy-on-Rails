@@ -166,7 +166,6 @@ public class Loco extends InteractiveGameObject {
 		Compass actDirection = null;
 
 		for (Cart cart : carts) {
-			System.out.println("Drive: " + cart.getDrivingDirection());
 			actSquare = this.map.getSquareById(cart.getSquareId());
 			actDirection = cart.getDrivingDirection();
 			cart.updateSquare(nextSquare);
@@ -175,7 +174,7 @@ public class Loco extends InteractiveGameObject {
 			cart.notifyUpdatedCart();
 			nextDirection = actDirection;
 			nextSquare = actSquare;
-			System.out.println("Drive: " + cart.getDrivingDirection());
+
 		}
 	}
 
