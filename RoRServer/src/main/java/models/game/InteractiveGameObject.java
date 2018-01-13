@@ -55,4 +55,10 @@ public abstract class InteractiveGameObject extends TickableGameObject {
 	public void setSquareId(UUID id) {
 		this.squareId = id;
 	}
+	
+	public void updateSquare(Square s) {
+		this.squareId = s.getId();
+		this.setXPos(s.getXIndex());
+		this.setYPos(s.getYIndex());
+	}
 }

@@ -15,11 +15,15 @@ import models.session.RoRSession;
  * Weiche) besitzen
  */
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Comparable<Rail> {
-    private PlaceableOnRail placeableOnRail = null;
-    private UUID trainstationId;
-    private List<RailSection> railSectionList;
-    private Resource resource;
     private Signals signals;
+	// muss hier raus und eine Ebene tiefer(RailSection)
+	protected PlaceableOnRail placeableOnRail = null;
+	protected RailSection section1;
+	protected RailSection section2;
+	private Square square;
+	private UUID trainstationId;
+	protected List<RailSection> railSectionList;
+	private Resource resource;
 
     /**
      * Konstruktor für Geraden oder Kurven

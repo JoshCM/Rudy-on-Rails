@@ -15,23 +15,13 @@ namespace RoRClient.Models.Game
     {
         private int speed;
         private Compass drivingDirection;
-        private Compass realDrivingDirection;
 
         public Loco(Guid id, Compass drivingDirection, Square square) : base(square)
         {
             this.id = id;
             this.drivingDirection = drivingDirection;
-            this.realDrivingDirection = drivingDirection;
 
-            base.PropertyChanged += OnBasePropertyChanged;
-        }
-
-        private void OnBasePropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if(e.PropertyName == "Square")
-            {
-                RealDrivingDirection = DrivingDirection;
-            }
+            //Je nachdem wie der Zug auf der Schiene positioniert ist muss die Rotation gesetzt werden.
         }
 
         public int Speed
@@ -49,23 +39,7 @@ namespace RoRClient.Models.Game
                 }
             }
         }
-
-        public Compass RealDrivingDirection
-        {
-            get
-            {
-                return realDrivingDirection;
-            }
-            set
-            {
-                if (realDrivingDirection != value)
-                {
-                    realDrivingDirection = value;
-                    NotifyPropertyChanged("RealDrivingDirection");
-                }
-            }
-        }
-
+     
         public Compass DrivingDirection
         {
             get
@@ -94,6 +68,17 @@ namespace RoRClient.Models.Game
             {
                 carts = value;
             }
+        }
+
+        public Cart getCartById(Guid cartId)
+        {
+            foreach(Cart c in Carts){
+                if (c.Id.Equals(cartId))
+                {
+                    return c;
+                }
+            }
+            return null;
         }
     }
 }
