@@ -23,43 +23,19 @@ namespace RoRClient.BindingConverter
             {
                 ObservableCollection<RailSection> railSections = (ObservableCollection<RailSection>)value;
                 String railsection = parameter as string;
-              
-
                 if (railSections.Count == 1)
                 {
                     RailSection railSection = railSections.First();
 
                     List<Compass> directionsLis = railSection.GetNodesAsList();
-                    directionsLis.
+                    int i = Compass.NORTH.CompareTo(Compass.SOUTH);
+                    int j = Compass.SOUTH.CompareTo(Compass.NORTH);
 
 
+                    String imageName = "rail_"+directionsLis[0].ToString() + "_"+ directionsLis[1].ToString() + ".png";
 
-                    List<Compass> positionList = railSection.GetNodesAsList();
-
-                    if (positionList.Contains(Compass.NORTH) && positionList.Contains(Compass.SOUTH))
-                    {
-                        return IMAGE_FOLDER_PATH + "rail_ns.png";
-                    }
-                    else if (positionList.Contains(Compass.EAST) && positionList.Contains(Compass.WEST))
-                    {
-                        return IMAGE_FOLDER_PATH + "rail_ew.png";
-                    }
-                    else if (positionList.Contains(Compass.SOUTH) && positionList.Contains(Compass.WEST))
-                    {
-                        return IMAGE_FOLDER_PATH + "railcurve_sw.png";
-                    }
-                    else if (positionList.Contains(Compass.SOUTH) && positionList.Contains(Compass.EAST))
-                    {
-                        return IMAGE_FOLDER_PATH + "railcurve_se.png";
-                    }
-                    else if (positionList.Contains(Compass.NORTH) && positionList.Contains(Compass.WEST))
-                    {
-                        return IMAGE_FOLDER_PATH + "railcurve_nw.png";
-                    }
-                    else if (positionList.Contains(Compass.NORTH) && positionList.Contains(Compass.EAST))
-                    {
-                        return IMAGE_FOLDER_PATH + "railcurve_ne.png";
-                    }
+                    return IMAGE_FOLDER_PATH + imageName;
+                  
                 }
                 else if (railSections.Count == 2)
                 {

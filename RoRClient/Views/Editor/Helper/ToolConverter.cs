@@ -38,8 +38,8 @@ namespace RoRClient.Views.Editor.Helper
                     node2 = Compass.WEST;
                     break;
                 case "railcurve_se":
-                    node1 = Compass.SOUTH;
-                    node2 = Compass.EAST;
+                    node1 = Compass.EAST;
+                    node2 = Compass.SOUTH;
                     break;
                 case "railcurve_sw":
                     node1 = Compass.SOUTH;

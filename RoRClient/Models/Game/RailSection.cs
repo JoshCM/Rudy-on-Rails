@@ -63,5 +63,10 @@ namespace RoRClient.Models.Game
             positionList.Add(node2);
             return positionList;
         }
+
+       public List<Compass> GetNodesAsSortedList()
+        {
+            return sort(GetNodesAsList());
+        }
     }
 }

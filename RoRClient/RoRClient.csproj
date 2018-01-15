@@ -452,12 +452,7 @@
     <Folder Include="Resources\Images\Tools\stations\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\railcurve_ne.png" />
-    <Resource Include="Resources\Images\railcurve_nw.png" />
-    <Resource Include="Resources\Images\railcurve_se.png" />
-    <Resource Include="Resources\Images\railcurve_sw.png" />
-    <Resource Include="Resources\Images\rail_ew.png" />
-    <Resource Include="Resources\Images\rail_ns.png" />
+    <Resource Include="Resources\Images\rail_EAST_SOUTH.png" />
     <Resource Include="Resources\Images\Tools\rails\railcurve_sw.png" />
     <Resource Include="Resources\Images\Tools\rails\rail_ew.png" />
     <Resource Include="Resources\Images\Tools\rails\rail_ns.png" />
@@ -476,17 +471,21 @@
     <Resource Include="Resources\Images\container_coal.png" />
     <Resource Include="Resources\Images\container_gold.png" />
     <Resource Include="Resources\Images\Tools\rails\rail_crossing.png" />
-    <Resource Include="Resources\Images\rail_crossing.png" />
     <Resource Include="Resources\Images\Tools\switches\switch_snA_se.png" />
-    <Resource Include="Resources\Images\switch_sn_se.png" />
     <Resource Include="Resources\Images\Tools\switches\switch_sn_swA.png" />
     <Resource Include="Resources\Images\Tools\switches\switch_snA_sw.png" />
     <Resource Include="Resources\Images\Tools\switches\switch_sn_se.png" />
     <Resource Include="Resources\Images\Tools\switches\switch_wn_we.png" />
-    <Resource Include="Resources\Images\switch_wn_we.png" />
     <Resource Include="Resources\Images\railcurve_sw_transparent.png" />
     <Resource Include="Resources\Images\rail_ns_transparent.png" />
     <Resource Include="Resources\Images\trainstation.png" />
+    <Resource Include="Resources\Images\rail_EAST_WEST.png" />
+    <Resource Include="Resources\Images\rail_NORTH_EAST.png" />
+    <Resource Include="Resources\Images\rail_NORTH_SOUTH.png" />
+    <Resource Include="Resources\Images\rail_NORTH_SOUTH_inactive.png" />
+    <Resource Include="Resources\Images\rail_NORTH_WEST.png" />
+    <Resource Include="Resources\Images\rail_SOUTH_WEST.png" />
+    <Resource Include="Resources\Images\rail_SOUTH_WEST_inactive.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
