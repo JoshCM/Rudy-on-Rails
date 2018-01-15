@@ -54,10 +54,12 @@ public class CommandCreatorTests {
 
 	@Test
 	public void CreateTrainstationCommandIsCreatedViaName() {
+		int trainstationX = 0;
+		int trainstationY = 4;
 		MessageInformation messageInformation = new MessageInformation();
-		messageInformation.putValue("xPos", 0);
-		messageInformation.putValue("yPos", 1);
-		messageInformation.putValue("alignment", Compass.NORTH.toString());
+		messageInformation.putValue("xPos", trainstationX);
+		messageInformation.putValue("yPos", trainstationY);
+		messageInformation.putValue("alignment", Compass.EAST.toString());
 
 		RoRSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
@@ -70,10 +72,15 @@ public class CommandCreatorTests {
 		} catch (Exception e) {
 
 		}
-
+		createdCommand.execute();
+		
 		assertNotNull(createdCommand);
 		assertEquals(commandName, createdCommand.getClass().getName());
 		assertEquals(command.getClass(), createdCommand.getClass());
+
+		Class<?> actualClass = session.getMap().getSquare(trainstationX, trainstationY).getPlaceableOnSquare().getClass();
+		
+		assertEquals(Trainstation.class, actualClass);
 	}
 	
 	@Test
