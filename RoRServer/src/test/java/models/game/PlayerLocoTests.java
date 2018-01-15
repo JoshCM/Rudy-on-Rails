@@ -17,7 +17,7 @@ import models.session.EditorSessionManager;
 import models.session.GameSession;
 import models.session.GameSessionManager;
 
-public class LocoTests {
+public class PlayerLocoTests {
 
 	@Before
 	public void initTests() {
@@ -29,17 +29,15 @@ public class LocoTests {
 		Loco loco = createTestLoco();
 		
 		MessageInformation messageInfo = TopicMessageQueue.getInstance()
-				.getFirstFoundMessageInformationForMessageType("CreateLoco");
+				.getFirstFoundMessageInformationForMessageType("CreatePlayerLoco");
 
 		UUID messageInfoLocoId = messageInfo.getValueAsUUID("locoId");
-		//UUID messageInfoSquareId = messageInfo.getValueAsUUID("squareId");
 		int messageInfoXPos = messageInfo.getValueAsInt("xPos");
 		int messageInfoYPos = messageInfo.getValueAsInt("yPos");
 
 		assertEquals(loco.getId(), messageInfoLocoId);
 		assertEquals(loco.getXPos(), messageInfoXPos);
 		assertEquals(loco.getYPos(), messageInfoYPos);
-		//assertEquals(loco.getSquareId(), messageInfoSquareId);
 	}
 	
 	/**
@@ -157,9 +155,8 @@ public class LocoTests {
 		squareLoco.setPlaceableOnSquare(railLoco);
 		squareCart.setPlaceableOnSquare(railCart);
 		
-		Loco loco = new Loco(gameSession.getName(), squareLoco, player.getId());
+		PlayerLoco loco = new PlayerLoco(gameSession.getName(), squareLoco, player.getId());
 		
 		return loco;
 	}
-	
 }

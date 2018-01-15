@@ -11,7 +11,7 @@ namespace RoRClient.Models.Game
     /// <summary>
     /// Klasse für die Loco, die eine Liste von Carts enthält
     /// </summary>
-    public class Loco : InteractiveGameObject, IPlaceableOnRail
+    public abstract class Loco : InteractiveGameObject, IPlaceableOnRail
     {
         private int speed;
         private Compass drivingDirection;
@@ -20,8 +20,6 @@ namespace RoRClient.Models.Game
         {
             this.id = id;
             this.drivingDirection = drivingDirection;
-
-            //Je nachdem wie der Zug auf der Schiene positioniert ist muss die Rotation gesetzt werden.
         }
 
         public int Speed

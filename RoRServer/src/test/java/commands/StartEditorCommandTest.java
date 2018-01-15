@@ -1,6 +1,8 @@
 package commands;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +48,7 @@ public class StartEditorCommandTest {
 	}
 
 	@Test
-	public void EditorShouldStartLoadedMap() {
+	public void editorShouldStartLoadedMap() {
 		MessageInformation messageInformation = new MessageInformation();
 		EditorSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
@@ -79,7 +81,7 @@ public class StartEditorCommandTest {
 					} 
 				}
 				if(!contains) {
-					assertEquals(null, square.getPlaceableOnSquare());
+					assertNull(square.getPlaceableOnSquare());
 				}
 			}
 		}

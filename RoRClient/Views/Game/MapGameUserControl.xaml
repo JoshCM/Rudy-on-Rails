@@ -51,12 +51,17 @@
                         </DataTemplate>
                     </ItemsControl.Resources>
                 </ItemsControl>
-                
-                <ItemsControl ItemsSource="{Binding LocoCollection}">
+
+                <ItemsControl ItemsSource="{Binding Locos}">
                     <ItemsControl.Resources>
-                        <DataTemplate DataType="{x:Type game:LocoGameViewModel}">
+                        <DataTemplate DataType="{x:Type game:PlayerLocoGameViewModel}">
                             <Canvas>
-                                <vg:LocoGameUserControl DataContext="{Binding }" X="{Binding SquarePosX}" Y="{Binding SquarePosY}" RotationAngle="{Binding Angle}"/>
+                                <vg:PlayerLocoGameUserControl DataContext="{Binding }" X="{Binding SquarePosX}" Y="{Binding SquarePosY}" RotationAngle="{Binding Angle}"/>
+                            </Canvas>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type game:GhostLocoGameViewModel}">
+                            <Canvas>
+                                <vg:GhostLocoGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"  RotationAngle="{Binding Angle}"/>
                             </Canvas>
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type game:CartGameViewModel}">

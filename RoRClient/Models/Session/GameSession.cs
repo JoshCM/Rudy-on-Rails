@@ -69,9 +69,9 @@ namespace RoRClient.Models.Session
         public void AddLoco(Loco loco)
         {
             locos.Add(loco);
-            NotifyPropertyChanged("Locos",null,loco);
-            
+            NotifyPropertyChanged("Locos", null, loco);
         }
+
         public void AddCart(Cart cart)
         {
             carts.Add(cart);

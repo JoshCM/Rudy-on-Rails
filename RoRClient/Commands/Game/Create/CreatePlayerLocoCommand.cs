@@ -8,30 +8,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.Commands.Game.Update
+namespace RoRClient.Commands.Game.Create
 {
-    class UpdateLocoPositionCommand : CommandBase
+    class CreatePlayerLocoCommand : CommandBase
     {
         private Guid locoId;
+        private Guid playerId;
         private int xPos;
         private int yPos;
         private Compass drivingDirection;
 
-        public UpdateLocoPositionCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        public CreatePlayerLocoCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
+            locoId = Guid.Parse(messageInformation.GetValueAsString("locoId"));
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
             drivingDirection = (Compass)Enum.Parse(typeof(Compass), messageInformation.GetValueAsString("drivingDirection"));
-            locoId = Guid.Parse(messageInformation.GetValueAsString("locoId"));
+            playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
         }
 
         public override void Execute()
         {
-            GameSession gameSession = GameSession.GetInstance();
-            Square square = gameSession.Map.GetSquare(xPos, yPos);
-            Loco loco = gameSession.GetLocoById(locoId);
-            loco.Square = square;
-            loco.DrivingDirection = drivingDirection;
+            Player player = session.GetPlayerById(playerId);
+            Square square = session.Map.GetSquare(xPos, yPos);
+            
+            PlayerLoco loco = new PlayerLoco(locoId, drivingDirection, square);
+            player.Loco = loco;
+
+            ((GameSession)session).AddLoco(loco);
         }
     }
 }

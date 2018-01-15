@@ -11,7 +11,7 @@ import models.session.GameSessionManager;
  * @author Isabel Rott, Michelle Le Klasse fuer eine Lok, zu der eine Liste von
  *         Carts gehoert
  */
-public class Loco extends InteractiveGameObject {
+public abstract class Loco extends InteractiveGameObject {
 	private ArrayList<Cart> carts;
 	private Rail rail;
 	private UUID playerId;
@@ -35,8 +35,6 @@ public class Loco extends InteractiveGameObject {
 		this.drivingDirection = rail.getFirstSection().getNode1();
 		this.speed = 0;
 		this.playerId = playerId;
-		NotifyLocoCreated();
-		this.addInitialCart();
 	}
 
 	/**
@@ -225,19 +223,6 @@ public class Loco extends InteractiveGameObject {
 	}
 
 	/**
-	 * notifiziert wenn eine Lok erstellt wurde
-	 */
-	private void NotifyLocoCreated() {
-		MessageInformation messageInfo = new MessageInformation("CreateLoco");
-		messageInfo.putValue("locoId", getId());
-		messageInfo.putValue("xPos", getXPos());
-		messageInfo.putValue("yPos", getYPos());
-		messageInfo.putValue("drivingDirection", drivingDirection.toString());
-		messageInfo.putValue("playerId", this.playerId);
-		notifyChange(messageInfo);
-	}
-
-	/**
 	 * notifiziert wenn die Position der Lok veraendert wurde
 	 */
 	private void NotifyLocoPositionChanged() {
@@ -246,7 +231,6 @@ public class Loco extends InteractiveGameObject {
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
 		messageInfo.putValue("drivingDirection", drivingDirection.toString());
-		messageInfo.putValue("playerId", this.playerId);
 		notifyChange(messageInfo);
 	}
 
@@ -316,5 +300,9 @@ public class Loco extends InteractiveGameObject {
 
 	public UUID getPlayerId() {
 		return playerId;
+	}
+	
+	public Compass getDrivingDirection() {
+		return drivingDirection;
 	}
 }
