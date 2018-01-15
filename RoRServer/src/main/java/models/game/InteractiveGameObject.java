@@ -14,6 +14,11 @@ public abstract class InteractiveGameObject extends TickableGameObject {
     
 	public InteractiveGameObject(String sessionName, Square square) {
 		super(sessionName);
+		
+		if(square == null) {
+			throw new IllegalArgumentException("Square must not be null");
+		}
+		
 		this.className = getClass().getName();
 		this.squareId = square.getId();
 		this.xPos = square.getXIndex();
