@@ -3,10 +3,7 @@ package commands.editor;
 import com.google.gson.JsonObject;
 import commands.base.CommandBase;
 import communication.MessageInformation;
-import models.game.Compass;
-import models.game.Map;
-import models.game.Rail;
-import models.game.Square;
+import models.game.*;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
@@ -31,16 +28,17 @@ public class CreateSwitchCommand extends CommandBase {
         EditorSession editorSession = (EditorSession) session;
         Map map = editorSession.getMap();
         Square square = map.getSquare(xPos, yPos);
-
-        List<Compass> railSectionPositions = new ArrayList<Compass>();
+        List<Enum> railSectionPositions = new ArrayList<Enum>();
         for(JsonObject json : railSectionData) {
             Compass node1 = Compass.valueOf(json.get("node1").getAsString());
             Compass node2 = Compass.valueOf(json.get("node2").getAsString());
             Compass node3 = Compass.valueOf(json.get("node3").getAsString());
             railSectionPositions.add(node1);
             railSectionPositions.add(node2);
+            railSectionPositions.add(RailSectionStatus.ACTIVE);
             railSectionPositions.add(node1);
             railSectionPositions.add(node3);
+            railSectionPositions.add(RailSectionStatus.INACTIVE);
         }
 
         Rail rail = new Rail(session.getName(), square, railSectionPositions);

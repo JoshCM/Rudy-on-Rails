@@ -1,11 +1,12 @@
 package models.game;
 
+import java.util.StringTokenizer;
 import java.util.UUID;
 
 import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
 import models.base.ModelBase;
-import models.helper.CompassHelper;
+import models.helper.StringToEnumConverter;
 
 /**
  * Klasse für ein Schienenstueck mit "Eingang" und "Ausgang"
@@ -18,9 +19,10 @@ public class RailSection extends ModelBase {
     private Compass node1;
     private Compass node2;
     private boolean isDrivable;
+    private RailSectionStatus railSectionStatus;
 
     // TODO: hier muss placeableOnSquareSection
-    public RailSection(String sessionName, Rail rail, Compass node1, Compass node2) {
+    public RailSection(String sessionName, Rail rail, Compass node1, Compass node2, RailSectionStatus railSectionStatus) {
         super(sessionName);
 
         if (node1 == node2) {
@@ -35,16 +37,19 @@ public class RailSection extends ModelBase {
         this.node1 = node1;
         this.node2 = node2;
         this.isDrivable = true;
+        this.railSectionStatus = railSectionStatus;
     }
 
     /**
      * @param sessionName
      * @param rail
-     * @param node1       Gültige Werte sind N,E,S,W und NORTH, EAST, WEST, SOUTH
-     * @param node2       Gültige Werte sind N,E,S,W und NORTH, EAST, WEST, SOUTH
+     * @param node1                 Gültige Werte sind N,E,S,W und NORTH, EAST, WEST, SOUTH
+     * @param node2                 Gültige Werte sind N,E,S,W und NORTH, EAST, WEST,
+     * @param railSectionStatus     Gülstige Werte sind ACTIVE; INACTIVE, FORBIDDEN
      */
-    public RailSection(String sessionName, Rail rail, String node1, String node2) {
-        this(sessionName, rail, CompassHelper.convertStringToNode(node1), CompassHelper.convertStringToNode(node2));
+    public RailSection(String sessionName, Rail rail, String node1, String node2, String railSectionStatus) {
+        this(sessionName, rail, StringToEnumConverter.convertStringToNode(node1), StringToEnumConverter.convertStringToNode(node2),
+                StringToEnumConverter.convertStringToRailSectionStatus(railSectionStatus));
     }
 
 
@@ -59,6 +64,8 @@ public class RailSection extends ModelBase {
     public Compass getNode2() {
         return node2;
     }
+
+    public RailSectionStatus getRailSectionStatus() {return railSectionStatus;}
 
     /**
      * Rotiert die RailSectionPositions.

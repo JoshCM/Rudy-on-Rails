@@ -18,8 +18,6 @@ import models.session.RoRSession;
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Comparable<Rail> {
 	// muss hier raus und eine Ebene tiefer(RailSection)
 	protected PlaceableOnRail placeableOnRail = null;
-	protected RailSection section1;
-	protected RailSection section2;
 	private UUID trainstationId;
 	protected List<RailSection> railSectionList;
 	private Resource resource;
@@ -27,14 +25,14 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	/**
 	 * Konstruktor für Geraden oder Kurven
 	 */
-	public Rail(String sessionName, Square square, List<Compass> railSectionPositions) {
+	public Rail(String sessionName, Square square, List<Enum> railSectionPositions) {
 		super(sessionName, square);
 		railSectionList = new ArrayList<RailSection>();
 		createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
 		notifyCreatedRail();
 	}
 
-	public Rail(String sessionName, Square square, List<Compass> railSectionPositions, UUID trainstationId, UUID id) {
+	public Rail(String sessionName, Square square, List<Enum> railSectionPositions, UUID trainstationId, UUID id) {
 		super(sessionName, square, id);
 
 		setTrainstationId(trainstationId);
@@ -98,12 +96,21 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	 *
 	 * @param sessionName
 	 * @param railSectionPositions
-	 */
-	private void createRailSectionsForRailSectionPositions(String sessionName, List<Compass> railSectionPositions) {
-		for (int i = 0; i < railSectionPositions.size(); i += 2) {
-			RailSection section = new RailSection(sessionName, this, railSectionPositions.get(i),
-					railSectionPositions.get(i + 1));
-			railSectionList.add(section);
+F	 */
+	private void createRailSectionsForRailSectionPositions(String sessionName, List<Enum> railSectionPositions) {
+		// für alte maps
+	    if(railSectionPositions.size() <3){
+            for (int i = 0; i < railSectionPositions.size(); i += 2) {
+                RailSection section = new RailSection(sessionName, this, (Compass) railSectionPositions.get(i),
+                        (Compass) railSectionPositions.get(i + 1), RailSectionStatus.ACTIVE);
+                railSectionList.add(section);
+            }
+        } else {
+            for (int i = 0; i < railSectionPositions.size(); i += 3) {
+                RailSection section = new RailSection(sessionName, this, (Compass) railSectionPositions.get(i),
+                        (Compass) railSectionPositions.get(i + 1), (RailSectionStatus) railSectionPositions.get(i + 2));
+                railSectionList.add(section);
+            }
 		}
 	}
 
@@ -126,6 +133,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 			json.addProperty("railSectionId", section.getId().toString());
 			json.addProperty("node1", section.getNode1().toString());
 			json.addProperty("node2", section.getNode2().toString());
+			json.addProperty("railSectionStatus", section.getRailSectionStatus().toString());
 			railSectionJsons.add(json);
 		}
 		messageInfo.putValue("railSections", railSectionJsons);
@@ -293,7 +301,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		Rail rail = (Rail) square.getPlaceableOnSquare();
 
 		// Hole die SectionPositions aus den RailSections und speichere in Liste
-		List<Compass> railSectionPosition = new ArrayList<Compass>();
+		List<Enum> railSectionPosition = new ArrayList<Enum>();
 		for (RailSection section : rail.getRailSectionList()) {
 			railSectionPosition.add(section.getNode1());
 			railSectionPosition.add(section.getNode2());

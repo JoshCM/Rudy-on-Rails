@@ -22,44 +22,49 @@ namespace RoRClient.BindingConverter
             if (value != null)
             {
                 ObservableCollection<RailSection> railSections = (ObservableCollection<RailSection>)value;
-                String railsection = parameter as string;
-                if (railSections.Count == 1)
+                bool northSouth = railSections.Where(x => x.GetNodesAsList().Contains(Compass.NORTH) && x.GetNodesAsList().Contains(Compass.SOUTH)).Any();
+                bool eastWest = railSections.Where(x => x.GetNodesAsList().Contains(Compass.EAST) && x.GetNodesAsList().Contains(Compass.WEST)).Any();
+                String param = parameter as string;
+                RailSection railSection1 = railSections.First();
+
+                ///RailSection railSection2 = railSections[1] nur falls len von railSections == 2
+
+                List<String> directionsLis = railSection1.GetNodesAsSortedStringList();
+
+                if (param.Contains("1"))
                 {
-                    RailSection railSection = railSections.First();
 
-                    List<Compass> directionsLis = railSection.GetNodesAsList();
-                    int i = Compass.NORTH.CompareTo(Compass.SOUTH);
-                    int j = Compass.SOUTH.CompareTo(Compass.NORTH);
-
-
-                    String imageName = "rail_"+directionsLis[0].ToString() + "_"+ directionsLis[1].ToString() + ".png";
-
-                    return IMAGE_FOLDER_PATH + imageName;
-                  
-                }
-                else if (railSections.Count == 2)
-                {
-                    bool northSouth = railSections.Where(x => x.GetNodesAsList().Contains(Compass.NORTH) && x.GetNodesAsList().Contains(Compass.SOUTH)).Any();
-                    bool eastWest = railSections.Where(x => x.GetNodesAsList().Contains(Compass.EAST) && x.GetNodesAsList().Contains(Compass.WEST)).Any();
-
-                    /// To -Do 
-                    /// aus RS String generieren der imagepath entspricht und diesen auf bild mappen
-                    /// ausnahme für crossing hinzufügen
-                    if (railsection == "1")
+                    if (railSections.Count == 2)
                     {
+                        /// evtl sowas ?railSections.Where(x => x.GetNodesAsList().Contains(Compass.NORTH) && x.GetNodesAsList().Contains(Compass.SOUTH)).Any();
 
-                        return IMAGE_FOLDER_PATH + "rail_ns.png";
-
+                        foreach (RailSection railSection in railSections)
+                        {
+                            if (railSection.Status == RailSectionStatus.INACTIVE)
+                            {
+                                return IMAGE_FOLDER_PATH + "rail_" + railSection.GetNodesAsSortedStringList()[0] + "_" + railSection.GetNodesAsSortedStringList()[1] + "_inactive.png";
+                            }
+                        }
                     }
-                    else if (railsection == "2") {
-                        return IMAGE_FOLDER_PATH + "rail_ew.png";
 
+                }
+                else if (param.Contains("2"))
+                {
+                    if (northSouth && eastWest)
+                    {
+                        return IMAGE_FOLDER_PATH + "crossing.png";
+                    }
+
+                    foreach (RailSection railSection in railSections)
+                    {
+                        if (railSection.Status == RailSectionStatus.ACTIVE)
+                        {
+                            return IMAGE_FOLDER_PATH + "rail_" + railSection.GetNodesAsSortedStringList()[0] + "_" + railSection.GetNodesAsSortedStringList()[1] + ".png";
+                        }
                     }
                 }
 
-                    
             }
-
             return IMAGE_FOLDER_PATH + "dummy.png";
         }
 

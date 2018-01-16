@@ -56,7 +56,7 @@ public class CreateTrainstationCommand extends CommandBase {
 		// Railsection werden erstellt
 		Compass railSectionPositionNode1 = Compass.NORTH;
 		Compass railSectionPositionNode2 = Compass.SOUTH;
-		List<Compass> railSectionPositions = Arrays.asList(railSectionPositionNode1, railSectionPositionNode2);
+		List<Enum> railSectionPositions = Arrays.asList(railSectionPositionNode1, railSectionPositionNode2);
 		
 		// Squares für die Rails der Trainstation werden gefunden
 		Square squareTop = map.getSquare(square.getXIndex() + TRAINSTATION_MARGIN,

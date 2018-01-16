@@ -7,11 +7,7 @@ import com.google.gson.JsonObject;
 
 import commands.base.CommandBase;
 import communication.MessageInformation;
-import models.game.Map;
-import models.game.Rail;
-import models.game.RailSection;
-import models.game.Compass;
-import models.game.Square;
+import models.game.*;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
@@ -34,12 +30,14 @@ public class CreateRailCommand extends CommandBase {
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(xPos, yPos);
 		
-		List<Compass> railSectionPositions = new ArrayList<Compass>();
+		List<Enum> railSectionPositions = new ArrayList<Enum>();
 		for(JsonObject json : railSectionData) {
 			Compass node1 = Compass.valueOf(json.get("node1").getAsString());
 			Compass node2 = Compass.valueOf(json.get("node2").getAsString());
+			RailSectionStatus railSectionStatus = RailSectionStatus.valueOf(json.get("railSectionStatus").getAsString());
 			railSectionPositions.add(node1);
 			railSectionPositions.add(node2);
+			railSectionPositions.add(railSectionStatus);
 		}
 		
 		Rail rail = new Rail(session.getName(), square, railSectionPositions);

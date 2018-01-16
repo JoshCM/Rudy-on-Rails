@@ -63,10 +63,32 @@ namespace RoRClient.Models.Game
             positionList.Add(node2);
             return positionList;
         }
+        
 
-       public List<Compass> GetNodesAsSortedList()
+        /// <summary>
+        /// Gibt alle Knoten als eine alphabetisch sortierte Liste zurück
+        /// </summary>
+        /// <returns></returns>
+        public List<String> GetNodesAsSortedStringList()
         {
-            return sort(GetNodesAsList());
+            List<String> directions = new List<String>();
+            directions.Add(node1.ToString());
+            directions.Add(node2.ToString());
+            directions.Sort();
+            return directions;
+        }
+
+        /// <summary>
+        /// Gibt an ob eine Railsection befahrbar ist
+        /// </summary>
+        /// <returns></returns>
+        public Boolean isActive()
+        {
+            if (status == RailSectionStatus.ACTIVE)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

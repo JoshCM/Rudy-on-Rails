@@ -7,10 +7,7 @@ import com.google.gson.JsonObject;
 
 import commands.base.CommandBase;
 import communication.MessageInformation;
-import models.game.Compass;
-import models.game.Map;
-import models.game.Rail;
-import models.game.Square;
+import models.game.*;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
@@ -32,12 +29,14 @@ public class CreateCrossingCommand extends CommandBase {
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(xPos, yPos);
 		
-		List<Compass> railSectionPositions = new ArrayList<Compass>();
+		List<Enum> railSectionPositions = new ArrayList<Enum>();
 		railSectionPositions.add(Compass.NORTH);
 		railSectionPositions.add(Compass.SOUTH);
+		railSectionPositions.add(RailSectionStatus.ACTIVE);
 		railSectionPositions.add(Compass.EAST);
 		railSectionPositions.add(Compass.WEST);
-		
+		railSectionPositions.add(RailSectionStatus.ACTIVE);
+
 		Rail rail = new Rail(session.getName(), square, railSectionPositions);
 		square.setPlaceableOnSquare(rail);
 	}

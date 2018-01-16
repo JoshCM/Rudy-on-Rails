@@ -4,13 +4,14 @@
 
 package models.helper;
 
-import exceptions.InvalidCompassDirectionString;
+import exceptions.InvalidStringForEnumType;
 import models.game.Compass;
 import models.game.RailSection;
+import models.game.RailSectionStatus;
 
 import java.util.Random;
 
-public class CompassHelper {
+public class StringToEnumConverter {
 
     /**
      * @param node Gültige Werte sind die Strings N, E, S, W, NORTH, EAST, SOUTH, WEST
@@ -21,7 +22,14 @@ public class CompassHelper {
         if (node.equalsIgnoreCase("EAST") || node.equalsIgnoreCase("E")) return Compass.EAST;
         if (node.equalsIgnoreCase("SOUTH") || node.equalsIgnoreCase("S")) return Compass.SOUTH;
         if (node.equalsIgnoreCase("WEST") || node.equalsIgnoreCase("W")) return Compass.WEST;
-        throw new InvalidCompassDirectionString("The Compass Direction you tried to use is invalid");
+        throw new InvalidStringForEnumType("The Compass Direction you tried to use is invalid");
+    }
+
+    public static RailSectionStatus convertStringToRailSectionStatus(String status) {
+        if (status.equalsIgnoreCase("ACTIVE"))  return RailSectionStatus.ACTIVE;
+        if (status.equalsIgnoreCase("INACTIVE"))  return RailSectionStatus.INACTIVE;
+        if (status.equalsIgnoreCase("FORBIDDEN"))  return RailSectionStatus.FORBIDDEN;
+        throw new InvalidStringForEnumType("Incorrect status for rail section");
     }
 
     public static Compass getRandomNode() {

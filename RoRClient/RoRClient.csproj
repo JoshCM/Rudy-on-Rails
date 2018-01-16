@@ -448,9 +448,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Images\Tools\stations\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Images\rail_EAST_SOUTH.png" />
     <Resource Include="Resources\Images\Tools\rails\railcurve_sw.png" />
@@ -460,7 +458,7 @@
     <Resource Include="Resources\Images\Tools\rails\railcurve_nw.png" />
     <Resource Include="Resources\Images\Tools\rails\railcurve_se.png" />
     <Resource Include="Resources\Images\dummy.png" />
-    <Resource Include="Resources\Images\Tools\trainstation.png" />
+    <Resource Include="Resources\Images\Tools\stations\trainstation.png" />
     <Resource Include="Resources\Images\game_minimap_dummy.png" />
     <Resource Include="Resources\Images\game_map_dummy.jpg" />
     <Resource Include="Resources\Images\rotate_right.png" />
@@ -471,21 +469,18 @@
     <Resource Include="Resources\Images\container_coal.png" />
     <Resource Include="Resources\Images\container_gold.png" />
     <Resource Include="Resources\Images\Tools\rails\rail_crossing.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_snA_se.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_sn_swA.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_snA_sw.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_sn_se.png" />
-    <Resource Include="Resources\Images\Tools\switches\switch_wn_we.png" />
-    <Resource Include="Resources\Images\railcurve_sw_transparent.png" />
-    <Resource Include="Resources\Images\rail_ns_transparent.png" />
+    <Resource Include="Resources\Images\Tools\switches\switch_ns_sw.png" />
+    <Resource Include="Resources\Images\Tools\switches\switch_ns_es.png" />
+    <Resource Include="Resources\Images\rail__NORTH_SOUTH_inactive.png" />
     <Resource Include="Resources\Images\trainstation.png" />
     <Resource Include="Resources\Images\rail_EAST_WEST.png" />
-    <Resource Include="Resources\Images\rail_NORTH_EAST.png" />
+    <Resource Include="Resources\Images\rail_EAST_NORTH.png" />
     <Resource Include="Resources\Images\rail_NORTH_SOUTH.png" />
     <Resource Include="Resources\Images\rail_NORTH_SOUTH_inactive.png" />
     <Resource Include="Resources\Images\rail_NORTH_WEST.png" />
     <Resource Include="Resources\Images\rail_SOUTH_WEST.png" />
     <Resource Include="Resources\Images\rail_SOUTH_WEST_inactive.png" />
+    <Resource Include="Resources\Images\Tools\switches\switch_es_sw.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
