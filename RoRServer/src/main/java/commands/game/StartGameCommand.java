@@ -8,11 +8,10 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
-import models.game.Loco;
-import models.game.GhostLoco;
 import models.game.Map;
 import models.game.Mine;
 import models.game.Player;
+import models.game.PlayerLoco;
 import models.game.Rail;
 import models.game.Square;
 import models.game.Stock;
@@ -113,7 +112,7 @@ public class StartGameCommand extends CommandBase {
 			// Für jeden Spieler eine Lok erstellen
 			if(playerIterator.hasNext()) {
 				// Loco wird erstellt und zur Liste der Locos hinzugefügt
-				gameSession.addLocomotive(new Loco(gameSession.getName(), locoSpawnPointSquare, playerIterator.next().getId()));
+				gameSession.addLoco(new PlayerLoco(gameSession.getName(), locoSpawnPointSquare, playerIterator.next().getId()));
 			}
 		}
 
