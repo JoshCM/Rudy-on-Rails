@@ -29,7 +29,7 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare{
 		setTrainstationId(trainstationId);
 		
 		// zu testzwecken
-		addResource(new Coal(sessionName, square));
+		// addResource(new Coal(sessionName, square));
 		notifyCreatedStock();
 	}
 	
@@ -39,7 +39,7 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare{
 		setTrainstationId(trainstationId);
 		
 		// zu testzwecken
-		addResource(new Coal(sessionName, square));
+		// addResource(new Coal(sessionName, square));
 		notifyCreatedStock();
 	}
 	
