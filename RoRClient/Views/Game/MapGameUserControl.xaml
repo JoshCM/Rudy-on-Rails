@@ -23,9 +23,7 @@
                 </ItemsControl>
                 
                 <ItemsControl ItemsSource="{Binding PlaceableOnSquareCollection}">
-                    <!-- Muss al Resource angelegt werden damit die Liste sich selbstständig ihr richtiges DataTemplate für jedes ViewModel nimmt -->
                     <ItemsControl.Resources>
-                        <!-- Hier musste der Type RailGameViewModel genutz werden -->
                         <DataTemplate DataType="{x:Type game:RailGameViewModel}">
                             <Canvas>
                                 <vg:RailGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
@@ -34,6 +32,11 @@
                         <DataTemplate DataType="{x:Type game:TrainstationGameViewModel}">
                             <Canvas>
                                 <vg:TrainstationGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type game:StockGameViewModel}">
+                            <Canvas>
+                                <vg:StockGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type game:GoldGameViewModel}">
@@ -48,12 +51,22 @@
                         </DataTemplate>
                     </ItemsControl.Resources>
                 </ItemsControl>
-                
-                <ItemsControl ItemsSource="{Binding LocoCollection}">
+
+                <ItemsControl ItemsSource="{Binding Locos}">
                     <ItemsControl.Resources>
-                        <DataTemplate DataType="{x:Type game:LocoGameViewModel}">
+                        <DataTemplate DataType="{x:Type game:PlayerLocoGameViewModel}">
                             <Canvas>
-                                <vg:LocoGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}" RotationAngle="{Binding Loco.RealDrivingDirection, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}"/>
+                                <vg:PlayerLocoGameUserControl DataContext="{Binding }" X="{Binding SquarePosX}" Y="{Binding SquarePosY}" RotationAngle="{Binding Angle}"/>
+                            </Canvas>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type game:GhostLocoGameViewModel}">
+                            <Canvas>
+                                <vg:GhostLocoGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"  RotationAngle="{Binding Angle}"/>
+                            </Canvas>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type game:CartGameViewModel}">
+                            <Canvas>
+                                <vg:CartGameUserControl DataContext="{Binding }" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"  RotationAngle="{Binding Angle}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.Resources>

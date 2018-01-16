@@ -3,12 +3,8 @@ using RoRClient.Communication.Dispatcher;
 using RoRClient.Communication.Topic;
 using RoRClient.Models.Game;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace RoRClient.Models.Session
 {
@@ -16,6 +12,7 @@ namespace RoRClient.Models.Session
     {
         private static GameSession gameSession = null;
         protected ObservableCollection<Loco> locos = new ObservableCollection<Loco>();
+        protected ObservableCollection<Cart> carts = new ObservableCollection<Cart>();
 
         private GameSession() : base()
         {
@@ -41,11 +38,41 @@ namespace RoRClient.Models.Session
             return locos.Where(x => x.Id == locoId).First();
         }
 
+        public ObservableCollection<Cart> Carts
+        {
+            get
+            {
+                return Carts;
+            }
+        }
+        private bool started;
+        public bool Started
+        {
+            get
+            {
+                return started;
+            }
+            set
+            {
+                if(started != value)
+                {
+                    started = value;
+                    NotifyPropertyChanged("Started");
+                }
+            }
+        }
+
         public void AddLoco(Loco loco)
         {
             locos.Add(loco);
-            NotifyPropertyChanged("Locos",null,loco);
-            
+            NotifyPropertyChanged("Locos", null, loco);
+        }
+
+        public void AddCart(Cart cart)
+        {
+            carts.Add(cart);
+            NotifyPropertyChanged("Carts", null, cart);
+
         }
         public static GameSession GetInstance()
         {

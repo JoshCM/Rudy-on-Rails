@@ -38,8 +38,13 @@
                                 <ve:TrainstationEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:StockEditorViewModel}">
+                            <Canvas>
+                                <ve:StockEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
                     </ItemsControl.Resources>
-                </ItemsControl>
+				</ItemsControl>
                 <ItemsControl ItemsSource="{Binding PlaceableOnRailCollection}">
                     <ItemsControl.Resources>
                         <DataTemplate DataType="{x:Type vm:MineEditorViewModel}">

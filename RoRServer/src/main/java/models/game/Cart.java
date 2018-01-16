@@ -3,6 +3,10 @@ package models.game;
 import exceptions.InvalidModelOperationException;
 import models.session.RoRSession;
 
+import java.util.UUID;
+
+import communication.MessageInformation;
+
 /**
  * 
  * @author Isabel Rott, Michelle Le
@@ -13,13 +17,18 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 	
 	private Resource resource;
 
+	private Compass drivingDirection;
+	private UUID playerId;
+	private Rail rail;
 	/**
 	 * Konstruktor eines Carts
 	 * @param square auf dem der Wagon steht wird mitgegeben
 	 */
-	public Cart(String sessionName, Square square) {
+	public Cart(String sessionName, Square square, Compass compass, UUID playerId, Rail rail) {
 		super(sessionName,square);
-		// TODO Auto-generated constructor stub
+		this.setDrivingDirection(compass);
+		this.playerId = playerId;
+		this.setRail(rail);
 	}
 	
 	/**
@@ -64,4 +73,39 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Compass getDrivingDirection() {
+		return drivingDirection;
+	}
+
+	public void setDrivingDirection(Compass compass) {
+		this.drivingDirection = compass;
+	}
+	
+	/**
+	 * notifiziert wenn die Position des Wagons ge�ndert wurde
+	 */
+	public void notifyUpdatedCart() {
+		MessageInformation messageInfo = new MessageInformation("UpdateCartPosition");
+		messageInfo.putValue("cartId", getId());
+		messageInfo.putValue("xPos", getXPos());
+		messageInfo.putValue("yPos", getYPos());
+		messageInfo.putValue("playerId", this.playerId);
+		messageInfo.putValue("drivingDirection", drivingDirection.toString());
+		notifyChange(messageInfo);
+	}
+
+
+
+	public Rail getRail() {
+		return rail;
+	}
+
+
+
+	public void setRail(Rail rail) {
+		this.rail = rail;
+	}
+	
+
 }
