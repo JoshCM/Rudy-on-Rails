@@ -12,19 +12,19 @@
             <Image Width="40" 
                    Height="40"
                    Source="/RoRClient;component/Resources/Images/container_coal.png" Stretch="Uniform"/>
-            <Label Content="{Binding GamePlayer.CoalCount}" MinHeight="20" MinWidth="50" HorizontalContentAlignment="Center" FontSize="14" FontWeight="Bold"/>
+            <Label Content="{Binding GamePlayer.CoalCount}" MinHeight="20" MinWidth="50" HorizontalContentAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="White"/>
         </StackPanel>
         <StackPanel Orientation="Vertical" Margin="10,0,10,0">
             <Image Width="40" 
                    Height="40"
                    Source="/RoRClient;component/Resources/Images/container_gold.png" Stretch="Uniform"/>
-            <Label Content="{Binding GamePlayer.GoldCount}" MinHeight="20" MinWidth="50" HorizontalContentAlignment="Center" FontSize="14" FontWeight="Bold"/>
+            <Label Content="{Binding GamePlayer.GoldCount}" MinHeight="20" MinWidth="50" HorizontalContentAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="White"/>
         </StackPanel>
         <StackPanel Orientation="Vertical" Margin="10,0,10,0">
             <Image Width="40" 
                    Height="40"
                    Source="/RoRClient;component/Resources/Images/container_points.png" Stretch="Uniform"/>
-            <Label Content="{Binding GamePlayer.PointCount}" MinHeight="20" MinWidth="50" HorizontalContentAlignment="Center" FontSize="14" FontWeight="Bold"/>
+            <Label Content="{Binding GamePlayer.PointCount}" MinHeight="20" MinWidth="50" HorizontalContentAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="White"/>
         </StackPanel>
     </StackPanel>
 </UserControl>
