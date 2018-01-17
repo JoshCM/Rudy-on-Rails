@@ -2,6 +2,7 @@
 using RoRClient.Models.Game;
 using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
+using RoRClient.ViewModels.Helper;
 using RoRClient.Views.Editor.Helper;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace RoRClient.ViewModels.Editor
     public class RailEditorViewModel : CanvasEditorViewModel
     {
         private Rail rail;
+        private ToolbarViewModel toolbarViewModel;
+
         public RailEditorViewModel(Rail rail) : base(rail.Id)
         {
             this.rail = rail;
@@ -30,6 +33,19 @@ namespace RoRClient.ViewModels.Editor
             get
             {
                 return rail;
+            }
+        }
+
+        public ToolbarViewModel ToolbarViewModel
+        {
+            get
+            {
+                return toolbarViewModel;
+            }
+
+            set
+            {
+                toolbarViewModel = value;
             }
         }
 
@@ -47,7 +63,6 @@ namespace RoRClient.ViewModels.Editor
 
 			// setze das Selektierte Objekt auf null
 			MapViewModel.SelectedEditorCanvasViewModel = null;
-
 		}
 
         public override void RotateLeft()
@@ -68,9 +83,61 @@ namespace RoRClient.ViewModels.Editor
             EditorSession.GetInstance().QueueSender.SendMessage("RotateRail", messageInformation);
         }
 
+        /// <summary>
+        ///  Move-Methode für alle PlaceableOnRail
+        /// </summary>
         public override void Move()
         {
+            RoRSession editorSession = EditorSession.GetInstance();
 
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("newXPos", this.SquarePosX);
+            messageInformation.PutValue("newYPos", this.SquarePosY);
+            messageInformation.PutValue("id", MapViewModel.SelectedEditorCanvasViewModel.Id);
+            String viewModelType = TypeHelper.getTypeNameByViewModel(MapViewModel.SelectedEditorCanvasViewModel.GetType().Name);
+            EditorSession.GetInstance().QueueSender.SendMessage("Move" + viewModelType, messageInformation);
+        }
+
+        private ICommand createPlaceableOnRailCommand;
+
+        public ICommand CreatePlaceableOnRailCommand
+        {
+            get
+            {
+                if (createPlaceableOnRailCommand == null)
+                {
+                    createPlaceableOnRailCommand = new ActionCommand(param => SendCreatePlaceableOnRailCommand());
+                }
+                return createPlaceableOnRailCommand;
+            }
+        }
+
+        private void SendCreatePlaceableOnRailCommand()
+        {
+            if (toolbarViewModel != null && toolbarViewModel.SelectedTool != null)
+            {
+                if (MapViewModel.SelectedEditorCanvasViewModel != null)
+                {
+                    Move();
+                    MapViewModel.SelectedEditorCanvasViewModel = null;
+                }
+                else if (toolbarViewModel.SelectedTool.Name.Contains("mine"))
+                {
+                    SendCreateMineCommand();
+                }
+
+                // weitere Commands...
+            }
+        }
+
+        private void SendCreateMineCommand()
+        {
+            MessageInformation message = new MessageInformation();
+            message.PutValue("xPos", rail.Square.PosX);
+            message.PutValue("yPos", rail.Square.PosY);
+
+            EditorSession session = EditorSession.GetInstance();
+            session.QueueSender.SendMessage("CreateMine", message);
         }
     }
 }

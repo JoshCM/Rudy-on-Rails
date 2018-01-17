@@ -17,7 +17,6 @@ import models.session.RoRSession;
 public class CreateCrossingCommand extends CommandBase {
 	private int xPos;
 	private int yPos;
-	private List<JsonObject> railSectionData;
 
 	public CreateCrossingCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);

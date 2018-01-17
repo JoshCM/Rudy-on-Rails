@@ -7,26 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace RoRClient.Views.Game
 {
-    /// <summary>
-    /// Interaktionslogik für LocoUserControl.xaml
-    /// </summary>
-    public partial class LocoGameUserControl : UserControl
+    public class LocoGameUserControl : UserControl
     {
-        private const double speedFactor = 0.5;
+        private const double speedFactor = 0.7;
         public LocoGameUserControl()
         {
-            InitializeComponent();
             SquareDim = ViewConstants.SQUARE_DIM;
         }
 
@@ -45,10 +34,10 @@ namespace RoRClient.Views.Game
 
         private static void OnXchanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            LocoGameUserControl locoGameUserControl = (LocoGameUserControl)d;
-            LocoGameViewModel locoGameViewModel = (LocoGameViewModel)locoGameUserControl.DataContext;
+            LocoGameUserControl LocoGameUserControl = (LocoGameUserControl)d;
+            LocoGameViewModel locoGameViewModel = (LocoGameViewModel)LocoGameUserControl.DataContext;
             double speedRatio = locoGameViewModel.Loco.Speed > 0 ? locoGameViewModel.Loco.Speed * speedFactor : 1;
-            locoGameUserControl.BeginAnimation(LocoGameUserControl.RealXProperty, new Int32Animation { From = locoGameUserControl.RealX, To = locoGameUserControl.X * ViewConstants.SQUARE_DIM, SpeedRatio = speedRatio });
+            LocoGameUserControl.BeginAnimation(LocoGameUserControl.RealXProperty, new Int32Animation { From = LocoGameUserControl.RealX, To = LocoGameUserControl.X * ViewConstants.SQUARE_DIM, SpeedRatio = speedRatio });
         }
 
 
@@ -67,10 +56,10 @@ namespace RoRClient.Views.Game
 
         private static void OnYchanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            LocoGameUserControl locoGameUserControl = (LocoGameUserControl)d;
-            LocoGameViewModel locoGameViewModel = (LocoGameViewModel)locoGameUserControl.DataContext;
+            LocoGameUserControl LocoGameUserControl = (LocoGameUserControl)d;
+            LocoGameViewModel locoGameViewModel = (LocoGameViewModel)LocoGameUserControl.DataContext;
             double speedRatio = locoGameViewModel.Loco.Speed > 0 ? locoGameViewModel.Loco.Speed * speedFactor : 1;
-            locoGameUserControl.BeginAnimation(LocoGameUserControl.RealYProperty, new Int32Animation { From = locoGameUserControl.RealY, To = locoGameUserControl.Y * ViewConstants.SQUARE_DIM, SpeedRatio = speedRatio });
+            LocoGameUserControl.BeginAnimation(LocoGameUserControl.RealYProperty, new Int32Animation { From = LocoGameUserControl.RealY, To = LocoGameUserControl.Y * ViewConstants.SQUARE_DIM, SpeedRatio = speedRatio });
         }
 
         public int RealX
@@ -111,5 +100,40 @@ namespace RoRClient.Views.Game
             }
         }
         public static readonly DependencyProperty SquareDimProperty = DependencyProperty.Register("SquareDim", typeof(int), typeof(LocoGameUserControl), new UIPropertyMetadata(0));
+
+
+        public int RotationAngle
+        {
+            get
+            {
+                return (int)GetValue(RotationAngleProperty);
+            }
+            set
+            {
+                SetValue(RotationAngleProperty, value);
+            }
+        }
+        public static readonly DependencyProperty RotationAngleProperty = DependencyProperty.Register("RotationAngle", typeof(int), typeof(LocoGameUserControl), new UIPropertyMetadata(0, OnRotationAngleChanged));
+
+        private static void OnRotationAngleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            LocoGameUserControl LocoGameUserControl = (LocoGameUserControl)d;
+            LocoGameViewModel locoGameViewModel = (LocoGameViewModel)LocoGameUserControl.DataContext;
+            double speedRatio = locoGameViewModel.Loco.Speed > 0 ? locoGameViewModel.Loco.Speed * speedFactor : 1;
+            LocoGameUserControl.BeginAnimation(LocoGameUserControl.RealRotationAngleProperty, new Int32Animation { From = LocoGameUserControl.RealRotationAngle, To = LocoGameUserControl.RotationAngle, SpeedRatio = speedRatio, EasingFunction = new QuadraticEase() });
+        }
+
+        public int RealRotationAngle
+        {
+            get
+            {
+                return (int)GetValue(RealRotationAngleProperty);
+            }
+            set
+            {
+                SetValue(RealRotationAngleProperty, value);
+            }
+        }
+        public static readonly DependencyProperty RealRotationAngleProperty = DependencyProperty.Register("RealRotationAngle", typeof(int), typeof(LocoGameUserControl), new UIPropertyMetadata(0));
     }
 }

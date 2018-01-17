@@ -30,6 +30,7 @@ namespace RoRClient.ViewModels.Game
             InitSquares();
 
             GameSession.GetInstance().PropertyChanged += OnLocoAddedInGameSession;
+            GameSession.GetInstance().PropertyChanged += OnCartAddedInGameSession;
             //TO-DO: nur zum Testen
             //CreateRandomRails();
 
@@ -70,6 +71,15 @@ namespace RoRClient.ViewModels.Game
             get
             {
                 return placeableOnRailCollection;
+            }
+        }
+
+        private ObservableCollection<CanvasGameViewModel> locos = new ObservableCollection<CanvasGameViewModel>();
+        public ObservableCollection<CanvasGameViewModel> Locos
+        {
+            get
+            {
+                return locos;
             }
         }
 
@@ -136,10 +146,44 @@ namespace RoRClient.ViewModels.Game
                     CanvasGameViewModel viewModel = factory.CreateGameViewModelForModel(square.PlaceableOnSquare, this);
 
                     taskFactory.StartNew(() => placeableOnSquareCollection.Add(viewModel));
+
+                    if (viewModel is RailGameViewModel)
+                    { 
+                        // Sollte es sich um eine Rail handeln, muss die OnRailPropertyChanged registiert werden und das ToolBarViewModel übergeben werden
+                        RailGameViewModel railGameViewModel = (RailGameViewModel)viewModel;
+                        railGameViewModel.Rail.PropertyChanged += OnRailPropertyChanged;
+                    }
                 }
             }
         }
 
+        private void OnRailPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Rail rail = (Rail)sender;
+
+            if (e.PropertyName == "PlaceableOnRail")
+            {
+                PropertyChangedExtendedEventArgs<IPlaceableOnRail> eventArgs = (PropertyChangedExtendedEventArgs<IPlaceableOnRail>)e;
+
+                if (rail.PlaceableOnRail == null)
+                {
+                    IModel model = (IModel)eventArgs.OldValue;
+                    CanvasGameViewModel result = placeableOnRailCollection.Where(x => x.Id == model.Id).First();
+
+                    if (result != null)
+                    {
+                        taskFactory.StartNew(() => placeableOnRailCollection.Remove(result));
+                    }
+                }
+                else
+                {
+                    ViewModelFactory factory = new ViewModelFactory();
+                    CanvasGameViewModel viewModel = factory.CreateGameViewModelForModel(rail.PlaceableOnRail, this);
+
+                    taskFactory.StartNew(() => placeableOnRailCollection.Add(viewModel));
+                }
+            }
+        }
 
         private void OnLocoAddedInGameSession(object sender, PropertyChangedEventArgs e)
         {
@@ -147,34 +191,27 @@ namespace RoRClient.ViewModels.Game
             {
                 PropertyChangedExtendedEventArgs<Loco> eventArgs = (PropertyChangedExtendedEventArgs<Loco>)e;
                 Loco loco = eventArgs.NewValue;
-                LocoGameViewModel locoGameViewModel = new LocoGameViewModel(loco);
-                taskFactory.StartNew(() => placeableOnRailCollection.Add(locoGameViewModel));
-            }
-            
-
-        }
-        
-        private void CreateRandomRails()
-        {
-            Random rand = new Random();
-            foreach (SquareGameViewModel squareViewModel in squareViewModels)
-            {
-                squareViewModel.Square.PlaceableOnSquare = null;
-                if (rand.Next(3) == 0)
+                if(loco is PlayerLoco)
                 {
-                    List<RailSection> railSections = new List<RailSection>();
-                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.NORTH, Compass.SOUTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.WEST, Compass.SOUTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.EAST, Compass.WEST));
-                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.WEST, Compass.NORTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.EAST, Compass.SOUTH));
-                    railSections.Add(new RailSection(Guid.NewGuid(), Compass.EAST, Compass.NORTH));
-
-                    List<RailSection> actualRailSection = new List<RailSection>();
-                    actualRailSection.Add(railSections[rand.Next(railSections.Count)]);
-                    Rail rail = new Rail(Guid.NewGuid(), squareViewModel.Square, actualRailSection);
-                    squareViewModel.Square.PlaceableOnSquare = rail;
+                    PlayerLocoGameViewModel locoGameViewModel = new PlayerLocoGameViewModel(loco);
+                    taskFactory.StartNew(() => locos.Add(locoGameViewModel));
+                } else
+                {
+                    GhostLocoGameViewModel locoGameViewModel = new GhostLocoGameViewModel(loco);
+                    taskFactory.StartNew(() => locos.Add(locoGameViewModel));
                 }
+                
+            }
+        }
+
+        private void OnCartAddedInGameSession(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Carts")
+            {
+                PropertyChangedExtendedEventArgs<Cart> eventArgs = (PropertyChangedExtendedEventArgs<Cart>)e;
+                Cart cart = eventArgs.NewValue;
+                CartGameViewModel cartGameViewModel = new CartGameViewModel(cart);
+                taskFactory.StartNew(() => locos.Add(cartGameViewModel));
             }
         }
     }

@@ -11,15 +11,74 @@
                      d:DesignHeight="300" d:DesignWidth="300"
                      Canvas.Top="{Binding RealY, ElementName=railUserControl}"
                      Canvas.Left="{Binding RealX, ElementName=railUserControl}">
-  
+
     <UserControl.Resources>
         <converter:RailSectionsToImagePathConverter  x:Key="RailSectionsToImagePathConverter"/>
+        <converter:BooleanToSignalImagePathConverter x:Key="BooleanToSignalImagePathConverter"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=railUserControl}"
             Height="{Binding SquareDim, ElementName=railUserControl}">
         <Image Width="{Binding SquareDim, ElementName=railUserControl}" 
                Height="{Binding SquareDim, ElementName=railUserControl}" 
                Source="{Binding Rail.RailSections, Mode=OneWay, Converter={StaticResource RailSectionsToImagePathConverter}}">
+            <Image.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+            </Image.InputBindings>
+        </Image>
+        <Image  x:Name="SignalNorth"
+                Visibility="{Binding Rail.Signals.Exists, Converter={StaticResource BoolToVisibilityConverter}}"
+                Canvas.Top="{Binding UpperSignalPos, ElementName=railUserControl}"
+                Canvas.Left="{Binding UpperSignalPos, ElementName=railUserControl}"
+                Height="{Binding SignalDimension, ElementName=railUserControl}"
+                Width="{Binding SignalDimension, ElementName=railUserControl}"
+                Source="{Binding Rail.Signals.NorthSignalActive, Converter={StaticResource BooleanToSignalImagePathConverter}}">
+            <Image.LayoutTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="180" CenterX="0" CenterY="0"/>
+                </TransformGroup>
+            </Image.LayoutTransform>
+        </Image>
+        <Image  x:Name="SignalSouth"
+                Visibility="{Binding Rail.Signals.Exists, Converter={StaticResource BoolToVisibilityConverter}}"
+                Canvas.Top="{Binding LowerSignalPos, ElementName=railUserControl}"
+                Canvas.Left="{Binding LowerSignalPos, ElementName=railUserControl}"
+                Height="{Binding SignalDimension, ElementName=railUserControl}"
+                Width="{Binding SignalDimension, ElementName=railUserControl}"
+                Source="{Binding Rail.Signals.SouthSignalActive, Converter={StaticResource BooleanToSignalImagePathConverter}}">
+            <Image.LayoutTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="0" CenterX="0" CenterY="0"/>
+                </TransformGroup>
+            </Image.LayoutTransform>
+        </Image>
+
+        <Image  x:Name="SignalEast"
+                Visibility="{Binding Rail.Signals.Exists, Converter={StaticResource BoolToVisibilityConverter}}"
+                Canvas.Top="{Binding UpperSignalPos, ElementName=railUserControl}"
+                Canvas.Left="{Binding LowerSignalPos, ElementName=railUserControl}"
+                Height="{Binding SignalDimension, ElementName=railUserControl}"
+                Width="{Binding SignalDimension, ElementName=railUserControl}"
+                Source="{Binding Rail.Signals.EastSignalActive, Converter={StaticResource BooleanToSignalImagePathConverter}}">
+            <Image.LayoutTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="270" CenterX="0" CenterY="0"/>
+                </TransformGroup>
+            </Image.LayoutTransform>
+        </Image>
+
+        <Image  x:Name="SignalWest"
+                Visibility="{Binding Rail.Signals.Exists, Converter={StaticResource BoolToVisibilityConverter}}"
+                Canvas.Top="{Binding LowerSignalPos, ElementName=railUserControl}"
+                Canvas.Left="{Binding UpperSignalPos, ElementName=railUserControl}"
+                Height="{Binding SignalDimension, ElementName=railUserControl}"
+                Width="{Binding SignalDimension, ElementName=railUserControl}"
+                Source="{Binding Rail.Signals.WestSignalActive, Converter={StaticResource BooleanToSignalImagePathConverter}}">
+            <Image.LayoutTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="90" CenterX="0" CenterY="0"/>
+                </TransformGroup>
+            </Image.LayoutTransform>
         </Image>
     </Canvas>
 </v:CanvasUserControl>

@@ -23,4 +23,10 @@ public class Container extends InteractiveGameObject implements PlaceableOnSquar
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void specificUpdate() {
+		// TODO Auto-generated method stub
+		
+	}
 }

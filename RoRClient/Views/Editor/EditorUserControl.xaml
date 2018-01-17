@@ -58,7 +58,7 @@
               Grid.ColumnSpan="2"
               Background="Green">
             <!-- Statusfenster oder so was -->
-            <editor:AttributeSelectionUserControl />
+            <editor:ObjectConfigurationUserControl DataContext="{Binding ObjectConfigurationViewModel}" />
         </Grid>
     </Grid>
 </UserControl>

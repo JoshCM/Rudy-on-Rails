@@ -14,6 +14,7 @@ namespace RoRClient.ViewModels.Editor
         private MapEditorViewModel mapViewModel;
         private ToolbarViewModel toolbarViewModel;
         private TopMenuViewModel topMenuViewModel;
+        private ObjectConfigurationViewModel objectConfigurationViewModel;
 
         public MapEditorViewModel MapViewModel
         {
@@ -39,12 +40,21 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
+        public ObjectConfigurationViewModel ObjectConfigurationViewModel
+        {
+            get
+            {
+                return objectConfigurationViewModel;
+            }
+        }
+
         public EditorViewModel(UIState uiState)
         {
             this.uiState = uiState;
             toolbarViewModel = new ToolbarViewModel();
             mapViewModel = new MapEditorViewModel(toolbarViewModel);
             topMenuViewModel = new TopMenuViewModel();
+            objectConfigurationViewModel = new ObjectConfigurationViewModel(mapViewModel);
         }
     }
 }

@@ -125,7 +125,6 @@ public class RailTests {
         rail.deleteRailSection(rs2);
     }
 
-
 	private Rail createCrossRail() {
 		Compass node1 = Compass.NORTH;
 		Compass node2 = Compass.SOUTH;
@@ -146,9 +145,30 @@ public class RailTests {
 		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions);
 		return rail;
 	}
+	
+	@Test
+	public void RailWithSignalsIsCreated() {
+		Compass node1 = Compass.NORTH;
+		Compass node2 = Compass.SOUTH;
+		Compass node3 = Compass.WEST;
+		Compass node4 = Compass.EAST;
+		List<Compass> railSectionPositions = new ArrayList<>();
+		railSectionPositions.add(node1);
+		railSectionPositions.add(node2);
+		railSectionPositions.add(node3);
+		railSectionPositions.add(node4);
+		int squarePosX = 0;
+		int squarePosY = 0;
 
-
-
-
-
+		EditorSession editorSession = EditorSessionManager.getInstance()
+				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "Player");
+		Map map = editorSession.getMap();
+		Square square = map.getSquare(squarePosX, squarePosY);
+		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions, true);
+		Signals signals = rail.getSignals();
+		
+		assertNotNull(signals);
+		assertTrue(signals.isNorthSignalActive());
+		assertTrue(signals.isSouthSignalActive());
+	}
 }

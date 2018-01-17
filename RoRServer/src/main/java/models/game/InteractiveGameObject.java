@@ -2,13 +2,11 @@ package models.game;
 
 import java.util.UUID;
 
-import models.base.ModelBase;
-
 /**
  * Abstrakte Klasse fuer alle Objekte, mit denen interagiert werden kann
  *
  */
-public abstract class InteractiveGameObject extends ModelBase {
+public abstract class InteractiveGameObject extends TickableGameObject {
 	protected final String className;
 	private UUID squareId;
 	private int xPos; // So lange, bis nur noch die id ausreicht
@@ -16,6 +14,11 @@ public abstract class InteractiveGameObject extends ModelBase {
     
 	public InteractiveGameObject(String sessionName, Square square) {
 		super(sessionName);
+		
+		if(square == null) {
+			throw new IllegalArgumentException("Square must not be null");
+		}
+		
 		this.className = getClass().getName();
 		this.squareId = square.getId();
 		this.xPos = square.getXIndex();
@@ -56,5 +59,11 @@ public abstract class InteractiveGameObject extends ModelBase {
 	
 	public void setSquareId(UUID id) {
 		this.squareId = id;
+	}
+	
+	public void updateSquare(Square s) {
+		this.squareId = s.getId();
+		this.setXPos(s.getXIndex());
+		this.setYPos(s.getYIndex());
 	}
 }

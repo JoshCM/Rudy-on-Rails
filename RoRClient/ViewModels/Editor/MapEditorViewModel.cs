@@ -58,6 +58,7 @@ namespace RoRClient.ViewModels.Editor
             set
             {
                 _selectedEditorCanvasViewModel = value;
+                OnPropertyChanged("SelectedEditorCanvasViewModel");
             }
         }
 
@@ -78,6 +79,15 @@ namespace RoRClient.ViewModels.Editor
             get
             {
                 return placeableOnSquareCollection;
+            }
+        }
+
+        private ObservableCollection<CanvasEditorViewModel> placeableOnRailCollection = new ObservableCollection<CanvasEditorViewModel>();
+        public ObservableCollection<CanvasEditorViewModel> PlaceableOnRailCollection
+        {
+            get
+            {
+                return placeableOnRailCollection;
             }
         }
 
@@ -123,7 +133,7 @@ namespace RoRClient.ViewModels.Editor
                 squareViewModels.Add(squareViewModel);
                 square.PropertyChanged += OnSquarePropertyChanged;
 
-
+                /*
                 if (square.PlaceableOnSquare != null)
                 {
                     switch (square.PlaceableOnSquare.GetType().Name)
@@ -131,6 +141,7 @@ namespace RoRClient.ViewModels.Editor
                         case "Rail":
                             Rail rail = (Rail)square.PlaceableOnSquare;
                             RailEditorViewModel railViewModel = new RailEditorViewModel(rail);
+                            railViewModel.ToolbarViewModel = toolbarViewModel;
                             placeableOnSquareCollection.Add(railViewModel);
                             rail.PropertyChanged += OnRailPropertyChanged;
                             break;
@@ -142,6 +153,7 @@ namespace RoRClient.ViewModels.Editor
                             break;
                     }
                 }
+                */
             }
         }
 
@@ -172,9 +184,38 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
+        /// <summary>
+        /// Wenn sich das PlaceableOnRail im Rail ändert wird diese Methode aufgerufen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnRailPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             Rail rail = (Rail)sender;
+
+            if (e.PropertyName == "PlaceableOnRail")
+            {
+                PropertyChangedExtendedEventArgs<IPlaceableOnRail> eventArgs = (PropertyChangedExtendedEventArgs<IPlaceableOnRail>)e;
+
+                if (rail.PlaceableOnRail == null)
+                {
+                    IModel model = (IModel)eventArgs.OldValue;
+                    CanvasEditorViewModel result = placeableOnRailCollection.Where(x => x.Id == model.Id).First();
+
+                    if (result != null)
+                    {
+                        taskFactory.StartNew(() => placeableOnRailCollection.Remove(result));
+                    }
+                }
+                else
+                {
+                    ViewModelFactory factory = new ViewModelFactory();
+                    CanvasEditorViewModel viewModel = factory.CreateEditorViewModelForModel(rail.PlaceableOnRail, this);
+
+                    taskFactory.StartNew(() => placeableOnRailCollection.Add(viewModel));
+                }
+            }
+
         }
 
         private void OnTrainstationPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -211,6 +252,14 @@ namespace RoRClient.ViewModels.Editor
                     CanvasEditorViewModel viewModel = factory.CreateEditorViewModelForModel(square.PlaceableOnSquare, this);
 
                     taskFactory.StartNew(() => placeableOnSquareCollection.Add(viewModel));
+
+                    if (viewModel is RailEditorViewModel)
+                    {
+                        // Sollte es sich um ein Rail handeln, muss die OnRailPropertyChanged registiert werden und das ToolBarViewModel übergeben werden
+                        RailEditorViewModel railEditorViewModel = (RailEditorViewModel)viewModel;
+                        railEditorViewModel.Rail.PropertyChanged += OnRailPropertyChanged;
+                        railEditorViewModel.ToolbarViewModel = toolbarViewModel;
+                    }
                 }
             }
         }

@@ -15,6 +15,7 @@ import commands.editor.DeleteTrainstationCommand;
 import communication.MessageInformation;
 import models.game.Compass;
 import models.game.Rail;
+import models.game.Stock;
 import models.game.Trainstation;
 import models.session.EditorSessionManager;
 import models.session.RoRSession;
@@ -23,33 +24,20 @@ public class CommandDeleterTests {
 	@Test
 	public void DeleteTrainstationCommandIsDeletedViaId() {
 		UUID trainstationId = UUID.randomUUID();
+		UUID stockId = UUID.randomUUID();
 
 		RoRSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 
-		// generiere trainstationRails
-		List<Rail> trainstationRails = Arrays.asList(
-				new Rail(session.getName(), session.getMap().getSquare(2, 0),
-						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getName(), session.getMap().getSquare(2, 1),
-						Arrays.asList(Compass.NORTH, Compass.SOUTH)),
-				new Rail(session.getName(), session.getMap().getSquare(2, 2),
-						Arrays.asList(Compass.NORTH, Compass.SOUTH)));
-
-		// setzt die rails als placeable und generiert trainstationRailIds
-		List<UUID> trainstationRailIds = new ArrayList<UUID>();
+		// kann für den Test des Commands leer sein, da kein Trainstation erstellt werden soll
 		List<String> trainstationRailIdStrings = new ArrayList<String>();
-		for(Rail trainstationRail : trainstationRails) {
-			session.getMap().getSquare(trainstationRail.getXPos(), trainstationRail.getYPos()).setPlaceableOnSquare(trainstationRail);
-			trainstationRailIds.add(trainstationRail.getId());
-			trainstationRailIdStrings.add(trainstationRail.getId().toString());
-		}
 
 		MessageInformation messageInformation = new MessageInformation();
-		messageInformation.putValue("id", trainstationId);
+		messageInformation.putValue("trainstationId", trainstationId);
+		messageInformation.putValue("stockId", stockId);
 		messageInformation.putValue("trainstationRailIds", trainstationRailIdStrings);
 		
-		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), trainstationRailIds, trainstationId, Compass.EAST);
+		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), new ArrayList<UUID>(), trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, stockId, Compass.EAST));
 		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		DeleteTrainstationCommand command = new DeleteTrainstationCommand(session, messageInformation);
 
