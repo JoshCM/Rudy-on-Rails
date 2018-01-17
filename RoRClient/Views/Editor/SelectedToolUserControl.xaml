@@ -6,7 +6,7 @@
              x:Name="selectedToolUserControl"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="300">
-    <Grid Background="White">
+    <Grid Background="#ff510404">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="4*" />
