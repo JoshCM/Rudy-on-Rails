@@ -3,11 +3,7 @@ package communication.dispatcher;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import javax.jms.Session;
-
 import com.google.gson.JsonObject;
-
 import communication.MessageEnvelope;
 import communication.MessageInformation;
 import communication.queue.QueueMessageQueue;
@@ -16,7 +12,6 @@ import models.session.EditorSession;
 import models.session.EditorSessionManager;
 import models.session.GameSession;
 import models.session.GameSessionManager;
-import models.session.RoRSession;
 import persistent.MapManager;
 import resources.PropertyManager;
 

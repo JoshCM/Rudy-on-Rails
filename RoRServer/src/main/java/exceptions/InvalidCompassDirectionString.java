@@ -5,7 +5,12 @@
 package exceptions;
 
 public class InvalidCompassDirectionString extends RuntimeException {
-    public InvalidCompassDirectionString(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public InvalidCompassDirectionString(String message) {
         super(message);
     }
 }

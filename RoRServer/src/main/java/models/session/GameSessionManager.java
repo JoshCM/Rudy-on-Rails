@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import models.game.Player;
-
 /**
  * Hier werden alle GameSessions erzeugt und gehalten GameSessions duerfen
  * ausschliesslich ueber diesen Manager erzeugt werden!
