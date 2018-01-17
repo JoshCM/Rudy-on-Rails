@@ -21,8 +21,6 @@ namespace RoRClient.ViewModels.Lobby
 	        this.lobbyModel = lobbyModel;
 	        this.gameSession = GameSession.GetInstance();
 
-			GameSession.GetInstance().PropertyChanged += OnGameStarted;
-            GameSession.GetInstance().PropertyChanged += OnGameLeft;
             uiState.OnUiStateChanged += OnUiStateChanged;
         }
 
@@ -140,7 +138,11 @@ namespace RoRClient.ViewModels.Lobby
         {
             if (uiState.State == "gameLobby")
             {
-	            isHost = GameSession.GetInstance().OwnPlayer.IsHost;
+                gameSession = GameSession.GetInstance();
+                gameSession.PropertyChanged += OnGameStarted;
+                gameSession.PropertyChanged += OnGameLeft;
+
+                isHost = gameSession.OwnPlayer.IsHost;
 				lobbyModel.ReadMapInfos();
 				lobbyModel.ReadGameInfos();
             }

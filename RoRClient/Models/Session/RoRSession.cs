@@ -38,7 +38,6 @@ namespace RoRClient.Models.Session
             set
             {
                 name = value;
-
             }
         }
 
