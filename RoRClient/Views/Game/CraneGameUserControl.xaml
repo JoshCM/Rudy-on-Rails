@@ -1,22 +1,21 @@
-﻿<v:CanvasUserControl x:Class="RoRClient.Views.Editor.CraneEditorUserControl"
+﻿<v:CanvasUserControl x:Class="RoRClient.Views.Game.CraneGameUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:v="clr-namespace:RoRClient.Views"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:RoRClient.Views.Editor"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converter="clr-namespace:RoRClient.BindingConverter"
-             x:Name="craneEditorUserControl"
+             x:Name="craneGameUserControl"
              mc:Ignorable="d" 
-             Canvas.Top="{Binding RealY, ElementName=craneEditorUserControl}"
-             Canvas.Left="{Binding RealX, ElementName=craneEditorUserControl}">
+             Canvas.Top="{Binding RealY, ElementName=craneGameUserControl}"
+             Canvas.Left="{Binding RealX, ElementName=craneGameUserControl}">
     <UserControl.Resources>
         <converter:CompassToAngleConverter  x:Key="CompassToAngleConverter"/>
     </UserControl.Resources>
-    <Canvas Width="{Binding SquareDim, ElementName=craneEditorUserControl}"
-            Height="{Binding SquareDim, ElementName=craneEditorUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=craneEditorUserControl}" 
-               Height="{Binding SquareDim, ElementName=craneEditorUserControl}" 
+    <Canvas Width="{Binding SquareDim, ElementName=craneGameUserControl}"
+            Height="{Binding SquareDim, ElementName=craneGameUserControl}">
+        <Image Width="{Binding SquareDim, ElementName=craneGameUserControl}" 
+               Height="{Binding SquareDim, ElementName=craneGameUserControl}" 
                Source="pack://application:,,,/Resources/Images/crane.png">
             <Image.LayoutTransform>
                 <TransformGroup>

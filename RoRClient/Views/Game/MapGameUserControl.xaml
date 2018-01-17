@@ -80,6 +80,11 @@
                                 <vg:MineGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
+                        <DataTemplate DataType="{x:Type game:CraneGameViewModel}">
+                            <Canvas>
+                                <vg:CraneGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y ="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
                     </ItemsControl.Resources>
                 </ItemsControl>
             </Canvas>

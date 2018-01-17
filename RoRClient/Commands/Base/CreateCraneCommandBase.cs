@@ -34,6 +34,8 @@ namespace RoRClient.Commands.Base
             Crane crane = new Crane(craneId, square, alignment);
             Rail rail = (Rail)square.PlaceableOnSquare;
             rail.PlaceableOnRail = crane;
+            Console.WriteLine("Crane(" + crane.Square.PosX + "/" + crane.Square.PosY + ")");
+            Console.WriteLine("Rail(" + rail.Square.PosX + "/" + rail.Square.PosY + ")");
         }
     }
 }
