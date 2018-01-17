@@ -575,6 +575,7 @@
     <Resource Include="Resources\Images\Tools\trainstation1.png" />
     <Resource Include="Resources\Images\stock_container_1.png" />
     <Resource Include="Resources\Images\container_points.png" />
+    <Resource Include="Resources\Images\btn_back.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

@@ -20,6 +20,9 @@
         <Border DockPanel.Dock="Top" BorderBrush="#FF510404" BorderThickness="2" Height="2" Margin="250,0,250,0" />
 
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="250,0,0,0" Height="172"  >
+            <Button x:Name="leaveEditorInfosButton" Command="{Binding LeaveJoinGameLobbyCommand}" Height="55" Width="55" FontSize="25" Background="#FF510404"  Margin="0,0,10,40">
+                <Image Source="/RoRClient;component/Resources/Images/btn_back.png" Stretch="Fill" ></Image>
+            </Button>
             <Button x:Name="createGameButton" Command="{Binding CreateGameSessionCommand}" Content="Erstellen" FontFamily="Source Sans Pro" Height="55" Width="200" FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" Margin="20,0,10,40"/>
             <Button x:Name="joinGameButton" Command="{Binding JoinGameSessionCommand}" Content="Beitreten" FontFamily="Source Sans Pro" Height="55" Width="200" FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" Margin="20,0,10,40" />
             <Button x:Name="refreshGamesButton" Command="{Binding RefreshGameSessionsCommand}" Content="Aktualisieren" FontFamily="Source Sans Pro" Height="55" Width="200" FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" Margin="20,0,10,40" />

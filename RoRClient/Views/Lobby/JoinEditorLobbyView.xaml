@@ -17,13 +17,19 @@
             <Label Content="Rudi On Rails" Foreground="White" FontFamily="Birch Std" FontSize="60" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" VerticalAlignment="Center"/>
         </Border>
 
+
         <Label DockPanel.Dock="Top" Content="Bau-Modus" Foreground="#FF510404" FontFamily="Birch Std" FontSize="45" Margin="250,50,0,0" />
         <Border DockPanel.Dock="Top" BorderBrush="#FF510404" BorderThickness="2" Height="2" Margin="250,0,250,0" />
 
         <StackPanel DockPanel.Dock="Left" Width="550" Margin="250,50,0,0">
             <TextBlock Text="Eigenen Bau-Modus erstellen." TextWrapping="Wrap" Height="45" Width="400" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" HorizontalAlignment="Left" Margin="0,0,0,10"/>
+            <StackPanel Orientation="Horizontal" >
+                <Button x:Name="leaveEditorInfosButton" Command="{Binding LeaveJoinEditorLobbyCommand}" Height="55" Width="55" FontSize="25" Background="#FF510404"  VerticalAlignment="Top" Margin="0,0,10,0">
+                <Image Source="/RoRClient;component/Resources/Images/btn_back.png"></Image>
+            </Button>
             <Button x:Name="editorButton" Command="{Binding CreateEditorSessionCommand}" Content="Erstellen" FontFamily="Source Sans Pro" Height="55" Width="200"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" HorizontalContentAlignment="Center" HorizontalAlignment="Left"/>
-            <!-- Binding muss noch eingerichtet werden -->
+            </StackPanel>
+                <!-- Binding muss noch eingerichtet werden -->
         </StackPanel>
 
         <StackPanel DockPanel.Dock="Right" Width="550" Margin="0,50,250,0" >

@@ -40,7 +40,10 @@
         </StackPanel>
 
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Height="200" Margin="-400,0,250,0">
-            <Button x:Name="startGame" Command="{Binding StartGameCommand}" Content="Spiel starten" IsEnabled="{Binding IsHost}" FontFamily="Source Sans Pro" Height="55" Width="200"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" VerticalAlignment="Top" Margin="0,30,10,0" />
+            <Button x:Name="leaveEditorInfosButton" Command="{Binding LeaveGameCommand}" Height="55" Width="55" FontSize="25" Background="#FF510404"  VerticalAlignment="Top" Margin="0,30,10,0" >
+                <Image Source="/RoRClient;component/Resources/Images/btn_back.png"></Image>
+            </Button>
+            <Button x:Name="startGame" Command="{Binding StartGameCommand}" Content="Spiel starten" IsEnabled="{Binding IsHost}" FontFamily="Source Sans Pro" Height="55" Width="200"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" VerticalAlignment="Top" Margin="10,30,10,0" />
             <Button x:Name="refreshGameInfosButton" Command="{Binding RefreshGameInfosCommand}"  Content="Aktualisieren" FontFamily="Source Sans Pro" Height="55" Width="200"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" VerticalAlignment="Top" Margin="10,30,0,0" />
         </StackPanel>
         <Border DockPanel.Dock="Bottom" BorderBrush="#FF510404" BorderThickness="2" Height="2" Margin="-400,0,250,0" />
