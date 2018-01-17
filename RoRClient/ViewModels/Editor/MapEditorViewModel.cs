@@ -223,6 +223,11 @@ namespace RoRClient.ViewModels.Editor
             PlayerTrainstation trainstation = (PlayerTrainstation)sender;
         }
 
+        private void OnPublicTrainstationPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            PublicTrainstation trainstation = (PublicTrainstation)sender;
+        }
+
         /// <summary>
         /// Wenn sich eine Property in Square ändert, dann wird diese Methode aufgerufen.
         /// </summary>

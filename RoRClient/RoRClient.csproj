@@ -108,6 +108,7 @@
     <Compile Include="BindingConverter\CompassToAngleConverter.cs" />
     <Compile Include="Commands\Base\ChangeMapNameCommandBase.cs" />
     <Compile Include="Commands\Base\CommandBase.cs" />
+    <Compile Include="Commands\Base\CreatePublicTrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\UpdateActivityOfSignalsCommandBase.cs" />
     <Compile Include="Commands\Base\CreateSignalsCommandBase.cs" />
     <Compile Include="Commands\Base\CreateMineCommandBase.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Commands\Base\CreateStockCommandBase.cs" />
     <Compile Include="Commands\Base\CreateTrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
+    <Compile Include="Commands\Editor\Create\CreatePublicTrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateActivityOfSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreatePlayerCommand.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="Commands\Editor\Other\ChangeMapNameCommand.cs" />
     <Compile Include="Commands\Editor\Other\StartCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateAlignmentOfMineCommand.cs" />
+    <Compile Include="Commands\Editor\Update\UpdateAlignmentOfPublicTrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateConfigOfSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateAlignmentOfStockCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateAlignmentOfTrainstationCommand.cs" />
@@ -239,6 +242,9 @@
     <Compile Include="Views\Editor\StockEditorUserControl.xaml.cs">
       <DependentUpon>StockEditorUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Editor\PlayerTrainstationEditorUserControl.xaml.cs">
+      <DependentUpon>PlayerTrainstationEditorUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Editor\TrainstationEditorUserControl.xaml.cs">
       <DependentUpon>TrainstationEditorUserControl.xaml</DependentUpon>
     </Compile>
@@ -345,6 +351,10 @@
     <Page Include="Views\Editor\StockEditorUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Editor\PlayerTrainstationEditorUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Game\CoalGameUserControl.xaml">
       <SubType>Designer</SubType>

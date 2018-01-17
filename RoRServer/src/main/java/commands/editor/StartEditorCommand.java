@@ -15,7 +15,7 @@ import models.game.PlaceableOnSquare;
 import models.game.Rail;
 import models.game.Square;
 import models.game.Stock;
-import models.game.PlayerTrainstation;
+import models.game.Trainstation;
 import models.session.EditorSession;
 import models.session.GameSession;
 import models.session.RoRSession;
@@ -65,7 +65,7 @@ public class StartEditorCommand extends CommandBase {
 						railSquaresToCreate.add(square);
 					if (square.getPlaceableOnSquare() instanceof Stock)
 						stockSquaresToCreate.add(square);
-					if (square.getPlaceableOnSquare() instanceof PlayerTrainstation)
+					if (square.getPlaceableOnSquare() instanceof Trainstation)
 						trainstationSquaresToCreate.add(square);
 				}
 			}

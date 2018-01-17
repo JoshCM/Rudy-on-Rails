@@ -8,7 +8,7 @@ import models.game.InteractiveGameObject;
 import models.game.Map;
 import models.game.Rail;
 import models.game.Square;
-import models.game.PlayerTrainstation;
+import models.game.Trainstation;
 
 /**
  * Validiert mögliche Positionen von PlaceableOnSquares
@@ -28,8 +28,8 @@ public class Validator {
 		InteractiveGameObject placeableOnSquare = (InteractiveGameObject) oldSquare.getPlaceableOnSquare();
 		if (placeableOnSquare instanceof Rail) {
 			return validateRailOnMap(newSquare);
-		} else if (placeableOnSquare instanceof PlayerTrainstation) {
-			PlayerTrainstation possibleTrainstation = (PlayerTrainstation) placeableOnSquare;
+		} else if (placeableOnSquare instanceof Trainstation) {
+			Trainstation possibleTrainstation = (Trainstation) placeableOnSquare;
 			return validateTrainstationOnMap(newSquare, possibleTrainstation.getAlignment(), map);
 		}
 		return false;
@@ -57,8 +57,8 @@ public class Validator {
 	 * @return boolean
 	 */
 	public static boolean validateTrainstationOnMap(Square newSquare, Compass alignment, Map map) {
-		int railCountRight = PlayerTrainstation.RAIL_COUNT_RIGHT;
-		int railCountLeft = PlayerTrainstation.RAIL_COUNT_LEFT;
+		int railCountRight = Trainstation.RAIL_COUNT_RIGHT;
+		int railCountLeft = Trainstation.RAIL_COUNT_LEFT;
 
 		if (!validatePossibleTrainstation(newSquare))
 			return false;

@@ -20,7 +20,7 @@
             </Image.InputBindings>
             <Image.LayoutTransform>
                 <TransformGroup>
-                    <RotateTransform Angle="{Binding PlayerTrainstation.Alignment, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" />
+                    <RotateTransform Angle="{Binding Trainstation.Alignment, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" />
                 </TransformGroup>
             </Image.LayoutTransform>
         </Image>
