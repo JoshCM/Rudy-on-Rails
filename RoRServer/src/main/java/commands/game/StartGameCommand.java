@@ -126,8 +126,6 @@ public class StartGameCommand extends CommandBase {
 		for(Rail generatedRail : generatedRails) {
 			generatedRail.generateResourcesNextToRail();
 		}
-		
-		createLocoForPlayers(session);
 
 		gameSession.start();
 	}
