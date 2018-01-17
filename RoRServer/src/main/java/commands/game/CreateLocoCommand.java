@@ -1,14 +1,9 @@
 package commands.game;
 
 import java.util.UUID;
-
 import commands.base.Command;
-import commands.base.CommandBase;
-import communication.MessageInformation;
-import models.game.Loco;
 import models.game.Map;
-import models.game.Player;
-import models.game.Rail;
+import models.game.PlayerLoco;
 import models.game.Square;
 import models.session.GameSession;
 import models.session.RoRSession;
@@ -46,9 +41,8 @@ public class CreateLocoCommand implements Command {
 		
 		//prüfen ob auf dem Square eine Rail liegt
 		if(square.getPlaceableOnSquare() != null) {
-			Rail rail = (Rail) square.getPlaceableOnSquare();
-			Loco loco = new Loco(session.getName(),square, playerId);
-			((GameSession) session).addLocomotive(loco);
+			PlayerLoco loco = new PlayerLoco(session.getName(), square, playerId);
+			((GameSession) session).addLoco(loco);
 		}
 	}
 }

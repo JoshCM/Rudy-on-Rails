@@ -3,12 +3,8 @@ using RoRClient.Communication.Dispatcher;
 using RoRClient.Communication.Topic;
 using RoRClient.Models.Game;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace RoRClient.Models.Session
 {
@@ -69,9 +65,9 @@ namespace RoRClient.Models.Session
         public void AddLoco(Loco loco)
         {
             locos.Add(loco);
-            NotifyPropertyChanged("Locos",null,loco);
-            
+            NotifyPropertyChanged("Locos", null, loco);
         }
+
         public void AddCart(Cart cart)
         {
             carts.Add(cart);

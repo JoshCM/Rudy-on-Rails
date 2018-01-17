@@ -1,19 +1,17 @@
 package models.game;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.UUID;
 
 import communication.MessageInformation;
 import models.session.GameSessionManager;
-import models.session.RoRSession;
 
 /**
  * 
  * @author Isabel Rott, Michelle Le Klasse fuer eine Lok, zu der eine Liste von
  *         Carts gehoert
  */
-public class Loco extends InteractiveGameObject {
+public abstract class Loco extends InteractiveGameObject {
 	private ArrayList<Cart> carts;
 	private Rail rail;
 	private UUID playerId;
@@ -37,8 +35,6 @@ public class Loco extends InteractiveGameObject {
 		this.drivingDirection = rail.getFirstSection().getNode1();
 		this.speed = 0;
 		this.playerId = playerId;
-		NotifyLocoCreated();
-		this.addInitialCart();
 	}
 
 	/**
@@ -93,17 +89,17 @@ public class Loco extends InteractiveGameObject {
 	}
 	
 	/**
-	 * Zug fährt rückwerts(letzter Wagon führt)
-	 * @param initial: Sagt ob der Zug grade von vorwärts in Rückwärts 
+	 * Zug fï¿½hrt rï¿½ckwerts(letzter Wagon fï¿½hrt)
+	 * @param initial: Sagt ob der Zug grade von vorwï¿½rts in Rï¿½ckwï¿½rts 
 	 */
 	public void reversedDrive(boolean initial) {
 
 		Cart actCart = null;
 		Compass tempDirection;
-		//beim Rückwärtsfahren ist natürlich die letzte Cart vorne, also bewegen wir erst die Carts und dann nach der for-Schleife den Zuch
+		//beim Rï¿½ckwï¿½rtsfahren ist natï¿½rlich die letzte Cart vorne, also bewegen wir erst die Carts und dann nach der for-Schleife den Zuch
 		for (int i = carts.size() - 1; i >= 0; i--) {
 			actCart = carts.get(i);
-			//Wenn von Vorwärts in Rückwärts geändert wird muss die Drivingdirection erstmal umgedreht werden.
+			//Wenn von Vorwï¿½rts in Rï¿½ckwï¿½rts geï¿½ndert wird muss die Drivingdirection erstmal umgedreht werden.
 			if(initial) {
 				tempDirection = actCart.getRail().getExitDirection(actCart.getDrivingDirection());
 			}
@@ -113,7 +109,7 @@ public class Loco extends InteractiveGameObject {
 			
 			Rail newRail = getNextRail(tempDirection, this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
 			
-			if(newRail!=null) {//Wenn das Nächste Schienenstück leer ist soll der zu anhalten
+			if(newRail!=null) {//Wenn das Nï¿½chste Schienenstï¿½ck leer ist soll der zu anhalten
 				Compass newDrivingDirection = newRail.getExitDirection(getDirectionNegation(tempDirection));
 
 				actCart.setDrivingDirection(newDrivingDirection);
@@ -126,7 +122,7 @@ public class Loco extends InteractiveGameObject {
 				break;
 			}
 		}
-		if(this.speed != 0) {//Wenn das nächste schienenstück der Cart leer ist darf der Zug natürlich auch nicht weiter düsen
+		if(this.speed != 0) {//Wenn das nï¿½chste schienenstï¿½ck der Cart leer ist darf der Zug natï¿½rlich auch nicht weiter dï¿½sen
 			if(initial)
 				tempDirection = this.rail.getExitDirection(this.drivingDirection);
 			else
@@ -137,34 +133,6 @@ public class Loco extends InteractiveGameObject {
 			this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 			NotifyLocoPositionChanged();
 		}
-	}
-
-	/**
-	 * wenn der Zug das erste mal rückwerts fahren soll(alle Fahrtrichtungen sollen umgedreht werden)
-	 */
-	public void initialReversedDrive() {
-
-		Cart actCart = null;
-		for (int i = carts.size() - 1; i >= 0; i--) {
-			actCart = carts.get(i);
-			Compass tempDirection = actCart.getRail().getExitDirection(actCart.getDrivingDirection());
-			Rail newRail = getNextRail(tempDirection, this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
-			Compass newDrivingDirection = newRail.getExitDirection(getDirectionNegation(tempDirection));
-
-			actCart.setDrivingDirection(newDrivingDirection);
-			actCart.setRail(newRail);
-			actCart.updateSquare(this.map.getSquare(newRail.getXPos(), newRail.getYPos()));
-			actCart.notifyUpdatedCart();
-
-		}
-
-		Compass tempDirection = this.rail.getExitDirection(this.drivingDirection);
-		this.rail = getNextRail(tempDirection, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-		this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(tempDirection));
-
-		this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-
-		NotifyLocoPositionChanged();
 	}
 
 	/**
@@ -263,19 +231,6 @@ public class Loco extends InteractiveGameObject {
 	}
 
 	/**
-	 * notifiziert wenn eine Lok erstellt wurde
-	 */
-	private void NotifyLocoCreated() {
-		MessageInformation messageInfo = new MessageInformation("CreateLoco");
-		messageInfo.putValue("locoId", getId());
-		messageInfo.putValue("xPos", getXPos());
-		messageInfo.putValue("yPos", getYPos());
-		messageInfo.putValue("drivingDirection", drivingDirection.toString());
-		messageInfo.putValue("playerId", this.playerId);
-		notifyChange(messageInfo);
-	}
-
-	/**
 	 * notifiziert wenn die Position der Lok veraendert wurde
 	 */
 	private void NotifyLocoPositionChanged() {
@@ -284,7 +239,6 @@ public class Loco extends InteractiveGameObject {
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
 		messageInfo.putValue("drivingDirection", drivingDirection.toString());
-		messageInfo.putValue("playerId", this.playerId);
 		notifyChange(messageInfo);
 	}
 
@@ -354,5 +308,9 @@ public class Loco extends InteractiveGameObject {
 
 	public UUID getPlayerId() {
 		return playerId;
+	}
+	
+	public Compass getDrivingDirection() {
+		return drivingDirection;
 	}
 }

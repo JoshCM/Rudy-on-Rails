@@ -1,26 +1,22 @@
 package commands;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-
 import org.junit.Test;
-
 import commands.base.Command;
-import commands.editor.MoveTrainstationCommand;
 import commands.editor.StartEditorCommand;
 import communication.MessageInformation;
-import junit.framework.Assert;
 import models.game.Rail;
 import models.game.Square;
 import models.game.Stock;
 import models.game.Trainstation;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
-import models.session.GameSession;
-import models.session.GameSessionManager;
 import models.game.Compass;
 
 public class StartEditorCommandTest {
@@ -52,12 +48,12 @@ public class StartEditorCommandTest {
 	}
 
 	@Test
-	public void EditorShouldStartLoadedMap() {
+	public void editorShouldStartLoadedMap() {
 		MessageInformation messageInformation = new MessageInformation();
 		EditorSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 		// name mit '#' am anfang legt eine neue leere Map fest
-		session.setMapName("GameDefaultMap");
+		session.setMapName("UnitTestMap");
 
 		StartEditorCommand command = new StartEditorCommand(session, messageInformation);
 
@@ -85,7 +81,7 @@ public class StartEditorCommandTest {
 					} 
 				}
 				if(!contains) {
-					assertEquals(null, square.getPlaceableOnSquare());
+					assertNull(square.getPlaceableOnSquare());
 				}
 			}
 		}
