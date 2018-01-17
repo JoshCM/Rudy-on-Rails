@@ -8,9 +8,10 @@
              x:Name="gameStatusUserControl"
              d:DesignHeight="20" d:DesignWidth="300">
     <StackPanel Orientation="Horizontal" >
-        <Label Content="Resourcen: 5 Coal | 3 Gold" FontSize="6" Margin="5,0" MinWidth="50" Width="79" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Label Content="{Binding CoalCount, ElementName=gameStatusUserControl}" FontSize="6" Margin="5,0" MinWidth="50" Width="79" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <!--
         <Label Content="Waggons: 5 gelagert | 3 beladen | 1 leer" FontSize="6" Margin="5,0" MinWidth="150" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Label Content="4 Punkte" FontSize="6"  Margin="5,0" MinWidth="50" Width="38" Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+        -->
     </StackPanel>
 </UserControl>

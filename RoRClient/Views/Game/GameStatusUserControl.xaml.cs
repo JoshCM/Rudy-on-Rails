@@ -28,27 +28,18 @@ namespace RoRClient.Views.Game
             InitializeComponent();
         }
 
-        public ObservableCollection<Resource> PlayerResources
+        public int CoalCount
         {
             get
             {
-                return (ObservableCollection<Resource>)GetValue(ResourcesProperty);
+                return (int)GetValue(CoalCountProperty);
             }
             set
             {
-                SetValue(ResourcesProperty, value);
+                SetValue(CoalCountProperty, value);
             }
         }
-        private static void OnPlayerResourcesChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            GameStatusUserControl gameStatusUserControl = sender as GameStatusUserControl;
 
-
-            var newCollection = e.NewValue as ObservableCollection<Resource>;
-
-            Console.WriteLine(newCollection.Count);
-        }
-
-        public static readonly DependencyProperty ResourcesProperty = DependencyProperty.Register("PlayerResources", typeof(ObservableCollection<Resource>), typeof(GameStatusUserControl), new UIPropertyMetadata(null, OnPlayerResourcesChanged));
+        public static readonly DependencyProperty CoalCountProperty = DependencyProperty.Register("CoalCount", typeof(int), typeof(GameStatusUserControl), new UIPropertyMetadata(0));
     }
 }
