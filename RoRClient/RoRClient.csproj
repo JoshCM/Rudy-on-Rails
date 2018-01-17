@@ -115,6 +115,7 @@
     <Compile Include="Commands\Base\CreateStockCommandBase.cs" />
     <Compile Include="Commands\Base\CreateTrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
+    <Compile Include="Commands\Editor\Other\LeaveEditorCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateActivityOfSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreatePlayerCommand.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateTrainstationCommand.cs" />
     <Compile Include="Commands\Game\Other\ChangeMapNameCommand.cs" />
+    <Compile Include="Commands\Game\Other\LeaveGameCommand.cs" />
     <Compile Include="Commands\Game\Other\StartCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateResourceCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateActivityOfSignalsCommand.cs" />

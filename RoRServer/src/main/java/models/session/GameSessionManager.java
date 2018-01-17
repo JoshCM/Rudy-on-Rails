@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import models.game.Player;
+
 /**
  * Hier werden alle GameSessions erzeugt und gehalten GameSessions duerfen
  * ausschliesslich ueber diesen Manager erzeugt werden!
@@ -37,11 +39,12 @@ public class GameSessionManager {
 	}
 
 	/**
-	 * Entfernt spezifische GameSession aus HashMap
+	 * Entfernt spezifische GameSession aus HashMap + Kickt alle Player
 	 * 
 	 * @param gameSession
 	 */
 	public void removeGameSession(GameSession gameSession) {
+		gameSession.removePlayers();
 		gameSessionMap.remove(gameSession.getName());
 	}
 

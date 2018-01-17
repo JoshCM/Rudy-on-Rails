@@ -49,7 +49,17 @@ public abstract class RoRSession extends ModelBase {
 
 	public void removePlayer(Player player) {
 		this.players.remove(player);
+		notifyPlayerLeft(player);
 	}
+
+	public void removePlayers() {
+		for(int i = getPlayers().size() - 1; i >= 0; i--) {
+			Player player = getPlayers().get(i);
+			removePlayer(player);
+		}
+	}
+	
+	protected abstract void notifyPlayerLeft(Player player);
 	
 	public Player getHost() {
 		return players.stream().filter(x -> x.getIsHost()).findFirst().get();

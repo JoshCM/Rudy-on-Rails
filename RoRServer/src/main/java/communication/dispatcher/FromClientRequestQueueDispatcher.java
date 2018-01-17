@@ -158,7 +158,13 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 			sendErrorMessage(clientId, "SessionAlreadyStarted");
 			return;
 		}
-
+		
+		
+		if (gameSession.isFull()) {
+			sendErrorMessage(clientId, "SessionAlreadyFull");
+			return;
+		}
+				
 		String playerName = messageInformation.getValueAsString("playerName");
 		UUID playerId = UUID.fromString(messageInformation.getClientid());
 		gameSession.createPlayer(playerId, playerName);
@@ -172,7 +178,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		responseInformation.putValue("type", type);
 		sendMessage(responseInformation);
 	}
-
+	
 	private void sendJoinGameSessionCommand(String clientId, GameSession gameSession) {
 		MessageInformation responseInformation = new MessageInformation("JoinGameSession");
 		responseInformation.setClientid(clientId);
@@ -224,6 +230,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 				json.addProperty("name", session.getName());
 				json.addProperty("amountOfPlayers", session.getPlayers().size());
 				json.addProperty("hostname", session.getHost().getName());
+				json.addProperty("availablePlayerSlots", session.getMap().getAvailablePlayerSlots());
 				gameSessionInfos.add(json);
 			}
 		}
@@ -239,7 +246,8 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 
 		List<JsonObject> gameInfos = new ArrayList<JsonObject>();
 		String sessionName = messageInformation.getValueAsString("sessionName");
-		List<Player> gamePlayers = GameSessionManager.getInstance().getGameSessionByName(sessionName).getPlayers();
+		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(sessionName);
+		List<Player> gamePlayers = gameSession.getPlayers();
 		for (Player player : gamePlayers) {
 			JsonObject json = new JsonObject();
 			json.addProperty("playerId", player.getId().toString());

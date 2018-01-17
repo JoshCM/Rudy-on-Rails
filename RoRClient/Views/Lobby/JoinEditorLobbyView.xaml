@@ -30,6 +30,7 @@
         <StackPanel Height="60"  Orientation="Horizontal" DockPanel.Dock="Bottom" >
             <Button Margin="10" Width="200" x:Name="editorButton" Command="{Binding CreateEditorSessionCommand}" Content="Erstellen"/>
             <Button Margin="10" Width="200" x:Name="gameButton" Command="{Binding JoinEditorSessionCommand}" Content="Beitreten"/>
+            <Button Margin="10" Width="200" x:Name="refreshEditorButton" Command="{Binding RefreshEditorSessionsCommand}" Content="Aktualisieren"/>
         </StackPanel>
     </DockPanel>
 </UserControl>

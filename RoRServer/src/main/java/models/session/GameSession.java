@@ -11,8 +11,10 @@ import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
 import models.game.GhostLoco;
 import models.game.Loco;
+import models.game.Player;
 import models.game.PlayerLoco;
 import models.game.TickableGameObject;
+import models.game.Trainstation;
 
 /**
  * Oberklasse vom Game-Modus. 
@@ -62,6 +64,18 @@ public class GameSession extends RoRSession{
 	}
 	
 	/**
+	 * Prüft, ob das Spiel die maximale Anzahl an verfügbaren Spielerslots erreicht wurde
+	 * @return
+	 */
+	public boolean isFull() {
+		boolean isFull = false;
+		if (getMap().getAvailablePlayerSlots() == getPlayers().size()) {
+			isFull = true;
+		}
+		return isFull;
+	}
+	
+	/**
 	 * stoppt den TickingThread
 	 */
 	public void stop() {
@@ -108,6 +122,13 @@ public class GameSession extends RoRSession{
 			locos.add(loco);
 			ticker.addObserver(loco);
 		}
+	}
+	
+	@Override
+	protected void notifyPlayerLeft(Player player) {
+		MessageInformation message = new MessageInformation("LeaveGame");
+		message.putValue("playerId", player.getId());
+		notifyChange(message);
 	}
 	
 	public List<Loco> getLocos() {
