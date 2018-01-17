@@ -10,6 +10,7 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
+import models.game.Crane;
 import models.game.Compass;
 import models.game.GhostLoco;
 import models.game.Map;
@@ -88,6 +89,11 @@ public class StartGameCommand extends CommandBase {
 				Mine mine = (Mine)rail.getPlaceableOnrail();
 				Mine newMine = (Mine)mine.loadFromMap(railSquare, session);
 				newRail.setPlaceableOnRail(newMine);
+			}else if(rail.getPlaceableOnrail() instanceof Crane) {
+			//liegt ein Crane auf einer Rail muss diese ebenfalls neu erzeugt werden
+				Crane crane = (Crane) rail.getPlaceableOnrail();
+				Crane newCrane = (Crane)crane.loadFromMap(railSquare, session);
+				rail.setPlaceableOnRail(newCrane);
 			}
 			railSquare.setPlaceableOnSquare(newRail);
 			

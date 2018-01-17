@@ -37,8 +37,8 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 
 		//log.info("Stock erstellt: " + newStock.toString());
 		
-		// die Trainstation die den Stock beinhaltet muss den neuen Stock gesetzt bekommen,#
-		// sonst hat der Stock der Trainstation keine Observer
+		// die Trainstation die den Stock beinhaltet muss den neuen Crane gesetzt bekommen,#
+		// sonst hat der Crane der Trainstation keine Observer
 		((Trainstation)session.getMap().getPlaceableOnSquareById(getTrainstationId())).setCrane(newCrane);
 		
 		return newCrane;

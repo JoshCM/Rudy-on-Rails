@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Commands.Game.Create
 {
-    class CreateMineCommand : CreateMineCommandBase
+    class CreateCraneCommand:CreateCraneCommandBase
     {
-        public CreateMineCommand(RoRSession session, MessageInformation message) : base(session, message)
+        public CreateCraneCommand(RoRSession session, MessageInformation message):base(session, message)
         {
         }
     }
