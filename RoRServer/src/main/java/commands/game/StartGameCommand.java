@@ -3,11 +3,14 @@ package commands.game;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
+
 import org.apache.log4j.Logger;
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
+import models.game.GhostLoco;
 import models.game.Map;
 import models.game.Mine;
 import models.game.Player;
@@ -112,7 +115,9 @@ public class StartGameCommand extends CommandBase {
 			// Für jeden Spieler eine Lok erstellen
 			if(playerIterator.hasNext()) {
 				// Loco wird erstellt und zur Liste der Locos hinzugefügt
-				gameSession.addLoco(new PlayerLoco(gameSession.getName(), locoSpawnPointSquare, playerIterator.next().getId()));
+				UUID playerId = playerIterator.next().getId();
+				gameSession.addLoco(new PlayerLoco(gameSession.getName(), locoSpawnPointSquare, playerId));
+				gameSession.addLoco(new GhostLoco(gameSession.getName(), locoSpawnPointSquare, playerId));
 			}
 		}
 
