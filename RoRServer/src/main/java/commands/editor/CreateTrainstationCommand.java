@@ -158,11 +158,12 @@ public class CreateTrainstationCommand extends CommandBase {
 		Square craneSquare = findCraneSquare(stock);
 		List<Rail> TrainstationRails = trainstation.getTrainstationRails();
 		Rail craneRail = findCraneRail(TrainstationRails, craneSquare);
+		
 		Compass craneAlignment = getCraneAlignment();
-		return new Crane(this.session.sessionName, craneSquare, trainstation.getId(),craneAlignment, craneRail.getId());
 		
-		
-		
+		Crane newCrane = new Crane(this.session.sessionName, craneSquare, trainstation.getId(),craneAlignment, craneRail.getId());
+		craneRail.setPlaceableOnRail(newCrane);
+		return newCrane;
 	}
 	
 	public Square findCraneSquare(Square stock) {

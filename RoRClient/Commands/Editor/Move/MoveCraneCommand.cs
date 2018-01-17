@@ -29,8 +29,11 @@ namespace RoRClient.Commands.Editor.Move
             EditorSession editor = (EditorSession) session;
             Square square = editor.Map.GetSquare(newXPos, newYPos);
             Rail rail = (Rail)square.PlaceableOnSquare;
+           
             Crane crane = (Crane)rail.PlaceableOnRail;
             crane.Square = editor.Map.GetSquare(newXPos, newYPos);
+            rail.PlaceableOnRail = null;
+            rail.PlaceableOnRail = crane;
             Console.WriteLine("newX" + crane.Square.PosX + "newY:"+crane.Square.PosY );
         }
     }

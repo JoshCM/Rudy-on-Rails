@@ -246,10 +246,11 @@ public class Map extends ModelBase {
 				
 				//The Crane likes to move it move it...
 				Crane crane = trainstation.getCrane();
-				Square old = getSquareById(crane.getSquareId());
 				Square newSquare = getTrainstationInteractiveGameObjectSquare(crane, trainstation, oldPlaceableOnSquareXPos, oldPlaceableOnSquareYPos);
-				crane.NotifyCraneMoved(newSquare);
+				System.out.println("newSquare ("+ newSquare.getXIndex() +"/"+newSquare.getYIndex()+")");
 				crane.changeSquare(newSquare);
+				crane.NotifyCraneMoved(newSquare);
+				
 				
 				
 				

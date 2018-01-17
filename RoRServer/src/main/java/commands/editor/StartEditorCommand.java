@@ -9,6 +9,7 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
+import models.game.Crane;
 import models.game.Map;
 import models.game.Mine;
 import models.game.PlaceableOnSquare;
@@ -85,6 +86,10 @@ public class StartEditorCommand extends CommandBase {
 				Mine mine = (Mine)rail.getPlaceableOnrail();
 				Mine newMine = (Mine)mine.loadFromMap(railSquare, session);
 				newRail.setPlaceableOnRail(newMine);
+			}else if(rail.getPlaceableOnrail() instanceof Crane) {
+				Crane crane = (Crane) rail.getPlaceableOnrail();
+				Crane newCrane = (Crane) crane.loadFromMap(railSquare, session);
+				newRail.setPlaceableOnRail(newCrane);
 			}
 			railSquare.setPlaceableOnSquare(newRail);
 		}
