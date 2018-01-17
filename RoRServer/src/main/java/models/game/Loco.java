@@ -54,9 +54,10 @@ public class Loco extends InteractiveGameObject {
 				if (speed < 0) {
 					if (!reversed) {
 						reversed = true;
-						initialReversedDrive();
+						reversedDrive(true);
+						//initialReversedDrive();
 					} else {
-						reversedDrive();
+						reversedDrive(false);
 					}
 				} else if (speed > 0) {
 					if (reversed) {
@@ -79,36 +80,63 @@ public class Loco extends InteractiveGameObject {
 	public void drive() {
 		Rail nextRail = getNextRail(this.drivingDirection,
 				this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
+		if(nextRail != null) {
 		moveCarts(this.rail, this.drivingDirection);
 		this.drivingDirection = nextRail.getExitDirection(getDirectionNegation(this.drivingDirection));
 		this.rail = nextRail;
 		this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 		NotifyLocoPositionChanged();
+		}
+		else {
+			this.speed = 0;
+		}
 	}
 	
 	/**
 	 * Zug fährt rückwerts(letzter Wagon führt)
+	 * @param initial: Sagt ob der Zug grade von vorwärts in Rückwärts 
 	 */
-	public void reversedDrive() {
+	public void reversedDrive(boolean initial) {
 
 		Cart actCart = null;
+		Compass tempDirection;
+		//beim Rückwärtsfahren ist natürlich die letzte Cart vorne, also bewegen wir erst die Carts und dann nach der for-Schleife den Zuch
 		for (int i = carts.size() - 1; i >= 0; i--) {
 			actCart = carts.get(i);
-			Rail newRail = getNextRail(actCart.getDrivingDirection(),
-					this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
-			Compass newDrivingDirection = newRail.getExitDirection(getDirectionNegation(actCart.getDrivingDirection()));
+			//Wenn von Vorwärts in Rückwärts geändert wird muss die Drivingdirection erstmal umgedreht werden.
+			if(initial) {
+				tempDirection = actCart.getRail().getExitDirection(actCart.getDrivingDirection());
+			}
+			else {
+				tempDirection = actCart.getDrivingDirection();
+			}
+			
+			Rail newRail = getNextRail(tempDirection, this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
+			
+			if(newRail!=null) {//Wenn das Nächste Schienenstück leer ist soll der zu anhalten
+				Compass newDrivingDirection = newRail.getExitDirection(getDirectionNegation(tempDirection));
 
-			actCart.setDrivingDirection(newDrivingDirection);
-			actCart.setRail(newRail);
-			actCart.updateSquare(this.map.getSquare(newRail.getXPos(), newRail.getYPos()));
-			actCart.notifyUpdatedCart();
+				actCart.setDrivingDirection(newDrivingDirection);
+				actCart.setRail(newRail);
+				actCart.updateSquare(this.map.getSquare(newRail.getXPos(), newRail.getYPos()));
+				actCart.notifyUpdatedCart();
+			}
+			else {
+				this.speed = 0; 
+				break;
+			}
 		}
-
-		this.rail = getNextRail(this.drivingDirection, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-		this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(this.drivingDirection));
-		this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-		NotifyLocoPositionChanged();
-
+		if(this.speed != 0) {//Wenn das nächste schienenstück der Cart leer ist darf der Zug natürlich auch nicht weiter düsen
+			if(initial)
+				tempDirection = this.rail.getExitDirection(this.drivingDirection);
+			else
+				tempDirection = this.drivingDirection;
+			
+			this.rail = getNextRail(tempDirection, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
+			this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(tempDirection));
+			this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
+			NotifyLocoPositionChanged();
+		}
 	}
 
 	/**
@@ -191,16 +219,24 @@ public class Loco extends InteractiveGameObject {
 		switch (compass) {
 		case NORTH:
 			retSquare = this.map.getSquare(square.getXIndex(), square.getYIndex() - 1);
-			return (Rail) retSquare.getPlaceableOnSquare();
+			if(retSquare.getPlaceableOnSquare() instanceof Rail)
+				return (Rail) retSquare.getPlaceableOnSquare();
+			break;
 		case EAST:
 			retSquare = this.map.getSquare(square.getXIndex() + 1, square.getYIndex());
-			return (Rail) retSquare.getPlaceableOnSquare();
+			if(retSquare.getPlaceableOnSquare() instanceof Rail)
+				return (Rail) retSquare.getPlaceableOnSquare();
+			break;
 		case SOUTH:
 			retSquare = this.map.getSquare(square.getXIndex(), square.getYIndex() + 1);
-			return (Rail) retSquare.getPlaceableOnSquare();
+			if(retSquare.getPlaceableOnSquare() instanceof Rail)
+				return (Rail) retSquare.getPlaceableOnSquare();
+			break;
 		case WEST:
 			retSquare = this.map.getSquare(square.getXIndex() - 1, square.getYIndex());
-			return (Rail) retSquare.getPlaceableOnSquare();
+			if(retSquare.getPlaceableOnSquare() instanceof Rail)
+				return (Rail) retSquare.getPlaceableOnSquare();
+			break;
 		}
 		return null;
 	}
