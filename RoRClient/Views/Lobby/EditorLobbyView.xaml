@@ -19,9 +19,9 @@
         <Border DockPanel.Dock="Top" BorderBrush="#FF510404" BorderThickness="2" Height="2" Margin="250,0,250,0" />
 
 
-        <StackPanel DockPanel.Dock="Left" Margin="250,40,0,250" >
+        <StackPanel DockPanel.Dock="Left" Margin="250,40,0,200">
             <TextBlock Text="Spieler in diesem Bau-Modus:" TextWrapping="Wrap" Height="40" Width="400" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" HorizontalAlignment="Left"/>
-            <ListBox Height="250" Width="400" x:Name="EditorPlayersListBox" ItemsSource="{Binding LobbyModel.EditorInfos}">
+            <ListBox Height="230" Width="400" x:Name="EditorPlayersListBox" ItemsSource="{Binding LobbyModel.EditorInfos}" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404">
               <ListBox.ItemTemplate>
                   <DataTemplate>
                      <StackPanel Orientation="Horizontal">
@@ -46,9 +46,9 @@
         <Border DockPanel.Dock="Bottom" BorderBrush="#FF510404" BorderThickness="2" Height="2" Margin="-400,0,250,0" />
 
 
-        <StackPanel  Margin="100,40,250,50">
+        <StackPanel  Margin="100,40,250,0">
             <TextBlock Text="Zur Verfügung stehende Karten:" TextWrapping="Wrap" Height="40" Width="400" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" HorizontalAlignment="Left"/>
-            <ListBox DockPanel.Dock="Right" Height="250" Width="400" IsSynchronizedWithCurrentItem="True" x:Name="EditorMapsListBox" ItemsSource="{Binding LobbyModel.MapNames}" SelectedItem="{Binding Path=EditorSession.MapName, Mode=TwoWay}" IsEnabled="{Binding IsHost}" HorizontalAlignment="Left">
+            <ListBox DockPanel.Dock="Right" Height="230" Width="400" IsSynchronizedWithCurrentItem="True" x:Name="EditorMapsListBox" ItemsSource="{Binding LobbyModel.MapNames}" SelectedItem="{Binding Path=EditorSession.MapName, Mode=TwoWay}" IsEnabled="{Binding IsHost}" HorizontalAlignment="Left" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" >
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Style.Triggers>

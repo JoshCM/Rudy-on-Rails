@@ -301,9 +301,6 @@
     <Compile Include="Views\Game\MapGameUserControl.xaml.cs">
       <DependentUpon>MapGameUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Game\GameMiniMapUserControl.xaml.cs">
-      <DependentUpon>GameMiniMapUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Game\MineGameUserControl.xaml.cs">
       <DependentUpon>MineGameUserControl.xaml</DependentUpon>
     </Compile>
@@ -384,10 +381,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Game\MapGameUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Game\GameMiniMapUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

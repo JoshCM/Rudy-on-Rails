@@ -28,7 +28,7 @@
 
         <StackPanel DockPanel.Dock="Right" Width="550" Margin="0,50,250,0" >
             <TextBlock Text="Bestehenden Bau-Modus auswählen und beitreten." TextWrapping="Wrap" Height="60" Width="400" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" HorizontalAlignment="Left" Margin="0,0,0,10"/>
-            <ListBox Height="200" Width="300" x:Name="editorSessionListBox" ItemsSource="{Binding LobbyModel.EditorSessionInfos}" SelectedItem="{Binding Path=SelectedEditorSessionInfo, Mode=TwoWay}" Margin="0,0,0,20" HorizontalAlignment="Left" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" >
+            <ListBox Height="200" Width="442" x:Name="editorSessionListBox" ItemsSource="{Binding LobbyModel.EditorSessionInfos}" SelectedItem="{Binding Path=SelectedEditorSessionInfo, Mode=TwoWay}" Margin="0,0,0,20" HorizontalAlignment="Left" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">

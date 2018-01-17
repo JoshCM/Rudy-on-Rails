@@ -25,26 +25,26 @@
             <Button x:Name="refreshGamesButton" Command="{Binding RefreshGameSessionsCommand}" Content="Aktualisieren" FontFamily="Source Sans Pro" Height="55" Width="200" FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" Margin="20,0,10,40" />
         </StackPanel>
 
-        <StackPanel Width="1000" Margin="0,40,0,0" >
-            <ListBox Height="328" x:Name="gameSessionListBox" DockPanel.Dock="Top" ItemsSource="{Binding LobbyModel.GameSessionInfos}" SelectedItem="{Binding Path=SelectedGameSessionInfo, Mode=TwoWay}" Margin="-28,0,373,0" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" >
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel.Resources>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Margin" Value="10,10,0,0"/>
-                            </Style>
-                        </StackPanel.Resources>
-                        <StackPanel.InputBindings>
-                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+        <StackPanel Width="1133" Margin="0,40,0,0" >
+            <ListBox Height="250" x:Name="gameSessionListBox" DockPanel.Dock="Top" ItemsSource="{Binding LobbyModel.GameSessionInfos}" SelectedItem="{Binding Path=SelectedGameSessionInfo, Mode=TwoWay}" Margin="40,0,373,0" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Margin" Value="10,10,0,0"/>
+                                </Style>
+                            </StackPanel.Resources>
+                            <StackPanel.InputBindings>
+                                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                                           AncestorType={x:Type UserControl}}, Path=DataContext.JoinGameSessionCommand}"/>
-                        </StackPanel.InputBindings>
-                        <TextBlock Text="{Binding Name}" />
-                        <TextBlock Text="{Binding AmountOfPlayers}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                            </StackPanel.InputBindings>
+                            <TextBlock Text="{Binding Name}" />
+                            <TextBlock Text="{Binding AmountOfPlayers}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
 
     </DockPanel>
