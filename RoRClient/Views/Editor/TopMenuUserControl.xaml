@@ -22,7 +22,7 @@
             <MenuItem Header="_Speichern" Command="{Binding SaveMapCommand}" Background="#ff510404"/>
             <MenuItem Header="_Speichern als..." Command="{Binding SaveNewMapCommand}" Background="#ff510404"/>
             <Separator Background="#ff510404" />
-            <MenuItem Header="_Schließen" Command="{x:Static cmd:EditorCommands.Exit}" Background="#ff510404"/>
+            <MenuItem Header="_Exit" Command="{Binding LeaveEditorCommand}" />
         </MenuItem>
         <Label Content="|" Foreground="White" FontSize="20" Margin="5, 0"/>
         <MenuItem Header="_Spielregeln" MinWidth="50"/>

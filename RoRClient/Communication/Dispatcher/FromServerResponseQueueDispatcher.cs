@@ -43,6 +43,7 @@ namespace RoRClient.Communication.Dispatcher
             editorSession.Name = editorName;
             string topicName = messageInformation.GetValueAsString("topicName");
             editorSession.Init(topicName);
+            editorSession.PropertyChanged += OnEditorSessionChanged;
 
             List<JObject> playersList = messageInformation.GetValueAsJObjectList("playerList");
             foreach (JObject obj in playersList)
