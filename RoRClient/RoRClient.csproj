@@ -304,9 +304,6 @@
     <Compile Include="Views\Game\MapGameUserControl.xaml.cs">
       <DependentUpon>MapGameUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Game\GameMiniMapUserControl.xaml.cs">
-      <DependentUpon>GameMiniMapUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Game\MineGameUserControl.xaml.cs">
       <DependentUpon>MineGameUserControl.xaml</DependentUpon>
     </Compile>
@@ -387,10 +384,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Game\MapGameUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Game\GameMiniMapUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -564,6 +557,7 @@
     <Resource Include="Resources\Images\container_gold.png" />
     <Resource Include="Resources\Images\Tools\rail_crossing.png" />
     <Resource Include="Resources\Images\rail_crossing.png" />
+    <Resource Include="Resources\Images\start_background.png" />
     <Resource Include="Resources\Images\signal_green.png" />
     <Resource Include="Resources\Images\signal_red.png" />
     <Resource Include="Resources\Images\loco_debug.png" />
@@ -579,6 +573,7 @@
     <Resource Include="Resources\Images\Tools\trainstation1.png" />
     <Resource Include="Resources\Images\stock_container_1.png" />
     <Resource Include="Resources\Images\container_points.png" />
+    <Resource Include="Resources\Images\btn_back.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
