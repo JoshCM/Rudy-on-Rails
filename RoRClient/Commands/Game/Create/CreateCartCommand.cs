@@ -49,7 +49,6 @@ namespace RoRClient.Commands.Game.Create
             {
                 Rail rail = (Rail)square.PlaceableOnSquare;
                 rail.PlaceableOnRail = cart; 
-                //((GameSession)session).AddCart(cart);
             }
         }
     }

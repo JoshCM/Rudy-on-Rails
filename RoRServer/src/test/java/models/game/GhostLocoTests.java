@@ -61,7 +61,7 @@ public class GhostLocoTests {
 		squareLoco.setPlaceableOnSquare(railLoco);
 		squareCart.setPlaceableOnSquare(railCart);
 		
-		GhostLoco loco = new GhostLoco(gameSession.getName(), squareLoco, player.getId());
+		GhostLoco loco = new GhostLoco(gameSession.getName(), squareLoco, player.getId(),node1);
 		
 		return loco;
 	}
