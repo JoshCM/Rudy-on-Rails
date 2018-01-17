@@ -7,12 +7,12 @@ import models.game.Playertrainstation;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
-public class MoveTrainstationCommand extends CommandBase{
+public class MovePlayertrainstationCommand extends CommandBase{
 
 	private Square oldSquare;
 	private Square newSquare;
 	
-	public MoveTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
+	public MovePlayertrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		EditorSession editorSession = (EditorSession) session;
 		Playertrainstation trainstation = (Playertrainstation)editorSession.getMap().getPlaceableOnSquareById(messageInfo.getValueAsUUID("id"));

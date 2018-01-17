@@ -13,13 +13,13 @@ import models.game.Rail;
 import models.game.Compass;
 import models.game.Square;
 import models.game.Stock;
-import models.game.PlayerTrainstation;
-import models.game.PublicTrainstation;
+import models.game.Playertrainstation;
+import models.game.Publictrainstation;
 import models.helper.Validator;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
-public class CreatePublicTrainstationCommand extends CommandBase {
+public class CreatePublictrainstationCommand extends CommandBase {
 	private int xPos;
 	private int yPos;
 	private Compass alignment;
@@ -32,7 +32,7 @@ public class CreatePublicTrainstationCommand extends CommandBase {
 	private static final int EAST_NORTH_CURVED = 2;
 	private List<Integer> crossing = Arrays.asList(-3,2);
 
-	public CreatePublicTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
+	public CreatePublictrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 
 		xPos = messageInfo.getValueAsInt("xPos");
@@ -59,7 +59,7 @@ public class CreatePublicTrainstationCommand extends CommandBase {
 			stockSquare.setPlaceableOnSquare(newStock);
 			
 			// Trainstation wird erzeugt und auf Square gesetzt
-			PublicTrainstation trainstation = new PublicTrainstation(session.getName(), newSquare, createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment, newStock);
+			Publictrainstation trainstation = new Publictrainstation(session.getName(), newSquare, createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment, newStock);
 			newSquare.setPlaceableOnSquare(trainstation);
 		}
 	}

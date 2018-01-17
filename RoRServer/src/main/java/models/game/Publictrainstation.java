@@ -5,17 +5,17 @@ import java.util.UUID;
 
 import models.session.RoRSession;
 
-public class PublicTrainstation extends Trainstation {
+public class Publictrainstation extends Trainstation {
 
-	public PublicTrainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id,
+	public Publictrainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id,
 			Compass alignment, Stock stock) {
 		super(sessionName, square, trainstationRailIds, id, alignment, stock);
 	}
 	
 	@Override
-	public PublicTrainstation loadFromMap(Square square, RoRSession session) {
-		PublicTrainstation trainStation = (PublicTrainstation) square.getPlaceableOnSquare();
-		PublicTrainstation newTrainStation = new PublicTrainstation(session.getName(), square,
+	public Publictrainstation loadFromMap(Square square, RoRSession session) {
+		Publictrainstation trainStation = (Publictrainstation) square.getPlaceableOnSquare();
+		Publictrainstation newTrainStation = new Publictrainstation(session.getName(), square,
 				trainStation.getTrainstationRailIds(), trainStation.getId(), trainStation.alignment,
 				trainStation.getStock());
 

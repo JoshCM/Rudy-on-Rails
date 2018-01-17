@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace RoRClient.Commands.Game.Create
 {
-    class CreateTrainstationCommand : CreateTrainstationCommandBase
+    class CreateTrainstationCommand : CreatePlayertrainstationCommandBase
     {
         /// <summary>
         /// Setzt die Trainstation und ihre zugehörigen Rails

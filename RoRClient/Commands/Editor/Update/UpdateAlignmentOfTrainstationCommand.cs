@@ -23,7 +23,7 @@ namespace RoRClient.Commands.Editor.Update
         public override void Execute()
         {
             EditorSession editorSession = (EditorSession)session;
-            PlayerTrainstation trainstation = (PlayerTrainstation)editorSession.Map.GetPlaceableById(trainstationId);
+            Playertrainstation trainstation = (Playertrainstation)editorSession.Map.GetPlaceableById(trainstationId);
             trainstation.Alignment = alignment;
         }
     }

@@ -7,22 +7,23 @@ import java.util.UUID;
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import models.game.Map;
+import models.game.PlaceableOnSquare;
 import models.game.Rail;
 import models.game.Square;
 import models.game.Stock;
-import models.game.PlayerTrainstation;
-import models.game.PublicTrainstation;
+import models.game.Playertrainstation;
+import models.game.Publictrainstation;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
-public class DeletePublicTrainstationCommand extends CommandBase{
+public class DeletePublictrainstationCommand extends CommandBase{
 
 	UUID trainstationId;
 	UUID stockId;
 	int trainstationYPos;
 	List<UUID> trainstationRailIds = new ArrayList<UUID>();
 	
-	public DeletePublicTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
+	public DeletePublictrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		this.trainstationId = messageInfo.getValueAsUUID("trainstationId");
 		this.stockId = messageInfo.getValueAsUUID("stockId");
@@ -38,7 +39,7 @@ public class DeletePublicTrainstationCommand extends CommandBase{
 		Map map = editorSession.getMap();
 		
 		// remove trainstation
-		PublicTrainstation trainstation = (PublicTrainstation) map.getPlaceableOnSquareById(trainstationId);
+		Publictrainstation trainstation = (Publictrainstation) map.getPlaceableOnSquareById(trainstationId);
 		Square trainstationSquare = map.getSquare(trainstation.getXPos(), trainstation.getYPos());
 		trainstationSquare.deletePlaceable();
 		

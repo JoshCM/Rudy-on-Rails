@@ -10,13 +10,13 @@ namespace RoRClient.Models.Game
     /// Klasse für Trainstations die einem Square zugeordnet sind
     /// und eine Liste von Rails die zu der Trainstation gehören
     /// </summary>
-    public class PlayerTrainstation : Trainstation, IPlaceableOnSquare
+    public class Playertrainstation : Trainstation, IPlaceableOnSquare
     {
         private List<Rail> trainstationRails;
         private Compass alignment;
         private Stock stock;
 
-        public PlayerTrainstation(Guid id, Square square, List<Rail> trainstationRails, Compass alignment, Stock stock) : base(id, square, trainstationRails, alignment, stock)
+        public Playertrainstation(Guid id, Square square, List<Rail> trainstationRails, Compass alignment, Stock stock) : base(id, square, trainstationRails, alignment, stock)
         {
             this.id = id;
             this.trainstationRails = trainstationRails;

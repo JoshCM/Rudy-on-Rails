@@ -54,7 +54,7 @@ namespace RoRClient.Commands.Editor.Move
             EditorSession editorSession = (EditorSession)session;
 			Square oldTrainstationSquare = editorSession.Map.GetSquare(oldXPos, oldYPos);
 			Square newTrainstationSquare = editorSession.Map.GetSquare(newXPos, newYPos);
-			PlayerTrainstation trainstation = (PlayerTrainstation)oldTrainstationSquare.PlaceableOnSquare;
+			Playertrainstation trainstation = (Playertrainstation)oldTrainstationSquare.PlaceableOnSquare;
 			trainstation.Square = newTrainstationSquare;
             newTrainstationSquare.PlaceableOnSquare = trainstation;
             oldTrainstationSquare.PlaceableOnSquare = null;

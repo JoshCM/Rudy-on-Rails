@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace RoRClient.Commands.Base
 {
-    class CreatePublicTrainstationCommandBase : CommandBase
+    class CreatePublictrainstationCommandBase : CommandBase
     {
         Guid trainstationId;
         Guid stockId;
@@ -27,7 +27,7 @@ namespace RoRClient.Commands.Base
         /// </summary>
         /// <param name="session"></param>
         /// <param name="messageInformation"></param>
-        public CreatePublicTrainstationCommandBase(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        public CreatePublictrainstationCommandBase(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             trainstationId = Guid.Parse(messageInformation.GetValueAsString("trainstationId"));
             stockId = Guid.Parse(messageInformation.GetValueAsString("stockId"));
@@ -50,7 +50,7 @@ namespace RoRClient.Commands.Base
         {
             Square square = session.Map.GetSquare(xPos, yPos);
             Stock stock = (Stock)session.Map.GetPlaceableById(stockId);
-            PublicTrainstation trainstation = new PublicTrainstation(trainstationId, square, trainstationRails, alignment, stock);
+            Publictrainstation trainstation = new Publictrainstation(trainstationId, square, trainstationRails, alignment, stock);
             square.PlaceableOnSquare = trainstation;
         }
     }

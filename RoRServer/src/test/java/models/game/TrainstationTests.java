@@ -47,8 +47,8 @@ public class TrainstationTests {
 		initValidTrainstationCommand(x, y);
 		Square square = session.getMap().getSquare(x, y);
 		Assert.assertNotNull(square.getPlaceableOnSquare());
-		Assert.assertEquals(PlayerTrainstation.class, square.getPlaceableOnSquare().getClass());
-		List<UUID> railIds = ((PlayerTrainstation) square.getPlaceableOnSquare()).getTrainstationRailIds();
+		Assert.assertEquals(Playertrainstation.class, square.getPlaceableOnSquare().getClass());
+		List<UUID> railIds = ((Playertrainstation) square.getPlaceableOnSquare()).getTrainstationRailIds();
 		Assert.assertEquals(14, railIds.size());
 	}
 

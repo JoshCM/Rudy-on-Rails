@@ -13,7 +13,7 @@ import models.game.Rail;
 import models.game.Compass;
 import models.game.Square;
 import models.game.Stock;
-import models.game.PlayerTrainstation;
+import models.game.Playertrainstation;
 import models.helper.Validator;
 import models.session.EditorSession;
 import models.session.RoRSession;
@@ -59,7 +59,7 @@ public class CreateTrainstationCommand extends CommandBase {
 			stockSquare.setPlaceableOnSquare(newStock);
 			
 			// Trainstation wird erzeugt und auf Square gesetzt
-			PlayerTrainstation trainstation = new PlayerTrainstation(session.getName(), newSquare, createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment, newStock);
+			Playertrainstation trainstation = new Playertrainstation(session.getName(), newSquare, createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment, newStock);
 			trainstation.setSpawnPointforLoco(spawnPointforLoco);
 			newSquare.setPlaceableOnSquare(trainstation);
 		}

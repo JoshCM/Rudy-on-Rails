@@ -220,12 +220,12 @@ namespace RoRClient.ViewModels.Editor
 
         private void OnTrainstationPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            PlayerTrainstation trainstation = (PlayerTrainstation)sender;
+            Playertrainstation trainstation = (Playertrainstation)sender;
         }
 
         private void OnPublicTrainstationPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            PublicTrainstation trainstation = (PublicTrainstation)sender;
+            Publictrainstation trainstation = (Publictrainstation)sender;
         }
 
         /// <summary>
@@ -415,7 +415,7 @@ namespace RoRClient.ViewModels.Editor
         /// </summary>
         private void Move()
         {
-	        SelectedEditorCanvasViewModel?.Move();
+	        SelectedEditorCanvasViewModel.Move();
 
 	        // Quicknavigation nach dem Verschieben nicht mehr anzeigen
             IsQuickNavigationVisible = false;

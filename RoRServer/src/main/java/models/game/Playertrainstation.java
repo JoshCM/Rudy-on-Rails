@@ -5,10 +5,10 @@ import java.util.UUID;
 
 import models.session.RoRSession;
 
-public class PlayerTrainstation extends Trainstation {
+public class Playertrainstation extends Trainstation {
 	private Square spawnPointForLoco;
 
-	public PlayerTrainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment,
+	public Playertrainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment,
 			Stock stock) {
 		super(sessionName, square, trainstationRailIds, id, alignment, stock);
 	}
@@ -30,9 +30,9 @@ public class PlayerTrainstation extends Trainstation {
 	}
 
 	@Override
-	public PlayerTrainstation loadFromMap(Square square, RoRSession session) {
-		PlayerTrainstation trainStation = (PlayerTrainstation) square.getPlaceableOnSquare();
-		PlayerTrainstation newTrainStation = new PlayerTrainstation(session.getName(), square,
+	public Playertrainstation loadFromMap(Square square, RoRSession session) {
+		Playertrainstation trainStation = (Playertrainstation) square.getPlaceableOnSquare();
+		Playertrainstation newTrainStation = new Playertrainstation(session.getName(), square,
 				trainStation.getTrainstationRailIds(), trainStation.getId(), trainStation.alignment,
 				trainStation.getStock());
 
@@ -65,7 +65,7 @@ public class PlayerTrainstation extends Trainstation {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PlayerTrainstation other = (PlayerTrainstation) obj;
+		Playertrainstation other = (Playertrainstation) obj;
 		if (CLOCKWISE != other.CLOCKWISE)
 			return false;
 		if (COUNTER_CLOCKWISE != other.COUNTER_CLOCKWISE)
