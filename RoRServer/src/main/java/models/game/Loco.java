@@ -12,7 +12,7 @@ import models.session.RoRSession;
  * @author Isabel Rott, Michelle Le Klasse fuer eine Lok, zu der eine Liste von
  *         Carts gehoert
  */
-public class Loco extends InteractiveGameObject {
+public class Loco extends TickableGameObject {
 	private ArrayList<Cart> carts;
 	private Rail rail;
 	private UUID playerId;

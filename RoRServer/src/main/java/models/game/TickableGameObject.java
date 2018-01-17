@@ -5,16 +5,12 @@ import models.base.ModelBase;
 import models.base.ModelObserver;
 import models.base.ObservableModel;
 
-public abstract class TickableGameObject extends ModelBase implements ModelObserver{
+public abstract class TickableGameObject  extends InteractiveGameObject implements ModelObserver{
 	protected static final long SEC_IN_NANO = 1000000000;
 	protected long timeDeltaInNanoSeconds;//Zeit zwischen den Ticks
 	
 	public TickableGameObject(String sessionName, Square square) {
-		super(sessionName);
-	}
-	
-	public TickableGameObject(String sessionName, UUID id) {
-		super(sessionName, id);
+		super(sessionName, square);
 	}
 	
 	abstract public void specificUpdate();
