@@ -90,5 +90,26 @@ namespace RoRClient.ViewModels.Editor
             EditorSession editorSession = EditorSession.GetInstance();
             editorSession.QueueSender.SendMessage("SaveMap", new MessageInformation());
         }
+
+        private ICommand leaveEditorCommand;
+        public ICommand LeaveEditorCommand
+        {
+            get
+            {
+                if (leaveEditorCommand == null)
+                {
+                    leaveEditorCommand = new ActionCommand(param => LeaveEditor());
+                }
+                return leaveEditorCommand;
+            }
+        }
+
+        private void LeaveEditor()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("playerId", EditorSession.GetInstance().OwnPlayer.Id);
+            messageInformation.PutValue("isHost", EditorSession.GetInstance().OwnPlayer.IsHost);
+            EditorSession.GetInstance().QueueSender.SendMessage("LeaveEditor", messageInformation);
+        }
     }
 }

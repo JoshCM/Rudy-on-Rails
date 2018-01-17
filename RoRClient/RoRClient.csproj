@@ -268,8 +268,6 @@
     <Compile Include="ViewModels\Editor\ToolItem.cs" />
     <Compile Include="ViewModels\Editor\EditorViewModel.cs" />
     <Compile Include="ViewModels\Editor\ToolbarViewModel.cs" />
-    <Compile Include="ViewModels\Commands\EditorCommands.cs" />
-    <Compile Include="ViewModels\Commands\ExitCommand.cs" />
     <Compile Include="Views\Editor\ToolbarUserControl.xaml.cs">
       <DependentUpon>ToolbarUserControl.xaml</DependentUpon>
     </Compile>

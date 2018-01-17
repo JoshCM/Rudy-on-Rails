@@ -22,13 +22,12 @@
             <MenuItem Header="_Save" Command="{Binding SaveMapCommand}"/>
             <MenuItem Header="_Save As..." Command="{Binding SaveNewMapCommand}"/>
             <Separator />
-            <MenuItem Header="_Exit" Command="{x:Static cmd:EditorCommands.Exit}" />
+            <MenuItem Header="_Exit" Command="{Binding LeaveEditorCommand}" />
         </MenuItem>
         <MenuItem Header="_Edit" />
         <MenuItem Header="_View" />
         <MenuItem Header="_Window" />
         <MenuItem Header="_Help" />
         <MenuItem Header="_Hier könnte Ihre Werbung stehen" />
-        <MenuItem Header="_Eigener Exit Button" Command="{x:Static cmd:EditorCommands.Exit}" />
     </Menu>
 </UserControl>
