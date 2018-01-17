@@ -1,5 +1,7 @@
 package commands.editor;
 
+import java.util.UUID;
+
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import exceptions.NotRemoveableException;
@@ -12,6 +14,7 @@ import models.session.RoRSession;
 public class DeletePlaceableCommand extends CommandBase {
 	private int xPos;
 	private int yPos;
+	private UUID emptyUUID = new UUID(0, 0);
 
 	public DeletePlaceableCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
@@ -33,7 +36,7 @@ public class DeletePlaceableCommand extends CommandBase {
 			Rail rail = (Rail) square.getPlaceableOnSquare();
 
 			// wenn die Rail einen TrainstationId hat
-			if (rail.getTrainstationId() != null) {
+			if (!rail.getTrainstationId().equals(emptyUUID)) {
 				deleteable = false;
 			}
 		}

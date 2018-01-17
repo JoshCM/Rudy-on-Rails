@@ -138,12 +138,15 @@
     <Compile Include="Commands\Editor\Update\UpdateNodesOfRailSectionCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
-    <Compile Include="Commands\Game\Create\CreateLocoCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateCartCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateGhostLocoCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreatePlayerLocoCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateMineCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateSignalsCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateTrainstationCommand.cs" />
     <Compile Include="Commands\Game\Other\ChangeMapNameCommand.cs" />
     <Compile Include="Commands\Game\Other\StartCommand.cs" />
@@ -170,10 +173,12 @@
     <Compile Include="Models\Game\Cart.cs" />
     <Compile Include="Models\Game\Coal.cs" />
     <Compile Include="Models\Game\Container.cs" />
+    <Compile Include="Models\Game\GhostLoco.cs" />
     <Compile Include="Models\Game\Gold.cs" />
     <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Mine.cs" />
     <Compile Include="Models\Game\Player.cs" />
+    <Compile Include="Models\Game\PlayerLoco.cs" />
     <Compile Include="Models\Game\PublicTrainstation.cs" />
     <Compile Include="Models\Game\Resource.cs" />
     <Compile Include="Models\Game\Stock.cs" />
@@ -199,9 +204,12 @@
     <Compile Include="ViewModels\Editor\MineEditorViewModel.cs" />
     <Compile Include="ViewModels\Editor\StockEditorViewModel.cs" />
     <Compile Include="ViewModels\Game\CanvasGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\CartGameViewModel.cs" />
     <Compile Include="ViewModels\Game\CoalGameViewModel.cs" />
     <Compile Include="ViewModels\Game\ContainerGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\PlayerLocoGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GoldGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\GhostLocoGameViewModel.cs" />
     <Compile Include="ViewModels\Game\LocoGameViewModel.cs" />
     <Compile Include="ViewModels\Game\MapGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
@@ -279,6 +287,9 @@
     <Compile Include="Views\Editor\ObjectConfigurationUserControl.xaml.cs">
       <DependentUpon>ObjectConfigurationUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\CartGameUserControl.xaml.cs">
+      <DependentUpon>CartGameUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\CoalGameUserControl.xaml.cs">
       <DependentUpon>CoalGameUserControl.xaml</DependentUpon>
     </Compile>
@@ -288,8 +299,12 @@
     <Compile Include="Views\Game\GoldGameUserControl.xaml.cs">
       <DependentUpon>GoldGameUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Game\LocoGameUserControl.xaml.cs">
-      <DependentUpon>LocoGameUserControl.xaml</DependentUpon>
+    <Compile Include="Views\Game\GhostLocoGameUserControl.xaml.cs">
+      <DependentUpon>GhostLocoGameUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\LocoGameUserControl.cs" />
+    <Compile Include="Views\Game\PlayerLocoGameUserControl.xaml.cs">
+      <DependentUpon>PlayerLocoGameUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\MapGameUserControl.xaml.cs">
       <DependentUpon>MapGameUserControl.xaml</DependentUpon>
@@ -340,6 +355,10 @@
       <DependentUpon>AskUserForStringPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Popup\PopupCreator.cs" />
+    <Page Include="Views\Game\CartGameUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Editor\ObjectConfiguration\RailConfigurationUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -368,7 +387,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Game\LocoGameUserControl.xaml">
+    <Page Include="Views\Game\GhostLocoGameUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Game\PlayerLocoGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -554,9 +577,12 @@
     <Resource Include="Resources\Images\signal_red.png" />
     <Resource Include="Resources\Images\loco_debug.png" />
     <Resource Include="Resources\Images\loco_4.png" />
+    <Resource Include="Resources\Images\cart.png" />
     <Resource Include="Resources\Images\Tools\rail_crossing_with_signals.png" />
     <Resource Include="Resources\Images\mine.png" />
     <Resource Include="Resources\Images\Tools\mine.png" />
+    <Resource Include="Resources\Images\ghosttrain.png" />
+    <Resource Include="Resources\Images\gras.jpg" />
     <Resource Include="Resources\Images\stock.png" />
     <Resource Include="Resources\Images\stock_cart_1.png" />
     <Resource Include="Resources\Images\Tools\trainstation1.png" />

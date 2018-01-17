@@ -10,28 +10,37 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Commands.Game.Update
 {
-    class UpdateLocoPositionCommand : CommandBase
+    class UpdateCartPositionCommand : CommandBase
     {
-        private Guid locoId;
+        private Guid playerId;
         private int xPos;
         private int yPos;
+        private Guid cartId;
         private Compass drivingDirection;
 
-        public UpdateLocoPositionCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
+
+        public UpdateCartPositionCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
+            playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             drivingDirection = (Compass)Enum.Parse(typeof(Compass), messageInformation.GetValueAsString("drivingDirection"));
-            locoId = Guid.Parse(messageInformation.GetValueAsString("locoId"));
+            cartId = Guid.Parse(messageInformation.GetValueAsString("cartId"));
         }
-
         public override void Execute()
         {
             GameSession gameSession = GameSession.GetInstance();
+
+
             Square square = gameSession.Map.GetSquare(xPos, yPos);
-            Loco loco = gameSession.GetLocoById(locoId);
-            loco.Square = square;
-            loco.DrivingDirection = drivingDirection;
+            Player player = gameSession.GetPlayerById(playerId);
+
+            Loco loco = player.Loco;
+
+            Cart cart = loco.getCartById(cartId);
+            cart.Speed=loco.Speed;
+            cart.Square = square;
+            cart.DrivingDirection = drivingDirection;
         }
     }
 }

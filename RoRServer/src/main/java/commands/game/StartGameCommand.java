@@ -7,6 +7,7 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
+import models.game.GhostLoco;
 import models.game.Map;
 import models.game.Mine;
 import models.game.Player;
@@ -109,6 +110,11 @@ public class StartGameCommand extends CommandBase {
 		for (Player p : session.getPlayers()) {
 			CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, p.getId());
 			createLocoCommand.execute();
+			
+			Map map = session.getMap();
+			Square square = map.getSquare(7, 3);
+			GhostLoco ghostLoco = new GhostLoco(session.getName(), square, p.getId());
+			((GameSession)session).addLoco(ghostLoco);
 		}
 	}
 }

@@ -1,6 +1,7 @@
-﻿using RoRClient.Models;
+﻿
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,9 +14,45 @@ namespace RoRClient.Models.Game
     /// </summary>
     public class Cart : InteractiveGameObject, IPlaceableOnRail
     {
-        public Cart(Guid id, Square square) : base(square)
+        private Compass drivingDirection;
+        private int speed;
+
+        public Cart(Guid id, Compass drivingDirection, Square square) : base(square)
         {
             this.id = id;
+            this.drivingDirection = drivingDirection;
+        }
+
+        public Compass DrivingDirection
+        {
+            get
+            {
+                return drivingDirection;
+            }
+            set
+            {
+                if (drivingDirection != value)
+                {
+                    drivingDirection = value;
+                    NotifyPropertyChanged("DrivingDirection");
+                }
+            }
+        }
+      
+        public int Speed
+        {
+            get
+            {
+                return speed;
+            }
+            set
+            {
+                if (speed != value)
+                {
+                    speed = value;
+                    NotifyPropertyChanged("Speed");
+                }
+            }
         }
     }
 }

@@ -9,7 +9,9 @@ import com.google.gson.JsonObject;
 import communication.MessageInformation;
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
+import models.game.GhostLoco;
 import models.game.Loco;
+import models.game.PlayerLoco;
 import models.game.TickableGameObject;
 
 /**
@@ -24,7 +26,7 @@ public class GameSession extends RoRSession{
 	private boolean stopped;
 	private long lastTimeUpdatedInNanoSeconds;
 	private Ticker ticker;
-	private ArrayList<Loco> locomotives = new ArrayList<>();
+	private ArrayList<Loco> locos = new ArrayList<>();
 
 	public GameSession(String name, UUID hostPlayerId, String hostPlayerName) {
 		super(name, hostPlayerId, hostPlayerName);
@@ -89,7 +91,7 @@ public class GameSession extends RoRSession{
 	 * @return
 	 */
 	public Loco getLocomotiveByPlayerId(UUID playerId) {
-		for (Loco loc : locomotives) {
+		for (Loco loc : locos) {
 			if (loc.getPlayerId().toString().equals(playerId.toString())) {
 				return loc;
 			}
@@ -99,17 +101,18 @@ public class GameSession extends RoRSession{
 
 	/**
 	 * Fügt Locotmotive der ArrayList hinzu
-	 * @param locomotive
+	 * @param loco
 	 */
-	public void addLocomotive(Loco locomotive) {
-
-		if(locomotive != null) {
-			this.locomotives.add(locomotive);
-			ticker.addObserver(locomotive);
+	public void addLoco(Loco loco) {
+		if(loco != null) {
+			locos.add(loco);
+			ticker.addObserver(loco);
 		}
 	}
 	
-
+	public List<Loco> getLocos() {
+		return locos;
+	}
 }
 
 
