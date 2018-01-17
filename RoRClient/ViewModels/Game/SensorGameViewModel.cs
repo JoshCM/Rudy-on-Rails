@@ -15,7 +15,6 @@ namespace RoRClient.ViewModels.Game
         public SensorGameViewModel(Sensor sensor) : base(sensor.Id)
         {
             this.sensor = sensor;
-            this.SquarePosX = sensor.
         }
     }
 }

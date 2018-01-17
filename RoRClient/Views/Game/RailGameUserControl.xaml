@@ -80,9 +80,11 @@
                 </TransformGroup>
             </Image.LayoutTransform>
         </Image>
-        
+
         <Image x:Name="Sensor"
                Visibility="{Binding Rail.Sensor.Exists}"
-               Canvas.Top="{Binding Pos}"
+               Canvas.Top="{Binding Pos}">
+        </Image>
+
     </Canvas>
 </v:CanvasUserControl>
