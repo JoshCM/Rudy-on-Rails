@@ -43,6 +43,11 @@ namespace RoRClient.Communication.Topic
             Console.WriteLine("startet connection(topicReceiver)");
         }
 
+        public void StopConnection()
+        {
+            messageConsumer.Listener -= OnMessageReceived;
+        }
+
         public void OnMessageReceived(IMessage message)
         {
             ITextMessage textMessage = message as ITextMessage;

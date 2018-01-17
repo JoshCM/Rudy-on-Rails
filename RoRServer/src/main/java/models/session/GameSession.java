@@ -3,15 +3,11 @@ package models.session;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import com.google.gson.JsonObject;
-
 import communication.MessageInformation;
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
-import models.game.GhostLoco;
 import models.game.Loco;
-import models.game.PlayerLoco;
+import models.game.Player;
 import models.game.TickableGameObject;
 
 /**
@@ -62,6 +58,18 @@ public class GameSession extends RoRSession{
 	}
 	
 	/**
+	 * Prüft, ob das Spiel die maximale Anzahl an verfügbaren Spielerslots erreicht wurde
+	 * @return
+	 */
+	public boolean isFull() {
+		boolean isFull = false;
+		if (getMap().getAvailablePlayerSlots() == getPlayers().size()) {
+			isFull = true;
+		}
+		return isFull;
+	}
+	
+	/**
 	 * stoppt den TickingThread
 	 */
 	public void stop() {
@@ -108,6 +116,13 @@ public class GameSession extends RoRSession{
 			locos.add(loco);
 			ticker.addObserver(loco);
 		}
+	}
+	
+	@Override
+	protected void notifyPlayerLeft(Player player) {
+		MessageInformation message = new MessageInformation("LeaveGame");
+		message.putValue("playerId", player.getId());
+		notifyChange(message);
 	}
 	
 	public List<Loco> getLocos() {

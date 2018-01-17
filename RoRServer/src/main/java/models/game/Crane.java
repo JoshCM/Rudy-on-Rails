@@ -87,10 +87,4 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	}
 
 
-
-	@Override
-	public void specificUpdate() {
-		// TODO Auto-generated method stub
-		
-	}
 }

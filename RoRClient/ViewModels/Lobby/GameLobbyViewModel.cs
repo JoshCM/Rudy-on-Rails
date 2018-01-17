@@ -21,7 +21,6 @@ namespace RoRClient.ViewModels.Lobby
 	        this.lobbyModel = lobbyModel;
 	        this.gameSession = GameSession.GetInstance();
 
-			GameSession.GetInstance().PropertyChanged += OnGameStarted;
             uiState.OnUiStateChanged += OnUiStateChanged;
         }
 
@@ -98,6 +97,35 @@ namespace RoRClient.ViewModels.Lobby
             }
         }
 
+        private ICommand leaveGameCommand;
+        public ICommand LeaveGameCommand
+        {
+            get
+            {
+                if (leaveGameCommand == null)
+                {
+                    leaveGameCommand = new ActionCommand(param => LeaveGame());
+                }
+                return leaveGameCommand;
+            }
+        }
+
+        private void LeaveGame()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
+            messageInformation.PutValue("isHost", GameSession.GetInstance().OwnPlayer.IsHost);
+            GameSession.GetInstance().QueueSender.SendMessage("LeaveGame", messageInformation);
+        }
+
+        private void OnGameLeft(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Left")
+            {
+                uiState.State = "joinGameLobby";
+            }
+        }
+
         private void OnGameStarted(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Started")
@@ -110,7 +138,11 @@ namespace RoRClient.ViewModels.Lobby
         {
             if (uiState.State == "gameLobby")
             {
-	            isHost = GameSession.GetInstance().OwnPlayer.IsHost;
+                gameSession = GameSession.GetInstance();
+                gameSession.PropertyChanged += OnGameStarted;
+                gameSession.PropertyChanged += OnGameLeft;
+
+                isHost = gameSession.OwnPlayer.IsHost;
 				lobbyModel.ReadMapInfos();
 				lobbyModel.ReadGameInfos();
             }

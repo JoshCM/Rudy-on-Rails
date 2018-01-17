@@ -33,5 +33,15 @@ namespace RoRClient.Models.Session
             }
             return editorSession;
         }
+
+        public void DeleteEditorSession()
+        {
+            if (topicReceiver != null)
+            {
+                topicReceiver.StopConnection();
+            }
+            editorSession = null;
+            NotifyPropertyChanged("EditorSessionDeleted");
+        }
     }
 }

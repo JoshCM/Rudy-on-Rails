@@ -4,6 +4,7 @@ using RoRClient.ViewModels.Lobby;
 using System.Collections.Generic;
 using RoRClient.ViewModels.Game;
 using RoRClient.Models.Game;
+using System;
 
 namespace RoRClient.ViewModels
 {
@@ -14,7 +15,7 @@ namespace RoRClient.ViewModels
     {
         Dictionary<string, ViewModelBase> viewmodels = new Dictionary<string, ViewModelBase>();
         private UIState uiState = new UIState();
-
+        private LobbyModel lobbyModel = new LobbyModel();
         private ViewModelBase _currentViewModel;
         public ViewModelBase CurrentViewModel
         {
@@ -33,7 +34,6 @@ namespace RoRClient.ViewModels
 
         public MainViewModel()
         {
-            LobbyModel lobbyModel = new LobbyModel();
 
             viewmodels.Add("start", new StartViewModel(uiState, lobbyModel));
             viewmodels.Add("editor", new EditorViewModel(uiState));

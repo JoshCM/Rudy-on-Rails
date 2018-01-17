@@ -58,14 +58,14 @@ namespace RoRClient.ViewModels.Game
             MessageInformation messageInformation = new MessageInformation();
 
             // Id der Trainstation
-            messageInformation.PutValue("trainstationId", trainstation.Id);
+            //messageInformation.PutValue("trainstationId");
 
             Rail rail = findRail(gameSession.Map);
             if(rail != null)
             {
-                messageInformation.PutValue("trainstationRailIds", railGuids);
-                messageInformation.PutValue("stockId", trainstation.Stock.Id);
-                gameSession.QueueSender.SendMessage("DeleteTrainstation", messageInformation);
+                messageInformation.PutValue("posX", rail.Square.PosX);
+                messageInformation.PutValue("posY", rail.Square.PosY);
+                gameSession.QueueSender.SendMessage("CreateCart", messageInformation);
             }
             
 

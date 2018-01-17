@@ -2,19 +2,14 @@ package commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-
 import org.junit.Test;
-
 import commands.base.Command;
 import commands.editor.DeleteTrainstationCommand;
 import communication.MessageInformation;
 import models.game.Compass;
-import models.game.Rail;
 import models.game.Stock;
 import models.game.Trainstation;
 import models.session.EditorSessionManager;
@@ -29,15 +24,18 @@ public class CommandDeleterTests {
 		RoRSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 
-		// kann für den Test des Commands leer sein, da kein Trainstation erstellt werden soll
+		// kann für den Test des Commands leer sein, da kein Trainstation erstellt
+		// werden soll
 		List<String> trainstationRailIdStrings = new ArrayList<String>();
 
 		MessageInformation messageInformation = new MessageInformation();
 		messageInformation.putValue("trainstationId", trainstationId);
 		messageInformation.putValue("stockId", stockId);
 		messageInformation.putValue("trainstationRailIds", trainstationRailIdStrings);
-		
-		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1), new ArrayList<UUID>(), trainstationId, Compass.EAST, new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, stockId, Compass.EAST));
+
+		Trainstation trainstation = new Trainstation(session.getName(), session.getMap().getSquare(1, 1),
+				new ArrayList<UUID>(), trainstationId, Compass.EAST,
+				new Stock(session.getName(), session.getMap().getSquare(1, 0), trainstationId, stockId, Compass.EAST));
 		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		DeleteTrainstationCommand command = new DeleteTrainstationCommand(session, messageInformation);
 
