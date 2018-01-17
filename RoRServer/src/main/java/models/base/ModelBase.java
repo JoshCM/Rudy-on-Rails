@@ -1,8 +1,6 @@
 package models.base;
 
-import java.util.Observable;
 import java.util.UUID;
-
 import communication.MessageEnvelope;
 import communication.MessageInformation;
 import communication.topic.TopicMessageQueue;
@@ -12,7 +10,7 @@ import communication.topic.TopicMessageQueue;
  * RoRSession kennen Die RoRSession wird aktuell gebraucht, damit die Models
  * Änderungen an den Client geben können über die Methode addMessage()
  */
-public abstract class ModelBase extends ObservableModel implements Model{
+public abstract class ModelBase extends ObservableModel implements Model {
 
 	private UUID id;
 	public String sessionName;
@@ -22,7 +20,7 @@ public abstract class ModelBase extends ObservableModel implements Model{
 		this.id = UUID.randomUUID();
 		this.sessionName = sessionName;
 	}
-	
+
 	// Konstruktur um eine vordefinierte UUID zu setzen
 	public ModelBase(String sessionName, UUID id) {
 		this.addObserver(TopicMessageQueue.getInstance());
@@ -37,18 +35,18 @@ public abstract class ModelBase extends ObservableModel implements Model{
 	public UUID getId() {
 		return id;
 	}
-	
+
 	public String getName() {
 		return sessionName;
 	}
-	
+
 	public void setName(String sessionName) {
 		this.sessionName = sessionName;
 	}
-	
+
 	/**
-	 * Hier werden Nachrichten hinzugefuegt, die an die verbundenen Clients geschickt
-	 * werden sollen
+	 * Hier werden Nachrichten hinzugefuegt, die an die verbundenen Clients
+	 * geschickt werden sollen
 	 * 
 	 * @param messageInformation
 	 */

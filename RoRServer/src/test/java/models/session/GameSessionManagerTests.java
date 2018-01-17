@@ -1,13 +1,9 @@
 package models.session;
 
 import static org.junit.Assert.assertEquals;
-
 import java.util.UUID;
-
 import org.junit.Test;
 import models.game.Player;
-import models.session.EditorSession;
-import models.session.EditorSessionManager;
 
 public class GameSessionManagerTests {
 	@Test

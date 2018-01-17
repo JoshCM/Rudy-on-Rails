@@ -8,17 +8,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import communication.queue.receiver.QueueReceiver;
-import models.base.Model;
 import models.game.Map;
 import models.game.Placeable;
 import models.game.PlaceableOnRail;
 import models.game.PlaceableOnSquare;
-import models.game.RailSection;
 
 /**
  * 
@@ -39,8 +36,9 @@ public class MapManager {
 			.setPrettyPrinting().create();
 	private final static Gson gsonSaver = new GsonBuilder().setPrettyPrinting().create();
 
-	private MapManager() {}
-	
+	private MapManager() {
+	}
+
 	/**
 	 * Es wird eine Map über den gegebenen Dateinamen erstellt und zugegeben.
 	 * 
@@ -50,7 +48,7 @@ public class MapManager {
 	 */
 	public static Map loadMap(String mapName) {
 		String jsonMap = readFromFile(mapName);
-		//log.info("Eingelesene Map: " + jsonMap);
+		// log.info("Eingelesene Map: " + jsonMap);
 		Map map = convertJsonToMap(jsonMap);
 		return map;
 	}
@@ -120,13 +118,13 @@ public class MapManager {
 	 *            Dateiname zum Speichern
 	 */
 	private static void saveToFile(String jsonMap, String mapName) {
-		
+
 		// erzeugt den maps-Ordner wenn er noch nicht existiert
 		File mapsDir = new File(OUTPUT_DIR_PATH);
-		if(!mapsDir.exists()) {
+		if (!mapsDir.exists()) {
 			mapsDir.mkdir();
 		}
-		
+
 		try (PrintWriter out = new PrintWriter(OUTPUT_DIR_PATH + mapName + ext)) {
 			out.println(jsonMap);
 			out.flush();
@@ -135,12 +133,12 @@ public class MapManager {
 			e.printStackTrace();
 		}
 	}
-	
-	public static List<String> readMapNames(){
+
+	public static List<String> readMapNames() {
 		List<String> mapList = new ArrayList<String>();
 		File folder = new File(OUTPUT_DIR_PATH);
-		for(File fileEntry : folder.listFiles()) {
-			if(fileEntry.isFile())
+		for (File fileEntry : folder.listFiles()) {
+			if (fileEntry.isFile())
 				mapList.add(fileEntry.getName().replace(ext, ""));
 		}
 		return mapList;

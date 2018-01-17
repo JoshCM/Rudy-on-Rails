@@ -1,18 +1,17 @@
 package models.game;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import exceptions.RailSectionException;
 import org.junit.Before;
 import org.junit.Test;
-
 import communication.MessageInformation;
-import communication.queue.QueueMessageQueue;
 import communication.topic.TopicMessageQueue;
+import exceptions.RailSectionException;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
 
@@ -58,9 +57,10 @@ public class RailTests {
 		Square square = map.getSquare(squarePosX, squarePosY);
 		UUID railId = UUID.randomUUID();
 		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions, UUID.randomUUID(), railId);
-		
-		MessageInformation messageInfo = TopicMessageQueue.getInstance().getFirstFoundMessageInformationForAttribute(railId);
-	
+
+		MessageInformation messageInfo = TopicMessageQueue.getInstance()
+				.getFirstFoundMessageInformationForAttribute(railId);
+
 		UUID messageInfoRailId = messageInfo.getValueAsUUID("railId");
 		UUID messageInfoSquareId = messageInfo.getValueAsUUID("squareId");
 		int messageInfoXPos = messageInfo.getValueAsInt("xPos");
@@ -92,38 +92,38 @@ public class RailTests {
 	}
 
 	@Test
-    public void addRailSectionToRail() {
-	    Rail rail = createCrossRail();
-        RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "EAST");
-        rail.addRailSection(rs);
-        assertTrue(rail.getAllRailSections().contains(rs));
-    }
+	public void addRailSectionToRail() {
+		Rail rail = createCrossRail();
+		RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "EAST");
+		rail.addRailSection(rs);
+		assertTrue(rail.getAllRailSections().contains(rs));
+	}
 
-    @Test(expected = RailSectionException.class)
-    public void addExistingRailSectionToRail() {
-        Rail rail = createCrossRail();
-        RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "EAST");
-        rail.addRailSection(rs);
-        RailSection rs2 = new RailSection(rail.sessionName, rail, "EAST", "NORTH");
-        rail.addRailSection(rs2);
-    }
+	@Test(expected = RailSectionException.class)
+	public void addExistingRailSectionToRail() {
+		Rail rail = createCrossRail();
+		RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "EAST");
+		rail.addRailSection(rs);
+		RailSection rs2 = new RailSection(rail.sessionName, rail, "EAST", "NORTH");
+		rail.addRailSection(rs2);
+	}
 
-    @Test
-    public void removeExistingRailSectionFromRail() {
-	    Rail rail = createCrossRail();
-	    RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "SOUTH");
-	    rail.deleteRailSection(rs);
-	    assertFalse(rail.getAllRailSections().contains(rs));
-    }
+	@Test
+	public void removeExistingRailSectionFromRail() {
+		Rail rail = createCrossRail();
+		RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "SOUTH");
+		rail.deleteRailSection(rs);
+		assertFalse(rail.getAllRailSections().contains(rs));
+	}
 
-    @Test(expected = RailSectionException.class)
-    public void removeExistingRailSectionFromRailTwice() {
-        Rail rail = createCrossRail();
-        RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "SOUTH");
-        RailSection rs2 = new RailSection(rail.sessionName, rail, "SOUTH", "NORTH");
-        rail.deleteRailSection(rs);
-        rail.deleteRailSection(rs2);
-    }
+	@Test(expected = RailSectionException.class)
+	public void removeExistingRailSectionFromRailTwice() {
+		Rail rail = createCrossRail();
+		RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "SOUTH");
+		RailSection rs2 = new RailSection(rail.sessionName, rail, "SOUTH", "NORTH");
+		rail.deleteRailSection(rs);
+		rail.deleteRailSection(rs2);
+	}
 
 	private Rail createCrossRail() {
 		Compass node1 = Compass.NORTH;
@@ -145,7 +145,7 @@ public class RailTests {
 		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions);
 		return rail;
 	}
-	
+
 	@Test
 	public void RailWithSignalsIsCreated() {
 		Compass node1 = Compass.NORTH;
@@ -166,7 +166,7 @@ public class RailTests {
 		Square square = map.getSquare(squarePosX, squarePosY);
 		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions, true);
 		Signals signals = rail.getSignals();
-		
+
 		assertNotNull(signals);
 		assertTrue(signals.isNorthSignalActive());
 		assertTrue(signals.isSouthSignalActive());

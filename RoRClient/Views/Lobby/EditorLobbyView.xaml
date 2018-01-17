@@ -53,6 +53,8 @@
 			        Content="Starte den verdammten Editor!" IsEnabled="{Binding IsHost}" />
 			<Button Margin="10" Width="200" x:Name="refreshEditorInfosButton" Command="{Binding RefreshEditorInfosCommand}"
 			        Content="Aktualisieren" />
-		</StackPanel>
+            <Button Margin="10" Width="200" x:Name="leaveEditorInfosButton" Command="{Binding LeaveEditorCommand}"
+			        Content="Tschüss" />
+        </StackPanel>
 	</DockPanel>
 </UserControl>

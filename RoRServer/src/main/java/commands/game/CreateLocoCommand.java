@@ -24,8 +24,8 @@ public class CreateLocoCommand implements Command {
 	 * @param messageInfo
 	 */
 	public CreateLocoCommand(RoRSession session, UUID playerId) {
-		xPos = 8;
-		yPos = 3;
+		xPos = 5;
+		yPos = 6;
 		this.session = session;
 		//xPos = messageInfo.getValueAsInt("xPos");
 		//yPos = messageInfo.getValueAsInt("yPos");
