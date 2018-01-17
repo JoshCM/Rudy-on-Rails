@@ -51,11 +51,11 @@
 		</StackPanel>
 		<StackPanel Height="60" Orientation="Horizontal" DockPanel.Dock="Bottom">
 			<Button Margin="10" Width="200" x:Name="startGame" Command="{Binding StartGameCommand}"
-			        Content="Starte das verdammte Spiel!" IsEnabled="{Binding IsHost}" />
+			        Content="Spiel starten" IsEnabled="{Binding IsHost}" />
 			<Button Margin="10" Width="200" x:Name="refreshGameInfosButton" Command="{Binding RefreshGameInfosCommand}"
 			        Content="Aktualisieren" />
             <Button Margin="10" Width="200" x:Name="leaveGameInfosButton" Command="{Binding LeaveGameCommand}"
-			        Content="Tschüss" />
+			        Content="Zurück" />
         </StackPanel>
 
 	</DockPanel>

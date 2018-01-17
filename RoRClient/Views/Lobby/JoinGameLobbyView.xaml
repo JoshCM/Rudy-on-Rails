@@ -33,6 +33,7 @@
             <Button Margin="10" Width="200" x:Name="createGameButton" Command="{Binding CreateGameSessionCommand}" Content="Erstellen"/>
             <Button Margin="10" Width="200" x:Name="joinGameButton" Command="{Binding JoinGameSessionCommand}" Content="Beitreten"/>
             <Button Margin="10" Width="200" x:Name="refreshGamesButton" Command="{Binding RefreshGameSessionsCommand}" Content="Aktualisieren"/>
+            <Button Margin="10" Width="200" x:Name="leaveGameInfosButton" Command="{Binding LeaveJoinGameLobbyCommand}" Content="Zurück" />
         </StackPanel>
     </DockPanel>
 </UserControl>
