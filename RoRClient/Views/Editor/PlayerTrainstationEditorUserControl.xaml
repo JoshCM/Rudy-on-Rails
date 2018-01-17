@@ -1,0 +1,28 @@
+﻿<v:CanvasUserControl x:Class="RoRClient.Views.Editor.PlayerTrainstationEditorUserControl"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                     xmlns:v="clr-namespace:RoRClient.Views"
+                     xmlns:converter="clr-namespace:RoRClient.BindingConverter"
+                     x:Name="playerTrainstationEditorUserControl"
+                     mc:Ignorable="d" 
+                     Canvas.Top="{Binding RealY, ElementName=playerTrainstationEditorUserControl}"
+                     Canvas.Left="{Binding RealX, ElementName=playerTrainstationEditorUserControl}">
+    <UserControl.Resources>
+        <converter:CompassToAngleConverter  x:Key="CompassToAngleConverter"/>
+    </UserControl.Resources>
+	<Canvas Width="{Binding SquareDim, ElementName=playerTrainstationEditorUserControl}"
+            Height="{Binding SquareDim, ElementName=playerTrainstationEditorUserControl}">
+		<Image Width="{Binding SquareDim, ElementName=playerTrainstationEditorUserControl}" Height="{Binding SquareDim, ElementName=playerTrainstationEditorUserControl}" Source="pack://application:,,,/Resources/Images/trainstation.png">
+            <Image.InputBindings>
+                <MouseBinding MouseAction="RightClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+            </Image.InputBindings>
+            <Image.LayoutTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="{Binding PlayerTrainstation.Alignment, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" />
+                </TransformGroup>
+            </Image.LayoutTransform>
+        </Image>
+    </Canvas>
+</v:CanvasUserControl>
