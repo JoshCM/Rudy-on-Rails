@@ -1,10 +1,8 @@
 package commands.editor;
 
 import java.util.UUID;
-
 import commands.base.CommandBase;
 import communication.MessageInformation;
-import exceptions.NotRemoveableException;
 import exceptions.NotRotateableException;
 import models.game.Map;
 import models.game.Rail;
@@ -17,10 +15,10 @@ public class RotateRailCommand extends CommandBase {
 	private int yPos;
 	private boolean right;
 	private UUID emptyUUID = new UUID(0, 0);
-	
+
 	public RotateRailCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
-		
+
 		xPos = messageInfo.getValueAsInt("xPos");
 		yPos = messageInfo.getValueAsInt("yPos");
 		right = messageInfo.getValueAsBoolean("right");
@@ -28,12 +26,12 @@ public class RotateRailCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		EditorSession editorSession = (EditorSession)session;
+		EditorSession editorSession = (EditorSession) session;
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(xPos, yPos);
-		
+
 		boolean rotateable = true;
-		Rail rail = (Rail)square.getPlaceableOnSquare();
+		Rail rail = (Rail) square.getPlaceableOnSquare();
 
 		// wenn die Rail einen TrainstationId hat
 		if (!rail.getTrainstationId().equals(emptyUUID)) {
@@ -44,10 +42,8 @@ public class RotateRailCommand extends CommandBase {
 			rail.rotate(right);
 		} else {
 			throw new NotRotateableException(
-					String.format("%s(Id:%s)%s", 
-							square.getPlaceableOnSquare().getClass().getName(),
-							square.getPlaceableOnSquare().getId(), 
-							" kann nicht rotiert werden"));
+					String.format("%s(Id:%s)%s", square.getPlaceableOnSquare().getClass().getName(),
+							square.getPlaceableOnSquare().getId(), " kann nicht rotiert werden"));
 		}
 	}
 }

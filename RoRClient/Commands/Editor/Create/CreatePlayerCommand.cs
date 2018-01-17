@@ -28,7 +28,7 @@ namespace RoRClient.Commands.Editor.Create
 
 		public override void Execute()
 		{
-			Player player = new Player(playerId, playerName, isHost);
+			EditorPlayer player = new EditorPlayer(playerId, playerName, isHost);
 			EditorSession.GetInstance().AddPlayer(player);
 		}
 	}

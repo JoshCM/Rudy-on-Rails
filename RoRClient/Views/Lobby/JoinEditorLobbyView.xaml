@@ -9,21 +9,29 @@
              d:DesignHeight="900" d:DesignWidth="1600">
 
     <DockPanel>
-        <DockPanel.Background>
-            <ImageBrush ImageSource="pack://application:,,,/Resources/Images/start_background.png" />
-        </DockPanel.Background>
-
-        <Border DockPanel.Dock="Top" Background="#FF510404" Height="120" Width="350" Margin="0,120,0,0">
-            <Label Content="Rudi On Rails" Foreground="White" FontFamily="Birch Std" FontSize="60" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" VerticalAlignment="Center"/>
-        </Border>
-
-        <Label DockPanel.Dock="Top" Content="Bau-Modus" Foreground="#FF510404" FontFamily="Birch Std" FontSize="45" Margin="250,50,0,0" />
-        <Border DockPanel.Dock="Top" BorderBrush="#FF510404" BorderThickness="2" Height="2" Margin="250,0,250,0" />
-
-        <StackPanel DockPanel.Dock="Left" Width="550" Margin="250,50,0,0">
-            <TextBlock Text="Eigenen Bau-Modus erstellen." TextWrapping="Wrap" Height="45" Width="400" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" HorizontalAlignment="Left" Margin="0,0,0,10"/>
-            <Button x:Name="editorButton" Command="{Binding CreateEditorSessionCommand}" Content="Erstellen" FontFamily="Source Sans Pro" Height="55" Width="200"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" HorizontalContentAlignment="Center" HorizontalAlignment="Left"/>
-            <!-- Binding muss noch eingerichtet werden -->
+        <ListBox Height="500" x:Name="editorSessionListBox" DockPanel.Dock="Top" ItemsSource="{Binding LobbyModel.EditorSessionInfos}" SelectedItem="{Binding Path=SelectedEditorSessionInfo, Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Margin" Value="10,10,0,0"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <StackPanel.InputBindings>
+                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                          AncestorType={x:Type UserControl}}, Path=DataContext.JoinEditorSessionCommand}"/>
+                        </StackPanel.InputBindings>
+                        <TextBlock Text="{Binding Name}" />
+                        <TextBlock Text="{Binding AmountOfPlayers}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Height="60"  Orientation="Horizontal" DockPanel.Dock="Bottom" >
+            <Button Margin="10" Width="200" x:Name="editorButton" Command="{Binding CreateEditorSessionCommand}" Content="Erstellen"/>
+            <Button Margin="10" Width="200" x:Name="gameButton" Command="{Binding JoinEditorSessionCommand}" Content="Beitreten"/>
+            <Button Margin="10" Width="200" x:Name="refreshEditorButton" Command="{Binding RefreshEditorSessionsCommand}" Content="Aktualisieren"/>
         </StackPanel>
 
         <StackPanel DockPanel.Dock="Right" Width="550" Margin="0,50,250,0" >

@@ -3,14 +3,14 @@ package models.session;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import com.google.gson.JsonObject;
-
 import communication.MessageInformation;
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
+import models.game.EditorPlayer;
+import models.game.GamePlayer;
 import models.game.GhostLoco;
 import models.game.Loco;
+import models.game.Player;
 import models.game.PlayerLoco;
 import models.game.TickableGameObject;
 
@@ -29,12 +29,26 @@ public class GameSession extends RoRSession{
 	private ArrayList<Loco> locos = new ArrayList<>();
 
 	public GameSession(String name, UUID hostPlayerId, String hostPlayerName) {
-		super(name, hostPlayerId, hostPlayerName);
+		super(name);
+		
+		createHostPlayer(hostPlayerId, hostPlayerName);
+		
 		GameSessionDispatcher dispatcher = new GameSessionDispatcher(this);
 		this.queueReceiver = new QueueReceiver(name, dispatcher);
 		this.ticker = new Ticker();
 		this.stopped = false;
 		this.startTicking();
+	}
+	
+	private void createHostPlayer(UUID playerId, String playerName) {
+		GamePlayer player = new GamePlayer(getName(), playerName, playerId, true);
+		addPlayer(player);
+	}
+	
+	public Player createPlayer(UUID playerId, String playerName) {
+		GamePlayer player = new GamePlayer(getName(), playerName, playerId, false);
+		addPlayer(player);
+		return player;
 	}
 	
 	/**
@@ -59,6 +73,18 @@ public class GameSession extends RoRSession{
 		};
 		tickingThread.start();
 		
+	}
+	
+	/**
+	 * Prüft, ob das Spiel die maximale Anzahl an verfügbaren Spielerslots erreicht wurde
+	 * @return
+	 */
+	public boolean isFull() {
+		boolean isFull = false;
+		if (getMap().getAvailablePlayerSlots() == getPlayers().size()) {
+			isFull = true;
+		}
+		return isFull;
 	}
 	
 	/**
@@ -108,6 +134,13 @@ public class GameSession extends RoRSession{
 			locos.add(loco);
 			ticker.addObserver(loco);
 		}
+	}
+	
+	@Override
+	protected void notifyPlayerLeft(Player player) {
+		MessageInformation message = new MessageInformation("LeaveGame");
+		message.putValue("playerId", player.getId());
+		notifyChange(message);
 	}
 	
 	public List<Loco> getLocos() {

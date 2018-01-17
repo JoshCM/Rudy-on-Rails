@@ -7,72 +7,55 @@
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
     <DockPanel>
-        <DockPanel.Background>
-            <ImageBrush ImageSource="pack://application:,,,/Resources/Images/start_background.png"/>
-        </DockPanel.Background>
-
-        <Border DockPanel.Dock="Top" Background="#FF510404" Height="120" Width="350" Margin="0,120,0,0">
-            <Label Content="Rudi On Rails" Foreground="White" FontFamily="Birch Std" FontSize="60" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" VerticalAlignment="Center"/>
-        </Border>
-
-        <Label DockPanel.Dock="Top" Content="Bau-Modus" Foreground="#FF510404" FontFamily="Birch Std" FontSize="45" Margin="250,0,0,0" />
-        <Border DockPanel.Dock="Top" BorderBrush="#FF510404" BorderThickness="2" Height="2" Margin="250,0,250,0" />
-
-
-        <StackPanel DockPanel.Dock="Left" Margin="250,40,0,200">
             <TextBlock Text="Spieler in diesem Bau-Modus:" TextWrapping="Wrap" Height="40" Width="400" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" HorizontalAlignment="Left"/>
-            <ListBox Height="230" Width="400" x:Name="EditorPlayersListBox" ItemsSource="{Binding LobbyModel.EditorInfos}" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404">
-              <ListBox.ItemTemplate>
-                  <DataTemplate>
-                     <StackPanel Orientation="Horizontal">
-                            <StackPanel.Resources>
-                                <Style TargetType="{x:Type TextBlock}">
-                                  <Setter Property="Margin" Value="10,10,0,0" />
-                              </Style>
-                          </StackPanel.Resources>
-                          <TextBlock Text="{Binding Player.Name}" />
-                     </StackPanel>
-                  </DataTemplate>
-             </ListBox.ItemTemplate>
-            </ListBox>
+		<StackPanel Height="500" Orientation="Horizontal" DockPanel.Dock="Top">
+			<ListBox Margin="10" Width="600" x:Name="EditorPlayersListBox" ItemsSource="{Binding LobbyModel.EditorInfos}">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal">
+							<StackPanel.Resources>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="Margin" Value="10,10,0,0" />
+								</Style>
+							</StackPanel.Resources>
+							<TextBlock Text="{Binding Player.Name}" />
+						</StackPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+			<ListBox IsSynchronizedWithCurrentItem="True" Margin="10" Width="600" x:Name="EditorMapsListBox" ItemsSource="{Binding LobbyModel.MapNames}" SelectedItem="{Binding Path=EditorSession.MapName, Mode=TwoWay}" IsEnabled="{Binding IsHost}">
+				<ListBox.ItemContainerStyle>
+					<Style TargetType="ListBoxItem">
+						<Style.Triggers>
+							<Trigger Property="IsSelected" Value="True" >
+								<Setter Property="FontWeight" Value="Bold" />
+								<Setter Property="Background" Value="Transparent" />
+								<Setter Property="Foreground" Value="Black" />
+							</Trigger>
+						</Style.Triggers>
+					</Style>
+				</ListBox.ItemContainerStyle>
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal">
+							<StackPanel.Resources>
+								<Style TargetType="{x:Type TextBlock}">
+									<Setter Property="Margin" Value="10,10,0,0" />
+								</Style>
+							</StackPanel.Resources>
+							<TextBlock Text="{Binding}"/>
+						</StackPanel>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+		</StackPanel>
+		<StackPanel Height="60" Orientation="Horizontal" DockPanel.Dock="Bottom">
+			<Button Margin="10" Width="200" x:Name="startEditor" Command="{Binding StartEditorCommand}"
+			        Content="Starte den verdammten Editor!" IsEnabled="{Binding IsHost}" />
+			<Button Margin="10" Width="200" x:Name="refreshEditorInfosButton" Command="{Binding RefreshEditorInfosCommand}"
+			        Content="Aktualisieren" />
+            <Button Margin="10" Width="200" x:Name="leaveEditorInfosButton" Command="{Binding LeaveEditorCommand}"
+			        Content="Tschüss" />
         </StackPanel>
-
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Height="200" Margin="-400,0,250,0">
-            <Button x:Name="startEditor" Command="{Binding StartEditorCommand}"
-			        Content="Editor starten" IsEnabled="{Binding IsHost}" FontFamily="Source Sans Pro" Height="55" Width="200"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" VerticalAlignment="Top" Margin="0,30,10,0"/>
-            <Button x:Name="refreshEditorInfosButton" Command="{Binding RefreshEditorInfosCommand}"
-			        Content="Aktualisieren" FontFamily="Source Sans Pro" Height="55" Width="200"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" VerticalAlignment="Top" Margin="10,30,0,0"/>
-        </StackPanel>
-        <Border DockPanel.Dock="Bottom" BorderBrush="#FF510404" BorderThickness="2" Height="2" Margin="-400,0,250,0" />
-
-
-        <StackPanel  Margin="100,40,250,0">
-            <TextBlock Text="Zur Verfügung stehende Karten:" TextWrapping="Wrap" Height="40" Width="400" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" HorizontalAlignment="Left"/>
-            <ListBox DockPanel.Dock="Right" Height="230" Width="400" IsSynchronizedWithCurrentItem="True" x:Name="EditorMapsListBox" ItemsSource="{Binding LobbyModel.MapNames}" SelectedItem="{Binding Path=EditorSession.MapName, Mode=TwoWay}" IsEnabled="{Binding IsHost}" HorizontalAlignment="Left" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" >
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
-                        <Style.Triggers>
-                            <Trigger Property="IsSelected" Value="True" >
-                                <Setter Property="FontWeight" Value="Bold" />
-                                <Setter Property="Background" Value="Transparent" />
-                                <Setter Property="Foreground" Value="Black" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </ListBox.ItemContainerStyle>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel.Resources>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Margin" Value="10,10,0,0" />
-                                </Style>
-                            </StackPanel.Resources>
-                            <TextBlock Text="{Binding}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
-    </DockPanel>
+	</DockPanel>
 </UserControl>

@@ -16,7 +16,7 @@ namespace RoRClient.Models.Session
 
         private GameSession() : base()
         {
-
+            
         }
 
         public new void Init(string topicName)
@@ -45,22 +45,6 @@ namespace RoRClient.Models.Session
                 return Carts;
             }
         }
-        private bool started;
-        public bool Started
-        {
-            get
-            {
-                return started;
-            }
-            set
-            {
-                if(started != value)
-                {
-                    started = value;
-                    NotifyPropertyChanged("Started");
-                }
-            }
-        }
 
         public void AddLoco(Loco loco)
         {
@@ -81,6 +65,16 @@ namespace RoRClient.Models.Session
                 gameSession = new GameSession();
             }
             return gameSession;
+        }
+
+        public void DeleteGameSession()
+        {
+            if(topicReceiver != null)
+            {
+                topicReceiver.StopConnection();
+            }
+            gameSession = null;
+            NotifyPropertyChanged("GameSessionDeleted");
         }
 	}
 }

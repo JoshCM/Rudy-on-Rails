@@ -29,7 +29,9 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 	private final int CLOCKWISE = 90;
 	private final int COUNTER_CLOCKWISE = -90;
-	private Square spawnPointForLoco;
+	
+	private UUID spawnPointForLoco;
+	private UUID spawnPointForCart;
 
 	transient EditorSession editorSession;
 
@@ -51,20 +53,28 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		return alignment;
 	}
 
-	/**
-	 * Setzt den SpanPoint für die Loco
-	 * @param square
-	 */
-	public void setSpawnPointforLoco(Square square) {
-		spawnPointForLoco = square;
+	public void setSpawnPointforLoco(UUID railId) {
+		spawnPointForLoco = railId;
+	}
+
+	public UUID getSpawnPointforLoco() {
+		return spawnPointForLoco;
 	}
 
 	/**
-	 * Gibt den SpawnPoint für die Loco zurück
-	 * @return Square als Startposition
+	 * Gibt den SpawnPoint für neue Carts zurück
+	 * @return
 	 */
-	public Square getSpawnPointforLoco() {
-		return spawnPointForLoco;
+	public UUID getSpawnPointForCart() {
+		return spawnPointForCart;
+	}
+
+	/**
+	 * Setzt den SpawnPoint für neue Carts
+	 * @param spawnPointForCart
+	 */
+	public void setSpawnPointForCart(UUID spawnPointForCart) {
+		this.spawnPointForCart = spawnPointForCart;
 	}
 
 	private void notifyCreatedTrainstation() {
@@ -314,14 +324,15 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 	@Override
 	public Trainstation loadFromMap(Square square, RoRSession session) {
-		Trainstation trainStation = (Trainstation) square.getPlaceableOnSquare();
+		Trainstation oldTrainStation = (Trainstation) square.getPlaceableOnSquare();
 		Trainstation newTrainStation = new Trainstation(session.getName(), square,
-				trainStation.getTrainstationRailIds(), trainStation.getId(), trainStation.alignment,
-				trainStation.getStock());
-
-		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses
-		// Objekts mitbekommen kann
+				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock());
+		
+		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
 		newTrainStation.setName(session.getName());
+		
+		// setze den alten SpawnPoint für die neue Trainstation
+		newTrainStation.setSpawnPointforLoco(oldTrainStation.getSpawnPointforLoco());
 
 		log.info("TrainStation erstellt: " + newTrainStation.toString());
 		return newTrainStation;

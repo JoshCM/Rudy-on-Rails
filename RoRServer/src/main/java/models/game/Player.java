@@ -14,8 +14,6 @@ public class Player extends ModelBase {
         this.name = name;
         this.setId(id);
         this.isHost = isHost;
-        
-        notifyCreated();
     }
     
     public String getName() {
@@ -28,13 +26,5 @@ public class Player extends ModelBase {
     
     public boolean getIsHost() {
     	return isHost;
-    }
-    
-    private void notifyCreated() {
-    	MessageInformation messageInfo = new MessageInformation("CreatePlayer");
-    	messageInfo.putValue("playerId", getId());
-    	messageInfo.putValue("playerName", name);
-    	messageInfo.putValue("isHost", isHost);
-    	notifyChange(messageInfo);
     }
 }

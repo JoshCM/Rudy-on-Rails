@@ -21,7 +21,8 @@
 
         <game:GameStatusUserControl Grid.Row="0"
                                     Grid.Column="0"
-                                    Grid.ColumnSpan="3" />
+                                    Grid.ColumnSpan="3" 
+                                    DataContext="{Binding GameStatusViewModel}"/>
 
         <game:MapGameUserControl Grid.Row="1"
                                  Grid.Column="0"
