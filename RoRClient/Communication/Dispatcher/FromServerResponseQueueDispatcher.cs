@@ -25,11 +25,15 @@ namespace RoRClient.Communication.Dispatcher
             EditorSession editorSession = EditorSession.GetInstance();
             editorSession.Name = messageInformation.GetValueAsString("editorName");
             editorSession.Init(messageInformation.GetValueAsString("topicName"));
+            editorSession.PropertyChanged += OnEditorSessionChanged;
 
             Guid playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             string playerName = messageInformation.GetValueAsString("playerName");
             Player player = new Player(playerId, playerName, true);
+
             editorSession.AddPlayer(player);
+            EditorInfo editorInfo = new EditorInfo(player);
+            lobbyModel.AddEditorInfo(editorInfo);
             lobbyModel.Connected_Editor = true;
         }
 
@@ -78,6 +82,14 @@ namespace RoRClient.Communication.Dispatcher
             if (e.PropertyName == "GameSessionDeleted")
             {
                 lobbyModel.Connected_Game = false;
+            }
+        }
+
+        private void OnEditorSessionChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "EditorSessionDeleted")
+            {
+                lobbyModel.Connected_Editor = false;
             }
         }
 

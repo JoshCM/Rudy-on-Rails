@@ -37,6 +37,7 @@ public class EditorSessionManager {
      * @param editorSession
      */
     public void removeEditorSession(EditorSession editorSession){
+    	editorSession.removePlayers();
         editorSessionMap.remove(editorSession.getName());
     }
     

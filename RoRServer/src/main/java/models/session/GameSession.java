@@ -123,12 +123,12 @@ public class GameSession extends RoRSession{
 			ticker.addObserver(loco);
 		}
 	}
-
-	public void removePlayers() {
-		for(int i = getPlayers().size() - 1; i >= 0; i--) {
-			Player player = getPlayers().get(i);
-			removePlayer(player);
-		}
+	
+	@Override
+	protected void notifyPlayerLeft(Player player) {
+		MessageInformation message = new MessageInformation("LeaveGame");
+		message.putValue("playerId", player.getId());
+		notifyChange(message);
 	}
 	
 	public List<Loco> getLocos() {

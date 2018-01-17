@@ -10,11 +10,11 @@ using RoRClient.Models.Game;
 
 namespace RoRClient.Commands.Game.Other
 {
-    public class LeavePlayerCommand : CommandBase
+    public class LeaveEditorCommand : CommandBase
     {
         private Guid playerId;
 
-        public LeavePlayerCommand(RoRSession session, MessageInformation message) : base(session, message)
+        public LeaveEditorCommand(RoRSession session, MessageInformation message) : base(session, message)
         {
             playerId = message.GetValueAsGuid("playerId");
         }

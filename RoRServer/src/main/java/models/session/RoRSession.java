@@ -51,12 +51,15 @@ public abstract class RoRSession extends ModelBase {
 		this.players.remove(player);
 		notifyPlayerLeft(player);
 	}
-	
-	private void notifyPlayerLeft(Player player) {
-		MessageInformation message = new MessageInformation("LeavePlayer");
-		message.putValue("playerId", player.getId());
-		notifyChange(message);
+
+	public void removePlayers() {
+		for(int i = getPlayers().size() - 1; i >= 0; i--) {
+			Player player = getPlayers().get(i);
+			removePlayer(player);
+		}
 	}
+	
+	protected abstract void notifyPlayerLeft(Player player);
 	
 	public Player getHost() {
 		return players.stream().filter(x -> x.getIsHost()).findFirst().get();

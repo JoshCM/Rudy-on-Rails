@@ -126,8 +126,29 @@ namespace RoRClient.ViewModels.Lobby
                 if (lobbyModel.Connected_Editor)
                 {
                     uiState.State = "editorLobby";
+                } else
+                {
+                    uiState.State = "joinEditorLobby";
                 }
             }
+        }
+
+        private ICommand refreshEditorSessionsCommand;
+        public ICommand RefreshEditorSessionsCommand
+        {
+            get
+            {
+                if (refreshEditorSessionsCommand == null)
+                {
+                    refreshEditorSessionsCommand = new ActionCommand(param => RefreshEditorSessionInfos());
+                }
+                return refreshEditorSessionsCommand;
+            }
+        }
+
+        public void RefreshEditorSessionInfos()
+        {
+            lobbyModel.ReadEditorSessions();
         }
     }
 }
