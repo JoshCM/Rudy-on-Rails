@@ -19,6 +19,7 @@ public class Map extends ModelBase {
 	private String name;
 	private Square squares[][];
 	private final int mapSize = 50;
+	private int availablePlayerSlots;
 
 	/**
 	 * Jedes Square auf der Map braucht einen Index, um jedem Objekt, das auf einem
@@ -34,6 +35,18 @@ public class Map extends ModelBase {
 				squares[x][y] = s;
 			}
 		}
+	}
+	
+	public int getAvailablePlayerSlots() {
+		return availablePlayerSlots;
+	}
+	
+	public void addAvailablePlayerSlot() {
+		availablePlayerSlots += 1;
+	}
+	
+	public void removeAvailablePlayerSlot() {
+		availablePlayerSlots -= 1;
 	}
 	
 	public int getMapSize() {

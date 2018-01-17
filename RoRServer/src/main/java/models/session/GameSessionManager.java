@@ -37,11 +37,12 @@ public class GameSessionManager {
 	}
 
 	/**
-	 * Entfernt spezifische GameSession aus HashMap
+	 * Entfernt spezifische GameSession aus HashMap + Kickt alle Player
 	 * 
 	 * @param gameSession
 	 */
 	public void removeGameSession(GameSession gameSession) {
+		gameSession.removePlayers();
 		gameSessionMap.remove(gameSession.getName());
 	}
 

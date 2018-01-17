@@ -2,22 +2,18 @@ package commands.editor;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
 import models.game.Map;
 import models.game.Mine;
-import models.game.PlaceableOnSquare;
 import models.game.Rail;
 import models.game.Square;
 import models.game.Stock;
 import models.game.Trainstation;
 import models.session.EditorSession;
-import models.session.GameSession;
 import models.session.RoRSession;
 import persistent.MapManager;
 

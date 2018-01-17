@@ -11,7 +11,6 @@ namespace RoRClient.Models.Game
     {
         private const int mapSize = 50;
         public static int MapSize => mapSize;
-
         private string name = "";
         private Square[,] squares;
 

@@ -117,6 +117,7 @@
     <Compile Include="Commands\Base\CreatePlayertrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreatePublicTrainstationCommand.cs" />
+    <Compile Include="Commands\Editor\Other\LeaveEditorCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateActivityOfSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreatePlayerCommand.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateTrainstationCommand.cs" />
     <Compile Include="Commands\Game\Other\ChangeMapNameCommand.cs" />
+    <Compile Include="Commands\Game\Other\LeaveGameCommand.cs" />
     <Compile Include="Commands\Game\Other\StartCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateResourceCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateActivityOfSignalsCommand.cs" />
@@ -173,6 +175,8 @@
     <Compile Include="Models\Game\Cart.cs" />
     <Compile Include="Models\Game\Coal.cs" />
     <Compile Include="Models\Game\Container.cs" />
+    <Compile Include="Models\Game\EditorPlayer.cs" />
+    <Compile Include="Models\Game\GamePlayer.cs" />
     <Compile Include="Models\Game\GhostLoco.cs" />
     <Compile Include="Models\Game\Gold.cs" />
     <Compile Include="Models\Game\Loco.cs" />
@@ -209,6 +213,7 @@
     <Compile Include="ViewModels\Game\CartGameViewModel.cs" />
     <Compile Include="ViewModels\Game\CoalGameViewModel.cs" />
     <Compile Include="ViewModels\Game\ContainerGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\GameStatusViewModel.cs" />
     <Compile Include="ViewModels\Game\PlayerLocoGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GoldGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GhostLocoGameViewModel.cs" />
@@ -590,6 +595,7 @@
     <Resource Include="Resources\Images\Tools\trainstation1.png" />
     <Resource Include="Resources\Images\stock_container_1.png" />
     <Resource Include="Resources\Images\Tools\trainstation_public.png" />
+    <Resource Include="Resources\Images\container_points.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

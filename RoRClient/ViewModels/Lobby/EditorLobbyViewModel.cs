@@ -25,8 +25,6 @@ namespace RoRClient.ViewModels.Lobby
 			this.uiState = uiState;
 			this.lobbyModel = lobbyModel;
 			this.editorSession = EditorSession.GetInstance();
-
-			EditorSession.GetInstance().PropertyChanged += OnEditorStarted;
 			uiState.OnUiStateChanged += OnUiStateChanged;
 		}
 
@@ -102,7 +100,36 @@ namespace RoRClient.ViewModels.Lobby
 			}
 		}
 
-		private void OnEditorStarted(object sender, PropertyChangedEventArgs e)
+        private ICommand leaveEditorCommand;
+        public ICommand LeaveEditorCommand
+        {
+            get
+            {
+                if (leaveEditorCommand == null)
+                {
+                    leaveEditorCommand = new ActionCommand(param => LeaveEditor());
+                }
+                return leaveEditorCommand;
+            }
+        }
+
+        private void LeaveEditor()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("playerId", EditorSession.GetInstance().OwnPlayer.Id);
+            messageInformation.PutValue("isHost", EditorSession.GetInstance().OwnPlayer.IsHost);
+            EditorSession.GetInstance().QueueSender.SendMessage("LeaveEditor", messageInformation);
+        }
+
+        private void OnEditorLeft(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Left")
+            {
+                uiState.State = "joinEditorLobby";
+            }
+        }
+
+        private void OnEditorStarted(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == "Started")
 			{
@@ -114,10 +141,14 @@ namespace RoRClient.ViewModels.Lobby
 		{
 			if (uiState.State == "editorLobby")
 			{
-				isHost = EditorSession.GetInstance().OwnPlayer.IsHost;
-				lobbyModel.ReadMapInfos();
+                editorSession = EditorSession.GetInstance();
+                editorSession.PropertyChanged += OnEditorStarted;
+                editorSession.PropertyChanged += OnEditorLeft;
+
+                isHost = EditorSession.GetInstance().OwnPlayer.IsHost;
+                lobbyModel.ReadMapInfos();
 				lobbyModel.ReadEditorInfos();
-			}
+            }
 		}
 	}
 }
