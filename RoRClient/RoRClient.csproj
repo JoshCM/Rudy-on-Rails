@@ -119,6 +119,7 @@
     <Compile Include="Commands\Editor\Create\CreateStockCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateTrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeleteMineCommand.cs" />
+    <Compile Include="Commands\Editor\Move\MoveCraneCommand.cs" />
     <Compile Include="Commands\Editor\Move\MoveMineCommand.cs" />
     <Compile Include="Commands\Editor\Move\MoveTrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Move\MoveRailCommand.cs" />

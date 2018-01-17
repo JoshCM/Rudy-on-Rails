@@ -69,7 +69,8 @@ public class CreateTrainstationCommand extends CommandBase {
 			
 			
 			//der Kran wird erstellt
-			createCrane(stockSquare, trainstation);
+			Crane crane = createCrane(stockSquare, trainstation);
+			trainstation.setCrane(crane);
 			
 			
 		}

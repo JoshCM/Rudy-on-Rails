@@ -37,4 +37,17 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		messageInfo.putValue("alignment", alignment.toString());
 		notifyChange(messageInfo);
 	}
+	
+	public void NotifyCraneMoved(Square newSquare) {
+		MessageInformation messageInfo = new MessageInformation("MoveCrane");
+		messageInfo.putValue("newXPos", newSquare.getXIndex());
+		messageInfo.putValue("newYPos", newSquare.getYIndex());
+		notifyChange(messageInfo);
+	}
+	
+	public void changeSquare(Square newSquare) {
+		this.setSquareId(newSquare.getId());
+		this.setXPos(newSquare.getXIndex());
+		this.setYPos(newSquare.getYIndex());
+	}
 }

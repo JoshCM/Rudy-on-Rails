@@ -25,6 +25,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	public static final int RAIL_COUNT_LEFT = 6;
 	private List<UUID> trainstationRailIds;
 	private Stock stock;
+	private Crane crane;
 	private Compass alignment;
 
 	private final int CLOCKWISE = 90;
@@ -33,7 +34,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 	transient EditorSession editorSession;
 
-	public Trainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment,
+	public Trainstation(String sessionName, Square square,List<UUID> trainstationRailIds, UUID id, Compass alignment,
 			Stock stock) {
 		super(sessionName, square, id);
 		this.stock = stock;
@@ -103,6 +104,14 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 	public void setStock(Stock newStock) {
 		this.stock = newStock;
+	}
+	
+	public Crane getCrane() {
+		return crane;
+	}
+
+	public void setCrane(Crane crane) {
+		this.crane = crane;
 	}
 
 	/**
