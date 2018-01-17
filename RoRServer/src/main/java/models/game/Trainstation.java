@@ -29,7 +29,9 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 	private final int CLOCKWISE = 90;
 	private final int COUNTER_CLOCKWISE = -90;
-	private UUID spawnPointForLoco;
+	
+	private Square spawnPointForLoco;
+	private Square spawnPointForCart;
 
 	transient EditorSession editorSession;
 
@@ -57,6 +59,22 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 	public UUID getSpawnPointforLoco() {
 		return spawnPointForLoco;
+	}
+
+	/**
+	 * Gibt den SpawnPoint für neue Carts zurück
+	 * @return
+	 */
+	public Square getSpawnPointForCart() {
+		return spawnPointForCart;
+	}
+
+	/**
+	 * Setzt den SpawnPoint für neue Carts
+	 * @param spawnPointForCart
+	 */
+	public void setSpawnPointForCart(Square spawnPointForCart) {
+		this.spawnPointForCart = spawnPointForCart;
 	}
 
 	private void notifyCreatedTrainstation() {

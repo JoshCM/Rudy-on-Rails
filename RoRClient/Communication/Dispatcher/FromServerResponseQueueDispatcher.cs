@@ -29,8 +29,7 @@ namespace RoRClient.Communication.Dispatcher
 
             Guid playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             string playerName = messageInformation.GetValueAsString("playerName");
-            Player player = new Player(playerId, playerName, true);
-
+            EditorPlayer player = new EditorPlayer(playerId, playerName, true);
             editorSession.AddPlayer(player);
             EditorInfo editorInfo = new EditorInfo(player);
             lobbyModel.AddEditorInfo(editorInfo);
@@ -67,7 +66,10 @@ namespace RoRClient.Communication.Dispatcher
 
             Guid playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             string playerName = messageInformation.GetValueAsString("playerName");
-            Player player = new Player(playerId, playerName, true);
+            int coalCount = messageInformation.GetValueAsInt("coalCount");
+            int goldCount = messageInformation.GetValueAsInt("goldCount");
+            int pointCount = messageInformation.GetValueAsInt("pointCount");
+            GamePlayer player = new GamePlayer(playerId, playerName, coalCount, goldCount, pointCount, true);
 
 	        gameSession.AddPlayer(player);
 

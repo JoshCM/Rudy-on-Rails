@@ -22,7 +22,8 @@
 
         <game:GameStatusUserControl Grid.Row="0"
                                     Grid.Column="0"
-                                    Grid.ColumnSpan="3" />
+                                    Grid.ColumnSpan="3" 
+                                    DataContext="{Binding GameStatusViewModel}"/>
 
         <game:MapGameUserControl Grid.Row="1"
                                  Grid.Column="0"
@@ -33,7 +34,7 @@
         <game:GameInteractionUserControl Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" />
         <game:TrainSpeedGameUserControl Grid.Row="2" Grid.Column="3" />
 
-        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="2" />
+        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" BorderBrush="Black" BorderThickness="2" />
         <Border Grid.Column="0" Grid.Row="2" BorderBrush="Black" BorderThickness="2" />
         <Border Grid.Column="1" Grid.Row="2" BorderBrush="Black" BorderThickness="2" />
         <Border Grid.Column="2" Grid.Row="2" BorderBrush="Black" BorderThickness="2" />
