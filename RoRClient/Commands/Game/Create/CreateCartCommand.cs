@@ -17,6 +17,7 @@ namespace RoRClient.Commands.Game.Create
         private int yPos;
         private Guid cartId;
         private Compass drivingDirection;
+        private bool addToLoco;
 
         public CreateCartCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
@@ -25,17 +26,31 @@ namespace RoRClient.Commands.Game.Create
             drivingDirection = (Compass)Enum.Parse(typeof(Compass), messageInformation.GetValueAsString("drivingDirection"));
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
+            addToLoco = messageInformation.GetValueAsBool("addToLoco");
+
         }
 
         public override void Execute()
         {
             Player player = session.GetPlayerById(playerId);
-            Loco loco = player.Loco;
+            
             Square square = ((GameSession)session).Map.GetSquare(xPos, yPos);
             Cart cart = new Cart(cartId, drivingDirection, square);
-            loco.Carts.Add(cart);
-            ((GameSession)session).AddCart(cart);
 
+            System.Console.WriteLine("drivingDirection:" + drivingDirection);
+
+            if (addToLoco)
+            {
+                Loco loco = player.Loco;
+                loco.Carts.Add(cart);
+                ((GameSession)session).AddCart(cart);
+            }
+            else
+            {
+                Rail rail = (Rail)square.PlaceableOnSquare;
+                rail.PlaceableOnRail = cart; 
+                //((GameSession)session).AddCart(cart);
+            }
         }
     }
 }

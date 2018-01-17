@@ -24,11 +24,12 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 	 * Konstruktor eines Carts
 	 * @param square auf dem der Wagon steht wird mitgegeben
 	 */
-	public Cart(String sessionName, Square square, Compass compass, UUID playerId, Rail rail) {
+	public Cart(String sessionName, Square square, Compass compass, UUID playerId, Rail rail, boolean addToLoco) {
 		super(sessionName,square);
 		this.setDrivingDirection(compass);
 		this.playerId = playerId;
 		this.setRail(rail);
+		NotifyAddedCart(addToLoco);
 	}
 	
 	/**
@@ -95,7 +96,25 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 		notifyChange(messageInfo);
 	}
 
-
+	/**
+	 * notifiziert, wenn ein Wagon erstellt wurde
+	 * @param withLoco 
+	 * 
+	 * @param square
+	 *            Feld auf dem der Wagon steht
+	 * @param cartId
+	 *            Id des Wagons
+	 */
+	private void NotifyAddedCart(boolean addToLoco) {
+		MessageInformation messageInfo = new MessageInformation("CreateCart");
+		messageInfo.putValue("playerId", this.playerId);
+		messageInfo.putValue("cartId", this.getId());
+		messageInfo.putValue("xPos", this.getXPos());
+		messageInfo.putValue("yPos", this.getYPos());
+		messageInfo.putValue("drivingDirection", this.getDrivingDirection());
+		messageInfo.putValue("addToLoco", addToLoco);
+		notifyChange(messageInfo);
+	}
 
 	public Rail getRail() {
 		return rail;

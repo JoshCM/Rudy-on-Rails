@@ -11,8 +11,8 @@ public class GhostLoco extends Loco {
 	private GhostLocoProxy ghostLocoProxy;
 	private Thread updateThread;
 	
-	public GhostLoco(String sessionName, Square square, UUID playerId) {
-		super(sessionName, square, playerId);
+	public GhostLoco(String sessionName, Square square, UUID playerId, Compass drivingDirection) {
+		super(sessionName, square, playerId, drivingDirection);
 		initGhostLocoProxy();
 		NotifyLocoCreated();
 		startUpdateThread();

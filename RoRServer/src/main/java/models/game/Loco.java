@@ -27,12 +27,12 @@ public abstract class Loco extends InteractiveGameObject {
 	 * @param square
 	 *            auf dem die Lok steht wird mitgegeben
 	 */
-	public Loco(String sessionName, Square square, UUID playerId) {
+	public Loco(String sessionName, Square square, UUID playerId, Compass drivingDirection) {
 		super(sessionName, square);
 		this.setCarts(new ArrayList<Cart>());
 		this.rail = (Rail) square.getPlaceableOnSquare();
 		this.map = GameSessionManager.getInstance().getGameSessionByName(sessionName).getMap();
-		this.drivingDirection = rail.getFirstSection().getNode1();
+		this.drivingDirection = drivingDirection;
 		this.speed = 0;
 		this.playerId = playerId;
 	}
@@ -51,7 +51,6 @@ public abstract class Loco extends InteractiveGameObject {
 					if (!reversed) {
 						reversed = true;
 						reversedDrive(true);
-						//initialReversedDrive();
 					} else {
 						reversedDrive(false);
 					}
@@ -110,8 +109,10 @@ public abstract class Loco extends InteractiveGameObject {
 			Rail newRail = getNextRail(tempDirection, this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
 			
 			if(newRail.getPlaceableOnrail() instanceof Cart) {
-				addCart();
+				carts.add((Cart) newRail.getPlaceableOnrail());
 				this.speed = 0;
+				notifyCartToLocoAddChanged();
+				notifySpeedChanged();
 				break;
 			}
 			
@@ -123,7 +124,7 @@ public abstract class Loco extends InteractiveGameObject {
 				actCart.updateSquare(this.map.getSquare(newRail.getXPos(), newRail.getYPos()));
 				actCart.notifyUpdatedCart();
 			}
-			else {
+			else{
 				this.speed = 0; 
 				break;
 			}
@@ -149,9 +150,9 @@ public abstract class Loco extends InteractiveGameObject {
 			Compass back = this.rail.getExitDirection(this.drivingDirection);
 			Rail prevRail = getNextRail(back, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 			Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
-			Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, prevRail);
+			Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, prevRail, true);
 			carts.add(cart);
-			NotifyAddedCart(cartSquare, cart.getId());
+			//NotifyAddedCart(cartSquare, cart.getId());
 		}
 	}
 
@@ -186,9 +187,9 @@ public abstract class Loco extends InteractiveGameObject {
 		Compass back = this.rail.getExitDirection(lastCart.getDrivingDirection());
 		Rail prevRail = getNextRail(back, this.map.getSquare(lastCart.getXPos(), lastCart.getYPos()));
 		Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
-		Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, prevRail);
+		Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, prevRail, true);
 		carts.add(cart);
-		NotifyAddedCart(cartSquare, cart.getId());
+		//NotifyAddedCart(cartSquare, cart.getId());
 		
 	}
 	
@@ -260,24 +261,14 @@ public abstract class Loco extends InteractiveGameObject {
 		messageInfo.putValue("drivingDirection", drivingDirection.toString());
 		notifyChange(messageInfo);
 	}
-
-	/**
-	 * notifiziert, wenn ein Wagon erstellt wurde
-	 * 
-	 * @param square
-	 *            Feld auf dem der Wagon steht
-	 * @param cartId
-	 *            Id des Wagons
-	 */
-	private void NotifyAddedCart(Square square, UUID cartId) {
-		MessageInformation messageInfo = new MessageInformation("CreateCart");
+	private void notifyCartToLocoAddChanged() {
+		MessageInformation messageInfo = new MessageInformation("UpdateCartToLoco");
+		messageInfo.putValue("xPos", getXPos());
+		messageInfo.putValue("yPos", getYPos());
 		messageInfo.putValue("playerId", this.playerId);
-		messageInfo.putValue("cartId", cartId);
-		messageInfo.putValue("xPos", square.getXIndex());
-		messageInfo.putValue("yPos", square.getYIndex());
-		messageInfo.putValue("drivingDirection", getCartById(cartId).getDrivingDirection());
 		notifyChange(messageInfo);
 	}
+
 
 	public void changeSpeed(int speed) {
 		this.speed = speed;

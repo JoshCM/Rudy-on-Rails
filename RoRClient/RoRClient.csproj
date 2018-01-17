@@ -154,6 +154,7 @@
     <Compile Include="Commands\Game\Other\StartCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateResourceCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateActivityOfSignalsCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateCartToLocoCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoPositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoSpeedCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateNodesOfRailSectionCommand.cs" />

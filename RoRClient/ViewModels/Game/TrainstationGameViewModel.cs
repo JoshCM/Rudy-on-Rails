@@ -1,4 +1,5 @@
-﻿using RoRClient.Communication.DataTransferObject;
+﻿using RoRClient.Communication;
+using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Game;
 using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
@@ -57,14 +58,15 @@ namespace RoRClient.ViewModels.Game
             RoRSession gameSession = GameSession.GetInstance();
             MessageInformation messageInformation = new MessageInformation();
 
-            // Id der Trainstation
-            //messageInformation.PutValue("trainstationId");
-
             Rail rail = findRail(gameSession.Map);
+            Compass compass = findRailDirection();
+            System.Console.WriteLine("Compass:" + compass.ToString());
             if(rail != null)
             {
                 messageInformation.PutValue("posX", rail.Square.PosX);
                 messageInformation.PutValue("posY", rail.Square.PosY);
+                messageInformation.PutValue("compass", compass.ToString());
+                messageInformation.PutValue("playerId",ClientConnection.GetInstance().ClientId);
                 gameSession.QueueSender.SendMessage("CreateCart", messageInformation);
             }
             
@@ -86,6 +88,21 @@ namespace RoRClient.ViewModels.Game
             }
 
             return null;
+        }
+        private Compass findRailDirection()
+        {
+            switch (trainstation.Alignment)
+            {
+                case Compass.EAST:
+                    return Compass.SOUTH;
+                case Compass.SOUTH:
+                    return Compass.WEST;
+                case Compass.WEST:
+                    return Compass.NORTH;
+                case Compass.NORTH:
+                    return Compass.EAST;
+            }
+            return 0;//geht nicht anders...
         }
     }
 }

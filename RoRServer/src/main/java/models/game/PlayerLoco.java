@@ -5,8 +5,8 @@ import java.util.UUID;
 import communication.MessageInformation;
 
 public class PlayerLoco extends Loco {
-	public PlayerLoco(String sessionName, Square square, UUID playerId) {
-		super(sessionName, square, playerId);
+	public PlayerLoco(String sessionName, Square square, UUID playerId, Compass drivingDirection) {
+		super(sessionName, square, playerId, drivingDirection);
 		
 		NotifyLocoCreated();
 		this.addInitialCart();

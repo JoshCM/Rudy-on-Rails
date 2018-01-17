@@ -10,6 +10,7 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
+import models.game.Compass;
 import models.game.GhostLoco;
 import models.game.Map;
 import models.game.Mine;
@@ -116,30 +117,27 @@ public class StartGameCommand extends CommandBase {
 			if(playerIterator.hasNext()) {
 				// Loco wird erstellt und zur Liste der Locos hinzugefügt
 				UUID playerId = playerIterator.next().getId();
-				gameSession.addLoco(new PlayerLoco(gameSession.getName(), locoSpawnPointSquare, playerId));
-				gameSession.addLoco(new GhostLoco(gameSession.getName(), locoSpawnPointSquare, playerId));
+				gameSession.addLoco(new PlayerLoco(gameSession.getName(), locoSpawnPointSquare, playerId, getLocoDirectionbyTrainstation(newTrainStation.getAlignment())));
+				gameSession.addLoco(new GhostLoco(gameSession.getName(), locoSpawnPointSquare, playerId, getLocoDirectionbyTrainstation(newTrainStation.getAlignment())));
+
+				newTrainStation.setPlayerId(playerId);
 			}
 		}
 
 		gameSession.start();
 	}
-
-	/**
-	 * Sobald ein Player der GameSession gejoined ist, soll eine Loco erstellt
-	 * werden, die dem Player zugeordnet ist
-	 * 
-	 * @param messageInformation
-	 */
-
-	private void createLocoForPlayers(RoRSession session) {
-		for (Player p : session.getPlayers()) {
-			CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, p.getId());
-			createLocoCommand.execute();
-			
-			Map map = session.getMap();
-			Square square = map.getSquare(5, 6);
-			GhostLoco ghostLoco = new GhostLoco(session.getName(), square, p.getId());
-			((GameSession)session).addLoco(ghostLoco);
+	
+	private Compass getLocoDirectionbyTrainstation(Compass compass) {
+		switch(compass) {
+		case NORTH:
+			return Compass.EAST;
+		case EAST:
+			return Compass.SOUTH;
+		case SOUTH:
+			return Compass.WEST;
+		case WEST:
+			return Compass.NORTH;
 		}
+		return null;
 	}
 }

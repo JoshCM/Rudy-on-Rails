@@ -27,6 +27,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	private Stock stock;
 	private Crane crane;
 	private Compass alignment;
+	private UUID playerId;
 
 	private final int CLOCKWISE = 90;
 	private final int COUNTER_CLOCKWISE = -90;
@@ -106,6 +107,14 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		this.crane = crane;
 	}
 
+	public void setPlayerId(UUID playerId) {
+		this.playerId = playerId;
+	}
+	
+	public UUID getPlayerId() {
+		return this.playerId;
+	}
+	
 	/**
 	 * Gibt die Liste von Rails der Trainstation zurück
 	 * 
@@ -386,4 +395,5 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		// TODO Auto-generated method stub
 		
 	}
+
 }
