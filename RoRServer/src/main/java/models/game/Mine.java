@@ -22,6 +22,7 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 	private long timeDeltaCounter = 0;// Summe der Zeit zwischen den Ticks
 	private final long SEC_IN_NANO = 1000000000;
 	private Resource res = null;
+	private Square square;
 	protected RoRSession session;
 	int i = 1;
 	
