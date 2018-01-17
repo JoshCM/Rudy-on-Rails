@@ -14,7 +14,7 @@ import models.game.Player;
  */
 public class EditorSession extends RoRSession {
 	public EditorSession(String name, UUID hostPlayerId, String hostPlayerName) {
-		super(name, hostPlayerId, hostPlayerName);
+		super(name);
 		
 		createHostPlayer(hostPlayerId, hostPlayerName);
 	

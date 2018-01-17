@@ -13,9 +13,9 @@ namespace RoRClient.Models.Game
         private int pointCount;
         public GamePlayer(Guid id, String name, int coalCount, int goldCount, int pointCount, bool isHost) : base(id, name, isHost)
         {
-            this.coalCount = coalCount;
-            this.goldCount = goldCount;
-            this.pointCount = pointCount;
+            CoalCount = coalCount;
+            GoldCount = goldCount;
+            PointCount = pointCount;
         }
 
         public int CoalCount

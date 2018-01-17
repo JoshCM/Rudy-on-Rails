@@ -4,19 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.jms.Session;
-
 import com.google.gson.JsonObject;
 
 import communication.MessageEnvelope;
 import communication.MessageInformation;
 import communication.queue.QueueMessageQueue;
+import models.game.GamePlayer;
 import models.game.Player;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
 import models.session.GameSession;
 import models.session.GameSessionManager;
-import models.session.RoRSession;
 import persistent.MapManager;
 import resources.PropertyManager;
 
@@ -128,12 +126,19 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 	}
 
 	private void sendCreateGameSessionCommand(String clientId, GameSession gameSession) {
+		GamePlayer gamePlayer = (GamePlayer)gameSession.getHost();
+		
 		MessageInformation responseInformation = new MessageInformation("CreateGameSession");
 		responseInformation.setClientid(clientId);
 		responseInformation.putValue("topicName", gameSession.getName());
 		responseInformation.putValue("gameName", gameSession.getName());
-		responseInformation.putValue("playerName", gameSession.getHost().getName());
-		responseInformation.putValue("playerId", gameSession.getHost().getId().toString());
+		responseInformation.putValue("playerName", gamePlayer.getName());
+		responseInformation.putValue("playerId", gamePlayer.getId().toString());
+		
+		// initial resources
+		responseInformation.putValue("coalCount", gamePlayer.getCoalCount());
+		responseInformation.putValue("goldCount", gamePlayer.getGoldCount());
+		responseInformation.putValue("pointCount", gamePlayer.getPointCount());
 
 		sendMessage(responseInformation);
 	}

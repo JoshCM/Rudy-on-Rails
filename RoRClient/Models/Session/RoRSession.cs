@@ -72,7 +72,7 @@ namespace RoRClient.Models.Session
         {
             get
             {
-                Player ownPlayer = players.Where(x => x.Id == ClientConnection.GetInstance().ClientId).First();
+                Player ownPlayer = players.Where(x => x.Id == ClientConnection.GetInstance().ClientId).FirstOrDefault();
                 if (ownPlayer != null)
                 {
                     return ownPlayer;

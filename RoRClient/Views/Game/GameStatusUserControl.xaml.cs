@@ -27,19 +27,5 @@ namespace RoRClient.Views.Game
         {
             InitializeComponent();
         }
-
-        public int CoalCount
-        {
-            get
-            {
-                return (int)GetValue(CoalCountProperty);
-            }
-            set
-            {
-                SetValue(CoalCountProperty, value);
-            }
-        }
-
-        public static readonly DependencyProperty CoalCountProperty = DependencyProperty.Register("CoalCount", typeof(int), typeof(GameStatusUserControl), new UIPropertyMetadata(0));
     }
 }

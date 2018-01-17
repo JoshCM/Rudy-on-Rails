@@ -32,7 +32,7 @@ public class GameSession extends RoRSession{
 	private ArrayList<Loco> locos = new ArrayList<>();
 
 	public GameSession(String name, UUID hostPlayerId, String hostPlayerName) {
-		super(name, hostPlayerId, hostPlayerName);
+		super(name);
 		
 		createHostPlayer(hostPlayerId, hostPlayerName);
 		

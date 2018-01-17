@@ -69,12 +69,12 @@ public class StartGameCommand extends CommandBase {
 		for (Square stockSquare : stockSquaresToCreate) {
 			stockSquare.setPlaceableOnSquare(stockSquare.getPlaceableOnSquare().loadFromMap(stockSquare, session));
 		}
-				
+	
+		List<Rail> generatedRails = new ArrayList<Rail>();
 		// erzeugen der neuen Rails auf deren Squares
 		for (Square railSquare : railSquaresToCreate) {
 			Rail rail = (Rail)railSquare.getPlaceableOnSquare();
 			Rail newRail = (Rail)railSquare.getPlaceableOnSquare().loadFromMap(railSquare, session);
-			newRail.generateResourcesNextToRail();
 			// liegt auf einer Rail eine Mine, muss diese darauf erzeugt werden
 			if (rail.getPlaceableOnrail() instanceof Mine) {
 				Mine mine = (Mine)rail.getPlaceableOnrail();
@@ -86,12 +86,18 @@ public class StartGameCommand extends CommandBase {
 			if(newRail.getSignals() != null) {
 				((GameSession)session).registerTickableGameObject(newRail.getSignals());
 			}
+			generatedRails.add(newRail);
 		}
 
 		// erzeugen der neuen Trainstations auf deren Squares
 		for (Square trainstationSquare : trainstationSquaresToCreate) {
 			trainstationSquare.setPlaceableOnSquare(
 					trainstationSquare.getPlaceableOnSquare().loadFromMap(trainstationSquare, session));
+		}
+		
+		// generiert an den erzeugenten rails resourcen
+		for(Rail generatedRail : generatedRails) {
+			generatedRail.generateResourcesNextToRail();
 		}
 		
 		createLocoForPlayers(session);

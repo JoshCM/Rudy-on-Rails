@@ -26,7 +26,7 @@ public abstract class RoRSession extends ModelBase {
 	
 	protected QueueReceiver queueReceiver;
 	
-	public RoRSession(String name, UUID hostPlayerId, String hostPlayerName) {
+	public RoRSession(String name) {
 		super(name);
 		map = new Map(name);
 	}
