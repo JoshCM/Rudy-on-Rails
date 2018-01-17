@@ -157,4 +157,19 @@ public class Signals extends TickableGameObject {
 
 		notifyChange(messageInfo);
 	};
+	
+	public boolean isSignalActive(Compass compass) {
+		switch(compass) {
+		case NORTH:
+			return isNorthSignalActive();
+		case EAST:
+			return isEastSignalActive();
+		case SOUTH:
+			return isSouthSignalActive();
+		case WEST:
+			return isWestSignalActive();
+		default:
+			return false;
+		}
+	}
 }

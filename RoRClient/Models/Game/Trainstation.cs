@@ -14,11 +14,13 @@ namespace RoRClient.Models.Game
     {
         private List<Rail> trainstationRails;
         private Compass alignment;
-        public Trainstation(Guid id, Square square, List<Rail> trainstationRails, Compass alignment) : base(square)
+        private Stock stock;
+        public Trainstation(Guid id, Square square, List<Rail> trainstationRails, Compass alignment, Stock stock) : base(square)
         {
             this.id = id;
             this.trainstationRails = trainstationRails;
             this.alignment = alignment;
+            this.stock = stock;
         }
 
         public List<Rail> TrainstationRails
@@ -27,6 +29,11 @@ namespace RoRClient.Models.Game
             {
                 return trainstationRails;
             }
+        }
+
+        public Stock Stock
+        {
+            get { return stock; }
         }
 
         public Compass Alignment

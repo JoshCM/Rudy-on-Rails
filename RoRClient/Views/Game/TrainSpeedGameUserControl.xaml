@@ -8,7 +8,7 @@
              d:DesignHeight="100" d:DesignWidth="100">
     <StackPanel >
         <Label Content="Geschwindigkeit" FontSize="8" Height="20" FontWeight="Bold" HorizontalAlignment="Center" />
-        <Slider Minimum="0" Maximum="4" IsSnapToTickEnabled="True" TickFrequency="1" HorizontalContentAlignment="Center"  ValueChanged="SliderValueChanged"/>
+        <Slider Minimum="-1" Maximum="+5" IsSnapToTickEnabled="True" TickFrequency="1" HorizontalContentAlignment="Center"  ValueChanged="SliderValueChanged"/>
 
     </StackPanel>
 </UserControl>

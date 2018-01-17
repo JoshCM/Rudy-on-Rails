@@ -15,38 +15,46 @@ import models.session.RoRSession;
  * Weiche) besitzen
  */
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Comparable<Rail> {
-    private PlaceableOnRail placeableOnRail = null;
-    private UUID trainstationId;
-    private List<RailSection> railSectionList;
-    private Resource resource;
     private Signals signals;
+	// muss hier raus und eine Ebene tiefer(RailSection)
+	protected PlaceableOnRail placeableOnRail = null;
+	protected RailSection section1;
+	protected RailSection section2;
+	private Square square;
+	private UUID trainstationId;
+	protected List<RailSection> railSectionList;
+	private Resource resource;
 
     /**
      * Konstruktor für Geraden oder Kurven
      */
     public Rail(String sessionName, Square square, List<Compass> railSectionPositions) {
-        super(sessionName, square);
-        railSectionList = new ArrayList<RailSection>();
-        createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
-        notifyCreatedRail();
+        this(sessionName, square, railSectionPositions, false, new UUID(0L, 0L), UUID.randomUUID());
     }
     
+    /**
+     * Konstruktor für Rails mit Signalen
+     */
     public Rail(String sessionName, Square square, List<Compass> railSectionPositions, boolean withSignals) {
-        this(sessionName, square, railSectionPositions);
+        this(sessionName, square, railSectionPositions, withSignals, new UUID(0L, 0L), UUID.randomUUID());
+    }
+    
+    public Rail(String sessionName, Square square, List<Compass> railSectionPositions, boolean withSignals, UUID trainstationId, UUID id) {
+        super(sessionName, square, id);
+        
+        railSectionList = new ArrayList<RailSection>();
+        createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
+        setTrainstationId(trainstationId);
+        notifyCreatedRail();
         
         if(withSignals) {
         	Signals signals = new Signals(sessionName, square);
         	this.signals = signals;
         };
     }
-
+    
     public Rail(String sessionName, Square square, List<Compass> railSectionPositions, UUID trainstationId, UUID id) {
-        super(sessionName, square, id);
-
-        setTrainstationId(trainstationId);
-        railSectionList = new ArrayList<RailSection>();
-        createRailSectionsForRailSectionPositions(sessionName, railSectionPositions);
-        notifyCreatedRail();
+    	this(sessionName, square, railSectionPositions, false, trainstationId, id);
     }
 
     // TODO: Welche Ressourcen kann eine Schiene haben und wann?
@@ -112,32 +120,31 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
             railSectionList.add(section);
         }
     }
-
+    
     /**
-     * Schickt Nachricht an Observer, wenn Schiene erstellt wurde.
-     */
-    private void notifyCreatedRail() {
-        MessageInformation messageInfo = new MessageInformation("CreateRail");
-        messageInfo.putValue("railId", getId());
+	 * Schickt Nachricht an Observer, wenn Schiene erstellt wurde.
+	 */
+	private void notifyCreatedRail() {
+		MessageInformation messageInfo = new MessageInformation("CreateRail");
+		messageInfo.putValue("railId", getId());
 
-        messageInfo.putValue("squareId", getSquareId());
-        // TODO: Später haben wir die richtigen SquareIds im Client, im Moment noch
-        // nicht!!
-        messageInfo.putValue("xPos", getXPos());
-        messageInfo.putValue("yPos", getYPos());
+		messageInfo.putValue("squareId", getSquareId());
+		messageInfo.putValue("trainstationId", getTrainstationId());
+		messageInfo.putValue("xPos", getXPos());
+		messageInfo.putValue("yPos", getYPos());
 
-        List<JsonObject> railSectionJsons = new ArrayList<JsonObject>();
-        for (RailSection section : railSectionList) {
-            JsonObject json = new JsonObject();
-            json.addProperty("railSectionId", section.getId().toString());
-            json.addProperty("node1", section.getNode1().toString());
-            json.addProperty("node2", section.getNode2().toString());
-            railSectionJsons.add(json);
-        }
-        messageInfo.putValue("railSections", railSectionJsons);
+		List<JsonObject> railSectionJsons = new ArrayList<JsonObject>();
+		for (RailSection section : railSectionList) {
+			JsonObject json = new JsonObject();
+			json.addProperty("railSectionId", section.getId().toString());
+			json.addProperty("node1", section.getNode1().toString());
+			json.addProperty("node2", section.getNode2().toString());
+			railSectionJsons.add(json);
+		}
+		messageInfo.putValue("railSections", railSectionJsons);
 
-        notifyChange(messageInfo);
-    }
+		notifyChange(messageInfo);
+	}
 	
 	public PlaceableOnRail getPlaceableOnrail() {
 		return placeableOnRail;
@@ -375,7 +382,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         boolean createSignals = rail.getSignals() != null;
 
         // Neues Rail erstellen und damit an den Client schicken
-        Rail newRail = new Rail(session.getName(), square, railSectionPosition, createSignals);
+        Rail newRail = new Rail(session.getName(), square, railSectionPosition, createSignals, trainstationId, rail.getId());
         System.out.println("Neue Rail erstellt: " + newRail.toString());
         
         // Sonderfall für Krezungen, die Signale haben

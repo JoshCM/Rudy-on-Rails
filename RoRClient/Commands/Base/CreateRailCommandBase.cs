@@ -17,12 +17,16 @@ namespace RoRClient.Commands.Base
     public class CreateRailCommandBase : CommandBase
     {
         protected Guid railId;
+        protected Guid trainstationId;
         protected int xPos;
         protected int yPos;
         protected List<RailSection> railSections = new List<RailSection>();
 
         public CreateRailCommandBase(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
+            if (messageInformation.attributes.ContainsKey("trainstationId"))
+                trainstationId = Guid.Parse(messageInformation.GetValueAsString("trainstationId"));
+
             railId = Guid.Parse(messageInformation.GetValueAsString("railId"));
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
@@ -41,7 +45,7 @@ namespace RoRClient.Commands.Base
         public override void Execute()
         {
             Square square = session.Map.GetSquare(xPos, yPos);
-            Rail rail = new Rail(railId, square, railSections);
+            Rail rail = new Rail(railId, square, railSections, trainstationId);
             square.PlaceableOnSquare = rail;
             Console.WriteLine("PlaceableOnSquare wurde gesetzt an Square mit " + square.PosX+ ", " + square.PosY);
         }

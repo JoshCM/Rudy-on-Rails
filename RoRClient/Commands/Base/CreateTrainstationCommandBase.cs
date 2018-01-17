@@ -14,8 +14,11 @@ namespace RoRClient.Commands.Base
     class CreateTrainstationCommandBase : CommandBase
     {
         Guid trainstationId;
+        Guid stockId;
         private int xPos;
         private int yPos;
+        private int stockXPos;
+        private int stockYPos;
         private Compass alignment;
         List<Rail> trainstationRails = new List<Rail>();
 
@@ -27,8 +30,10 @@ namespace RoRClient.Commands.Base
         public CreateTrainstationCommandBase(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             trainstationId = Guid.Parse(messageInformation.GetValueAsString("trainstationId"));
+            stockId = Guid.Parse(messageInformation.GetValueAsString("stockId"));
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
+
             alignment = (Compass)Enum.Parse(typeof(Compass), messageInformation.GetValueAsString("alignment"));
 
             // über railids rails nutzen
@@ -44,7 +49,8 @@ namespace RoRClient.Commands.Base
         public override void Execute()
         {
             Square square = session.Map.GetSquare(xPos, yPos);
-            Trainstation trainstation = new Trainstation(trainstationId, square, trainstationRails, alignment);
+            Stock stock = (Stock)session.Map.GetPlaceableById(stockId);
+            Trainstation trainstation = new Trainstation(trainstationId, square, trainstationRails, alignment, stock);
             square.PlaceableOnSquare = trainstation;
         }
     }

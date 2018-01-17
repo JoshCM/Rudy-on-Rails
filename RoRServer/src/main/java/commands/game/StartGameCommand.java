@@ -7,11 +7,13 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
+import models.game.GhostLoco;
 import models.game.Map;
 import models.game.Mine;
 import models.game.Player;
 import models.game.Rail;
 import models.game.Square;
+import models.game.Stock;
 import models.game.Trainstation;
 import models.session.GameSession;
 import models.session.RoRSession;
@@ -38,7 +40,7 @@ public class StartGameCommand extends CommandBase {
 		// Client schicken würden
 		List<Square> railSquaresToCreate = new ArrayList<Square>();
 		List<Square> trainstationSquaresToCreate = new ArrayList<Square>();
-		List<Square> mineSquaresToCreate = new ArrayList<Square>();
+		List<Square> stockSquaresToCreate = new ArrayList<Square>();
 		
 		// Jedes Square durchgehen
 		Square[][] squares = map.getSquares();
@@ -53,15 +55,21 @@ public class StartGameCommand extends CommandBase {
 
 				// Wenn etwas auf dem Square liegt
 				if (square.getPlaceableOnSquare() != null) {
-					if (square.getPlaceableOnSquare() instanceof Rail) {
+					if (square.getPlaceableOnSquare() instanceof Rail)
 						railSquaresToCreate.add(square);
-					}
+					if (square.getPlaceableOnSquare() instanceof Stock)
+						stockSquaresToCreate.add(square);
 					if (square.getPlaceableOnSquare() instanceof Trainstation)
 						trainstationSquaresToCreate.add(square);
 				}
 			}
 		}
 
+		// erzeugen der neuen Stocks auf deren Squares
+		for (Square stockSquare : stockSquaresToCreate) {
+			stockSquare.setPlaceableOnSquare(stockSquare.getPlaceableOnSquare().loadFromMap(stockSquare, session));
+		}
+				
 		// erzeugen der neuen Rails auf deren Squares
 		for (Square railSquare : railSquaresToCreate) {
 			Rail rail = (Rail)railSquare.getPlaceableOnSquare();
@@ -102,6 +110,11 @@ public class StartGameCommand extends CommandBase {
 		for (Player p : session.getPlayers()) {
 			CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, p.getId());
 			createLocoCommand.execute();
+			
+			Map map = session.getMap();
+			Square square = map.getSquare(7, 3);
+			GhostLoco ghostLoco = new GhostLoco(session.getName(), square, p.getId());
+			((GameSession)session).addLoco(ghostLoco);
 		}
 	}
 }
