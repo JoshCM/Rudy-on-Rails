@@ -31,7 +31,20 @@
 
         <game:GameMiniMapUserControl Grid.Row="2" Grid.Column="0" />
         <game:GameInteractionUserControl Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" />
-        <game:TrainSpeedGameUserControl Grid.Row="2" Grid.Column="3" />
+
+        <Canvas Grid.Row="2" Grid.Column="3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <game:TrainSpeedGameUserControl Grid.Row="0" Grid.Column="1" />
+                <game:SensorGameUserControl Grid.Row="1" Grid.Column="1" />
+            </Grid>
+        </Canvas>
 
         <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="2" />
         <Border Grid.Column="0" Grid.Row="2" BorderBrush="Black" BorderThickness="2" />
