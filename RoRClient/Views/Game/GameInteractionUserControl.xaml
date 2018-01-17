@@ -5,22 +5,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RoRClient.Views.Game"
              mc:Ignorable="d" 
-             d:DesignHeight="225" d:DesignWidth="800" Background="#510404">
+             d:DesignHeight="225" d:DesignWidth="800" Background="#510404" BorderBrush="White" BorderThickness="5">
 
-    <Grid Margin="40">
-        <Label Content="GameInteraction" Foreground="White" FontFamily="Source Sans Pro" FontSize="20" HorizontalAlignment="Center" Margin="20"/>
+    <Grid Margin="10">
 
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+        <Label Content="GameInteraction" Foreground="White" FontFamily="Source Sans Pro" FontSize="20" HorizontalAlignment="Center" Margin="20"/>
+
+        <Button Content="Geisterzug" ></Button>
+        
+        <!--
+
 
         <Button Grid.Column="0" Grid.Row="0" Content="Geisterzug" FontSize="5" Margin="2"/>
         <Button Grid.Column="1" Grid.Row="0" Content="Sensoren" FontSize="5" Margin="2"/>
