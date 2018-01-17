@@ -214,5 +214,13 @@ namespace RoRClient.ViewModels.Game
                 taskFactory.StartNew(() => locos.Add(cartGameViewModel));
             }
         }
+
+        /// <summary>
+        /// Das Bahnhofshäuschen wurde angeklickt, ein Wagon soll platziert werden damit es angekoppelt werden kann
+        /// </summary>
+        public void addNewCart()
+        {
+
+        }
     }
 }

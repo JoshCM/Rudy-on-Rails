@@ -1,9 +1,13 @@
-﻿using RoRClient.Models.Game;
+﻿using RoRClient.Communication.DataTransferObject;
+using RoRClient.Models.Game;
+using RoRClient.Models.Session;
+using RoRClient.ViewModels.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace RoRClient.ViewModels.Game
 {
@@ -24,6 +28,64 @@ namespace RoRClient.ViewModels.Game
             {
                 return trainstation;
             }
+        }
+
+        /// <summary>
+        /// Auswählen/Selektieren von ViewModels
+        /// </summary>
+        private ICommand selectedTrainstationObjectCommand;
+        public ICommand SelectedTrainstationObjectCommand
+        {
+            get
+            {
+                if (selectedTrainstationObjectCommand == null)
+                {
+                    selectedTrainstationObjectCommand = new ActionCommand(param => SelectTrainstationObject());
+                }
+                return selectedTrainstationObjectCommand;
+            }
+        }
+
+        /// <summary>
+        /// EditorObject (Rail etc.) ausgewählt + Quicknavigation anzeigen
+        /// </summary>
+        public void SelectTrainstationObject()
+        {
+
+            Console.WriteLine("hallo i bims, 1 geklicktes etwas");
+
+            RoRSession gameSession = GameSession.GetInstance();
+            MessageInformation messageInformation = new MessageInformation();
+
+            // Id der Trainstation
+            messageInformation.PutValue("trainstationId", trainstation.Id);
+
+            Rail rail = findRail(gameSession.Map);
+            if(rail != null)
+            {
+                messageInformation.PutValue("trainstationRailIds", railGuids);
+                messageInformation.PutValue("stockId", trainstation.Stock.Id);
+                gameSession.QueueSender.SendMessage("DeleteTrainstation", messageInformation);
+            }
+            
+
+        }
+
+        private Rail findRail(Map map)
+        {
+            switch (trainstation.Alignment)
+            {
+                case Compass.EAST:
+                    return map.GetSquare(trainstation.Square.PosX + 1, trainstation.Square.PosY - 2).PlaceableOnSquare as Rail;
+                case Compass.SOUTH:
+                    return map.GetSquare(trainstation.Square.PosX + 2, trainstation.Square.PosY - 1).PlaceableOnSquare as Rail;
+                case Compass.WEST:
+                    return map.GetSquare(trainstation.Square.PosX - 1, trainstation.Square.PosY + 2).PlaceableOnSquare as Rail;
+                case Compass.NORTH:
+                    return map.GetSquare(trainstation.Square.PosX - 2, trainstation.Square.PosY - 1).PlaceableOnSquare as Rail;
+            }
+
+            return null;
         }
     }
 }

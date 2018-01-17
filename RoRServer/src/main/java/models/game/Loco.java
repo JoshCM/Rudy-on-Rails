@@ -109,7 +109,13 @@ public abstract class Loco extends InteractiveGameObject {
 			
 			Rail newRail = getNextRail(tempDirection, this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
 			
-			if(newRail!=null) {//Wenn das N�chste Schienenst�ck leer ist soll der zu anhalten
+			if(newRail.getPlaceableOnrail() instanceof Cart) {
+				addCart();
+				this.speed = 0;
+				break;
+			}
+			
+			if(newRail instanceof Rail) {//Wenn das N�chste Schienenst�ck leer ist soll der zu anhalten
 				Compass newDrivingDirection = newRail.getExitDirection(getDirectionNegation(tempDirection));
 
 				actCart.setDrivingDirection(newDrivingDirection);
@@ -174,6 +180,19 @@ public abstract class Loco extends InteractiveGameObject {
 		}
 	}
 
+	public void addCart() {
+		
+		Cart lastCart = this.carts.get(carts.size()-1);
+		Compass back = this.rail.getExitDirection(lastCart.getDrivingDirection());
+		Rail prevRail = getNextRail(back, this.map.getSquare(lastCart.getXPos(), lastCart.getYPos()));
+		Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
+		Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, prevRail);
+		carts.add(cart);
+		NotifyAddedCart(cartSquare, cart.getId());
+		
+	}
+	
+	
 	/**
 	 * gibt das Rail zur�ck, dass in angegebener Richtung an das Feld, das
 	 * mitgegeben wird, angekoppelt ist
