@@ -13,11 +13,10 @@ import models.session.RoRSession;
  *         Carts gehoert
  */
 public class Loco extends TickableGameObject {
-	private final long SEC_IN_NANO = 1000000000;
 	private ArrayList<Cart> carts;
 	private Rail rail;
 	private UUID playerId;
-	private long timeDeltaCounter = 0;// Summe der Zeit zwischen den Ticks
+	private long timeDeltaCounter = 0; // Summe der Zeit zwischen den Ticks
 	private long speed;
 	private Compass drivingDirection;
 	private Map map;
@@ -66,7 +65,6 @@ public class Loco extends TickableGameObject {
 				drive();
 			}
 		}
-
 	}
 
 	/**

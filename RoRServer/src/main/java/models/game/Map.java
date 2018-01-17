@@ -44,7 +44,7 @@ public class Map extends ModelBase {
 		return name;
 	}
 
-	public void ChangeName(String name) {
+	public void changeName(String name) {
 		this.name = name;
 		notifyChangedName();
 	}

@@ -9,7 +9,7 @@ import models.session.RoRSession;
  * Klasse fuer ein Cart (Waggon), das an einer Loco haengt
  * Auf einem Cart koennen Container geladen werden
  */
-public class Cart extends InteractiveGameObject implements PlaceableOnRail {
+public class Cart extends TickableGameObject implements PlaceableOnRail {
 	
 	private Resource resource;
 
@@ -56,9 +56,12 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 	}
 
 	@Override
+	public void specificUpdate() {
+		// TODO Auto-generated method stub
+	}
+	
 	public PlaceableOnRail loadFromMap(Square square, RoRSession session) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

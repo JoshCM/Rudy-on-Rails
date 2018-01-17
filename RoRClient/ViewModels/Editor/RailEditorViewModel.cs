@@ -49,8 +49,6 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
-
-
         public override void Delete()
         {
             int xPos = this.SquarePosX;
@@ -65,7 +63,6 @@ namespace RoRClient.ViewModels.Editor
 
 			// setze das Selektierte Objekt auf null
 			MapViewModel.SelectedEditorCanvasViewModel = null;
-
 		}
 
         public override void RotateLeft()
@@ -117,21 +114,20 @@ namespace RoRClient.ViewModels.Editor
 
         private void SendCreatePlaceableOnRailCommand()
         {
-            if (toolbarViewModel != null)
+            if (toolbarViewModel != null && toolbarViewModel.SelectedTool != null)
             {
                 if (MapViewModel.SelectedEditorCanvasViewModel != null)
                 {
                     Move();
                     MapViewModel.SelectedEditorCanvasViewModel = null;
-                } else if (toolbarViewModel.SelectedTool.Name.Contains("mine"))
+                }
+                else if (toolbarViewModel.SelectedTool.Name.Contains("mine"))
                 {
                     SendCreateMineCommand();
                 }
 
                 // weitere Commands...
-
             }
-
         }
 
         private void SendCreateMineCommand()

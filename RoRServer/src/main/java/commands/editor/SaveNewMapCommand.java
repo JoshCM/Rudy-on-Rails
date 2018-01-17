@@ -18,7 +18,7 @@ public class SaveNewMapCommand extends CommandBase {
 	@Override
 	public void execute() {
 		Map map = session.getMap();
-		map.ChangeName(mapName);
+		map.changeName(mapName);
 		MapManager.saveMap(map);
 	}
 }

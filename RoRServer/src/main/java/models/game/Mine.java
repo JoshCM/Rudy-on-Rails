@@ -15,7 +15,6 @@ import models.session.GameSessionManager;
 import models.session.RoRSession;
 
 public class Mine extends TickableGameObject implements PlaceableOnRail {
-	
 	private List<Resource> resources = new ArrayList<Resource>();
 	private UUID railId;
 	private Compass alignment;
@@ -28,8 +27,7 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 	
 
 	public Mine(String sessionName, Square square, Compass alignment, UUID railId) {
-		super(sessionName,square);
-		
+		super(sessionName, square);
 		this.alignment = alignment;
 		this.railId = railId;
 		notifyCreatedMine();
@@ -52,8 +50,8 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 
 		// Neue Mine erstellen und damit an den Client schicken
 		Mine newMine = new Mine(session.getName(), square, alignment, railId);
-		// sessionName neu setzen, damit Observer Änderung dieses Objekts
 		// mitbekommen kann
+		// sessionName neu setzen, damit Observer Änderung dieses Objekts
 		newMine.setName(session.getName());
 		if (session instanceof GameSession) {
 			((GameSession) session).addMine(newMine);
@@ -91,7 +89,6 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 		alignment = CompassHelper.rotateCompass(true, alignment);
 		notifyAlignmentUpdated();
 	}
-
 	/**
 	 * Methode zum Erstellen einer Nachrichtm wenn eine neue Mine erstellt wurde
 	 */
@@ -135,8 +132,9 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 			if (resources.size() < maxNumberOfResource) {
 				res = minedResource();
 				resources.add(res);
-//				log.info("res=" + res.getName() + i);
-				i += 1;
+				//log.info("res=" + res.getName()+i);
+				System.out.println("res=" + res.getName()+i);
+				i+=1;
 			}
 		}
 	}
@@ -149,7 +147,7 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 			res = new Coal(this.sessionName, square);
 		} else {
 			res = new Gold(this.sessionName, square);
-
+		
 		}
 		return res;
 	}
@@ -182,6 +180,10 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 
 		return railId;
 
+	}
+	public void setSquare(Square newSquare) {
+		// TODO Auto-generated method stub
+		square=newSquare;
 	}
 
 }
