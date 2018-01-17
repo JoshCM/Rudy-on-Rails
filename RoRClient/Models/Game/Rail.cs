@@ -15,6 +15,7 @@ namespace RoRClient.Models.Game
         private Guid trainstationId;
         private ObservableCollection<RailSection> railSections = new ObservableCollection<RailSection>();
         private Signals signals;
+        private Sensor sensor;
 
         public Guid TrainstationId
         {

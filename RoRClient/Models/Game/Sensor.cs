@@ -9,5 +9,10 @@ namespace RoRClient.Models.Game
 {
     public class Sensor : ModelBase
     {
+        private Boolean Exists;
+        public Sensor()
+        {
+
+        }
     }
 }
