@@ -11,10 +11,10 @@ import communication.MessageInformation;
 import models.helper.CompassHelper;
 import models.session.EditorSessionManager;
 import models.session.GameSession;
+import models.session.GameSessionManager;
 import models.session.RoRSession;
 
 public class Mine extends TickableGameObject implements PlaceableOnRail {
-	private Logger log = Logger.getLogger(Mine.class.getName());
 	private List<Resource> resources = new ArrayList<Resource>();
 	private UUID railId;
 	private Compass alignment;
@@ -29,7 +29,6 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 
 	public Mine(String sessionName, Square square, Compass alignment, UUID railId) {
 		super(sessionName, square);
-		this.square = square;
 		this.alignment = alignment;
 		this.railId = railId;
 		notifyCreatedMine();
@@ -87,11 +86,6 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 		alignment = CompassHelper.rotateCompass(true, alignment);
 		notifyAlignmentUpdated();
 	}
-
-	public UUID getSquareId() {
-		// TODO Auto-generated method stub
-		return square.getId();
-	}
 	/**
 	 * Methode zum Erstellen einer Nachrichtm wenn eine neue Mine erstellt wurde
 	 */
@@ -105,14 +99,6 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 		notifyChange(message);		
 	}
 
-	public Object getXPos() {
-		// TODO Auto-generated method stub
-		return square.getXIndex();
-	}
-	public Object getYPos() {
-		// TODO Auto-generated method stub
-		return square.getYIndex();
-	}
 	/**
 	 * Schickt eine Nachricht an den Client, wenn sich die Richtung der Mine
 	 * ge�ndert hat
@@ -142,17 +128,20 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 			if (resources.size() < maxNumberOfResource) {
 				res= minedResource();
 				resources.add(res);
-				log.info("res=" + res.getName()+i);
+				//log.info("res=" + res.getName()+i);
+				System.out.println("res=" + res.getName()+i);
 				i+=1;
 			}
 		}
 	}
 	public Resource minedResource() {
+		Square square = GameSessionManager.getInstance().getGameSessionByName(sessionName).getMap()
+				.getSquareById(getSquareId());
 		Random random = new Random();
 		if (random.nextFloat() <= 0.7) {
-			res = new Coal(this.sessionName, this.square);
+			res = new Coal(this.sessionName, square);
 		} else {
-			res = new Gold(this.sessionName, this.square);
+			res = new Gold(this.sessionName, square);
 		
 		}
 		return res;
