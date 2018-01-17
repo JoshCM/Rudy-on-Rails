@@ -47,7 +47,7 @@ public abstract class ModelBase extends ObservableModel implements Model{
 	}
 	
 	/**
-	 * Hier werden Nachrichten hinzugefügt, die an die verbundenen Clients geschickt
+	 * Hier werden Nachrichten hinzugefuegt, die an die verbundenen Clients geschickt
 	 * werden sollen
 	 * 
 	 * @param messageInformation

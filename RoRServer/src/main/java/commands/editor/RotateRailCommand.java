@@ -1,5 +1,7 @@
 package commands.editor;
 
+import java.util.UUID;
+
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import exceptions.NotRemoveableException;
@@ -14,6 +16,7 @@ public class RotateRailCommand extends CommandBase {
 	private int xPos;
 	private int yPos;
 	private boolean right;
+	private UUID emptyUUID = new UUID(0, 0);
 	
 	public RotateRailCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
@@ -33,7 +36,7 @@ public class RotateRailCommand extends CommandBase {
 		Rail rail = (Rail)square.getPlaceableOnSquare();
 
 		// wenn die Rail einen TrainstationId hat
-		if (rail.getTrainstationId() != null) {
+		if (!rail.getTrainstationId().equals(emptyUUID)) {
 			rotateable = false;
 		}
 

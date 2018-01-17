@@ -2,13 +2,12 @@ package commands.game;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
+import models.game.GhostLoco;
 import models.game.Map;
 import models.game.Mine;
 import models.game.Player;
@@ -75,14 +74,18 @@ public class StartGameCommand extends CommandBase {
 		for (Square railSquare : railSquaresToCreate) {
 			Rail rail = (Rail)railSquare.getPlaceableOnSquare();
 			Rail newRail = (Rail)railSquare.getPlaceableOnSquare().loadFromMap(railSquare, session);
+			newRail.generateResourcesNextToRail();
 			// liegt auf einer Rail eine Mine, muss diese darauf erzeugt werden
-			if (rail.getPlaceableOnRail() instanceof Mine) {
-				Mine mine = (Mine)rail.getPlaceableOnRail();
+			if (rail.getPlaceableOnrail() instanceof Mine) {
+				Mine mine = (Mine)rail.getPlaceableOnrail();
 				Mine newMine = (Mine)mine.loadFromMap(railSquare, session);
 				newRail.setPlaceableOnRail(newMine);
 			}
 			railSquare.setPlaceableOnSquare(newRail);
-
+			
+			if(newRail.getSignals() != null) {
+				((GameSession)session).registerTickableGameObject(newRail.getSignals());
+			}
 		}
 
 		// erzeugen der neuen Trainstations auf deren Squares
@@ -107,6 +110,11 @@ public class StartGameCommand extends CommandBase {
 		for (Player p : session.getPlayers()) {
 			CreateLocoCommand createLocoCommand = new CreateLocoCommand(session, p.getId());
 			createLocoCommand.execute();
+			
+			Map map = session.getMap();
+			Square square = map.getSquare(7, 3);
+			GhostLoco ghostLoco = new GhostLoco(session.getName(), square, p.getId());
+			((GameSession)session).addLoco(ghostLoco);
 		}
 	}
 }

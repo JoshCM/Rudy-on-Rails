@@ -14,13 +14,7 @@ namespace RoRClient.Models.Game
         private Square square;
         private Guid trainstationId;
         private ObservableCollection<RailSection> railSections = new ObservableCollection<RailSection>();
-        public ObservableCollection<RailSection> RailSections
-        {
-            get
-            {
-                return railSections;
-            }
-        }
+        private Signals signals;
 
         public Guid TrainstationId
         {
@@ -42,6 +36,7 @@ namespace RoRClient.Models.Game
             }
 
             this.square = square;
+            Signals = new Signals(Guid.Empty); 
         }
 
         /// <summary>
@@ -62,6 +57,9 @@ namespace RoRClient.Models.Game
 
             this.square = square;
             this.trainstationId = trainstationId;
+
+            // hier, weil base und this hintereinander nicht so klappen will
+            Signals = new Signals(Guid.Empty);
         }
 
         public void AddRailSection(RailSection railSection)
@@ -69,7 +67,32 @@ namespace RoRClient.Models.Game
             railSections.Add(railSection);
             NotifyPropertyChanged("RailSections");
         }
-        
+
+        #region Properties
+        public ObservableCollection<RailSection> RailSections
+        {
+            get
+            {
+                return railSections;
+            }
+        }
+
+        public Signals Signals
+        {
+            get
+            {
+                return signals;
+            }
+            set
+            {
+                if(signals != value)
+                {
+                    signals = value;
+                    NotifyPropertyChanged("Signals");
+                }
+            }
+        }
+
         public IPlaceableOnRail PlaceableOnRail
         {
             get
@@ -86,5 +109,6 @@ namespace RoRClient.Models.Game
                 }
             }
         }
+        #endregion
     }
 }

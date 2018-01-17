@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace RoRClient.Models.Game
     /// <summary>
     /// Klasse für die Loco, die eine Liste von Carts enthält
     /// </summary>
-    public class Loco : InteractiveGameObject, IPlaceableOnRail
+    public abstract class Loco : InteractiveGameObject, IPlaceableOnRail
     {
         private int speed;
         private Compass drivingDirection;
@@ -36,7 +37,7 @@ namespace RoRClient.Models.Game
                 }
             }
         }
-
+     
         public Compass DrivingDirection
         {
             get
@@ -65,6 +66,17 @@ namespace RoRClient.Models.Game
             {
                 carts = value;
             }
+        }
+
+        public Cart getCartById(Guid cartId)
+        {
+            foreach(Cart c in Carts){
+                if (c.Id.Equals(cartId))
+                {
+                    return c;
+                }
+            }
+            return null;
         }
     }
 }

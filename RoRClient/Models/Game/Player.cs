@@ -1,5 +1,6 @@
 ﻿using RoRClient.Models.Base;
 using System;
+using System.Collections.ObjectModel;
 
 namespace RoRClient.Models.Game
 {

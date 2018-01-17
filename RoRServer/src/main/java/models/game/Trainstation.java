@@ -209,7 +209,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 				}
 				
 				// erzeuge neue Rail und setze intern das Square.PlacableOnSquare
-				Rail newRail = new Rail(sessionName, newSquare, railSectionsCompass,
+				Rail newRail = new Rail(sessionName, newSquare, railSectionsCompass, false,
 						tmpRail.getTrainstationId(), tmpRail.getId());
 				newSquare.setPlaceableOnSquare(newRail);
 			}else if(tmpTrainstationGameObject instanceof Stock) {
@@ -386,5 +386,11 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	public String toString() {
 		return "Trainstation [trainstationRailIds=" + trainstationRailIds + ", alignment=" + alignment
 				+ ", spawnPointForLoco=" + spawnPointForLoco + "]";
+	}
+
+	@Override
+	public void specificUpdate() {
+		// TODO Auto-generated method stub
+		
 	}
 }

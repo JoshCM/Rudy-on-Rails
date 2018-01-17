@@ -20,7 +20,7 @@ public class MapManagerTest {
 		railSectionPositions.add(Compass.NORTH);
 		railSectionPositions.add(Compass.SOUTH);
 		Rail rail = new Rail(sessionName, railSquare, railSectionPositions);
-		
+		railSquare.setPlaceableOnSquare(rail);
 		String mapAsJson = MapManager.convertMapToJson(map);
 		Map loadedMap = MapManager.convertJsonToMap(mapAsJson);
 
