@@ -16,11 +16,28 @@ namespace RoRClient.Models.Game
     {
         private Compass drivingDirection;
         private int speed;
+        private bool isGhostCart;
 
         public Cart(Guid id, Compass drivingDirection, Square square) : base(square)
         {
             this.id = id;
             this.drivingDirection = drivingDirection;
+        }
+
+        public bool IsGhostCart
+        {
+            get
+            {
+                return isGhostCart;
+            }
+            set
+            {
+                if (isGhostCart != value)
+                {
+                    isGhostCart = value;
+                    NotifyPropertyChanged("IsGhostCart");
+                }
+            }
         }
 
         public Compass DrivingDirection

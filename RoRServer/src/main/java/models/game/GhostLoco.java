@@ -13,8 +13,10 @@ public class GhostLoco extends Loco {
 	
 	public GhostLoco(String sessionName, Square square, UUID playerId) {
 		super(sessionName, square, playerId);
+		
 		initGhostLocoProxy();
 		NotifyLocoCreated();
+		addInitialCart();
 		startUpdateThread();
 		
 		changeSpeed(1);

@@ -100,6 +100,8 @@ namespace RoRClient.ViewModels.Game
                 }
             }
         }
+
+        #region Properties
         public int Angle
         {
             get
@@ -130,6 +132,8 @@ namespace RoRClient.ViewModels.Game
                 }
             }
         }
+        #endregion
+
         int lastSpeedValueGreaterOrLessThanZero = 0;
 
         private void InvertDrivingDirectionIfDrivingDirectionHasChanged(int value)
