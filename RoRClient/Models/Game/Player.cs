@@ -34,22 +34,5 @@ namespace RoRClient.Models.Game
                 return isHost;
             }
         }
-
-        private Loco loco;
-        public Loco Loco
-        {
-            get
-            {
-                return loco;
-            }
-            set
-            {
-                if (value != null)
-                {
-                    this.loco = value;
-                    NotifyPropertyChanged("LocoCreated");
-                }
-            }
-        }
     }
 }

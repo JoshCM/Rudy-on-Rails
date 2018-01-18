@@ -13,6 +13,7 @@ namespace RoRClient.Commands.Game.Update
     class UpdateCartPositionCommand : CommandBase
     {
         private Guid playerId;
+        private Guid currentLocoId;
         private int xPos;
         private int yPos;
         private Guid cartId;
@@ -26,18 +27,18 @@ namespace RoRClient.Commands.Game.Update
             playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             drivingDirection = (Compass)Enum.Parse(typeof(Compass), messageInformation.GetValueAsString("drivingDirection"));
             cartId = Guid.Parse(messageInformation.GetValueAsString("cartId"));
+            currentLocoId = Guid.Parse(messageInformation.GetValueAsString("currentLocoId"));
         }
         public override void Execute()
         {
             GameSession gameSession = GameSession.GetInstance();
 
-
             Square square = gameSession.Map.GetSquare(xPos, yPos);
             Player player = gameSession.GetPlayerById(playerId);
 
-            Loco loco = player.Loco;
+            Loco loco = gameSession.GetLocoById(currentLocoId);
 
-            Cart cart = loco.getCartById(cartId);
+            Cart cart = loco.GetCartById(cartId);
             cart.Speed=loco.Speed;
             cart.Square = square;
             cart.DrivingDirection = drivingDirection;
