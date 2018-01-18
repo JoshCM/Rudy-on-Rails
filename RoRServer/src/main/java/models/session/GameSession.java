@@ -12,6 +12,7 @@ import models.game.GhostLoco;
 import models.game.Loco;
 import models.game.Player;
 import models.game.PlayerLoco;
+import models.game.Scripts;
 import models.game.TickableGameObject;
 
 /**
@@ -27,6 +28,7 @@ public class GameSession extends RoRSession{
 	private long lastTimeUpdatedInNanoSeconds;
 	private Ticker ticker;
 	private ArrayList<Loco> locos = new ArrayList<>();
+	private Scripts scripts;
 
 	public GameSession(String name, UUID hostPlayerId, String hostPlayerName) {
 		super(name);
@@ -34,6 +36,7 @@ public class GameSession extends RoRSession{
 		createHostPlayer(hostPlayerId, hostPlayerName);
 		
 		GameSessionDispatcher dispatcher = new GameSessionDispatcher(this);
+		scripts = new Scripts(name);
 		this.queueReceiver = new QueueReceiver(name, dispatcher);
 		this.ticker = new Ticker();
 		this.stopped = false;
@@ -145,6 +148,16 @@ public class GameSession extends RoRSession{
 	
 	public List<Loco> getLocos() {
 		return locos;
+	}
+	
+	public Scripts getScripts() {
+		return scripts;
+	}
+	
+	@Override
+	public void start() {
+		super.start();
+		scripts.loadGhostLocoDefaultScripts();
 	}
 }
 

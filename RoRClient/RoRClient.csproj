@@ -138,6 +138,7 @@
     <Compile Include="Commands\Editor\Update\UpdateNodesOfRailSectionCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateGhostLocoScriptCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateCartCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateGhostLocoCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayerLocoCommand.cs" />
@@ -183,6 +184,8 @@
     <Compile Include="Models\Game\Player.cs" />
     <Compile Include="Models\Game\PlayerLoco.cs" />
     <Compile Include="Models\Game\Resource.cs" />
+    <Compile Include="Models\Game\Script.cs" />
+    <Compile Include="Models\Game\Scripts.cs" />
     <Compile Include="Models\Game\Stock.cs" />
     <Compile Include="Models\Game\Signals.cs" />
     <Compile Include="Models\Game\Trainstation.cs" />
