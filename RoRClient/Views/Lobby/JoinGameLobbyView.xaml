@@ -7,6 +7,18 @@
              xmlns:vm ="clr-namespace:RoRClient.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
+    <UserControl.Resources>
+        <Style x:Key="hcs" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="10 0 5 0 "/>
+            <Setter Property="FontFamily" Value="Source Sans Pro"/>
+            <Setter Property="Foreground" Value="#FF510404"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="White"></Setter>
+            <Setter Property="Height" Value="Auto"></Setter>
+        </Style>
+    </UserControl.Resources>
+    
     <DockPanel>
         <DockPanel.Background>
             <ImageBrush ImageSource="pack://application:,,,/Resources/Images/start_background.png" />
@@ -29,29 +41,19 @@
         </StackPanel>
 
         <StackPanel Width="1133" Margin="0,40,0,0" >
-            <ListBox Height="250" x:Name="gameSessionListBox" DockPanel.Dock="Top" ItemsSource="{Binding LobbyModel.GameSessionInfos}" SelectedItem="{Binding Path=SelectedGameSessionInfo, Mode=TwoWay}" Margin="40,0,373,0" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" >
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel.Resources>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Margin" Value="10,10,0,0"/>
-                                </Style>
-                            </StackPanel.Resources>
-                            <StackPanel.InputBindings>
-                                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, 
-                                          AncestorType={x:Type UserControl}}, Path=DataContext.JoinGameSessionCommand}"/>
-                            </StackPanel.InputBindings>
-                            <TextBlock Text="{Binding Name}" />
-                            <TextBlock Text="{Binding AmountOfPlayers}"/>
-                            <TextBlock Text=" / "/>
-                            <TextBlock Text="{Binding AvailablePlayerSlots}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <ListView Height="250" x:Name="gameSessionListBox" DockPanel.Dock="Top" ItemsSource="{Binding LobbyModel.GameSessionInfos}" SelectedItem="{Binding Path=SelectedGameSessionInfo, Mode=TwoWay}" Margin="40,0,373,0" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn HeaderContainerStyle="{StaticResource hcs}" Header="Spielname"  Width="340" DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn HeaderContainerStyle="{StaticResource hcs}" Header="Spieleranzahl" Width="150" DisplayMemberBinding="{Binding AmountOfPlayers}" />
+                        <GridViewColumn HeaderContainerStyle="{StaticResource hcs}" Header="Mögliche Spieleranzahl" Width="1000" DisplayMemberBinding="{Binding AvailablePlayerSlots}" />
+                    </GridView>
+                </ListView.View>
+                <ListView.InputBindings>
+                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                  AncestorType={x:Type UserControl}}, Path=DataContext.JoinGameSessionCommand}"/>
+                </ListView.InputBindings>
+            </ListView>
         </StackPanel>
-
-
     </DockPanel>
 </UserControl>

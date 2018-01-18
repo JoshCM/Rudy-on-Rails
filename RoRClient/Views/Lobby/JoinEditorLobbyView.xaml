@@ -9,9 +9,16 @@
              d:DesignHeight="900" d:DesignWidth="1600">
     <UserControl.Resources>
         <Style x:Key="hcs" TargetType="{x:Type GridViewColumnHeader}">
-            <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="10 0 5 0 "/>
+            <Setter Property="FontFamily" Value="Source Sans Pro"/>
+            <Setter Property="Foreground" Value="#FF510404"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="White"></Setter>
+            <Setter Property="Height" Value="Auto"></Setter>
         </Style>
     </UserControl.Resources>
+    
     <DockPanel>
         <DockPanel.Background>
             <ImageBrush ImageSource="pack://application:,,,/Resources/Images/start_background.png" />
@@ -38,11 +45,11 @@
 
         <StackPanel DockPanel.Dock="Right" Width="550" Margin="0,50,250,0" >
             <TextBlock Text="Bestehenden Bau-Modus auswählen und beitreten." TextWrapping="Wrap" Height="60" Width="400" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" HorizontalAlignment="Left" Margin="0,0,0,10"/>
-            <ListView Height="200" Width="442" x:Name="editorSessionListBox" ItemsSource="{Binding LobbyModel.EditorSessionInfos}" SelectedItem="{Binding Path=SelectedEditorSessionInfo, Mode=TwoWay}" Margin="0,0,0,20" HorizontalAlignment="Left" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" >
+            <ListView Height="200" Width="442" x:Name="editorSessionListBox" ItemsSource="{Binding LobbyModel.EditorSessionInfos}" SelectedItem="{Binding Path=SelectedEditorSessionInfo, Mode=TwoWay}" Margin="0,0,0,20" HorizontalAlignment="Left" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn HeaderContainerStyle="{StaticResource hcs}" Header="Spielname"  Width="200" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn HeaderContainerStyle="{StaticResource hcs}" Header="Spieleranzahl" Width="150" DisplayMemberBinding="{Binding AmountOfPlayers}" />
+                        <GridViewColumn HeaderContainerStyle="{StaticResource hcs}" Header="Spielname"  Width="280" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn HeaderContainerStyle="{StaticResource hcs}" Header="Spieleranzahl" Width="1000" DisplayMemberBinding="{Binding AmountOfPlayers}" />
                     </GridView>
                 </ListView.View>
                 <ListView.InputBindings>
