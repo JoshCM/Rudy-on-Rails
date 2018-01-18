@@ -53,8 +53,10 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button x:Name="gameButton" Command="{Binding JoinEditorSessionCommand}" Content="Beitreten" FontFamily="Source Sans Pro" Height="55" Width="200" FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" HorizontalAlignment="Left"/>
-            <!-- Binding muss noch eingerichtet werden -->
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,0,0,0" Height="60"  >
+                <Button x:Name="gameButton" Command="{Binding JoinEditorSessionCommand}" Content="Beitreten" FontFamily="Source Sans Pro" Height="55" Width="200" FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" HorizontalAlignment="Left" />
+                <Button x:Name="refreshGamesButton" Command="{Binding RefreshEditorSessionsCommand}" Content="Aktualisieren" FontFamily="Source Sans Pro" Height="55" Width="200" FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" Margin="20,0,10,0" />
+            </StackPanel>
         </StackPanel>
     </DockPanel>
 
