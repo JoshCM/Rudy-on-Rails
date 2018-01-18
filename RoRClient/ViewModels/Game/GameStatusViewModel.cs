@@ -14,7 +14,8 @@ namespace RoRClient.ViewModels.Game
         
         public GameStatusViewModel()
         {
-            GamePlayer = (GamePlayer)GameSession.GetInstance().OwnPlayer;
+            Player ownPlayer = (GamePlayer)GameSession.GetInstance().OwnPlayer;
+            GamePlayer = (GamePlayer)ownPlayer;
         }
 
         public GamePlayer GamePlayer

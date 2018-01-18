@@ -35,7 +35,7 @@ namespace RoRClient.Commands.Game.Create
             Player player = session.GetPlayerById(playerId);
             Loco loco = gameSession.GetLocoById(currentLocoId);
             Square square = session.Map.GetSquare(xPos, yPos);
-            Cart cart = new Cart(cartId, drivingDirection, square);
+            Cart cart = new Cart(cartId, playerId, drivingDirection, square);
 
             if (loco is GhostLoco)
             {

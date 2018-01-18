@@ -194,9 +194,10 @@ namespace RoRClient.ViewModels.Game
                 {
                     PlayerLocoGameViewModel locoGameViewModel = new PlayerLocoGameViewModel(loco);
                     taskFactory.StartNew(() => locos.Add(locoGameViewModel));
-                } else
+                }
+                else
                 {
-                    GhostLocoGameViewModel locoGameViewModel = new GhostLocoGameViewModel(loco);
+                    GhostLocoGameViewModel locoGameViewModel = new GhostLocoGameViewModel((GhostLoco)loco);
                     taskFactory.StartNew(() => locos.Add(locoGameViewModel));
                 }
 

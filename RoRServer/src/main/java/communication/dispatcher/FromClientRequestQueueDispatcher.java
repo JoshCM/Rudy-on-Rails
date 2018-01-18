@@ -197,6 +197,12 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 			players.add(json);
 		}
 		responseInformation.putValue("playerList", players);
+		
+		// initial resources
+		GamePlayer gamePlayer = (GamePlayer)gameSession.getHost();
+		responseInformation.putValue("coalCount", gamePlayer.getCoalCount());
+		responseInformation.putValue("goldCount", gamePlayer.getGoldCount());
+		responseInformation.putValue("pointCount", gamePlayer.getPointCount());
 
 		sendMessage(responseInformation);
 	}

@@ -16,11 +16,13 @@ namespace RoRClient.Models.Game
     {
         private int speed;
         private Compass drivingDirection;
+        private Guid playerId;
 
-        public Loco(Guid id, Compass drivingDirection, Square square) : base(square)
+        public Loco(Guid id, Guid playerId, Compass drivingDirection, Square square) : base(square)
         {
             this.id = id;
             this.drivingDirection = drivingDirection;
+            this.playerId = playerId;
         }
 
         public void AddCart(Cart cart)
@@ -58,6 +60,13 @@ namespace RoRClient.Models.Game
                     drivingDirection = value;
                     NotifyPropertyChanged("DrivingDirection");
                 }
+            }
+        }
+        public Guid PlayerId
+        {
+            get
+            {
+                return playerId;
             }
         }
 

@@ -32,7 +32,7 @@ namespace RoRClient.Commands.Game.Create
             Player player = session.GetPlayerById(playerId);
             Square square = session.Map.GetSquare(xPos, yPos);
             
-            PlayerLoco loco = new PlayerLoco(locoId, drivingDirection, square);
+            PlayerLoco loco = new PlayerLoco(locoId, playerId, drivingDirection, square);
             ((GameSession)session).AddLoco(loco);
         }
     }
