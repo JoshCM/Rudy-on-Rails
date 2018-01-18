@@ -29,9 +29,29 @@ public class GhostLocoTests {
 		int messageInfoXPos = messageInfo.getValueAsInt("xPos");
 		int messageInfoYPos = messageInfo.getValueAsInt("yPos");
 
-		assertEquals(messageInfoLocoId, ghostLoco.getId());
-		assertEquals(messageInfoXPos, ghostLoco.getXPos());
-		assertEquals(messageInfoYPos, ghostLoco.getYPos());
+		assertEquals(ghostLoco.getId(), messageInfoLocoId);
+		assertEquals(ghostLoco.getXPos(), messageInfoXPos);
+		assertEquals(ghostLoco.getYPos(), messageInfoYPos);
+	}
+	
+	@Test
+	public void GhostLoco_CreatesStartsWithOneCart() {		
+		GhostLoco ghostLoco = createTestGhostLoco();
+		
+		MessageInformation messageInfo = TopicMessageQueue.getInstance()
+				.getFirstFoundMessageInformationForMessageType("CreateCart");
+
+		UUID messageInfoLocoId = messageInfo.getValueAsUUID("currentLocoId");
+		int messageInfoXPos = messageInfo.getValueAsInt("xPos");
+		int messageInfoYPos = messageInfo.getValueAsInt("yPos");
+		
+		Cart cart = ghostLoco.getCarts().get(0);
+		
+		assertEquals(ghostLoco.getId(), cart.getCurrentLocoId());
+		assertEquals(ghostLoco.getId(), messageInfoLocoId);
+		
+		assertEquals(cart.getXPos(), messageInfoXPos);
+		assertEquals(cart.getYPos(), messageInfoYPos);
 	}
 	
 	private GhostLoco createTestGhostLoco() {
