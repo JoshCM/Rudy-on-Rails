@@ -9,7 +9,7 @@ import org.junit.Test;
 import com.google.gson.JsonObject;
 import commands.base.Command;
 import commands.editor.CreateRailCommand;
-import commands.editor.CreateTrainstationCommand;
+import commands.editor.CreatePlayertrainstationCommand;
 import commands.editor.StartEditorCommand;
 import communication.MessageInformation;
 import models.game.Compass;
@@ -56,7 +56,7 @@ public class CommandCreatorTests {
 
 		RoRSession session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
-		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
+		CreatePlayertrainstationCommand command = new CreatePlayertrainstationCommand(session, messageInformation);
 
 		String commandName = command.getClass().getName();
 		Command createdCommand = null;
@@ -73,7 +73,7 @@ public class CommandCreatorTests {
 
 		Class<?> actualClass = session.getMap().getSquare(trainstationX, trainstationY).getPlaceableOnSquare().getClass();
 		
-		assertEquals(Trainstation.class, actualClass);
+		assertEquals(Playertrainstation.class, actualClass);
 	}
 	
 	@Test

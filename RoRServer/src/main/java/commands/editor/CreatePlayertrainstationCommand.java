@@ -13,12 +13,13 @@ import models.game.Rail;
 import models.game.Compass;
 import models.game.Square;
 import models.game.Stock;
+import models.game.Trainstation;
 import models.game.Playertrainstation;
 import models.helper.Validator;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
-public class CreateTrainstationCommand extends CommandBase {
+public class CreatePlayertrainstationCommand extends CommandBase {
 	private final static int OUTER_RAILS_COUNT = 8;
 	private final static int INNER_RAILS_COUNT = 6;
 	private final static int OUTER_RAILS_Y = OUTER_RAILS_COUNT / 2 * (-1);
@@ -31,7 +32,7 @@ public class CreateTrainstationCommand extends CommandBase {
 	private int yPos;
 	private Compass alignment;
 
-	public CreateTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
+	public CreatePlayertrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 
 		xPos = messageInfo.getValueAsInt("xPos");
@@ -59,7 +60,7 @@ public class CreateTrainstationCommand extends CommandBase {
 			stockSquare.setPlaceableOnSquare(newStock);
 
 			// Trainstation wird erzeugt und auf Square gesetzt
-			Trainstation trainstation = new Trainstation(session.getName(), newSquare,
+			Playertrainstation trainstation = new Playertrainstation(session.getName(), newSquare,
 					createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment, newStock);
 			this.setSpawnPoint(trainstation);
 			newSquare.setPlaceableOnSquare(trainstation);
@@ -162,7 +163,7 @@ public class CreateTrainstationCommand extends CommandBase {
 	 * Sucht das richtige Rail und setze es als Spawnpoint
 	 * @param trainstation Der neu erzeugte Trainstation
 	 */
-	private void setSpawnPoint(Trainstation trainstation) {
+	private void setSpawnPoint(Playertrainstation trainstation) {
 		int spawnPointX;
 		int spawnPointY;
 		switch (trainstation.getAlignment()) {

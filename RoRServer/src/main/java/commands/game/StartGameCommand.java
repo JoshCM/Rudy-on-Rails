@@ -18,6 +18,7 @@ import models.game.PlayerLoco;
 import models.game.Rail;
 import models.game.Square;
 import models.game.Stock;
+import models.game.Trainstation;
 import models.game.Playertrainstation;
 import models.session.GameSession;
 import models.session.RoRSession;
@@ -102,8 +103,8 @@ public class StartGameCommand extends CommandBase {
 		for (Square trainstationSquare : trainstationSquaresToCreate) {
 			
 			// Alte Trainstation holen und neue Trainstation damit erstellen
-			Trainstation oldTrainStation = (Trainstation) trainstationSquare.getPlaceableOnSquare();
-			Trainstation newTrainStation = oldTrainStation.loadFromMap(trainstationSquare, gameSession);
+			Playertrainstation oldTrainStation = (Playertrainstation) trainstationSquare.getPlaceableOnSquare();
+			Playertrainstation newTrainStation = oldTrainStation.loadFromMap(trainstationSquare, gameSession);
 			
 			// Neue Trainstation auf Square setzen
 			trainstationSquare.setPlaceableOnSquare(newTrainStation);

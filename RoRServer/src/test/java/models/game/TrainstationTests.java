@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import commands.CommandCreator;
 import commands.base.Command;
-import commands.editor.CreateTrainstationCommand;
+import commands.editor.CreatePlayertrainstationCommand;
 import commands.editor.MoveTrainstationCommand;
 import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
@@ -28,7 +28,7 @@ public class TrainstationTests {
 
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
-		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
+		CreatePlayertrainstationCommand command = new CreatePlayertrainstationCommand(session, messageInformation);
 
 		String commandName = command.getClass().getName();
 		Command createdCommand = null;
@@ -61,7 +61,7 @@ public class TrainstationTests {
 
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
-		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
+		CreatePlayertrainstationCommand command = new CreatePlayertrainstationCommand(session, messageInformation);
 
 		String commandName = command.getClass().getName();
 		Command createdCommand = null;
@@ -89,7 +89,7 @@ public class TrainstationTests {
 		Square square = session.getMap().getSquare(trainstationX + 1, trainstationY);
 		square.setPlaceableOnSquare(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
-		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
+		CreatePlayertrainstationCommand command = new CreatePlayertrainstationCommand(session, messageInformation);
 
 		String commandName = command.getClass().getName();
 		Command createdCommand = null;

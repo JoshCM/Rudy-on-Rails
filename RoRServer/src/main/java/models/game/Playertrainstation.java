@@ -1,49 +1,82 @@
 package models.game;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.google.gson.JsonObject;
+
+import communication.MessageInformation;
 import models.session.RoRSession;
 
 public class Playertrainstation extends Trainstation {
-	private Square spawnPointForLoco;
+	private UUID spawnPointForLoco;
+	private UUID spawnPointForCart;
 
 	public Playertrainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment,
 			Stock stock) {
 		super(sessionName, square, trainstationRailIds, id, alignment, stock);
+		notifyCreatedPlayertrainstation();
 	}
 
-	/**
-	 * Setzt den SpanPoint für die Loco
-	 * @param square
-	 */
-	public void setSpawnPointforLoco(Square square) {
-		spawnPointForLoco = square;
+	public void setSpawnPointforLoco(UUID railId) {
+		spawnPointForLoco = railId;
 	}
 
-	/**
-	 * Gibt den SpawnPoint für die Loco zurück
-	 * @return Square als Startposition
-	 */
-	public Square getSpawnPointforLoco() {
+	public UUID getSpawnPointforLoco() {
 		return spawnPointForLoco;
+	}
+
+	/**
+	 * Gibt den SpawnPoint fÃ¼r neue Carts zurÃ¼ck
+	 * @return
+	 */
+	public UUID getSpawnPointForCart() {
+		return spawnPointForCart;
+	}
+
+	/**
+	 * Setzt den SpawnPoint fÃ¼r neue Carts
+	 * @param spawnPointForCart
+	 */
+	public void setSpawnPointForCart(UUID spawnPointForCart) {
+		this.spawnPointForCart = spawnPointForCart;
+	}
+	
+	private void notifyCreatedPlayertrainstation() {
+		MessageInformation messageInfo = new MessageInformation("CreatePlayertrainstation");
+		messageInfo.putValue("trainstationId", getId());
+		messageInfo.putValue("alignment", alignment);
+		messageInfo.putValue("xPos", getXPos());
+		messageInfo.putValue("yPos", getYPos());
+		List<JsonObject> rails = new ArrayList<JsonObject>();
+		for (UUID railId : getTrainstationRailIds()) {
+			JsonObject json = new JsonObject();
+			json.addProperty("railId", railId.toString());
+			rails.add(json);
+		}
+		messageInfo.putValue("trainstationRails", rails);
+		messageInfo.putValue("stockId", getStock().getId());
+
+		notifyChange(messageInfo);
 	}
 
 	@Override
 	public Playertrainstation loadFromMap(Square square, RoRSession session) {
-		Playertrainstation trainStation = (Playertrainstation) square.getPlaceableOnSquare();
+		Playertrainstation oldTrainStation = (Playertrainstation) square.getPlaceableOnSquare();
 		Playertrainstation newTrainStation = new Playertrainstation(session.getName(), square,
-				trainStation.getTrainstationRailIds(), trainStation.getId(), trainStation.alignment,
-				trainStation.getStock());
-
-		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses
-		// Objekts mitbekommen kann
+				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock());
+		
+		// der sessionName muss neu gesetzt werden, damit der Observer Ã„nderungen dieses Objekts mitbekommen kann
 		newTrainStation.setName(session.getName());
+		
+		// setze den alten SpawnPoint fÃ¼r die neue Trainstation
+		newTrainStation.setSpawnPointforLoco(oldTrainStation.getSpawnPointforLoco());
 
 		log.info("TrainStation erstellt: " + newTrainStation.toString());
 		return newTrainStation;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
