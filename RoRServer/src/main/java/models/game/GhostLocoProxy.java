@@ -27,7 +27,7 @@ public class GhostLocoProxy {
 	}
 	
 	public void changeSpeed(int speed) {
-		if(speed >= 0 && speed <= 5) {
+		if(speed >= -1 && speed <= 5) {
 			loco.changeSpeed(speed);
 		}
 	}
@@ -82,7 +82,7 @@ public class GhostLocoProxy {
 						}
 					} else if(placeableOnSquare instanceof Resource) {
 						Resource resource = (Resource)placeableOnSquare;
-						result.add(resource.getName());
+						result.add(resource.getSessionName());
 					}
 				}
 			} else {

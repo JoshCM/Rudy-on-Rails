@@ -69,19 +69,19 @@ public class GhostLocoTests {
 		
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession("TestSession",
 				UUID.randomUUID(), "HostPlayer");
-		Player player = new Player(gameSession.getName(), "Hans", UUID.randomUUID(), true);
+		Player player = new Player(gameSession.getSessionName(), "Hans", UUID.randomUUID(), true);
 
 		Map map = gameSession.getMap();
 		Square squareLoco = map.getSquare(squarePosXLoco, squarePosYLoco);
 		Square squareCart = map.getSquare(squarePosXCart, squarePosYCart);
 		
-		Rail railLoco = new Rail(gameSession.getName(), squareLoco, directions);
-		Rail railCart = new Rail(gameSession.getName(), squareCart, directions);
+		Rail railLoco = new Rail(gameSession.getSessionName(), squareLoco, directions);
+		Rail railCart = new Rail(gameSession.getSessionName(), squareCart, directions);
 
 		squareLoco.setPlaceableOnSquare(railLoco);
 		squareCart.setPlaceableOnSquare(railCart);
 		
-		GhostLoco loco = new GhostLoco(gameSession.getName(), squareLoco, player.getId());
+		GhostLoco loco = new GhostLoco(gameSession.getSessionName(), squareLoco, player.getId());
 		
 		return loco;
 	}
