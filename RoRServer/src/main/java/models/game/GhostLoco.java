@@ -10,6 +10,7 @@ public class GhostLoco extends Loco {
 	private PythonInterpreter pi = new PythonInterpreter();
 	private GhostLocoProxy ghostLocoProxy;
 	private Thread updateThread;
+	private boolean initialized;
 	
 	public GhostLoco(String sessionName, Square square, UUID playerId) {
 		super(sessionName, square, playerId);
@@ -17,7 +18,6 @@ public class GhostLoco extends Loco {
 		initGhostLocoProxy();
 		NotifyLocoCreated();
 		addInitialCart();
-		startUpdateThread();
 		
 		changeSpeed(1);
 	}
@@ -26,6 +26,13 @@ public class GhostLoco extends Loco {
 		ghostLocoProxy = new GhostLocoProxy(this);
         pi.exec("from ghostloco import update");
         pi.set("proxy", ghostLocoProxy);
+	}
+	
+	public void init() {
+		if(!initialized) {
+			initialized = true;
+			startUpdateThread();
+		}
 	}
 	
 	private void startUpdateThread() {
