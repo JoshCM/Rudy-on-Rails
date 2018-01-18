@@ -211,6 +211,7 @@
     <Compile Include="ViewModels\Game\CartGameViewModel.cs" />
     <Compile Include="ViewModels\Game\CoalGameViewModel.cs" />
     <Compile Include="ViewModels\Game\ContainerGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\GameInteractionsViewModel.cs" />
     <Compile Include="ViewModels\Game\GameStatusViewModel.cs" />
     <Compile Include="ViewModels\Game\PlayerLocoGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GoldGameViewModel.cs" />
@@ -493,6 +494,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Popup\AskUserForStringPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

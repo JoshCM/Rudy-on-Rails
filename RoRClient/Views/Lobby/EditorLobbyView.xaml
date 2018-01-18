@@ -6,6 +6,10 @@
              xmlns:local="clr-namespace:RoRClient.Views.Lobby"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
+    <UserControl.Resources>
+        <ResourceDictionary Source="../Styles.xaml"/>
+    </UserControl.Resources>
+    
     <DockPanel>
         <DockPanel.Background>
             <ImageBrush ImageSource="pack://application:,,,/Resources/Images/start_background.png"/>
@@ -42,9 +46,9 @@
                 <Image Source="/RoRClient;component/Resources/Images/btn_back.png"></Image>
             </Button>
             <Button x:Name="startEditor" Command="{Binding StartEditorCommand}"
-			        Content="Editor starten" IsEnabled="{Binding IsHost}" FontFamily="Source Sans Pro" Height="55" Width="200"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" VerticalAlignment="Top" Margin="10,30,10,0"/>
+			        Content="Editor starten" IsEnabled="{Binding IsHost}" Style="{StaticResource DefaultButtonStyle}" VerticalAlignment="Top" Margin="10,30,10,0"/>
             <Button x:Name="refreshEditorInfosButton" Command="{Binding RefreshEditorInfosCommand}"
-			        Content="Aktualisieren" FontFamily="Source Sans Pro" Height="55" Width="200" FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" VerticalAlignment="Top" Margin="10,30,10,0"/>
+			        Content="Aktualisieren" Style="{StaticResource DefaultButtonStyle}" VerticalAlignment="Top" Margin="10,30,10,0"/>
 
 
         </StackPanel>
