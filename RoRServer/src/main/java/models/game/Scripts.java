@@ -26,4 +26,8 @@ public class Scripts extends ModelBase {
 		Script script = ghostLocoScripts.stream().filter(x -> x.getId().equals(scriptId)).findFirst().get();
 		return script;
 	}
+	
+	public void addGhostLocoScript(Script script) {
+		ghostLocoScripts.add(script);
+	}
 }

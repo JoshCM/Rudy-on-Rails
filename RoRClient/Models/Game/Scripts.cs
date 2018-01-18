@@ -11,16 +11,16 @@ namespace RoRClient.Models.Game
     public class Scripts : ModelBase
     {
         private ObservableCollection<Script> ghostLocoScripts = new ObservableCollection<Script>();
+        private TaskFactory taskFactory;
 
         public Scripts()
         {
-
+            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public void AddGhostLocoScript(Script script)
         {
-            ghostLocoScripts.Add(script);
-            NotifyPropertyChanged("GhostLocoScripts");
+            taskFactory.StartNew(() => ghostLocoScripts.Add(script));
         }
 
         public ObservableCollection<Script> GhostLocoScripts
