@@ -15,7 +15,7 @@
         <StackPanel Orientation="Vertical">
             <Button Content="Geisterzug" Style="{StaticResource DefaultButtonStyle}" HorizontalAlignment="Left"/>
 
-            <ComboBox Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" ItemsSource="{Binding Scripts.GhostLocoScripts}" HorizontalAlignment="Left" DisplayMemberPath="Name"/>
+            <ComboBox Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" ItemsSource="{Binding Scripts.GhostLocoScripts}" HorizontalAlignment="Left" DisplayMemberPath="Name" SelectedValue="{Binding SelectedGhostLocoScript}"/>
         </StackPanel>
     </StackPanel>
 </UserControl>

@@ -2,6 +2,8 @@ package models.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import models.base.ModelBase;
 
 public class Scripts extends ModelBase {
@@ -18,5 +20,10 @@ public class Scripts extends ModelBase {
 	
 	public List<Script> getGhostLocoScripts() {
 		return ghostLocoScripts;
+	}
+	
+	public Script getGhostLocoScriptForId(UUID scriptId) {
+		Script script = ghostLocoScripts.stream().filter(x -> x.getId().equals(scriptId)).findFirst().get();
+		return script;
 	}
 }

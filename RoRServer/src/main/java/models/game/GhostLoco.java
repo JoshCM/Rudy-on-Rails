@@ -67,4 +67,9 @@ public class GhostLoco extends Loco {
 		messageInfo.putValue("playerId", getPlayerId());
 		notifyChange(messageInfo);
 	}
+	
+	public void changeCurrentScriptName(String currentScriptName) {
+		this.currentScriptName = currentScriptName;
+		initGhostLocoProxy();
+	}
 }
