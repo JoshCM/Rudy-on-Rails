@@ -19,8 +19,21 @@ namespace RoRClient.ViewModels.Game
     {
         private Script selectedGhostLocoScript;
         private bool canActivateSensor = false;
+        private bool canConfigureSensor = false;
         private MapGameViewModel mapGameViewModel;
-        private CanvasGameViewModel canvasGameViewModel;
+
+        public bool CanConfigureSensor
+        {
+            get
+            {
+                return canConfigureSensor;
+            }
+            set
+            {
+                canConfigureSensor = value;
+                OnPropertyChanged("CanConfigureSensor");
+            }
+        }
 
         public bool CanActivateSensor
         {
@@ -38,14 +51,6 @@ namespace RoRClient.ViewModels.Game
         public GameInteractionsViewModel(MapGameViewModel mapGameViewModel)
         {
             this.mapGameViewModel = mapGameViewModel;
-        }
-
-        public void OnSelectedGameObjectChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "SelectedGameCanvasViewModel")
-            {
-                canvasGameViewModel = (CanvasGameViewModel)sender;
-            }
         }
 
         public Scripts Scripts

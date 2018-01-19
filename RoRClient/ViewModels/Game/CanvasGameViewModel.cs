@@ -51,17 +51,23 @@ namespace RoRClient.ViewModels.Game
         /// </summary>
         public void SelectInteractiveGameObject()
         {
+            // Beim Klick auf CanvasViewModel (außer Sensor) darf ein Sensor nicht bearbeitet werden (DropDownMenü)
+            Console.WriteLine("Ausgewähltes ViewModel: " + this.ToString());
+            MapViewModel.GameInteractionsViewModel.CanConfigureSensor = false;
             // Neues CanvasGameViewModel (this) in MapViewModel merken
             MapViewModel.SelectedGameCanvasViewModel = this;
             if (MapViewModel.SelectedGameCanvasViewModel is RailGameViewModel)
             {
-                MapViewModel.GameInteractionsViewModel.CanActivateSensor = true;
+                RailGameViewModel railGameViewModel = (RailGameViewModel)MapViewModel.SelectedGameCanvasViewModel;
+                if (!railGameViewModel.Rail.hasSensor())
+                {
+                    MapViewModel.GameInteractionsViewModel.CanActivateSensor = true;
+                }
+                
             } else
             {
                 MapViewModel.GameInteractionsViewModel.CanActivateSensor = false;
             }
-            
-            Console.WriteLine(this);
         }
     }
 }

@@ -82,10 +82,13 @@
         </Image>
 
         <Image x:Name="Sensor"
-               Visibility="{Binding Rail.SensorActive, Converter={StaticResource BoolToVisibilityConverter}}"
+               Visibility="{Binding Rail.SensorPlaced, Converter={StaticResource BoolToVisibilityConverter}}"
                Height="{Binding SensorDimension, ElementName=railUserControl}"
                Width="{Binding SensorDimension, ElementName=railUserControl}"
                Source="/RoRClient;component/Resources/Images/sensor.png">
+            <Image.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding ActivateMenuForScriptCommand}" />
+            </Image.InputBindings>
         </Image>
 
     </Canvas>

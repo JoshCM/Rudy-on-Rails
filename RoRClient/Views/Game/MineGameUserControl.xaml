@@ -18,6 +18,9 @@
         <Image Width="{Binding SquareDim, ElementName=mineUserControl}" 
                Height="{Binding SquareDim, ElementName=mineUserControl}" 
                 Source="/RoRClient;component/Resources/Images/mine.png" Stretch="Fill">
+            <Image.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+            </Image.InputBindings>
             <Image.LayoutTransform>
                 <TransformGroup>
                     <RotateTransform Angle="{Binding Mine.Alignment, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" />

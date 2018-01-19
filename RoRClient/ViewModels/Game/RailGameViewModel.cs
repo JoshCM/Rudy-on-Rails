@@ -1,9 +1,11 @@
 ﻿using RoRClient.Models.Game;
+using RoRClient.ViewModels.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace RoRClient.ViewModels.Game
 {
@@ -24,6 +26,42 @@ namespace RoRClient.ViewModels.Game
             {
                 return r;
             }
+        }
+
+        private ICommand setScriptForSensorCommand;
+        public ICommand SetScriptForSensorCommand
+        {
+            get
+            {
+                if (setScriptForSensorCommand == null)
+                {
+                    setScriptForSensorCommand = new ActionCommand(param => SetScriptForSensor());
+                }
+                return setScriptForSensorCommand;
+            }
+        }
+
+        private void SetScriptForSensor()
+        {
+            // set script for Sensor
+        }
+
+        private ICommand activateMenuForScriptCommand;
+        public ICommand ActivateMenuForScriptCommand
+        {
+            get
+            {
+                if (activateMenuForScriptCommand == null)
+                {
+                    activateMenuForScriptCommand = new ActionCommand(param => ActivateMenuForScript());
+                }
+                return activateMenuForScriptCommand;
+            }
+        }
+
+        private void ActivateMenuForScript()
+        {
+            MapViewModel.GameInteractionsViewModel.CanConfigureSensor = true;
         }
     }
 }

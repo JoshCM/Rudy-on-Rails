@@ -24,9 +24,13 @@ public class ActivateSensorCommand extends CommandBase {
 	public void execute() {
 		Map map = this.session.getMap();
 		Placeable placeable = map.getPlaceableById(selectedModelId);
+		// Es muss ein Rail sein
 		if (placeable instanceof Rail) {
 			Rail rail = (Rail)placeable;
-			rail.activateSensor();
+			// Kein Sensor auf Rail
+			if (rail.getSensor() == null) {
+				rail.activateSensor();
+			}
 		} else {
 			throw new InvalidModelOperationException("Keine Rail");
 		}
