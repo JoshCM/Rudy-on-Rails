@@ -16,6 +16,7 @@ namespace RoRClient.Models.Game
         private ObservableCollection<RailSection> railSections = new ObservableCollection<RailSection>();
         private Signals signals;
         private Sensor sensor;
+        private Boolean sensorActive;
 
         public Guid TrainstationId
         {
@@ -38,7 +39,6 @@ namespace RoRClient.Models.Game
 
             this.square = square;
             Signals = new Signals(Guid.Empty);
-            Sensor = new Sensor();
         }
 
         /// <summary>
@@ -62,22 +62,12 @@ namespace RoRClient.Models.Game
 
             // hier, weil base und this hintereinander nicht so klappen will
             Signals = new Signals(Guid.Empty);
-            Sensor = new Sensor();
         }
 
         public void AddRailSection(RailSection railSection)
         {
             railSections.Add(railSection);
             NotifyPropertyChanged("RailSections");
-        }
-
-        #region Properties
-        public ObservableCollection<RailSection> RailSections
-        {
-            get
-            {
-                return railSections;
-            }
         }
 
         public Signals Signals
@@ -106,6 +96,35 @@ namespace RoRClient.Models.Game
             {
                 sensor = value;
                 NotifyPropertyChanged("Sensor");
+            }
+        }
+
+        public Boolean SensorActive
+        {
+            get
+            {
+                return sensorActive;
+            }
+
+            set
+            {
+                sensorActive = value;
+                NotifyPropertyChanged("SensorActiv");
+            }
+        }
+
+        public void ActivateSensor()
+        {
+            Sensor = new Sensor(Id);
+            SensorActive = true;
+        }
+
+        #region Properties
+        public ObservableCollection<RailSection> RailSections
+        {
+            get
+            {
+                return railSections;
             }
         }
 

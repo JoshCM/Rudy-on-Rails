@@ -145,6 +145,7 @@
     <Compile Include="Commands\Game\Create\CreateMineCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateSensorCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateSignalsCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />

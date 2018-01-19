@@ -7,12 +7,16 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Models.Game
 {
+    /// <summary>
+    /// Model für Sensor
+    /// </summary>
     public class Sensor : ModelBase
     {
-        private Boolean Exists;
-        public Sensor()
-        {
+        private Guid railId;
 
+        public Sensor(Guid railId)
+        {
+            this.railId = railId;
         }
     }
 }

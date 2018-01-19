@@ -1,16 +1,32 @@
 package models.game;
 
-public class Sensor extends TickableGameObject {
+import java.util.UUID;
 
-	public Sensor(String sessionName) {
+import communication.MessageInformation;
+
+/**
+ * Model für Sensor
+ * @author Andreas Pöhler
+ *
+ */
+public class Sensor extends TickableGameObject {
+	
+	private UUID railId;
+
+	public Sensor(String sessionName, UUID railId) {
 		super(sessionName);
-		// TODO Auto-generated constructor stub
+		this.railId = railId;
+		notifySensorActivated();		
 	}
 
 	@Override
 	public void specificUpdate() {
-		// TODO Auto-generated method stub
-		
+				
 	}
-
+	
+	public void notifySensorActivated() {
+		MessageInformation message = new MessageInformation("UpdateSensor");
+		message.putValue("railId", railId);
+		notifyChange(message);		
+	}
 }

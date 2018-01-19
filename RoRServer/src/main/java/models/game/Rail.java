@@ -24,6 +24,8 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	private UUID trainstationId;
 	protected List<RailSection> railSectionList;
 	private Resource resource;
+	private Sensor sensor;
+	private boolean sensorActive;
 
     /**
      * Konstruktor für Geraden oder Kurven
@@ -65,6 +67,18 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     public Resource getResource() {
         return resource;
     }
+    
+    public Sensor getSensor() {
+    	return sensor;
+    }
+    
+    /**
+     * Neuen Sensor erstellen und aktivieren für Rail
+     */
+    public void activateSensor() {
+    	sensor = new Sensor(getSessionName(), getId());
+    }
+   
 
     /**
      * Platziert auf den benachbarten Squares (sofern frei) anhand der Schwierigkeit
