@@ -57,7 +57,13 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     	this(sessionName, square, railSectionPositions, false, trainstationId, id);
     }
 
-    // TODO: Welche Ressourcen kann eine Schiene haben und wann?
+    public Rail(String sessionName, Square newSquare, List<Compass> railSectionsCompass, boolean b, UUID trainstationId, UUID id, PlaceableOnRail placeableOnRail) {
+    	this(sessionName,newSquare,railSectionsCompass,b,trainstationId,id);
+    	this.placeableOnRail = placeableOnRail;
+    	
+	}
+
+	// TODO: Welche Ressourcen kann eine Schiene haben und wann?
     public void setResource(Resource resource) {
         this.resource = resource;
     }

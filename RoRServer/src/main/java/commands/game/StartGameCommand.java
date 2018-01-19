@@ -11,6 +11,8 @@ import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
 import exceptions.MapNotFoundException;
+import models.game.Crane;
+import models.game.Compass;
 import models.game.GhostLoco;
 import models.game.Map;
 import models.game.Mine;
@@ -47,7 +49,7 @@ public class StartGameCommand extends CommandBase {
 	private void startLoadedMap(Map map) {
 		GameSession gameSession = (GameSession)session;
 		log.info("loading map: " + gameSession.getMapName());
-		map.setSessionNameForMapAndSquares(gameSession.getDescription());
+		map.setSessionNameForMapAndSquares(gameSession.getSessionName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		gameSession.setMap(map);
 
@@ -66,7 +68,7 @@ public class StartGameCommand extends CommandBase {
 				// Square holen
 				Square square = squares[i][j];
 				// square bekommt sessionName und observer
-				square.setSessionName(gameSession.getDescription());
+				square.setSessionName(gameSession.getSessionName());
 				square.addObserver(TopicMessageQueue.getInstance());
 
 				// Wenn etwas auf dem Square liegt
@@ -96,6 +98,11 @@ public class StartGameCommand extends CommandBase {
 				Mine mine = (Mine)rail.getPlaceableOnrail();
 				Mine newMine = (Mine)mine.loadFromMap(railSquare, session);
 				newRail.setPlaceableOnRail(newMine);
+			}else if(rail.getPlaceableOnrail() instanceof Crane) {
+			//liegt ein Crane auf einer Rail muss diese ebenfalls neu erzeugt werden
+				Crane crane = (Crane) rail.getPlaceableOnrail();
+				Crane newCrane = (Crane)crane.loadFromMap(railSquare, session);
+				rail.setPlaceableOnRail(newCrane);
 			}
 			railSquare.setPlaceableOnSquare(newRail);
 			
@@ -126,9 +133,10 @@ public class StartGameCommand extends CommandBase {
 			if(playerIterator.hasNext()) {
 				// Loco wird erstellt und zur Liste der Locos hinzugefügt
 				UUID playerId = playerIterator.next().getId();
-				gameSession.addLoco(new PlayerLoco(gameSession.getDescription(), locoSpawnPointSquare, playerId));
-				GhostLoco ghostLoco = new GhostLoco(gameSession.getDescription(), locoSpawnPointSquare, playerId);
+				gameSession.addLoco(new PlayerLoco(gameSession.getSessionName(), locoSpawnPointSquare, playerId, getLocoDirectionbyTrainstation(newTrainStation.getAlignment())));
+				GhostLoco ghostLoco = new GhostLoco(gameSession.getSessionName(), locoSpawnPointSquare, playerId, getLocoDirectionbyTrainstation(newTrainStation.getAlignment()));
 				gameSession.addLoco(ghostLoco);
+				newTrainStation.setPlayerId(playerId);
 			}
 		}
 		
@@ -138,5 +146,19 @@ public class StartGameCommand extends CommandBase {
 		}
 
 		gameSession.start();
+	}
+	
+	private Compass getLocoDirectionbyTrainstation(Compass compass) {
+		switch(compass) {
+		case NORTH:
+			return Compass.EAST;
+		case EAST:
+			return Compass.SOUTH;
+		case SOUTH:
+			return Compass.WEST;
+		case WEST:
+			return Compass.NORTH;
+		}
+		return null;
 	}
 }

@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.Commands.Editor.Create
+namespace RoRClient.Commands.Game.Create
 {
-    class CreateStockCommand : CreateStockCommandBase
+    class CreateCraneCommand:CreateCraneCommandBase
     {
-        public CreateStockCommand(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
-        { 
+        public CreateCraneCommand(RoRSession session, MessageInformation message):base(session, message)
+        {
         }
     }
 }

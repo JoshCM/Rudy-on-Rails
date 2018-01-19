@@ -31,6 +31,13 @@ namespace RoRClient.Commands.Editor.Delete
         {
             EditorSession editorSession = EditorSession.GetInstance();
             Square square = editorSession.Map.GetSquare(xPos, yPos);
+            IPlaceableOnSquare placeableOnSquare = square.PlaceableOnSquare;
+            if(placeableOnSquare is Rail)
+            {
+                Rail rail = (Rail)placeableOnSquare;
+                if(rail.PlaceableOnRail is Crane)
+                    rail.PlaceableOnRail = null;
+            }
             square.PlaceableOnSquare = null;
         }
     }
