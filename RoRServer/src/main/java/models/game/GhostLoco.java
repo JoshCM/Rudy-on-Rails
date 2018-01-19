@@ -1,17 +1,18 @@
 package models.game;
 
 import java.util.UUID;
-
 import org.python.util.PythonInterpreter;
-
 import communication.MessageInformation;
 
+/**
+ * Dem Geisterzug kann ein Script hinterlegt werden, dass ihn steuert
+ */
 public class GhostLoco extends Loco {
 	private PythonInterpreter pi = new PythonInterpreter();
 	private GhostLocoProxy ghostLocoProxy;
 	private Thread updateThread;
 	private boolean initialized;
-	private String currentScriptName = "";
+	private String currentScriptFilename = "";
 	private Thread updateMethodThread;
 
 	public GhostLoco(String sessionName, Square square, UUID playerId) {
@@ -22,20 +23,31 @@ public class GhostLoco extends Loco {
 		addInitialCart();
 	}
 
+	/**
+	 * Lädt die update-Methode des aktuellen Scripts in den Python-Interpreter
+	 */
 	private void importCurrentScript() {
-		if (!currentScriptName.isEmpty()) {
-			pi.exec("from " + currentScriptName + " import update");
+		if (!currentScriptFilename.isEmpty()) {
+			pi.exec("from " + currentScriptFilename + " import update");
 			pi.set("proxy", ghostLocoProxy);
 		}
 	}
 
+	/**
+	 * Startet den Update-Thread einmalig
+	 * Notwendig, damit man GhostLoco Unit-testen kann
+	 */
 	private void init() {
-		if (!initialized && !currentScriptName.isEmpty()) {
+		if (!initialized && !currentScriptFilename.isEmpty()) {
 			initialized = true;
 			startUpdateThread();
 		}
 	}
 
+	/**
+	 * Startet den Thread, der in regelmäßigen Abständen die update-Methode des
+	 * aktuellen Python-Scripts aufruft
+	 */
 	private void startUpdateThread() {
 		updateThread = new Thread(new Runnable() {
 			@Override
@@ -54,8 +66,12 @@ public class GhostLoco extends Loco {
 		updateThread.start();
 	}
 
+	/**
+	 * Ruft die update-Methode des aktuellen Python-Scripts auf, sofern der letzte
+	 * Aufruf dieser Methode bereits abgearbeitet ist
+	 */
 	private void callUpdateOnPythonScript() {
-		if (updateMethodThread == null) {
+		if (updateMethodThread == null && !updateMethodThread.isAlive()) {
 			updateMethodThread = new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -63,16 +79,6 @@ public class GhostLoco extends Loco {
 				}
 			});
 			updateMethodThread.start();
-		} else {
-			if (!updateMethodThread.isAlive()) {
-				updateMethodThread = new Thread(new Runnable() {
-					@Override
-					public void run() {
-						pi.exec("update(proxy)");
-					}
-				});
-				updateMethodThread.start();
-			}
 		}
 	}
 
@@ -86,18 +92,24 @@ public class GhostLoco extends Loco {
 		notifyChange(messageInfo);
 	}
 
+	/**
+	 * Ändert den filename des aktuellen Scripts. Dieses wird über Jython direkt
+	 * gestartet.
+	 * 
+	 * @param currentScriptName
+	 */
 	public void changeCurrentScriptName(String currentScriptName) {
-		this.currentScriptName = currentScriptName;
-		
+		this.currentScriptFilename = currentScriptName;
+
 		// Falls gerade noch ein anderes Script läuft, töte es!
-		if(updateMethodThread != null && updateMethodThread.isAlive()) {
+		if (updateMethodThread != null && updateMethodThread.isAlive()) {
 			try {
-				updateMethodThread.interrupt();		
+				updateMethodThread.interrupt();
 				updateMethodThread = null;
-			}catch(Exception e) {
+			} catch (Exception e) {
 			}
 		}
-		
+
 		importCurrentScript();
 		init();
 	}
