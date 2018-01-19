@@ -13,9 +13,19 @@
     <Canvas Width="{Binding SquareDim, ElementName=squareUserControl}"
             Height="{Binding SquareDim, ElementName=squareUserControl}">
 
+        <Rectangle
+            Width="{Binding SquareDim, ElementName=squareUserControl}"
+            Height="{Binding SquareDim, ElementName=squareUserControl}"
+            Fill="#f9f1df"
+            Stroke="WHITE"
+            StrokeThickness="1">
+        </Rectangle>
+
+
+        <!--
         <Image Width="{Binding SquareDim, ElementName=squareUserControl}" 
                Height="{Binding SquareDim, ElementName=squareUserControl}" 
-               Source="/RoRClient;component/Resources/Images/gras.jpg" Stretch="Fill" >
-        </Image>
+               Source="/RoRClient;component/Resources/Images/gras.jpg" Stretch="Fill" > 
+        </Image> -->
     </Canvas>
 </v:CanvasUserControl>

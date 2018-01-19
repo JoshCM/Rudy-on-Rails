@@ -154,5 +154,23 @@ namespace RoRClient.ViewModels.Lobby
                 }
             }
         }
+
+        private ICommand leaveJoinGameLobbyCommand;
+        public ICommand LeaveJoinGameLobbyCommand
+        {
+            get
+            {
+                if (leaveJoinGameLobbyCommand == null)
+                {
+                    leaveJoinGameLobbyCommand = new ActionCommand(param => LeaveJoinGameLobby());
+                }
+                return leaveJoinGameLobbyCommand;
+            }
+        }
+
+        private void LeaveJoinGameLobby()
+        {
+            uiState.State = "start";
+        }
     }
 }

@@ -13,37 +13,47 @@ namespace RoRClient.Commands.Game.Create
     class CreateCartCommand : CommandBase
     {
         private Guid playerId;
+        private Guid currentLocoId = Guid.Empty;
         private int xPos;
         private int yPos;
         private Guid cartId;
         private Compass drivingDirection;
-        private bool addToLoco;
 
         public CreateCartCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
+
+            System.Console.WriteLine("FRTEITAGAGA: " + messageInformation.GetValueAsString("currentLocoId"));
+
+            if (!messageInformation.GetValueAsString("currentLocoId").Equals(String.Empty))
+            {
+                currentLocoId = Guid.Parse(messageInformation.GetValueAsString("currentLocoId"));
+            }
             cartId = Guid.Parse(messageInformation.GetValueAsString("cartId"));
             drivingDirection = (Compass)Enum.Parse(typeof(Compass), messageInformation.GetValueAsString("drivingDirection"));
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
-            addToLoco = messageInformation.GetValueAsBool("addToLoco");
 
         }
 
         public override void Execute()
         {
+            GameSession gameSession = (GameSession)session;
             Player player = session.GetPlayerById(playerId);
-            
-            Square square = ((GameSession)session).Map.GetSquare(xPos, yPos);
-            Cart cart = new Cart(cartId, drivingDirection, square);
 
-            System.Console.WriteLine("drivingDirection:" + drivingDirection);
+            Square square = session.Map.GetSquare(xPos, yPos);
+            Cart cart = new Cart(cartId, playerId, drivingDirection, square);
 
-            if (addToLoco)
+            if (!currentLocoId.Equals(Guid.Empty))
             {
-                Loco loco = player.Loco;
-                loco.Carts.Add(cart);
-                ((GameSession)session).AddCart(cart);
+                Loco loco = gameSession.GetLocoById(currentLocoId);
+                if (loco is GhostLoco)
+                {
+                    cart.IsGhostCart = true;
+                }
+
+                loco.AddCart(cart);
+
             }
             else
             {

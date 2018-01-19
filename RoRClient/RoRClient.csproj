@@ -99,7 +99,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BindingConverter\BooleanToOpacityConverter.cs" />
     <Compile Include="BindingConverter\BooleanToSignalImagePathConverter.cs" />
+    <Compile Include="BindingConverter\BooleanToVisibilityConverter.cs" />
     <Compile Include="BindingConverter\ObjectEqualsConverter.cs" />
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
     <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
@@ -178,6 +180,8 @@
     <Compile Include="Models\Game\Cart.cs" />
     <Compile Include="Models\Game\Coal.cs" />
     <Compile Include="Models\Game\Container.cs" />
+    <Compile Include="Models\Game\EditorPlayer.cs" />
+    <Compile Include="Models\Game\GamePlayer.cs" />
     <Compile Include="Models\Game\GhostLoco.cs" />
     <Compile Include="Models\Game\Crane.cs" />
     <Compile Include="Models\Game\Gold.cs" />
@@ -212,6 +216,7 @@
     <Compile Include="ViewModels\Game\CartGameViewModel.cs" />
     <Compile Include="ViewModels\Game\CoalGameViewModel.cs" />
     <Compile Include="ViewModels\Game\ContainerGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\GameStatusViewModel.cs" />
     <Compile Include="ViewModels\Game\CraneGameViewModel.cs" />
     <Compile Include="ViewModels\Game\PlayerLocoGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GoldGameViewModel.cs" />
@@ -277,8 +282,6 @@
     <Compile Include="ViewModels\Editor\ToolItem.cs" />
     <Compile Include="ViewModels\Editor\EditorViewModel.cs" />
     <Compile Include="ViewModels\Editor\ToolbarViewModel.cs" />
-    <Compile Include="ViewModels\Commands\EditorCommands.cs" />
-    <Compile Include="ViewModels\Commands\ExitCommand.cs" />
     <Compile Include="Views\Editor\ToolbarUserControl.xaml.cs">
       <DependentUpon>ToolbarUserControl.xaml</DependentUpon>
     </Compile>
@@ -317,9 +320,6 @@
     </Compile>
     <Compile Include="Views\Game\MapGameUserControl.xaml.cs">
       <DependentUpon>MapGameUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Game\GameMiniMapUserControl.xaml.cs">
-      <DependentUpon>GameMiniMapUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\MineGameUserControl.xaml.cs">
       <DependentUpon>MineGameUserControl.xaml</DependentUpon>
@@ -409,10 +409,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Game\MapGameUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Game\GameMiniMapUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -586,6 +582,7 @@
     <Resource Include="Resources\Images\container_gold.png" />
     <Resource Include="Resources\Images\Tools\rail_crossing.png" />
     <Resource Include="Resources\Images\rail_crossing.png" />
+    <Resource Include="Resources\Images\start_background.png" />
     <Resource Include="Resources\Images\signal_green.png" />
     <Resource Include="Resources\Images\signal_red.png" />
     <Resource Include="Resources\Images\loco_debug.png" />
@@ -600,6 +597,8 @@
     <Resource Include="Resources\Images\stock_cart_1.png" />
     <Resource Include="Resources\Images\Tools\trainstation1.png" />
     <Resource Include="Resources\Images\stock_container_1.png" />
+    <Resource Include="Resources\Images\container_points.png" />
+    <Resource Include="Resources\Images\btn_back.png" />
     <Resource Include="Resources\Images\crane.png" />
     <Resource Include="Resources\Images\Tools\crane.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />

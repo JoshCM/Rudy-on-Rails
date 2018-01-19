@@ -15,6 +15,7 @@ namespace RoRClient.Commands.Game.Update
         private Guid playerId;
         private int xPos;
         private int yPos;
+        private Guid currentLocoId;
 
 
         public UpdateCartToLocoCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
@@ -22,6 +23,8 @@ namespace RoRClient.Commands.Game.Update
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
             playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
+            currentLocoId = Guid.Parse(messageInformation.GetValueAsString("currentLocoId"));
+
         }
         public override void Execute()
         {
@@ -31,13 +34,13 @@ namespace RoRClient.Commands.Game.Update
             Square square = gameSession.Map.GetSquare(xPos, yPos);
             Player player = gameSession.GetPlayerById(playerId);
 
-            Loco loco = player.Loco;
+            Loco loco = gameSession.GetLocoById(currentLocoId);
             Rail rail = square.PlaceableOnSquare as Rail;
             Cart cart = rail.PlaceableOnRail as Cart;
-            loco.Carts.Add(cart);
+            loco.AddCart(cart);
             //rail.PlaceableOnRail = null;
-            ((GameSession)session).AddCart(cart);
-        
+
+
 
         }
     }

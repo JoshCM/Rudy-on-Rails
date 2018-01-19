@@ -10,5 +10,10 @@ namespace RoRClient.Views.Editor
         {
             InitializeComponent();
         }
+
+        private void MapEditorUserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

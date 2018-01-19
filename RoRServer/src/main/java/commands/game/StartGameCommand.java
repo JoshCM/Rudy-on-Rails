@@ -78,12 +78,12 @@ public class StartGameCommand extends CommandBase {
 		for (Square stockSquare : stockSquaresToCreate) {
 			stockSquare.setPlaceableOnSquare(stockSquare.getPlaceableOnSquare().loadFromMap(stockSquare, session));
 		}
-				
+	
+		List<Rail> generatedRails = new ArrayList<Rail>();
 		// erzeugen der neuen Rails auf deren Squares
 		for (Square railSquare : railSquaresToCreate) {
 			Rail rail = (Rail)railSquare.getPlaceableOnSquare();
 			Rail newRail = (Rail)railSquare.getPlaceableOnSquare().loadFromMap(railSquare, session);
-			newRail.generateResourcesNextToRail();
 			// liegt auf einer Rail eine Mine, muss diese darauf erzeugt werden
 			if (rail.getPlaceableOnrail() instanceof Mine) {
 				Mine mine = (Mine)rail.getPlaceableOnrail();
@@ -100,6 +100,7 @@ public class StartGameCommand extends CommandBase {
 			if(newRail.getSignals() != null) {
 				((GameSession)session).registerTickableGameObject(newRail.getSignals());
 			}
+			generatedRails.add(newRail);
 		}
 
 		Iterator<Player> playerIterator = gameSession.getPlayers().iterator();
@@ -124,10 +125,16 @@ public class StartGameCommand extends CommandBase {
 				// Loco wird erstellt und zur Liste der Locos hinzugefügt
 				UUID playerId = playerIterator.next().getId();
 				gameSession.addLoco(new PlayerLoco(gameSession.getName(), locoSpawnPointSquare, playerId, getLocoDirectionbyTrainstation(newTrainStation.getAlignment())));
-				gameSession.addLoco(new GhostLoco(gameSession.getName(), locoSpawnPointSquare, playerId, getLocoDirectionbyTrainstation(newTrainStation.getAlignment())));
-
+				GhostLoco ghostLoco = new GhostLoco(gameSession.getName(), locoSpawnPointSquare, playerId, getLocoDirectionbyTrainstation(newTrainStation.getAlignment()));
+				gameSession.addLoco(ghostLoco);
+				ghostLoco.init();
 				newTrainStation.setPlayerId(playerId);
 			}
+		}
+		
+		// generiert an den erzeugenten rails resourcen
+		for(Rail generatedRail : generatedRails) {
+			generatedRail.generateResourcesNextToRail();
 		}
 
 		gameSession.start();

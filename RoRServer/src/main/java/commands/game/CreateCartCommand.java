@@ -41,9 +41,9 @@ public class CreateCartCommand implements Command{
 		System.out.println("Square: "+ square);
 		System.out.println("Rail: "+ rail);
 
-		Cart cart = new Cart(session.sessionName, square, compass, playerId, rail, false);
+		Cart cart = new Cart(session.sessionName, square, compass, playerId, false, null);
 		rail.setPlaceableOnRail(cart);
-		Loco loco = session.getLocomotiveByPlayerId(playerId);
+		//Loco loco = session.getLocomotiveByPlayerId(playerId);
 		
 	}
 	

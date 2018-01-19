@@ -6,15 +6,15 @@
         xmlns:local="clr-namespace:RoRClient.Views.Popup"
         x:Name="ThisPopup"
         mc:Ignorable="d" WindowStyle="None"
-        Title="AskUserForStringPopup" Height="120" Width="300" 
+        Title="AskUserForStringPopup" Height="150" Width="350" 
         FocusManager.FocusedElement="{Binding ElementName=ResponseTextBox}"
-        KeyDown="ThisPopup_KeyDown">
+        KeyDown="ThisPopup_KeyDown" Background="#F9F1DF">
     <StackPanel Margin="15" >
-        <TextBlock Text="{Binding Message, Mode=TwoWay, ElementName=ThisPopup}" Padding="5"/>
-        <TextBox x:Name="ResponseTextBox" Text="{Binding InputText, Mode=TwoWay, ElementName=ThisPopup}" />
+        <TextBlock Text="{Binding Message, Mode=TwoWay, ElementName=ThisPopup}" Margin="5" Foreground="#FF510404" FontFamily="Source Sans Pro"/>
+        <TextBox x:Name="ResponseTextBox" Text="{Binding InputText, Mode=TwoWay, ElementName=ThisPopup}" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="2" FontFamily="Source Sans Pro" FontSize="20"/>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
-            <Button Content="Speichern" Click="OkButton_Click"/>
-            <Button Content="Abbrechen" Click="CancelButton_Click"/>
+            <Button Content="Speichern" Click="OkButton_Click" FontFamily="Source Sans Pro" Width="90" Height="30" Background="#FF510404" FontSize="15" Foreground="White" BorderBrush="#FF510404" BorderThickness="2" Margin="5" />
+            <Button Content="Abbrechen" Click="CancelButton_Click" FontFamily="Source Sans Pro" Width="90" Height="30" Background="#FF510404" FontSize="15" Foreground="White" BorderBrush="#FF510404" BorderThickness="2" Margin="5"/>
         </StackPanel>
     </StackPanel>
 </Window>

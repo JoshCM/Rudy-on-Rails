@@ -150,5 +150,23 @@ namespace RoRClient.ViewModels.Lobby
         {
             lobbyModel.ReadEditorSessions();
         }
+
+        private ICommand leaveJoinEditorLobbyCommand;
+        public ICommand LeaveJoinEditorLobbyCommand
+        {
+            get
+            {
+                if (leaveJoinEditorLobbyCommand == null)
+                {
+                    leaveJoinEditorLobbyCommand = new ActionCommand(param => LeaveJoinEditorLobby());
+                }
+                return leaveJoinEditorLobbyCommand;
+            }
+        }
+
+        private void LeaveJoinEditorLobby()
+        {
+            uiState.State = "start";
+        }
     }
 }

@@ -14,9 +14,10 @@ def update(proxy):
 	if "Rail" not in objectsOnSquare:
 		proxy.changeSpeed(0)
 	else:
+		proxy.changeSpeed(5)
 		# Halte, wenn ein Signal eingeschaltet ist
 		if "InactiveSignal" in objectsOnSquare:
 			proxy.changeSpeed(0)
 		# Fahre weiter, wenn ein Signal ausgeschaltet ist
 		elif "ActiveSignal" in objectsOnSquare:
-			proxy.changeSpeed(4)
+			proxy.changeSpeed(5)

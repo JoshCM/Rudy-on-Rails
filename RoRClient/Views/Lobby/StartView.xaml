@@ -6,15 +6,35 @@
              xmlns:local="clr-namespace:RoRClient.Views"
              xmlns:vm ="clr-namespace:RoRClient.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="900" d:DesignWidth="1600" Background="BlanchedAlmond">
-    <StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="PlayerName"/>
-            <TextBox Text="{Binding LobbyModel.PlayerName, Mode=TwoWay}" Width="200"/>
+             d:DesignHeight="900" d:DesignWidth="1600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+        <Image Source="pack://application:,,,/Resources/Images/start_background.png" Height="900" Width="1600" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
+        <Border Grid.Column="0" Grid.ColumnSpan="2" Background="#FF510404" Height="120" Width="350" Margin="0,30,0,0">
+            <Label Content="Rudi On Rails" Foreground="White" FontFamily="Birch Std" FontSize="60" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" VerticalAlignment="Center"/>
+        </Border>
+
+        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,100,0">
+            <TextBlock Text="Spielername " FontFamily="Source Sans Pro" FontSize="30" Foreground="#FF510404" Height="45" Width="180" />
+            <TextBox Text="{Binding LobbyModel.PlayerName, Mode=TwoWay}" Height="45" Width="250" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="2" TextChanged="TextBox_TextChanged" FontFamily="Source Sans Pro" FontSize="24"/>
         </StackPanel>
-        
-        <Button x:Name="editorButton" Command="{Binding SwitchToJoinEditorLobbyView}" Content="Hier gehts zum Editor"/>
-        <!-- Binding muss noch eingerichtet werden -->
-        <Button x:Name="gameButton" Command="{Binding SwitchToJoinGameLobbyView}" Content="Hier gehts zum Dampf-Modus"/>
-    </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" >
+            <Button x:Name="editorButton" Command="{Binding SwitchToJoinEditorLobbyView}" Content="ZUM BAU-MODUS" FontFamily="Source Sans Pro" Height="55" Width="250" FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" HorizontalContentAlignment="Center" Margin="0,0,0,15" />
+            <!-- Binding muss noch eingerichtet werden -->
+            <Button x:Name="gameButton" Command="{Binding SwitchToJoinGameLobbyView}" Content="ZUM DAMPF-MODUS" FontFamily="Source Sans Pro" Height="55" Width="250"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" Margin="0,15,0,0"/>
+        </StackPanel>
+
+
+    </Grid>
 </UserControl>
