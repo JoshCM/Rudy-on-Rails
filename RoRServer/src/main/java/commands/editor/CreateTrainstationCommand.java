@@ -57,11 +57,11 @@ public class CreateTrainstationCommand extends CommandBase {
 			// neuer Stock wird erstellt
 			// y-1 da die anfangsausrichtung der trainstation immer EAST ist
 			Square stockSquare = map.getSquare(xPos, yPos - 1);
-			Stock newStock = new Stock(session.getName(), stockSquare, trainstationId, alignment);
+			Stock newStock = new Stock(session.getDescription(), stockSquare, trainstationId, alignment);
 			stockSquare.setPlaceableOnSquare(newStock);
 			
 			// Trainstation wird erzeugt und auf Square gesetzt
-			Trainstation trainstation = new Trainstation(session.getName(), newSquare,
+			Trainstation trainstation = new Trainstation(session.getDescription(), newSquare,
 					createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment, newStock);
 			this.setSpawnPoint(trainstation);
 			newSquare.setPlaceableOnSquare(trainstation);
@@ -161,7 +161,7 @@ public class CreateTrainstationCommand extends CommandBase {
 	 * @return Die Id der neuen Rail
 	 */
 	private UUID createRail(Square trainstationRailSquare, UUID trainstationId, List<Compass> compassList) {
-		Rail rail = new Rail(session.getName(), trainstationRailSquare, compassList, trainstationId, UUID.randomUUID());
+		Rail rail = new Rail(session.getDescription(), trainstationRailSquare, compassList, trainstationId, UUID.randomUUID());
 		rail.setSquareId(trainstationRailSquare.getId());
 		trainstationRailSquare.setPlaceableOnSquare(rail);
 		return rail.getId();
@@ -216,13 +216,13 @@ public class CreateTrainstationCommand extends CommandBase {
 	public Compass getCraneAlignment() {
 		switch(this.alignment) {
 		case EAST:
-			return Compass.SOUTH;
+			return Compass.NORTH;
 		case NORTH:
 			return Compass.WEST;
 		case SOUTH:
 			return Compass.EAST;
 		case WEST:
-			return Compass.NORTH;
+			return Compass.SOUTH;
 		default:
 			return Compass.EAST;
 		}

@@ -96,7 +96,7 @@ public class CommandCreatorTests {
 		for(Square[] squares : editorSession.getMap().getSquares()) {
 			for(Square square : squares) {
 				assertNull(square.getPlaceableOnSquare());
-				assertEquals(editorName, square.getName());
+				assertEquals(editorName, square.getDescription());
 			}
 		}
 	}

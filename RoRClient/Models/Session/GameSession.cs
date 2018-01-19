@@ -11,11 +11,20 @@ namespace RoRClient.Models.Session
     public class GameSession : RoRSession
     {
         private static GameSession gameSession = null;
-        public ObservableCollection<Loco> locos = new ObservableCollection<Loco>();
+        protected ObservableCollection<Loco> locos = new ObservableCollection<Loco>();
+        private Scripts scripts = new Scripts();
 
         private GameSession() : base()
         {
             
+        }
+
+        public Scripts Scripts
+        {
+            get
+            {
+                return scripts;
+            }
         }
 
         public new void Init(string topicName)

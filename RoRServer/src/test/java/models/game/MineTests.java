@@ -52,9 +52,9 @@ public class MineTests {
 		railSectionPositions.add(Compass.NORTH);
 		railSectionPositions.add(Compass.SOUTH);
 
-		Rail rail = new Rail(gameSession.getName(), square, railSectionPositions);
+		Rail rail = new Rail(gameSession.getDescription(), square, railSectionPositions);
 		square.setPlaceableOnSquare(rail);
-		Mine mine = new Mine(gameSession.getName(), square, rail.getAlignment(), rail.getId());
+		Mine mine = new Mine(gameSession.getDescription(), square, rail.getAlignment(), rail.getId());
 		rail.setPlaceableOnRail(mine);
 
 		return mine;
@@ -76,9 +76,9 @@ public class MineTests {
 		railSectionPositions.add(Compass.NORTH);
 		railSectionPositions.add(Compass.SOUTH);
 
-		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions);
+		Rail rail = new Rail(editorSession.getDescription(), square, railSectionPositions);
 		square.setPlaceableOnSquare(rail);
-		Mine mine = new Mine(editorSession.getName(), square, rail.getAlignment(), rail.getId());
+		Mine mine = new Mine(editorSession.getDescription(), square, rail.getAlignment(), rail.getId());
 		rail.setPlaceableOnRail(mine);
 
 		mine.rotateLeft();
@@ -99,9 +99,9 @@ public class MineTests {
 		railSectionPositions.add(Compass.NORTH);
 		railSectionPositions.add(Compass.SOUTH);
 
-		Rail rail = new Rail(editorSession.getName(), square, railSectionPositions);
+		Rail rail = new Rail(editorSession.getDescription(), square, railSectionPositions);
 		square.setPlaceableOnSquare(rail);
-		Mine mine = new Mine(editorSession.getName(), square, rail.getAlignment(), rail.getId());
+		Mine mine = new Mine(editorSession.getDescription(), square, rail.getAlignment(), rail.getId());
 		rail.setPlaceableOnRail(mine);
 
 		mine.rotateRight();

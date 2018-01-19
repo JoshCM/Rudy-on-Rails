@@ -37,6 +37,25 @@ public class Map extends ModelBase {
 		}
 	}
 	
+	public void initAvailablePlayerSlots() {
+		removeAvailablePlayerSlots();
+		createAvailablePlayerSlots();
+	}
+	
+	private void createAvailablePlayerSlots() {
+		for(Square[] squares : getSquares()) {
+			for(Square square : squares) {
+				if(square.getPlaceableOnSquare() instanceof Trainstation) {
+					addAvailablePlayerSlot();
+				}
+			}
+		}
+	}
+	
+	private void removeAvailablePlayerSlots() {
+		availablePlayerSlots = 0;
+	}
+	
 	public int getAvailablePlayerSlots() {
 		return availablePlayerSlots;
 	}
@@ -45,15 +64,11 @@ public class Map extends ModelBase {
 		availablePlayerSlots += 1;
 	}
 	
-	public void removeAvailablePlayerSlot() {
-		availablePlayerSlots -= 1;
-	}
-	
 	public int getMapSize() {
 		return mapSize;
 	}
 
-	public String getName() {
+	public String getDescription() {
 		return name;
 	}
 
@@ -261,8 +276,7 @@ public class Map extends ModelBase {
 				Crane crane = trainstation.getCrane();
 				Square newSquare = getTrainstationInteractiveGameObjectSquare(crane, trainstation, oldPlaceableOnSquareXPos, oldPlaceableOnSquareYPos);
 				System.out.println("newSquare ("+ newSquare.getXIndex() +"/"+newSquare.getYIndex()+")");
-				crane.changeSquare(newSquare);
-				crane.NotifyCraneMoved(newSquare);
+				crane.moveCrane(newSquare);
 				
 				
 				
