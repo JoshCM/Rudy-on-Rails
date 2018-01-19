@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import models.scripts.ProxyObject;
 import models.session.GameSession;
 import models.session.GameSessionManager;
 
-public class GhostLocoProxy {
+public class GhostLocoProxy implements ProxyObject {
 	private Loco loco;
 	private GameSession gameSession;
 	private Map map;
@@ -82,7 +83,7 @@ public class GhostLocoProxy {
 						}
 					} else if(placeableOnSquare instanceof Resource) {
 						Resource resource = (Resource)placeableOnSquare;
-						result.add(resource.getSessionName());
+						result.add(resource.getDescription());
 					}
 				}
 			} else {

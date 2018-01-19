@@ -11,6 +11,7 @@ import exceptions.InvalidModelOperationException;
 import models.game.Map;
 import models.game.Rail;
 import models.game.Compass;
+import models.game.Crane;
 import models.game.Square;
 import models.game.Stock;
 import models.game.Trainstation;
@@ -30,7 +31,8 @@ public class CreateTrainstationCommand extends CommandBase {
 	private int xPos;
 	private int yPos;
 	private Compass alignment;
-
+	private Map map;
+	
 	public CreateTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 
@@ -42,7 +44,7 @@ public class CreateTrainstationCommand extends CommandBase {
 	@Override
 	public void execute() {
 		EditorSession editorSession = (EditorSession) session;
-		Map map = editorSession.getMap();
+		this.map = editorSession.getMap();
 		Square newSquare = map.getSquare(xPos, yPos);
 
 		if (!Validator.validateTrainstationOnMap(newSquare, alignment, editorSession.getMap())) {
@@ -55,14 +57,21 @@ public class CreateTrainstationCommand extends CommandBase {
 			// neuer Stock wird erstellt
 			// y-1 da die anfangsausrichtung der trainstation immer EAST ist
 			Square stockSquare = map.getSquare(xPos, yPos - 1);
-			Stock newStock = new Stock(session.getSessionName(), stockSquare, trainstationId, alignment);
+			Stock newStock = new Stock(session.getDescription(), stockSquare, trainstationId, alignment);
 			stockSquare.setPlaceableOnSquare(newStock);
-
+			
 			// Trainstation wird erzeugt und auf Square gesetzt
-			Trainstation trainstation = new Trainstation(session.getSessionName(), newSquare,
+			Trainstation trainstation = new Trainstation(session.getDescription(), newSquare,
 					createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment, newStock);
 			this.setSpawnPoint(trainstation);
 			newSquare.setPlaceableOnSquare(trainstation);
+			
+			
+			//der Kran wird erstellt
+			Crane crane = createCrane(stockSquare, trainstation);
+			trainstation.setCrane(crane);
+			
+			
 		}
 	}
 
@@ -152,11 +161,76 @@ public class CreateTrainstationCommand extends CommandBase {
 	 * @return Die Id der neuen Rail
 	 */
 	private UUID createRail(Square trainstationRailSquare, UUID trainstationId, List<Compass> compassList) {
-		Rail rail = new Rail(session.getSessionName(), trainstationRailSquare, compassList, trainstationId, UUID.randomUUID());
+		Rail rail = new Rail(session.getDescription(), trainstationRailSquare, compassList, trainstationId, UUID.randomUUID());
 		rail.setSquareId(trainstationRailSquare.getId());
 		trainstationRailSquare.setPlaceableOnSquare(rail);
 		return rail.getId();
 	}
+	
+	public Crane createCrane(Square stock, Trainstation trainstation) {
+		Square craneSquare = findCraneSquare(stock);
+		List<Rail> TrainstationRails = trainstation.getTrainstationRails();
+		Rail craneRail = findCraneRail(TrainstationRails, craneSquare);
+		
+		Compass craneAlignment = getCraneAlignment();
+		
+		Crane newCrane = new Crane(this.session.sessionName, craneSquare, trainstation.getId(),craneAlignment, craneRail.getId());
+		craneRail.setPlaceableOnRail(newCrane);
+		return newCrane;
+	}
+	
+	public Square findCraneSquare(Square stock) {
+		Square craneSquare = null;
+		
+		switch (this.alignment) {
+		case EAST:
+			craneSquare = this.map.getSquare(stock.getXIndex()+1, stock.getYIndex());
+			break;
+		case WEST:
+			craneSquare = this.map.getSquare(stock.getXIndex()-1, stock.getYIndex());
+			break;
+		case SOUTH:
+			craneSquare = this.map.getSquare(stock.getXIndex(), stock.getYIndex()+1);
+			break;
+		case NORTH:
+			craneSquare = this.map.getSquare(stock.getXIndex(), stock.getYIndex()-1);
+			break;
+		default:
+			break;
+		}
+		
+		return craneSquare;
+	}
+	
+	public Rail findCraneRail(List<Rail> trainstationRails, Square craneSquare) {
+		Rail craneRail = null;
+		for(Rail rail : trainstationRails) {
+			if(rail.getXPos() == craneSquare.getXIndex() && rail.getYPos() == craneSquare.getYIndex()) {
+				craneRail = rail;
+				return craneRail;
+			}
+		}	
+		return craneRail;
+	}
+	
+	public Compass getCraneAlignment() {
+		switch(this.alignment) {
+		case EAST:
+			return Compass.NORTH;
+		case NORTH:
+			return Compass.WEST;
+		case SOUTH:
+			return Compass.EAST;
+		case WEST:
+			return Compass.SOUTH;
+		default:
+			return Compass.EAST;
+		}
+			
+				
+	}
+	
+	
 
 	/**
 	 * Sucht das richtige Rail und setze es als Spawnpoint

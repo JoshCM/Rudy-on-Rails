@@ -93,14 +93,14 @@ public class StartEditorCommandTest {
 		// EditorSession und Square erstellen
 		EditorSession editorSession = EditorSessionManager.getInstance()
 				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
-		Square square = new Square(editorSession.getSessionName(), 0, 0);
+		Square square = new Square(editorSession.getDescription(), 0, 0);
 
 		// Erstellen einer neuen Rail
 		List<Compass> railSectionPositions = new ArrayList<Compass>();
 		railSectionPositions.add(Compass.NORTH);
 		railSectionPositions.add(Compass.SOUTH);
 
-		Rail loadedRail = new Rail(editorSession.getSessionName(), square, railSectionPositions);
+		Rail loadedRail = new Rail(editorSession.getDescription(), square, railSectionPositions);
 		square.setPlaceableOnSquare(loadedRail);
 
 		Rail createdRail = loadedRail.loadFromMap(square, editorSession);
@@ -114,15 +114,15 @@ public class StartEditorCommandTest {
 		// EditorSession und Square erstellen
 		EditorSession editorSession = EditorSessionManager.getInstance()
 				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
-		Square square = new Square(editorSession.getSessionName(), 1, 1);
+		Square square = new Square(editorSession.getDescription(), 1, 1);
 
 		// Erstellen eines neuen Bahnhofes
 		List<UUID> uuids = new ArrayList<UUID>();
 		uuids.add(UUID.randomUUID());
 
 		UUID trainstationId = UUID.randomUUID();
-		Trainstation loadedTrainstation = new Trainstation(editorSession.getSessionName(), square, uuids, trainstationId,
-				Compass.NORTH, new Stock(editorSession.getSessionName(), editorSession.getMap().getSquare(1, 0),
+		Trainstation loadedTrainstation = new Trainstation(editorSession.getDescription(), square, uuids, trainstationId,
+				Compass.NORTH, new Stock(editorSession.getDescription(), editorSession.getMap().getSquare(1, 0),
 						trainstationId, Compass.NORTH));
 		square.setPlaceableOnSquare(loadedTrainstation);
 

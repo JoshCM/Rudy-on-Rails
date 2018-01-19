@@ -24,7 +24,7 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
 		MessageInformation message = new MessageInformation("CreateResource");
 		message.putValue("resourceId", getId());
 		message.putValue("quantity", getQuantity());
-		message.putValue("resource", getSessionName());
+		message.putValue("resource", getDescription());
 		message.putValue("squareId", getSquareId());
 		message.putValue("xPos", getXPos());
 		message.putValue("yPos", getYPos());
@@ -39,7 +39,7 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
 		this.quantity = quantity;
 	}
 
-	public String getSessionName() {
+	public String getDescription() {
 		return name;
 	}
 

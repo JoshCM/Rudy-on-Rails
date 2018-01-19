@@ -16,7 +16,7 @@ public class Player extends ModelBase {
         this.isHost = isHost;
     }
     
-    public String getSessionName() {
+    public String getDescription() {
         return name;
     }
 

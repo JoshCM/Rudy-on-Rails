@@ -127,7 +127,7 @@ namespace RoRClient.Models.Session
 		    {
 			    MessageInformation messageInformation = new MessageInformation();
 			    messageInformation.PutValue("mapName", MapName);
-			    QueueSender.SendMessage("ChangeMapName", messageInformation);
+			    QueueSender.SendMessage("ChangeMapSelection", messageInformation);
 		    }
 	    }
 

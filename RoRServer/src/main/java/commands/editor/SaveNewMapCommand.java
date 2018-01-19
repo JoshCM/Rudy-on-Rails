@@ -19,6 +19,10 @@ public class SaveNewMapCommand extends CommandBase {
 	public void execute() {
 		Map map = session.getMap();
 		map.changeName(mapName);
+		
+		//setzt die availablePlayerSlots
+		map.initAvailablePlayerSlots();
+		
 		MapManager.saveMap(map);
 	}
 }

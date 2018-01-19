@@ -204,10 +204,23 @@ namespace RoRClient.ViewModels.Game
                 }
                 else
                 {
-                    ViewModelFactory factory = new ViewModelFactory();
-                    CanvasGameViewModel viewModel = factory.CreateGameViewModelForModel(rail.PlaceableOnRail, this);
+                    IModel model = (IModel)eventArgs.NewValue;
+                    if (model.GetType() == typeof(Cart))
+                    {
+                        ViewModelFactory factory = new ViewModelFactory();
+                        Cart cart = eventArgs.NewValue as Cart;
+                        CartGameViewModel cartGameViewModel = new CartGameViewModel(cart);
+                        taskFactory.StartNew(() => locos.Add(cartGameViewModel));
+                    }
+                    else
+                    {
+                        ViewModelFactory factory = new ViewModelFactory();
+                        CanvasGameViewModel viewModel = factory.CreateGameViewModelForModel(rail.PlaceableOnRail, this);
 
-                    taskFactory.StartNew(() => placeableOnRailCollection.Add(viewModel));
+                        taskFactory.StartNew(() => placeableOnRailCollection.Add(viewModel));
+
+                    }
+              
                 }
             }
         }

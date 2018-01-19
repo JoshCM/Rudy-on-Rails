@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using static RoRClient.Models.Game.Script;
 
 namespace RoRClient.ViewModels.Game
 {
@@ -102,7 +103,7 @@ namespace RoRClient.ViewModels.Game
         private void AddGhostLocoScriptFromPlayer()
         {
             MessageInformation messageInformation = new MessageInformation();
-            string scriptName = "Eigenes Script";
+            string description = "Eigenes Script";
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.ShowDialog();
@@ -112,9 +113,10 @@ namespace RoRClient.ViewModels.Game
                 string scriptContent = File.ReadAllText(openFileDialog.FileName);
 
                 messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
-                messageInformation.PutValue("scriptName", scriptName);
+                messageInformation.PutValue("description", description);
                 messageInformation.PutValue("scriptContent", scriptContent);
-                GameSession.GetInstance().QueueSender.SendMessage("AddGhostLocoScriptFromPlayer", messageInformation);
+                messageInformation.PutValue("scriptType", ScriptTypes.GHOSTLOCO.ToString());
+                GameSession.GetInstance().QueueSender.SendMessage("AddScriptFromPlayer", messageInformation);
             }
         }
 

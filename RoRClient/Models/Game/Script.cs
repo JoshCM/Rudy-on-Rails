@@ -9,44 +9,67 @@ namespace RoRClient.Models.Game
 {
     public class Script : ModelBase
     {
-        private string name;
-        private string scriptName;
-
-        public Script(Guid id, string name, string scriptName)
+        public enum ScriptTypes
         {
-            this.id = id;
-            this.name = name;
-            this.scriptName = scriptName;
+            GHOSTLOCO
         }
 
-        public string Name
+        private string description;
+        private string filename;
+        private ScriptTypes scriptType;
+
+        public Script(Guid id, string description, ScriptTypes scriptType, string filename)
+        {
+            this.id = id;
+            this.description = description;
+            this.scriptType = scriptType;
+            this.filename = filename;
+        }
+
+        public string Description
         {
             get
             {
-                return name;
+                return description;
             }
             set
             {
-                if(name != value)
+                if(description != value)
                 {
-                    name = value;
-                    NotifyPropertyChanged("Name");
+                    description = value;
+                    NotifyPropertyChanged("Description");
                 }
             }
         }
 
-        public string ScriptName
+        public string Filename
         {
             get
             {
-                return scriptName;
+                return filename;
             }
             set
             {
-                if (scriptName != value)
+                if (filename != value)
                 {
-                    scriptName = value;
-                    NotifyPropertyChanged("ScriptName");
+                    filename = value;
+                    NotifyPropertyChanged("Filename");
+                }
+            }
+        }
+
+        public ScriptTypes ScriptType
+        {
+            get
+            {
+                return scriptType;
+            }
+            set
+            {
+                if (scriptType != value)
+                {
+                    scriptType = value;
+                    NotifyPropertyChanged("ScriptType");
                 }
             }
         }

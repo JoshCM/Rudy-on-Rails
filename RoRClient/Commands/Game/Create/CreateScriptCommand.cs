@@ -7,22 +7,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static RoRClient.Models.Game.Script;
 
 namespace RoRClient.Commands.Game.Create
 {
-    class CreateGhostLocoScriptCommand : CommandBase
+    class CreateScriptCommand : CommandBase
     {
         private Guid id;
         private Guid playerId;
-        private string name;
-        private string scriptName;
+        private string description;
+        private ScriptTypes scriptType;
+        private string filename;
 
-        public CreateGhostLocoScriptCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        public CreateScriptCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             id = Guid.Parse(messageInformation.GetValueAsString("id"));
             playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
-            name = messageInformation.GetValueAsString("name");
-            scriptName = messageInformation.GetValueAsString("scriptName");
+            description = messageInformation.GetValueAsString("description");
+            scriptType = (ScriptTypes)Enum.Parse(typeof(ScriptTypes), messageInformation.GetValueAsString("scriptType"));
+            filename = messageInformation.GetValueAsString("filename");
         }
 
         public override void Execute()
@@ -32,8 +35,8 @@ namespace RoRClient.Commands.Game.Create
             // Nur ein Script erzeugen, falls Default Script (leere Guid) oder ein Script des eigenen Spielers
             if (playerId == Guid.Empty || playerId == gameSession.OwnPlayer.Id)
             {
-                Script script = new Script(id, name, scriptName);
-                gameSession.Scripts.AddGhostLocoScript(script);
+                Script script = new Script(id, description, scriptType, filename);
+                gameSession.Scripts.AddScript(script);
             }
         }
     }

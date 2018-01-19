@@ -6,7 +6,7 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import models.game.GhostLoco;
 import models.game.Loco;
-import models.game.Script;
+import models.scripts.Script;
 import models.session.GameSession;
 import models.session.RoRSession;
 
@@ -26,8 +26,8 @@ public class ChangeCurrentScriptOfGhostLocosCommand extends CommandBase {
 		GameSession gameSession = (GameSession)session;
 		for(Loco loco : gameSession.getLocos()) {
 			if(loco instanceof GhostLoco && loco.getPlayerId().equals(playerId)) {
-				Script script = gameSession.getScripts().getGhostLocoScriptForId(scriptId);
-				((GhostLoco)loco).changeCurrentScriptName(script.getScriptName());
+				Script script = gameSession.getScripts().getScriptForId(scriptId);
+				((GhostLoco)loco).changeCurrentScriptFilename(script.getFilename());
 			}
 		}
 	}
