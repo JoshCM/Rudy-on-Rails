@@ -57,11 +57,11 @@ public class CreateTrainstationCommand extends CommandBase {
 			// neuer Stock wird erstellt
 			// y-1 da die anfangsausrichtung der trainstation immer EAST ist
 			Square stockSquare = map.getSquare(xPos, yPos - 1);
-			Stock newStock = new Stock(session.getName(), stockSquare, trainstationId, alignment);
+			Stock newStock = new Stock(session.getSessionName(), stockSquare, trainstationId, alignment);
 			stockSquare.setPlaceableOnSquare(newStock);
 			
 			// Trainstation wird erzeugt und auf Square gesetzt
-			Trainstation trainstation = new Trainstation(session.getName(), newSquare,
+			Trainstation trainstation = new Trainstation(session.getSessionName(), newSquare,
 					createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment, newStock);
 			this.setSpawnPoint(trainstation);
 			newSquare.setPlaceableOnSquare(trainstation);
@@ -161,7 +161,7 @@ public class CreateTrainstationCommand extends CommandBase {
 	 * @return Die Id der neuen Rail
 	 */
 	private UUID createRail(Square trainstationRailSquare, UUID trainstationId, List<Compass> compassList) {
-		Rail rail = new Rail(session.getName(), trainstationRailSquare, compassList, trainstationId, UUID.randomUUID());
+		Rail rail = new Rail(session.getSessionName(), trainstationRailSquare, compassList, trainstationId, UUID.randomUUID());
 		rail.setSquareId(trainstationRailSquare.getId());
 		trainstationRailSquare.setPlaceableOnSquare(rail);
 		return rail.getId();

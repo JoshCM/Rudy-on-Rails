@@ -146,7 +146,7 @@ public class FromClientRequestQueueDispatcherTests {
 
 		assertEquals(2, editorSession.getPlayers().size());
 
-		Player joinedPlayer = editorSession.getPlayers().stream().filter(x -> x.getName().equals(joinedPlayerName))
+		Player joinedPlayer = editorSession.getPlayers().stream().filter(x -> x.getSessionName().equals(joinedPlayerName))
 				.findFirst().get();
 		assertNotNull(joinedPlayer);
 	}
@@ -181,13 +181,13 @@ public class FromClientRequestQueueDispatcherTests {
 		JsonObject hostPlayerData = playerList.get(0);
 		Player hostPlayer = editorSession.getPlayers().get(0);
 		assertEquals(hostPlayer.getId().toString(), hostPlayerData.get("playerId").getAsString());
-		assertEquals(hostPlayer.getName(), hostPlayerData.get("playerName").getAsString());
+		assertEquals(hostPlayer.getSessionName(), hostPlayerData.get("playerName").getAsString());
 		assertEquals(hostPlayer.getIsHost(), hostPlayerData.get("isHost").getAsBoolean());
 
 		JsonObject joinedPlayerData = playerList.get(1);
 		Player joinedPlayer = editorSession.getPlayers().get(1);
 		assertEquals(joinedPlayer.getId().toString(), joinedPlayerData.get("playerId").getAsString());
-		assertEquals(joinedPlayer.getName(), joinedPlayerData.get("playerName").getAsString());
+		assertEquals(joinedPlayer.getSessionName(), joinedPlayerData.get("playerName").getAsString());
 		assertEquals(joinedPlayer.getIsHost(), joinedPlayerData.get("isHost").getAsBoolean());
 	}
 
@@ -295,7 +295,7 @@ public class FromClientRequestQueueDispatcherTests {
 
 		assertEquals(2, gameSession.getPlayers().size());
 
-		Player joinedPlayer = gameSession.getPlayers().stream().filter(x -> x.getName().equals(joinedPlayerName))
+		Player joinedPlayer = gameSession.getPlayers().stream().filter(x -> x.getSessionName().equals(joinedPlayerName))
 				.findFirst().get();
 		assertNotNull(joinedPlayer);
 	}
@@ -329,13 +329,13 @@ public class FromClientRequestQueueDispatcherTests {
 		JsonObject hostPlayerData = playerList.get(0);
 		Player hostPlayer = gameSession.getPlayers().get(0);
 		assertEquals(hostPlayer.getId().toString(), hostPlayerData.get("playerId").getAsString());
-		assertEquals(hostPlayer.getName(), hostPlayerData.get("playerName").getAsString());
+		assertEquals(hostPlayer.getSessionName(), hostPlayerData.get("playerName").getAsString());
 		assertEquals(hostPlayer.getIsHost(), hostPlayerData.get("isHost").getAsBoolean());
 
 		JsonObject joinedPlayerData = playerList.get(1);
 		Player joinedPlayer = gameSession.getPlayers().get(1);
 		assertEquals(joinedPlayer.getId().toString(), joinedPlayerData.get("playerId").getAsString());
-		assertEquals(joinedPlayer.getName(), joinedPlayerData.get("playerName").getAsString());
+		assertEquals(joinedPlayer.getSessionName(), joinedPlayerData.get("playerName").getAsString());
 		assertEquals(joinedPlayer.getIsHost(), joinedPlayerData.get("isHost").getAsBoolean());
 	}
 
@@ -534,7 +534,7 @@ public class FromClientRequestQueueDispatcherTests {
 		@SuppressWarnings("unchecked")
 		List<JsonObject> gameInfos = (List<JsonObject>) response.getValue("gameInfo");
 		for(JsonObject obj : gameInfos) {
-			expectedPlayerNames.add(gameSession.getPlayerById(UUID.fromString(obj.get("playerId").getAsString())).getName());
+			expectedPlayerNames.add(gameSession.getPlayerById(UUID.fromString(obj.get("playerId").getAsString())).getSessionName());
 		}
 		assertTrue(expectedPlayerNames.contains(playerNames.get(0)));
 		assertTrue(expectedPlayerNames.contains(playerNames.get(1)));
@@ -594,7 +594,7 @@ public class FromClientRequestQueueDispatcherTests {
 		@SuppressWarnings("unchecked")
 		List<JsonObject> editorInfos = (List<JsonObject>) response.getValue("editorInfo");
 		for(JsonObject obj : editorInfos) {
-			expectedPlayerNames.add(editorSession.getPlayerById(UUID.fromString(obj.get("playerId").getAsString())).getName());
+			expectedPlayerNames.add(editorSession.getPlayerById(UUID.fromString(obj.get("playerId").getAsString())).getSessionName());
 		}
 		assertTrue(expectedPlayerNames.contains(playerNames.get(0)));
 		assertTrue(expectedPlayerNames.contains(playerNames.get(1)));

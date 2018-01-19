@@ -1,60 +1,26 @@
 package models.game;
 
 import java.util.UUID;
-
-import org.python.util.PythonInterpreter;
-
 import communication.MessageInformation;
+import models.scripts.ProxyObject;
+import models.scripts.ScriptableObject;
+import models.session.GameSessionManager;
 
+/**
+ * Dem Geisterzug kann ein Script hinterlegt werden, dass ihn steuert
+ */
 public class GhostLoco extends Loco {
-	private final static String DEFAULT_SCRIPT = "ghostloco_default_drivefast";
-	
-	private PythonInterpreter pi = new PythonInterpreter();
-	private GhostLocoProxy ghostLocoProxy;
-	private Thread updateThread;
-	private boolean initialized;
-	private String currentScriptName;
-	
-	public GhostLoco(String sessionName, Square square, UUID playerId, Compass drivingDirection) {
-		super(sessionName, square, playerId, drivingDirection);
-		currentScriptName = DEFAULT_SCRIPT;
-		initGhostLocoProxy();
+	ScriptableObject scriptableObject;
+
+	public GhostLoco(String sessionName, Square square, UUID playerId) {
+		super(sessionName, square, playerId);
+
+		ProxyObject ghostLocoProxy = new GhostLocoProxy(this);
+		scriptableObject = new ScriptableObject(ghostLocoProxy);
+		GameSessionManager.getInstance().getGameSessionByName(sessionName).addScriptableObject(scriptableObject);
 		
 		NotifyLocoCreated();
 		addInitialCart();
-		
-		changeSpeed(1);
-	}
-	
-	private void initGhostLocoProxy() {
-		ghostLocoProxy = new GhostLocoProxy(this);
-        pi.exec("from " + currentScriptName + " import update");
-        pi.set("proxy", ghostLocoProxy);
-	}
-	
-	public void init() {
-		if(!initialized) {
-			initialized = true;
-			startUpdateThread();
-		}
-	}
-	
-	private void startUpdateThread() {
-		updateThread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (true) {
-					pi.exec("update(proxy)");
-					
-					try {
-						Thread.sleep(250);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-		updateThread.start();
 	}
 
 	private void NotifyLocoCreated() {
@@ -65,5 +31,9 @@ public class GhostLoco extends Loco {
 		messageInfo.putValue("drivingDirection", getDrivingDirection().toString());
 		messageInfo.putValue("playerId", getPlayerId());
 		notifyChange(messageInfo);
+	}
+	
+	public void changeCurrentScriptName(String currentScriptName) {
+		scriptableObject.changeCurrentScriptName(currentScriptName);
 	}
 }

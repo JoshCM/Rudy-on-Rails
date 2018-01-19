@@ -10,6 +10,7 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
+import exceptions.MapNotFoundException;
 import models.game.Crane;
 import models.game.Compass;
 import models.game.GhostLoco;
@@ -34,13 +35,21 @@ public class StartGameCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		
 		GameSession gameSession = (GameSession)session;
+		Map map;
+		try {
+			map = MapManager.loadMap(gameSession.getMapName());
+			startLoadedMap(map);
+		} catch (MapNotFoundException e) {
+			e.printStackTrace();
+		}
 		
+	}
+	
+	private void startLoadedMap(Map map) {
+		GameSession gameSession = (GameSession)session;
 		log.info("loading map: " + gameSession.getMapName());
-		// Map laden
-		Map map = MapManager.loadMap(gameSession.getMapName());
-		map.setSessionNameForMapAndSquares(gameSession.getName());
+		map.setSessionNameForMapAndSquares(gameSession.getSessionName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		gameSession.setMap(map);
 
@@ -59,7 +68,7 @@ public class StartGameCommand extends CommandBase {
 				// Square holen
 				Square square = squares[i][j];
 				// square bekommt sessionName und observer
-				square.setName(gameSession.getName());
+				square.setSessionName(gameSession.getSessionName());
 				square.addObserver(TopicMessageQueue.getInstance());
 
 				// Wenn etwas auf dem Square liegt
@@ -124,6 +133,8 @@ public class StartGameCommand extends CommandBase {
 			if(playerIterator.hasNext()) {
 				// Loco wird erstellt und zur Liste der Locos hinzugefügt
 				UUID playerId = playerIterator.next().getId();
+				gameSession.addLoco(new PlayerLoco(gameSession.getSessionName(), locoSpawnPointSquare, playerId));
+				GhostLoco ghostLoco = new GhostLoco(gameSession.getSessionName(), locoSpawnPointSquare, playerId);
 				gameSession.addLoco(new PlayerLoco(gameSession.getName(), locoSpawnPointSquare, playerId, getLocoDirectionbyTrainstation(newTrainStation.getAlignment())));
 				GhostLoco ghostLoco = new GhostLoco(gameSession.getName(), locoSpawnPointSquare, playerId, getLocoDirectionbyTrainstation(newTrainStation.getAlignment()));
 				gameSession.addLoco(ghostLoco);
