@@ -37,7 +37,8 @@ namespace RoRClient.Models.Game
             }
 
             this.square = square;
-            Signals = new Signals(Guid.Empty); 
+            Signals = new Signals(Guid.Empty);
+            Sensor = new Sensor();
         }
 
         /// <summary>
@@ -61,6 +62,7 @@ namespace RoRClient.Models.Game
 
             // hier, weil base und this hintereinander nicht so klappen will
             Signals = new Signals(Guid.Empty);
+            Sensor = new Sensor();
         }
 
         public void AddRailSection(RailSection railSection)
@@ -91,6 +93,19 @@ namespace RoRClient.Models.Game
                     signals = value;
                     NotifyPropertyChanged("Signals");
                 }
+            }
+        }
+
+        public Sensor Sensor
+        {
+            get
+            {
+                return sensor;
+            }
+            set
+            {
+                sensor = value;
+                NotifyPropertyChanged("Sensor");
             }
         }
 
