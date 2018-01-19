@@ -36,26 +36,21 @@ namespace RoRClient.Commands.Game.Create
         {
             GameSession gameSession = (GameSession)session;
             Player player = session.GetPlayerById(playerId);
-            Loco loco = gameSession.GetLocoById(currentLocoId);
+
+
             Square square = session.Map.GetSquare(xPos, yPos);
             Cart cart = new Cart(cartId, playerId, drivingDirection, square);
-            
-            Square square = ((GameSession)session).Map.GetSquare(xPos, yPos);
-            Cart cart = new Cart(cartId, drivingDirection, square);
 
-            if (loco is GhostLoco)
+            if (currentLocoId != null)
             {
-                cart.IsGhostCart = true;
-            }
+                Loco loco = gameSession.GetLocoById(currentLocoId);
+                if (loco is GhostLoco)
+                {
+                    cart.IsGhostCart = true;
+                }
 
-            loco.AddCart(cart);
-            System.Console.WriteLine("drivingDirection:" + drivingDirection);
+                loco.AddCart(cart);
 
-            if (addToLoco)
-            {
-                Loco loco = player.Loco;
-                loco.Carts.Add(cart);
-                ((GameSession)session).AddCart(cart);
             }
             else
             {

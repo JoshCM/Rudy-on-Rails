@@ -267,6 +267,7 @@ public abstract class Loco extends InteractiveGameObject {
 		messageInfo.putValue("xPos", cart.getXPos());
 		messageInfo.putValue("yPos", cart.getYPos());
 		messageInfo.putValue("playerId", this.playerId);
+		messageInfo.putValue("currentLocoId", getId());
 		notifyChange(messageInfo);
 	}
 
