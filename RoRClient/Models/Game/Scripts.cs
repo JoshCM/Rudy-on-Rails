@@ -18,9 +18,16 @@ namespace RoRClient.Models.Game
             taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        public void AddGhostLocoScript(Script script)
+        public void AddScript(Script script)
         {
-            taskFactory.StartNew(() => ghostLocoScripts.Add(script));
+            switch (script.ScriptType)
+            {
+                case "ghostloco":
+                    taskFactory.StartNew(() => ghostLocoScripts.Add(script));
+                    break;
+                default:
+                    break;
+            }
         }
 
         public ObservableCollection<Script> GhostLocoScripts

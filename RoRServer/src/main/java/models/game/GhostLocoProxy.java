@@ -7,7 +7,7 @@ import java.util.Random;
 import models.session.GameSession;
 import models.session.GameSessionManager;
 
-public class GhostLocoProxy {
+public class GhostLocoProxy implements ProxyObject {
 	private Loco loco;
 	private GameSession gameSession;
 	private Map map;

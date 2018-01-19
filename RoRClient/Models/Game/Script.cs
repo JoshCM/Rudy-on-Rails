@@ -11,11 +11,13 @@ namespace RoRClient.Models.Game
     {
         private string name;
         private string scriptName;
+        private string scriptType;
 
-        public Script(Guid id, string name, string scriptName)
+        public Script(Guid id, string name, string scriptType, string scriptName)
         {
             this.id = id;
             this.name = name;
+            this.scriptType = scriptType;
             this.scriptName = scriptName;
         }
 
@@ -47,6 +49,22 @@ namespace RoRClient.Models.Game
                 {
                     scriptName = value;
                     NotifyPropertyChanged("ScriptName");
+                }
+            }
+        }
+
+        public string ScriptType
+        {
+            get
+            {
+                return scriptType;
+            }
+            set
+            {
+                if (scriptType != value)
+                {
+                    scriptType = value;
+                    NotifyPropertyChanged("ScriptType");
                 }
             }
         }

@@ -88,7 +88,8 @@ namespace RoRClient.ViewModels.Game
                 messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
                 messageInformation.PutValue("scriptName", scriptName);
                 messageInformation.PutValue("scriptContent", scriptContent);
-                GameSession.GetInstance().QueueSender.SendMessage("AddGhostLocoScriptFromPlayer", messageInformation);
+                messageInformation.PutValue("scriptType", "ghostloco");
+                GameSession.GetInstance().QueueSender.SendMessage("AddScriptFromPlayer", messageInformation);
             }
         }
     }
