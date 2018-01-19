@@ -23,11 +23,7 @@ public class Scripts extends ModelBase {
 		scripts.add(new Script(getDescription(), "Langsam fahren", ScriptType.GHOSTLOCO, "ghostloco_default_driveslow"));
 	}
 	
-	private void loadSensorDefaultScript() {
-		scripts.add(null);
-	}
-	
-	public List<Script> getGhostLocoScripts() {
+	public List<Script> getScripts() {
 		return scripts;
 	}
 	

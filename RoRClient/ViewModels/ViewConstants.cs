@@ -13,7 +13,7 @@ namespace RoRClient.ViewModels
     {
         // public const double FACTOR = 0.5;
         public const int SQUARE_DIM = 50;
-        public const int SIGNAL_DIMENSION = 28;
+        public const int SIGNAL_DIMENSION = SQUARE_DIM / 5;
         public const int UPPER_SIGNAL_POS = 4;
         public const int LOWER_SIGNAL_POS = SQUARE_DIM - UPPER_SIGNAL_POS - SIGNAL_DIMENSION;
         public const int SENSOR_DIMENSION = 28;

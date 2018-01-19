@@ -15,6 +15,7 @@ using Point = System.Windows.Point;
 using System.ComponentModel;
 using RoRClient.ViewModels.Helper;
 using RoRClient.Models.Base;
+using RoRClient.Communication;
 
 namespace RoRClient.ViewModels.Game
 {
@@ -107,6 +108,21 @@ namespace RoRClient.ViewModels.Game
             get
             {
                 return locos;
+            }
+        }
+
+        private LocoGameViewModel ownLoco;
+        public LocoGameViewModel OwnLoco
+        {
+            get
+            {
+                foreach(CanvasGameViewModel canvasGameViewModel in locos)
+                {
+                    LocoGameViewModel locoViewModel = (LocoGameViewModel)canvasGameViewModel;
+                    if (locoViewModel.Loco.PlayerId == ClientConnection.GetInstance().ClientId)
+                        return locoViewModel;
+                }
+                return null;
             }
         }
 
@@ -210,7 +226,7 @@ namespace RoRClient.ViewModels.Game
                         ViewModelFactory factory = new ViewModelFactory();
                         Cart cart = eventArgs.NewValue as Cart;
                         CartGameViewModel cartGameViewModel = new CartGameViewModel(cart);
-                        taskFactory.StartNew(() => locos.Add(cartGameViewModel));
+                        taskFactory.StartNew(() => placeableOnRailCollection.Add(cartGameViewModel));
                     }
                     else
                     {

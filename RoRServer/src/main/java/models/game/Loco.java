@@ -48,7 +48,7 @@ public abstract class Loco extends InteractiveGameObject {
 			if (this.timeDeltaCounter >= SEC_IN_NANO / absoluteSpeed) {
 				timeDeltaCounter = 0;
 				if (speed < 0) {
-					if (!reversed) {
+					if (!reversed) {//Wenn das erstemal nach dem Vorw�rts fahren wieder r�ckw�rts gefahren wird muss die Driving direction ge�ndert werden 
 						reversed = true;
 						reversedDrive(true);
 					} else {
@@ -56,6 +56,7 @@ public abstract class Loco extends InteractiveGameObject {
 					}
 				} else if (speed > 0) {
 					if (reversed) {
+						//Wenn das erstemal nach dem R�ckw�rts fahren wieder vorf�rts gefahren wird muss die Driving direction ge�ndert werden 
 						this.drivingDirection = this.rail.getExitDirection(this.drivingDirection);
 						for (int i = carts.size() - 1; i >= 0; i--) {
 							Cart c = carts.get(i);
@@ -76,14 +77,15 @@ public abstract class Loco extends InteractiveGameObject {
 		Rail nextRail = getNextRail(this.drivingDirection,
 				this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 		if(nextRail != null) {
-		moveCarts(this.rail, this.drivingDirection);
-		this.drivingDirection = nextRail.getExitDirection(getDirectionNegation(this.drivingDirection));
-		this.rail = nextRail;
-		this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-		NotifyLocoPositionChanged();
+			moveCarts(this.rail, this.drivingDirection);
+			this.drivingDirection = nextRail.getExitDirection(getDirectionNegation(this.drivingDirection));
+			this.rail = nextRail;
+			this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
+			NotifyLocoPositionChanged();
 		}
 		else {
 			this.speed = 0;
+			notifySpeedChanged();
 		}
 	}
 	
@@ -106,25 +108,29 @@ public abstract class Loco extends InteractiveGameObject {
 				tempDirection = actCart.getDrivingDirection();
 			}
 			
-			Rail newRail = getNextRail(tempDirection, this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
+			Rail nextRail = getNextRail(tempDirection, this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
 			
-			if(newRail.getPlaceableOnrail() instanceof Cart) {
-				Cart cart = (Cart) newRail.getPlaceableOnrail();
+			if(nextRail.getPlaceableOnrail() instanceof Cart) {//Wenn eine Cart gefunden wird, also zum andocken
+				Cart cart = (Cart) nextRail.getPlaceableOnrail();
+				cart.setDrivingDirection(actCart.getDrivingDirection());
 				carts.add(cart);
 				cart.setCurrentLocoId(this.getId());
-				newRail.setPlaceableOnRail(null);
+				nextRail.setPlaceableOnRail(null);
 				this.speed = 0;
+				if(initial) {//Wenn noch nie Vorw�rtsgefahren wurde und direkt beim start r�ckw�rts gefahren wird muss die Driving direction ge�ndert werden
+					this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(this.rail.getExitDirection(this.drivingDirection)));
+				}
 				notifyCartToLocoAdded(cart);
 				notifySpeedChanged();
 				break;
 			}
 			
-			if(newRail instanceof Rail) {//Wenn das N�chste Schienenst�ck leer ist soll der zu anhalten
-				Compass newDrivingDirection = newRail.getExitDirection(getDirectionNegation(tempDirection));
+			if(nextRail instanceof Rail) {//Wenn das N�chste Schienenst�ck leer ist soll der zu anhalten
+				Compass newDrivingDirection = nextRail.getExitDirection(getDirectionNegation(tempDirection));
 
 				actCart.setDrivingDirection(newDrivingDirection);
-				actCart.setRail(newRail);
-				actCart.updateSquare(this.map.getSquare(newRail.getXPos(), newRail.getYPos()));
+				actCart.setRail(nextRail);
+				actCart.updateSquare(this.map.getSquare(nextRail.getXPos(), nextRail.getYPos()));
 				actCart.notifyUpdatedCart();
 			}
 			else{
@@ -144,11 +150,24 @@ public abstract class Loco extends InteractiveGameObject {
 			NotifyLocoPositionChanged();
 		}
 	}
+	
+	public void addCart() {
+		if (carts.isEmpty()) {
+			addInitialCart();
+		} else {
+			Cart lastCart = this.carts.get(carts.size()-1);
+			Compass back = this.rail.getExitDirection(lastCart.getDrivingDirection());
+			Rail prevRail = getNextRail(back, this.map.getSquare(lastCart.getXPos(), lastCart.getYPos()));
+			Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
+			Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, true, this.getId());
+			carts.add(cart);
+		}
+	}
 
 	/**
 	 * f�gt der Lok initial ein Cart hinzu auf das vorige Feld
 	 */
-	public void addInitialCart() {
+	private void addInitialCart() {
 		if (carts.isEmpty()) {
 			Compass back = this.rail.getExitDirection(this.drivingDirection);
 			Rail prevRail = getNextRail(back, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
@@ -179,22 +198,8 @@ public abstract class Loco extends InteractiveGameObject {
 			cart.notifyUpdatedCart();
 			nextDirection = actDirection;
 			nextSquare = actSquare;
-
 		}
 	}
-
-	public void addCart() {
-		
-		Cart lastCart = this.carts.get(carts.size()-1);
-		Compass back = this.rail.getExitDirection(lastCart.getDrivingDirection());
-		Rail prevRail = getNextRail(back, this.map.getSquare(lastCart.getXPos(), lastCart.getYPos()));
-		Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
-		Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, true, this.getId());
-		carts.add(cart);
-		//NotifyAddedCart(cartSquare, cart.getId());
-		
-	}
-	
 	
 	/**
 	 * gibt das Rail zur�ck, dass in angegebener Richtung an das Feld, das
