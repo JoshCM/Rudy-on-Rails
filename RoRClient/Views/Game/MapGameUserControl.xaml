@@ -80,11 +80,6 @@
                                 <vg:MineGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
-                        <DataTemplate DataType="{x:Type game:SensorGameViewModel}">
-                            <Canvas>
-                                <vg:SensorGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
-                            </Canvas>
-                        </DataTemplate>
                     </ItemsControl.Resources>
                 </ItemsControl>
             </Canvas>

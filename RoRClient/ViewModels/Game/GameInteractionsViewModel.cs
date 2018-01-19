@@ -18,6 +18,7 @@ namespace RoRClient.ViewModels.Game
     {
         private Script selectedGhostLocoScript;
         private bool canActivateSensor = false;
+        private MapGameViewModel mapGameViewModel;
         private CanvasGameViewModel canvasGameViewModel;
 
         public bool CanActivateSensor
@@ -33,9 +34,9 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
-        public GameInteractionsViewModel()
+        public GameInteractionsViewModel(MapGameViewModel mapGameViewModel)
         {
-
+            this.mapGameViewModel = mapGameViewModel;
         }
 
         public void OnSelectedGameObjectChanged(object sender, PropertyChangedEventArgs e)
@@ -133,8 +134,8 @@ namespace RoRClient.ViewModels.Game
         private void ActivateSensor()
         {
             MessageInformation message = new MessageInformation();
-            Rail rail = ((RailGameViewModel)canvasGameViewModel).Rail;
-            message.PutValue("railId", rail.Id);
+            Guid selectedModelId = mapGameViewModel.SelectedGameCanvasViewModel.Id;
+            message.PutValue("selectedModelId", selectedModelId);
             GameSession.GetInstance().QueueSender.SendMessage("ActivateSensor", message);
         }
 

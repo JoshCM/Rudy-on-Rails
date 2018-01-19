@@ -16,7 +16,7 @@ namespace RoRClient.Models.Game
         private ObservableCollection<RailSection> railSections = new ObservableCollection<RailSection>();
         private Signals signals;
         private Sensor sensor;
-        private Boolean sensorActive;
+        private Boolean sensorActive = false;
 
         public Guid TrainstationId
         {
@@ -109,7 +109,7 @@ namespace RoRClient.Models.Game
             set
             {
                 sensorActive = value;
-                NotifyPropertyChanged("SensorActiv");
+                NotifyPropertyChanged("SensorActive");
             }
         }
 

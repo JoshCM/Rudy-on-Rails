@@ -80,5 +80,13 @@
                 </TransformGroup>
             </Image.LayoutTransform>
         </Image>
+
+        <Image x:Name="Sensor"
+               Visibility="{Binding Rail.SensorActive, Converter={StaticResource BoolToVisibilityConverter}}"
+               Height="{Binding SensorDimension, ElementName=railUserControl}"
+               Width="{Binding SensorDimension, ElementName=railUserControl}"
+               Source="/RoRClient;component/Resources/Images/sensor.png">
+        </Image>
+
     </Canvas>
 </v:CanvasUserControl>

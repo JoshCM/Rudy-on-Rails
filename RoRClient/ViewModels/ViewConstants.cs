@@ -16,5 +16,6 @@ namespace RoRClient.ViewModels
         public const int SIGNAL_DIMENSION = 28;
         public const int UPPER_SIGNAL_POS = 4;
         public const int LOWER_SIGNAL_POS = SQUARE_DIM - UPPER_SIGNAL_POS - SIGNAL_DIMENSION;
+        public const int SENSOR_DIMENSION = 28;
     }
 }

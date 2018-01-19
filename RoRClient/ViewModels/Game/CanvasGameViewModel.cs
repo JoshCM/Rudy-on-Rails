@@ -55,10 +55,12 @@ namespace RoRClient.ViewModels.Game
             MapViewModel.SelectedGameCanvasViewModel = this;
             if (MapViewModel.SelectedGameCanvasViewModel is RailGameViewModel)
             {
-                // Button auf true setzen
+                MapViewModel.GameInteractionsViewModel.CanActivateSensor = true;
+            } else
+            {
+                MapViewModel.GameInteractionsViewModel.CanActivateSensor = false;
             }
-
-
+            
             Console.WriteLine(this);
         }
     }

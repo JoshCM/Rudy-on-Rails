@@ -22,6 +22,7 @@ namespace RoRClient.ViewModels.Game
     {
         private CanvasGameViewModel gameCanvasViewModel;
         private TaskFactory taskFactory;
+        private GameInteractionsViewModel gameInteractionsViewModel;
 
         public MapGameViewModel()
         {
@@ -35,6 +36,18 @@ namespace RoRClient.ViewModels.Game
 
             MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
             MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+        }
+
+        public GameInteractionsViewModel GameInteractionsViewModel
+        {
+            get
+            {
+                return gameInteractionsViewModel;
+            }
+            set
+            {
+                gameInteractionsViewModel = value;
+            }
         }
 
         public CanvasGameViewModel GameCanvasViewModel
