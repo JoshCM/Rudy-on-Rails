@@ -52,13 +52,13 @@ namespace RoRClient.ViewModels.Game
         /// </summary>
         public void SelectTrainstationObject()
         {
-
-            Console.WriteLine("hallo i bims, 1 geklicktes etwas");
-
             RoRSession gameSession = GameSession.GetInstance();
             MessageInformation messageInformation = new MessageInformation();
 
             Rail rail = findRail(gameSession.Map);
+
+
+
             Compass compass = findRailDirection();
             System.Console.WriteLine("Compass:" + compass.ToString());
             if(rail != null)

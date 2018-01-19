@@ -48,7 +48,7 @@ public abstract class Loco extends InteractiveGameObject {
 			if (this.timeDeltaCounter >= SEC_IN_NANO / absoluteSpeed) {
 				timeDeltaCounter = 0;
 				if (speed < 0) {
-					if (!reversed) {
+					if (!reversed) {//Wenn das erstemal nach dem Vorwärts fahren wieder rückwärts gefahren wird muss die Driving direction geändert werden 
 						reversed = true;
 						reversedDrive(true);
 					} else {
@@ -56,6 +56,7 @@ public abstract class Loco extends InteractiveGameObject {
 					}
 				} else if (speed > 0) {
 					if (reversed) {
+						//Wenn das erstemal nach dem Rückwärts fahren wieder vorfärts gefahren wird muss die Driving direction geändert werden 
 						this.drivingDirection = this.rail.getExitDirection(this.drivingDirection);
 						for (int i = carts.size() - 1; i >= 0; i--) {
 							Cart c = carts.get(i);
@@ -107,17 +108,16 @@ public abstract class Loco extends InteractiveGameObject {
 				tempDirection = actCart.getDrivingDirection();
 			}
 			
-			Rail newRail = getNextRail(tempDirection, this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
+			Rail nextRail = getNextRail(tempDirection, this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
 			
-			if(newRail.getPlaceableOnrail() instanceof Cart) {
-				Cart cart = (Cart) newRail.getPlaceableOnrail();
+			if(nextRail.getPlaceableOnrail() instanceof Cart) {//Wenn eine Cart gefunden wird, also zum andocken
+				Cart cart = (Cart) nextRail.getPlaceableOnrail();
 				cart.setDrivingDirection(actCart.getDrivingDirection());
-	
 				carts.add(cart);
 				cart.setCurrentLocoId(this.getId());
-				newRail.setPlaceableOnRail(null);
+				nextRail.setPlaceableOnRail(null);
 				this.speed = 0;
-				if(initial) {
+				if(initial) {//Wenn noch nie Vorwärtsgefahren wurde und direkt beim start rückwärts gefahren wird muss die Driving direction geändert werden
 					this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(this.rail.getExitDirection(this.drivingDirection)));
 				}
 				notifyCartToLocoAdded(cart);
@@ -125,12 +125,12 @@ public abstract class Loco extends InteractiveGameObject {
 				break;
 			}
 			
-			if(newRail instanceof Rail) {//Wenn das Nï¿½chste Schienenstï¿½ck leer ist soll der zu anhalten
-				Compass newDrivingDirection = newRail.getExitDirection(getDirectionNegation(tempDirection));
+			if(nextRail instanceof Rail) {//Wenn das Nï¿½chste Schienenstï¿½ck leer ist soll der zu anhalten
+				Compass newDrivingDirection = nextRail.getExitDirection(getDirectionNegation(tempDirection));
 
 				actCart.setDrivingDirection(newDrivingDirection);
-				actCart.setRail(newRail);
-				actCart.updateSquare(this.map.getSquare(newRail.getXPos(), newRail.getYPos()));
+				actCart.setRail(nextRail);
+				actCart.updateSquare(this.map.getSquare(nextRail.getXPos(), nextRail.getYPos()));
 				actCart.notifyUpdatedCart();
 			}
 			else{
