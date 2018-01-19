@@ -9,13 +9,20 @@ namespace RoRClient.Models.Game
 {
     public class Script : ModelBase
     {
+        public enum ScriptTypes
+        {
+            GHOSTLOCO
+        }
+
         private string name;
         private string scriptName;
+        private ScriptTypes scriptType;
 
-        public Script(Guid id, string name, string scriptName)
+        public Script(Guid id, string name, ScriptTypes scriptType, string scriptName)
         {
             this.id = id;
             this.name = name;
+            this.scriptType = scriptType;
             this.scriptName = scriptName;
         }
 
@@ -47,6 +54,22 @@ namespace RoRClient.Models.Game
                 {
                     scriptName = value;
                     NotifyPropertyChanged("ScriptName");
+                }
+            }
+        }
+
+        public ScriptTypes ScriptType
+        {
+            get
+            {
+                return scriptType;
+            }
+            set
+            {
+                if (scriptType != value)
+                {
+                    scriptType = value;
+                    NotifyPropertyChanged("ScriptType");
                 }
             }
         }

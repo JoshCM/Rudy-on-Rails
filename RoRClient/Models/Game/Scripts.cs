@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static RoRClient.Models.Game.Script;
 
 namespace RoRClient.Models.Game
 {
@@ -18,9 +19,16 @@ namespace RoRClient.Models.Game
             taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        public void AddGhostLocoScript(Script script)
+        public void AddScript(Script script)
         {
-            taskFactory.StartNew(() => ghostLocoScripts.Add(script));
+            switch (script.ScriptType)
+            {
+                case ScriptTypes.GHOSTLOCO:
+                    taskFactory.StartNew(() => ghostLocoScripts.Add(script));
+                    break;
+                default:
+                    break;
+            }
         }
 
         public ObservableCollection<Script> GhostLocoScripts

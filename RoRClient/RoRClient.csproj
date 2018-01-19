@@ -138,7 +138,7 @@
     <Compile Include="Commands\Editor\Update\UpdateNodesOfRailSectionCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
-    <Compile Include="Commands\Game\Create\CreateGhostLocoScriptCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateScriptCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateCartCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateGhostLocoCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayerLocoCommand.cs" />
