@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import communication.MessageEnvelope;
 import communication.MessageInformation;
 import communication.queue.QueueMessageQueue;
+import exceptions.MapNotFoundException;
 import models.game.GamePlayer;
 import models.game.Player;
 import models.session.EditorSession;
@@ -240,7 +241,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 				json.addProperty("name", session.getSessionName());
 				json.addProperty("amountOfPlayers", session.getPlayers().size());
 				json.addProperty("hostname", session.getHost().getSessionName());
-				json.addProperty("availablePlayerSlots", session.getMap().getAvailablePlayerSlots());
+				json.addProperty("availablePlayerSlots", session.getAvailablePlayerSlots());
 				gameSessionInfos.add(json);
 			}
 		}

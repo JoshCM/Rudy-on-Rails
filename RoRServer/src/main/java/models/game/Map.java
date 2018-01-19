@@ -37,16 +37,31 @@ public class Map extends ModelBase {
 		}
 	}
 	
+	public void initAvailablePlayerSlots() {
+		removeAvailablePlayerSlots();
+		createAvailablePlayerSlots();
+	}
+	
+	private void createAvailablePlayerSlots() {
+		for(Square[] squares : getSquares()) {
+			for(Square square : squares) {
+				if(square.getPlaceableOnSquare() instanceof Trainstation) {
+					addAvailablePlayerSlot();
+				}
+			}
+		}
+	}
+	
+	private void removeAvailablePlayerSlots() {
+		availablePlayerSlots = 0;
+	}
+	
 	public int getAvailablePlayerSlots() {
 		return availablePlayerSlots;
 	}
 	
 	public void addAvailablePlayerSlot() {
 		availablePlayerSlots += 1;
-	}
-	
-	public void removeAvailablePlayerSlot() {
-		availablePlayerSlots -= 1;
 	}
 	
 	public int getMapSize() {

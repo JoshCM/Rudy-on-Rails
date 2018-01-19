@@ -14,6 +14,10 @@ public class SaveMapCommand extends CommandBase {
 	@Override
 	public void execute() {
 		Map map = session.getMap();
+		
+		//setzt die availablePlayerSlots
+		map.initAvailablePlayerSlots();
+				
 		MapManager.saveMap(map);
 	}
 }

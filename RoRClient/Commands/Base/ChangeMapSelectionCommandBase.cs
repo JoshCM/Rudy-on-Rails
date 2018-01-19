@@ -8,16 +8,18 @@ using RoRClient.Models.Session;
 
 namespace RoRClient.Commands.Base
 {
-	class ChangeMapNameCommandBase : CommandBase
+	class ChangeMapSelectionCommandBase : CommandBase
 	{
 		private string mapName;
-		public ChangeMapNameCommandBase(RoRSession session, MessageInformation message) : base(session, message)
+        private int availablePlayerSlots;
+		public ChangeMapSelectionCommandBase(RoRSession session, MessageInformation message) : base(session, message)
 		{
 			mapName = message.GetValueAsString("mapName");
-		}
+            //availablePlayerSlots = message.GetValueAsInt("availablePlayerSlots");
+        }
 		public override void Execute()
 		{
 			session.MapName = mapName;
-		}
+        }
 	}
 }

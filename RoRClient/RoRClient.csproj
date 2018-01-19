@@ -108,7 +108,7 @@
     <Compile Include="BindingConverter\IsNullToBooleanConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
     <Compile Include="BindingConverter\CompassToAngleConverter.cs" />
-    <Compile Include="Commands\Base\ChangeMapNameCommandBase.cs" />
+    <Compile Include="Commands\Base\ChangeMapSelectionCommandBase.cs" />
     <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Base\UpdateActivityOfSignalsCommandBase.cs" />
     <Compile Include="Commands\Base\CreateSignalsCommandBase.cs" />
@@ -129,7 +129,7 @@
     <Compile Include="Commands\Editor\Move\MoveMineCommand.cs" />
     <Compile Include="Commands\Editor\Move\MoveTrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Move\MoveRailCommand.cs" />
-    <Compile Include="Commands\Editor\Other\ChangeMapNameCommand.cs" />
+    <Compile Include="Commands\Editor\Other\ChangeMapSelectionCommand.cs" />
     <Compile Include="Commands\Editor\Other\StartCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateAlignmentOfMineCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateConfigOfSignalsCommand.cs" />
@@ -149,7 +149,7 @@
     <Compile Include="Commands\Game\Create\CreateSignalsCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateTrainstationCommand.cs" />
-    <Compile Include="Commands\Game\Other\ChangeMapNameCommand.cs" />
+    <Compile Include="Commands\Game\Other\ChangeMapSelectionCommand.cs" />
     <Compile Include="Commands\Game\Other\LeaveGameCommand.cs" />
     <Compile Include="Commands\Game\Other\StartCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateResourceCommand.cs" />

@@ -29,6 +29,7 @@ public class GameSession extends RoRSession{
 	private Ticker ticker;
 	private ArrayList<Loco> locos = new ArrayList<>();
 	private Scripts scripts;
+	private int availablePlayerSlots;
 
 	public GameSession(String name, UUID hostPlayerId, String hostPlayerName) {
 		super(name);
@@ -158,6 +159,14 @@ public class GameSession extends RoRSession{
 	public void start() {
 		super.start();
 		scripts.loadGhostLocoDefaultScripts();
+	}
+
+	public int getAvailablePlayerSlots() {
+		return availablePlayerSlots;
+	}
+
+	public void setAvailablePlayerSlots(int availablePlayerSlots) {
+		this.availablePlayerSlots = availablePlayerSlots;
 	}
 }
 

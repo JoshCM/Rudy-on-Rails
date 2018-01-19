@@ -10,6 +10,7 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
+import exceptions.MapNotFoundException;
 import models.game.GhostLoco;
 import models.game.Map;
 import models.game.Mine;
@@ -32,12 +33,20 @@ public class StartGameCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		
 		GameSession gameSession = (GameSession)session;
+		Map map;
+		try {
+			map = MapManager.loadMap(gameSession.getMapName());
+			startLoadedMap(map);
+		} catch (MapNotFoundException e) {
+			e.printStackTrace();
+		}
 		
+	}
+	
+	private void startLoadedMap(Map map) {
+		GameSession gameSession = (GameSession)session;
 		log.info("loading map: " + gameSession.getMapName());
-		// Map laden
-		Map map = MapManager.loadMap(gameSession.getMapName());
 		map.setSessionNameForMapAndSquares(gameSession.getSessionName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		gameSession.setMap(map);

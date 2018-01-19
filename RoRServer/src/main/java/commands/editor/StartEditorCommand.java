@@ -7,6 +7,7 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
+import exceptions.MapNotFoundException;
 import models.game.Map;
 import models.game.Mine;
 import models.game.Rail;
@@ -30,7 +31,7 @@ public class StartEditorCommand extends CommandBase {
 		log.info("create new map");
 	}
 
-	private void startLoadedMap(String mapName) {
+	private void startLoadedMap(String mapName) throws MapNotFoundException {
 		Map map = MapManager.loadMap(mapName);
 		log.info("loading map: " + mapName);
 
@@ -101,7 +102,11 @@ public class StartEditorCommand extends CommandBase {
 			startNewMap();
 		} else {
 			// eine map wird geladen
-			startLoadedMap(mapName);
+			try {
+				startLoadedMap(mapName);
+			} catch (MapNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
 		session.start();
 	}
