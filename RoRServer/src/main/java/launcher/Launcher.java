@@ -9,7 +9,7 @@ import communication.topic.TopicMessageQueue;
  */
 public class Launcher {
 	public static void main(String[] args) {
-		MessageBroker.getInstance();
+		MessageBroker.start();
 		TopicMessageQueue.getInstance().setup();
 		QueueMessageQueue.getInstance().setup();
 	}
