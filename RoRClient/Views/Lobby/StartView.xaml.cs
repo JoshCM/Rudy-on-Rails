@@ -21,5 +21,10 @@ namespace RoRClient.Views.Lobby
         {
             InitializeComponent();
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

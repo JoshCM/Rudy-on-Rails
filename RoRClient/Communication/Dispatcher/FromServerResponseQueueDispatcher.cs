@@ -29,8 +29,7 @@ namespace RoRClient.Communication.Dispatcher
 
             Guid playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             string playerName = messageInformation.GetValueAsString("playerName");
-            Player player = new Player(playerId, playerName, true);
-
+            EditorPlayer player = new EditorPlayer(playerId, playerName, true);
             editorSession.AddPlayer(player);
             EditorInfo editorInfo = new EditorInfo(player);
             lobbyModel.AddEditorInfo(editorInfo);
@@ -44,6 +43,7 @@ namespace RoRClient.Communication.Dispatcher
             editorSession.Name = editorName;
             string topicName = messageInformation.GetValueAsString("topicName");
             editorSession.Init(topicName);
+            editorSession.PropertyChanged += OnEditorSessionChanged;
 
             List<JObject> playersList = messageInformation.GetValueAsJObjectList("playerList");
             foreach (JObject obj in playersList)
@@ -51,7 +51,7 @@ namespace RoRClient.Communication.Dispatcher
                 Guid playerId = Guid.Parse(obj.GetValue("playerId").ToString());
                 string playerName = obj.GetValue("playerName").ToString();
                 bool isHost = Boolean.Parse(obj.GetValue("isHost").ToString());
-                Player player = new Player(playerId, playerName, isHost);
+                EditorPlayer player = new EditorPlayer(playerId, playerName, isHost);
                 editorSession.AddPlayer(player);
             }
 
@@ -67,7 +67,10 @@ namespace RoRClient.Communication.Dispatcher
 
             Guid playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             string playerName = messageInformation.GetValueAsString("playerName");
-            Player player = new Player(playerId, playerName, true);
+            int coalCount = messageInformation.GetValueAsInt("coalCount");
+            int goldCount = messageInformation.GetValueAsInt("goldCount");
+            int pointCount = messageInformation.GetValueAsInt("pointCount");
+            GamePlayer player = new GamePlayer(playerId, playerName, coalCount, goldCount, pointCount, true);
 
 	        gameSession.AddPlayer(player);
 
@@ -107,8 +110,12 @@ namespace RoRClient.Communication.Dispatcher
                 Guid playerId = Guid.Parse(obj.GetValue("playerId").ToString());
                 string playerName = obj.GetValue("playerName").ToString();
                 bool isHost = Boolean.Parse(obj.GetValue("isHost").ToString());
-                Player player = new Player(playerId, playerName, isHost);
-	            gameSession.AddPlayer(player);
+                int coalCount = messageInformation.GetValueAsInt("coalCount");
+                int goldCount = messageInformation.GetValueAsInt("goldCount");
+                int pointCount = messageInformation.GetValueAsInt("pointCount");
+                GamePlayer player = new GamePlayer(playerId, playerName, coalCount, goldCount, pointCount, isHost);
+
+                gameSession.AddPlayer(player);
 	            GameInfo gameInfo = new GameInfo(player);
 	            lobbyModel.AddGameInfo(gameInfo);
 

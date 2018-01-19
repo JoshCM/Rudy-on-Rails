@@ -11,11 +11,16 @@ namespace RoRClient.ViewModels.Game
     {
         UIState uiState;
         private MapGameViewModel mapGameViewModel;
+        private GameStatusViewModel gameStatusViewModel;
 
         #region Properties
         public MapGameViewModel MapGameViewModel
         {
             get { return mapGameViewModel; }
+        }
+        public GameStatusViewModel GameStatusViewModel
+        {
+            get { return gameStatusViewModel; }
         }
         #endregion
 
@@ -23,6 +28,15 @@ namespace RoRClient.ViewModels.Game
         {
             this.uiState = uiState;
             mapGameViewModel = new MapGameViewModel();
+            uiState.OnUiStateChanged += OnUiStateChanged;
+        }
+
+        private void OnUiStateChanged(object sender, UiChangedEventArgs args)
+        {
+            if (uiState.State == "game")
+            {
+                gameStatusViewModel = new GameStatusViewModel();
+            }
         }
     }
 }

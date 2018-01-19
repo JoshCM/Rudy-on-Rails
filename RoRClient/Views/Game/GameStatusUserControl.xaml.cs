@@ -27,28 +27,5 @@ namespace RoRClient.Views.Game
         {
             InitializeComponent();
         }
-
-        public ObservableCollection<Resource> PlayerResources
-        {
-            get
-            {
-                return (ObservableCollection<Resource>)GetValue(ResourcesProperty);
-            }
-            set
-            {
-                SetValue(ResourcesProperty, value);
-            }
-        }
-        private static void OnPlayerResourcesChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            GameStatusUserControl gameStatusUserControl = sender as GameStatusUserControl;
-
-
-            var newCollection = e.NewValue as ObservableCollection<Resource>;
-
-            Console.WriteLine(newCollection.Count);
-        }
-
-        public static readonly DependencyProperty ResourcesProperty = DependencyProperty.Register("PlayerResources", typeof(ObservableCollection<Resource>), typeof(GameStatusUserControl), new UIPropertyMetadata(null, OnPlayerResourcesChanged));
     }
 }

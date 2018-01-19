@@ -152,9 +152,8 @@ public abstract class Loco extends InteractiveGameObject {
 			Compass back = this.rail.getExitDirection(this.drivingDirection);
 			Rail prevRail = getNextRail(back, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 			Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
-			Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, prevRail, true);
+			Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, true, this.getId());
 			carts.add(cart);
-			//NotifyAddedCart(cartSquare, cart.getId());
 		}
 	}
 
@@ -189,7 +188,7 @@ public abstract class Loco extends InteractiveGameObject {
 		Compass back = this.rail.getExitDirection(lastCart.getDrivingDirection());
 		Rail prevRail = getNextRail(back, this.map.getSquare(lastCart.getXPos(), lastCart.getYPos()));
 		Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
-		Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, prevRail, true);
+		Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, true, this.getId());
 		carts.add(cart);
 		//NotifyAddedCart(cartSquare, cart.getId());
 		
