@@ -30,10 +30,10 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	public PlaceableOnRail loadFromMap(Square square, RoRSession session) {
 		Rail rail = (Rail) square.getPlaceableOnSquare();
 		Crane crane = (Crane) rail.getPlaceableOnrail();
-		Crane newCrane = new Crane(session.getName(), square, crane.getTrainstationId(), crane.getId(), crane.getAlignment(), crane.getRailId());
+		Crane newCrane = new Crane(session.getSessionName(), square, crane.getTrainstationId(), crane.getId(), crane.getAlignment(), crane.getRailId());
 		
 		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
-		newCrane.setName(session.getName());
+		newCrane.setSessionName(session.getSessionName());
 
 		//log.info("Stock erstellt: " + newStock.toString());
 		
