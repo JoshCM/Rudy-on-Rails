@@ -106,7 +106,7 @@ public class PlayerLocoTests {
 		Map map = gameSession.getMap();
 		Square square = map.getSquare(squarePosX, squarePosY);
 
-		Rail rail = new Rail(gameSession.getName(), square, directions);
+		Rail rail = new Rail(gameSession.getSessionName(), square, directions);
 
 		square.setPlaceableOnSquare(rail);
 
@@ -130,19 +130,19 @@ public class PlayerLocoTests {
 
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "HostPlayer");
-		Player player = new Player(gameSession.getName(), "Hans", UUID.randomUUID(), true);
+		Player player = new Player(gameSession.getSessionName(), "Hans", UUID.randomUUID(), true);
 
 		Map map = gameSession.getMap();
 		Square squareLoco = map.getSquare(squarePosXLoco, squarePosYLoco);
 		Square squareCart = map.getSquare(squarePosXCart, squarePosYCart);
 
-		Rail railLoco = new Rail(gameSession.getName(), squareLoco, directions);
-		Rail railCart = new Rail(gameSession.getName(), squareCart, directions);
+		Rail railLoco = new Rail(gameSession.getSessionName(), squareLoco, directions);
+		Rail railCart = new Rail(gameSession.getSessionName(), squareCart, directions);
 
 		squareLoco.setPlaceableOnSquare(railLoco);
 		squareCart.setPlaceableOnSquare(railCart);
 
-		PlayerLoco loco = new PlayerLoco(gameSession.getName(), squareLoco, player.getId());
+		PlayerLoco loco = new PlayerLoco(gameSession.getSessionName(), squareLoco, player.getId());
 
 		return loco;
 	}

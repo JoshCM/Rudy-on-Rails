@@ -53,7 +53,7 @@ public class Map extends ModelBase {
 		return mapSize;
 	}
 
-	public String getName() {
+	public String getSessionName() {
 		return name;
 	}
 

@@ -40,7 +40,7 @@ public class CreateMineCommand extends CommandBase {
 				// und es darf noch nichts auf dem Rail liegen
 				if (rail.getPlaceableOnrail() == null) {
 					Compass alignment = rail.getAlignment();
-					Mine mine = new Mine(editorSession.getName(), square, alignment, rail.getId());
+					Mine mine = new Mine(editorSession.getSessionName(), square, alignment, rail.getId());
 					rail.setPlaceableOnRail(mine);
 				} else {
 					throw new InvalidModelOperationException("Auf dem Rail liegt schon etwas");

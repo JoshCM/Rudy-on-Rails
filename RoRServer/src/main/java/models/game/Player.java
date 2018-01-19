@@ -16,11 +16,11 @@ public class Player extends ModelBase {
         this.isHost = isHost;
     }
     
-    public String getName() {
+    public String getSessionName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setSessionName(String name) {
         this.name = name;
     }
     
