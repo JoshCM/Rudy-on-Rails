@@ -94,13 +94,13 @@ namespace RoRClient.ViewModels.Game
             switch (trainstation.Alignment)
             {
                 case Compass.EAST:
-                    return Compass.SOUTH;
-                case Compass.SOUTH:
-                    return Compass.WEST;
-                case Compass.WEST:
                     return Compass.NORTH;
-                case Compass.NORTH:
+                case Compass.SOUTH:
                     return Compass.EAST;
+                case Compass.WEST:
+                    return Compass.SOUTH;
+                case Compass.NORTH:
+                    return Compass.WEST;
             }
             return 0;//geht nicht anders...
         }

@@ -125,9 +125,9 @@ public class StartGameCommand extends CommandBase {
 				// Loco wird erstellt und zur Liste der Locos hinzugefügt
 				UUID playerId = playerIterator.next().getId();
 				gameSession.addLoco(new PlayerLoco(gameSession.getName(), locoSpawnPointSquare, playerId, getLocoDirectionbyTrainstation(newTrainStation.getAlignment())));
-				GhostLoco ghostLoco = new GhostLoco(gameSession.getName(), locoSpawnPointSquare, playerId, getLocoDirectionbyTrainstation(newTrainStation.getAlignment()));
-				gameSession.addLoco(ghostLoco);
-				ghostLoco.init();
+				//GhostLoco ghostLoco = new GhostLoco(gameSession.getName(), locoSpawnPointSquare, playerId, getLocoDirectionbyTrainstation(newTrainStation.getAlignment()));
+				//gameSession.addLoco(ghostLoco);
+				//ghostLoco.init();
 				newTrainStation.setPlayerId(playerId);
 			}
 		}

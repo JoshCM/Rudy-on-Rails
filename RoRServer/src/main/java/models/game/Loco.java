@@ -76,14 +76,15 @@ public abstract class Loco extends InteractiveGameObject {
 		Rail nextRail = getNextRail(this.drivingDirection,
 				this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 		if(nextRail != null) {
-		moveCarts(this.rail, this.drivingDirection);
-		this.drivingDirection = nextRail.getExitDirection(getDirectionNegation(this.drivingDirection));
-		this.rail = nextRail;
-		this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-		NotifyLocoPositionChanged();
+			moveCarts(this.rail, this.drivingDirection);
+			this.drivingDirection = nextRail.getExitDirection(getDirectionNegation(this.drivingDirection));
+			this.rail = nextRail;
+			this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
+			NotifyLocoPositionChanged();
 		}
 		else {
 			this.speed = 0;
+			notifySpeedChanged();
 		}
 	}
 	
@@ -110,6 +111,7 @@ public abstract class Loco extends InteractiveGameObject {
 			
 			if(newRail.getPlaceableOnrail() instanceof Cart) {
 				Cart cart = (Cart) newRail.getPlaceableOnrail();
+				cart.setDrivingDirection(actCart.getDrivingDirection());
 				carts.add(cart);
 				cart.setCurrentLocoId(this.getId());
 				newRail.setPlaceableOnRail(null);

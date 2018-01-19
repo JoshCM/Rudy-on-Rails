@@ -182,7 +182,7 @@ namespace RoRClient.ViewModels.Game
                         ViewModelFactory factory = new ViewModelFactory();
                         Cart cart = eventArgs.NewValue as Cart;
                         CartGameViewModel cartGameViewModel = new CartGameViewModel(cart);
-                        taskFactory.StartNew(() => locos.Add(cartGameViewModel));
+                        taskFactory.StartNew(() => placeableOnRailCollection.Add(cartGameViewModel));
                     }
                     else
                     {

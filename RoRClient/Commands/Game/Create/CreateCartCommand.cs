@@ -22,9 +22,6 @@ namespace RoRClient.Commands.Game.Create
         public CreateCartCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
-
-            System.Console.WriteLine("FRTEITAGAGA: " + messageInformation.GetValueAsString("currentLocoId"));
-
             if (!messageInformation.GetValueAsString("currentLocoId").Equals(String.Empty))
             {
                 currentLocoId = Guid.Parse(messageInformation.GetValueAsString("currentLocoId"));

@@ -27,6 +27,7 @@ namespace RoRClient.Commands.Game.Update
 
         public override void Execute()
         {
+            System.Console.WriteLine(drivingDirection);
             GameSession gameSession = GameSession.GetInstance();
             Square square = gameSession.Map.GetSquare(xPos, yPos);
             Loco loco = gameSession.GetLocoById(locoId);
