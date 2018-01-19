@@ -12,8 +12,8 @@ import models.session.GameSessionManager;
 public class GhostLoco extends Loco {
 	ScriptableObject scriptableObject;
 
-	public GhostLoco(String sessionName, Square square, UUID playerId) {
-		super(sessionName, square, playerId);
+	public GhostLoco(String sessionName, Square square, UUID playerId, Compass drivingDirection) {
+		super(sessionName, square, playerId, drivingDirection);
 
 		ProxyObject ghostLocoProxy = new GhostLocoProxy(this);
 		scriptableObject = new ScriptableObject(ghostLocoProxy);

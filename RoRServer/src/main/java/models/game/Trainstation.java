@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.activemq.console.command.CreateCommand;
 import org.apache.log4j.Logger;
 
 import com.google.gson.JsonObject;
@@ -25,7 +26,9 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	public static final int RAIL_COUNT_LEFT = 6;
 	private List<UUID> trainstationRailIds;
 	private Stock stock;
+	private Crane crane;
 	private Compass alignment;
+	private UUID playerId;
 
 	private final int CLOCKWISE = 90;
 	private final int COUNTER_CLOCKWISE = -90;
@@ -35,7 +38,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 	transient EditorSession editorSession;
 
-	public Trainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment,
+	public Trainstation(String sessionName, Square square,List<UUID> trainstationRailIds, UUID id, Compass alignment,
 			Stock stock) {
 		super(sessionName, square, id);
 		this.stock = stock;
@@ -114,7 +117,23 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	public void setStock(Stock newStock) {
 		this.stock = newStock;
 	}
+	
+	public Crane getCrane() {
+		return crane;
+	}
 
+	public void setCrane(Crane crane) {
+		this.crane = crane;
+	}
+
+	public void setPlayerId(UUID playerId) {
+		this.playerId = playerId;
+	}
+	
+	public UUID getPlayerId() {
+		return this.playerId;
+	}
+	
 	/**
 	 * Gibt die Liste von Rails der Trainstation zurück
 	 * 
@@ -211,7 +230,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 				
 				// erzeuge neue Rail und setze intern das Square.PlacableOnSquare
 				Rail newRail = new Rail(sessionName, newSquare, railSectionsCompass, false,
-						tmpRail.getTrainstationId(), tmpRail.getId());
+						tmpRail.getTrainstationId(), tmpRail.getId(),tmpRail.placeableOnRail);
 				newSquare.setPlaceableOnSquare(newRail);
 			}else if(tmpTrainstationGameObject instanceof Stock) {
 				Stock tmpStock = (Stock)tmpTrainstationGameObject;
@@ -271,6 +290,22 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		trainstationInteractiveGameObjects.add(stock);
 
 		rotateTrainstationInteractiveGameObjects(trainstationInteractiveGameObjects, pivotXPos, pivotYPos, right);
+		
+		//wir sagen dem Crane das sich alles gedreht hat und wir jetzt auf nem anderen Square stehen
+		Rail craneRail = getRailbyId(this.crane.getRailId());
+		Square newSquare = EditorSessionManager.getInstance().getEditorSessionByName(sessionName).getMap().getSquareById(craneRail.getSquareId());
+//		crane.rotateCrane(newSquare, this.alignment);
+		this.crane = new Crane(this.sessionName, newSquare, this.getId(), Crane.getCraneAlignmentbyTrainstationAlignment(this.alignment), craneRail.getId());
+	}
+
+	private Rail getRailbyId(UUID railId) {
+		// TODO Auto-generated method stub
+		for(Rail rail: getTrainstationRails()) {
+			if(rail.getId().equals(railId)) {
+				return rail;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -395,4 +430,5 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		// TODO Auto-generated method stub
 		
 	}
+
 }

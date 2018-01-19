@@ -27,12 +27,12 @@ public abstract class Loco extends InteractiveGameObject {
 	 * @param square
 	 *            auf dem die Lok steht wird mitgegeben
 	 */
-	public Loco(String sessionName, Square square, UUID playerId) {
+	public Loco(String sessionName, Square square, UUID playerId, Compass drivingDirection) {
 		super(sessionName, square);
 		this.setCarts(new ArrayList<Cart>());
 		this.rail = (Rail) square.getPlaceableOnSquare();
 		this.map = GameSessionManager.getInstance().getGameSessionByName(sessionName).getMap();
-		this.drivingDirection = rail.getFirstSection().getNode1();
+		this.drivingDirection = drivingDirection;
 		this.speed = 0;
 		this.playerId = playerId;
 	}
@@ -51,7 +51,6 @@ public abstract class Loco extends InteractiveGameObject {
 					if (!reversed) {
 						reversed = true;
 						reversedDrive(true);
-						//initialReversedDrive();
 					} else {
 						reversedDrive(false);
 					}
@@ -109,7 +108,18 @@ public abstract class Loco extends InteractiveGameObject {
 			
 			Rail newRail = getNextRail(tempDirection, this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
 			
-			if(newRail!=null) {//Wenn das N�chste Schienenst�ck leer ist soll der zu anhalten
+			if(newRail.getPlaceableOnrail() instanceof Cart) {
+				Cart cart = (Cart) newRail.getPlaceableOnrail();
+				carts.add(cart);
+				cart.setCurrentLocoId(this.getId());
+				newRail.setPlaceableOnRail(null);
+				this.speed = 0;
+				notifyCartToLocoAdded(cart);
+				notifySpeedChanged();
+				break;
+			}
+			
+			if(newRail instanceof Rail) {//Wenn das N�chste Schienenst�ck leer ist soll der zu anhalten
 				Compass newDrivingDirection = newRail.getExitDirection(getDirectionNegation(tempDirection));
 
 				actCart.setDrivingDirection(newDrivingDirection);
@@ -117,7 +127,7 @@ public abstract class Loco extends InteractiveGameObject {
 				actCart.updateSquare(this.map.getSquare(newRail.getXPos(), newRail.getYPos()));
 				actCart.notifyUpdatedCart();
 			}
-			else {
+			else{
 				this.speed = 0; 
 				break;
 			}
@@ -143,7 +153,7 @@ public abstract class Loco extends InteractiveGameObject {
 			Compass back = this.rail.getExitDirection(this.drivingDirection);
 			Rail prevRail = getNextRail(back, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 			Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
-			Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, getId());
+			Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, true, this.getId());
 			carts.add(cart);
 		}
 	}
@@ -173,6 +183,19 @@ public abstract class Loco extends InteractiveGameObject {
 		}
 	}
 
+	public void addCart() {
+		
+		Cart lastCart = this.carts.get(carts.size()-1);
+		Compass back = this.rail.getExitDirection(lastCart.getDrivingDirection());
+		Rail prevRail = getNextRail(back, this.map.getSquare(lastCart.getXPos(), lastCart.getYPos()));
+		Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
+		Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, true, this.getId());
+		carts.add(cart);
+		//NotifyAddedCart(cartSquare, cart.getId());
+		
+	}
+	
+	
 	/**
 	 * gibt das Rail zur�ck, dass in angegebener Richtung an das Feld, das
 	 * mitgegeben wird, angekoppelt ist
@@ -240,6 +263,15 @@ public abstract class Loco extends InteractiveGameObject {
 		messageInfo.putValue("drivingDirection", drivingDirection.toString());
 		notifyChange(messageInfo);
 	}
+	private void notifyCartToLocoAdded(Cart cart) {
+		MessageInformation messageInfo = new MessageInformation("UpdateCartToLoco");
+		messageInfo.putValue("xPos", cart.getXPos());
+		messageInfo.putValue("yPos", cart.getYPos());
+		messageInfo.putValue("playerId", this.playerId);
+		messageInfo.putValue("currentLocoId", getId());
+		notifyChange(messageInfo);
+	}
+
 
 	public void changeSpeed(int speed) {
 		this.speed = speed;

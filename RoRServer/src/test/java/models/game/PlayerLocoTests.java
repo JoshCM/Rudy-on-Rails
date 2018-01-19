@@ -142,7 +142,7 @@ public class PlayerLocoTests {
 		squareLoco.setPlaceableOnSquare(railLoco);
 		squareCart.setPlaceableOnSquare(railCart);
 
-		PlayerLoco loco = new PlayerLoco(gameSession.getSessionName(), squareLoco, player.getId());
+		PlayerLoco loco = new PlayerLoco(gameSession.getSessionName(), squareLoco, player.getId(),node1);
 
 		return loco;
 	}

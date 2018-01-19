@@ -271,6 +271,22 @@ public class Map extends ModelBase {
 				newSquareOfStock.setPlaceableOnSquare(stock);
 				
 				notifyMovedTrainstation(oldSquareOfStock, newSquareOfStock, oldSquareOfPlaceable, newSquareOfPlaceable, trainstation);
+				
+				//The Crane likes to move it move it...
+				Crane crane = trainstation.getCrane();
+				Square newSquare = getTrainstationInteractiveGameObjectSquare(crane, trainstation, oldPlaceableOnSquareXPos, oldPlaceableOnSquareYPos);
+				System.out.println("newSquare ("+ newSquare.getXIndex() +"/"+newSquare.getYIndex()+")");
+				crane.moveCrane(newSquare);
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 			}
 		} else {
 			throw new NotMoveableException(String.format("PlaceableOnSquare von %s ist nicht auf %s verschiebbar",
