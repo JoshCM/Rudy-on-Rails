@@ -5,7 +5,12 @@
 package exceptions;
 
 public class RailSectionException extends RuntimeException  {
-    public RailSectionException(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public RailSectionException(String message) {
             super(message);
     }
 }

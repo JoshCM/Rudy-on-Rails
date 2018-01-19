@@ -3,24 +3,16 @@ package commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
-
 import org.junit.Test;
-
 import com.google.gson.JsonObject;
-
 import commands.base.Command;
 import commands.editor.CreateRailCommand;
 import commands.editor.CreateTrainstationCommand;
-import commands.editor.DeleteTrainstationCommand;
 import commands.editor.StartEditorCommand;
 import communication.MessageInformation;
 import models.game.Compass;
-import models.game.Rail;
 import models.game.Square;
 import models.game.Trainstation;
 import models.session.EditorSession;
@@ -104,7 +96,7 @@ public class CommandCreatorTests {
 		for(Square[] squares : editorSession.getMap().getSquares()) {
 			for(Square square : squares) {
 				assertNull(square.getPlaceableOnSquare());
-				assertEquals(editorName, square.getName());
+				assertEquals(editorName, square.getDescription());
 			}
 		}
 	}

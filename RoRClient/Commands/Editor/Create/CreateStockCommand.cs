@@ -11,7 +11,8 @@ namespace RoRClient.Commands.Editor.Create
 {
     class CreateStockCommand : CreateStockCommandBase
     {
-        public CreateStockCommand(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation) { 
+        public CreateStockCommand(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        { 
         }
     }
 }

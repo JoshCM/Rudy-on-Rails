@@ -1,6 +1,7 @@
 ﻿using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Game;
 using RoRClient.Models.Lobby;
+using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
 using RoRClient.ViewModels.Helper;
 using RoRClient.Views.Popup;
@@ -110,13 +111,16 @@ namespace RoRClient.ViewModels.Lobby
         {
             string gameName = PopupCreator.AskUserToInputString("Gib einer GameSession einen Namen!");
 
-            if(gameName != "")
+            if(gameName == null) 
             {
-                MessageInformation messageInformation = new MessageInformation();
-                messageInformation.PutValue("playerName", lobbyModel.PlayerName);
-                messageInformation.PutValue("gameName", gameName);
-                lobbyModel.getFromClientRequestSender().SendMessage("CreateGameSession", messageInformation);
+                Random rnd = new Random();
+                int random = rnd.Next(100000, 999999);
+                gameName = "TollesGame" + random.ToString();
             }
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("playerName", lobbyModel.PlayerName);
+            messageInformation.PutValue("gameName", gameName);
+            lobbyModel.getFromClientRequestSender().SendMessage("CreateGameSession", messageInformation);
         }
 
         private ICommand refreshGameSessionsCommand;
@@ -144,8 +148,29 @@ namespace RoRClient.ViewModels.Lobby
                 if (lobbyModel.Connected_Game)
                 {
                     uiState.State = "gameLobby";
+                } else
+                {
+                    uiState.State = "joinGameLobby";
                 }
             }
+        }
+
+        private ICommand leaveJoinGameLobbyCommand;
+        public ICommand LeaveJoinGameLobbyCommand
+        {
+            get
+            {
+                if (leaveJoinGameLobbyCommand == null)
+                {
+                    leaveJoinGameLobbyCommand = new ActionCommand(param => LeaveJoinGameLobby());
+                }
+                return leaveJoinGameLobbyCommand;
+            }
+        }
+
+        private void LeaveJoinGameLobby()
+        {
+            uiState.State = "start";
         }
     }
 }

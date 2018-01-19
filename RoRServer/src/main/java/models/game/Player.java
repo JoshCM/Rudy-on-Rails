@@ -14,27 +14,17 @@ public class Player extends ModelBase {
         this.name = name;
         this.setId(id);
         this.isHost = isHost;
-        
-        notifyCreated();
     }
     
-    public String getName() {
+    public String getDescription() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setSessionName(String name) {
         this.name = name;
     }
     
     public boolean getIsHost() {
     	return isHost;
-    }
-    
-    private void notifyCreated() {
-    	MessageInformation messageInfo = new MessageInformation("CreatePlayer");
-    	messageInfo.putValue("playerId", getId());
-    	messageInfo.putValue("playerName", name);
-    	messageInfo.putValue("isHost", isHost);
-    	notifyChange(messageInfo);
     }
 }

@@ -15,6 +15,7 @@ using Point = System.Windows.Point;
 using System.ComponentModel;
 using RoRClient.ViewModels.Helper;
 using RoRClient.Models.Base;
+using RoRClient.Communication;
 
 namespace RoRClient.ViewModels.Game
 {
@@ -30,7 +31,6 @@ namespace RoRClient.ViewModels.Game
             InitSquares();
 
             GameSession.GetInstance().PropertyChanged += OnLocoAddedInGameSession;
-            GameSession.GetInstance().PropertyChanged += OnCartAddedInGameSession;
             //TO-DO: nur zum Testen
             //CreateRandomRails();
 
@@ -80,6 +80,21 @@ namespace RoRClient.ViewModels.Game
             get
             {
                 return locos;
+            }
+        }
+
+        private LocoGameViewModel ownLoco;
+        public LocoGameViewModel OwnLoco
+        {
+            get
+            {
+                foreach(CanvasGameViewModel canvasGameViewModel in locos)
+                {
+                    LocoGameViewModel locoViewModel = (LocoGameViewModel)canvasGameViewModel;
+                    if (locoViewModel.Loco.PlayerId == ClientConnection.GetInstance().ClientId)
+                        return locoViewModel;
+                }
+                return null;
             }
         }
 
@@ -177,10 +192,23 @@ namespace RoRClient.ViewModels.Game
                 }
                 else
                 {
-                    ViewModelFactory factory = new ViewModelFactory();
-                    CanvasGameViewModel viewModel = factory.CreateGameViewModelForModel(rail.PlaceableOnRail, this);
+                    IModel model = (IModel)eventArgs.NewValue;
+                    if (model.GetType() == typeof(Cart))
+                    {
+                        ViewModelFactory factory = new ViewModelFactory();
+                        Cart cart = eventArgs.NewValue as Cart;
+                        CartGameViewModel cartGameViewModel = new CartGameViewModel(cart);
+                        taskFactory.StartNew(() => placeableOnRailCollection.Add(cartGameViewModel));
+                    }
+                    else
+                    {
+                        ViewModelFactory factory = new ViewModelFactory();
+                        CanvasGameViewModel viewModel = factory.CreateGameViewModelForModel(rail.PlaceableOnRail, this);
 
-                    taskFactory.StartNew(() => placeableOnRailCollection.Add(viewModel));
+                        taskFactory.StartNew(() => placeableOnRailCollection.Add(viewModel));
+
+                    }
+              
                 }
             }
         }
@@ -195,16 +223,18 @@ namespace RoRClient.ViewModels.Game
                 {
                     PlayerLocoGameViewModel locoGameViewModel = new PlayerLocoGameViewModel(loco);
                     taskFactory.StartNew(() => locos.Add(locoGameViewModel));
-                } else
+                }
+                else
                 {
-                    GhostLocoGameViewModel locoGameViewModel = new GhostLocoGameViewModel(loco);
+                    GhostLocoGameViewModel locoGameViewModel = new GhostLocoGameViewModel((GhostLoco)loco);
                     taskFactory.StartNew(() => locos.Add(locoGameViewModel));
                 }
-                
+
+                loco.PropertyChanged += OnCartAddedInLoco;
             }
         }
 
-        private void OnCartAddedInGameSession(object sender, PropertyChangedEventArgs e)
+        private void OnCartAddedInLoco(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Carts")
             {

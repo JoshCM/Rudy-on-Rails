@@ -126,8 +126,47 @@ namespace RoRClient.ViewModels.Lobby
                 if (lobbyModel.Connected_Editor)
                 {
                     uiState.State = "editorLobby";
+                } else
+                {
+                    uiState.State = "joinEditorLobby";
                 }
             }
+        }
+
+        private ICommand refreshEditorSessionsCommand;
+        public ICommand RefreshEditorSessionsCommand
+        {
+            get
+            {
+                if (refreshEditorSessionsCommand == null)
+                {
+                    refreshEditorSessionsCommand = new ActionCommand(param => RefreshEditorSessionInfos());
+                }
+                return refreshEditorSessionsCommand;
+            }
+        }
+
+        public void RefreshEditorSessionInfos()
+        {
+            lobbyModel.ReadEditorSessions();
+        }
+
+        private ICommand leaveJoinEditorLobbyCommand;
+        public ICommand LeaveJoinEditorLobbyCommand
+        {
+            get
+            {
+                if (leaveJoinEditorLobbyCommand == null)
+                {
+                    leaveJoinEditorLobbyCommand = new ActionCommand(param => LeaveJoinEditorLobby());
+                }
+                return leaveJoinEditorLobbyCommand;
+            }
+        }
+
+        private void LeaveJoinEditorLobby()
+        {
+            uiState.State = "start";
         }
     }
 }

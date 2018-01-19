@@ -19,6 +19,7 @@ public class Map extends ModelBase {
 	private String name;
 	private Square squares[][];
 	private final int mapSize = 50;
+	private int availablePlayerSlots;
 
 	/**
 	 * Jedes Square auf der Map braucht einen Index, um jedem Objekt, das auf einem
@@ -36,11 +37,38 @@ public class Map extends ModelBase {
 		}
 	}
 	
+	public void initAvailablePlayerSlots() {
+		removeAvailablePlayerSlots();
+		createAvailablePlayerSlots();
+	}
+	
+	private void createAvailablePlayerSlots() {
+		for(Square[] squares : getSquares()) {
+			for(Square square : squares) {
+				if(square.getPlaceableOnSquare() instanceof Trainstation) {
+					addAvailablePlayerSlot();
+				}
+			}
+		}
+	}
+	
+	private void removeAvailablePlayerSlots() {
+		availablePlayerSlots = 0;
+	}
+	
+	public int getAvailablePlayerSlots() {
+		return availablePlayerSlots;
+	}
+	
+	public void addAvailablePlayerSlot() {
+		availablePlayerSlots += 1;
+	}
+	
 	public int getMapSize() {
 		return mapSize;
 	}
 
-	public String getName() {
+	public String getDescription() {
 		return name;
 	}
 
@@ -243,6 +271,22 @@ public class Map extends ModelBase {
 				newSquareOfStock.setPlaceableOnSquare(stock);
 				
 				notifyMovedTrainstation(oldSquareOfStock, newSquareOfStock, oldSquareOfPlaceable, newSquareOfPlaceable, trainstation);
+				
+				//The Crane likes to move it move it...
+				Crane crane = trainstation.getCrane();
+				Square newSquare = getTrainstationInteractiveGameObjectSquare(crane, trainstation, oldPlaceableOnSquareXPos, oldPlaceableOnSquareYPos);
+				System.out.println("newSquare ("+ newSquare.getXIndex() +"/"+newSquare.getYIndex()+")");
+				crane.moveCrane(newSquare);
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 			}
 		} else {
 			throw new NotMoveableException(String.format("PlaceableOnSquare von %s ist nicht auf %s verschiebbar",

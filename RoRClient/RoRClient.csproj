@@ -99,35 +99,42 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BindingConverter\BooleanToOpacityConverter.cs" />
     <Compile Include="BindingConverter\BooleanToSignalImagePathConverter.cs" />
+    <Compile Include="BindingConverter\BooleanToVisibilityConverter.cs" />
     <Compile Include="BindingConverter\ObjectEqualsConverter.cs" />
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
     <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
-    <Compile Include="BindingConverter\BooleanToColorConverter.cs" />
+    <Compile Include="BindingConverter\IsNullToBooleanConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
     <Compile Include="BindingConverter\CompassToAngleConverter.cs" />
-    <Compile Include="Commands\Base\ChangeMapNameCommandBase.cs" />
+    <Compile Include="Commands\Base\ChangeMapSelectionCommandBase.cs" />
     <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Base\UpdateActivityOfSignalsCommandBase.cs" />
     <Compile Include="Commands\Base\CreateSignalsCommandBase.cs" />
+    <Compile Include="Commands\Base\CreateCraneCommandBase.cs" />
     <Compile Include="Commands\Base\CreateMineCommandBase.cs" />
     <Compile Include="Commands\Base\CreateRailCommandBase.cs" />
     <Compile Include="Commands\Base\CreateStockCommandBase.cs" />
     <Compile Include="Commands\Base\CreateTrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
+    <Compile Include="Commands\Editor\Other\LeaveEditorCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateActivityOfSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateSignalsCommand.cs" />
+    <Compile Include="Commands\Editor\Create\CreateCraneCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateMineCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateStockCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateTrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeleteMineCommand.cs" />
+    <Compile Include="Commands\Editor\Move\MoveCraneCommand.cs" />
     <Compile Include="Commands\Editor\Move\MoveMineCommand.cs" />
     <Compile Include="Commands\Editor\Move\MoveTrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Move\MoveRailCommand.cs" />
-    <Compile Include="Commands\Editor\Other\ChangeMapNameCommand.cs" />
+    <Compile Include="Commands\Editor\Other\ChangeMapSelectionCommand.cs" />
     <Compile Include="Commands\Editor\Other\StartCommand.cs" />
+    <Compile Include="Commands\Editor\Update\UpdateAlignmentOfCrane.cs" />
     <Compile Include="Commands\Editor\Update\UpdateAlignmentOfMineCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateConfigOfSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateAlignmentOfStockCommand.cs" />
@@ -135,7 +142,9 @@
     <Compile Include="Commands\Editor\Update\UpdateNodesOfRailSectionCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateNameOfMapCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeletePlaceableCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateScriptCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateCartCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreateCraneCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateGhostLocoCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayerLocoCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateMineCommand.cs" />
@@ -146,10 +155,12 @@
     <Compile Include="Commands\Game\Update\UpdateResourceLoadedOntoCartCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateTrainstationCommand.cs" />
-    <Compile Include="Commands\Game\Other\ChangeMapNameCommand.cs" />
+    <Compile Include="Commands\Game\Other\ChangeMapSelectionCommand.cs" />
+    <Compile Include="Commands\Game\Other\LeaveGameCommand.cs" />
     <Compile Include="Commands\Game\Other\StartCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateResourceCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateActivityOfSignalsCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateCartToLocoCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoPositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoSpeedCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateNodesOfRailSectionCommand.cs" />
@@ -171,13 +182,18 @@
     <Compile Include="Models\Game\Cart.cs" />
     <Compile Include="Models\Game\Coal.cs" />
     <Compile Include="Models\Game\Container.cs" />
+    <Compile Include="Models\Game\EditorPlayer.cs" />
+    <Compile Include="Models\Game\GamePlayer.cs" />
     <Compile Include="Models\Game\GhostLoco.cs" />
+    <Compile Include="Models\Game\Crane.cs" />
     <Compile Include="Models\Game\Gold.cs" />
     <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Mine.cs" />
     <Compile Include="Models\Game\Player.cs" />
     <Compile Include="Models\Game\PlayerLoco.cs" />
     <Compile Include="Models\Game\Resource.cs" />
+    <Compile Include="Models\Game\Script.cs" />
+    <Compile Include="Models\Game\Scripts.cs" />
     <Compile Include="Models\Game\Stock.cs" />
     <Compile Include="Models\Game\Signals.cs" />
     <Compile Include="Models\Game\Trainstation.cs" />
@@ -197,12 +213,16 @@
     <Compile Include="ViewModels\Base\CanvasViewModelBase.cs" />
     <Compile Include="ViewModels\Editor\ObjectConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Editor\ObjectConfiguration\RailConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\Editor\CraneEditorViewModel.cs" />
     <Compile Include="ViewModels\Editor\MineEditorViewModel.cs" />
     <Compile Include="ViewModels\Editor\StockEditorViewModel.cs" />
     <Compile Include="ViewModels\Game\CanvasGameViewModel.cs" />
     <Compile Include="ViewModels\Game\CartGameViewModel.cs" />
     <Compile Include="ViewModels\Game\CoalGameViewModel.cs" />
     <Compile Include="ViewModels\Game\ContainerGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\GameInteractionsViewModel.cs" />
+    <Compile Include="ViewModels\Game\GameStatusViewModel.cs" />
+    <Compile Include="ViewModels\Game\CraneGameViewModel.cs" />
     <Compile Include="ViewModels\Game\PlayerLocoGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GoldGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GhostLocoGameViewModel.cs" />
@@ -235,6 +255,9 @@
     <Compile Include="ViewModels\ViewConstants.cs" />
     <Compile Include="ViewModels\Editor\MapEditorViewModel.cs" />
     <Compile Include="Views\CanvasUserControl.cs" />
+    <Compile Include="Views\Editor\CraneEditorUserControl.xaml.cs">
+      <DependentUpon>CraneEditorUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Editor\Helper\RegexValidator.cs" />
     <Compile Include="Views\Editor\Helper\ToolConverter.cs" />
     <Compile Include="Views\Editor\ObjectConfiguration\RailConfigurationUserControl.xaml.cs">
@@ -264,8 +287,6 @@
     <Compile Include="ViewModels\Editor\ToolItem.cs" />
     <Compile Include="ViewModels\Editor\EditorViewModel.cs" />
     <Compile Include="ViewModels\Editor\ToolbarViewModel.cs" />
-    <Compile Include="ViewModels\Commands\EditorCommands.cs" />
-    <Compile Include="ViewModels\Commands\ExitCommand.cs" />
     <Compile Include="Views\Editor\ToolbarUserControl.xaml.cs">
       <DependentUpon>ToolbarUserControl.xaml</DependentUpon>
     </Compile>
@@ -286,6 +307,9 @@
     <Compile Include="Views\Game\CoalGameUserControl.xaml.cs">
       <DependentUpon>CoalGameUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\CraneGameUserControl.xaml.cs">
+      <DependentUpon>CraneGameUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\GameInteractionUserControl.xaml.cs">
       <DependentUpon>GameInteractionUserControl.xaml</DependentUpon>
     </Compile>
@@ -301,9 +325,6 @@
     </Compile>
     <Compile Include="Views\Game\MapGameUserControl.xaml.cs">
       <DependentUpon>MapGameUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Game\GameMiniMapUserControl.xaml.cs">
-      <DependentUpon>GameMiniMapUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\MineGameUserControl.xaml.cs">
       <DependentUpon>MineGameUserControl.xaml</DependentUpon>
@@ -356,6 +377,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Editor\CraneEditorUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
     <Page Include="Views\Editor\MineEditorUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -365,6 +390,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Game\CoalGameUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\CraneGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -385,10 +414,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Game\MapGameUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Game\GameMiniMapUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -496,6 +521,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communication\ClientConnection.cs" />
@@ -562,6 +591,7 @@
     <Resource Include="Resources\Images\container_gold.png" />
     <Resource Include="Resources\Images\Tools\rail_crossing.png" />
     <Resource Include="Resources\Images\rail_crossing.png" />
+    <Resource Include="Resources\Images\start_background.png" />
     <Resource Include="Resources\Images\signal_green.png" />
     <Resource Include="Resources\Images\signal_red.png" />
     <Resource Include="Resources\Images\loco_debug.png" />
@@ -576,6 +606,10 @@
     <Resource Include="Resources\Images\stock_cart_1.png" />
     <Resource Include="Resources\Images\Tools\trainstation1.png" />
     <Resource Include="Resources\Images\stock_container_1.png" />
+    <Resource Include="Resources\Images\container_points.png" />
+    <Resource Include="Resources\Images\btn_back.png" />
+    <Resource Include="Resources\Images\crane.png" />
+    <Resource Include="Resources\Images\Tools\crane.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

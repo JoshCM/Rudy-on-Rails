@@ -14,10 +14,19 @@ namespace RoRClient.Models.Session
         protected ObservableCollection<Loco> locos = new ObservableCollection<Loco>();
         protected ObservableCollection<Mine> mines = new ObservableCollection<Mine>();
         protected ObservableCollection<Cart> carts = new ObservableCollection<Cart>();
+        private Scripts scripts = new Scripts();
 
         private GameSession() : base()
         {
+            
+        }
 
+        public Scripts Scripts
+        {
+            get
+            {
+                return scripts;
+            }
         }
 
         public new void Init(string topicName)
@@ -39,28 +48,9 @@ namespace RoRClient.Models.Session
             return locos.Where(x => x.Id == locoId).First();
         }
 
-        public ObservableCollection<Cart> Carts
+        public Loco GetLocoByPlayerId(Guid playerId)
         {
-            get
-            {
-                return Carts;
-            }
-        }
-        private bool started;
-        public bool Started
-        {
-            get
-            {
-                return started;
-            }
-            set
-            {
-                if(started != value)
-                {
-                    started = value;
-                    NotifyPropertyChanged("Started");
-                }
-            }
+            return locos.Where(x => x.PlayerId == playerId).First();
         }
 
         public void AddLoco(Loco loco)
@@ -88,6 +78,17 @@ namespace RoRClient.Models.Session
             }
             return gameSession;
         }
+
+        public void DeleteGameSession()
+        {
+            if(topicReceiver != null)
+            {
+                topicReceiver.StopConnection();
+            }
+            gameSession = null;
+            NotifyPropertyChanged("GameSessionDeleted");
+        }
+	}
 
         public Mine getMineByPosition(int xPos, int yPos)
         {

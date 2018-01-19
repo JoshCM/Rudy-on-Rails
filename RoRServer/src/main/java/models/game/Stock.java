@@ -4,52 +4,49 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.apache.log4j.Logger;
-
 import com.google.gson.JsonObject;
-
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
-import communication.topic.TopicMessageQueue;
 import models.session.RoRSession;
 
 /**
- * Lager einer Trainstation
- * Besitzt eine Ausrichtung, eine TrainstationId und eine Liste von Containers
+ * Lager einer Trainstation Besitzt eine Ausrichtung, eine TrainstationId und
+ * eine Liste von Containers
  *
  */
-public class Stock extends InteractiveGameObject implements PlaceableOnSquare{
+public class Stock extends InteractiveGameObject implements PlaceableOnSquare {
 	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
 	private Compass alignment;
 	private UUID trainstationId;
 	private List<Resource> resources = new ArrayList<Resource>();
-	
+
 	public Stock(String sessionName, Square square, UUID trainstationId, Compass alignment) {
 		super(sessionName, square);
 		setAlignment(alignment);
 		setTrainstationId(trainstationId);
-		
+
 		// zu testzwecken
 		// addResource(new Coal(sessionName, square));
 		notifyCreatedStock();
 	}
-	
+
 	public Stock(String sessionName, Square square, UUID trainstationId, UUID id, Compass alignment) {
 		super(sessionName, square, id);
 		setAlignment(alignment);
 		setTrainstationId(trainstationId);
-		
+
 		// zu testzwecken
 		// addResource(new Coal(sessionName, square));
 		notifyCreatedStock();
 	}
-	
+
 	private void notifyCreatedStock() {
 		MessageInformation messageInfo = new MessageInformation("CreateStock");
 		messageInfo.putValue("stockId", getId());
 		messageInfo.putValue("squareId", getSquareId());
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
-		
+
 		List<JsonObject> jsonResources = new ArrayList<JsonObject>();
 		for (Resource resource : resources) {
 			JsonObject json = new JsonObject();
@@ -63,17 +60,20 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare{
 	@Override
 	public PlaceableOnSquare loadFromMap(Square square, RoRSession session) {
 		Stock stock = (Stock) square.getPlaceableOnSquare();
-		Stock newStock = new Stock(session.getName(), square, stock.getTrainstationId(), stock.getId(), stock.getAlignment());
-		
-		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
-		newStock.setName(session.getName());
+		Stock newStock = new Stock(session.getDescription(), square, stock.getTrainstationId(), stock.getId(),
+				stock.getAlignment());
+
+		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses
+		// Objekts mitbekommen kann
+		newStock.setSessionName(session.getDescription());
 
 		log.info("Stock erstellt: " + newStock.toString());
-		
-		// die Trainstation die den Stock beinhaltet muss den neuen Stock gesetzt bekommen,#
+
+		// die Trainstation die den Stock beinhaltet muss den neuen Stock gesetzt
+		// bekommen,#
 		// sonst hat der Stock der Trainstation keine Observer
-		((Trainstation)session.getMap().getPlaceableOnSquareById(getTrainstationId())).setStock(newStock);
-		
+		((Trainstation) session.getMap().getPlaceableOnSquareById(getTrainstationId())).setStock(newStock);
+
 		return newStock;
 	}
 
@@ -100,7 +100,7 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare{
 		alignment = Compass.values()[newIndex];
 		notifyStockAlignmentUpdated();
 	}
-	
+
 	private void notifyStockAlignmentUpdated() {
 		MessageInformation messageInformation = new MessageInformation("UpdateAlignmentOfStock");
 		messageInformation.putValue("id", this.getId());
@@ -125,11 +125,16 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare{
 	public List<Resource> getResources() {
 		return resources;
 	}
-	
+
 	public void addResource(Resource resource) {
 		this.resources.add(resource);
 	}
 
+	@Override
+	public void specificUpdate() {
+		// TODO Auto-generated method stub
+
+	}
 
 
 }

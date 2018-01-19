@@ -16,7 +16,7 @@
 
     <DockPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Bottom">
-            <Canvas x:Name="thisCanvas" Background="Brown" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
+            <Canvas x:Name="thisCanvas" Background="White" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
                 <ItemsControl ItemsSource="{Binding SquareViewModels}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type vm:SquareEditorViewModel}">
@@ -50,6 +50,11 @@
                         <DataTemplate DataType="{x:Type vm:MineEditorViewModel}">
                             <Canvas>
                                 <ve:MineEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:CraneEditorViewModel}">
+                            <Canvas>
+                                <ve:CraneEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.Resources>

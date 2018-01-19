@@ -2,10 +2,6 @@ package commands.editor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-
-import com.google.gson.JsonObject;
-
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import models.game.Compass;
@@ -18,7 +14,7 @@ import models.session.RoRSession;
 public class CreateCrossingWithSignalsCommand extends CommandBase {
 	private int xPos;
 	private int yPos;
-	
+
 	public CreateCrossingWithSignalsCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 
@@ -31,14 +27,14 @@ public class CreateCrossingWithSignalsCommand extends CommandBase {
 		EditorSession editorSession = (EditorSession) session;
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(xPos, yPos);
-		
+
 		List<Compass> railSectionPositions = new ArrayList<Compass>();
 		railSectionPositions.add(Compass.NORTH);
 		railSectionPositions.add(Compass.SOUTH);
 		railSectionPositions.add(Compass.EAST);
 		railSectionPositions.add(Compass.WEST);
-		
-		Rail rail = new Rail(session.getName(), square, railSectionPositions, true);
+
+		Rail rail = new Rail(session.getDescription(), square, railSectionPositions, true);
 		square.setPlaceableOnSquare(rail);
 	}
 }

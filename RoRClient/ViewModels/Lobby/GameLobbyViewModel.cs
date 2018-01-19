@@ -14,6 +14,7 @@ namespace RoRClient.ViewModels.Lobby
         private bool isHost;
 	    private LobbyModel lobbyModel;
 	    private GameSession gameSession;
+        private bool canStartGame;
 
 		public GameLobbyViewModel(UIState uiState, LobbyModel lobbyModel)
         {
@@ -21,7 +22,6 @@ namespace RoRClient.ViewModels.Lobby
 	        this.lobbyModel = lobbyModel;
 	        this.gameSession = GameSession.GetInstance();
 
-			GameSession.GetInstance().PropertyChanged += OnGameStarted;
             uiState.OnUiStateChanged += OnUiStateChanged;
         }
 
@@ -57,6 +57,19 @@ namespace RoRClient.ViewModels.Lobby
             }
         }
 
+        public bool CanStartGame
+        {
+            get
+            {
+                return canStartGame;
+            }
+            set
+            {
+                canStartGame = value;
+                OnPropertyChanged("CanStartGame");
+            }
+        }
+
         private ICommand startGameCommand;
         public ICommand StartGameCommand
         {
@@ -69,7 +82,6 @@ namespace RoRClient.ViewModels.Lobby
                 return startGameCommand;
             }
         }
-
 
 	    private ICommand refreshGameInfosCommand;
 	    public ICommand RefreshGameInfosCommand
@@ -98,11 +110,40 @@ namespace RoRClient.ViewModels.Lobby
             }
         }
 
-        private void OnGameStarted(object sender, PropertyChangedEventArgs e)
+        private ICommand leaveGameCommand;
+        public ICommand LeaveGameCommand
+        {
+            get
+            {
+                if (leaveGameCommand == null)
+                {
+                    leaveGameCommand = new ActionCommand(param => LeaveGame());
+                }
+                return leaveGameCommand;
+            }
+        }
+
+        private void LeaveGame()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
+            messageInformation.PutValue("isHost", GameSession.GetInstance().OwnPlayer.IsHost);
+            GameSession.GetInstance().QueueSender.SendMessage("LeaveGame", messageInformation);
+        }
+
+        private void OnGameSessionChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Started")
             {
                 uiState.State = "game";
+            }
+            else if (e.PropertyName == "Left")
+            {
+                uiState.State = "joinGameLobby";
+            }
+            else if (e.PropertyName == "MapName")
+            {
+                CanStartGame = IsHost && gameSession.MapName != "";
             }
         }
 
@@ -110,7 +151,10 @@ namespace RoRClient.ViewModels.Lobby
         {
             if (uiState.State == "gameLobby")
             {
-	            isHost = GameSession.GetInstance().OwnPlayer.IsHost;
+                gameSession = GameSession.GetInstance();
+                gameSession.PropertyChanged += OnGameSessionChanged;
+
+                isHost = gameSession.OwnPlayer.IsHost;
 				lobbyModel.ReadMapInfos();
 				lobbyModel.ReadGameInfos();
             }

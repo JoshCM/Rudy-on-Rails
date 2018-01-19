@@ -1,7 +1,6 @@
 package models.game;
 
 import communication.MessageInformation;
-import models.base.ModelBase;
 
 /**
  * Die Signals werden in der Rail verwendet und stellen die vier Signale (Norden, Osten, Westen, Süden) dar.

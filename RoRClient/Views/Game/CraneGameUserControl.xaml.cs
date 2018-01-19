@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace RoRClient.Views.Game
 {
     /// <summary>
-    /// Interaktionslogik für GameMiniMapUserControl.xaml
+    /// Interaktionslogik für CraneGameUserControl.xaml
     /// </summary>
-    public partial class GameMiniMapUserControl : UserControl
+    public partial class CraneGameUserControl : CanvasUserControl
     {
-        public GameMiniMapUserControl()
+        public CraneGameUserControl()
         {
             InitializeComponent();
         }

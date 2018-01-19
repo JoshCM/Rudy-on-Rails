@@ -38,7 +38,6 @@ namespace RoRClient.Models.Session
             set
             {
                 name = value;
-
             }
         }
 
@@ -72,7 +71,7 @@ namespace RoRClient.Models.Session
         {
             get
             {
-                Player ownPlayer = players.Where(x => x.Id == ClientConnection.GetInstance().ClientId).First();
+                Player ownPlayer = players.Where(x => x.Id == ClientConnection.GetInstance().ClientId).FirstOrDefault();
                 if (ownPlayer != null)
                 {
                     return ownPlayer;
@@ -93,7 +92,7 @@ namespace RoRClient.Models.Session
 
         public Player GetPlayerById(Guid playerId)
         {
-            return players.Where(x => x.Id == playerId).First();
+            return players.Where(x => x.Id == playerId).FirstOrDefault();
         }
         public QueueSender QueueSender
         {
@@ -128,7 +127,7 @@ namespace RoRClient.Models.Session
 		    {
 			    MessageInformation messageInformation = new MessageInformation();
 			    messageInformation.PutValue("mapName", MapName);
-			    QueueSender.SendMessage("ChangeMapName", messageInformation);
+			    QueueSender.SendMessage("ChangeMapSelection", messageInformation);
 		    }
 	    }
 

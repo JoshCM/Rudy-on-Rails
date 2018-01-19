@@ -2,22 +2,20 @@ package commands.editor;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
+import models.game.Crane;
+import exceptions.MapNotFoundException;
 import models.game.Map;
 import models.game.Mine;
-import models.game.PlaceableOnSquare;
 import models.game.Rail;
 import models.game.Square;
 import models.game.Stock;
 import models.game.Trainstation;
 import models.session.EditorSession;
-import models.session.GameSession;
 import models.session.RoRSession;
 import persistent.MapManager;
 
@@ -29,16 +27,16 @@ public class StartEditorCommand extends CommandBase {
 	}
 
 	private void startNewMap() {
-		Map map = new Map(session.getName());
+		Map map = new Map(session.getDescription());
 		session.setMap(map);
 		log.info("create new map");
 	}
 
-	private void startLoadedMap(String mapName) {
+	private void startLoadedMap(String mapName) throws MapNotFoundException {
 		Map map = MapManager.loadMap(mapName);
 		log.info("loading map: " + mapName);
 
-		map.setSessionNameForMapAndSquares(session.getName());
+		map.setSessionNameForMapAndSquares(session.getDescription());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
 
@@ -56,7 +54,7 @@ public class StartEditorCommand extends CommandBase {
 				// Square holen
 				Square square = squares[i][j];
 				// square bekommt sessionName und observer
-				square.setName(session.getName());
+				square.setSessionName(session.getDescription());
 				square.addObserver(TopicMessageQueue.getInstance());
 
 				// Wenn etwas auf dem Square liegt
@@ -85,6 +83,10 @@ public class StartEditorCommand extends CommandBase {
 				Mine mine = (Mine)rail.getPlaceableOnrail();
 				Mine newMine = (Mine)mine.loadFromMap(railSquare, session);
 				newRail.setPlaceableOnRail(newMine);
+			}else if(rail.getPlaceableOnrail() instanceof Crane) {
+				Crane crane = (Crane) rail.getPlaceableOnrail();
+				Crane newCrane = (Crane) crane.loadFromMap(railSquare, session);
+				newRail.setPlaceableOnRail(newCrane);
 			}
 			railSquare.setPlaceableOnSquare(newRail);
 		}
@@ -105,7 +107,11 @@ public class StartEditorCommand extends CommandBase {
 			startNewMap();
 		} else {
 			// eine map wird geladen
-			startLoadedMap(mapName);
+			try {
+				startLoadedMap(mapName);
+			} catch (MapNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
 		session.start();
 	}

@@ -16,12 +16,15 @@ namespace RoRClient.Models.Game
     {
         private Compass drivingDirection;
         private int speed;
+        private bool isGhostCart;
+        private Guid playerId;
         private String onboardResourceImagePath;
         public Resource onboardResource;
 
-        public Cart(Guid id, Compass drivingDirection, Square square) : base(square)
+        public Cart(Guid id, Guid playerId, Compass drivingDirection, Square square) : base(square)
         {
             this.id = id;
+            this.playerId = playerId;
             this.drivingDirection = drivingDirection;
             this.onboardResource = null;
             this.onboardResourceImagePath= null;
@@ -64,6 +67,30 @@ namespace RoRClient.Models.Game
         {
             onboardResource = res;
             NotifyPropertyChanged("OnboardResource", this.onboardResource, res);
+        }
+
+        public bool IsGhostCart
+        {
+            get
+            {
+                return isGhostCart;
+            }
+            set
+            {
+                if (isGhostCart != value)
+                {
+                    isGhostCart = value;
+                    NotifyPropertyChanged("IsGhostCart");
+                }
+            }
+        }
+
+        public Guid PlayerId
+        {
+            get
+            {
+                return playerId;
+            }
         }
 
         public Compass DrivingDirection

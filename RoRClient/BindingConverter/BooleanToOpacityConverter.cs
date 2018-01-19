@@ -15,23 +15,12 @@ namespace RoRClient.BindingConverter
     /// Wird genutzt, um bei einem RailViewModel zu entscheiden, um welchen Schienentyp es sich handelt und gibt dann den Pfad zum passenden
     /// Bild zurück
     /// </summary>
-    public class BooleanToColorConverter : IValueConverter
+    public class BooleanToOpacityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool boolValue = (bool)value;
-
-            if(boolValue)
-            {
-                SolidColorBrush solidColorBrush = new SolidColorBrush();
-                solidColorBrush.Color = Colors.Green;
-                return solidColorBrush;
-            } else
-            {
-                SolidColorBrush solidColorBrush = new SolidColorBrush();
-                solidColorBrush.Color = Colors.Red;
-                return solidColorBrush;
-            }
+            return boolValue ? 0.6 : 1;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

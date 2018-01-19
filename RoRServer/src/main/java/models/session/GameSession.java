@@ -3,17 +3,18 @@ package models.session;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import com.google.gson.JsonObject;
-
 import communication.MessageInformation;
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
-import models.game.GhostLoco;
+import models.game.GamePlayer;
 import models.game.Loco;
 import models.game.Mine;
 import models.game.PlayerLoco;
+import models.game.Player;
 import models.game.TickableGameObject;
+import models.scripts.ScriptableObject;
+import models.scripts.ScriptableObjectManager;
+import models.scripts.Scripts;
 
 /**
  * Oberklasse vom Game-Modus. 
@@ -29,14 +30,33 @@ public class GameSession extends RoRSession{
 	private Ticker ticker;
 	private ArrayList<Mine> mines=new ArrayList<>();
 	private ArrayList<Loco> locos = new ArrayList<>();
+	private Scripts scripts;
+	private int availablePlayerSlots;
+	private ScriptableObjectManager scriptableObjectManager;
 
 	public GameSession(String name, UUID hostPlayerId, String hostPlayerName) {
-		super(name, hostPlayerId, hostPlayerName);
+		super(name);
+		
+		createHostPlayer(hostPlayerId, hostPlayerName);
+		
 		GameSessionDispatcher dispatcher = new GameSessionDispatcher(this);
+		scripts = new Scripts(name);
+		scriptableObjectManager = new ScriptableObjectManager();
 		this.queueReceiver = new QueueReceiver(name, dispatcher);
 		this.ticker = new Ticker();
 		this.stopped = false;
 		this.startTicking();
+	}
+	
+	private void createHostPlayer(UUID playerId, String playerName) {
+		GamePlayer player = new GamePlayer(getDescription(), playerName, playerId, true);
+		addPlayer(player);
+	}
+	
+	public Player createPlayer(UUID playerId, String playerName) {
+		GamePlayer player = new GamePlayer(getDescription(), playerName, playerId, false);
+		addPlayer(player);
+		return player;
 	}
 	
 	/**
@@ -61,6 +81,18 @@ public class GameSession extends RoRSession{
 		};
 		tickingThread.start();
 		
+	}
+	
+	/**
+	 * Prüft, ob das Spiel die maximale Anzahl an verfügbaren Spielerslots erreicht wurde
+	 * @return
+	 */
+	public boolean isFull() {
+		boolean isFull = false;
+		if (getMap().getAvailablePlayerSlots() == getPlayers().size()) {
+			isFull = true;
+		}
+		return isFull;
 	}
 	
 	/**
@@ -112,6 +144,13 @@ public class GameSession extends RoRSession{
 		}
 	}
 	
+	@Override
+	protected void notifyPlayerLeft(Player player) {
+		MessageInformation message = new MessageInformation("LeaveGame");
+		message.putValue("playerId", player.getId());
+		notifyChange(message);
+	}
+	
 	
 	public void addMine(Mine mine) {
 		if(mine!=null) {
@@ -125,6 +164,29 @@ public class GameSession extends RoRSession{
 
 	public List<Loco> getLocos() {
 		return locos;
+	}
+	
+	public Scripts getScripts() {
+		return scripts;
+	}
+	
+	@Override
+	public void start() {
+		super.start();
+		scripts.init();
+		scriptableObjectManager.init();
+	}
+	
+	public void addScriptableObject(ScriptableObject scriptableObject) {
+		scriptableObjectManager.addScriptableObject(scriptableObject);
+	}
+
+	public int getAvailablePlayerSlots() {
+		return availablePlayerSlots;
+	}
+
+	public void setAvailablePlayerSlots(int availablePlayerSlots) {
+		this.availablePlayerSlots = availablePlayerSlots;
 	}
 }
 

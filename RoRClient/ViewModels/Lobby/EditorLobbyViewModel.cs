@@ -19,14 +19,13 @@ namespace RoRClient.ViewModels.Lobby
 		private bool isHost;
 		private LobbyModel lobbyModel;
 		private EditorSession editorSession;
+        private bool canStartEditor;
 
 		public EditorLobbyViewModel(UIState uiState, LobbyModel lobbyModel)
 		{
 			this.uiState = uiState;
 			this.lobbyModel = lobbyModel;
 			this.editorSession = EditorSession.GetInstance();
-
-			EditorSession.GetInstance().PropertyChanged += OnEditorStarted;
 			uiState.OnUiStateChanged += OnUiStateChanged;
 		}
 
@@ -62,7 +61,20 @@ namespace RoRClient.ViewModels.Lobby
 			}
 		}
 
-		private ICommand startEditorCommand;
+        public bool CanStartEditor
+        {
+            get
+            {
+                return canStartEditor;
+            }
+            set
+            {
+                canStartEditor = value;
+                OnPropertyChanged("CanStartEditor");
+            }
+        }
+
+        private ICommand startEditorCommand;
 		public ICommand StartEditorCommand
 		{
 			get
@@ -102,22 +114,54 @@ namespace RoRClient.ViewModels.Lobby
 			}
 		}
 
-		private void OnEditorStarted(object sender, PropertyChangedEventArgs e)
+        private ICommand leaveEditorCommand;
+        public ICommand LeaveEditorCommand
+        {
+            get
+            {
+                if (leaveEditorCommand == null)
+                {
+                    leaveEditorCommand = new ActionCommand(param => LeaveEditor());
+                }
+                return leaveEditorCommand;
+            }
+        }
+
+        private void LeaveEditor()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("playerId", EditorSession.GetInstance().OwnPlayer.Id);
+            messageInformation.PutValue("isHost", EditorSession.GetInstance().OwnPlayer.IsHost);
+            EditorSession.GetInstance().QueueSender.SendMessage("LeaveEditor", messageInformation);
+        }
+
+        private void OnEditorSessionChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == "Started")
 			{
 				uiState.State = "editor";
 			}
-		}
+            else if (e.PropertyName == "Left")
+            {
+                uiState.State = "joinEditorLobby";
+            }
+            else if (e.PropertyName == "MapName")
+            {
+                CanStartEditor = IsHost && editorSession.MapName != "";
+            }
+        }
 
 		private void OnUiStateChanged(object sender, UiChangedEventArgs args)
 		{
 			if (uiState.State == "editorLobby")
 			{
-				isHost = EditorSession.GetInstance().OwnPlayer.IsHost;
-				lobbyModel.ReadMapInfos();
+                editorSession = EditorSession.GetInstance();
+                editorSession.PropertyChanged += OnEditorSessionChanged;
+
+                isHost = EditorSession.GetInstance().OwnPlayer.IsHost;
+                lobbyModel.ReadMapInfos();
 				lobbyModel.ReadEditorInfos();
-			}
+            }
 		}
 	}
 }

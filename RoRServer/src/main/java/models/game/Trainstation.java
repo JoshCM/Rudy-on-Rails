@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.activemq.console.command.CreateCommand;
 import org.apache.log4j.Logger;
 
 import com.google.gson.JsonObject;
@@ -25,21 +26,25 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	public static final int RAIL_COUNT_LEFT = 6;
 	private List<UUID> trainstationRailIds;
 	private Stock stock;
+	private Crane crane;
 	private Compass alignment;
+	private UUID playerId;
 
 	private final int CLOCKWISE = 90;
 	private final int COUNTER_CLOCKWISE = -90;
-	private Square spawnPointForLoco;
+	
+	private UUID spawnPointForLoco;
+	private UUID spawnPointForCart;
 
 	transient EditorSession editorSession;
 
-	public Trainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment,
+	public Trainstation(String sessionName, Square square,List<UUID> trainstationRailIds, UUID id, Compass alignment,
 			Stock stock) {
 		super(sessionName, square, id);
 		this.stock = stock;
 		this.trainstationRailIds = trainstationRailIds;
 		this.alignment = alignment;
-		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getName());
+		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getDescription());
 		notifyCreatedTrainstation();
 	}
 
@@ -51,20 +56,28 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		return alignment;
 	}
 
-	/**
-	 * Setzt den SpanPoint für die Loco
-	 * @param square
-	 */
-	public void setSpawnPointforLoco(Square square) {
-		spawnPointForLoco = square;
+	public void setSpawnPointforLoco(UUID railId) {
+		spawnPointForLoco = railId;
+	}
+
+	public UUID getSpawnPointforLoco() {
+		return spawnPointForLoco;
 	}
 
 	/**
-	 * Gibt den SpawnPoint für die Loco zurück
-	 * @return Square als Startposition
+	 * Gibt den SpawnPoint für neue Carts zurück
+	 * @return
 	 */
-	public Square getSpawnPointforLoco() {
-		return spawnPointForLoco;
+	public UUID getSpawnPointForCart() {
+		return spawnPointForCart;
+	}
+
+	/**
+	 * Setzt den SpawnPoint für neue Carts
+	 * @param spawnPointForCart
+	 */
+	public void setSpawnPointForCart(UUID spawnPointForCart) {
+		this.spawnPointForCart = spawnPointForCart;
 	}
 
 	private void notifyCreatedTrainstation() {
@@ -104,7 +117,23 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	public void setStock(Stock newStock) {
 		this.stock = newStock;
 	}
+	
+	public Crane getCrane() {
+		return crane;
+	}
 
+	public void setCrane(Crane crane) {
+		this.crane = crane;
+	}
+
+	public void setPlayerId(UUID playerId) {
+		this.playerId = playerId;
+	}
+	
+	public UUID getPlayerId() {
+		return this.playerId;
+	}
+	
 	/**
 	 * Gibt die Liste von Rails der Trainstation zurück
 	 * 
@@ -112,7 +141,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	 */
 	public List<Rail> getTrainstationRails() {
 		List<Rail> trainstationRails = new ArrayList<Rail>();
-		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getName());
+		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getDescription());
 		for (UUID railId : trainstationRailIds) {
 			trainstationRails.add((Rail) editorSession.getMap().getPlaceableOnSquareById(railId));
 		}
@@ -185,7 +214,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 			InteractiveGameObject tmpTrainstationGameObject = temptrainstationGameObjectMap.get(coordinate);
 			// bekomme sessionname für neue Rail
-			String sessionName = editorSession.getName();
+			String sessionName = editorSession.getDescription();
 			// bekomme newSquare
 			Square newSquare = (Square) editorSession.getMap().getSquare(coordinate.x, coordinate.y);
 
@@ -201,7 +230,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 				
 				// erzeuge neue Rail und setze intern das Square.PlacableOnSquare
 				Rail newRail = new Rail(sessionName, newSquare, railSectionsCompass, false,
-						tmpRail.getTrainstationId(), tmpRail.getId());
+						tmpRail.getTrainstationId(), tmpRail.getId(),tmpRail.placeableOnRail);
 				newSquare.setPlaceableOnSquare(newRail);
 			}else if(tmpTrainstationGameObject instanceof Stock) {
 				Stock tmpStock = (Stock)tmpTrainstationGameObject;
@@ -261,6 +290,22 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		trainstationInteractiveGameObjects.add(stock);
 
 		rotateTrainstationInteractiveGameObjects(trainstationInteractiveGameObjects, pivotXPos, pivotYPos, right);
+		
+		//wir sagen dem Crane das sich alles gedreht hat und wir jetzt auf nem anderen Square stehen
+		Rail craneRail = getRailbyId(this.crane.getRailId());
+		Square newSquare = EditorSessionManager.getInstance().getEditorSessionByName(sessionName).getMap().getSquareById(craneRail.getSquareId());
+//		crane.rotateCrane(newSquare, this.alignment);
+		this.crane = new Crane(this.sessionName, newSquare, this.getId(), Crane.getCraneAlignmentbyTrainstationAlignment(this.alignment), craneRail.getId());
+	}
+
+	private Rail getRailbyId(UUID railId) {
+		// TODO Auto-generated method stub
+		for(Rail rail: getTrainstationRails()) {
+			if(rail.getId().equals(railId)) {
+				return rail;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -314,14 +359,15 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 	@Override
 	public Trainstation loadFromMap(Square square, RoRSession session) {
-		Trainstation trainStation = (Trainstation) square.getPlaceableOnSquare();
-		Trainstation newTrainStation = new Trainstation(session.getName(), square,
-				trainStation.getTrainstationRailIds(), trainStation.getId(), trainStation.alignment,
-				trainStation.getStock());
-
-		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses
-		// Objekts mitbekommen kann
-		newTrainStation.setName(session.getName());
+		Trainstation oldTrainStation = (Trainstation) square.getPlaceableOnSquare();
+		Trainstation newTrainStation = new Trainstation(session.getDescription(), square,
+				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock());
+		
+		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
+		newTrainStation.setSessionName(session.getDescription());
+		
+		// setze den alten SpawnPoint für die neue Trainstation
+		newTrainStation.setSpawnPointforLoco(oldTrainStation.getSpawnPointforLoco());
 
 		log.info("TrainStation erstellt: " + newTrainStation.toString());
 		return newTrainStation;
@@ -378,4 +424,11 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		return "Trainstation [trainstationRailIds=" + trainstationRailIds + ", alignment=" + alignment
 				+ ", spawnPointForLoco=" + spawnPointForLoco + "]";
 	}
+
+	@Override
+	public void specificUpdate() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

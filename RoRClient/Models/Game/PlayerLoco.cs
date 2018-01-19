@@ -8,7 +8,7 @@ namespace RoRClient.Models.Game
 {
     public class PlayerLoco : Loco
     {
-        public PlayerLoco(Guid id, Compass drivingDirection, Square square) : base(id, drivingDirection, square)
+        public PlayerLoco(Guid id, Guid playerId, Compass drivingDirection, Square square) : base(id, playerId, drivingDirection, square)
         {
         }
     }

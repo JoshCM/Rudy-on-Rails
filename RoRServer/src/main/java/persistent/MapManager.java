@@ -8,17 +8,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import communication.queue.receiver.QueueReceiver;
-import models.base.Model;
+import exceptions.MapNotFoundException;
 import models.game.Map;
 import models.game.Placeable;
 import models.game.PlaceableOnRail;
 import models.game.PlaceableOnSquare;
-import models.game.RailSection;
 
 /**
  * 
@@ -39,24 +37,28 @@ public class MapManager {
 			.setPrettyPrinting().create();
 	private final static Gson gsonSaver = new GsonBuilder().setPrettyPrinting().create();
 
-	private MapManager() {}
-	
+	private MapManager() {
+	}
+
 	/**
-	 * Es wird eine Map über den gegebenen Dateinamen erstellt und zugegeben.
+	 * Es wird eine Map über den gegebenen Dateinamen erstellt und zurückgegeben.
 	 * 
 	 * @param mapName
 	 *            Dateiname der Map
 	 * @return Gibt eine Map für ein Spiel zurück
+	 * @throws MapNotFoundException 
 	 */
-	public static Map loadMap(String mapName) {
+	public static Map loadMap(String mapName) throws MapNotFoundException {
+		if(mapName == null)
+			throw new MapNotFoundException(String.format("MapName ist %s", mapName));
+		
 		String jsonMap = readFromFile(mapName);
-		//log.info("Eingelesene Map: " + jsonMap);
 		Map map = convertJsonToMap(jsonMap);
 		return map;
 	}
 
 	/**
-	 * Lies eine Datei über den gegebenen Namen ein und gibt ein JsonObjekt zurück
+	 * Liest eine Datei über den gegebenen Namen ein und gibt ein JsonObjekt zurück
 	 * 
 	 * @param mapName:
 	 *            Dateiname der Map
@@ -72,6 +74,8 @@ public class MapManager {
 			while ((line = br.readLine()) != null) {
 				jsonMap += line;
 			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -98,7 +102,7 @@ public class MapManager {
 	public static void saveMap(Map map) {
 		String jsonMap = convertMapToJson(map);
 		log.info("Gespeicherte Map: " + jsonMap);
-		saveToFile(jsonMap, map.getName());
+		saveToFile(jsonMap, map.getDescription());
 	}
 
 	public static String convertMapToJson(Map map) {
@@ -110,6 +114,10 @@ public class MapManager {
 		Map map = gsonLoader.fromJson(mapAsJson, Map.class);
 		return map;
 	}
+	
+	public static int loadAvailablePlayerSlots(String mapName) throws MapNotFoundException {
+		return loadMap(mapName).getAvailablePlayerSlots();
+	}
 
 	/**
 	 * Speichert das JsonObjekt im Dateisystem ab
@@ -120,13 +128,13 @@ public class MapManager {
 	 *            Dateiname zum Speichern
 	 */
 	private static void saveToFile(String jsonMap, String mapName) {
-		
+
 		// erzeugt den maps-Ordner wenn er noch nicht existiert
 		File mapsDir = new File(OUTPUT_DIR_PATH);
-		if(!mapsDir.exists()) {
+		if (!mapsDir.exists()) {
 			mapsDir.mkdir();
 		}
-		
+
 		try (PrintWriter out = new PrintWriter(OUTPUT_DIR_PATH + mapName + ext)) {
 			out.println(jsonMap);
 			out.flush();
@@ -135,13 +143,15 @@ public class MapManager {
 			e.printStackTrace();
 		}
 	}
-	
-	public static List<String> readMapNames(){
+
+	public static List<String> readMapNames() {
 		List<String> mapList = new ArrayList<String>();
 		File folder = new File(OUTPUT_DIR_PATH);
-		for(File fileEntry : folder.listFiles()) {
-			if(fileEntry.isFile())
-				mapList.add(fileEntry.getName().replace(ext, ""));
+		if (folder.exists()) { 
+			for (File fileEntry : folder.listFiles()) {
+				if (fileEntry.isFile())
+					mapList.add(fileEntry.getName().replace(ext, ""));
+			}
 		}
 		return mapList;
 	}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -15,11 +16,19 @@ namespace RoRClient.Models.Game
     {
         private int speed;
         private Compass drivingDirection;
+        private Guid playerId;
 
-        public Loco(Guid id, Compass drivingDirection, Square square) : base(square)
+        public Loco(Guid id, Guid playerId, Compass drivingDirection, Square square) : base(square)
         {
             this.id = id;
             this.drivingDirection = drivingDirection;
+            this.playerId = playerId;
+        }
+
+        public void AddCart(Cart cart)
+        {
+            carts.Add(cart);
+            NotifyPropertyChanged("Carts", null, cart);
         }
 
         public int Speed
@@ -53,22 +62,24 @@ namespace RoRClient.Models.Game
                 }
             }
         }
+        public Guid PlayerId
+        {
+            get
+            {
+                return playerId;
+            }
+        }
 
-        private List<Cart> carts = new List<Cart>();
-
-        public List<Cart> Carts
+        private ObservableCollection<Cart> carts = new ObservableCollection<Cart>();
+        public ObservableCollection<Cart> Carts
         {
             get
             {
                 return carts;
             }
-            set
-            {
-                carts = value;
-            }
         }
 
-        public Cart getCartById(Guid cartId)
+        public Cart GetCartById(Guid cartId)
         {
             return carts.Where(x => x.Id == cartId).First();
         }

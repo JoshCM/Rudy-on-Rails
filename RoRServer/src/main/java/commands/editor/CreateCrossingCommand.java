@@ -2,9 +2,6 @@ package commands.editor;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.gson.JsonObject;
-
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import models.game.Compass;
@@ -37,7 +34,7 @@ public class CreateCrossingCommand extends CommandBase {
 		railSectionPositions.add(Compass.EAST);
 		railSectionPositions.add(Compass.WEST);
 		
-		Rail rail = new Rail(session.getName(), square, railSectionPositions);
+		Rail rail = new Rail(session.getDescription(), square, railSectionPositions);
 		square.setPlaceableOnSquare(rail);
 	}
 }
