@@ -4,6 +4,7 @@ using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,9 +17,33 @@ namespace RoRClient.ViewModels.Game
     public class GameInteractionsViewModel : ViewModelBase
     {
         private Script selectedGhostLocoScript;
+        private bool canActivateSensor = false;
+        private CanvasGameViewModel canvasGameViewModel;
+
+        public bool CanActivateSensor
+        {
+            get
+            {
+                return canActivateSensor;
+            }
+            set
+            {
+                canActivateSensor = value;
+                OnPropertyChanged("CanActivateSensor");
+            }
+        }
 
         public GameInteractionsViewModel()
         {
+
+        }
+
+        public void OnSelectedGameObjectChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "SelectedGameCanvasViewModel")
+            {
+                canvasGameViewModel = (CanvasGameViewModel)sender;
+            }
         }
 
         public Scripts Scripts
@@ -91,5 +116,27 @@ namespace RoRClient.ViewModels.Game
                 GameSession.GetInstance().QueueSender.SendMessage("AddGhostLocoScriptFromPlayer", messageInformation);
             }
         }
+
+        private ICommand activateSensorCommand;
+        public ICommand ActivateSensorCommand
+        {
+            get
+            {
+                if(activateSensorCommand == null)
+                {
+                    activateSensorCommand = new ActionCommand(param => ActivateSensor());
+                }
+                return activateSensorCommand;
+            }
+        }
+
+        private void ActivateSensor()
+        {
+            MessageInformation message = new MessageInformation();
+            Rail rail = ((RailGameViewModel)canvasGameViewModel).Rail;
+            message.PutValue("railId", rail.Id);
+            GameSession.GetInstance().QueueSender.SendMessage("ActivateSensor", message);
+        }
+
     }
 }

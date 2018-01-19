@@ -37,6 +37,10 @@ namespace RoRClient.ViewModels.Game
             this.uiState = uiState;
             mapGameViewModel = new MapGameViewModel();
             gameInteractionsViewModel = new GameInteractionsViewModel();
+
+            // Prüfen
+            mapGameViewModel.SelectedGameCanvasViewModel.PropertyChanged += gameInteractionsViewModel.OnSelectedGameObjectChanged;
+
             uiState.OnUiStateChanged += OnUiStateChanged;
         }
 

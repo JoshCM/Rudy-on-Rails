@@ -43,6 +43,21 @@ namespace RoRClient.ViewModels.Game
             set { gameCanvasViewModel = value; }
         }
 
+
+        private CanvasGameViewModel _selectedGameCanvasViewModel;
+        public CanvasGameViewModel SelectedGameCanvasViewModel
+        {
+            get
+            {
+                return _selectedGameCanvasViewModel;
+            }
+            set
+            {
+                _selectedGameCanvasViewModel = value;
+                OnPropertyChanged("SelectedGameCanvasViewModel");
+            }
+        }
+
         private ObservableCollection<SquareGameViewModel> squareViewModels =
             new ObservableCollection<SquareGameViewModel>();
 

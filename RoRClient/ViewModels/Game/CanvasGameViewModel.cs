@@ -25,9 +25,41 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
+        /// <param name="modelId"></param>
         public CanvasGameViewModel(Guid modelId) : base(modelId)
         {
         }
 
+        /// <summary>
+        /// Auswählen/Selektieren von ViewModels
+        /// </summary>
+        private ICommand selectInteractiveGameObjectCommand;
+        public ICommand SelectInteractiveGameObjectCommand
+        {
+            get
+            {
+                if(selectInteractiveGameObjectCommand == null)
+                {
+                    selectInteractiveGameObjectCommand = new ActionCommand(param => SelectInteractiveGameObject());
+                }
+                return selectInteractiveGameObjectCommand;
+            }
+        }
+
+        /// <summary>
+        /// GameObject (Rail etc.) ausgewählt 
+        /// </summary>
+        public void SelectInteractiveGameObject()
+        {
+            // Neues CanvasGameViewModel (this) in MapViewModel merken
+            MapViewModel.SelectedGameCanvasViewModel = this;
+            if (MapViewModel.SelectedGameCanvasViewModel is RailGameViewModel)
+            {
+                // Button auf true setzen
+            }
+
+
+            Console.WriteLine(this);
+        }
     }
 }

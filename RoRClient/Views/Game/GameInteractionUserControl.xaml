@@ -27,7 +27,7 @@
         </StackPanel>
 
         <StackPanel Margin="20 20 10 10">
-            <Button Content="Sensor" Style="{StaticResource DefaultButtonStyleDampfmodus}" Margin="0 0 0 10"/>
+            <Button Content="Sensor" Style="{StaticResource DefaultButtonStyleDampfmodus}" Margin="0 0 0 10" IsEnabled="{Binding CanActivateSensor}" Command="{Binding ActivateSensorCommand}"/>
             <ComboBox Text="Wähle Script" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" Margin="0 0 0 10"/>
             <Button Content="Script hochladen" Style="{StaticResource DefaultButtonStyleDampfmodus}" />
         </StackPanel>
