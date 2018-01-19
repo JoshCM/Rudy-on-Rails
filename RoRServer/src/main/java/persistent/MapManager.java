@@ -147,9 +147,11 @@ public class MapManager {
 	public static List<String> readMapNames() {
 		List<String> mapList = new ArrayList<String>();
 		File folder = new File(OUTPUT_DIR_PATH);
-		for (File fileEntry : folder.listFiles()) {
-			if (fileEntry.isFile())
-				mapList.add(fileEntry.getName().replace(ext, ""));
+		if (folder.exists()) {
+			for (File fileEntry : folder.listFiles()) {
+				if (fileEntry.isFile())
+					mapList.add(fileEntry.getName().replace(ext, ""));
+			}
 		}
 		return mapList;
 	}
