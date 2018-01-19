@@ -10,12 +10,13 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModels.Editor
 {
-    abstract public class TrainstationEditorViewModel : CanvasEditorViewModel
+    public abstract class TrainstationEditorViewModel : CanvasEditorViewModel
     {
         private Trainstation trainstation;
 
         public TrainstationEditorViewModel(Trainstation trainstation) : base(trainstation.Id)
         {
+            this.trainstation = trainstation;
             this.SquarePosX = trainstation.Square.PosX;
             this.SquarePosY = trainstation.Square.PosY;
         }
@@ -44,7 +45,7 @@ namespace RoRClient.ViewModels.Editor
 
         public override void Move()
         {
-
+            // in SquareViewModel implementiert
         }
 
         public override void RotateLeft()

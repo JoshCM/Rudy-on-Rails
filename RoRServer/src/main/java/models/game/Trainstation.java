@@ -93,24 +93,6 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 		return shallowCopy;
 	}
 
-//	private void notifyCreatedTrainstation() {
-//		MessageInformation messageInfo = new MessageInformation("CreateTrainstation");
-//		messageInfo.putValue("trainstationId", getId());
-//		messageInfo.putValue("alignment", alignment);
-//		messageInfo.putValue("xPos", getXPos());
-//		messageInfo.putValue("yPos", getYPos());
-//		List<JsonObject> rails = new ArrayList<JsonObject>();
-//		for (UUID railId : getTrainstationRailIds()) {
-//			JsonObject json = new JsonObject();
-//			json.addProperty("railId", railId.toString());
-//			rails.add(json);
-//		}
-//		messageInfo.putValue("trainstationRails", rails);
-//		messageInfo.putValue("stockId", getStock().getId());
-//
-//		notifyChange(messageInfo);
-//	}
-
 	private void notifyTrainstationAlignmentUpdated() {
 		MessageInformation messageInformation = new MessageInformation("UpdateAlignmentOfTrainstation");
 		messageInformation.putValue("id", this.getId());

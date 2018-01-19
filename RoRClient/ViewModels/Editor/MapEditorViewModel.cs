@@ -220,12 +220,7 @@ namespace RoRClient.ViewModels.Editor
 
         private void OnTrainstationPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            Playertrainstation trainstation = (Playertrainstation)sender;
-        }
-
-        private void OnPublicTrainstationPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            Publictrainstation trainstation = (Publictrainstation)sender;
+            Trainstation trainstation = (Trainstation)sender;
         }
 
         /// <summary>

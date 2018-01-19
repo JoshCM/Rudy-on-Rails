@@ -5,19 +5,20 @@ import communication.MessageInformation;
 import exceptions.NotRotateableException;
 import models.game.Map;
 import models.game.Playertrainstation;
+import models.game.Trainstation;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
 public class RotateTrainstationCommand extends CommandBase{
 
-	Playertrainstation trainstation;
+	Trainstation trainstation;
 	boolean right;
 	public RotateTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		EditorSession editorSession = (EditorSession)session;
 		Map map = editorSession.getMap();
 		right = messageInfo.getValueAsBoolean("right");
-		trainstation = (Playertrainstation) map.getPlaceableOnSquareById(messageInfo.getValueAsUUID("id"));
+		trainstation = (Trainstation) map.getPlaceableOnSquareById(messageInfo.getValueAsUUID("id"));
 	}
 
 	@Override
@@ -25,7 +26,7 @@ public class RotateTrainstationCommand extends CommandBase{
 		if(trainstation.validateRotation(right))
 			trainstation.rotate(right);
 		else
-			throw new NotRotateableException(String.format("Trainstation kann nicht rotiert werden(Clockwise:%s)", right));
+			throw new NotRotateableException(String.format("Playertrainstation kann nicht rotiert werden(Clockwise:%s)", right));
 	}
 
 }

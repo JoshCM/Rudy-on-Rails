@@ -15,19 +15,9 @@ namespace RoRClient.ViewModels.Editor
     /// </summary>
     public class PublictrainstationEditorViewModel : TrainstationEditorViewModel
     {
-        private Publictrainstation publictrainstation;
-
         public PublictrainstationEditorViewModel(Trainstation trainstation) : base(trainstation)
         {
-            this.publictrainstation = (Publictrainstation)trainstation;
-        }
 
-        public Publictrainstation Publictrainstation
-        {
-            get
-            {
-                return publictrainstation;
-            }
         }
     }
 }

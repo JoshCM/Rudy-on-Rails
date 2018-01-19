@@ -117,7 +117,7 @@
     <Compile Include="Commands\Base\CreateStockCommandBase.cs" />
     <Compile Include="Commands\Base\CreatePlayertrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
-    <Compile Include="Commands\Editor\Create\CreatePublicTrainstationCommand.cs" />
+    <Compile Include="Commands\Editor\Create\CreatePublictrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Other\LeaveEditorCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateActivityOfSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateSignalsCommand.cs" />
@@ -133,7 +133,6 @@
     <Compile Include="Commands\Editor\Other\ChangeMapNameCommand.cs" />
     <Compile Include="Commands\Editor\Other\StartCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateAlignmentOfMineCommand.cs" />
-    <Compile Include="Commands\Editor\Update\UpdateAlignmentOfPublicTrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateConfigOfSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateAlignmentOfStockCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateAlignmentOfTrainstationCommand.cs" />

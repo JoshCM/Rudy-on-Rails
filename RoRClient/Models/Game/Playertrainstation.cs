@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 namespace RoRClient.Models.Game
 {
     /// <summary>
-    /// Klasse für Trainstations die einem Square zugeordnet sind
-    /// und eine Liste von Rails die zu der Trainstation gehören
+    /// Klasse für Playertrainstations, die einem Square zugeordnet sind
+    /// und eine Liste von Rails, die zu der Trainstation gehören
+    /// TODO: Für den Game-Modus muss Playertrainstation einem Spieler zugeordnet sein
     /// </summary>
-    public class Playertrainstation : Trainstation, IPlaceableOnSquare
+    public class Playertrainstation : Trainstation
     {
         private List<Rail> trainstationRails;
         private Compass alignment;

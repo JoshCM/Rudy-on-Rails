@@ -1,21 +1,20 @@
-package commands.editor;
+package commands.base;
 
-import commands.base.CommandBase;
 import communication.MessageInformation;
 import models.game.Square;
-import models.game.Playertrainstation;
+import models.game.Trainstation;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
-public class MoveTrainstationCommand extends CommandBase{
+public class MoveTrainstationCommandBase extends CommandBase {
 
 	private Square oldSquare;
 	private Square newSquare;
 	
-	public MoveTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
+	public MoveTrainstationCommandBase(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		EditorSession editorSession = (EditorSession) session;
-		Playertrainstation trainstation = (Playertrainstation)editorSession.getMap().getPlaceableOnSquareById(messageInfo.getValueAsUUID("id"));
+		Trainstation trainstation = (Trainstation)editorSession.getMap().getPlaceableOnSquareById(messageInfo.getValueAsUUID("id"));
 		int newXPos = messageInfo.getValueAsInt("newXPos");
 		int newYPos = messageInfo.getValueAsInt("newYPos");
 		this.oldSquare = editorSession.getMap().getSquareById(trainstation.getSquareId());
@@ -27,5 +26,4 @@ public class MoveTrainstationCommand extends CommandBase{
 		EditorSession editorSession = (EditorSession) session;
 		editorSession.getMap().movePlaceableOnSquare(oldSquare, newSquare);
 	}
-
 }

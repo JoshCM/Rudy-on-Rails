@@ -60,7 +60,7 @@ public class Playertrainstation extends Trainstation {
 
 		notifyChange(messageInfo);
 	}
-
+	
 	@Override
 	public Playertrainstation loadFromMap(Square square, RoRSession session) {
 		Playertrainstation oldTrainStation = (Playertrainstation) square.getPlaceableOnSquare();

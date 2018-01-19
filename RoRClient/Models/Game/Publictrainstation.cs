@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Models.Game
 {
-    class Publictrainstation : Trainstation, IPlaceableOnSquare
+    /// <summary>
+    /// Klasse für Publictrainstations, die einem Square zugeordnet sind
+    /// und eine Liste von Rails, die zu der Trainstation gehören
+    /// TODO: Eine Publictrainstation hat einen Kran
+    /// </summary>
+    public class Publictrainstation : Trainstation
     {
         private List<Rail> trainstationRails;
         private Compass alignment;

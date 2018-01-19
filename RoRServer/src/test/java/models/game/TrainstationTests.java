@@ -9,7 +9,7 @@ import org.junit.Test;
 import commands.CommandCreator;
 import commands.base.Command;
 import commands.editor.CreatePlayertrainstationCommand;
-import commands.editor.MoveTrainstationCommand;
+import commands.editor.MovePlayertrainstationCommand;
 import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
 import exceptions.NotMoveableException;
@@ -209,7 +209,7 @@ public class TrainstationTests {
 		messageInformation.putValue("newYPos", movedTrainstationY);
 		messageInformation.putValue("id", createdTrainstation.getId());
 		
-		MoveTrainstationCommand command = new MoveTrainstationCommand(session, messageInformation);
+		MovePlayertrainstationCommand command = new MovePlayertrainstationCommand(session, messageInformation);
 
 		String commandName = command.getClass().getName();
 		Command moveCommand = null;
@@ -255,7 +255,7 @@ public class TrainstationTests {
 		messageInformation.putValue("newYPos", movedTrainstationY);
 		messageInformation.putValue("id", createdTrainstation.getId());
 		
-		MoveTrainstationCommand command = new MoveTrainstationCommand(session, messageInformation);
+		MovePlayertrainstationCommand command = new MovePlayertrainstationCommand(session, messageInformation);
 
 		String commandName = command.getClass().getName();
 		Command moveCommand = null;

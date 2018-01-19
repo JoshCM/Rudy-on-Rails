@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Models.Game
 {
-    public abstract class Trainstation : InteractiveGameObject
+    public abstract class Trainstation : InteractiveGameObject, IPlaceableOnSquare
     {
         private List<Rail> trainstationRails;
         private Compass alignment;

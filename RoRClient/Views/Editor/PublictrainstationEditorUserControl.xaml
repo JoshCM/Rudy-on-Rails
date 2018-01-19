@@ -14,7 +14,7 @@
     </UserControl.Resources>
 	<Canvas Width="{Binding SquareDim, ElementName=publictrainstationEditorUserControl}"
             Height="{Binding SquareDim, ElementName=publictrainstationEditorUserControl}">
-		<Image Width="{Binding SquareDim, ElementName=publictrainstationEditorUserControl}" Height="{Binding SquareDim, ElementName=publictrainstationEditorUserControl}" Source="pack://application:,,,/Resources/Images/Tools/publictrainstation1.png">
+		<Image Width="{Binding SquareDim, ElementName=publictrainstationEditorUserControl}" Height="{Binding SquareDim, ElementName=publictrainstationEditorUserControl}" Source="pack://application:,,,/Resources/Images/trainstation.png">
             <Image.InputBindings>
                 <MouseBinding MouseAction="RightClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
             </Image.InputBindings>
