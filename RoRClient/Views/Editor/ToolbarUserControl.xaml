@@ -10,21 +10,22 @@
 	VerticalAlignment="Stretch"
 	HorizontalContentAlignment="Stretch"
 	VerticalContentAlignment="Stretch"
-    Height="auto"
-    Width="auto"
-    Background="Beige" d:DesignHeight="813.443" d:DesignWidth="389.613">
+    Background="#510404" d:DesignHeight="800" d:DesignWidth="320">
 
-    <ListView ItemsSource="{Binding ToolItems}" SelectedItem="{Binding SelectedTool, UpdateSourceTrigger=PropertyChanged}" x:Name="ToolbarListView" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="auto">
+
+ 
+    <ListView ItemsSource="{Binding ToolItems}" SelectedItem="{Binding SelectedTool, UpdateSourceTrigger=PropertyChanged}" x:Name="ToolbarListView" Height="800" Width="320">
+        
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <UniformGrid Columns="2" Rows="5" Margin="15"/>
+                <UniformGrid Columns="2" Rows="9" Margin="1"/>
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ListView.ItemTemplate>
             <DataTemplate>
-                <StackPanel>
+                <StackPanel Margin="0,3,0,0">
                     <Image Source="{Binding ImagePath}" Width="80" Height="80"/>
-                    <Label Content="{Binding Name}"></Label>
+                    <Label Content="{Binding Name}" FontFamily="Source Sans Pro" Foreground="#FF510404"></Label>
                 </StackPanel>
             </DataTemplate>
         </ListView.ItemTemplate>

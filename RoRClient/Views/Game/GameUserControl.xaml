@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              d:DesignHeight="900" d:DesignWidth="1600" Background="Gray">
 
-    <Grid x:Name="ContentGrid" Margin="1">
+    <Grid x:Name="ContentGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="9*" />
@@ -17,16 +17,16 @@
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
 
         <game:GameStatusUserControl Grid.Row="0"
                                     Grid.Column="0"
-                                    Grid.ColumnSpan="3" />
+                                    Grid.ColumnSpan="3" 
+                                    DataContext="{Binding GameStatusViewModel}"/>
 
         <game:MapGameUserControl Grid.Row="1"
                                  Grid.Column="0"
-                                 Grid.ColumnSpan="4" 
+                                 Grid.ColumnSpan="3" 
                                  DataContext="{Binding MapGameViewModel}"/>
 
         <game:GameMiniMapUserControl Grid.Row="2" Grid.Column="0" />

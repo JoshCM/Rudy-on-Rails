@@ -7,23 +7,37 @@ import org.python.util.PythonInterpreter;
 import communication.MessageInformation;
 
 public class GhostLoco extends Loco {
+	private final static String DEFAULT_SCRIPT = "ghostloco_default_drivefast";
+	
 	private PythonInterpreter pi = new PythonInterpreter();
 	private GhostLocoProxy ghostLocoProxy;
 	private Thread updateThread;
+	private boolean initialized;
+	private String currentScriptName;
 	
 	public GhostLoco(String sessionName, Square square, UUID playerId) {
 		super(sessionName, square, playerId);
+		
+		currentScriptName = DEFAULT_SCRIPT;
 		initGhostLocoProxy();
+		
 		NotifyLocoCreated();
-		startUpdateThread();
+		addInitialCart();
 		
 		changeSpeed(1);
 	}
 	
 	private void initGhostLocoProxy() {
 		ghostLocoProxy = new GhostLocoProxy(this);
-        pi.exec("from ghostloco import update");
+        pi.exec("from " + currentScriptName + " import update");
         pi.set("proxy", ghostLocoProxy);
+	}
+	
+	public void init() {
+		if(!initialized) {
+			initialized = true;
+			startUpdateThread();
+		}
 	}
 	
 	private void startUpdateThread() {

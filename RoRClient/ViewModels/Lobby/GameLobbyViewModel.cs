@@ -14,6 +14,7 @@ namespace RoRClient.ViewModels.Lobby
         private bool isHost;
 	    private LobbyModel lobbyModel;
 	    private GameSession gameSession;
+        private bool canStartGame;
 
 		public GameLobbyViewModel(UIState uiState, LobbyModel lobbyModel)
         {
@@ -56,6 +57,19 @@ namespace RoRClient.ViewModels.Lobby
             }
         }
 
+        public bool CanStartGame
+        {
+            get
+            {
+                return canStartGame;
+            }
+            set
+            {
+                canStartGame = value;
+                OnPropertyChanged("CanStartGame");
+            }
+        }
+
         private ICommand startGameCommand;
         public ICommand StartGameCommand
         {
@@ -68,7 +82,6 @@ namespace RoRClient.ViewModels.Lobby
                 return startGameCommand;
             }
         }
-
 
 	    private ICommand refreshGameInfosCommand;
 	    public ICommand RefreshGameInfosCommand
@@ -118,19 +131,19 @@ namespace RoRClient.ViewModels.Lobby
             GameSession.GetInstance().QueueSender.SendMessage("LeaveGame", messageInformation);
         }
 
-        private void OnGameLeft(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Left")
-            {
-                uiState.State = "joinGameLobby";
-            }
-        }
-
-        private void OnGameStarted(object sender, PropertyChangedEventArgs e)
+        private void OnGameSessionChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Started")
             {
                 uiState.State = "game";
+            }
+            else if (e.PropertyName == "Left")
+            {
+                uiState.State = "joinGameLobby";
+            }
+            else if (e.PropertyName == "MapName")
+            {
+                CanStartGame = IsHost && gameSession.MapName != "";
             }
         }
 
@@ -139,8 +152,7 @@ namespace RoRClient.ViewModels.Lobby
             if (uiState.State == "gameLobby")
             {
                 gameSession = GameSession.GetInstance();
-                gameSession.PropertyChanged += OnGameStarted;
-                gameSession.PropertyChanged += OnGameLeft;
+                gameSession.PropertyChanged += OnGameSessionChanged;
 
                 isHost = gameSession.OwnPlayer.IsHost;
 				lobbyModel.ReadMapInfos();

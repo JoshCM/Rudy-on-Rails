@@ -14,7 +14,7 @@
     <UserControl.InputBindings>
         <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding TopMenuViewModel.SaveMapCommand}"/>
     </UserControl.InputBindings>
-    
+
     <Grid x:Name="ContentGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -24,8 +24,8 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="10*" />
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="15*" />
             <ColumnDefinition Width="0" />
         </Grid.ColumnDefinitions>
 
@@ -40,23 +40,21 @@
                                Grid.Column="1"
                                Grid.ColumnSpan="2"
                                Grid.RowSpan="2"
-                               DataContext="{Binding MapViewModel}" />
+                               DataContext="{Binding MapViewModel}" Loaded="MapEditorUserControl_Loaded" />
 
         <!-- Werkzeugleiste -->
         <editor:ToolbarUserControl DataContext="{Binding ToolbarViewModel}" x:Name="ToolbarUserControlName"
-                                   Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" />
+                                   Grid.Row="1" Grid.RowSpan="2" Grid.Column="0"/>
 
         <Grid Grid.Row="3"
-              Grid.Column="0"
-              Background="Violet">
+              Grid.Column="0">
             <!--Aktives Werkzeug -->
             <editor:SelectedToolUserControl DataContext="{Binding ToolbarViewModel}"/>
         </Grid>
 
         <Grid Grid.Row="3"
               Grid.Column="1"
-              Grid.ColumnSpan="2"
-              Background="Green">
+              Grid.ColumnSpan="2">
             <!-- Statusfenster oder so was -->
             <editor:ObjectConfigurationUserControl DataContext="{Binding ObjectConfigurationViewModel}" />
         </Grid>

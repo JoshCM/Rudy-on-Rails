@@ -21,24 +21,12 @@ public abstract class RoRSession extends ModelBase {
 	private String mapName;
 
 	protected QueueReceiver queueReceiver;
-
-	public RoRSession(String name, UUID hostPlayerId, String hostPlayerName) {
+	
+	public RoRSession(String name) {
 		super(name);
 		map = new Map(name);
-		createHostPlayer(hostPlayerId, hostPlayerName);
 	}
-
-	private void createHostPlayer(UUID playerId, String playerName) {
-		Player player = new Player(getName(), playerName, playerId, true);
-		players.add(player);
-	}
-
-	public Player createPlayer(UUID playerId, String playerName) {
-		Player player = new Player(getName(), playerName, playerId, false);
-		players.add(player);
-		return player;
-	}
-
+		
 	public void setup() {
 		queueReceiver.setup();
 	}
@@ -72,7 +60,11 @@ public abstract class RoRSession extends ModelBase {
 	public List<Player> getPlayers() {
 		return Collections.unmodifiableList(players);
 	}
-
+	
+	public void addPlayer(Player player) {
+		players.add(player);
+	}
+	
 	public Player getPlayerById(UUID id) {
 		for (Player player : getPlayers()) {
 			if (player.getId().equals(id))

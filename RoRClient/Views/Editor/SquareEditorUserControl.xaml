@@ -17,7 +17,7 @@
         <Rectangle
             Width="{Binding SquareDim, ElementName=squareUserControl}"
             Height="{Binding SquareDim, ElementName=squareUserControl}"
-            Fill="BROWN"
+            Fill="#f9f1df"
             Stroke="WHITE"
             StrokeThickness="1">
             <Rectangle.InputBindings>

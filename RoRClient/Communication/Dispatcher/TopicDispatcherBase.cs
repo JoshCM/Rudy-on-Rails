@@ -48,6 +48,7 @@ namespace RoRClient.Communication.Dispatcher
             try
             {
                 Type commandType = Type.GetType(pathToCommand);
+                Console.WriteLine("Command von Server: " + pathToCommand);
                 // nach commandType müssen die genauen Parameter für den Konstruktor mitgegeben werden (siehe CommandBase)
                 ICommand command = (ICommand)Activator.CreateInstance(commandType, session, message);
                 command.Execute();

@@ -1,4 +1,5 @@
 ﻿using RoRClient.Models.Game;
+using RoRClient.Models.Session;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,8 @@ namespace RoRClient.ViewModels.Game
         private Cart cart;
         private Compass realDrivingDirection;
         private int angle;
+        private bool belongsToOwnPlayer;
+        private bool isGhostCartAndDoesNotBelongToPlayer;
 
         public CartGameViewModel(Cart cart) : base(cart.Id)
         {
@@ -23,6 +26,12 @@ namespace RoRClient.ViewModels.Game
             SetAngleAccordingToDrivingDirection();
 
             cart.PropertyChanged += OnCartChanged;
+
+            if (cart.PlayerId == GameSession.GetInstance().OwnPlayer.Id)
+            {
+                BelongsToOwnPlayer = true;
+            }
+            UpdateIsGhostCartAndDoesNotBelongToPlayer();
         }
 
         /// <summary>
@@ -99,7 +108,51 @@ namespace RoRClient.ViewModels.Game
                     lastSpeedValueGreaterOrLessThanZero = cart.Speed;
                 }
             }
+            if(e.PropertyName == "IsGhostCart")
+            {
+                UpdateIsGhostCartAndDoesNotBelongToPlayer();
+            }
         }
+
+        private void UpdateIsGhostCartAndDoesNotBelongToPlayer()
+        {
+            if (!BelongsToOwnPlayer && cart.IsGhostCart)
+            {
+                IsGhostCartAndDoesNotBelongToPlayer = true;
+            }
+            else
+            {
+                IsGhostCartAndDoesNotBelongToPlayer = false;
+            }
+        }
+
+        #region Properties
+        public bool BelongsToOwnPlayer
+        {
+            get
+            {
+                return belongsToOwnPlayer;
+            }
+            set
+            {
+                belongsToOwnPlayer = value;
+                OnPropertyChanged("BelongsToOwnPlayer");
+            }
+        }
+
+        public bool IsGhostCartAndDoesNotBelongToPlayer
+        {
+            get
+            {
+                return isGhostCartAndDoesNotBelongToPlayer;
+            }
+            set
+            {
+                isGhostCartAndDoesNotBelongToPlayer = value;
+                OnPropertyChanged("IsGhostCartAndDoesNotBelongToPlayer");
+            }
+        }
+
         public int Angle
         {
             get
@@ -130,6 +183,8 @@ namespace RoRClient.ViewModels.Game
                 }
             }
         }
+        #endregion
+
         int lastSpeedValueGreaterOrLessThanZero = 0;
 
         private void InvertDrivingDirectionIfDrivingDirectionHasChanged(int value)
