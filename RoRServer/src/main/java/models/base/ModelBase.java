@@ -39,6 +39,10 @@ public abstract class ModelBase extends ObservableModel implements Model {
 	public String getDescription() {
 		return sessionName;
 	}
+	
+	public String getSessionName() {
+		return sessionName;
+	}
 
 	public void setSessionName(String sessionName) {
 		this.sessionName = sessionName;
