@@ -111,6 +111,7 @@ public abstract class Loco extends InteractiveGameObject {
 			if(newRail.getPlaceableOnrail() instanceof Cart) {
 				Cart cart = (Cart) newRail.getPlaceableOnrail();
 				carts.add(cart);
+				cart.setCurrentLocoId(this.getId());
 				newRail.setPlaceableOnRail(null);
 				this.speed = 0;
 				notifyCartToLocoAdded(cart);

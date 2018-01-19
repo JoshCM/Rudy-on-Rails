@@ -20,6 +20,8 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 	private Rail rail;
 	private UUID currentLocoId;
 	
+
+
 	/**
 	 * Konstruktor eines Carts
 	 * @param square auf dem der Wagon steht wird mitgegeben
@@ -31,7 +33,7 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 		Rail rail = (Rail)square.getPlaceableOnSquare();
 		this.setRail(rail);
 		this.currentLocoId = currentLocoId;
-		notifyAddedCart(addToLoco);
+		notifyAddedCart();
 	}
 	
 	/**
@@ -42,14 +44,19 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 	 * @param cartId
 	 *            Id des Wagons
 	 */
-	private void notifyAddedCart(boolean addToLoco) {
+	private void notifyAddedCart() {
 		MessageInformation messageInfo = new MessageInformation("CreateCart");
 		messageInfo.putValue("playerId", this.playerId);
 		messageInfo.putValue("cartId", getId());
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
-		messageInfo.putValue("addToLoco", addToLoco);
-		messageInfo.putValue("currentLocoId", currentLocoId);
+		if(currentLocoId == null) {
+			messageInfo.putValue("currentLocoId", "");
+		}
+		else {
+			messageInfo.putValue("currentLocoId", currentLocoId);
+		}
+		
 		messageInfo.putValue("drivingDirection", drivingDirection);
 		notifyChange(messageInfo);
 	}
@@ -103,6 +110,10 @@ public class Cart extends InteractiveGameObject implements PlaceableOnRail {
 
 	public void setDrivingDirection(Compass compass) {
 		this.drivingDirection = compass;
+	}
+	
+	public void setCurrentLocoId(UUID currentLocoId) {
+		this.currentLocoId = currentLocoId;
 	}
 	
 	/**

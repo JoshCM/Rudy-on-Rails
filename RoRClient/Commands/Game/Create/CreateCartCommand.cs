@@ -13,22 +13,26 @@ namespace RoRClient.Commands.Game.Create
     class CreateCartCommand : CommandBase
     {
         private Guid playerId;
-        private Guid currentLocoId;
+        private Guid currentLocoId = Guid.Empty;
         private int xPos;
         private int yPos;
         private Guid cartId;
         private Compass drivingDirection;
-        private bool addToLoco;
 
         public CreateCartCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
-            currentLocoId = Guid.Parse(messageInformation.GetValueAsString("currentLocoId"));
+
+            System.Console.WriteLine("FRTEITAGAGA: " + messageInformation.GetValueAsString("currentLocoId"));
+
+            if (!messageInformation.GetValueAsString("currentLocoId").Equals(String.Empty))
+            {
+                currentLocoId = Guid.Parse(messageInformation.GetValueAsString("currentLocoId"));
+            }
             cartId = Guid.Parse(messageInformation.GetValueAsString("cartId"));
             drivingDirection = (Compass)Enum.Parse(typeof(Compass), messageInformation.GetValueAsString("drivingDirection"));
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
-            addToLoco = messageInformation.GetValueAsBool("addToLoco");
 
         }
 
@@ -37,11 +41,10 @@ namespace RoRClient.Commands.Game.Create
             GameSession gameSession = (GameSession)session;
             Player player = session.GetPlayerById(playerId);
 
-
             Square square = session.Map.GetSquare(xPos, yPos);
             Cart cart = new Cart(cartId, playerId, drivingDirection, square);
 
-            if (currentLocoId != null)
+            if (!currentLocoId.Equals(Guid.Empty))
             {
                 Loco loco = gameSession.GetLocoById(currentLocoId);
                 if (loco is GhostLoco)
