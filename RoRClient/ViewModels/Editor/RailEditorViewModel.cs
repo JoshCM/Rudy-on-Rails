@@ -70,6 +70,15 @@ namespace RoRClient.ViewModels.Editor
             EditorSession.GetInstance().QueueSender.SendMessage("RotateRail", messageInformation);
         }
 
+        public override void ChangeSwitch()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("xPos", rail.Square.PosX);
+            messageInformation.PutValue("yPos", rail.Square.PosY);
+            messageInformation.PutValue("change", true);
+            EditorSession.GetInstance().QueueSender.SendMessage("ChangeSwitch", messageInformation);
+        }
+
         public override void Move()
         {
 

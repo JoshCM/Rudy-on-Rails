@@ -30,18 +30,19 @@ namespace RoRClient.Models.Game
 
         public RailSectionStatus Status
         {
-            get {
+            get
+            {
                 return status;
             }
         }
 
-        public RailSection (Guid id, Compass node1, Compass node2, RailSectionStatus status) : base()
+        public RailSection(Guid id, Compass node1, Compass node2, RailSectionStatus status) : base()
         {
             this.id = id;
             this.node1 = node1;
             this.node2 = node2;
             this.status = status;
-            
+
         }
 
         public RailSection(Guid id, Compass node1, Compass node2) : base()
@@ -63,7 +64,7 @@ namespace RoRClient.Models.Game
             positionList.Add(node2);
             return positionList;
         }
-        
+
 
         /// <summary>
         /// Gibt alle Knoten als eine alphabetisch sortierte Liste zurück
@@ -76,19 +77,6 @@ namespace RoRClient.Models.Game
             directions.Add(node2.ToString());
             directions.Sort();
             return directions;
-        }
-
-        /// <summary>
-        /// Gibt an ob eine Railsection befahrbar ist
-        /// </summary>
-        /// <returns></returns>
-        public Boolean isActive()
-        {
-            if (status == RailSectionStatus.ACTIVE)
-            {
-                return true;
-            }
-            return false;
         }
     }
 }

@@ -34,10 +34,9 @@ public class CreateRailCommand extends CommandBase {
 		for(JsonObject json : railSectionData) {
 			Compass node1 = Compass.valueOf(json.get("node1").getAsString());
 			Compass node2 = Compass.valueOf(json.get("node2").getAsString());
-			RailSectionStatus railSectionStatus = RailSectionStatus.valueOf(json.get("railSectionStatus").getAsString());
 			railSectionPositions.add(node1);
 			railSectionPositions.add(node2);
-			railSectionPositions.add(railSectionStatus);
+			railSectionPositions.add(RailSectionStatus.ACTIVE);
 		}
 		
 		Rail rail = new Rail(session.getName(), square, railSectionPositions);

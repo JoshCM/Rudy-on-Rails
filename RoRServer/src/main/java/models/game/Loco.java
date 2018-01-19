@@ -37,7 +37,7 @@ public class Loco extends TickableGameObject {
 		this.square = square;// Das hier muss noch raus, aber erst testen
 		this.rail = (Rail) square.getPlaceableOnSquare();
 		this.map = GameSessionManager.getInstance().getGameSessionByName(sessionName).getMap();
-		this.drivingDirection = rail.getFirstSection().getNode1();
+		this.drivingDirection = rail.getActivDirection(.getNode1();
 		this.speed = 0; 
 		this.playerId = playerId;
 		NotifyLocoCreated();

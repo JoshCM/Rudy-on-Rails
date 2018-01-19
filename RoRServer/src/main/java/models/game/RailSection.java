@@ -19,7 +19,7 @@ public class RailSection extends ModelBase {
     private Compass node1;
     private Compass node2;
     private boolean isDrivable;
-    private RailSectionStatus railSectionStatus;
+    private RailSectionStatus status = RailSectionStatus.ACTIVE;
 
     // TODO: hier muss placeableOnSquareSection
     public RailSection(String sessionName, Rail rail, Compass node1, Compass node2, RailSectionStatus railSectionStatus) {
@@ -37,7 +37,7 @@ public class RailSection extends ModelBase {
         this.node1 = node1;
         this.node2 = node2;
         this.isDrivable = true;
-        this.railSectionStatus = railSectionStatus;
+        this.status = railSectionStatus;
     }
 
     /**
@@ -65,7 +65,7 @@ public class RailSection extends ModelBase {
         return node2;
     }
 
-    public RailSectionStatus getRailSectionStatus() {return railSectionStatus;}
+    public RailSectionStatus getRailSectionStatus() {return status;}
 
     /**
      * Rotiert die RailSectionPositions.
@@ -83,6 +83,16 @@ public class RailSection extends ModelBase {
     public void rotate(boolean right, boolean notYet) {
         node1 = rotateRailSectionPosition(node1, right);
         node2 = rotateRailSectionPosition(node2, right);
+    }
+
+    public void switchActitityStatus()
+    {
+        if (status == RailSectionStatus.ACTIVE) {
+            status = RailSectionStatus.INACTIVE;
+        } else if (status == RailSectionStatus.INACTIVE) {
+            status = RailSectionStatus.ACTIVE;
+        }
+        notifyNodesUpdated();
     }
 
 
@@ -120,6 +130,7 @@ public class RailSection extends ModelBase {
         messageInformation.putValue("railSectionId", getId().toString());
         messageInformation.putValue("node1", node1.toString());
         messageInformation.putValue("node2", node2.toString());
+        messageInformation.putValue("railSectionStatus", status.toString());
         messageInformation.putValue("isDrivable", getDrivableString());
         notifyChange(messageInformation);
     }

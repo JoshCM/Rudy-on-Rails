@@ -133,7 +133,11 @@ F	 */
 			json.addProperty("railSectionId", section.getId().toString());
 			json.addProperty("node1", section.getNode1().toString());
 			json.addProperty("node2", section.getNode2().toString());
-			json.addProperty("railSectionStatus", section.getRailSectionStatus().toString());
+			if (section.getRailSectionStatus().toString() == null){
+                json.addProperty("railSectionStatus", RailSectionStatus.ACTIVE.toString());
+            } else {
+                json.addProperty("railSectionStatus", section.getRailSectionStatus().toString());
+            }
 			railSectionJsons.add(json);
 		}
 		messageInfo.putValue("railSections", railSectionJsons);
@@ -148,6 +152,15 @@ F	 */
 	public RailSection getFirstSection() {
 		return railSectionList.get(0);
 	}
+
+    public RailSection getActivDirection() {
+        for (RailSection railSection : railSectionList) {
+            if(railSection.getRailSectionStatus() == RailSectionStatus.ACTIVE){
+                return railSection;
+            }
+        }
+	    return railSectionList.get(0);
+    }
 
 	public List<RailSection> getRailSectionList() {
 		return railSectionList;
@@ -225,6 +238,12 @@ F	 */
 			this.railSectionList.remove(rs);
 		}
 	}
+
+	public void changeSwitch() {
+        for (RailSection section : railSectionList) {
+            section.switchActitityStatus();
+        }
+    }
 
 	@Override
 	public int hashCode() {
@@ -305,6 +324,12 @@ F	 */
 		for (RailSection section : rail.getRailSectionList()) {
 			railSectionPosition.add(section.getNode1());
 			railSectionPosition.add(section.getNode2());
+			if (section.getRailSectionStatus() == null)
+			{
+                railSectionPosition.add(RailSectionStatus.ACTIVE);
+            }else {
+                railSectionPosition.add(section.getRailSectionStatus());
+            }
 		}
 
 		// Neues Rail erstellen und damit an den Client schicken

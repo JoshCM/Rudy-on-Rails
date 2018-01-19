@@ -12,8 +12,8 @@ namespace RoRClient.BindingConverter
 {
     /// <summary>
     /// Wird genutzt, um bei einem RailViewModel zu entscheiden, um welchen Schienentyp es sich handelt und gibt dann den Pfad zum passenden
-    /// Bild zurück
-    /// </summary>
+    /// Bild zurück. Rails mit mehreren Railsection (z. B. Weichen) werden aus zwei übereinander gelagerten Bildern erzeugt.
+    /// parameter entscheidet welches Railsection-Bild bei mehreren Schienen übergeordnet angezeigt werden soll
     public class RailSectionsToImagePathConverter : IValueConverter
     {
         private const string IMAGE_FOLDER_PATH = "..\\..\\Resources\\Images\\";
@@ -26,8 +26,6 @@ namespace RoRClient.BindingConverter
                 bool eastWest = railSections.Where(x => x.GetNodesAsList().Contains(Compass.EAST) && x.GetNodesAsList().Contains(Compass.WEST)).Any();
                 String param = parameter as string;
                 RailSection railSection1 = railSections.First();
-
-                ///RailSection railSection2 = railSections[1] nur falls len von railSections == 2
 
                 List<String> directionsLis = railSection1.GetNodesAsSortedStringList();
 
