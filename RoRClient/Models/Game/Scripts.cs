@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static RoRClient.Models.Game.Script;
 
 namespace RoRClient.Models.Game
 {
@@ -22,7 +23,7 @@ namespace RoRClient.Models.Game
         {
             switch (script.ScriptType)
             {
-                case "ghostloco":
+                case ScriptTypes.GHOSTLOCO:
                     taskFactory.StartNew(() => ghostLocoScripts.Add(script));
                     break;
                 default:

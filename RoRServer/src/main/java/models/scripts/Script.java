@@ -6,12 +6,16 @@ import communication.MessageInformation;
 import models.base.ModelBase;
 
 public class Script extends ModelBase {
+	public enum ScriptType {
+		GHOSTLOCO
+	}
+	
 	private String name;
-	private String scriptType;
+	private ScriptType scriptType;
 	private String scriptName;
 	private UUID playerId;
 	
-	public Script(String sessionName, String name, String scriptType, String scriptName, UUID playerId) {
+	public Script(String sessionName, String name, ScriptType scriptType, String scriptName, UUID playerId) {
 		super(sessionName);
 		this.playerId = playerId;
 		this.name = name;
@@ -20,7 +24,7 @@ public class Script extends ModelBase {
 		notifyScriptCreated();
 	}
 
-	public Script(String sessionName, String name, String scriptType, String scriptName) {
+	public Script(String sessionName, String name, ScriptType scriptType, String scriptName) {
 		this(sessionName, name, scriptType, scriptName, UUID.fromString("00000000-0000-0000-0000-000000000000"));
 	}
 
@@ -32,7 +36,7 @@ public class Script extends ModelBase {
 		return scriptName;
 	}
 	
-	public String getScriptType() {
+	public ScriptType getScriptType() {
 		return scriptType;
 	}
 	
@@ -45,7 +49,7 @@ public class Script extends ModelBase {
 		messageInfo.putValue("id", getId());
 		messageInfo.putValue("playerId", playerId);
 		messageInfo.putValue("name", name);
-		messageInfo.putValue("scriptType", scriptType);
+		messageInfo.putValue("scriptType", scriptType.toString());
 		messageInfo.putValue("scriptName", scriptName);
 		notifyChange(messageInfo);
 	}

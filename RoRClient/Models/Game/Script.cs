@@ -9,11 +9,16 @@ namespace RoRClient.Models.Game
 {
     public class Script : ModelBase
     {
+        public enum ScriptTypes
+        {
+            GHOSTLOCO
+        }
+
         private string name;
         private string scriptName;
-        private string scriptType;
+        private ScriptTypes scriptType;
 
-        public Script(Guid id, string name, string scriptType, string scriptName)
+        public Script(Guid id, string name, ScriptTypes scriptType, string scriptName)
         {
             this.id = id;
             this.name = name;
@@ -53,7 +58,7 @@ namespace RoRClient.Models.Game
             }
         }
 
-        public string ScriptType
+        public ScriptTypes ScriptType
         {
             get
             {

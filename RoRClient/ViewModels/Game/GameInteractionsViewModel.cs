@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using static RoRClient.Models.Game.Script;
 
 namespace RoRClient.ViewModels.Game
 {
@@ -88,7 +89,7 @@ namespace RoRClient.ViewModels.Game
                 messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
                 messageInformation.PutValue("scriptName", scriptName);
                 messageInformation.PutValue("scriptContent", scriptContent);
-                messageInformation.PutValue("scriptType", "ghostloco");
+                messageInformation.PutValue("scriptType", ScriptTypes.GHOSTLOCO.ToString());
                 GameSession.GetInstance().QueueSender.SendMessage("AddScriptFromPlayer", messageInformation);
             }
         }

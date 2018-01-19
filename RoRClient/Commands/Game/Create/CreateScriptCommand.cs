@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static RoRClient.Models.Game.Script;
 
 namespace RoRClient.Commands.Game.Create
 {
@@ -15,7 +16,7 @@ namespace RoRClient.Commands.Game.Create
         private Guid id;
         private Guid playerId;
         private string name;
-        private string scriptType;
+        private ScriptTypes scriptType;
         private string scriptName;
 
         public CreateScriptCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
@@ -23,7 +24,7 @@ namespace RoRClient.Commands.Game.Create
             id = Guid.Parse(messageInformation.GetValueAsString("id"));
             playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             name = messageInformation.GetValueAsString("name");
-            scriptType = messageInformation.GetValueAsString("scriptType");
+            scriptType = (ScriptTypes)Enum.Parse(typeof(ScriptTypes), messageInformation.GetValueAsString("scriptType"));
             scriptName = messageInformation.GetValueAsString("scriptName");
         }
 

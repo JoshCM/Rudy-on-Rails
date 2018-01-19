@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import models.base.ModelBase;
+import models.scripts.Script.ScriptType;
 
 public class Scripts extends ModelBase {
 	private List<Script> ghostLocoScripts = new ArrayList<Script>();
@@ -18,8 +19,8 @@ public class Scripts extends ModelBase {
 	}
 	
 	private void loadGhostLocoDefaultScripts() {
-		ghostLocoScripts.add(new Script(getSessionName(), "Schnell fahren", "ghostloco", "ghostloco_default_drivefast"));
-		ghostLocoScripts.add(new Script(getSessionName(), "Langsam fahren", "ghostloco", "ghostloco_default_driveslow"));
+		ghostLocoScripts.add(new Script(getSessionName(), "Schnell fahren", ScriptType.GHOSTLOCO, "ghostloco_default_drivefast"));
+		ghostLocoScripts.add(new Script(getSessionName(), "Langsam fahren", ScriptType.GHOSTLOCO, "ghostloco_default_driveslow"));
 	}
 	
 	public List<Script> getGhostLocoScripts() {
@@ -33,7 +34,7 @@ public class Scripts extends ModelBase {
 	
 	public void addScript(Script script) {
 		switch(script.getScriptType()) {
-		case "ghostloco":
+		case GHOSTLOCO:
 			ghostLocoScripts.add(script);
 			break;
 		default:

@@ -6,6 +6,7 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import helper.ScriptFileWriter;
 import models.scripts.Script;
+import models.scripts.Script.ScriptType;
 import models.session.GameSession;
 import models.session.RoRSession;
 
@@ -16,7 +17,7 @@ import models.session.RoRSession;
 public class AddScriptFromPlayerCommand extends CommandBase {
 	private UUID playerId;
 	private String scriptName;
-	private String scriptType;
+	private ScriptType scriptType;
 	private String scriptContent;
 	
 	public AddScriptFromPlayerCommand(RoRSession session, MessageInformation messageInfo) {
@@ -24,7 +25,7 @@ public class AddScriptFromPlayerCommand extends CommandBase {
 		
 		playerId = messageInfo.getValueAsUUID("playerId");
 		scriptName = messageInfo.getValueAsString("scriptName");
-		scriptType = messageInfo.getValueAsString("scriptType");
+		scriptType = ScriptType.valueOf(messageInfo.getValueAsString("scriptType"));
 		scriptContent = messageInfo.getValueAsString("scriptContent");
 	}
 
