@@ -112,10 +112,14 @@ public abstract class Loco extends InteractiveGameObject {
 			if(newRail.getPlaceableOnrail() instanceof Cart) {
 				Cart cart = (Cart) newRail.getPlaceableOnrail();
 				cart.setDrivingDirection(actCart.getDrivingDirection());
+	
 				carts.add(cart);
 				cart.setCurrentLocoId(this.getId());
 				newRail.setPlaceableOnRail(null);
 				this.speed = 0;
+				if(initial) {
+					this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(this.rail.getExitDirection(this.drivingDirection)));
+				}
 				notifyCartToLocoAdded(cart);
 				notifySpeedChanged();
 				break;

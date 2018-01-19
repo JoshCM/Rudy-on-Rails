@@ -11,7 +11,7 @@ namespace RoRClient.Models.Session
     public class GameSession : RoRSession
     {
         private static GameSession gameSession = null;
-        protected ObservableCollection<Loco> locos = new ObservableCollection<Loco>();
+        public ObservableCollection<Loco> locos = new ObservableCollection<Loco>();
 
         private GameSession() : base()
         {
@@ -35,6 +35,11 @@ namespace RoRClient.Models.Session
         public Loco GetLocoById(Guid locoId)
         {
             return locos.Where(x => x.Id == locoId).First();
+        }
+
+        public Loco GetLocoByPlayerId(Guid playerId)
+        {
+            return locos.Where(x => x.PlayerId == playerId).First();
         }
 
         public void AddLoco(Loco loco)

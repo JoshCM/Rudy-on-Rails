@@ -38,7 +38,7 @@ public class CreateCartCommand implements Command{
 		Square square = this.session.getMap().getSquare(xPos, yPos);
 		Rail rail = (Rail) square.getPlaceableOnSquare();
 		
-		if(rail.getPlaceableOnrail()==null) {
+		if(rail.getPlaceableOnrail() == null) {
 			Cart cart = new Cart(session.sessionName, square, compass, playerId, false, null);
 			rail.setPlaceableOnRail(cart);
 		}
