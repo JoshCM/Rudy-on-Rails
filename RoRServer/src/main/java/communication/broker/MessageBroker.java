@@ -19,14 +19,12 @@ public class MessageBroker {
 	private MessageBroker(){
 		broker = new BrokerService();
 	}
-
-	public static MessageBroker getInstance() {
+	
+	public static void start() {
 		if (messageBroker == null) {
 			messageBroker = new MessageBroker();
 			messageBroker.startBroker();
 		}
-		
-		return messageBroker;	
 	}
 	
 	public void startBroker() {
