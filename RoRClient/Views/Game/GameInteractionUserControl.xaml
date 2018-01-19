@@ -17,13 +17,26 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <StackPanel>
-        <StackPanel Orientation="Vertical">
-            <Button Content="Geisterzug" Style="{StaticResource DefaultButtonStyle}" HorizontalAlignment="Left" Margin="0 0 0 10"/>
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Margin="20 20 10 10">
+            <Button Content="Geisterzug" Style="{StaticResource DefaultButtonStyleDampfmodus}" Margin="0 0 0 10"/>
             <ComboBox IsEditable="{Binding SelectedGhostLocoScript, Converter={StaticResource IsNullToBooleanConverter}}"
                       IsReadOnly="{Binding SelectedGhostLocoScript, Converter={StaticResource IsNullToBooleanConverter}}"
-                      Text="Wähle Script" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" ItemsSource="{Binding Scripts.GhostLocoScripts}" HorizontalAlignment="Left" DisplayMemberPath="Name" SelectedValue="{Binding SelectedGhostLocoScript}" Margin="0 0 0 10"/>
-            <Button Content="Script hochladen" Command="{Binding AddGhostLocoScriptFromPlayerCommand}" Style="{StaticResource DefaultButtonStyle}" HorizontalAlignment="Left" Margin="0 0 0 10"/>
+                      Text="Wähle Script" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" ItemsSource="{Binding Scripts.GhostLocoScripts}" DisplayMemberPath="Name" SelectedValue="{Binding SelectedGhostLocoScript}" Margin="0 0 0 10"/>
+            <Button Content="Script hochladen" Command="{Binding AddGhostLocoScriptFromPlayerCommand}" Style="{StaticResource DefaultButtonStyleDampfmodus}"/>
         </StackPanel>
+
+        <StackPanel Margin="20 20 10 10">
+            <Button Content="Sensor" Style="{StaticResource DefaultButtonStyleDampfmodus}" Margin="0 0 0 10"/>
+            <ComboBox Text="Wähle Script" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" Margin="0 0 0 10"/>
+            <Button Content="Script hochladen" Style="{StaticResource DefaultButtonStyleDampfmodus}" />
+        </StackPanel>
+
+        <StackPanel Margin="20 20 10 10">
+            <Button Content="Ressourcentausch" Style="{StaticResource DefaultButtonStyleDampfmodus}" Margin="0 0 0 10"/>
+            <ComboBox Text="Wähle Tausch" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" Margin="0 0 0 10" />
+            <Button Content="Auswählen" Style="{StaticResource DefaultButtonStyleDampfmodus}"/>
+        </StackPanel>
+        
     </StackPanel>
 </UserControl>

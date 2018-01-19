@@ -38,13 +38,13 @@
         <Setter Property="Foreground" Value="#FF510404"/>
         <Setter Property="Background" Value="White"/>
         <Setter Property="FontFamily" Value="Source Sans Pro"/>
-        <Setter Property="FontSize" Value="25"/>
+        <Setter Property="FontSize" Value="18"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="BorderBrush" Value="#FF510404"/>
         <Setter Property="BorderThickness" Value="3"/>
-        <Setter Property="Width" Value="200"/>
-        <Setter Property="Height" Value="55"/>
+        <Setter Property="Width" Value="180"/>
+        <Setter Property="Height" Value="45"/>
     </Style>
 
     <Style x:Key="GridViewColumnHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
@@ -67,5 +67,16 @@
         <Setter Property="BorderThickness" Value="3"/>
         <Setter Property="Width" Value="200"/>
         <Setter Property="Height" Value="55"/>
+    </Style>
+    <Style x:Key="DefaultButtonStyleDampfmodus" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="#FF510404"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="FontFamily" Value="Source Sans Pro"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="BorderBrush" Value="#FF510404"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Width" Value="180"/>
+        <Setter Property="Height" Value="45"/>
     </Style>
 </ResourceDictionary>
