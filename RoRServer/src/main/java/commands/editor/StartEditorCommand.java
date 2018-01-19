@@ -26,7 +26,7 @@ public class StartEditorCommand extends CommandBase {
 	}
 
 	private void startNewMap() {
-		Map map = new Map(session.getSessionName());
+		Map map = new Map(session.getDescription());
 		session.setMap(map);
 		log.info("create new map");
 	}
@@ -35,7 +35,7 @@ public class StartEditorCommand extends CommandBase {
 		Map map = MapManager.loadMap(mapName);
 		log.info("loading map: " + mapName);
 
-		map.setSessionNameForMapAndSquares(session.getSessionName());
+		map.setSessionNameForMapAndSquares(session.getDescription());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
 
@@ -53,7 +53,7 @@ public class StartEditorCommand extends CommandBase {
 				// Square holen
 				Square square = squares[i][j];
 				// square bekommt sessionName und observer
-				square.setSessionName(session.getSessionName());
+				square.setSessionName(session.getDescription());
 				square.addObserver(TopicMessageQueue.getInstance());
 
 				// Wenn etwas auf dem Square liegt

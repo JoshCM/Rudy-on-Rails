@@ -36,7 +36,7 @@ public abstract class ModelBase extends ObservableModel implements Model {
 		return id;
 	}
 
-	public String getSessionName() {
+	public String getDescription() {
 		return sessionName;
 	}
 

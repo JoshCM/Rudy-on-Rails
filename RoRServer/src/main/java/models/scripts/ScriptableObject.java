@@ -50,10 +50,10 @@ public class ScriptableObject {
 	 * Ändert den filename des aktuellen Scripts. Dieses wird über Jython direkt
 	 * gestartet.
 	 * 
-	 * @param currentScriptName
+	 * @param currentScriptFilename
 	 */
-	public void changeCurrentScriptName(String currentScriptName) {
-		this.currentScriptFilename = currentScriptName;
+	public void changeCurrentScriptFilename(String currentScriptFilename) {
+		this.currentScriptFilename = currentScriptFilename;
 
 		// Falls gerade noch ein anderes Script läuft, töte es!
 		if (updateMethodThread != null && updateMethodThread.isAlive()) {

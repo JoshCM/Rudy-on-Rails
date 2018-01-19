@@ -60,12 +60,12 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare {
 	@Override
 	public PlaceableOnSquare loadFromMap(Square square, RoRSession session) {
 		Stock stock = (Stock) square.getPlaceableOnSquare();
-		Stock newStock = new Stock(session.getSessionName(), square, stock.getTrainstationId(), stock.getId(),
+		Stock newStock = new Stock(session.getDescription(), square, stock.getTrainstationId(), stock.getId(),
 				stock.getAlignment());
 
 		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses
 		// Objekts mitbekommen kann
-		newStock.setSessionName(session.getSessionName());
+		newStock.setSessionName(session.getDescription());
 
 		log.info("Stock erstellt: " + newStock.toString());
 

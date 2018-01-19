@@ -83,7 +83,7 @@ public class GhostLocoProxy implements ProxyObject {
 						}
 					} else if(placeableOnSquare instanceof Resource) {
 						Resource resource = (Resource)placeableOnSquare;
-						result.add(resource.getSessionName());
+						result.add(resource.getDescription());
 					}
 				}
 			} else {

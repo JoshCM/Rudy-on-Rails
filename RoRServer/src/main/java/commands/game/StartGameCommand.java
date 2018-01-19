@@ -47,7 +47,7 @@ public class StartGameCommand extends CommandBase {
 	private void startLoadedMap(Map map) {
 		GameSession gameSession = (GameSession)session;
 		log.info("loading map: " + gameSession.getMapName());
-		map.setSessionNameForMapAndSquares(gameSession.getSessionName());
+		map.setSessionNameForMapAndSquares(gameSession.getDescription());
 		map.addObserver(TopicMessageQueue.getInstance());
 		gameSession.setMap(map);
 
@@ -66,7 +66,7 @@ public class StartGameCommand extends CommandBase {
 				// Square holen
 				Square square = squares[i][j];
 				// square bekommt sessionName und observer
-				square.setSessionName(gameSession.getSessionName());
+				square.setSessionName(gameSession.getDescription());
 				square.addObserver(TopicMessageQueue.getInstance());
 
 				// Wenn etwas auf dem Square liegt
@@ -126,8 +126,8 @@ public class StartGameCommand extends CommandBase {
 			if(playerIterator.hasNext()) {
 				// Loco wird erstellt und zur Liste der Locos hinzugefügt
 				UUID playerId = playerIterator.next().getId();
-				gameSession.addLoco(new PlayerLoco(gameSession.getSessionName(), locoSpawnPointSquare, playerId));
-				GhostLoco ghostLoco = new GhostLoco(gameSession.getSessionName(), locoSpawnPointSquare, playerId);
+				gameSession.addLoco(new PlayerLoco(gameSession.getDescription(), locoSpawnPointSquare, playerId));
+				GhostLoco ghostLoco = new GhostLoco(gameSession.getDescription(), locoSpawnPointSquare, playerId);
 				gameSession.addLoco(ghostLoco);
 			}
 		}

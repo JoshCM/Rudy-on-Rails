@@ -14,7 +14,7 @@ public class EditorPlayer extends Player{
 	private void notifyCreated() {
     	MessageInformation messageInfo = new MessageInformation("CreatePlayer");
     	messageInfo.putValue("playerId", getId());
-    	messageInfo.putValue("playerName", getSessionName());
+    	messageInfo.putValue("playerName", getDescription());
     	messageInfo.putValue("isHost", getIsHost());
     	notifyChange(messageInfo);
     }

@@ -15,17 +15,17 @@ namespace RoRClient.Commands.Game.Create
     {
         private Guid id;
         private Guid playerId;
-        private string name;
+        private string description;
         private ScriptTypes scriptType;
-        private string scriptName;
+        private string filename;
 
         public CreateScriptCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             id = Guid.Parse(messageInformation.GetValueAsString("id"));
             playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
-            name = messageInformation.GetValueAsString("name");
+            description = messageInformation.GetValueAsString("description");
             scriptType = (ScriptTypes)Enum.Parse(typeof(ScriptTypes), messageInformation.GetValueAsString("scriptType"));
-            scriptName = messageInformation.GetValueAsString("scriptName");
+            filename = messageInformation.GetValueAsString("filename");
         }
 
         public override void Execute()
@@ -35,7 +35,7 @@ namespace RoRClient.Commands.Game.Create
             // Nur ein Script erzeugen, falls Default Script (leere Guid) oder ein Script des eigenen Spielers
             if (playerId == Guid.Empty || playerId == gameSession.OwnPlayer.Id)
             {
-                Script script = new Script(id, name, scriptType, scriptName);
+                Script script = new Script(id, description, scriptType, filename);
                 gameSession.Scripts.AddScript(script);
             }
         }

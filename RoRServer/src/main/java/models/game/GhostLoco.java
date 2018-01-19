@@ -33,7 +33,7 @@ public class GhostLoco extends Loco {
 		notifyChange(messageInfo);
 	}
 	
-	public void changeCurrentScriptName(String currentScriptName) {
-		scriptableObject.changeCurrentScriptName(currentScriptName);
+	public void changeCurrentScriptFilename(String currentScriptName) {
+		scriptableObject.changeCurrentScriptFilename(currentScriptName);
 	}
 }

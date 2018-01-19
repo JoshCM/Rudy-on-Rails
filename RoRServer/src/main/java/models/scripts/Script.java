@@ -10,30 +10,30 @@ public class Script extends ModelBase {
 		GHOSTLOCO
 	}
 	
-	private String name;
+	private String description;
 	private ScriptType scriptType;
-	private String scriptName;
+	private String filename;
 	private UUID playerId;
 	
-	public Script(String sessionName, String name, ScriptType scriptType, String scriptName, UUID playerId) {
+	public Script(String sessionName, String description, ScriptType scriptType, String filename, UUID playerId) {
 		super(sessionName);
 		this.playerId = playerId;
-		this.name = name;
-		this.scriptName = scriptName;
+		this.description = description;
+		this.filename = filename;
 		this.scriptType = scriptType;
 		notifyScriptCreated();
 	}
 
-	public Script(String sessionName, String name, ScriptType scriptType, String scriptName) {
-		this(sessionName, name, scriptType, scriptName, UUID.fromString("00000000-0000-0000-0000-000000000000"));
+	public Script(String sessionName, String description, ScriptType scriptType, String scriptName) {
+		this(sessionName, description, scriptType, scriptName, UUID.fromString("00000000-0000-0000-0000-000000000000"));
 	}
 
-	public String getSessionName() {
-		return name;
+	public String getDescription() {
+		return description;
 	}
 
-	public String getScriptName() {
-		return scriptName;
+	public String getFilename() {
+		return filename;
 	}
 	
 	public ScriptType getScriptType() {
@@ -48,9 +48,9 @@ public class Script extends ModelBase {
 		MessageInformation messageInfo = new MessageInformation("CreateScript");
 		messageInfo.putValue("id", getId());
 		messageInfo.putValue("playerId", playerId);
-		messageInfo.putValue("name", name);
+		messageInfo.putValue("description", description);
 		messageInfo.putValue("scriptType", scriptType.toString());
-		messageInfo.putValue("scriptName", scriptName);
+		messageInfo.putValue("filename", filename);
 		notifyChange(messageInfo);
 	}
 }

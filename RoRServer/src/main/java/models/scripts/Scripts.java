@@ -19,8 +19,8 @@ public class Scripts extends ModelBase {
 	}
 	
 	private void loadGhostLocoDefaultScripts() {
-		ghostLocoScripts.add(new Script(getSessionName(), "Schnell fahren", ScriptType.GHOSTLOCO, "ghostloco_default_drivefast"));
-		ghostLocoScripts.add(new Script(getSessionName(), "Langsam fahren", ScriptType.GHOSTLOCO, "ghostloco_default_driveslow"));
+		ghostLocoScripts.add(new Script(getDescription(), "Schnell fahren", ScriptType.GHOSTLOCO, "ghostloco_default_drivefast"));
+		ghostLocoScripts.add(new Script(getDescription(), "Langsam fahren", ScriptType.GHOSTLOCO, "ghostloco_default_driveslow"));
 	}
 	
 	public List<Script> getGhostLocoScripts() {
