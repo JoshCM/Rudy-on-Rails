@@ -120,7 +120,6 @@ public class StartGameCommand extends CommandBase {
 				gameSession.addLoco(new PlayerLoco(gameSession.getSessionName(), locoSpawnPointSquare, playerId));
 				GhostLoco ghostLoco = new GhostLoco(gameSession.getSessionName(), locoSpawnPointSquare, playerId);
 				gameSession.addLoco(ghostLoco);
-				ghostLoco.init();
 			}
 		}
 		

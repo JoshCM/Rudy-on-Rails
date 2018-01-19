@@ -9,6 +9,10 @@ import models.game.Script;
 import models.session.GameSession;
 import models.session.RoRSession;
 
+/**
+ * Ein vom Client geschicktes Python-Script wird als Datei gespeichert 
+ * Dieses wird in einem neuen Script-Objekt verlinkt und den GhostLocoScripts hinzugefügt
+ */
 public class AddGhostLocoScriptFromPlayerCommand extends CommandBase {
 	private UUID playerId;
 	private String scriptName;
@@ -25,8 +29,9 @@ public class AddGhostLocoScriptFromPlayerCommand extends CommandBase {
 	@Override
 	public void execute() {
 		String playerIdAsString = playerId.toString().replace("-", "_");
-		String correctedScriptName = scriptName.replace(" ", "_");
-		String filename = "ghostloco_" + playerIdAsString + "_" + correctedScriptName;
+		String newIdAsString = UUID.randomUUID().toString().replace("-", "_");
+		// Eindeutiger Filename wird generiert aus playerId und einer zufälligen UUID
+		String filename = "ghostloco_" + playerIdAsString + "_" + newIdAsString;
 		// Python-Script wird gespeichert
 		ScriptFileWriter.writeStringToFile(filename, scriptContent);
 		

@@ -4,18 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RoRClient.Views.Game"
+             xmlns:converter="clr-namespace:RoRClient.BindingConverter"
              mc:Ignorable="d" 
              d:DesignHeight="225" d:DesignWidth="800" Background="#510404" BorderBrush="White" BorderThickness="5">
 
     <UserControl.Resources>
-        <ResourceDictionary Source="../Styles.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <converter:IsNullToBooleanConverter x:Key="IsNullToBooleanConverter"/>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <StackPanel>
         <StackPanel Orientation="Vertical">
             <Button Content="Geisterzug" Style="{StaticResource DefaultButtonStyle}" HorizontalAlignment="Left" Margin="0 0 0 10"/>
-            <ComboBox Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" ItemsSource="{Binding Scripts.GhostLocoScripts}" HorizontalAlignment="Left" DisplayMemberPath="Name" SelectedValue="{Binding SelectedGhostLocoScript}" Margin="0 0 0 10"/>
-            <Button Content="Geisterzug" Command="{Binding AddGhostLocoScriptFromPlayerCommand}" Style="{StaticResource DefaultButtonStyle}" HorizontalAlignment="Left" Margin="0 0 0 10"/>
+            <ComboBox IsEditable="{Binding SelectedGhostLocoScript, Converter={StaticResource IsNullToBooleanConverter}}"
+                      IsReadOnly="{Binding SelectedGhostLocoScript, Converter={StaticResource IsNullToBooleanConverter}}"
+                      Text="Wähle Script" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" ItemsSource="{Binding Scripts.GhostLocoScripts}" HorizontalAlignment="Left" DisplayMemberPath="Name" SelectedValue="{Binding SelectedGhostLocoScript}" Margin="0 0 0 10"/>
+            <Button Content="Script hochladen" Command="{Binding AddGhostLocoScriptFromPlayerCommand}" Style="{StaticResource DefaultButtonStyle}" HorizontalAlignment="Left" Margin="0 0 0 10"/>
         </StackPanel>
     </StackPanel>
 </UserControl>

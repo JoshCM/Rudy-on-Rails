@@ -105,7 +105,7 @@
     <Compile Include="BindingConverter\ObjectEqualsConverter.cs" />
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
     <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
-    <Compile Include="BindingConverter\BooleanToColorConverter.cs" />
+    <Compile Include="BindingConverter\IsNullToBooleanConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
     <Compile Include="BindingConverter\CompassToAngleConverter.cs" />
     <Compile Include="Commands\Base\ChangeMapNameCommandBase.cs" />
