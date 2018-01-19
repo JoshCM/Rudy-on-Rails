@@ -2,6 +2,9 @@ package models.game;
 
 import java.util.UUID;
 import communication.MessageInformation;
+import models.scripts.ProxyObject;
+import models.scripts.ScriptableObject;
+import models.session.GameSessionManager;
 
 /**
  * Dem Geisterzug kann ein Script hinterlegt werden, dass ihn steuert
@@ -14,6 +17,8 @@ public class GhostLoco extends Loco {
 
 		ProxyObject ghostLocoProxy = new GhostLocoProxy(this);
 		scriptableObject = new ScriptableObject(ghostLocoProxy);
+		GameSessionManager.getInstance().getGameSessionByName(sessionName).addScriptableObject(scriptableObject);
+		
 		NotifyLocoCreated();
 		addInitialCart();
 	}

@@ -1,4 +1,4 @@
-package models.game;
+package models.scripts;
 
 public interface ProxyObject {
 

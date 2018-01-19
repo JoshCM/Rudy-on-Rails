@@ -5,7 +5,7 @@ import java.util.UUID;
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import helper.ScriptFileWriter;
-import models.game.Script;
+import models.scripts.Script;
 import models.session.GameSession;
 import models.session.RoRSession;
 

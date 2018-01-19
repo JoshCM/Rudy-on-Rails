@@ -6,7 +6,7 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import models.game.GhostLoco;
 import models.game.Loco;
-import models.game.Script;
+import models.scripts.Script;
 import models.session.GameSession;
 import models.session.RoRSession;
 

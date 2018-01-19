@@ -12,8 +12,10 @@ import models.game.GhostLoco;
 import models.game.Loco;
 import models.game.Player;
 import models.game.PlayerLoco;
-import models.game.Scripts;
 import models.game.TickableGameObject;
+import models.scripts.ScriptableObject;
+import models.scripts.ScriptableObjectManager;
+import models.scripts.Scripts;
 
 /**
  * Oberklasse vom Game-Modus. 
@@ -29,6 +31,7 @@ public class GameSession extends RoRSession{
 	private Ticker ticker;
 	private ArrayList<Loco> locos = new ArrayList<>();
 	private Scripts scripts;
+	private ScriptableObjectManager scriptableObjectManager;
 
 	public GameSession(String name, UUID hostPlayerId, String hostPlayerName) {
 		super(name);
@@ -37,6 +40,7 @@ public class GameSession extends RoRSession{
 		
 		GameSessionDispatcher dispatcher = new GameSessionDispatcher(this);
 		scripts = new Scripts(name);
+		scriptableObjectManager = new ScriptableObjectManager();
 		this.queueReceiver = new QueueReceiver(name, dispatcher);
 		this.ticker = new Ticker();
 		this.stopped = false;
@@ -157,7 +161,12 @@ public class GameSession extends RoRSession{
 	@Override
 	public void start() {
 		super.start();
-		scripts.loadGhostLocoDefaultScripts();
+		scripts.init();
+		scriptableObjectManager.init();
+	}
+	
+	public void addScriptableObject(ScriptableObject scriptableObject) {
+		scriptableObjectManager.addScriptableObject(scriptableObject);
 	}
 }
 

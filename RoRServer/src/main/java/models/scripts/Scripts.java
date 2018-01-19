@@ -1,4 +1,4 @@
-package models.game;
+package models.scripts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,11 @@ public class Scripts extends ModelBase {
 		super(sessionName);
 	}
 	
-	public void loadGhostLocoDefaultScripts() {
+	public void init() {
+		loadGhostLocoDefaultScripts();
+	}
+	
+	private void loadGhostLocoDefaultScripts() {
 		ghostLocoScripts.add(new Script(getSessionName(), "Schnell fahren", "ghostloco", "ghostloco_default_drivefast"));
 		ghostLocoScripts.add(new Script(getSessionName(), "Langsam fahren", "ghostloco", "ghostloco_default_driveslow"));
 	}

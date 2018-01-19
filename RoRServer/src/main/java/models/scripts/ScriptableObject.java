@@ -1,12 +1,10 @@
-package models.game;
+package models.scripts;
 
 import org.python.util.PythonInterpreter;
 
 public class ScriptableObject {
 	private PythonInterpreter pi = new PythonInterpreter();
 	private ProxyObject proxyObject;
-	private Thread updateThread;
-	private boolean initialized;
 	private String currentScriptFilename = "";
 	private Thread updateMethodThread;
 	
@@ -25,43 +23,10 @@ public class ScriptableObject {
 	}
 
 	/**
-	 * Startet den Update-Thread einmalig
-	 * Notwendig, damit man GhostLoco Unit-testen kann
-	 */
-	private void init() {
-		if (!initialized && !currentScriptFilename.isEmpty()) {
-			initialized = true;
-			startUpdateThread();
-		}
-	}
-
-	/**
-	 * Startet den Thread, der in regelmäßigen Abständen die update-Methode des
-	 * aktuellen Python-Scripts aufruft
-	 */
-	private void startUpdateThread() {
-		updateThread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				while (true) {
-					callUpdateOnPythonScript();
-
-					try {
-						Thread.sleep(250);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-		updateThread.start();
-	}
-
-	/**
 	 * Ruft die update-Methode des aktuellen Python-Scripts auf, sofern der letzte
 	 * Aufruf dieser Methode bereits abgearbeitet ist
 	 */
-	private void callUpdateOnPythonScript() {
+	public void callUpdateOnPythonScript() {
 		if (updateMethodThread == null) {
 			initAndStartUpdateMethodThread();
 		} else {
@@ -100,6 +65,9 @@ public class ScriptableObject {
 		}
 
 		importCurrentScript();
-		init();
+	}
+	
+	public String getCurrentScriptFilename() {
+		return currentScriptFilename;
 	}
 }
