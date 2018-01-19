@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.activemq.console.command.CreateCommand;
 import org.apache.log4j.Logger;
 
 import com.google.gson.JsonObject;
@@ -211,7 +212,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 				
 				// erzeuge neue Rail und setze intern das Square.PlacableOnSquare
 				Rail newRail = new Rail(sessionName, newSquare, railSectionsCompass, false,
-						tmpRail.getTrainstationId(), tmpRail.getId());
+						tmpRail.getTrainstationId(), tmpRail.getId(),tmpRail.placeableOnRail);
 				newSquare.setPlaceableOnSquare(newRail);
 			}else if(tmpTrainstationGameObject instanceof Stock) {
 				Stock tmpStock = (Stock)tmpTrainstationGameObject;
@@ -271,6 +272,22 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		trainstationInteractiveGameObjects.add(stock);
 
 		rotateTrainstationInteractiveGameObjects(trainstationInteractiveGameObjects, pivotXPos, pivotYPos, right);
+		
+		//wir sagen dem Crane das sich alles gedreht hat und wir jetzt auf nem anderen Square stehen
+		Rail craneRail = getRailbyId(this.crane.getRailId());
+		Square newSquare = EditorSessionManager.getInstance().getEditorSessionByName(sessionName).getMap().getSquareById(craneRail.getSquareId());
+//		crane.rotateCrane(newSquare, this.alignment);
+		this.crane = new Crane(this.sessionName, newSquare, this.getId(), Crane.getCraneAlignmentbyTrainstationAlignment(this.alignment), craneRail.getId());
+	}
+
+	private Rail getRailbyId(UUID railId) {
+		// TODO Auto-generated method stub
+		for(Rail rail: getTrainstationRails()) {
+			if(rail.getId().equals(railId)) {
+				return rail;
+			}
+		}
+		return null;
 	}
 
 	/**

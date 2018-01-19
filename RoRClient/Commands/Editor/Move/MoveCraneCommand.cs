@@ -12,8 +12,6 @@ namespace RoRClient.Commands.Editor.Move
 {
     class MoveCraneCommand : CommandBase
     {
-        private int oldXPos;
-        private int oldYPos;
         private int newXPos;
         private int newYPos;
 

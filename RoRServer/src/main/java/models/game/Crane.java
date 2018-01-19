@@ -44,14 +44,40 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		return newCrane;
 	}
 	
+	public void moveCrane(Square newSquare) {
+		changeSquare(newSquare);
+		NotifyCraneMoved();
+	}
 	
-	private UUID getRailId() {
+	public void rotateCrane(Square newSquare, Compass trainstationAlignment) {
+		moveCrane(newSquare);
+		this.alignment = getCraneAlignmentbyTrainstationAlignment(alignment);
+		NotifyCraneRotated();
+	}
+	
+	public static Compass getCraneAlignmentbyTrainstationAlignment(Compass trainstationAlignment) {
+		switch(trainstationAlignment) {
+		case EAST:
+			return Compass.NORTH;
+		case NORTH:
+			return Compass.WEST;
+		case SOUTH:
+			return Compass.EAST;
+		case WEST:
+			return Compass.SOUTH;
+		default:
+			return Compass.EAST;
+		}
+	}
+	
+	
+	public UUID getRailId() {
 		return railId;
 	}
-	private Compass getAlignment() {
+	public Compass getAlignment() {
 		return alignment;		
 	}
-	private UUID getTrainstationId() {
+	public UUID getTrainstationId() {
 		return trainstationId;
 	}
 	private void NotifyCraneCreated() {
@@ -65,10 +91,18 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		notifyChange(messageInfo);
 	}
 	
-	public void NotifyCraneMoved(Square newSquare) {
+	private void NotifyCraneMoved() {
 		MessageInformation messageInfo = new MessageInformation("MoveCrane");
-		messageInfo.putValue("newXPos", newSquare.getXIndex());
-		messageInfo.putValue("newYPos", newSquare.getYIndex());
+		messageInfo.putValue("newXPos", getXPos());
+		messageInfo.putValue("newYPos", getYPos());
+		notifyChange(messageInfo);
+	}
+	
+	private void NotifyCraneRotated() {
+		MessageInformation messageInfo = new MessageInformation("UpdateAlignmentOfCrane");
+		messageInfo.putValue("XPos", getXPos());
+		messageInfo.putValue("YPos", getYPos());
+		messageInfo.putValue("newAlignment", this.alignment.toString());
 		notifyChange(messageInfo);
 	}
 	
