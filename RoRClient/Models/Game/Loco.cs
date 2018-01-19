@@ -70,13 +70,7 @@ namespace RoRClient.Models.Game
 
         public Cart getCartById(Guid cartId)
         {
-            foreach(Cart c in Carts){
-                if (c.Id.Equals(cartId))
-                {
-                    return c;
-                }
-            }
-            return null;
+            return carts.Where(x => x.Id == cartId).First();
         }
     }
 }

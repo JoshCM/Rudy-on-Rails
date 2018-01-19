@@ -17,7 +17,16 @@
             Height="{Binding SquareDim, ElementName=cartGameUserControl}">
         <Image Width="{Binding SquareDim, ElementName=cartGameUserControl}" 
                Height="{Binding SquareDim, ElementName=cartGameUserControl}" 
-                Source="/RoRClient;component/Resources/Images/cart.png" Stretch="Fill" RenderTransformOrigin="0.5, 0.5">
+                Source ="/RoRClient;component/Resources/Images/cart.png" Stretch="Fill" RenderTransformOrigin="0.5, 0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="{Binding RealRotationAngle, ElementName=cartGameUserControl}" />
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        <Image Width="{Binding SquareDim, ElementName=cartGameUserControl}" 
+               Height="{Binding SquareDim, ElementName=cartGameUserControl}" 
+                Source="{Binding Path=Cart.OnboardResourceImagePath, UpdateSourceTrigger=PropertyChanged}" Stretch="Fill" RenderTransformOrigin="0.5, 0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <RotateTransform Angle="{Binding RealRotationAngle, ElementName=cartGameUserControl}" />

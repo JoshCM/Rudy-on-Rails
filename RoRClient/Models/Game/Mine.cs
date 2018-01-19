@@ -68,6 +68,16 @@ namespace RoRClient.Models.Game
             golds.Add(gold);
             NotifyPropertyChanged("GoldCount",goldCount,golds.Count.ToString());
         }
+        public void RemoveCoal(IPlaceableOnSquare coal)
+        {
+            coals.Remove(coal);
+            NotifyPropertyChanged("CoalCount", coalCount, coals.Count.ToString());
+        }
+        public void RemoveGold(IPlaceableOnSquare gold)
+        {
+            golds.Remove(gold);
+            NotifyPropertyChanged("GoldCount", goldCount, golds.Count.ToString());
+        }
         public List<IPlaceableOnSquare> GetCoals()
         {
             return coals;

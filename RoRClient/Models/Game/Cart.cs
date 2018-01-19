@@ -16,11 +16,54 @@ namespace RoRClient.Models.Game
     {
         private Compass drivingDirection;
         private int speed;
+        private String onboardResourceImagePath;
+        public Resource onboardResource;
 
         public Cart(Guid id, Compass drivingDirection, Square square) : base(square)
         {
             this.id = id;
             this.drivingDirection = drivingDirection;
+            this.onboardResource = null;
+            this.onboardResourceImagePath= null;
+
+        }
+        public Resource OnboardResource
+        {
+            get
+            {
+                return onboardResource;
+            }
+            set
+            {
+            onboardResource = value;   
+            }
+        }
+        public String OnboardResourceImagePath
+        {
+            get
+            {
+                return onboardResourceImagePath;
+            }
+            set
+            {
+                onboardResourceImagePath = value;
+            }
+        
+        }
+        /*
+         * Setzt ImagePfad für OnboardResource in View ein
+         * Also beim abladen onboardResource=null und onboardResourceImagePath=null setzen
+         * */
+        public void updateOnboardResourceImagePath(String newImagePath)
+        {
+            onboardResourceImagePath = newImagePath;
+            NotifyPropertyChanged("OnboardResourceImagePath", this.onboardResourceImagePath, newImagePath);
+
+        }
+        public void UpdateOnboardResource(Resource res)
+        {
+            onboardResource = res;
+            NotifyPropertyChanged("OnboardResource", this.onboardResource, res);
         }
 
         public Compass DrivingDirection

@@ -24,8 +24,8 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 	private Resource res = null;
 	private Square square;
 	protected RoRSession session;
+	protected GameSession gameSession;
 	int i = 1;
-	
 
 	public Mine(String sessionName, Square square, Compass alignment, UUID railId) {
 		super(sessionName, square);
@@ -90,6 +90,7 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 		alignment = CompassHelper.rotateCompass(true, alignment);
 		notifyAlignmentUpdated();
 	}
+
 	/**
 	 * Methode zum Erstellen einer Nachrichtm wenn eine neue Mine erstellt wurde
 	 */
@@ -124,20 +125,51 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 		result = prime * result + ((resources == null) ? 0 : resources.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public void specificUpdate() {
 		this.timeDeltaCounter += timeDeltaInNanoSeconds;
+		if (this.timeDeltaCounter >= SEC_IN_NANO) {
+			gameSession = GameSessionManager.getInstance().getGameSessionByName(sessionName);
+			List<Loco> locos = gameSession.getLocos();
+			for (Loco loco : locos) {
+				List<Cart> carts = loco.getCarts();
+				for (Cart cart : carts) {
+					if (cart.getXPos() == this.getXPos() && cart.getYPos() == this.getYPos()&&cart.getResource()==null&&resources.size()!=0) {
+						
+						System.out.println("cart ist in mine");
+						cart.loadResourceOntoCart(resources.get(0));
+						notifyResourceLoadedOntoCart(loco,cart);
+						
+						resources.remove(0);
+						break;
+					}
+				}
+
+			}
+		}
 		if (this.timeDeltaCounter >= SEC_IN_NANO * 4) {
 			this.timeDeltaCounter = 0;
 			if (resources.size() < maxNumberOfResource) {
 				res = minedResource();
 				resources.add(res);
-				//log.info("res=" + res.getName()+i);
-				System.out.println("res=" + res.getName()+i);
-				i+=1;
+				// log.info("res=" + res.getName()+i);
+				System.out.println("res=" + res.getName() + i);
+				i += 1;
 			}
+
+			
 		}
+	}
+
+	private void notifyResourceLoadedOntoCart(Loco loco,Cart cart) {
+		MessageInformation message = new MessageInformation("UpdateResourceLoadedOntoCart");
+		message.putValue("Resource", resources.get(0).getName());
+		message.putValue("LocoId", loco.getId());
+		message.putValue("CartId", cart.getId());
+		message.putValue("XPos", this.getXPos());
+		message.putValue("YPos", this.getYPos());
+		notifyChange(message);
 	}
 
 	public Resource minedResource() {
@@ -148,7 +180,7 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 			res = new Coal(this.sessionName, square);
 		} else {
 			res = new Gold(this.sessionName, square);
-		
+
 		}
 		return res;
 	}
@@ -182,9 +214,10 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 		return railId;
 
 	}
+
 	public void setSquare(Square newSquare) {
 		// TODO Auto-generated method stub
-		square=newSquare;
+		square = newSquare;
 	}
 
 }
