@@ -216,13 +216,13 @@ public class CreateTrainstationCommand extends CommandBase {
 	public Compass getCraneAlignment() {
 		switch(this.alignment) {
 		case EAST:
-			return Compass.SOUTH;
+			return Compass.NORTH;
 		case NORTH:
 			return Compass.WEST;
 		case SOUTH:
 			return Compass.EAST;
 		case WEST:
-			return Compass.NORTH;
+			return Compass.SOUTH;
 		default:
 			return Compass.EAST;
 		}
