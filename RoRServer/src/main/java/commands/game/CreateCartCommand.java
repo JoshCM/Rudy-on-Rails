@@ -37,13 +37,19 @@ public class CreateCartCommand implements Command{
 		
 		Square square = this.session.getMap().getSquare(xPos, yPos);
 		Rail rail = (Rail) square.getPlaceableOnSquare();
-	
-		System.out.println("Square: "+ square);
-		System.out.println("Rail: "+ rail);
+		Loco loco = session.getLocomotiveByPlayerId(playerId);
+		
+		if(loco.getCarts().size() < 5) {
+			if(rail.getPlaceableOnrail()==null) {//Damit nicht mehrere Wagons übereinander erzeugt werden
+				Cart cart = new Cart(session.sessionName, square, compass, playerId, false, null);
+				rail.setPlaceableOnRail(cart);
+			}
+		}
+		
 
-		Cart cart = new Cart(session.sessionName, square, compass, playerId, false, null);
-		rail.setPlaceableOnRail(cart);
-		//Loco loco = session.getLocomotiveByPlayerId(playerId);
+		
+
+		
 		
 	}
 	

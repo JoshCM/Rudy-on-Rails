@@ -7,16 +7,17 @@ using RoRClient.Commands.Base;
 using RoRClient.Models.Session;
 using RoRClient.Communication.DataTransferObject;
 using RoRClient.Communication;
+using System.ComponentModel;
 
 namespace RoRClient.ViewModels.Game
 {
-    class SpeedSliderViewModel
+    class SpeedSliderViewModel: ViewModelBase
     {
+        private int speed;
         private ICommand updateSpeedCommand;//muss das sein?
         internal ICommand UpdateSpeedCommand(double newValue)
         {
             sendUpdateSpeedCommand(newValue);
-
             return updateSpeedCommand;
         }
 
@@ -29,5 +30,23 @@ namespace RoRClient.ViewModels.Game
 
             gameSession.QueueSender.SendMessage("ChangeSpeedOfLocomotive", messageInformation);
         }
+
+        private void OnSpeedPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+
+        }
+        private int Speed
+        {
+            get
+            {
+                return speed;
+            }
+            set
+            {
+                if (speed != value)
+                    speed = value;
+            }
+        }
+
     }
 }

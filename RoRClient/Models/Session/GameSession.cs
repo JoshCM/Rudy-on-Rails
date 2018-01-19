@@ -46,6 +46,11 @@ namespace RoRClient.Models.Session
             return locos.Where(x => x.Id == locoId).First();
         }
 
+        public Loco GetLocoByPlayerId(Guid playerId)
+        {
+            return locos.Where(x => x.PlayerId == playerId).First();
+        }
+
         public void AddLoco(Loco loco)
         {
             locos.Add(loco);

@@ -49,6 +49,10 @@ namespace RoRClient.Views.Game
             CartGameUserControl cartGameUserControl = (CartGameUserControl)d;
             CartGameViewModel cartGameViewModel = (CartGameViewModel)cartGameUserControl.DataContext;
             double speedRatio = cartGameViewModel.Cart.Speed > 0 ? cartGameViewModel.Cart.Speed * speedFactor : 1;
+            if(cartGameUserControl.RealX == 0)
+            {
+                cartGameUserControl.RealX = cartGameViewModel.SquarePosX * ViewConstants.SQUARE_DIM;
+            }
             cartGameUserControl.BeginAnimation(CartGameUserControl.RealXProperty, new Int32Animation { From = cartGameUserControl.RealX, To = cartGameUserControl.X * ViewConstants.SQUARE_DIM, SpeedRatio = speedRatio });
         }
 
@@ -71,6 +75,10 @@ namespace RoRClient.Views.Game
             CartGameUserControl cartGameUserControl = (CartGameUserControl)d;
             CartGameViewModel cartGameViewModel = (CartGameViewModel)cartGameUserControl.DataContext;
             double speedRatio = cartGameViewModel.Cart.Speed > 0 ? cartGameViewModel.Cart.Speed * speedFactor : 1;
+            if (cartGameUserControl.RealY == 0)
+            {
+                cartGameUserControl.RealY = cartGameViewModel.SquarePosY * ViewConstants.SQUARE_DIM;
+            }
             cartGameUserControl.BeginAnimation(CartGameUserControl.RealYProperty, new Int32Animation { From = cartGameUserControl.RealY, To = cartGameUserControl.Y * ViewConstants.SQUARE_DIM, SpeedRatio = speedRatio });
         }
 
