@@ -7,34 +7,29 @@ import org.python.util.PythonInterpreter;
 import communication.MessageInformation;
 
 public class GhostLoco extends Loco {
-	private final static String DEFAULT_SCRIPT = "ghostloco_default_drivefast";
-	
 	private PythonInterpreter pi = new PythonInterpreter();
 	private GhostLocoProxy ghostLocoProxy;
 	private Thread updateThread;
 	private boolean initialized;
-	private String currentScriptName;
+	private String currentScriptName = "";
 	
 	public GhostLoco(String sessionName, Square square, UUID playerId) {
 		super(sessionName, square, playerId);
-		
-		currentScriptName = DEFAULT_SCRIPT;
-		initGhostLocoProxy();
-		
+
+		ghostLocoProxy = new GhostLocoProxy(this);
 		NotifyLocoCreated();
 		addInitialCart();
-		
-		changeSpeed(1);
 	}
 	
-	private void initGhostLocoProxy() {
-		ghostLocoProxy = new GhostLocoProxy(this);
-        pi.exec("from " + currentScriptName + " import update");
-        pi.set("proxy", ghostLocoProxy);
+	private void importCurrentScript() {
+		if(!currentScriptName.isEmpty()) {
+	        pi.exec("from " + currentScriptName + " import update");
+	        pi.set("proxy", ghostLocoProxy);
+		}
 	}
 	
-	public void init() {
-		if(!initialized) {
+	private void init() {
+		if(!initialized && !currentScriptName.isEmpty()) {
 			initialized = true;
 			startUpdateThread();
 		}
@@ -66,5 +61,11 @@ public class GhostLoco extends Loco {
 		messageInfo.putValue("drivingDirection", getDrivingDirection().toString());
 		messageInfo.putValue("playerId", getPlayerId());
 		notifyChange(messageInfo);
+	}
+	
+	public void changeCurrentScriptName(String currentScriptName) {
+		this.currentScriptName = currentScriptName;
+		importCurrentScript();
+		init();
 	}
 }

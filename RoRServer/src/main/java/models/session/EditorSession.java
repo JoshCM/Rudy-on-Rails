@@ -24,12 +24,12 @@ public class EditorSession extends RoRSession {
 	}
 
 	private void createHostPlayer(UUID playerId, String playerName) {
-		EditorPlayer player = new EditorPlayer(getName(), playerName, playerId, true);
+		EditorPlayer player = new EditorPlayer(getSessionName(), playerName, playerId, true);
 		addPlayer(player);
 	}
 	
 	public Player createPlayer(UUID playerId, String playerName) {
-		EditorPlayer player = new EditorPlayer(getName(), playerName, playerId, false);
+		EditorPlayer player = new EditorPlayer(getSessionName(), playerName, playerId, false);
 		addPlayer(player);
 		return player;
 	}

@@ -14,7 +14,7 @@ public class MapTests {
 		Map map = new Map("testSession");
 		map.changeName(newName);
 		
-		assertEquals(newName, map.getName());
+		assertEquals(newName, map.getSessionName());
 	}
 	
 	@Test
