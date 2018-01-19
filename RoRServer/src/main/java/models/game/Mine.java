@@ -50,10 +50,10 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 	public PlaceableOnRail loadFromMap(Square square, RoRSession session) {
 
 		// Neue Mine erstellen und damit an den Client schicken
-		Mine newMine = new Mine(session.getName(), square, alignment, railId);
+		Mine newMine = new Mine(session.getSessionName(), square, alignment, railId);
 		// mitbekommen kann
 		// sessionName neu setzen, damit Observer Änderung dieses Objekts
-		newMine.setName(session.getName());
+		newMine.setSessionName(session.getSessionName());
 		if (session instanceof GameSession) {
 			((GameSession) session).addMine(newMine);
 		}
@@ -154,7 +154,7 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 				res = minedResource();
 				resources.add(res);
 				// log.info("res=" + res.getName()+i);
-				System.out.println("res=" + res.getName() + i);
+				System.out.println("res=" + res.getSessionName() + i);
 				i += 1;
 			}
 
@@ -164,7 +164,7 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 
 	private void notifyResourceLoadedOntoCart(Loco loco,Cart cart) {
 		MessageInformation message = new MessageInformation("UpdateResourceLoadedOntoCart");
-		message.putValue("Resource", resources.get(0).getName());
+		message.putValue("Resource", resources.get(0).name);
 		message.putValue("LocoId", loco.getId());
 		message.putValue("CartId", cart.getId());
 		message.putValue("XPos", this.getXPos());

@@ -2,6 +2,7 @@
 using RoRClient.Communication.Dispatcher;
 using RoRClient.Communication.Topic;
 using RoRClient.Models.Game;
+
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -88,7 +89,7 @@ namespace RoRClient.Models.Session
             gameSession = null;
             NotifyPropertyChanged("GameSessionDeleted");
         }
-	}
+	
 
         public Mine getMineByPosition(int xPos, int yPos)
         {

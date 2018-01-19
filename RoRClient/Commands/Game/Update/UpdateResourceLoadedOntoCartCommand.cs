@@ -30,7 +30,7 @@ namespace RoRClient.Commands.Game.Update
             Mine mine = GameSession.GetInstance().getMineByPosition(xPos, yPos);
         
             Loco loco = GameSession.GetInstance().GetLocoById(locoId);
-            Cart cart = loco.getCartById(cartId);      
+            Cart cart = loco.GetCartById(cartId);      
             
             Resource onboardResource=null;
             String newImagePath = null;

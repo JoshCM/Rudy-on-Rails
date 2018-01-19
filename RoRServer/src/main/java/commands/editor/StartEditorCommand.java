@@ -102,7 +102,7 @@ public class StartEditorCommand extends CommandBase {
 	public void execute() {
 		String mapName = ((EditorSession) session).getMapName();
 
-		if (mapName==null) {
+		if (mapName.startsWith("#")) {
 			// eine neue map wird erstellt
 			startNewMap();
 		} else {
