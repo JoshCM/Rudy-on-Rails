@@ -28,9 +28,7 @@
                                  Grid.Column="0"
                                  Grid.ColumnSpan="3" 
                                  DataContext="{Binding MapGameViewModel}"/>
-
-        <game:GameMiniMapUserControl Grid.Row="2" Grid.Column="0" />
-        <game:GameInteractionUserControl Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" />
+        <game:GameInteractionUserControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
 
         <Canvas Grid.Row="2" Grid.Column="3">
             <Grid>
@@ -45,10 +43,5 @@
                 <game:SensorGameUserControl Grid.Row="1" Grid.Column="1" />
             </Grid>
         </Canvas>
-
-        <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="2" />
-        <Border Grid.Column="0" Grid.Row="2" BorderBrush="Black" BorderThickness="2" />
-        <Border Grid.Column="1" Grid.Row="2" BorderBrush="Black" BorderThickness="2" />
-        <Border Grid.Column="2" Grid.Row="2" BorderBrush="Black" BorderThickness="2" />
     </Grid>
 </UserControl>
