@@ -29,7 +29,7 @@
                                 <vg:RailGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
-                        <DataTemplate DataType="{x:Type game:TrainstationGameViewModel}">
+                        <DataTemplate DataType="{x:Type game:PlayertrainstationGameViewModel}">
                             <Canvas>
                                 <vg:TrainstationGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>

@@ -20,6 +20,14 @@ namespace RoRClient.ViewModels.Editor
             this.SquarePosX = trainstation.Square.PosX;
             this.SquarePosY = trainstation.Square.PosY;
         }
+        
+        public Trainstation Trainstation
+        {
+            get
+            {
+                return trainstation;
+            }
+        }
 
         public override void Delete()
         {

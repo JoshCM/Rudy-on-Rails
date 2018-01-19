@@ -144,11 +144,12 @@
     <Compile Include="Commands\Game\Create\CreatePlayerLocoCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateMineCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayerCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreatePublictrainstationCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateSignalsCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
-    <Compile Include="Commands\Game\Create\CreateTrainstationCommand.cs" />
+    <Compile Include="Commands\Game\Create\CreatePlayertrainstationCommand.cs" />
     <Compile Include="Commands\Game\Other\ChangeMapNameCommand.cs" />
     <Compile Include="Commands\Game\Other\LeaveGameCommand.cs" />
     <Compile Include="Commands\Game\Other\StartCommand.cs" />
@@ -221,6 +222,8 @@
     <Compile Include="ViewModels\Game\MapGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
     <Compile Include="ViewModels\Game\MineGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\PublictrainstationGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\TrainstationGameViewModel.cs" />
     <Compile Include="ViewModels\Game\SpeedSliderViewModel.cs" />
     <Compile Include="ViewModels\Game\SquareGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
@@ -228,7 +231,7 @@
     <Compile Include="ViewModels\Editor\PlayertrainstationEditorViewModel.cs" />
     <Compile Include="ViewModels\Game\StockGameViewModel.cs" />
     <Compile Include="ViewModels\Helper\TypeHelper.cs" />
-    <Compile Include="ViewModels\Game\TrainstationGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\PlayertrainstationGameViewModel.cs" />
     <Compile Include="ViewModels\Helper\UIState.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactory.cs" />
     <Compile Include="ViewModels\Lobby\EditorLobbyViewModel.cs" />
@@ -317,6 +320,9 @@
     <Compile Include="Views\Game\MineGameUserControl.xaml.cs">
       <DependentUpon>MineGameUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\PublictrainstationGameUserControl.xaml.cs">
+      <DependentUpon>PublictrainstationGameUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\SquareGameUserControl.xaml.cs">
       <DependentUpon>SquareGameUserControl.xaml</DependentUpon>
     </Compile>
@@ -334,6 +340,9 @@
     </Compile>
     <Compile Include="Views\Game\RailGameUserControl.xaml.cs">
       <DependentUpon>RailGameUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\PlayertrainstationGameUserControl.xaml.cs">
+      <DependentUpon>PlayertrainstationGameUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\TrainstationGameUserControl.xaml.cs">
       <DependentUpon>TrainstationGameUserControl.xaml</DependentUpon>
@@ -409,6 +418,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Game\PublictrainstationGameUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Game\SquareGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -432,6 +445,10 @@
     <Page Include="Views\Game\RailGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\PlayertrainstationGameUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Game\TrainstationGameUserControl.xaml">
       <SubType>Designer</SubType>
