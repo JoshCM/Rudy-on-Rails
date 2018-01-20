@@ -26,6 +26,7 @@ public class Scripts extends ModelBase {
 	
 	private void loadSensorDefaultScripts() {
 		scripts.add(new Script(getDescription(), "Funny", ScriptType.SENSOR, "funny"));
+		scripts.add(new Script(getDescription(), "Destroy", ScriptType.SENSOR, "destroy"));
 	}
 	
 	public List<Script> getScripts() {

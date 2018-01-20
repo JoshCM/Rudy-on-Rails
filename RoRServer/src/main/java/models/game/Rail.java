@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.google.gson.JsonObject;
 import communication.MessageInformation;
 import exceptions.RailSectionException;
+import models.session.GameSession;
 import models.session.GameSessionManager;
 import models.session.RoRSession;
 
@@ -82,7 +83,9 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
      * Neuen Sensor auf Rail platzieren
      */
     public void placeSensor() {
-    	sensor = new Sensor(getSessionName(), getId());
+    	GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(sessionName);
+    	Square square = gameSession.getMap().getSquareById(getSquareId());
+    	sensor = new Sensor(getSessionName(), square , getId());
     }
    
 

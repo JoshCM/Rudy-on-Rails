@@ -115,7 +115,7 @@ namespace RoRClient.Models.Game
 
         public void PlaceSensor()
         {
-            Sensor = new Sensor(Id);
+            Sensor = new Sensor(Square, Id);
             SensorPlaced = true;
         }
         public bool hasSensor()

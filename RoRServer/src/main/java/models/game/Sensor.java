@@ -13,23 +13,23 @@ import models.session.GameSessionManager;
  * @author Andreas Pöhler
  *
  */
-public class Sensor extends TickableGameObject {
+public class Sensor extends InteractiveGameObject {
 	
 	private UUID railId;
 	private boolean active;
 	private ScriptableObject scriptableObject;
 
-	public Sensor(String sessionName, UUID railId) {
-		super(sessionName);
+	public Sensor(String sessionName, Square square, UUID railId) {
+		super(sessionName, square);
 		this.railId = railId;
 		this.active = false;
 		
 		// Vorbereitung für Skripting
-		ProxyObject sensorProxy = new SensorProxy(this);
+		ProxyObject sensorProxy = new SensorProxy(this, square);
 		scriptableObject = new ScriptableObject(sensorProxy);
 		GameSessionManager.getInstance().getGameSessionByName(sessionName).addScriptableObject(scriptableObject);
 		
-		notifySensorActivated();		
+		notifySensorPlaced();		
 	}
 
 	@Override
@@ -37,7 +37,10 @@ public class Sensor extends TickableGameObject {
 				
 	}
 	
-	public void notifySensorActivated() {
+	/**
+	 * Schickt eine Nachricht an den Client, um den Sensor auf einer Rail zu platzieren
+	 */
+	private void notifySensorPlaced() {
 		MessageInformation message = new MessageInformation("PlaceSensor");
 		message.putValue("railId", railId);
 		notifyChange(message);		
@@ -55,7 +58,22 @@ public class Sensor extends TickableGameObject {
 		return active ? true : false;
 	}
 	
+	/**
+	 * Änderrt und Führt das mitgegebene Script aus
+	 * @param currentScriptName
+	 */
 	public void changeCurrentScriptFilename(String currentScriptName) {
 		scriptableObject.changeCurrentScriptFilename(currentScriptName);
+		notifySensorActivated();
+	}
+	
+	/**
+	 * Schickt eine Nachricht an den Client, um den Sensor zu aktivieren
+	 */
+	private void notifySensorActivated() {
+		MessageInformation message = new MessageInformation("ActivateSensor");
+		message.putValue("railId", railId);
+		message.putValue("active", active);
+		notifyChange(message);
 	}
 }

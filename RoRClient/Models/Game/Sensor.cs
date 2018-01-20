@@ -10,12 +10,12 @@ namespace RoRClient.Models.Game
     /// <summary>
     /// Model für Sensor
     /// </summary>
-    public class Sensor : ModelBase
+    public class Sensor : InteractiveGameObject
     {
         private Guid railId;
         private bool active;
 
-        public Sensor(Guid railId)
+        public Sensor(Square square, Guid railId) : base(square)
         {
             this.railId = railId;
             this.active = false;
