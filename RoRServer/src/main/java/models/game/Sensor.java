@@ -54,4 +54,8 @@ public class Sensor extends TickableGameObject {
 	public boolean isActive() {
 		return active ? true : false;
 	}
+	
+	public void changeCurrentScriptFilename(String currentScriptName) {
+		scriptableObject.changeCurrentScriptFilename(currentScriptName);
+	}
 }

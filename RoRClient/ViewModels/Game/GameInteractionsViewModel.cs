@@ -175,11 +175,11 @@ namespace RoRClient.ViewModels.Game
         /// </summary>
         private void ChangeCurrentScriptOfSensor()
         {
-            MessageInformation messageInformation = new MessageInformation();
-            messageInformation.PutValue("railId", null); // Hier muss noch der aktuelle Sensor/Rail mitgegeben werden
-            Guid id = mapGameViewModel.SelectedGameCanvasViewModel.Id;
-            messageInformation.PutValue("scriptId", SelectedSensorScript.Id);
-            GameSession.GetInstance().QueueSender.SendMessage("ChangeCurrentScriptOfSensor", messageInformation);
+            MessageInformation message = new MessageInformation();
+            Guid selectedModelId = mapGameViewModel.SelectedGameCanvasViewModel.Id;
+            message.PutValue("selectedModelId", selectedModelId);
+            message.PutValue("scriptId", SelectedSensorScript.Id);
+            GameSession.GetInstance().QueueSender.SendMessage("ChangeCurrentScriptOfSensor", message);
         }
 
     }

@@ -22,11 +22,14 @@ public class PlaceSensorCommand extends CommandBase {
 
 	@Override
 	public void execute() {
+		
 		Map map = this.session.getMap();
 		Placeable placeable = map.getPlaceableById(selectedModelId);
+		
 		// Es muss ein Rail sein
 		if (placeable instanceof Rail) {
 			Rail rail = (Rail)placeable;
+			
 			// Kein Sensor auf Rail
 			if (rail.getSensor() == null) {
 				rail.placeSensor();

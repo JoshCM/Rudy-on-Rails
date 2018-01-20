@@ -11,7 +11,7 @@ using RoRClient.Models.Game;
 namespace RoRClient.Commands.Game.Other
 {
     /// <summary>
-    /// Command zum Erstellen von Sensoren auf einem Rail
+    /// Command zum Platzieren von Sensoren auf einem Rail
     /// </summary>
     public class PlaceSensorCommand : CommandBase
     {
