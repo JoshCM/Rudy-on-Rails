@@ -10,5 +10,8 @@ public class SensorProxy implements ProxyObject {
 	}
 	
 	// Methoden für Script...
-
+	public void funny() {
+		System.out.println("Funny");
+	}
+	
 }

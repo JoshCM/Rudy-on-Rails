@@ -51,11 +51,14 @@ namespace RoRClient.ViewModels.Game
         /// </summary>
         public void SelectInteractiveGameObject()
         {
-            // Beim Klick auf CanvasViewModel (außer Sensor) darf ein Sensor nicht bearbeitet werden (DropDownMenü)
             Console.WriteLine("Ausgewähltes ViewModel: " + this.ToString());
+
+            // Beim Klick auf CanvasViewModel (außer Sensor) darf ein Sensor nicht bearbeitet werden (DropDownMenü)
             MapViewModel.GameInteractionsViewModel.CanConfigureSensor = false;
+
             // Neues CanvasGameViewModel (this) in MapViewModel merken
             MapViewModel.SelectedGameCanvasViewModel = this;
+
             if (MapViewModel.SelectedGameCanvasViewModel is RailGameViewModel)
             {
                 RailGameViewModel railGameViewModel = (RailGameViewModel)MapViewModel.SelectedGameCanvasViewModel;

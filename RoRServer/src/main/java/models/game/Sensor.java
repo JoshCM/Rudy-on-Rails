@@ -16,11 +16,13 @@ import models.session.GameSessionManager;
 public class Sensor extends TickableGameObject {
 	
 	private UUID railId;
+	private boolean active;
 	private ScriptableObject scriptableObject;
 
 	public Sensor(String sessionName, UUID railId) {
 		super(sessionName);
 		this.railId = railId;
+		this.active = false;
 		
 		// Vorbereitung für Skripting
 		ProxyObject sensorProxy = new SensorProxy(this);
@@ -36,8 +38,20 @@ public class Sensor extends TickableGameObject {
 	}
 	
 	public void notifySensorActivated() {
-		MessageInformation message = new MessageInformation("UpdateSensor");
+		MessageInformation message = new MessageInformation("PlaceSensor");
 		message.putValue("railId", railId);
 		notifyChange(message);		
+	}
+	
+	public void activate() {
+		active = true;
+	}
+	
+	public void deactivate() {
+		active = false;
+	}
+	
+	public boolean isActive() {
+		return active ? true : false;
 	}
 }

@@ -18,6 +18,7 @@ namespace RoRClient.ViewModels.Game
     public class GameInteractionsViewModel : ViewModelBase
     {
         private Script selectedGhostLocoScript;
+        private Script selectedSensorScript;
         private bool canActivateSensor = false;
         private bool canConfigureSensor = false;
         private MapGameViewModel mapGameViewModel;
@@ -125,25 +126,60 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
-        private ICommand activateSensorCommand;
-        public ICommand ActivateSensorCommand
+        private ICommand placeSensorCommand;
+        public ICommand PlaceSensorCommand
         {
             get
             {
-                if(activateSensorCommand == null)
+                if(placeSensorCommand == null)
                 {
-                    activateSensorCommand = new ActionCommand(param => ActivateSensor());
+                    placeSensorCommand = new ActionCommand(param => PlaceSensor());
                 }
-                return activateSensorCommand;
+                return placeSensorCommand;
             }
         }
 
-        private void ActivateSensor()
+        /// <summary>
+        /// Schickt eine Nachricht mit dem ausgewählten Canvas an den Server, um zu prüfen, ob dort ein Sensor platziert werden kann
+        /// </summary>
+        private void PlaceSensor()
         {
             MessageInformation message = new MessageInformation();
             Guid selectedModelId = mapGameViewModel.SelectedGameCanvasViewModel.Id;
             message.PutValue("selectedModelId", selectedModelId);
-            GameSession.GetInstance().QueueSender.SendMessage("ActivateSensor", message);
+            GameSession.GetInstance().QueueSender.SendMessage("PlaceSensor", message);
+        }
+
+        /// <summary>
+        /// Aktuell ausgewähltes Script für Sensor
+        /// </summary>
+        public Script SelectedSensorScript
+        {
+            get
+            {
+                return selectedSensorScript;
+            }
+            set
+            {
+                if (selectedSensorScript != value)
+                {
+                    selectedSensorScript = value;
+                    OnPropertyChanged("SelectedSensorScript");
+                    ChangeCurrentScriptOfSensor();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Ändert das Script für den Sensor
+        /// </summary>
+        private void ChangeCurrentScriptOfSensor()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("railId", null); // Hier muss noch der aktuelle Sensor/Rail mitgegeben werden
+            Guid id = mapGameViewModel.SelectedGameCanvasViewModel.Id;
+            messageInformation.PutValue("scriptId", SelectedSensorScript.Id);
+            GameSession.GetInstance().QueueSender.SendMessage("ChangeCurrentScriptOfSensor", messageInformation);
         }
 
     }

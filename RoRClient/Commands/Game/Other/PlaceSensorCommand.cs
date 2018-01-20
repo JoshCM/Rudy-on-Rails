@@ -8,16 +8,16 @@ using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Session;
 using RoRClient.Models.Game;
 
-namespace RoRClient.Commands.Game.Update
+namespace RoRClient.Commands.Game.Other
 {
     /// <summary>
     /// Command zum Erstellen von Sensoren auf einem Rail
     /// </summary>
-    public class UpdateSensorCommand : CommandBase
+    public class PlaceSensorCommand : CommandBase
     {
         private Guid railId;
 
-        public UpdateSensorCommand(RoRSession session, MessageInformation message) : base(session, message)
+        public PlaceSensorCommand(RoRSession session, MessageInformation message) : base(session, message)
         {
             this.railId = message.GetValueAsGuid("railId");
         }
@@ -26,7 +26,7 @@ namespace RoRClient.Commands.Game.Update
         {
             GameSession gameSession = GameSession.GetInstance();
             Rail rail = (Rail)gameSession.Map.GetPlaceableById(railId);
-            rail.ActivateSensor();
+            rail.PlaceSensor();
         }
     }
 }

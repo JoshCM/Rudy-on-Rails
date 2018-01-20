@@ -113,7 +113,7 @@ namespace RoRClient.Models.Game
             }
         }
 
-        public void ActivateSensor()
+        public void PlaceSensor()
         {
             Sensor = new Sensor(Id);
             SensorPlaced = true;

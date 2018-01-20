@@ -11,11 +11,11 @@ import models.game.PlaceableOnSquare;
 import models.game.Rail;
 import models.session.RoRSession;
 
-public class ActivateSensorCommand extends CommandBase {
+public class PlaceSensorCommand extends CommandBase {
 
 	private UUID selectedModelId;
 	
-	public ActivateSensorCommand(RoRSession session, MessageInformation messageInfo) {
+	public PlaceSensorCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		this.selectedModelId = messageInfo.getValueAsUUID("selectedModelId");
 	}
@@ -29,7 +29,7 @@ public class ActivateSensorCommand extends CommandBase {
 			Rail rail = (Rail)placeable;
 			// Kein Sensor auf Rail
 			if (rail.getSensor() == null) {
-				rail.activateSensor();
+				rail.placeSensor();
 			}
 		} else {
 			throw new InvalidModelOperationException("Keine Rail");

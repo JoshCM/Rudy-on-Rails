@@ -15,6 +15,7 @@
     <UserControl.Resources>
         <converter:RailSectionsToImagePathConverter  x:Key="RailSectionsToImagePathConverter"/>
         <converter:BooleanToSignalImagePathConverter x:Key="BooleanToSignalImagePathConverter"/>
+        <converter:BooleanToSensorImagePathConverter x:Key="BooleanToSensorImagePathConverter"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=railUserControl}"
@@ -85,7 +86,7 @@
                Visibility="{Binding Rail.SensorPlaced, Converter={StaticResource BoolToVisibilityConverter}}"
                Height="{Binding SensorDimension, ElementName=railUserControl}"
                Width="{Binding SensorDimension, ElementName=railUserControl}"
-               Source="/RoRClient;component/Resources/Images/sensor.png">
+               Source="{Binding Rail.Sensor.Active, Converter={StaticResource BooleanToSensorImagePathConverter}}">
             <Image.InputBindings>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding ActivateMenuForScriptCommand}" />
             </Image.InputBindings>

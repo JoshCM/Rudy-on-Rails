@@ -100,6 +100,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindingConverter\BooleanToOpacityConverter.cs" />
+    <Compile Include="BindingConverter\BooleanToSensorImagePathConverter.cs" />
     <Compile Include="BindingConverter\BooleanToSignalImagePathConverter.cs" />
     <Compile Include="BindingConverter\BooleanToVisibilityConverter.cs" />
     <Compile Include="BindingConverter\ObjectEqualsConverter.cs" />
@@ -150,7 +151,7 @@
     <Compile Include="Commands\Game\Create\CreateMineCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
-    <Compile Include="Commands\Game\Update\UpdateSensorCommand.cs" />
+    <Compile Include="Commands\Game\Other\PlaceSensorCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateSignalsCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
@@ -231,7 +232,6 @@
     <Compile Include="ViewModels\Game\MapGameViewModel.cs" />
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
     <Compile Include="ViewModels\Game\MineGameViewModel.cs" />
-    <Compile Include="ViewModels\Game\SensorGameViewModel.cs" />
     <Compile Include="ViewModels\Game\SpeedSliderViewModel.cs" />
     <Compile Include="ViewModels\Game\SquareGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GameViewModel.cs" />
@@ -331,9 +331,6 @@
     <Compile Include="Views\Game\MineGameUserControl.xaml.cs">
       <DependentUpon>MineGameUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Game\SensorGameUserControl.xaml.cs">
-      <DependentUpon>SensorGameUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Game\SquareGameUserControl.xaml.cs">
       <DependentUpon>SquareGameUserControl.xaml</DependentUpon>
     </Compile>
@@ -423,10 +420,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Game\MineGameUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Game\SensorGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -620,6 +613,8 @@
     <Resource Include="Resources\Images\btn_back.png" />
     <Resource Include="Resources\Images\crane.png" />
     <Resource Include="Resources\Images\Tools\crane.png" />
+    <Resource Include="Resources\Images\sensor_active.png" />
+    <Resource Include="Resources\Images\sensor_inactive.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

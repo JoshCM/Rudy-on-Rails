@@ -13,10 +13,25 @@ namespace RoRClient.Models.Game
     public class Sensor : ModelBase
     {
         private Guid railId;
+        private bool active;
 
         public Sensor(Guid railId)
         {
             this.railId = railId;
+            this.active = false;
+        }
+
+        public bool Active
+        {
+            get
+            {
+                return active;
+            }
+            set
+            {
+                active = value;
+                NotifyPropertyChanged("Active");
+            }
         }
     }
 }

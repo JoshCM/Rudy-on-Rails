@@ -11,7 +11,9 @@ namespace RoRClient.Models.Game
     {
         public enum ScriptTypes
         {
-            GHOSTLOCO
+            GHOSTLOCO,
+            SENSOR
+             
         }
 
         private string description;

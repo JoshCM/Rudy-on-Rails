@@ -28,19 +28,6 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
-        private ICommand setScriptForSensorCommand;
-        public ICommand SetScriptForSensorCommand
-        {
-            get
-            {
-                if (setScriptForSensorCommand == null)
-                {
-                    setScriptForSensorCommand = new ActionCommand(param => SetScriptForSensor());
-                }
-                return setScriptForSensorCommand;
-            }
-        }
-
         private void SetScriptForSensor()
         {
             // set script for Sensor

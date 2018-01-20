@@ -79,9 +79,9 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     }
     
     /**
-     * Neuen Sensor erstellen und aktivieren für Rail
+     * Neuen Sensor auf Rail platzieren
      */
-    public void activateSensor() {
+    public void placeSensor() {
     	sensor = new Sensor(getSessionName(), getId());
     }
    
