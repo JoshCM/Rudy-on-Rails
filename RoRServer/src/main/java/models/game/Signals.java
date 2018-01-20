@@ -31,7 +31,7 @@ public class Signals extends TickableGameObject {
 	private long timeDeltaCounter = 0;
 
 	public Signals(String sessionName, Square square) {
-		super(sessionName);
+		super(sessionName, square);
 		this.squarePosX = square.getXIndex();
 		this.squarePosY = square.getYIndex();
 
