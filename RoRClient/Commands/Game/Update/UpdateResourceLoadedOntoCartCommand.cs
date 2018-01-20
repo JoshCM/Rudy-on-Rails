@@ -37,13 +37,13 @@ namespace RoRClient.Commands.Game.Update
             if (res == "Gold")
             {
                 onboardResource = (Resource)mine.GetGolds().ElementAt(0);
-                mine.GetGolds().RemoveAt(0);
+                mine.RemoveGold((IPlaceableOnSquare)onboardResource);
                 newImagePath = "/RoRClient;component/Resources/Images/container_gold.png";
             }
             if (res == "Coal")
             {
                 onboardResource = (Resource)mine.GetCoals().ElementAt(0);
-                mine.GetCoals().RemoveAt(0);
+                mine.RemoveCoal((IPlaceableOnSquare)onboardResource);
                 newImagePath = "/RoRClient;component/Resources/Images/container_coal.png";
             }
             cart.UpdateOnboardResource(onboardResource);
