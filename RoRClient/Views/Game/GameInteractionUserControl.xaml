@@ -45,7 +45,8 @@
                       IsEnabled="{Binding CanConfigureSensor}" 
                       ItemContainerStyle="{StaticResource DefaultComboBoxItem}" 
                       ItemsSource="{Binding Scripts.SensorScripts}"
-                      HorizontalAlignment="Left" DisplayMemberPath="Description" 
+                      HorizontalAlignment="Left" DisplayMemberPath="Description"
+                      SelectedValue="{Binding SelectedSensorScript}"
                       Margin="0 0 0 10"/>
             <Button Content="Script hochladen" 
                     Command="{Binding AddSensorScriptFromPlayerCommand}" 
