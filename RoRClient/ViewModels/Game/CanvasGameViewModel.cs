@@ -64,12 +64,12 @@ namespace RoRClient.ViewModels.Game
                 RailGameViewModel railGameViewModel = (RailGameViewModel)MapViewModel.SelectedGameCanvasViewModel;
                 if (!railGameViewModel.Rail.hasSensor())
                 {
-                    MapViewModel.GameInteractionsViewModel.CanActivateSensor = true;
+                    MapViewModel.GameInteractionsViewModel.CanPlaceSensor = true;
                 }
                 
             } else
             {
-                MapViewModel.GameInteractionsViewModel.CanActivateSensor = false;
+                MapViewModel.GameInteractionsViewModel.CanPlaceSensor = false;
             }
         }
     }

@@ -19,7 +19,7 @@ namespace RoRClient.ViewModels.Game
     {
         private Script selectedGhostLocoScript;
         private Script selectedSensorScript;
-        private bool canActivateSensor = false;
+        private bool canPlaceSensor = false;
         private bool canConfigureSensor = false;
         private MapGameViewModel mapGameViewModel;
 
@@ -36,16 +36,16 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
-        public bool CanActivateSensor
+        public bool CanPlaceSensor
         {
             get
             {
-                return canActivateSensor;
+                return canPlaceSensor;
             }
             set
             {
-                canActivateSensor = value;
-                OnPropertyChanged("CanActivateSensor");
+                canPlaceSensor = value;
+                OnPropertyChanged("CanPlaceSensor");
             }
         }
 
@@ -126,6 +126,9 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
+        /// <summary>
+        /// Command zum Platzieren eines Sensors
+        /// </summary>
         private ICommand placeSensorCommand;
         public ICommand PlaceSensorCommand
         {
@@ -148,6 +151,9 @@ namespace RoRClient.ViewModels.Game
             Guid selectedModelId = mapGameViewModel.SelectedGameCanvasViewModel.Id;
             message.PutValue("selectedModelId", selectedModelId);
             GameSession.GetInstance().QueueSender.SendMessage("PlaceSensor", message);
+
+            // Button zum Platzieren von Sensoren deaktivieren, damit nicht mehrere Sensoren übereinander liegen
+            CanPlaceSensor = false;
         }
 
         /// <summary>
@@ -176,7 +182,7 @@ namespace RoRClient.ViewModels.Game
         private void ChangeCurrentScriptOfSensor()
         {
             MessageInformation message = new MessageInformation();
-            Guid selectedModelId = mapGameViewModel.SelectedGameCanvasViewModel.Id;
+            Guid selectedModelId = mapGameViewModel.SelectedGameCanvasViewModel.Id; // Muss noch gefixt werden, ist das letzte Rail und nicht der Sensor!
             message.PutValue("selectedModelId", selectedModelId);
             message.PutValue("scriptId", SelectedSensorScript.Id);
             GameSession.GetInstance().QueueSender.SendMessage("ChangeCurrentScriptOfSensor", message);
