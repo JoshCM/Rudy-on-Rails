@@ -368,6 +368,7 @@
     <Compile Include="Views\Popup\AskUserForStringPopup.xaml.cs">
       <DependentUpon>AskUserForStringPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Popup\CustomFileDialogs.cs" />
     <Compile Include="Views\Popup\PopupCreator.cs" />
     <Page Include="Views\Game\CartGameUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
