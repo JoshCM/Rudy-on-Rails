@@ -18,6 +18,7 @@ namespace RoRClient.ViewModels.Game
     public class GameInteractionsViewModel : ViewModelBase
     {
         private Script selectedGhostLocoScript;
+        private int currentNumberOfOwnGhostLocoScript = 1;
 
         public GameInteractionsViewModel()
         {
@@ -77,12 +78,13 @@ namespace RoRClient.ViewModels.Game
         /// </summary>
         private void AddGhostLocoScriptFromPlayer()
         {
-            string description = "Eigenes Script";
+            string description = "Eigenes Script " + currentNumberOfOwnGhostLocoScript;
             string filename = CustomFileDialogs.AskUserToSelectPythonScript();
 
             if (filename != null)
             {
                 string scriptContent = File.ReadAllText(filename);
+                currentNumberOfOwnGhostLocoScript += 1;
 
                 MessageInformation messageInformation = new MessageInformation();
                 messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);

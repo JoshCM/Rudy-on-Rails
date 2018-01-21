@@ -1,5 +1,6 @@
 package models.scripts;
 
+import org.python.core.PyException;
 import org.python.util.PythonInterpreter;
 
 public class ScriptableObject {
@@ -7,6 +8,7 @@ public class ScriptableObject {
 	private ProxyObject proxyObject;
 	private String currentScriptFilename = "";
 	private Thread updateMethodThread;
+	private boolean currentScriptIsValid;
 	
 	public ScriptableObject(ProxyObject proxyObject) {
 		this.proxyObject = proxyObject;
@@ -17,8 +19,13 @@ public class ScriptableObject {
 	 */
 	private void importCurrentScript() {
 		if (!currentScriptFilename.isEmpty()) {
-			pi.exec("from " + currentScriptFilename + " import update");
-			pi.set("proxy", proxyObject);
+			try {
+				pi.exec("from " + currentScriptFilename + " import update");
+				pi.set("proxy", proxyObject);
+				currentScriptIsValid = true;
+			} catch(PyException e) {
+				currentScriptIsValid = false;
+			}
 		}
 	}
 
@@ -40,7 +47,9 @@ public class ScriptableObject {
 		updateMethodThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				pi.exec("update(proxy)");
+				if(currentScriptIsValid) {
+					pi.exec("update(proxy)");
+				}
 			}
 		});
 		updateMethodThread.start();
