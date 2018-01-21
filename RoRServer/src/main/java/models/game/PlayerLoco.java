@@ -9,7 +9,7 @@ public class PlayerLoco extends Loco {
 		super(sessionName, square, playerId, drivingDirection);
 		
 		NotifyLocoCreated();
-		this.addInitialCart();
+		addCart();
 	}
 	
 	/**

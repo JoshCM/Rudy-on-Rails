@@ -30,6 +30,8 @@
                                  DataContext="{Binding MapGameViewModel}"/>
 
         <game:GameInteractionUserControl DataContext="{Binding GameInteractionsViewModel}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
-        <game:TrainSpeedGameUserControl Grid.Row="2" Grid.Column="2" />
+        <game:TrainSpeedGameUserControl Grid.Row="2"
+                                        Grid.Column="2"
+                                        DataContext="{Binding MapGameViewModel}"/>
     </Grid>
 </UserControl>
