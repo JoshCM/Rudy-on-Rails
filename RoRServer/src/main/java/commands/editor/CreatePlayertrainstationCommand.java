@@ -13,7 +13,6 @@ import models.game.Rail;
 import models.game.Compass;
 import models.game.Square;
 import models.game.Stock;
-import models.game.Trainstation;
 import models.game.Playertrainstation;
 import models.helper.Validator;
 import models.session.EditorSession;
@@ -69,13 +68,9 @@ public class CreatePlayertrainstationCommand extends CommandBase {
 
 	/**
 	 * Erzeugt die Rails einer Trainstation anhand der Square der neuen Trainstation
-	 * 
-	 * @param map
-	 *            Die momentane Map
-	 * @param square
-	 *            Das Square der Trainstation
-	 * @param trainstationId
-	 *            Die ID der Trainstation
+	 * @param map				Die momentane Map
+	 * @param square 			Das Square der Trainstation
+	 * @param trainstationId	Die ID der Trainstation
 	 * @return Eine Liste von IDs der Rails, die erzeugt und platziert wurden
 	 */
 	private List<UUID> createTrainstationRails(Map map, Square square, UUID trainstationId) {
@@ -84,8 +79,7 @@ public class CreatePlayertrainstationCommand extends CommandBase {
 
 		// Railsection werden erstellt
 		List<Compass> northSouthRailSectionPositions = Arrays.asList(Compass.NORTH, Compass.SOUTH);
-		List<Compass> crossRailSectionPositions = Arrays.asList(Compass.NORTH, Compass.SOUTH, Compass.WEST,
-				Compass.EAST);
+		List<Compass> crossRailSectionPositions = Arrays.asList(Compass.NORTH, Compass.SOUTH, Compass.WEST,Compass.EAST);
 		List<Compass> eastSouthRailSectionPositions = Arrays.asList(Compass.EAST, Compass.SOUTH);
 		List<Compass> eastNorthRailSectionPositions = Arrays.asList(Compass.EAST, Compass.NORTH);
 
@@ -141,15 +135,10 @@ public class CreatePlayertrainstationCommand extends CommandBase {
 	}
 
 	/**
-	 * Erzeugt eine Rail auf dem mitgegebenen Square mit einer TrainstationId und
-	 * bestimmten RailSectionPositions
-	 * 
-	 * @param trainstationRailSquare
-	 *            Das Square auf dem die Rail platziert werden soll
-	 * @param trainstationId
-	 *            Die Id der zugehörigen Trainstation
-	 * @param compassList
-	 *            Die Liste von Compass
+	 * Erzeugt eine Rail auf dem mitgegebenen Square mit einer TrainstationId und bestimmten RailSectionPositions
+	 * @param trainstationRailSquare	Das Square auf dem die Rail platziert werden soll
+	 * @param trainstationId			Die Id der zugehörigen Trainstation
+	 * @param compassList				Die Liste von Compass
 	 * @return Die Id der neuen Rail
 	 */
 	private UUID createRail(Square trainstationRailSquare, UUID trainstationId, List<Compass> compassList) {

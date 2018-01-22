@@ -8,15 +8,12 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 
-import com.google.gson.JsonObject;
-
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import helper.Geometry;
 import helper.Geometry.Coordinate;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
-import models.session.RoRSession;
 
 public abstract class Trainstation extends InteractiveGameObject implements PlaceableOnSquare {
 	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
@@ -38,11 +35,10 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 		this.trainstationRailIds = trainstationRailIds;
 		this.alignment = alignment;
 		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getName());
-		//notifyCreatedTrainstation();
 	}
 
 	/**
-	 * Gibt die Ausrichtung der Trainstation zur�ck
+	 * Gibt die Ausrichtung der Trainstation zurück
 	 * @return Ausrichtung als Compass
 	 */
 	public Compass getAlignment() {
@@ -58,7 +54,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	}
 	
 	/**
-	 * Gibt den Stock als Object zur�ck
+	 * Gibt den Stock als Object zurück
 	 * @return Den Stock
 	 */
 	public Stock getStock() {
@@ -70,7 +66,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	}
 	
 	/**
-	 * Gibt die Liste von Rails der Trainstation zur�ck
+	 * Gibt die Liste von Rails der Trainstation zurück
 	 * @return trainstationRails
 	 */
 	public List<Rail> getTrainstationRails() {
@@ -83,7 +79,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	}
 
 	/**
-	 * Gibt die Liste von Rails der Trainstation umgedreht zur�ck
+	 * Gibt die Liste von Rails der Trainstation umgedreht zurück
 	 * @return
 	 */
 	public List<Rail> getReverseTrainstationRails() {
@@ -101,16 +97,11 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	}
 
 	/**
-	 * Rotiert die zugeh�rigen Rails einer Trainstation
-	 * 
-	 * @param trainstationRail
-	 *            Ein Rail der Trainstation
-	 * @param oldRailSquare
-	 *            Square worauf die Rail vorher PlaceableOnSquare war
-	 * @param newRailSquare
-	 *            Square worauf die Rail PlaceableOnSquare werden soll
-	 * @param right
-	 *            Uhrzeigersinn/Gegen Uhrzeigersinn
+	 * Rotiert die zugehörigen Rails einer Trainstation
+	 * @param trainstationRail	Ein Rail der Trainstation
+	 * @param oldRailSquare		Square worauf die Rail vorher PlaceableOnSquare war
+	 * @param newRailSquare		Square worauf die Rail PlaceableOnSquare werden soll
+	 * @param right				Uhrzeigersinn/Gegen Uhrzeigersinn
 	 */
 	private void rotateTrainstationInteractiveGameObjects(List<InteractiveGameObject> trainstationGameObjects, int pivotXPos,
 			int pivotYPos, boolean right) {
@@ -139,14 +130,14 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 
 			temptrainstationGameObjectMap.put(newCoordinate, trainstationGameObject);
 
-			// l�sche das Rail aus dem alten Square
+			// lösche das Rail aus dem alten Square
 			oldSquare.deletePlaceable();
 		}
 
 		for (Coordinate coordinate : temptrainstationGameObjectMap.keySet()) {
 
 			InteractiveGameObject tmpTrainstationGameObject = temptrainstationGameObjectMap.get(coordinate);
-			// bekomme sessionname f�r neue Rail
+			// bekomme sessionname für neue Rail
 			String sessionName = editorSession.getName();
 			// bekomme newSquare
 			Square newSquare = (Square) editorSession.getMap().getSquare(coordinate.x, coordinate.y);
@@ -178,9 +169,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 
 	/**
 	 * Rotiert das Alignment der Trainstation
-	 * 
-	 * @param right
-	 *            Uhrzeigersinn/Gegen Uhrzeigersinn
+	 * @param right	Uhrzeigersinn/Gegen Uhrzeigersinn
 	 */
 	private void rotateTrainstation(boolean right) {
 		int newIndex;
@@ -199,10 +188,8 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	}
 
 	/**
-	 * Rotiert die Trainstation und alle zugeh�rigen Rails
-	 * 
-	 * @param right
-	 *            Uhrzeigersinn/Gegen Uhrzeigersinn
+	 * Rotiert die Trainstation und alle zugehörigen Rails
+	 * @param right	Uhrzeigersinn/Gegen Uhrzeigersinn
 	 */
 	public void rotate(boolean right) {
 		// rotiert die Trainstation
@@ -227,9 +214,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 
 	/**
 	 * Validiert ob man die Rotation umsetzen kann
-	 * 
-	 * @param right
-	 *            Uhrzeigersinn/Gegen Uhrzeigersinn
+	 * @param right	Uhrzeigersinn/Gegen Uhrzeigersinn
 	 * @return (True)Validiert oder (False)nicht validiert
 	 */
 	public boolean validateRotation(boolean right) {

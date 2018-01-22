@@ -53,7 +53,7 @@ namespace RoRClient.ViewModels.Editor
 
         public override void Move()
         {
-            // in SquareViewModel implementiert
+            // in SquareEditorViewModel implementiert
         }
 
         public override void RotateLeft()

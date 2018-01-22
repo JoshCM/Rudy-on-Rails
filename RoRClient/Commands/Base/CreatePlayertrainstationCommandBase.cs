@@ -23,7 +23,7 @@ namespace RoRClient.Commands.Base
         List<Rail> trainstationRails = new List<Rail>();
 
         /// <summary>
-        /// Setzt die Trainstation und ihre zugehörigen Rails
+        /// Setzt die PlayrTrainstation und ihre zugehörigen Rails
         /// </summary>
         /// <param name="session"></param>
         /// <param name="messageInformation"></param>

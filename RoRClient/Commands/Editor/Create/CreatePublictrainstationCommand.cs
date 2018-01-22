@@ -14,7 +14,7 @@ namespace RoRClient.Commands.Editor.Create
     class CreatePublictrainstationCommand : CreatePublictrainstationCommandBase
     {
         /// <summary>
-        /// Setzt die Trainstation und ihre zugehörigen Rails
+        /// Setzt die PublicTrainstation und ihre zugehörigen Rails
         /// </summary>
         /// <param name="session"></param>
         /// <param name="messageInformation"></param>

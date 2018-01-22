@@ -42,11 +42,11 @@ public class Publictrainstation extends Trainstation {
 				trainStation.getTrainstationRailIds(), trainStation.getId(), trainStation.alignment,
 				trainStation.getStock());
 
-		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses
+		// der sessionName muss neu gesetzt werden, damit der Observer ï¿½nderungen dieses
 		// Objekts mitbekommen kann
 		newTrainStation.setName(session.getName());
 
-		log.info("TrainStation erstellt: " + newTrainStation.toString());
+		log.info("PublicTrainStation erstellt: " + newTrainStation.toString());
 		return newTrainStation;
 	}
 }

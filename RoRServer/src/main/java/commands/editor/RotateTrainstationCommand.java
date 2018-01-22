@@ -4,7 +4,6 @@ import commands.base.CommandBase;
 import communication.MessageInformation;
 import exceptions.NotRotateableException;
 import models.game.Map;
-import models.game.Playertrainstation;
 import models.game.Trainstation;
 import models.session.EditorSession;
 import models.session.RoRSession;

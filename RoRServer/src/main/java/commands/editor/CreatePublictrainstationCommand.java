@@ -13,24 +13,23 @@ import models.game.Rail;
 import models.game.Compass;
 import models.game.Square;
 import models.game.Stock;
-import models.game.Playertrainstation;
 import models.game.Publictrainstation;
 import models.helper.Validator;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
 public class CreatePublictrainstationCommand extends CommandBase {
+	private final static int OUTER_RAILS_COUNT = 8;
+	private final static int INNER_RAILS_COUNT = 6;
+	private final static int OUTER_RAILS_Y = OUTER_RAILS_COUNT / 2 * (-1);
+	private final static int INNER_RAILS_Y = INNER_RAILS_COUNT / 2 * (-1);
+	private static final int CURVED_RAIL_EAST_SOUTH_Y = -3;
+	private static final int CURVED_RAIL_EAST_NORTH_Y = 2;
+	private static final List<Integer> CROSSING_COORDINATES = Arrays.asList(-3, 2);
+	
 	private int xPos;
 	private int yPos;
 	private Compass alignment;
-	private final static int TRAINSTATION_MARGIN = 1;
-	private final static int RIGHT_STRAIGHT_RAILS_START_Y = -4;
-	private final static int LEFT_STRAIGHT_RAILS_START_Y = -3;
-	private final static int RIGHT_STRAIGHT_RAILS_COUNT = 8;
-	private final static int LEFT_STRAIGHT_RAILS_COUNT = 6;
-	private static final int EAST_SOUTH_CURVED = -3;
-	private static final int EAST_NORTH_CURVED = 2;
-	private List<Integer> crossing = Arrays.asList(-3,2);
 
 	public CreatePublictrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
@@ -47,7 +46,8 @@ public class CreatePublictrainstationCommand extends CommandBase {
 		Square newSquare = map.getSquare(xPos, yPos);
 
 		if (!Validator.validateTrainstationOnMap(newSquare,alignment, editorSession.getMap())) {
-			throw new InvalidModelOperationException(String.format("Trainstation(x:%s,y:%s) konnte nicht angelegt werden", xPos, yPos));
+			throw new InvalidModelOperationException(
+					String.format("Trainstation(x:%s,y:%s) konnte nicht angelegt werden", xPos, yPos));
 		} else {
 			// generiere UUID für Trainstation
 			UUID trainstationId = UUID.randomUUID();
@@ -59,16 +59,17 @@ public class CreatePublictrainstationCommand extends CommandBase {
 			stockSquare.setPlaceableOnSquare(newStock);
 			
 			// Trainstation wird erzeugt und auf Square gesetzt
-			Publictrainstation trainstation = new Publictrainstation(session.getName(), newSquare, createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment, newStock);
+			Publictrainstation trainstation = new Publictrainstation(session.getName(), newSquare, 
+					createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment, newStock);
 			newSquare.setPlaceableOnSquare(trainstation);
 		}
 	}
 
 	/**
 	 * Erzeugt die Rails einer Trainstation anhand der Square der neuen Trainstation
-	 * @param map Die momentane Map
-	 * @param square Das Square der Trainstation
-	 * @param trainstationId Die ID der Trainstation
+	 * @param map				Die momentane Map
+	 * @param square			Das Square der Trainstation
+	 * @param trainstationId	Die ID der Trainstation
 	 * @return Eine Liste von IDs der Rails, die erzeugt und platziert wurden
 	 */
 	private List<UUID> createTrainstationRails(Map map, Square square, UUID trainstationId) {
@@ -88,28 +89,28 @@ public class CreatePublictrainstationCommand extends CommandBase {
 		List<Square> crossingTrainstationRailSquares = new ArrayList<Square>();
 		
 		// alle außenliegenden Squares werden hinzugefügt
-		for(int i = RIGHT_STRAIGHT_RAILS_START_Y; i < RIGHT_STRAIGHT_RAILS_COUNT + RIGHT_STRAIGHT_RAILS_START_Y; i++) {
+		for(int i = OUTER_RAILS_Y; i < OUTER_RAILS_COUNT + OUTER_RAILS_Y; i++) {
 			int railX = square.getXIndex() + 2;
 			int railY = square.getYIndex() + i;
 			Square trainstationRailSquare = map.getSquare(railX, railY);
 			
 			// wenn die Rail eine Kreuzung werden soll oder eine gerade Rail
-			if(crossing.contains(i))
+			if(CROSSING_COORDINATES.contains(i))
 				crossingTrainstationRailSquares.add(trainstationRailSquare);
 			else
 				straightTrainstationRailSquares.add(trainstationRailSquare);
 		}
 		
 		// alle innenliegenden Squares werden hinzugefügt
-		for(int i = LEFT_STRAIGHT_RAILS_START_Y; i < LEFT_STRAIGHT_RAILS_COUNT + LEFT_STRAIGHT_RAILS_START_Y; i++) {
+		for(int i = INNER_RAILS_Y; i < INNER_RAILS_COUNT + INNER_RAILS_Y; i++) {
 			int railX = square.getXIndex() + 1;
 			int railY = square.getYIndex() + i;
 			Square trainstationRailSquare = map.getSquare(railX, railY);
 			
 			// wenn die Rail eine Kurve werden soll oder eine gerade Rail
-			if(i == EAST_SOUTH_CURVED)
+			if(i == CURVED_RAIL_EAST_SOUTH_Y)
 				trainstationRailIds.add(createRail(trainstationRailSquare, trainstationId, eastSouthRailSectionPositions));
-			else if(i == EAST_NORTH_CURVED)
+			else if(i == CURVED_RAIL_EAST_NORTH_Y)
 				trainstationRailIds.add(createRail(trainstationRailSquare, trainstationId, eastNorthRailSectionPositions));
 			else
 				straightTrainstationRailSquares.add(trainstationRailSquare);
@@ -130,9 +131,9 @@ public class CreatePublictrainstationCommand extends CommandBase {
 
 	/**
 	 * Erzeugt eine Rail auf dem mitgegebenen Square mit einer TrainstationId und bestimmten RailSectionPositions
-	 * @param trainstationRailSquare Das Square auf dem die Rail platziert werden soll
-	 * @param trainstationId Die Id der zugehörigen Trainstation
-	 * @param compassList Die Liste von Compass 
+	 * @param trainstationRailSquare	Das Square auf dem die Rail platziert werden soll
+	 * @param trainstationId			Die Id der zugehörigen Trainstation
+	 * @param compassList				Die Liste von Compass 
 	 * @return Die Id der neuen Rail
 	 */
 	private UUID createRail(Square trainstationRailSquare, UUID trainstationId, List<Compass> compassList) {

@@ -73,7 +73,7 @@ public class Playertrainstation extends Trainstation {
 		// setze den alten SpawnPoint für die neue Trainstation
 		newTrainStation.setSpawnPointforLoco(oldTrainStation.getSpawnPointforLoco());
 
-		log.info("TrainStation erstellt: " + newTrainStation.toString());
+		log.info("PlayerTrainStation erstellt: " + newTrainStation.toString());
 		return newTrainStation;
 	}
 	

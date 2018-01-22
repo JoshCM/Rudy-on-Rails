@@ -172,8 +172,6 @@ namespace RoRClient.ViewModels.Editor
             messageInformation.PutValue("yPos", yPos);
             messageInformation.PutValue("alignment", Compass.EAST.ToString());
 
-
-            //Was steht in Message?
             editorSession.QueueSender.SendMessage("CreatePlayertrainstation", messageInformation);
         }
 
