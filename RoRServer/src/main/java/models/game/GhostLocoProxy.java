@@ -2,8 +2,7 @@ package models.game;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
+import models.helper.CompassHelper;
 import models.scripts.ProxyObject;
 import models.session.GameSession;
 import models.session.GameSessionManager;
@@ -71,8 +70,10 @@ public class GhostLocoProxy implements ProxyObject {
 		List<String> result = new ArrayList<String>();
 
 		if (isSquareVisibleForProxy(sideways, forward)) {
-			int squarePosX = getRealXForDrivingDirection(sideways, forward);
-			int squarePosY = getRealYForDrivingDirection(sideways, forward);
+			int squarePosX = CompassHelper.getRealXForDirection(loco.getDrivingDirection(), loco.getXPos(),
+					loco.getYPos(), sideways, forward);
+			int squarePosY = CompassHelper.getRealYForDirection(loco.getDrivingDirection(), loco.getXPos(),
+					loco.getYPos(), sideways, forward);
 
 			if (squarePosX <= map.getMapSize() && squarePosY <= map.getMapSize()) {
 				result = collectObjectsFromSquareAsStrings(squarePosX, squarePosY);
@@ -85,8 +86,8 @@ public class GhostLocoProxy implements ProxyObject {
 
 		return result;
 	}
-	
-	private List<String> collectObjectsFromSquareAsStrings(int squarePosX, int squarePosY){
+
+	private List<String> collectObjectsFromSquareAsStrings(int squarePosX, int squarePosY) {
 		List<String> result = new ArrayList<String>();
 		Square square = map.getSquare(squarePosX, squarePosY);
 		PlaceableOnSquare placeableOnSquare = square.getPlaceableOnSquare();
@@ -108,9 +109,10 @@ public class GhostLocoProxy implements ProxyObject {
 		result.add("Rail");
 
 		Rail rail = (Rail) placeableOnSquare;
-		
+
 		// Füge Signal-Zustand der Liste hinzu, falls es aktive Signale gibt
-		// Dabei wird nur das Signal in der Richtung betrachtet, in die der Zug unterwegs ist
+		// Dabei wird nur das Signal in der Richtung betrachtet, in die der Zug
+		// unterwegs ist
 		if (rail.getSignals() != null) {
 			boolean activeSignal = rail.getSignals()
 					.isSignalActive(loco.getDirectionNegation(loco.getDrivingDirection()));
@@ -129,36 +131,6 @@ public class GhostLocoProxy implements ProxyObject {
 			if (loco.getRail().getId().equals(rail.getId())) {
 				result.add("Loco");
 			}
-		}
-	}
-
-	private int getRealXForDrivingDirection(int sideways, int forward) {
-		switch (loco.getDrivingDirection()) {
-		case NORTH:
-			return loco.getXPos() + sideways;
-		case EAST:
-			return loco.getXPos() + forward;
-		case SOUTH:
-			return loco.getXPos() - sideways;
-		case WEST:
-			return loco.getXPos() - forward;
-		default:
-			return -1;
-		}
-	}
-
-	private int getRealYForDrivingDirection(int sideways, int forward) {
-		switch (loco.getDrivingDirection()) {
-		case NORTH:
-			return loco.getYPos() - forward;
-		case EAST:
-			return loco.getYPos() + sideways;
-		case SOUTH:
-			return loco.getYPos() + forward;
-		case WEST:
-			return loco.getYPos() - sideways;
-		default:
-			return -1;
 		}
 	}
 
