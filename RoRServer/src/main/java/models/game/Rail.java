@@ -90,11 +90,11 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
                 if (s.getPlaceableOnSquare() == null && Math.random() < chanceToSpawn / 100) {
                     if (Math.random() < 0.5) {
                         Gold gold = new Gold(
-                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getSessionName(), s);
+                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getDescription(), s);
                         s.setPlaceableOnSquare(gold);
                     } else {
                         Coal coal = new Coal(
-                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getSessionName(), s);
+                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getDescription(), s);
                         s.setPlaceableOnSquare(coal);
                     }
                 }
@@ -388,7 +388,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         boolean createSignals = rail.getSignals() != null;
 
         // Neues Rail erstellen und damit an den Client schicken
-        Rail newRail = new Rail(session.getSessionName(), square, railSectionPosition, createSignals, trainstationId, rail.getId());
+        Rail newRail = new Rail(session.getDescription(), square, railSectionPosition, createSignals, trainstationId, rail.getId());
         System.out.println("Neue Rail erstellt: " + newRail.toString());
         
         // Sonderfall für Krezungen, die Signale haben
@@ -405,10 +405,4 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     public Signals getSignals() {
     	return signals;
     }
-
-	@Override
-	public void specificUpdate() {
-		// TODO Auto-generated method stub
-
-	}
 }

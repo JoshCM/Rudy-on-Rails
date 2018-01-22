@@ -38,7 +38,7 @@ namespace RoRClient.Commands.Game.Update
             Rail rail = square.PlaceableOnSquare as Rail;
             Cart cart = rail.PlaceableOnRail as Cart;
             loco.AddCart(cart);
-            //rail.PlaceableOnRail = null;
+            rail.PlaceableOnRail = null;
 
 
 

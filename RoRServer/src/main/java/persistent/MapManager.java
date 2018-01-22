@@ -102,7 +102,7 @@ public class MapManager {
 	public static void saveMap(Map map) {
 		String jsonMap = convertMapToJson(map);
 		log.info("Gespeicherte Map: " + jsonMap);
-		saveToFile(jsonMap, map.getSessionName());
+		saveToFile(jsonMap, map.getDescription());
 	}
 
 	public static String convertMapToJson(Map map) {
@@ -147,9 +147,11 @@ public class MapManager {
 	public static List<String> readMapNames() {
 		List<String> mapList = new ArrayList<String>();
 		File folder = new File(OUTPUT_DIR_PATH);
-		for (File fileEntry : folder.listFiles()) {
-			if (fileEntry.isFile())
-				mapList.add(fileEntry.getName().replace(ext, ""));
+		if (folder.exists()) { 
+			for (File fileEntry : folder.listFiles()) {
+				if (fileEntry.isFile())
+					mapList.add(fileEntry.getName().replace(ext, ""));
+			}
 		}
 		return mapList;
 	}

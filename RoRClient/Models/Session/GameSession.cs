@@ -2,6 +2,7 @@
 using RoRClient.Communication.Dispatcher;
 using RoRClient.Communication.Topic;
 using RoRClient.Models.Game;
+
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace RoRClient.Models.Session
     {
         private static GameSession gameSession = null;
         protected ObservableCollection<Loco> locos = new ObservableCollection<Loco>();
+        protected ObservableCollection<Mine> mines = new ObservableCollection<Mine>();
+        protected ObservableCollection<Cart> carts = new ObservableCollection<Cart>();
         private Scripts scripts = new Scripts();
 
         private GameSession() : base()
@@ -46,12 +49,28 @@ namespace RoRClient.Models.Session
             return locos.Where(x => x.Id == locoId).First();
         }
 
+        public Loco GetLocoByPlayerId(Guid playerId)
+        {
+            return locos.Where(x => x.PlayerId == playerId).First();
+        }
+
         public void AddLoco(Loco loco)
         {
             locos.Add(loco);
             NotifyPropertyChanged("Locos", null, loco);
         }
 
+        public void addMine(Mine mine)
+        {
+            mines.Add(mine);
+        }
+
+        public void AddCart(Cart cart)
+        {
+            carts.Add(cart);
+            NotifyPropertyChanged("Carts", null, cart);
+
+        }
         public static GameSession GetInstance()
         {
             if (gameSession == null)
@@ -70,5 +89,18 @@ namespace RoRClient.Models.Session
             gameSession = null;
             NotifyPropertyChanged("GameSessionDeleted");
         }
-	}
+	
+
+        public Mine getMineByPosition(int xPos, int yPos)
+        {
+            foreach (Mine mine in mines)
+            {
+                if (mine.Square.PosX == xPos && mine.Square.PosY == yPos)
+                {
+                    return mine;
+                }
+            }
+            return null;
+        }
+    }
 }

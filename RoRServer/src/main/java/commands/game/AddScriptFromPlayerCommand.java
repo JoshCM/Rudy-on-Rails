@@ -16,7 +16,7 @@ import models.session.RoRSession;
  */
 public class AddScriptFromPlayerCommand extends CommandBase {
 	private UUID playerId;
-	private String scriptName;
+	private String description;
 	private ScriptType scriptType;
 	private String scriptContent;
 	
@@ -24,7 +24,7 @@ public class AddScriptFromPlayerCommand extends CommandBase {
 		super(session, messageInfo);
 		
 		playerId = messageInfo.getValueAsUUID("playerId");
-		scriptName = messageInfo.getValueAsString("scriptName");
+		description = messageInfo.getValueAsString("description");
 		scriptType = ScriptType.valueOf(messageInfo.getValueAsString("scriptType"));
 		scriptContent = messageInfo.getValueAsString("scriptContent");
 	}
@@ -39,7 +39,7 @@ public class AddScriptFromPlayerCommand extends CommandBase {
 		ScriptFileWriter.writeStringToFile(filename, scriptContent);
 		
 		GameSession gameSession = (GameSession)session;
-		Script script = new Script(gameSession.getSessionName(), scriptName, scriptType, filename, playerId);
+		Script script = new Script(gameSession.getDescription(), description, scriptType, filename, playerId);
 		gameSession.getScripts().addScript(script);
 	}
 }

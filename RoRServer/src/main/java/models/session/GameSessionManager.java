@@ -43,7 +43,7 @@ public class GameSessionManager {
 	 */
 	public void removeGameSession(GameSession gameSession) {
 		gameSession.removePlayers();
-		gameSessionMap.remove(gameSession.getSessionName());
+		gameSessionMap.remove(gameSession.getDescription());
 	}
 
 	// aktuell wird immer die erste GameSession in der HashMap zurueckgegeben

@@ -44,7 +44,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		this.stock = stock;
 		this.trainstationRailIds = trainstationRailIds;
 		this.alignment = alignment;
-		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getSessionName());
+		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getDescription());
 		notifyCreatedTrainstation();
 	}
 
@@ -141,7 +141,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	 */
 	public List<Rail> getTrainstationRails() {
 		List<Rail> trainstationRails = new ArrayList<Rail>();
-		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getSessionName());
+		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getDescription());
 		for (UUID railId : trainstationRailIds) {
 			trainstationRails.add((Rail) editorSession.getMap().getPlaceableOnSquareById(railId));
 		}
@@ -214,7 +214,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 			InteractiveGameObject tmpTrainstationGameObject = temptrainstationGameObjectMap.get(coordinate);
 			// bekomme sessionname für neue Rail
-			String sessionName = editorSession.getSessionName();
+			String sessionName = editorSession.getDescription();
 			// bekomme newSquare
 			Square newSquare = (Square) editorSession.getMap().getSquare(coordinate.x, coordinate.y);
 
@@ -360,11 +360,11 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	@Override
 	public Trainstation loadFromMap(Square square, RoRSession session) {
 		Trainstation oldTrainStation = (Trainstation) square.getPlaceableOnSquare();
-		Trainstation newTrainStation = new Trainstation(session.getSessionName(), square,
+		Trainstation newTrainStation = new Trainstation(session.getDescription(), square,
 				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock());
 		
 		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
-		newTrainStation.setSessionName(session.getSessionName());
+		newTrainStation.setSessionName(session.getDescription());
 		
 		// setze den alten SpawnPoint für die neue Trainstation
 		newTrainStation.setSpawnPointforLoco(oldTrainStation.getSpawnPointforLoco());
@@ -425,10 +425,6 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 				+ ", spawnPointForLoco=" + spawnPointForLoco + "]";
 	}
 
-	@Override
-	public void specificUpdate() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 }

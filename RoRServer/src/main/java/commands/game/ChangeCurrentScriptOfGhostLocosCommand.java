@@ -26,8 +26,8 @@ public class ChangeCurrentScriptOfGhostLocosCommand extends CommandBase {
 		GameSession gameSession = (GameSession)session;
 		for(Loco loco : gameSession.getLocos()) {
 			if(loco instanceof GhostLoco && loco.getPlayerId().equals(playerId)) {
-				Script script = gameSession.getScripts().getGhostLocoScriptForId(scriptId);
-				((GhostLoco)loco).changeCurrentScriptName(script.getScriptName());
+				Script script = gameSession.getScripts().getScriptForId(scriptId);
+				((GhostLoco)loco).changeCurrentScriptFilename(script.getFilename());
 			}
 		}
 	}

@@ -633,3 +633,5 @@ RoRServer/activemq-data/localhost/KahaDB/db.data
 RoRServer/Maps/
 
 RoRServer/resources/maps/
+
+*.map

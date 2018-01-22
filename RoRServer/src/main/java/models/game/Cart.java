@@ -13,7 +13,8 @@ import communication.MessageInformation;
  * Klasse fuer ein Cart (Waggon), das an einer Loco haengt
  * Auf einem Cart koennen Container geladen werden
  */
-public class Cart extends InteractiveGameObject implements PlaceableOnRail {
+public class Cart extends TickableGameObject implements PlaceableOnRail {
+	
 	private Resource resource;
 	private Compass drivingDirection;
 	private UUID playerId;

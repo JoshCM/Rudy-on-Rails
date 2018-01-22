@@ -8,7 +8,7 @@ import models.base.ModelBase;
 import models.scripts.Script.ScriptType;
 
 public class Scripts extends ModelBase {
-	private List<Script> ghostLocoScripts = new ArrayList<Script>();
+	private List<Script> scripts = new ArrayList<Script>();
 	
 	public Scripts(String sessionName) {
 		super(sessionName);
@@ -19,26 +19,20 @@ public class Scripts extends ModelBase {
 	}
 	
 	private void loadGhostLocoDefaultScripts() {
-		ghostLocoScripts.add(new Script(getSessionName(), "Schnell fahren", ScriptType.GHOSTLOCO, "ghostloco_default_drivefast"));
-		ghostLocoScripts.add(new Script(getSessionName(), "Langsam fahren", ScriptType.GHOSTLOCO, "ghostloco_default_driveslow"));
+		scripts.add(new Script(getDescription(), "Schnell fahren", ScriptType.GHOSTLOCO, "ghostloco_default_drivefast"));
+		scripts.add(new Script(getDescription(), "Langsam fahren", ScriptType.GHOSTLOCO, "ghostloco_default_driveslow"));
 	}
 	
-	public List<Script> getGhostLocoScripts() {
-		return ghostLocoScripts;
+	public List<Script> getScripts() {
+		return scripts;
 	}
 	
-	public Script getGhostLocoScriptForId(UUID scriptId) {
-		Script script = ghostLocoScripts.stream().filter(x -> x.getId().equals(scriptId)).findFirst().get();
+	public Script getScriptForId(UUID scriptId) {
+		Script script = scripts.stream().filter(x -> x.getId().equals(scriptId)).findFirst().get();
 		return script;
 	}
 	
 	public void addScript(Script script) {
-		switch(script.getScriptType()) {
-		case GHOSTLOCO:
-			ghostLocoScripts.add(script);
-			break;
-		default:
-			break;
-		}
+		scripts.add(script);
 	}
 }

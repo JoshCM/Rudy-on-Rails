@@ -20,7 +20,8 @@ public class GhostLoco extends Loco {
 		GameSessionManager.getInstance().getGameSessionByName(sessionName).addScriptableObject(scriptableObject);
 		
 		NotifyLocoCreated();
-		addInitialCart();
+		addCart();
+		addCart();
 	}
 
 	private void NotifyLocoCreated() {
@@ -33,7 +34,7 @@ public class GhostLoco extends Loco {
 		notifyChange(messageInfo);
 	}
 	
-	public void changeCurrentScriptName(String currentScriptName) {
-		scriptableObject.changeCurrentScriptName(currentScriptName);
+	public void changeCurrentScriptFilename(String currentScriptName) {
+		scriptableObject.changeCurrentScriptFilename(currentScriptName);
 	}
 }

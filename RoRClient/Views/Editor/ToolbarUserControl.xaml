@@ -18,7 +18,7 @@
         
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <UniformGrid Columns="2" Rows="9" Margin="1"/>
+                <UniformGrid Columns="2" Rows="10" Margin="1"/>
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ListView.ItemTemplate>
