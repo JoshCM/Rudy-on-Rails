@@ -47,6 +47,12 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getDescription());
 		notifyCreatedTrainstation();
 	}
+	
+	public Trainstation(String sessionName, Square square,List<UUID> trainstationRailIds, UUID id, Compass alignment,
+			Stock stock, Crane crane) {
+		this(sessionName,square,trainstationRailIds,id,alignment,stock);
+		this.crane = crane;
+	}
 
 	/**
 	 * Gibt die Ausrichtung der Trainstation zurück
@@ -361,7 +367,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	public Trainstation loadFromMap(Square square, RoRSession session) {
 		Trainstation oldTrainStation = (Trainstation) square.getPlaceableOnSquare();
 		Trainstation newTrainStation = new Trainstation(session.getDescription(), square,
-				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock());
+				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock(), oldTrainStation.getCrane());
 		
 		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
 		newTrainStation.setSessionName(session.getDescription());
