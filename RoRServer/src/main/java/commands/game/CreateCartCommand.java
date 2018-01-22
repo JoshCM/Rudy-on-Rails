@@ -6,11 +6,14 @@ import commands.base.Command;
 import communication.MessageInformation;
 import models.game.Cart;
 import models.game.Compass;
+import models.game.GamePlayer;
 import models.game.Loco;
+import models.game.PlayerLoco;
 import models.game.Rail;
 import models.game.Square;
 import models.session.GameSession;
 import models.session.RoRSession;
+import resources.PropertyManager;
 
 public class CreateCartCommand implements Command{
 
@@ -19,6 +22,7 @@ public class CreateCartCommand implements Command{
 	private Compass compass;
 	private UUID playerId;
 	protected GameSession session;
+	
 	/**
 	 * yPos, xPos müssen von den Bahnhöfen rausgelesen werden
 	 * @param session
@@ -33,25 +37,33 @@ public class CreateCartCommand implements Command{
 	}
 	@Override
 	public void execute() {
-
-		
-		Square square = this.session.getMap().getSquare(xPos, yPos);
-		Rail rail = (Rail) square.getPlaceableOnSquare();
+		Square cartSpawnPointSquare = this.session.getMap().getSquare(xPos, yPos);
+		Rail cartSpawnPointRail = (Rail) cartSpawnPointSquare.getPlaceableOnSquare();
 		Loco loco = session.getLocomotiveByPlayerId(playerId);
+		GamePlayer currentPlayer = (GamePlayer)session.getPlayerById(playerId);
 		
-		if(loco.getCarts().size() < 5) {
-			if(rail.getPlaceableOnrail()==null) {//Damit nicht mehrere Wagons �bereinander erzeugt werden
-				Cart cart = new Cart(session.sessionName, square, compass, playerId, false, null);
-				rail.setPlaceableOnRail(cart);
-			}
+		if(validateBuyCart(currentPlayer, loco, cartSpawnPointRail)) {
+			// abziehen des Goldes des Players
+			currentPlayer.removeGold(3);
+			
+			// erstellen des Carts und setzzen auf das richtige Rail
+			Cart cart = new Cart(session.sessionName, cartSpawnPointSquare, compass, playerId, false, null);
+			cartSpawnPointRail.setPlaceableOnRail(cart);
 		}
-		
-
-		
-
-		
 		
 	}
 	
-
+	private boolean validateBuyCart(GamePlayer currentPlayer, Loco loco, Rail cartSpawnPointRail) {
+		// die Loco des Players kann nicht mehr als 5 carts besitzen dürfen
+		if(loco.getCarts().size() < Integer.valueOf(PropertyManager.getProperty("max_cart_number"))) {
+			// die cartSpawnPointRail muss leer sein
+			if(cartSpawnPointRail.getPlaceableOnrail()==null) {
+				// der player muss genügend resource(Gold) zur verfügung haben
+				if(currentPlayer.getGoldCount() >= Integer.valueOf(PropertyManager.getProperty("cart_costs"))) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

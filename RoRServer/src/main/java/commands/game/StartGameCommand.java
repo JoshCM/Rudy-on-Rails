@@ -129,13 +129,16 @@ public class StartGameCommand extends CommandBase {
 			Square locoSpawnPointSquare = rail.getSquareFromGameSession();
 			//Square locoSpawnPointSquare = map.getSquareById(newTrainStation.getSpawnPointforLoco());
 			
-			// Für jeden Spieler eine Lok erstellen
+			// Für jeden Spieler eine Lok erstellen und den Trainstation zuweisen
 			if(playerIterator.hasNext()) {
-				// Loco wird erstellt und zur Liste der Locos hinzugefügt
+				
 				UUID playerId = playerIterator.next().getId();
+				// Loco und GhostLoco werden erstellt und zur Liste der Locos hinzugefügt
 				gameSession.addLoco(new PlayerLoco(gameSession.getSessionName(), locoSpawnPointSquare, playerId, getLocoDirectionbyTrainstation(newTrainStation.getAlignment())));
 				GhostLoco ghostLoco = new GhostLoco(gameSession.getSessionName(), locoSpawnPointSquare, playerId, getLocoDirectionbyTrainstation(newTrainStation.getAlignment()));
 				gameSession.addLoco(ghostLoco);
+				
+				// Trainstation bekommt die PlayerId
 				newTrainStation.setPlayerId(playerId);
 			}
 		}
