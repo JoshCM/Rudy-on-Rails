@@ -145,6 +145,11 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 			json.addProperty("railSectionId", section.getId().toString());
 			json.addProperty("node1", section.getNode1().toString());
 			json.addProperty("node2", section.getNode2().toString());
+			if (section.getRailSectionStatus().toString() == null){
+                json.addProperty("railSectionStatus", RailSectionStatus.ACTIVE.toString());
+            } else {
+                json.addProperty("railSectionStatus", section.getRailSectionStatus().toString());
+            }
 			railSectionJsons.add(json);
 		}
 		messageInfo.putValue("railSections", railSectionJsons);
@@ -167,6 +172,15 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     public List<RailSection> getRailSectionList() {
         return railSectionList;
     }
+    public RailSection getActivDirection() {
+        for (RailSection railSection : railSectionList) {
+            if(railSection.getRailSectionStatus() == RailSectionStatus.ACTIVE){
+                return railSection;
+            }
+        }
+	    return railSectionList.get(0);
+    }
+
 
     public UUID getTrainstationId() {
         return trainstationId;
@@ -250,6 +264,12 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
             this.railSectionList.remove(rs);
         }
     }
+	public void changeSwitch() {
+        for (RailSection section : railSectionList) {
+            section.switchActitityStatus();
+        }
+    }
+
 
 
     @Override

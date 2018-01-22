@@ -98,6 +98,11 @@ namespace RoRClient.ViewModels.Editor
         public abstract void Move();
 
         /// <summary>
+        /// Methode zum Verschieben eines EditorCanvasViewModel / Muss in der jeweiligen Unterklasse überschrieben werden
+        /// </summary>
+        public abstract void ChangeSwitch();
+
+        /// <summary>
         /// Methode zum Löschen eines EditorCanvasViewModel / Muss in der jeweiligen Unterklasse überschrieben werden
         /// </summary>
         public abstract void Delete();

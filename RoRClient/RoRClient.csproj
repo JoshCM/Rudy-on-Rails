@@ -191,6 +191,7 @@
     <Compile Include="Models\Game\Mine.cs" />
     <Compile Include="Models\Game\Player.cs" />
     <Compile Include="Models\Game\PlayerLoco.cs" />
+    <Compile Include="Models\Game\RailSectionStatus.cs" />
     <Compile Include="Models\Game\Resource.cs" />
     <Compile Include="Models\Game\Script.cs" />
     <Compile Include="Models\Game\Scripts.cs" />
@@ -567,18 +568,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Resources\Images\railcurve_ne.png" />
-    <Resource Include="Resources\Images\railcurve_nw.png" />
-    <Resource Include="Resources\Images\railcurve_se.png" />
-    <Resource Include="Resources\Images\railcurve_sw.png" />
-    <Resource Include="Resources\Images\rail_ew.png" />
-    <Resource Include="Resources\Images\rail_ns.png" />
-    <Resource Include="Resources\Images\Tools\railcurve_sw.png" />
-    <Resource Include="Resources\Images\Tools\rail_ew.png" />
-    <Resource Include="Resources\Images\Tools\rail_ns.png" />
-    <Resource Include="Resources\Images\Tools\railcurve_ne.png" />
-    <Resource Include="Resources\Images\Tools\railcurve_nw.png" />
-    <Resource Include="Resources\Images\Tools\railcurve_se.png" />
+    <Resource Include="Resources\Images\rail_EAST_SOUTH.png" />
     <Resource Include="Resources\Images\dummy.png" />
     <Resource Include="Resources\Images\trainstation.png" />
     <Resource Include="Resources\Images\game_minimap_dummy.png" />

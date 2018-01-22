@@ -1,5 +1,6 @@
 ﻿using RoRClient.Models.Game;
 using System;
+using System.Collections.Generic;
 
 namespace RoRClient.Views.Editor.Helper
 {
@@ -17,6 +18,7 @@ namespace RoRClient.Views.Editor.Helper
         {
             Compass node1;
             Compass node2;
+            RailSectionStatus status = RailSectionStatus.ACTIVE;
 
             switch (toolName)
             {
@@ -37,8 +39,8 @@ namespace RoRClient.Views.Editor.Helper
                     node2 = Compass.WEST;
                     break;
                 case "railcurve_se":
-                    node1 = Compass.SOUTH;
-                    node2 = Compass.EAST;
+                    node1 = Compass.EAST;
+                    node2 = Compass.SOUTH;
                     break;
                 case "railcurve_sw":
                     node1 = Compass.SOUTH;
@@ -49,7 +51,51 @@ namespace RoRClient.Views.Editor.Helper
                     node2 = new Compass();
                     break;
             }
-            return new RailSection(Guid.NewGuid(), node1, node2);
+            return new RailSection(Guid.NewGuid(), node1, node2, status);
         }
+
+        /// <summary>
+        /// Erzeugt aus einem definierten Namen zwei Railsection mit jeweils zwei RailSectionPositions.  
+        /// Node1 ist jeweils mit node2 und node3 verknüpft und bildet so die Weiche
+        /// </summary>
+        /// <param name="toolName">Name des selectedTool</param>
+        /// <returns>Railsection</returns>
+        public static List<RailSection> ConvertSwitchToRailSections(String toolName)
+        {
+            Compass node1;
+            Compass node2;
+            Compass node3;
+            List <RailSection> railSections = new List<RailSection>();
+
+            switch (toolName)
+            {
+                case "switch_ns_es":
+                    node1 = Compass.SOUTH;
+                    node2 = Compass.NORTH;
+                    node3 = Compass.EAST;
+                    break;
+                case "switch_ns_sw":
+                    node1 = Compass.SOUTH;
+                    node2 = Compass.NORTH;
+                    node3 = Compass.WEST;
+                    break;
+                case "switch_es_sw":
+                    node1 = Compass.SOUTH;
+                    node2 = Compass.EAST;
+                    node3 = Compass.WEST;
+                    break;
+                default:
+                    node1 = new Compass();
+                    node2 = new Compass();
+                    node3 = new Compass();
+                    break;
+            }
+
+            railSections.Add(new RailSection(Guid.NewGuid(), node1, node2, RailSectionStatus.ACTIVE));
+            railSections.Add(new RailSection(Guid.NewGuid(), node1, node3, RailSectionStatus.INACTIVE));
+
+            return railSections;
+        }
+
     }
 }

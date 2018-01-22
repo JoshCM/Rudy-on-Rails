@@ -6,6 +6,8 @@ using RoRClient.ViewModels.Helper;
 using RoRClient.Views.Editor.Helper;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -86,6 +88,15 @@ namespace RoRClient.ViewModels.Editor
         /// <summary>
         ///  Move-Methode für alle PlaceableOnRail
         /// </summary>
+        public override void ChangeSwitch()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("xPos", rail.Square.PosX);
+            messageInformation.PutValue("yPos", rail.Square.PosY);
+            messageInformation.PutValue("change", true);
+            EditorSession.GetInstance().QueueSender.SendMessage("ChangeSwitch", messageInformation);
+        }
+
         public override void Move()
         {
             RoRSession editorSession = EditorSession.GetInstance();

@@ -31,12 +31,13 @@ public class CreateRailCommand extends CommandBase {
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(xPos, yPos);
 		
-		List<Compass> railSectionPositions = new ArrayList<Compass>();
+		List<Enum> railSectionPositions = new ArrayList<Enum>();
 		for(JsonObject json : railSectionData) {
 			Compass node1 = Compass.valueOf(json.get("node1").getAsString());
 			Compass node2 = Compass.valueOf(json.get("node2").getAsString());
 			railSectionPositions.add(node1);
 			railSectionPositions.add(node2);
+			railSectionPositions.add(RailSectionStatus.ACTIVE);
 		}
 		
 		Rail rail = new Rail(session.getDescription(), square, railSectionPositions);
