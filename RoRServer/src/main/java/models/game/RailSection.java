@@ -72,6 +72,8 @@ public class RailSection extends ModelBase {
     }
 
     public RailSectionStatus getRailSectionStatus() {return status;}
+    public void setRailSectionStatus(RailSectionStatus railSectionStatus) { this.status = railSectionStatus;}
+
 
     /**
      * Rotiert die RailSectionPositions.

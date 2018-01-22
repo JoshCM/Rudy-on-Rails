@@ -18,7 +18,6 @@ namespace RoRClient.Views.Editor.Helper
         {
             Compass node1;
             Compass node2;
-            RailSectionStatus status = RailSectionStatus.ACTIVE;
 
             switch (toolName)
             {
@@ -51,7 +50,7 @@ namespace RoRClient.Views.Editor.Helper
                     node2 = new Compass();
                     break;
             }
-            return new RailSection(Guid.NewGuid(), node1, node2, status);
+            return new RailSection(Guid.NewGuid(), node1, node2);
         }
 
         /// <summary>
@@ -69,17 +68,17 @@ namespace RoRClient.Views.Editor.Helper
 
             switch (toolName)
             {
-                case "switch_ns_es":
+                case "switch_se_sn":
                     node1 = Compass.SOUTH;
                     node2 = Compass.NORTH;
                     node3 = Compass.EAST;
                     break;
-                case "switch_ns_sw":
+                case "switch_sn_sw":
                     node1 = Compass.SOUTH;
                     node2 = Compass.NORTH;
                     node3 = Compass.WEST;
                     break;
-                case "switch_es_sw":
+                case "switch_se_sw":
                     node1 = Compass.SOUTH;
                     node2 = Compass.EAST;
                     node3 = Compass.WEST;
@@ -91,8 +90,8 @@ namespace RoRClient.Views.Editor.Helper
                     break;
             }
 
-            railSections.Add(new RailSection(Guid.NewGuid(), node1, node2, RailSectionStatus.ACTIVE));
-            railSections.Add(new RailSection(Guid.NewGuid(), node1, node3, RailSectionStatus.INACTIVE));
+            railSections.Add(new RailSection(Guid.NewGuid(), node1, node2));
+            railSections.Add(new RailSection(Guid.NewGuid(), node1, node3));
 
             return railSections;
         }

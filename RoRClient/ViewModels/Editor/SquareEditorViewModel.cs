@@ -215,7 +215,7 @@ namespace RoRClient.ViewModels.Editor
         {
             throw new NotImplementedException();
         }
-        public override void ChangeSwitch()
+        public void ChangeSwitch()
         {
             throw new NotImplementedException();
         }

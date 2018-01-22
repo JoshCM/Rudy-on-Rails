@@ -122,7 +122,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     private void createRailSectionsForRailSectionPositions(String sessionName, List<Compass> railSectionPositions) {
         for (int i = 0; i < railSectionPositions.size(); i += 2) {
             RailSection section = new RailSection(sessionName, this, railSectionPositions.get(i),
-                    railSectionPositions.get(i + 1));
+                    railSectionPositions.get(i + 1), RailSectionStatus.ACTIVE);
             railSectionList.add(section);
         }
     }
@@ -264,13 +264,6 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
             this.railSectionList.remove(rs);
         }
     }
-	public void changeSwitch() {
-        for (RailSection section : railSectionList) {
-            section.switchActitityStatus();
-        }
-    }
-
-
 
     @Override
     public int hashCode() {

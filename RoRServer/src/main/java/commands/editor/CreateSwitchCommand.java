@@ -28,20 +28,18 @@ public class CreateSwitchCommand extends CommandBase {
         EditorSession editorSession = (EditorSession) session;
         Map map = editorSession.getMap();
         Square square = map.getSquare(xPos, yPos);
-        List<Enum> railSectionPositions = new ArrayList<Enum>();
+        List<Compass> railSectionPositions = new ArrayList<Compass>();
         for(JsonObject json : railSectionData) {
             Compass node1 = Compass.valueOf(json.get("node1").getAsString());
             Compass node2 = Compass.valueOf(json.get("node2").getAsString());
             Compass node3 = Compass.valueOf(json.get("node3").getAsString());
             railSectionPositions.add(node1);
             railSectionPositions.add(node2);
-            railSectionPositions.add(RailSectionStatus.ACTIVE);
             railSectionPositions.add(node1);
             railSectionPositions.add(node3);
-            railSectionPositions.add(RailSectionStatus.INACTIVE);
         }
 
-        Rail rail = new Rail(session.getName(), square, railSectionPositions);
+        Rail rail = new Switch(session.getDescription(), square, railSectionPositions);
         square.setPlaceableOnSquare(rail);
     }
 }

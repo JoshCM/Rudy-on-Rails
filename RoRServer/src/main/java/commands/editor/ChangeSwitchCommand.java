@@ -6,6 +6,7 @@ import exceptions.NotRotateableException;
 import models.game.Map;
 import models.game.Rail;
 import models.game.Square;
+import models.game.Switch;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
@@ -28,8 +29,8 @@ public class ChangeSwitchCommand extends CommandBase {
         EditorSession editorSession = (EditorSession)session;
         Map map = editorSession.getMap();
         Square square = map.getSquare(xPos, yPos);
-        Rail rail = (Rail)square.getPlaceableOnSquare();
+        Switch railSwitch = (Switch)square.getPlaceableOnSquare();
 
-        if(change){rail.changeSwitch();}
+        if(change){railSwitch.changeSwitch();}
     }
 }

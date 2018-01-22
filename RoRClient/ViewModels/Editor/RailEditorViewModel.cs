@@ -88,7 +88,7 @@ namespace RoRClient.ViewModels.Editor
         /// <summary>
         ///  Move-Methode für alle PlaceableOnRail
         /// </summary>
-        public override void ChangeSwitch()
+        public void ChangeSwitch()
         {
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("xPos", rail.Square.PosX);

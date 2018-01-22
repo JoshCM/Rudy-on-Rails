@@ -34,7 +34,6 @@ namespace RoRClient.BindingConverter
 
                     if (railSections.Count == 2)
                     {
-                        /// evtl sowas ?railSections.Where(x => x.GetNodesAsList().Contains(Compass.NORTH) && x.GetNodesAsList().Contains(Compass.SOUTH)).Any();
 
                         foreach (RailSection railSection in railSections)
                         {

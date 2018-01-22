@@ -25,10 +25,9 @@ public class CreateCrossingCommand extends CommandBase {
 		Map map = editorSession.getMap();
 		Square square = map.getSquare(xPos, yPos);
 		
-		List<Enum> railSectionPositions = new ArrayList<Enum>();
+		List<Compass> railSectionPositions = new ArrayList<Compass>();
 		railSectionPositions.add(Compass.NORTH);
 		railSectionPositions.add(Compass.SOUTH);
-		railSectionPositions.add(RailSectionStatus.ACTIVE);
 		railSectionPositions.add(Compass.EAST);
 		railSectionPositions.add(Compass.WEST);
 		
