@@ -44,6 +44,14 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		return newCrane;
 	}
 	
+	
+	/**
+	 * der Kran soll sich bewegen(linear) damit er die Container aufgabeln kann
+	 */
+	public void moveToTakeTheGoods() {
+		
+	}
+	
 	public void moveCrane(Square newSquare) {
 		changeSquare(newSquare);
 		NotifyCraneMoved();

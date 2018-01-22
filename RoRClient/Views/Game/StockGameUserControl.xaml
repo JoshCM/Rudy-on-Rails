@@ -16,6 +16,9 @@
     <Canvas Width="{Binding SquareDim, ElementName=stockGameUserControl}"
             Height="{Binding SquareDim, ElementName=stockGameUserControl}">
         <Image Width="{Binding SquareDim, ElementName=stockGameUserControl}" Height="{Binding SquareDim, ElementName=stockGameUserControl}" Source="pack://application:,,,/Resources/Images/stock_container_1.png">
+            <Image.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectedStockObjectCommand}"></MouseBinding>
+            </Image.InputBindings>
             <Image.LayoutTransform>
                 <TransformGroup>
                     <RotateTransform Angle="{Binding Stock.Alignment, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" />

@@ -9,6 +9,7 @@ import models.game.Compass;
 import models.game.Loco;
 import models.game.Rail;
 import models.game.Square;
+import models.game.Trainstation;
 import models.session.GameSession;
 import models.session.RoRSession;
 
@@ -18,6 +19,7 @@ public class CreateCartCommand implements Command{
 	private int yPos;
 	private Compass compass;
 	private UUID playerId;
+	private UUID trainstationOwnerId;
 	protected GameSession session;
 	/**
 	 * yPos, xPos m√ºssen von den Bahnh√∂fen rausgelesen werden
@@ -30,6 +32,9 @@ public class CreateCartCommand implements Command{
 		this.compass = Compass.valueOf((String) messageInfo.getValue("compass"));
 		this.session = (GameSession)session;
 		this.playerId = UUID.fromString(messageInfo.getClientid());
+		Trainstation trainstation = (Trainstation)this.session.getMap().getPlaceableOnSquareById(messageInfo.getValueAsUUID("trainstationId"));
+		this.trainstationOwnerId = trainstation.getPlayerId();
+		
 	}
 	@Override
 	public void execute() {
@@ -40,9 +45,11 @@ public class CreateCartCommand implements Command{
 		Loco loco = session.getLocomotiveByPlayerId(playerId);
 		
 		if(loco.getCarts().size() < 5) {
-			if(rail.getPlaceableOnrail()==null) {//Damit nicht mehrere Wagons ¸bereinander erzeugt werden
-				Cart cart = new Cart(session.sessionName, square, compass, playerId, false, null);
-				rail.setPlaceableOnRail(cart);
+			if(trainstationOwnerId.equals(playerId)) {
+				if(rail.getPlaceableOnrail()==null) {//Damit nicht mehrere Wagons ¸bereinander erzeugt werden
+					Cart cart = new Cart(session.sessionName, square, compass, playerId, false, null);
+					rail.setPlaceableOnRail(cart);
+				}
 			}
 		}
 		
