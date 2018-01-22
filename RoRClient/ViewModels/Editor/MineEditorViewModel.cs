@@ -47,6 +47,12 @@ namespace RoRClient.ViewModels.Editor
 
         }
 
+
+        public override void ChangeSwitch()
+        {
+            throw new NotImplementedException();
+        }
+
         public override void RotateLeft()
         {
             MessageInformation message = new MessageInformation();
