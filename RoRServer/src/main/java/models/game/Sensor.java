@@ -34,11 +34,6 @@ public class Sensor extends InteractiveGameObject {
 		
 		notifySensorPlaced();		
 	}
-
-	@Override
-	public void specificUpdate() {
-				
-	}
 	
 	/**
 	 * Schickt eine Nachricht an den Client, um den Sensor auf einer Rail zu platzieren

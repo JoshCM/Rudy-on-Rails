@@ -623,8 +623,6 @@
     <Resource Include="Resources\Images\rail_SOUTH_WEST.png" />
     <Resource Include="Resources\Images\rail_EAST_WEST.png" />
     <Resource Include="Resources\Images\rail_NORTH_SOUTH.png" />
-    <Resource Include="Resources\Images\sensor_aktiv.png" />
-    <Resource Include="Resources\Images\sensor_inaktiv.png" />
     <Resource Include="Resources\Images\stock_cart_2.png" />
     <Resource Include="Resources\Images\stock_cart_3.png" />
     <Resource Include="Resources\Images\stock_cart_4.png" />
@@ -641,7 +639,6 @@
     <Resource Include="Resources\Images\Tools\switch\switch_se_sn.png" />
     <Resource Include="Resources\Images\Tools\switch\switch_se_sw.png" />
     <Resource Include="Resources\Images\Tools\switch\switch_sn_sw.png" />
-    <Resource Include="Resources\Images\Tools\crane.png" />
     <Resource Include="Resources\Images\sensor_active.png" />
     <Resource Include="Resources\Images\sensor_inactive.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />

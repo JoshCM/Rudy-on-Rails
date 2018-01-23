@@ -17,7 +17,7 @@
             Height="{Binding SquareDim, ElementName=mineUserControl}">
         <Grid x:Name="GridContainer" Height="Auto" Width="Auto">
 
-        <Image Width="{Binding SquareDim, ElementName=mineUserControl}" 
+            <Image Width="{Binding SquareDim, ElementName=mineUserControl}" 
                Height="{Binding SquareDim, ElementName=mineUserControl}" 
                 Source="/RoRClient;component/Resources/Images/mine.png" Stretch="Fill">
                 <Image.LayoutTransform>
@@ -25,6 +25,9 @@
                         <RotateTransform Angle="{Binding Mine.Alignment, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" />
                     </TransformGroup>
                 </Image.LayoutTransform>
+                <Image.InputBindings>
+                    <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+                </Image.InputBindings>
             </Image>
             <Grid Height="25" Width="50">
                 <Grid.Background>
@@ -32,21 +35,12 @@
                 </Grid.Background>
                 <Image x:Name="Bild0" Width="25" Height="25" HorizontalAlignment="left" Source="/RoRClient;component/Resources/Images/container_gold.png"/>
                 <Label x:Name="Text0" FontSize="14" HorizontalAlignment="Left" Content="{Binding Path=Mine.GoldCount, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" Foreground="#FFF9F9F9" />
-           
+
                 <Image Width="25" Height="25" HorizontalAlignment="Right" Source="/RoRClient;component/Resources/Images/container_coal.png"/>
                 <Label x:Name="Text1" FontSize="14" HorizontalAlignment="Right" Content="{Binding Path=Mine.CoalCount, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" Foreground="#FFF9F9F9" />
             </Grid>
-            
-            
+
+
         </Grid>
-            <Image.InputBindings>
-                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
-            </Image.InputBindings>
-            <Image.LayoutTransform>
-                <TransformGroup>
-                    <RotateTransform Angle="{Binding Mine.Alignment, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" />
-                </TransformGroup>
-            </Image.LayoutTransform>
-        </Image>
     </Canvas>
  </v:CanvasUserControl>
