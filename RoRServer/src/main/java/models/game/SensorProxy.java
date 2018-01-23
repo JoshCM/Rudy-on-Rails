@@ -29,6 +29,7 @@ public class SensorProxy implements ProxyObject {
 	}
 	
 	public void destroyTrain() {
+		System.out.println("Loco zerstört: " + loco.toString());
 		List<Loco> locos = GameSessionManager.getInstance().getGameSession().getLocos();
 		locos.remove(loco);
 	}
