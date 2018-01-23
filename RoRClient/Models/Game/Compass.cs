@@ -6,6 +6,7 @@ namespace RoRClient.Models.Game
     /// </summary>
     public enum Compass
     {
-        NORTH, EAST, SOUTH, WEST
-    };
+        NORTH, SOUTH, EAST, WEST
+    }
 }
+

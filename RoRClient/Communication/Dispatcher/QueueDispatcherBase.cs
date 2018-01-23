@@ -18,6 +18,7 @@ namespace RoRClient.Communication.Dispatcher
         public void CallMethodFromString(string methodName, MessageInformation messageInformation)
         {
             MethodInfo method = this.GetType().GetMethod(methodName);
+            Console.Write("methodName", methodName);
             method.Invoke(this, new[] {messageInformation});
         }
 
