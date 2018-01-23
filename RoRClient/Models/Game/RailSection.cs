@@ -75,7 +75,6 @@ namespace RoRClient.Models.Game
             List<String> directions = new List<String>();
             directions.Add(node1.ToString());
             directions.Add(node2.ToString());
-            Console.WriteLine("Nodes sorted:", node1.ToString(), node2.ToString());
             directions.Sort();
             return directions;
         }
