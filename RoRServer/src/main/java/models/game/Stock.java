@@ -130,10 +130,7 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare {
 		this.resources.add(resource);
 	}
 
-	@Override
-	public void specificUpdate() {
-		// TODO Auto-generated method stub
+	
 
-	}
 
 }

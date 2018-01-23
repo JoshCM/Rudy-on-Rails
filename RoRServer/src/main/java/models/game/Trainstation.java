@@ -425,10 +425,6 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 				+ ", spawnPointForLoco=" + spawnPointForLoco + "]";
 	}
 
-	@Override
-	public void specificUpdate() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 }

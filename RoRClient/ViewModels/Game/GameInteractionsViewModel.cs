@@ -2,6 +2,7 @@
 using RoRClient.Models.Game;
 using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
+using RoRClient.Views.Popup;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,6 +23,7 @@ namespace RoRClient.ViewModels.Game
         private bool canPlaceSensor = false;
         private bool canConfigureSensor = false;
         private MapGameViewModel mapGameViewModel;
+        private int currentNumberOfOwnGhostLocoScript = 1;
 
         public bool CanConfigureSensor
         {
@@ -108,16 +110,15 @@ namespace RoRClient.ViewModels.Game
         /// </summary>
         private void AddGhostLocoScriptFromPlayer()
         {
-            MessageInformation messageInformation = new MessageInformation();
-            string description = "Eigenes Script";
+            string description = "Eigenes Script " + currentNumberOfOwnGhostLocoScript;
+            string filename = CustomFileDialogs.AskUserToSelectPythonScript();
 
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.ShowDialog();
-
-            if(openFileDialog.FileName != "")
+            if (filename != null)
             {
-                string scriptContent = File.ReadAllText(openFileDialog.FileName);
+                string scriptContent = File.ReadAllText(filename);
+                currentNumberOfOwnGhostLocoScript += 1;
 
+                MessageInformation messageInformation = new MessageInformation();
                 messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
                 messageInformation.PutValue("description", description);
                 messageInformation.PutValue("scriptContent", scriptContent);
