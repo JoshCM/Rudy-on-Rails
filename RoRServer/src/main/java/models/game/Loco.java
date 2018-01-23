@@ -21,7 +21,7 @@ public class Loco extends TickableGameObject {
 	private long speed;
 	private Compass drivingDirection;
 	private boolean reversed = false;
-	private Map map;
+	protected Map map;
 	private static List<Sensor> sensors; // Jede Loco kennt alle Sensoren
 
 	/**
