@@ -94,7 +94,7 @@ public class RailTests {
 	@Test
 	public void addRailSectionToRail() {
 		Rail rail = createCrossRail();
-		RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "EAST");
+		RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "EAST", "ACTIVE");
 		rail.addRailSection(rs);
 		assertTrue(rail.getAllRailSections().contains(rs));
 	}
@@ -102,16 +102,16 @@ public class RailTests {
 	@Test(expected = RailSectionException.class)
 	public void addExistingRailSectionToRail() {
 		Rail rail = createCrossRail();
-		RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "EAST");
+		RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "EAST", "ACTIVE");
 		rail.addRailSection(rs);
-		RailSection rs2 = new RailSection(rail.sessionName, rail, "EAST", "NORTH");
+		RailSection rs2 = new RailSection(rail.sessionName, rail, "EAST", "NORTH", "ACTIVE");
 		rail.addRailSection(rs2);
 	}
 
 	@Test
 	public void removeExistingRailSectionFromRail() {
 		Rail rail = createCrossRail();
-		RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "SOUTH");
+		RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "SOUTH", "ACTIVE");
 		rail.deleteRailSection(rs);
 		assertFalse(rail.getAllRailSections().contains(rs));
 	}
@@ -119,8 +119,8 @@ public class RailTests {
 	@Test(expected = RailSectionException.class)
 	public void removeExistingRailSectionFromRailTwice() {
 		Rail rail = createCrossRail();
-		RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "SOUTH");
-		RailSection rs2 = new RailSection(rail.sessionName, rail, "SOUTH", "NORTH");
+		RailSection rs = new RailSection(rail.sessionName, rail, "NORTH", "SOUTH", "ACTIVE");
+		RailSection rs2 = new RailSection(rail.sessionName, rail, "SOUTH", "NORTH", "ACTIVE");
 		rail.deleteRailSection(rs);
 		rail.deleteRailSection(rs2);
 	}

@@ -110,6 +110,7 @@
     <Compile Include="BindingConverter\CompassToAngleConverter.cs" />
     <Compile Include="Commands\Base\ChangeMapSelectionCommandBase.cs" />
     <Compile Include="Commands\Base\CommandBase.cs" />
+    <Compile Include="Commands\Base\DeletePlaceableCommandBase.cs" />
     <Compile Include="Commands\Base\UpdateActivityOfSignalsCommandBase.cs" />
     <Compile Include="Commands\Base\CreateSignalsCommandBase.cs" />
     <Compile Include="Commands\Base\CreateCraneCommandBase.cs" />
@@ -152,6 +153,8 @@
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateSignalsCommand.cs" />
+    <Compile Include="Commands\Game\Delete\DeletePlaceableCommand.cs" />
+    <Compile Include="Commands\Game\Other\RemoveResourceFromMineCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateResourceLoadedOntoCartCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateTrainstationCommand.cs" />

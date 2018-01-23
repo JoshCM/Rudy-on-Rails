@@ -43,8 +43,6 @@ namespace RoRClient.Models.Game
                 goldCount = value;
                 
             }
-                
-
         }
         public String CoalCount
         {
@@ -55,9 +53,7 @@ namespace RoRClient.Models.Game
             set
             {
                 coalCount = value;
-                
             }
-
         }
         public void AddCoal(IPlaceableOnSquare coal) {
             coals.Add(coal);
@@ -78,13 +74,21 @@ namespace RoRClient.Models.Game
             golds.Remove(gold);
             NotifyPropertyChanged("GoldCount", goldCount, golds.Count.ToString());
         }
-        public List<IPlaceableOnSquare> GetCoals()
+
+        public List<IPlaceableOnSquare> Coals
         {
-            return coals;
+            get
+            {
+                return coals;
+            }
         }
-        public List<IPlaceableOnSquare> GetGolds()
+
+        public List<IPlaceableOnSquare> Golds
         {
-            return golds;
+            get
+            {
+                return golds;
+            }
         }
     }
 }

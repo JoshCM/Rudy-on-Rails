@@ -8,11 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.Commands.Editor.Delete
+namespace RoRClient.Commands.Game.Delete
 {
     public class DeletePlaceableCommand : DeletePlaceableCommandBase
     {
-        public DeletePlaceableCommand(EditorSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        public DeletePlaceableCommand(GameSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
         }
     }
