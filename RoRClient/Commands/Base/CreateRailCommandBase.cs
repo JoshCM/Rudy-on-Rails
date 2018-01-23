@@ -37,7 +37,8 @@ namespace RoRClient.Commands.Base
                 Guid railSectionId = Guid.Parse(obj.GetValue("railSectionId").ToString());
                 Compass node1 = (Compass)Enum.Parse(typeof(Compass), obj.GetValue("node1").ToString());
 				Compass node2 = (Compass)Enum.Parse(typeof(Compass), obj.GetValue("node2").ToString());
-                RailSection section = new RailSection(railSectionId, node1, node2);
+                RailSectionStatus railSectionStatus = (RailSectionStatus)Enum.Parse(typeof(RailSectionStatus), obj.GetValue("railSectionStatus").ToString());
+                RailSection section = new RailSection(railSectionId, node1, node2, railSectionStatus);
                 railSections.Add(section);
             }
         }
