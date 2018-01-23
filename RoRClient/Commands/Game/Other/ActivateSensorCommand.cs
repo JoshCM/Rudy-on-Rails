@@ -10,6 +10,9 @@ using RoRClient.Models.Game;
 
 namespace RoRClient.Commands.Game.Other
 {
+    /// <summary>
+    /// Command zum Deaktivieren/Aktivieren von Sensoren auf der Map
+    /// </summary>
     public class ActivateSensorCommand : CommandBase
     {
         private bool active;

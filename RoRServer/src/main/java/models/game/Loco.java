@@ -40,25 +40,21 @@ public abstract class Loco extends InteractiveGameObject {
 		this.playerId = playerId;
 		Loco.sensors = new ArrayList<Sensor>();
 	}
-	
+
 	public static void addSensor(Sensor sensor) {
 		sensors.add(sensor);
 	}
-	
+
 	public void notifySensors() {
-		
-		// Es müssen Sensoren vorhanden sein
-		if (!sensors.isEmpty()) {
-			Iterator<Sensor> iter = sensors.iterator();
-			while(iter.hasNext()) {
-				Sensor sensor = iter.next();
-				// Wenn der Zug sich auf der Position des Sensors befindet
-				if (sensor.checkPosition(getXPos(), getYPos())) {
-					sensor.runScriptOnTrainArrived(this);
-				}
+
+		Iterator<Sensor> iter = sensors.iterator();
+		while (iter.hasNext()) {
+			Sensor sensor = iter.next();
+			// Sensor ist aktiv und der Zug befindet sich auf der Position des Sensors
+			if (sensor.isActive() && sensor.checkPosition(getXPos(), getYPos())) {
+				sensor.runScriptOnTrainArrived(this);
 			}
 		}
-		
 	}
 
 	/**

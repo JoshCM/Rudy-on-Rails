@@ -30,7 +30,7 @@ public class Sensor extends InteractiveGameObject {
 		// Vorbereitung für Skripting
 		sensorProxy = new SensorProxy(this, square);
 		scriptableObject = new ScriptableObject(sensorProxy);
-		GameSessionManager.getInstance().getGameSessionByName(sessionName).addScriptableObject(scriptableObject);
+		// GameSessionManager.getInstance().getGameSessionByName(sessionName).addScriptableObject(scriptableObject);
 		
 		notifySensorPlaced();		
 	}
@@ -72,11 +72,12 @@ public class Sensor extends InteractiveGameObject {
 	}
 	
 	/**
-	 * Wird ausgeführt, sobald ein Zug auf den Sensor fährt
+	 * Führt das gesetzte Script aus, sobald ein Zug auf den Sensor fährt
 	 */
 	public void runScriptOnTrainArrived(Loco loco) {
 		sensorProxy.setLoco(loco);
 		scriptableObject.changeCurrentScriptFilename(currentScriptName);
+		scriptableObject.callUpdateOnPythonScript();
 		deactivate();
 		notifySensorActivated();
 	}

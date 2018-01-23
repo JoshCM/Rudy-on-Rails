@@ -171,7 +171,10 @@ namespace RoRClient.ViewModels.Game
                 {
                     selectedSensorScript = value;
                     OnPropertyChanged("SelectedSensorScript");
-                    ChangeCurrentScriptOfSensor();
+
+                    if (selectedSensorScript != null) {
+                        ChangeCurrentScriptOfSensor();
+                    }
                 }
             }
         }
@@ -182,7 +185,7 @@ namespace RoRClient.ViewModels.Game
         private void ChangeCurrentScriptOfSensor()
         {
             MessageInformation message = new MessageInformation();
-            Guid selectedModelId = mapGameViewModel.SelectedGameCanvasViewModel.Id; // Muss noch gefixt werden, ist das letzte Rail und nicht der Sensor!
+            Guid selectedModelId = mapGameViewModel.SelectedGameCanvasViewModel.Id;
             message.PutValue("selectedModelId", selectedModelId);
             message.PutValue("scriptId", SelectedSensorScript.Id);
             GameSession.GetInstance().QueueSender.SendMessage("ChangeCurrentScriptOfSensor", message);

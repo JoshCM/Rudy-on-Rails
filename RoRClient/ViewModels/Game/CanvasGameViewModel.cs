@@ -62,6 +62,8 @@ namespace RoRClient.ViewModels.Game
             if (MapViewModel.SelectedGameCanvasViewModel is RailGameViewModel)
             {
                 RailGameViewModel railGameViewModel = (RailGameViewModel)MapViewModel.SelectedGameCanvasViewModel;
+
+                // Wenn das Rail noch keinen Sensor hat
                 if (!railGameViewModel.Rail.hasSensor())
                 {
                     MapViewModel.GameInteractionsViewModel.CanPlaceSensor = true;

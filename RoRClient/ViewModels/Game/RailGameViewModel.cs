@@ -56,6 +56,9 @@ namespace RoRClient.ViewModels.Game
 
             // Es soll kein weiterer Sensor mehr platziert werden können
             MapViewModel.GameInteractionsViewModel.CanPlaceSensor = false;
+
+            // DrownDown für Auswahl zurücksetzten
+            MapViewModel.GameInteractionsViewModel.SelectedSensorScript = null;
         }
     }
 }
