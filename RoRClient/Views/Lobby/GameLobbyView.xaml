@@ -7,7 +7,10 @@
              xmlns:vm="clr-namespace:RoRClient.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="900" d:DesignWidth="1600">
-
+    <UserControl.Resources>
+        <ResourceDictionary Source="../Styles.xaml"/>
+    </UserControl.Resources>
+    
     <DockPanel>
         <DockPanel.Background>
             <ImageBrush ImageSource="pack://application:,,,/Resources/Images/start_background.png"/>
@@ -43,8 +46,8 @@
             <Button x:Name="leaveEditorInfosButton" Command="{Binding LeaveGameCommand}" Height="55" Width="55" FontSize="25" Background="#FF510404"  VerticalAlignment="Top" Margin="0,30,10,0" >
                 <Image Source="/RoRClient;component/Resources/Images/btn_back.png"></Image>
             </Button>
-            <Button x:Name="startGame" Command="{Binding StartGameCommand}" Content="Spiel starten" IsEnabled="{Binding IsHost}" FontFamily="Source Sans Pro" Height="55" Width="200"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" VerticalAlignment="Top" Margin="10,30,10,0" />
-            <Button x:Name="refreshGameInfosButton" Command="{Binding RefreshGameInfosCommand}"  Content="Aktualisieren" FontFamily="Source Sans Pro" Height="55" Width="200"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" VerticalAlignment="Top" Margin="10,30,0,0" />
+            <Button x:Name="startGame" Command="{Binding StartGameCommand}" Content="Spiel starten" IsEnabled="{Binding CanStartGame}" Style="{StaticResource DefaultButtonStyle}" VerticalAlignment="Top" Margin="10,30,10,0" />
+            <Button x:Name="refreshGameInfosButton" Command="{Binding RefreshGameInfosCommand}"  Content="Aktualisieren" Style="{StaticResource DefaultButtonStyle}" VerticalAlignment="Top" Margin="10,30,0,0" />
         </StackPanel>
         <Border DockPanel.Dock="Bottom" BorderBrush="#FF510404" BorderThickness="2" Height="2" Margin="-400,0,250,0" />
 

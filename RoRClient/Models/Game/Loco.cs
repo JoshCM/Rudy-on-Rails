@@ -16,11 +16,13 @@ namespace RoRClient.Models.Game
     {
         private int speed;
         private Compass drivingDirection;
+        private Guid playerId;
 
-        public Loco(Guid id, Compass drivingDirection, Square square) : base(square)
+        public Loco(Guid id, Guid playerId, Compass drivingDirection, Square square) : base(square)
         {
             this.id = id;
             this.drivingDirection = drivingDirection;
+            this.playerId = playerId;
         }
 
         public void AddCart(Cart cart)
@@ -60,6 +62,13 @@ namespace RoRClient.Models.Game
                 }
             }
         }
+        public Guid PlayerId
+        {
+            get
+            {
+                return playerId;
+            }
+        }
 
         private ObservableCollection<Cart> carts = new ObservableCollection<Cart>();
         public ObservableCollection<Cart> Carts
@@ -72,13 +81,7 @@ namespace RoRClient.Models.Game
 
         public Cart GetCartById(Guid cartId)
         {
-            foreach(Cart c in Carts){
-                if (c.Id.Equals(cartId))
-                {
-                    return c;
-                }
-            }
-            return null;
+            return carts.Where(x => x.Id == cartId).First();
         }
     }
 }

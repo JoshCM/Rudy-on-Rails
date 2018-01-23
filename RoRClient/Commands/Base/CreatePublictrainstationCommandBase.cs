@@ -17,8 +17,6 @@ namespace RoRClient.Commands.Base
         Guid stockId;
         private int xPos;
         private int yPos;
-        private int stockXPos;
-        private int stockYPos;
         private Compass alignment;
         List<Rail> trainstationRails = new List<Rail>();
 

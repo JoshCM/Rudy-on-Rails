@@ -23,12 +23,6 @@ namespace RoRClient.Views.Game
         public GameUserControl()
         {
             InitializeComponent();
-
-        }
-
-        private void GameMenuUserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

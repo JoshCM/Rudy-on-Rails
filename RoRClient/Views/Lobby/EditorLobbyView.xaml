@@ -6,6 +6,10 @@
              xmlns:local="clr-namespace:RoRClient.Views.Lobby"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
+    <UserControl.Resources>
+        <ResourceDictionary Source="../Styles.xaml"/>
+    </UserControl.Resources>
+    
     <DockPanel>
         <DockPanel.Background>
             <ImageBrush ImageSource="pack://application:,,,/Resources/Images/start_background.png"/>
@@ -22,18 +26,18 @@
         <StackPanel DockPanel.Dock="Left" Margin="250,40,0,200">
             <TextBlock Text="Spieler in diesem Bau-Modus:" TextWrapping="Wrap" Height="40" Width="400" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" HorizontalAlignment="Left"/>
             <ListBox Height="230" Width="400" x:Name="EditorPlayersListBox" ItemsSource="{Binding LobbyModel.EditorInfos}" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404">
-              <ListBox.ItemTemplate>
-                  <DataTemplate>
-                     <StackPanel Orientation="Horizontal">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
                             <StackPanel.Resources>
                                 <Style TargetType="{x:Type TextBlock}">
-                                  <Setter Property="Margin" Value="10,10,0,0" />
-                              </Style>
-                          </StackPanel.Resources>
-                          <TextBlock Text="{Binding Player.Name}" />
-                     </StackPanel>
-                  </DataTemplate>
-             </ListBox.ItemTemplate>
+                                    <Setter Property="Margin" Value="10,10,0,0" />
+                                </Style>
+                            </StackPanel.Resources>
+                            <TextBlock Text="{Binding Player.Name}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
         </StackPanel>
 
@@ -42,11 +46,9 @@
                 <Image Source="/RoRClient;component/Resources/Images/btn_back.png"></Image>
             </Button>
             <Button x:Name="startEditor" Command="{Binding StartEditorCommand}"
-			        Content="Editor starten" IsEnabled="{Binding IsHost}" FontFamily="Source Sans Pro" Height="55" Width="200"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" VerticalAlignment="Top" Margin="10,30,10,0"/>
+                    Content="Editor starten" IsEnabled="{Binding CanStartEditor}" Style="{StaticResource DefaultButtonStyle}" VerticalAlignment="Top" Margin="10,30,10,0"/>
             <Button x:Name="refreshEditorInfosButton" Command="{Binding RefreshEditorInfosCommand}"
-			        Content="Aktualisieren" FontFamily="Source Sans Pro" Height="55" Width="200" FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" VerticalAlignment="Top" Margin="10,30,10,0"/>
-
-
+                    Content="Aktualisieren" Style="{StaticResource DefaultButtonStyle}" VerticalAlignment="Top" Margin="10,30,10,0"/>
         </StackPanel>
         <Border DockPanel.Dock="Bottom" BorderBrush="#FF510404" BorderThickness="2" Height="2" Margin="-400,0,250,0" />
 

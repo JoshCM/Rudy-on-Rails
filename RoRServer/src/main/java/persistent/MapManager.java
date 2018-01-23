@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import communication.queue.receiver.QueueReceiver;
+import exceptions.MapNotFoundException;
 import models.game.Map;
 import models.game.Placeable;
 import models.game.PlaceableOnRail;
@@ -40,21 +41,24 @@ public class MapManager {
 	}
 
 	/**
-	 * Es wird eine Map über den gegebenen Dateinamen erstellt und zugegeben.
+	 * Es wird eine Map über den gegebenen Dateinamen erstellt und zurückgegeben.
 	 * 
 	 * @param mapName
 	 *            Dateiname der Map
 	 * @return Gibt eine Map für ein Spiel zurück
+	 * @throws MapNotFoundException 
 	 */
-	public static Map loadMap(String mapName) {
+	public static Map loadMap(String mapName) throws MapNotFoundException {
+		if(mapName == null)
+			throw new MapNotFoundException(String.format("MapName ist %s", mapName));
+		
 		String jsonMap = readFromFile(mapName);
-		// log.info("Eingelesene Map: " + jsonMap);
 		Map map = convertJsonToMap(jsonMap);
 		return map;
 	}
 
 	/**
-	 * Lies eine Datei über den gegebenen Namen ein und gibt ein JsonObjekt zurück
+	 * Liest eine Datei über den gegebenen Namen ein und gibt ein JsonObjekt zurück
 	 * 
 	 * @param mapName:
 	 *            Dateiname der Map
@@ -70,6 +74,8 @@ public class MapManager {
 			while ((line = br.readLine()) != null) {
 				jsonMap += line;
 			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -96,7 +102,7 @@ public class MapManager {
 	public static void saveMap(Map map) {
 		String jsonMap = convertMapToJson(map);
 		log.info("Gespeicherte Map: " + jsonMap);
-		saveToFile(jsonMap, map.getName());
+		saveToFile(jsonMap, map.getDescription());
 	}
 
 	public static String convertMapToJson(Map map) {
@@ -107,6 +113,10 @@ public class MapManager {
 	public static Map convertJsonToMap(String mapAsJson) {
 		Map map = gsonLoader.fromJson(mapAsJson, Map.class);
 		return map;
+	}
+	
+	public static int loadAvailablePlayerSlots(String mapName) throws MapNotFoundException {
+		return loadMap(mapName).getAvailablePlayerSlots();
 	}
 
 	/**
@@ -137,9 +147,11 @@ public class MapManager {
 	public static List<String> readMapNames() {
 		List<String> mapList = new ArrayList<String>();
 		File folder = new File(OUTPUT_DIR_PATH);
-		for (File fileEntry : folder.listFiles()) {
-			if (fileEntry.isFile())
-				mapList.add(fileEntry.getName().replace(ext, ""));
+		if (folder.exists()) { 
+			for (File fileEntry : folder.listFiles()) {
+				if (fileEntry.isFile())
+					mapList.add(fileEntry.getName().replace(ext, ""));
+			}
 		}
 		return mapList;
 	}

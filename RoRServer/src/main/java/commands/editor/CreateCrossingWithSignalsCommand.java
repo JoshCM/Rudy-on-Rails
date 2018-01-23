@@ -34,7 +34,7 @@ public class CreateCrossingWithSignalsCommand extends CommandBase {
 		railSectionPositions.add(Compass.EAST);
 		railSectionPositions.add(Compass.WEST);
 
-		Rail rail = new Rail(session.getName(), square, railSectionPositions, true);
+		Rail rail = new Rail(session.getDescription(), square, railSectionPositions, true);
 		square.setPlaceableOnSquare(rail);
 	}
 }

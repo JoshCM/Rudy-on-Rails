@@ -4,45 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RoRClient.Views.Game"
+             xmlns:converter="clr-namespace:RoRClient.BindingConverter"
              mc:Ignorable="d" 
              d:DesignHeight="225" d:DesignWidth="800" Background="#510404" BorderBrush="White" BorderThickness="5">
 
-    <Grid Margin="10">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <converter:IsNullToBooleanConverter x:Key="IsNullToBooleanConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-
-        <Label Content="GameInteraction" Foreground="White" FontFamily="Source Sans Pro" FontSize="20" HorizontalAlignment="Center" Margin="20"/>
-
-        <Button Content="Geisterzug" ></Button>
-        
-        <!--
-
-
-        <Button Grid.Column="0" Grid.Row="0" Content="Geisterzug" FontSize="5" Margin="2"/>
-        <Button Grid.Column="1" Grid.Row="0" Content="Sensoren" FontSize="5" Margin="2"/>
-        <Button Grid.Column="2" Grid.Row="0" Content="Tausch" FontSize="5" Margin="2" />
-
-
-        <ComboBox Grid.Row="1" Grid.ColumnSpan="3" FontSize="5" Margin="2" >
-            <ComboBoxItem>Skript 1</ComboBoxItem>
-            <ComboBoxItem IsSelected="True">Skript 2</ComboBoxItem>
-            <ComboBoxItem>Skript 3</ComboBoxItem>
-        </ComboBox>
-
-        <TextBox Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="2" FontSize="5" TextWrapping="Wrap" Text="Text" VerticalAlignment="Top" Height="45" Margin="2" />
-        <Button Grid.Column="2" Grid.Row="2" Content="Speichern" FontSize="5" Margin="1,2,1,1" Background="#FF171515" BorderBrush="#FF171515" Foreground="White" />
-        <Button Grid.Column="2" Grid.Row="3" Content="Auswählen" FontSize="5" Margin="1,1,1,2" Background="#FF171515" BorderBrush="#FF171515" Foreground="White"/> -->
-
-    </Grid>
+    <StackPanel>
+        <StackPanel Orientation="Vertical">
+            <Button Content="Geisterzug" Style="{StaticResource DefaultButtonStyle}" HorizontalAlignment="Left" Margin="0 0 0 10"/>
+            <ComboBox IsEditable="{Binding SelectedGhostLocoScript, Converter={StaticResource IsNullToBooleanConverter}}"
+                      IsReadOnly="{Binding SelectedGhostLocoScript, Converter={StaticResource IsNullToBooleanConverter}}"
+                      Text="Wähle Script" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" ItemsSource="{Binding Scripts.GhostLocoScripts}" HorizontalAlignment="Left" DisplayMemberPath="Description" SelectedValue="{Binding SelectedGhostLocoScript}" Margin="0 0 0 10"/>
+            <Button Content="Script hochladen" Command="{Binding AddGhostLocoScriptFromPlayerCommand}" Style="{StaticResource DefaultButtonStyle}" HorizontalAlignment="Left" Margin="0 0 0 10"/>
+        </StackPanel>
+    </StackPanel>
 </UserControl>

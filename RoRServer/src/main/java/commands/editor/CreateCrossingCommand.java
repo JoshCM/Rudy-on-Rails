@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import commands.base.CommandBase;
 import communication.MessageInformation;
-import models.game.Compass;
-import models.game.Map;
-import models.game.Rail;
-import models.game.Square;
+import models.game.*;
 import models.session.EditorSession;
 import models.session.RoRSession;
 
@@ -34,7 +31,7 @@ public class CreateCrossingCommand extends CommandBase {
 		railSectionPositions.add(Compass.EAST);
 		railSectionPositions.add(Compass.WEST);
 		
-		Rail rail = new Rail(session.getName(), square, railSectionPositions);
+		Rail rail = new Rail(session.getDescription(), square, railSectionPositions);
 		square.setPlaceableOnSquare(rail);
 	}
 }

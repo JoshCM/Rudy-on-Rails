@@ -87,7 +87,7 @@ public class TrainstationTests {
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 		Square square = session.getMap().getSquare(trainstationX + 1, trainstationY);
-		square.setPlaceableOnSquare(new Rail(session.getName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
+		square.setPlaceableOnSquare(new Rail(session.getDescription(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		CreatePlayertrainstationCommand command = new CreatePlayertrainstationCommand(session, messageInformation);
 

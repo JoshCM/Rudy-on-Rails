@@ -57,7 +57,13 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     	this(sessionName, square, railSectionPositions, false, trainstationId, id);
     }
 
-    // TODO: Welche Ressourcen kann eine Schiene haben und wann?
+    public Rail(String sessionName, Square newSquare, List<Compass> railSectionsCompass, boolean b, UUID trainstationId, UUID id, PlaceableOnRail placeableOnRail) {
+    	this(sessionName,newSquare,railSectionsCompass,b,trainstationId,id);
+    	this.placeableOnRail = placeableOnRail;
+    	
+	}
+
+	// TODO: Welche Ressourcen kann eine Schiene haben und wann?
     public void setResource(Resource resource) {
         this.resource = resource;
     }
@@ -84,11 +90,11 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
                 if (s.getPlaceableOnSquare() == null && Math.random() < chanceToSpawn / 100) {
                     if (Math.random() < 0.5) {
                         Gold gold = new Gold(
-                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(), s);
+                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getDescription(), s);
                         s.setPlaceableOnSquare(gold);
                     } else {
                         Coal coal = new Coal(
-                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getName(), s);
+                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getDescription(), s);
                         s.setPlaceableOnSquare(coal);
                     }
                 }
@@ -113,10 +119,10 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
      * @param sessionName
      * @param railSectionPositions
      */
-    private void createRailSectionsForRailSectionPositions(String sessionName, List<Compass> railSectionPositions) {
+    protected void createRailSectionsForRailSectionPositions(String sessionName, List<Compass> railSectionPositions) {
         for (int i = 0; i < railSectionPositions.size(); i += 2) {
             RailSection section = new RailSection(sessionName, this, railSectionPositions.get(i),
-                    railSectionPositions.get(i + 1));
+                    railSectionPositions.get(i + 1), RailSectionStatus.ACTIVE);
             railSectionList.add(section);
         }
     }
@@ -139,6 +145,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 			json.addProperty("railSectionId", section.getId().toString());
 			json.addProperty("node1", section.getNode1().toString());
 			json.addProperty("node2", section.getNode2().toString());
+			json.addProperty("railSectionStatus", section.getRailSectionStatus().toString());
 			railSectionJsons.add(json);
 		}
 		messageInfo.putValue("railSections", railSectionJsons);
@@ -161,6 +168,16 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     public List<RailSection> getRailSectionList() {
         return railSectionList;
     }
+
+    public RailSection getActivDirection() {
+        for (RailSection railSection : railSectionList) {
+            if(railSection.getRailSectionStatus() == RailSectionStatus.ACTIVE){
+                return railSection;
+            }
+        }
+	    return railSectionList.get(0);
+    }
+
 
     public UUID getTrainstationId() {
         return trainstationId;
@@ -244,7 +261,6 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
             this.railSectionList.remove(rs);
         }
     }
-
 
     @Override
     public int hashCode() {
@@ -369,6 +385,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 
     @Override
     public Rail loadFromMap(Square square, RoRSession session) {
+        Rail newRail = null;
 
         Rail rail = (Rail) square.getPlaceableOnSquare();
 
@@ -378,13 +395,19 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
             railSectionPosition.add(section.getNode1());
             railSectionPosition.add(section.getNode2());
         }
-        
+
         boolean createSignals = rail.getSignals() != null;
 
         // Neues Rail erstellen und damit an den Client schicken
-        Rail newRail = new Rail(session.getName(), square, railSectionPosition, createSignals, trainstationId, rail.getId());
+        if (rail.getClassName().contains("Switch")) {
+            newRail = new Switch(session.getDescription(), square, railSectionPosition);
+        } else {
+            newRail = new Rail(session.getDescription(), square, railSectionPosition, createSignals, trainstationId, rail.getId());
+        }
         System.out.println("Neue Rail erstellt: " + newRail.toString());
-        
+
+
+
         // Sonderfall für Krezungen, die Signale haben
         // ToDo: Refactoring, wenn die Modelstruktur umgebaut wurde!
         if(createSignals) {
@@ -399,10 +422,4 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     public Signals getSignals() {
     	return signals;
     }
-
-	@Override
-	public void specificUpdate() {
-		// TODO Auto-generated method stub
-
-	}
 }

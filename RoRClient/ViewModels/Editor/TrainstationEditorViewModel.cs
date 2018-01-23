@@ -56,6 +56,7 @@ namespace RoRClient.ViewModels.Editor
             // in SquareEditorViewModel implementiert
         }
 
+
         public override void RotateLeft()
         {
             MessageInformation messageInformation = new MessageInformation();

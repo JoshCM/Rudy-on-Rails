@@ -19,7 +19,7 @@ public class GamePlayer extends Player{
 	private void notifyCreated() {
     	MessageInformation messageInfo = new MessageInformation("CreatePlayer");
     	messageInfo.putValue("playerId", getId());
-    	messageInfo.putValue("playerName", getName());
+    	messageInfo.putValue("playerName", getDescription());
     	messageInfo.putValue("isHost", getIsHost());
     	messageInfo.putValue("coalCount", getCoalCount());
     	messageInfo.putValue("goldCount", getGoldCount());

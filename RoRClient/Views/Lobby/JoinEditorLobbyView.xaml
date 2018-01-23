@@ -8,15 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
     <UserControl.Resources>
-        <Style x:Key="hcs" TargetType="{x:Type GridViewColumnHeader}">
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="Margin" Value="10 0 5 0 "/>
-            <Setter Property="FontFamily" Value="Source Sans Pro"/>
-            <Setter Property="Foreground" Value="#FF510404"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="White"></Setter>
-            <Setter Property="Height" Value="Auto"></Setter>
-        </Style>
+        <ResourceDictionary Source="../Styles.xaml"/>
     </UserControl.Resources>
     
     <DockPanel>
@@ -38,7 +30,7 @@
                 <Button x:Name="leaveEditorInfosButton" Command="{Binding LeaveJoinEditorLobbyCommand}" Height="55" Width="55" FontSize="25" Background="#FF510404"  VerticalAlignment="Top" Margin="0,0,10,0">
                     <Image Source="/RoRClient;component/Resources/Images/btn_back.png"></Image>
                 </Button>
-                <Button x:Name="editorButton" Command="{Binding CreateEditorSessionCommand}" Content="Erstellen" FontFamily="Source Sans Pro" Height="55" Width="200"  FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" HorizontalContentAlignment="Center" HorizontalAlignment="Left"/>
+                <Button x:Name="editorButton" Command="{Binding CreateEditorSessionCommand}" Content="Erstellen" Style="{StaticResource DefaultButtonStyle}"/>
             </StackPanel>
             <!-- Binding muss noch eingerichtet werden -->
         </StackPanel>
@@ -48,8 +40,8 @@
             <ListView Height="200" Width="442" x:Name="editorSessionListBox" ItemsSource="{Binding LobbyModel.EditorSessionInfos}" SelectedItem="{Binding Path=SelectedEditorSessionInfo, Mode=TwoWay}" Margin="0,0,0,20" HorizontalAlignment="Left" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" ScrollViewer.HorizontalScrollBarVisibility="Hidden">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn HeaderContainerStyle="{StaticResource hcs}" Header="Spielname"  Width="280" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn HeaderContainerStyle="{StaticResource hcs}" Header="Spieleranzahl" Width="1000" DisplayMemberBinding="{Binding AmountOfPlayers}" />
+                        <GridViewColumn HeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}" Header="Spielname"  Width="280" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn HeaderContainerStyle="{StaticResource GridViewColumnHeaderStyle}" Header="Spieleranzahl" Width="1000" DisplayMemberBinding="{Binding AmountOfPlayers}" />
                     </GridView>
                 </ListView.View>
                 <ListView.InputBindings>
@@ -58,8 +50,8 @@
                 </ListView.InputBindings>
             </ListView>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Margin="0,0,0,0" Height="60"  >
-                <Button x:Name="gameButton" Command="{Binding JoinEditorSessionCommand}" Content="Beitreten" FontFamily="Source Sans Pro" Height="55" Width="200" FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" HorizontalAlignment="Left" />
-                <Button x:Name="refreshGamesButton" Command="{Binding RefreshEditorSessionsCommand}" Content="Aktualisieren" FontFamily="Source Sans Pro" Height="55" Width="200" FontSize="25" Background="White" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="3" Margin="20,0,10,0" />
+                <Button x:Name="gameButton" Command="{Binding JoinEditorSessionCommand}" Content="Beitreten" Style="{StaticResource DefaultButtonStyle}" />
+                <Button x:Name="refreshGamesButton" Command="{Binding RefreshEditorSessionsCommand}" Content="Aktualisieren" Style="{StaticResource DefaultButtonStyle}" Margin="20,0,10,0" />
             </StackPanel>
         </StackPanel>
     </DockPanel>

@@ -57,6 +57,11 @@
                                 <ve:MineEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:CraneEditorViewModel}">
+                            <Canvas>
+                                <ve:CraneEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
                     </ItemsControl.Resources>
                 </ItemsControl>
 
@@ -79,6 +84,13 @@
                         <Button Command="{Binding MoveCommand}">
                             <Image 
                                 Source="/RoRClient;component/Resources/Images/move.png"
+                                Height="20" 
+                                Width="20" >
+                            </Image>
+                        </Button>
+                        <Button Command="{Binding ChangeSwitchCommand}">
+                            <Image 
+                                Source="/RoRClient;component/Resources/Images/changeSwitch.png"
                                 Height="20" 
                                 Width="20" >
                             </Image>

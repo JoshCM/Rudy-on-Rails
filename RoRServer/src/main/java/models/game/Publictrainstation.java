@@ -10,7 +10,7 @@ import communication.MessageInformation;
 import models.session.RoRSession;
 
 public class Publictrainstation extends Trainstation {
-
+	
 	public Publictrainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id,
 			Compass alignment, Stock stock) {
 		super(sessionName, square, trainstationRailIds, id, alignment, stock);
@@ -37,14 +37,12 @@ public class Publictrainstation extends Trainstation {
 	
 	@Override
 	public Publictrainstation loadFromMap(Square square, RoRSession session) {
-		Publictrainstation trainStation = (Publictrainstation) square.getPlaceableOnSquare();
-		Publictrainstation newTrainStation = new Publictrainstation(session.getName(), square,
-				trainStation.getTrainstationRailIds(), trainStation.getId(), trainStation.alignment,
-				trainStation.getStock());
-
-		// der sessionName muss neu gesetzt werden, damit der Observer �nderungen dieses
-		// Objekts mitbekommen kann
-		newTrainStation.setName(session.getName());
+		Publictrainstation oldTrainStation = (Publictrainstation) square.getPlaceableOnSquare();
+		Publictrainstation newTrainStation = new Publictrainstation(session.getDescription(), square,
+				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock());
+		
+		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
+		newTrainStation.setSessionName(session.getDescription());
 
 		log.info("PublicTrainStation erstellt: " + newTrainStation.toString());
 		return newTrainStation;

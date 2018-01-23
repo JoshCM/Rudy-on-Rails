@@ -11,7 +11,6 @@ namespace RoRClient.Models.Game
         private List<Rail> trainstationRails;
         private Compass alignment;
         private Stock stock;
-        private Square square;
 
         public Trainstation(Guid id, Square square, List<Rail> trainstationRails, Compass alignment, Stock stock) : base(square)
         {

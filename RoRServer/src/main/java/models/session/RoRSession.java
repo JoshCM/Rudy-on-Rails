@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.UUID;
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
+import exceptions.MapNotFoundException;
 import models.base.ModelBase;
 import models.game.Map;
 import models.game.Player;
+import persistent.MapManager;
 
 /**
  * Oberklasse von EditorSession und GameSession
@@ -94,11 +96,22 @@ public abstract class RoRSession extends ModelBase {
 
 	/**
 	 * Schickt eine Message mit dem neuen MapName, über den Topic der GameSession,
-	 * an alle angemeldeten Clients
+	 * an alle angemeldeten Clients 
 	 */
 	private void notifyChangedMapName() {
-		MessageInformation messageInfo = new MessageInformation("ChangeMapName");
+		MessageInformation messageInfo = new MessageInformation("ChangeMapSelection");
 		messageInfo.putValue("mapName", getMapName());
+		if(this instanceof GameSession) {
+			GameSession gameSession = (GameSession) this;
+			int availablePlayers;
+			try {
+				availablePlayers = MapManager.loadAvailablePlayerSlots(getMapName());
+				gameSession.setAvailablePlayerSlots(availablePlayers);
+				messageInfo.putValue("availablePlayerSlots", gameSession.getAvailablePlayerSlots());
+			} catch (MapNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 		notifyChange(messageInfo);
 	}
 }

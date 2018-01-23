@@ -64,11 +64,11 @@ public class Playertrainstation extends Trainstation {
 	@Override
 	public Playertrainstation loadFromMap(Square square, RoRSession session) {
 		Playertrainstation oldTrainStation = (Playertrainstation) square.getPlaceableOnSquare();
-		Playertrainstation newTrainStation = new Playertrainstation(session.getName(), square,
+		Playertrainstation newTrainStation = new Playertrainstation(session.getDescription(), square,
 				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock());
 		
 		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
-		newTrainStation.setName(session.getName());
+		newTrainStation.setSessionName(session.getDescription());
 		
 		// setze den alten SpawnPoint für die neue Trainstation
 		newTrainStation.setSpawnPointforLoco(oldTrainStation.getSpawnPointforLoco());

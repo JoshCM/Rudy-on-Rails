@@ -361,6 +361,31 @@ namespace RoRClient.ViewModels.Editor
         }
 
         /// <summary>
+        /// Command für Änderung der Weichenrichtung erstellen
+        /// </summary>
+       private ICommand changeSwitchCommand;
+       public ICommand ChangeSwitchCommand
+        {
+            get
+            {
+                if (changeSwitchCommand == null)
+                {
+                    changeSwitchCommand = new ActionCommand(param => ChangeSwitch());
+                }
+                return changeSwitchCommand;
+            }
+        }
+        
+        /// <summary>
+        /// Wechseln der aktiven Schiene einer Weiche
+        /// </summary>
+       private void ChangeSwitch()
+        {
+            RailEditorViewModel railEditorViewModel = (RailEditorViewModel)SelectedEditorCanvasViewModel;
+            railEditorViewModel.ChangeSwitch();
+        }
+
+        /// <summary>
         /// Command für Delete erstellen
         /// </summary>
         private ICommand deleteCommand;

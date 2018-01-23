@@ -12,9 +12,11 @@
             Canvas.Left="{Binding RealX, ElementName=locoGameUserControl}">
     <UserControl.Resources>
         <converter:CompassToAngleConverter x:Key="CompassToAngleConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=locoGameUserControl}"
-            Height="{Binding SquareDim, ElementName=locoGameUserControl}">
+            Height="{Binding SquareDim, ElementName=locoGameUserControl}"
+            Visibility="{Binding BelongsToOwnPlayer, Converter={StaticResource BooleanToVisibilityConverter}}">
         <Image Width="{Binding SquareDim, ElementName=locoGameUserControl}"
                Height="{Binding SquareDim, ElementName=locoGameUserControl}" 
                Source="/RoRClient;component/Resources/Images/ghosttrain.png" Stretch="Fill" RenderTransformOrigin="0.5, 0.5"
