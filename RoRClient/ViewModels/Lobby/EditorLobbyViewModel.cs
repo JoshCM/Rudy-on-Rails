@@ -26,8 +26,14 @@ namespace RoRClient.ViewModels.Lobby
 			this.uiState = uiState;
 			this.lobbyModel = lobbyModel;
 			this.editorSession = EditorSession.GetInstance();
-			uiState.OnUiStateChanged += OnUiStateChanged;
-		}
+
+            editorSession = EditorSession.GetInstance();
+            editorSession.PropertyChanged += OnEditorSessionChanged;
+
+            isHost = EditorSession.GetInstance().OwnPlayer.IsHost;
+            lobbyModel.ReadMapInfos();
+            lobbyModel.ReadEditorInfos();
+        }
 
 		/// <summary>
 		/// Die EditorSession muss hier als Property vorhanden sein, damit der MapName
@@ -150,18 +156,5 @@ namespace RoRClient.ViewModels.Lobby
                 CanStartEditor = IsHost && editorSession.MapName != "";
             }
         }
-
-		private void OnUiStateChanged(object sender, UiChangedEventArgs args)
-		{
-			if (uiState.State == "editorLobby")
-			{
-                editorSession = EditorSession.GetInstance();
-                editorSession.PropertyChanged += OnEditorSessionChanged;
-
-                isHost = EditorSession.GetInstance().OwnPlayer.IsHost;
-                lobbyModel.ReadMapInfos();
-				lobbyModel.ReadEditorInfos();
-            }
-		}
 	}
 }

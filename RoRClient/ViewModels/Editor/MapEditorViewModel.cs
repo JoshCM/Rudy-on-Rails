@@ -26,14 +26,14 @@ namespace RoRClient.ViewModels.Editor
 
         private CanvasEditorViewModel _previousSelectEditorCanvasViewModel;
 
-        public MapEditorViewModel(ToolbarViewModel toolbarViewModel)
+        public MapEditorViewModel(ToolbarViewModel toolbarViewModel, TaskFactory taskFactory)
         {
             this.toolbarViewModel = toolbarViewModel;
-            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             map = EditorSession.GetInstance().Map;
             InitSquares();
             MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
             MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+            this.taskFactory = taskFactory;
         }
 
         public CanvasEditorViewModel PreviousSelectedEditorCanvasViewModel
@@ -132,28 +132,6 @@ namespace RoRClient.ViewModels.Editor
                 squareViewModel.MapViewModel = this;
                 squareViewModels.Add(squareViewModel);
                 square.PropertyChanged += OnSquarePropertyChanged;
-
-                /*
-                if (square.PlaceableOnSquare != null)
-                {
-                    switch (square.PlaceableOnSquare.GetType().Name)
-                    {
-                        case "Rail":
-                            Rail rail = (Rail)square.PlaceableOnSquare;
-                            RailEditorViewModel railViewModel = new RailEditorViewModel(rail);
-                            railViewModel.ToolbarViewModel = toolbarViewModel;
-                            placeableOnSquareCollection.Add(railViewModel);
-                            rail.PropertyChanged += OnRailPropertyChanged;
-                            break;
-                        case "Trainstation":
-                            Trainstation trainstation = (Trainstation)square.PlaceableOnSquare;
-                            TrainstationEditorViewModel trainstationViewModel = new TrainstationEditorViewModel(trainstation);
-                            placeableOnSquareCollection.Add(trainstationViewModel);
-                            trainstation.PropertyChanged += OnTrainstationPropertyChanged;
-                            break;
-                    }
-                }
-                */
             }
         }
 

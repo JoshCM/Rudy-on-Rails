@@ -32,20 +32,12 @@ namespace RoRClient.ViewModels.Game
         }
         #endregion
 
-        public GameViewModel(UIState uiState)
+        public GameViewModel(UIState uiState, TaskFactory taskFactory)
         {
             this.uiState = uiState;
-            mapGameViewModel = new MapGameViewModel();
+            mapGameViewModel = new MapGameViewModel(taskFactory);
             gameInteractionsViewModel = new GameInteractionsViewModel();
-            uiState.OnUiStateChanged += OnUiStateChanged;
-        }
-
-        private void OnUiStateChanged(object sender, UiChangedEventArgs args)
-        {
-            if (uiState.State == "game")
-            {
-                gameStatusViewModel = new GameStatusViewModel();
-            }
+            gameStatusViewModel = new GameStatusViewModel();
         }
     }
 }
