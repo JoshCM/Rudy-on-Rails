@@ -15,6 +15,7 @@ namespace RoRClient.ViewModels.Lobby
 	    private LobbyModel lobbyModel;
 	    private GameSession gameSession;
         private bool canStartGame;
+        private string selectedMapName;
 
 		public GameLobbyViewModel(UIState uiState, LobbyModel lobbyModel)
         {
@@ -72,6 +73,38 @@ namespace RoRClient.ViewModels.Lobby
             {
                 canStartGame = value;
                 OnPropertyChanged("CanStartGame");
+            }
+        }
+
+        public string SelectedMapName
+        {
+            get
+            {
+                return selectedMapName;
+            }
+            set
+            {
+                if(selectedMapName != value)
+                {
+                    selectedMapName = value;
+                    ChangeMapName();
+                    OnPropertyChanged("SelectedMapName");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Wenn der Player der Host der GameSession ist, dann wird die MapName-Änderung
+        /// and den Server geschickt und über den Topic der Session an alle Clients der
+        /// GameSession verteilt
+        /// </summary>
+        private void ChangeMapName()
+        {
+            if (gameSession.OwnPlayer.IsHost)
+            {
+                MessageInformation messageInformation = new MessageInformation();
+                messageInformation.PutValue("mapName", selectedMapName);
+                gameSession.QueueSender.SendMessage("ChangeMapSelection", messageInformation);
             }
         }
 

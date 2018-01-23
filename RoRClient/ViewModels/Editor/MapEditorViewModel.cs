@@ -33,6 +33,8 @@ namespace RoRClient.ViewModels.Editor
             InitSquares();
             MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
             MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+
+            toolbarViewModel.PropertyChanged += OnSelectedToolChanged;
             this.taskFactory = taskFactory;
         }
 
@@ -59,6 +61,10 @@ namespace RoRClient.ViewModels.Editor
             {
                 _selectedEditorCanvasViewModel = value;
                 OnPropertyChanged("SelectedEditorCanvasViewModel");
+                if(_selectedEditorCanvasViewModel == null)
+                {
+                    IsQuickNavigationVisible = false;
+                }
             }
         }
 
@@ -193,7 +199,14 @@ namespace RoRClient.ViewModels.Editor
                     taskFactory.StartNew(() => placeableOnRailCollection.Add(viewModel));
                 }
             }
+        }
 
+        private void OnSelectedToolChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "SelectedTool")
+            {
+                SelectedEditorCanvasViewModel = null;
+            }
         }
 
         private void OnTrainstationPropertyChanged(object sender, PropertyChangedEventArgs e)

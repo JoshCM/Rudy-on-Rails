@@ -32,9 +32,9 @@ namespace RoRClient.ViewModels.Game
         private void LeaveGame()
         {
             MessageInformation messageInformation = new MessageInformation();
-            messageInformation.PutValue("playerId", EditorSession.GetInstance().OwnPlayer.Id);
-            messageInformation.PutValue("isHost", EditorSession.GetInstance().OwnPlayer.IsHost);
-            EditorSession.GetInstance().QueueSender.SendMessage("LeaveGame", messageInformation);
+            messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
+            messageInformation.PutValue("isHost", GameSession.GetInstance().OwnPlayer.IsHost);
+            GameSession.GetInstance().QueueSender.SendMessage("LeaveGame", messageInformation);
         }
     }
 }
