@@ -145,11 +145,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 			json.addProperty("railSectionId", section.getId().toString());
 			json.addProperty("node1", section.getNode1().toString());
 			json.addProperty("node2", section.getNode2().toString());
-			if (section.getRailSectionStatus().toString() == null){
-                json.addProperty("railSectionStatus", RailSectionStatus.ACTIVE.toString());
-            } else {
-                json.addProperty("railSectionStatus", section.getRailSectionStatus().toString());
-            }
+			json.addProperty("railSectionStatus", section.getRailSectionStatus().toString());
 			railSectionJsons.add(json);
 		}
 		messageInfo.putValue("railSections", railSectionJsons);
@@ -172,6 +168,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     public List<RailSection> getRailSectionList() {
         return railSectionList;
     }
+
     public RailSection getActivDirection() {
         for (RailSection railSection : railSectionList) {
             if(railSection.getRailSectionStatus() == RailSectionStatus.ACTIVE){
@@ -388,6 +385,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 
     @Override
     public Rail loadFromMap(Square square, RoRSession session) {
+        Rail newRail = null;
 
         Rail rail = (Rail) square.getPlaceableOnSquare();
 
@@ -397,13 +395,19 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
             railSectionPosition.add(section.getNode1());
             railSectionPosition.add(section.getNode2());
         }
-        
+
         boolean createSignals = rail.getSignals() != null;
 
         // Neues Rail erstellen und damit an den Client schicken
-        Rail newRail = new Rail(session.getDescription(), square, railSectionPosition, createSignals, trainstationId, rail.getId());
+        if (rail.getClassName().contains("Switch")) {
+            newRail = new Switch(session.getDescription(), square, railSectionPosition);
+        } else {
+            newRail = new Rail(session.getDescription(), square, railSectionPosition, createSignals, trainstationId, rail.getId());
+        }
         System.out.println("Neue Rail erstellt: " + newRail.toString());
-        
+
+
+
         // Sonderfall für Krezungen, die Signale haben
         // ToDo: Refactoring, wenn die Modelstruktur umgebaut wurde!
         if(createSignals) {
