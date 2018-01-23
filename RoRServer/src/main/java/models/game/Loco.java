@@ -19,7 +19,7 @@ public class Loco extends TickableGameObject {
 	private long speed;
 	private Compass drivingDirection;
 	private boolean reversed = false;
-	private Map map;
+	protected Map map;
 
 	/**
 	 * Konstruktor einer Lok
