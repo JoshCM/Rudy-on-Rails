@@ -11,8 +11,8 @@ import models.session.GameSessionManager;
  */
 public class GhostLoco extends Loco {
 	ScriptableObject scriptableObject;
-	private boolean picksUpGoldContainerNextToRails = true;
-	private boolean picksUpCoalContainerNextToRails = true;
+	private boolean picksUpGoldContainerNextToRails = false;
+	private boolean picksUpCoalContainerNextToRails = false;
 
 	public GhostLoco(String sessionName, Square square, UUID playerId, Compass drivingDirection) {
 		super(sessionName, square, playerId, drivingDirection);
@@ -95,5 +95,21 @@ public class GhostLoco extends Loco {
 		cart.loadResourceOntoCart(resource);
 		Square square = map.getSquareById(resource.getSquareId());
 		square.deletePlaceable();
+	}
+
+	public boolean isPicksUpGoldContainerNextToRails() {
+		return picksUpGoldContainerNextToRails;
+	}
+
+	public void setPicksUpGoldContainerNextToRails(boolean picksUpGoldContainerNextToRails) {
+		this.picksUpGoldContainerNextToRails = picksUpGoldContainerNextToRails;
+	}
+
+	public boolean isPicksUpCoalContainerNextToRails() {
+		return picksUpCoalContainerNextToRails;
+	}
+
+	public void setPicksUpCoalContainerNextToRails(boolean picksUpCoalContainerNextToRails) {
+		this.picksUpCoalContainerNextToRails = picksUpCoalContainerNextToRails;
 	}
 }

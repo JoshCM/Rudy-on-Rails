@@ -12,15 +12,15 @@ import models.session.GameSessionManager;
  * dann Zugriff auf alle public-Methoden dieser Klasse
  */
 public class GhostLocoProxy implements ProxyObject {
-	private Loco loco;
+	private GhostLoco ghostLoco;
 	private GameSession gameSession;
 	private Map map;
 
 	private int VISIBLE_SQUARE_AMOUNT_SIDEWAYS = 2;
 	private int VISIBLE_SQUARE_AMOUNT_FORWARD = 5;
 
-	public GhostLocoProxy(Loco loco) {
-		this.loco = loco;
+	public GhostLocoProxy(GhostLoco ghostLoco) {
+		this.ghostLoco = ghostLoco;
 		this.gameSession = GameSessionManager.getInstance().getGameSession();
 		this.map = gameSession.getMap();
 	};
@@ -33,7 +33,7 @@ public class GhostLocoProxy implements ProxyObject {
 	 */
 	public void changeSpeed(int speed) {
 		if (speed >= -1 && speed <= 5) {
-			loco.changeSpeed(speed);
+			ghostLoco.changeSpeed(speed);
 		}
 	}
 
@@ -70,10 +70,10 @@ public class GhostLocoProxy implements ProxyObject {
 		List<String> result = new ArrayList<String>();
 
 		if (isSquareVisibleForProxy(sideways, forward)) {
-			int squarePosX = CompassHelper.getRealXForDirection(loco.getDrivingDirection(), loco.getXPos(),
-					loco.getYPos(), sideways, forward);
-			int squarePosY = CompassHelper.getRealYForDirection(loco.getDrivingDirection(), loco.getXPos(),
-					loco.getYPos(), sideways, forward);
+			int squarePosX = CompassHelper.getRealXForDirection(ghostLoco.getDrivingDirection(), ghostLoco.getXPos(),
+					ghostLoco.getYPos(), sideways, forward);
+			int squarePosY = CompassHelper.getRealYForDirection(ghostLoco.getDrivingDirection(), ghostLoco.getXPos(),
+					ghostLoco.getYPos(), sideways, forward);
 
 			if (squarePosX <= map.getMapSize() && squarePosY <= map.getMapSize()) {
 				result = collectObjectsFromSquareAsStrings(squarePosX, squarePosY);
@@ -115,7 +115,7 @@ public class GhostLocoProxy implements ProxyObject {
 		// unterwegs ist
 		if (rail.getSignals() != null) {
 			boolean activeSignal = rail.getSignals()
-					.isSignalActive(loco.getDirectionNegation(loco.getDrivingDirection()));
+					.isSignalActive(ghostLoco.getDirectionNegation(ghostLoco.getDrivingDirection()));
 			if (activeSignal) {
 				result.add("ActiveSignal");
 			} else {
@@ -144,6 +144,22 @@ public class GhostLocoProxy implements ProxyObject {
 	}
 
 	public long getSpeed() {
-		return loco.getSpeed();
+		return ghostLoco.getSpeed();
+	}
+	
+	public boolean isPicksUpGoldContainerNextToRails() {
+		return ghostLoco.isPicksUpGoldContainerNextToRails();
+	}
+	
+	public void setPicksUpGoldContainerNextToRails(boolean picksUpGoldContainerNextToRails) {
+		ghostLoco.setPicksUpGoldContainerNextToRails(picksUpGoldContainerNextToRails);
+	}
+	
+	public boolean isPicksUpCoalContainerNextToRails() {
+		return ghostLoco.isPicksUpCoalContainerNextToRails();
+	}
+	
+	public void setPicksUpCoalContainerNextToRails(boolean picksUpCoalContainerNextToRails) {
+		ghostLoco.setPicksUpGoldContainerNextToRails(picksUpCoalContainerNextToRails);
 	}
 }

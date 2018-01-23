@@ -1,20 +1,16 @@
+def init(proxy):
+	proxy.setPicksUpCoalContainerNextToRails(True)
+	proxy.setPicksUpGoldContainerNextToRails(False)
+	proxy.changeSpeed(2)
+
+
 def update(proxy):
-	#squareList = proxy.getObjectsOnVisibleSquares()
-
-	#for objList in squareList:
-	#	for value in objList:
-	#		print(value)
-
 	objectsOnSquare = proxy.getObjectsOnSquare(0, 1);
-
-	#for value in objectsOnSquare:
-		#print(value)
 
 	# Halte, wenn die Strecke zuende ist
 	if "Rail" not in objectsOnSquare:
 		proxy.changeSpeed(0)
 	else:
-		proxy.changeSpeed(2)
 		# Halte, wenn ein Signal eingeschaltet ist
 		if "InactiveSignal" in objectsOnSquare:
 			proxy.changeSpeed(0)
