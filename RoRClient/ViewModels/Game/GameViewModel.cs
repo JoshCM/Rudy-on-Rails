@@ -36,7 +36,7 @@ namespace RoRClient.ViewModels.Game
         {
             this.uiState = uiState;
             mapGameViewModel = new MapGameViewModel(taskFactory);
-            gameInteractionsViewModel = new GameInteractionsViewModel();
+            gameInteractionsViewModel = new GameInteractionsViewModel(taskFactory);
             gameStatusViewModel = new GameStatusViewModel();
         }
     }
