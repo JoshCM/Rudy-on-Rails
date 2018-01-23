@@ -13,6 +13,7 @@ namespace RoRClient.ViewModels.Game
         private MapGameViewModel mapGameViewModel;
         private GameStatusViewModel gameStatusViewModel;
         private GameInteractionsViewModel gameInteractionsViewModel;
+        private TopMenuViewModel topMenuViewModel;
 
         #region Properties
         public MapGameViewModel MapGameViewModel
@@ -30,6 +31,13 @@ namespace RoRClient.ViewModels.Game
                 return gameInteractionsViewModel;
             }
         }
+        public TopMenuViewModel TopMenuViewModel
+        {
+            get
+            {
+                return topMenuViewModel;
+            }
+        }
         #endregion
 
         public GameViewModel(UIState uiState, TaskFactory taskFactory)
@@ -38,6 +46,7 @@ namespace RoRClient.ViewModels.Game
             mapGameViewModel = new MapGameViewModel(taskFactory);
             gameInteractionsViewModel = new GameInteractionsViewModel();
             gameStatusViewModel = new GameStatusViewModel();
+            topMenuViewModel = new TopMenuViewModel();
         }
     }
 }
