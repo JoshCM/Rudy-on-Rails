@@ -24,9 +24,9 @@ namespace RoRClient.ViewModels.Game
         private CanvasGameViewModel gameCanvasViewModel;
         private TaskFactory taskFactory;
 
-        public MapGameViewModel()
+        public MapGameViewModel(TaskFactory taskFactory)
         {
-            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            this.taskFactory = taskFactory;
             map = GameSession.GetInstance().Map;
             InitSquares();
 

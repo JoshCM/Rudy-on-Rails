@@ -135,7 +135,6 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 					if (cart.getXPos() == this.getXPos() && cart.getYPos() == this.getYPos()
 							&& cart.getResource() == null && resources.size() != 0) {
 
-						System.out.println("cart ist in mine");
 						cart.loadResourceOntoCart(resources.get(0));
 
 						removeResource();
@@ -149,8 +148,6 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 			if (resources.size() < maxNumberOfResource) {
 				res = minedResource();
 				resources.add(res);
-				// log.info("res=" + res.getName()+i);
-				System.out.println("res=" + res.getSessionName() + i);
 				i += 1;
 			}
 		}

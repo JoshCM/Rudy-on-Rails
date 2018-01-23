@@ -242,6 +242,8 @@
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
     <Compile Include="ViewModels\Game\MineGameViewModel.cs" />
     <Compile Include="ViewModels\Game\PublictrainstationGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\ScriptsViewModel.cs" />
+    <Compile Include="ViewModels\Game\TopMenuViewModel.cs" />
     <Compile Include="ViewModels\Game\TrainstationGameViewModel.cs" />
     <Compile Include="ViewModels\Game\SpeedSliderViewModel.cs" />
     <Compile Include="ViewModels\Game\SquareGameViewModel.cs" />
@@ -357,6 +359,9 @@
     <Compile Include="Views\Game\StockGameUserControl.xaml.cs">
       <DependentUpon>StockGameUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\TopMenuUserControl.xaml.cs">
+      <DependentUpon>TopMenuUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\TrainSpeedGameUserControl.xaml.cs">
       <DependentUpon>TrainSpeedGameUserControl.xaml</DependentUpon>
     </Compile>
@@ -465,6 +470,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Game\StockGameUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\TopMenuUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

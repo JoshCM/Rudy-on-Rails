@@ -22,7 +22,7 @@
             <Button Content="Geisterzug" Style="{StaticResource DefaultButtonStyle}" HorizontalAlignment="Left" Margin="0 0 0 10"/>
             <ComboBox IsEditable="{Binding SelectedGhostLocoScript, Converter={StaticResource IsNullToBooleanConverter}}"
                       IsReadOnly="{Binding SelectedGhostLocoScript, Converter={StaticResource IsNullToBooleanConverter}}"
-                      Text="Wähle Script" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" ItemsSource="{Binding Scripts.GhostLocoScripts}" HorizontalAlignment="Left" DisplayMemberPath="Description" SelectedValue="{Binding SelectedGhostLocoScript}" Margin="0 0 0 10"/>
+                      Text="Wähle Script" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" ItemsSource="{Binding ScriptsViewModel.GhostLocoScripts}" HorizontalAlignment="Left" DisplayMemberPath="Description" SelectedValue="{Binding SelectedGhostLocoScript}" Margin="0 0 0 10"/>
             <Button Content="Script hochladen" Command="{Binding AddGhostLocoScriptFromPlayerCommand}" Style="{StaticResource DefaultButtonStyle}" HorizontalAlignment="Left" Margin="0 0 0 10"/>
         </StackPanel>
     </StackPanel>
