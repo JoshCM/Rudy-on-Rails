@@ -44,7 +44,7 @@ public class CreateCartCommand implements Command{
 		
 		if(validateBuyCart(currentPlayer, loco, cartSpawnPointRail)) {
 			// abziehen des Goldes des Players
-			currentPlayer.removeGold(3);
+			currentPlayer.removeGold(Integer.valueOf(PropertyManager.getProperty("cart_costs")));
 			
 			// erstellen des Carts und setzzen auf das richtige Rail
 			Cart cart = new Cart(session.sessionName, cartSpawnPointSquare, compass, playerId, false, null);
