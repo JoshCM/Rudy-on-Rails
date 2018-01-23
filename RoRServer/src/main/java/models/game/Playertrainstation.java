@@ -125,7 +125,7 @@ public class Playertrainstation extends Trainstation {
 
 	@Override
 	public String toString() {
-		return "Trainstation [trainstationRailIds=" + trainstationRailIds + ", alignment=" + alignment
+		return "PlayerTrainstation [trainstationRailIds=" + trainstationRailIds + ", alignment=" + alignment
 				+ ", spawnPointForLoco=" + spawnPointForLoco + "]";
 	}
 }

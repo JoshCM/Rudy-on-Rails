@@ -158,7 +158,6 @@
     <Compile Include="Commands\Game\Update\UpdateResourceLoadedOntoCartCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayertrainstationCommand.cs" />
-    <Compile Include="Commands\Game\Create\CreateTrainstationCommand.cs" />
     <Compile Include="Commands\Game\Other\ChangeMapSelectionCommand.cs" />
     <Compile Include="Commands\Game\Other\LeaveGameCommand.cs" />
     <Compile Include="Commands\Game\Other\StartCommand.cs" />
@@ -195,6 +194,8 @@
     <Compile Include="Models\Game\Mine.cs" />
     <Compile Include="Models\Game\Player.cs" />
     <Compile Include="Models\Game\PlayerLoco.cs" />
+    <Compile Include="Models\Game\Publictrainstation.cs" />
+    <Compile Include="Models\Game\RailSectionStatus.cs" />
     <Compile Include="Models\Game\Resource.cs" />
     <Compile Include="Models\Game\Script.cs" />
     <Compile Include="Models\Game\Scripts.cs" />
@@ -625,7 +626,6 @@
     <Resource Include="Resources\Images\stock_cart_1.png" />
     <Resource Include="Resources\Images\Tools\trainstations\trainstation1.png" />
     <Resource Include="Resources\Images\stock_container_1.png" />
-    <Resource Include="Resources\Images\Tools\publictrainstation1.png" />
     <Resource Include="Resources\Images\container_points.png" />
     <Resource Include="Resources\Images\btn_back.png" />
     <Resource Include="Resources\Images\crane.png" />
@@ -666,6 +666,8 @@
     <Resource Include="Resources\Images\Tools\switch\switch_se_sn.png" />
     <Resource Include="Resources\Images\Tools\switch\switch_se_sw.png" />
     <Resource Include="Resources\Images\Tools\switch\switch_sn_sw.png" />
+    <Resource Include="Resources\Images\Tools\trainstations\publictrainstation.png" />
+    <Resource Include="Resources\Images\stock_container_public_ts.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

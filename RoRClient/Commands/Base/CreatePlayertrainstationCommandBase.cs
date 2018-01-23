@@ -23,7 +23,7 @@ namespace RoRClient.Commands.Base
         List<Rail> trainstationRails = new List<Rail>();
 
         /// <summary>
-        /// Setzt die PlayrTrainstation und ihre zugehörigen Rails
+        /// Setzt die PlayerTrainstation und ihre zugehörigen Rails
         /// </summary>
         /// <param name="session"></param>
         /// <param name="messageInformation"></param>
@@ -50,7 +50,7 @@ namespace RoRClient.Commands.Base
         {
             Square square = session.Map.GetSquare(xPos, yPos);
             Stock stock = (Stock)session.Map.GetPlaceableById(stockId);
-            Trainstation trainstation = new Playertrainstation(trainstationId, square, trainstationRails, alignment, stock);
+            Playertrainstation trainstation = new Playertrainstation(trainstationId, square, trainstationRails, alignment, stock);
             square.PlaceableOnSquare = (Playertrainstation)trainstation;
         }
 

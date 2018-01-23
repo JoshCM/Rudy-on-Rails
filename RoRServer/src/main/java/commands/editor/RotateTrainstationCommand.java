@@ -25,7 +25,7 @@ public class RotateTrainstationCommand extends CommandBase{
 		if(trainstation.validateRotation(right))
 			trainstation.rotate(right);
 		else
-			throw new NotRotateableException(String.format("Playertrainstation kann nicht rotiert werden(Clockwise:%s)", right));
+			throw new NotRotateableException(String.format("Trainstation kann nicht rotiert werden(Clockwise:%s)", right));
 	}
 
 }

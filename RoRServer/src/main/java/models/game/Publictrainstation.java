@@ -47,4 +47,9 @@ public class Publictrainstation extends Trainstation {
 		log.info("PublicTrainStation erstellt: " + newTrainStation.toString());
 		return newTrainStation;
 	}
+	
+	@Override
+	public String toString() {
+		return "PublicTrainstation [trainstationRailIds=" + trainstationRailIds + ", alignment=" + alignment + "]";
+	}
 }
