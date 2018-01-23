@@ -435,7 +435,7 @@ namespace RoRClient.ViewModels.Editor
         /// </summary>
         private void Move()
         {
-	        SelectedEditorCanvasViewModel?.Move();
+	        SelectedEditorCanvasViewModel.Move();
 
 	        // Quicknavigation nach dem Verschieben nicht mehr anzeigen
             IsQuickNavigationVisible = false;

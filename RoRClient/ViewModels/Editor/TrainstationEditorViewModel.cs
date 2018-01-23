@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
-using RoRClient.Communication.DataTransferObject;
+﻿using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Game;
 using RoRClient.Models.Session;
+using RoRClient.ViewModels.Editor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +10,9 @@ using System.Threading.Tasks;
 
 namespace RoRClient.ViewModels.Editor
 {
-    /// <summary>
-    /// Hält die zugehörige Trainstation und die Position (SquarePosX, SquarePosY) der Trainstation
-    /// </summary>
-    public class TrainstationEditorViewModel : CanvasEditorViewModel
+    public abstract class TrainstationEditorViewModel : CanvasEditorViewModel
     {
-        private Trainstation trainstation; 
+        private Trainstation trainstation;
 
         public TrainstationEditorViewModel(Trainstation trainstation) : base(trainstation.Id)
         {
@@ -23,7 +20,7 @@ namespace RoRClient.ViewModels.Editor
             this.SquarePosX = trainstation.Square.PosX;
             this.SquarePosY = trainstation.Square.PosY;
         }
-
+        
         public Trainstation Trainstation
         {
             get
@@ -37,10 +34,10 @@ namespace RoRClient.ViewModels.Editor
             RoRSession editorSession = EditorSession.GetInstance();
             MessageInformation messageInformation = new MessageInformation();
 
-			// Id der Trainstation
-			messageInformation.PutValue("trainstationId", trainstation.Id);
+            // Id der Trainstation
+            messageInformation.PutValue("trainstationId", trainstation.Id);
 
-			List<Guid> railGuids = new List<Guid>();
+            List<Guid> railGuids = new List<Guid>();
             // Iteriert über alle TrainstationRails
             foreach (Rail trainstationRail in trainstation.TrainstationRails)
             {
@@ -50,23 +47,23 @@ namespace RoRClient.ViewModels.Editor
             messageInformation.PutValue("stockId", trainstation.Stock.Id);
             editorSession.QueueSender.SendMessage("DeleteTrainstation", messageInformation);
 
-			// setze das Selektierte Objekt auf null
-			MapViewModel.SelectedEditorCanvasViewModel = null;
-		}
+            // setze das Selektierte Objekt auf null
+            MapViewModel.SelectedEditorCanvasViewModel = null;
+        }
 
         public override void Move()
         {
-			
-		}
+            // in SquareEditorViewModel implementiert
+        }
 
 
         public override void RotateLeft()
         {
-			MessageInformation messageInformation = new MessageInformation();
-			messageInformation.PutValue("id", trainstation.Id);
-			messageInformation.PutValue("right", false);
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("id", trainstation.Id);
+            messageInformation.PutValue("right", false);
             EditorSession.GetInstance().QueueSender.SendMessage("RotateTrainstation", messageInformation);
-		}
+        }
 
         public override void RotateRight()
         {
