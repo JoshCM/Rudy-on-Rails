@@ -83,6 +83,13 @@
                                 Width="20" >
                             </Image>
                         </Button>
+                        <Button Command="{Binding ChangeSwitchCommand}">
+                            <Image 
+                                Source="/RoRClient;component/Resources/Images/changeSwitch.png"
+                                Height="20" 
+                                Width="20" >
+                            </Image>
+                        </Button>
                         <Button Command="{Binding DeleteCommand}">
                             <Image 
                                 Source="/RoRClient;component/Resources/Images/delete.png"

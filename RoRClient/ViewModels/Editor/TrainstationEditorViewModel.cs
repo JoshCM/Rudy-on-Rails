@@ -59,6 +59,7 @@ namespace RoRClient.ViewModels.Editor
 			
 		}
 
+
         public override void RotateLeft()
         {
 			MessageInformation messageInformation = new MessageInformation();

@@ -11,6 +11,7 @@ namespace RoRClient.Models.Game
     {
         private Compass node1;
         private Compass node2;
+        private RailSectionStatus status;
 
         public Compass Node1
         {
@@ -27,11 +28,29 @@ namespace RoRClient.Models.Game
             }
         }
 
-        public RailSection (Guid id, Compass node1, Compass node2) : base()
+        public RailSectionStatus Status
+        {
+            get
+            {
+                return status;
+            }
+        }
+
+        public RailSection(Guid id, Compass node1, Compass node2, RailSectionStatus status) : base()
         {
             this.id = id;
             this.node1 = node1;
             this.node2 = node2;
+            this.status = status;
+
+        }
+
+        public RailSection(Guid id, Compass node1, Compass node2) : base()
+        {
+            this.id = id;
+            this.node1 = node1;
+            this.node2 = node2;
+
         }
 
         /// <summary>
@@ -44,6 +63,21 @@ namespace RoRClient.Models.Game
             positionList.Add(node1);
             positionList.Add(node2);
             return positionList;
+        }
+
+
+        /// <summary>
+        /// Gibt alle Knoten als eine alphabetisch sortierte Liste zurück
+        /// </summary>
+        /// <returns></returns>
+        public List<String> GetNodesAsSortedStringList()
+        {
+            List<String> directions = new List<String>();
+            directions.Add(node1.ToString());
+            directions.Add(node2.ToString());
+            Console.WriteLine("Nodes sorted:", node1.ToString(), node2.ToString());
+            directions.Sort();
+            return directions;
         }
     }
 }
