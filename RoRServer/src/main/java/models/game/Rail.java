@@ -86,6 +86,8 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     	GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(sessionName);
     	Square square = gameSession.getMap().getSquareById(getSquareId());
     	sensor = new Sensor(getSessionName(), square , getId());
+    	// Die Locos kennen den Sensor und sagen diesem Bescheid, wenn darüber gefahren wird
+    	Loco.addSensor(sensor);
     }
    
 

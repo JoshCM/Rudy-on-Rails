@@ -25,7 +25,7 @@ namespace RoRClient.Commands.Game.Other
         {
             Rail rail = (Rail)session.Map.GetPlaceableById(railId);
             Sensor sensor = rail.Sensor;
-            sensor.Active = true;
+            sensor.Active = active;
         }
     }
 }

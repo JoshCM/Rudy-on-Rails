@@ -1,6 +1,8 @@
 package models.game;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 import communication.MessageInformation;
@@ -20,6 +22,7 @@ public abstract class Loco extends InteractiveGameObject {
 	private Compass drivingDirection;
 	private boolean reversed = false;
 	private Map map;
+	private static List<Sensor> sensors; // Jede Loco kennt alle Sensoren
 
 	/**
 	 * Konstruktor einer Lok
@@ -35,6 +38,27 @@ public abstract class Loco extends InteractiveGameObject {
 		this.drivingDirection = drivingDirection;
 		this.speed = 0;
 		this.playerId = playerId;
+		Loco.sensors = new ArrayList<Sensor>();
+	}
+	
+	public static void addSensor(Sensor sensor) {
+		sensors.add(sensor);
+	}
+	
+	public void notifySensors() {
+		
+		// Es müssen Sensoren vorhanden sein
+		if (!sensors.isEmpty()) {
+			Iterator<Sensor> iter = sensors.iterator();
+			while(iter.hasNext()) {
+				Sensor sensor = iter.next();
+				// Wenn der Zug sich auf der Position des Sensors befindet
+				if (sensor.checkPosition(getXPos(), getYPos())) {
+					sensor.runScriptOnTrainArrived(this);
+				}
+			}
+		}
+		
 	}
 
 	/**
@@ -81,7 +105,10 @@ public abstract class Loco extends InteractiveGameObject {
 			this.drivingDirection = nextRail.getExitDirection(getDirectionNegation(this.drivingDirection));
 			this.rail = nextRail;
 			this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-			NotifyLocoPositionChanged();
+			notifyLocoPositionChanged();
+			
+			// Die Sensoren erfahren es auch
+			notifySensors();
 		}
 		else {
 			this.speed = 0;
@@ -147,7 +174,7 @@ public abstract class Loco extends InteractiveGameObject {
 			this.rail = getNextRail(tempDirection, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 			this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(tempDirection));
 			this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-			NotifyLocoPositionChanged();
+			notifyLocoPositionChanged();
 		}
 	}
 	
@@ -260,7 +287,7 @@ public abstract class Loco extends InteractiveGameObject {
 	/**
 	 * notifiziert wenn die Position der Lok veraendert wurde
 	 */
-	private void NotifyLocoPositionChanged() {
+	private void notifyLocoPositionChanged() {
 		MessageInformation messageInfo = new MessageInformation("UpdateLocoPosition");
 		messageInfo.putValue("locoId", getId());
 		messageInfo.putValue("xPos", getXPos());

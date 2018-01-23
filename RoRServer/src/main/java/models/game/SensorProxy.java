@@ -8,6 +8,7 @@ public class SensorProxy implements ProxyObject {
 
 	private Sensor sensor;
 	private Square square;
+	private Loco loco;
 	
 	public SensorProxy (Sensor sensor, Square square) {
 		this.sensor = sensor;
@@ -19,20 +20,20 @@ public class SensorProxy implements ProxyObject {
 		System.out.println("Funny");
 	}
 	
-	public void stopTrain() {
-		
+	public void setLoco(Loco loco) {
+		this.loco = loco;
+	}
+	
+	public void stop() {
+		loco.changeSpeed(0);
 	}
 	
 	public void destroyTrain() {
 		List<Loco> locos = GameSessionManager.getInstance().getGameSession().getLocos();
-		for (Loco loco : locos) {
-			int xpos = loco.getXPos();
-			int ypos = loco.getYPos();
-			if (xpos == square.getXIndex() && ypos == square.getYIndex()) {
-				System.out.println("Tschüss " + loco.toString());
-				locos.remove(loco);
-			}
-		}
+		locos.remove(loco);
 	}
 	
+	public void info() {
+		System.out.println("Zug angekommen: " + loco.toString());
+	}
 }

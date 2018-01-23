@@ -48,7 +48,14 @@ namespace RoRClient.ViewModels.Game
 
         private void ActivateMenuForScript()
         {
+            // Bei Klick auf vorhandenen Sensor, kann ein Script dafür ausgewählt werden
             MapViewModel.GameInteractionsViewModel.CanConfigureSensor = true;
+
+            // Das Rail darunter wird als aktives CanvasViewModel gesetzt
+            MapViewModel.SelectedGameCanvasViewModel = this;
+
+            // Es soll kein weiterer Sensor mehr platziert werden können
+            MapViewModel.GameInteractionsViewModel.CanPlaceSensor = false;
         }
     }
 }
