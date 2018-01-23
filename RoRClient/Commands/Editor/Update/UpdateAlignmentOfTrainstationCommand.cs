@@ -10,6 +10,9 @@ using RoRClient.Models.Game;
 
 namespace RoRClient.Commands.Editor.Update
 {
+    /// <summary>
+    /// Nach Rotation einer Trainstation wird deren Ausrichtung angepasst
+    /// </summary>
     class UpdateAlignmentOfTrainstationCommand : CommandBase
     {
         private Guid trainstationId;
