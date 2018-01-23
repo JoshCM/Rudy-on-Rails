@@ -119,7 +119,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
      * @param sessionName
      * @param railSectionPositions
      */
-    private void createRailSectionsForRailSectionPositions(String sessionName, List<Compass> railSectionPositions) {
+    protected void createRailSectionsForRailSectionPositions(String sessionName, List<Compass> railSectionPositions) {
         for (int i = 0; i < railSectionPositions.size(); i += 2) {
             RailSection section = new RailSection(sessionName, this, railSectionPositions.get(i),
                     railSectionPositions.get(i + 1), RailSectionStatus.ACTIVE);

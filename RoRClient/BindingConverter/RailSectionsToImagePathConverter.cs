@@ -29,7 +29,7 @@ namespace RoRClient.BindingConverter
 
                 List<String> directionsLis = railSection1.GetNodesAsSortedStringList();
 
-                if (param.Contains("1"))
+                if (param.Contains("inactive"))
                 {
 
                     if (railSections.Count == 2)
@@ -45,11 +45,11 @@ namespace RoRClient.BindingConverter
                     }
 
                 }
-                else if (param.Contains("2"))
+                else if (param.Contains("active"))
                 {
                     if (northSouth && eastWest)
                     {
-                        return IMAGE_FOLDER_PATH + "crossing.png";
+                        return IMAGE_FOLDER_PATH + "rail_crossing.png";
                     }
 
                     foreach (RailSection railSection in railSections)

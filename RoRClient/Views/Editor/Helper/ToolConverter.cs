@@ -54,8 +54,9 @@ namespace RoRClient.Views.Editor.Helper
         }
 
         /// <summary>
-        /// Erzeugt aus einem definierten Namen zwei Railsection mit jeweils zwei RailSectionPositions.  
-        /// Node1 ist jeweils mit node2 und node3 verknüpft und bildet so die Weiche
+        /// Erzeugt aus einem definierten Namen zwei Railsections mit jeweils zwei RailSectionPositions.  
+        /// Der sich wiederholende Node( node1, node3) bildet den Knotenpunkt beider Railsections und somit die Weiche.
+        /// Node1 und Node2 bilden die aktive Railsection der Weiche.
         /// </summary>
         /// <param name="toolName">Name des selectedTool</param>
         /// <returns>Railsection</returns>
@@ -64,6 +65,8 @@ namespace RoRClient.Views.Editor.Helper
             Compass node1;
             Compass node2;
             Compass node3;
+            Compass node4;
+
             List <RailSection> railSections = new List<RailSection>();
 
             switch (toolName)
@@ -71,27 +74,31 @@ namespace RoRClient.Views.Editor.Helper
                 case "switch_se_sn":
                     node1 = Compass.SOUTH;
                     node2 = Compass.NORTH;
-                    node3 = Compass.EAST;
+                    node3 = Compass.SOUTH;
+                    node4 = Compass.EAST;
                     break;
                 case "switch_sn_sw":
                     node1 = Compass.SOUTH;
                     node2 = Compass.NORTH;
-                    node3 = Compass.WEST;
+                    node3 = Compass.SOUTH;
+                    node4 = Compass.WEST;
                     break;
                 case "switch_se_sw":
                     node1 = Compass.SOUTH;
-                    node2 = Compass.EAST;
-                    node3 = Compass.WEST;
+                    node2 = Compass.WEST;
+                    node3 = Compass.SOUTH;
+                    node4 = Compass.EAST;
                     break;
                 default:
                     node1 = new Compass();
                     node2 = new Compass();
                     node3 = new Compass();
+                    node4 = new Compass();
                     break;
             }
 
             railSections.Add(new RailSection(Guid.NewGuid(), node1, node2));
-            railSections.Add(new RailSection(Guid.NewGuid(), node1, node3));
+            railSections.Add(new RailSection(Guid.NewGuid(), node3, node4));
 
             return railSections;
         }

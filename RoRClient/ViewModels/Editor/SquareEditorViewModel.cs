@@ -156,7 +156,9 @@ namespace RoRClient.ViewModels.Editor
             JObject railSectionObject = new JObject();
             railSectionObject.Add("node1", railSectionList[0].Node1.ToString());
             railSectionObject.Add("node2", railSectionList[0].Node2.ToString());
-            railSectionObject.Add("node3", railSectionList[1].Node2.ToString());
+            railSectionObject.Add("node3", railSectionList[1].Node1.ToString());
+            railSectionObject.Add("node4", railSectionList[1].Node2.ToString());
+
             railSections.Add(railSectionObject);
 
             messageInformation.PutValue("railSections", railSections);

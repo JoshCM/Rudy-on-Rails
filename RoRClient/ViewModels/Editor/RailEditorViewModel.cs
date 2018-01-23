@@ -85,9 +85,6 @@ namespace RoRClient.ViewModels.Editor
             EditorSession.GetInstance().QueueSender.SendMessage("RotateRail", messageInformation);
         }
 
-        /// <summary>
-        ///  Move-Methode für alle PlaceableOnRail
-        /// </summary>
         public void ChangeSwitch()
         {
             MessageInformation messageInformation = new MessageInformation();

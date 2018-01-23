@@ -33,10 +33,11 @@ public class CreateSwitchCommand extends CommandBase {
             Compass node1 = Compass.valueOf(json.get("node1").getAsString());
             Compass node2 = Compass.valueOf(json.get("node2").getAsString());
             Compass node3 = Compass.valueOf(json.get("node3").getAsString());
+            Compass node4 = Compass.valueOf(json.get("node4").getAsString());
             railSectionPositions.add(node1);
             railSectionPositions.add(node2);
-            railSectionPositions.add(node1);
             railSectionPositions.add(node3);
+            railSectionPositions.add(node4);
         }
 
         Rail rail = new Switch(session.getDescription(), square, railSectionPositions);

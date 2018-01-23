@@ -626,12 +626,12 @@
     <Resource Include="Resources\Images\stock_container_2.png" />
     <Resource Include="Resources\Images\stock_container_3.png" />
     <Resource Include="Resources\Images\stock_container_4.png" />
-    <Resource Include="Resources\Images\changeDirection.png" />
+    <Resource Include="Resources\Images\changeSwitch.png" />
     <Resource Include="Resources\Images\rail_EAST_NORTH_inactive.png" />
     <Resource Include="Resources\Images\rail_EAST_SOUTH_inactive.png" />
     <Resource Include="Resources\Images\rail_EAST_WEST_inactive.png" />
     <Resource Include="Resources\Images\rail_NORTH_SOUTH_inactive.png" />
-    <Resource Include="Resources\Images\rail_NOTH_WEST_inactive.png" />
+    <Resource Include="Resources\Images\rail_NORTH_WEST_inactive.png" />
     <Resource Include="Resources\Images\rail_SOUTH_WEST_inactive.png" />
     <Resource Include="Resources\Images\Tools\switch\switch_se_sn.png" />
     <Resource Include="Resources\Images\Tools\switch\switch_se_sw.png" />
