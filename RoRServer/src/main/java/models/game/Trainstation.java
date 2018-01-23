@@ -9,32 +9,26 @@ import java.util.UUID;
 import org.apache.activemq.console.command.CreateCommand;
 import org.apache.log4j.Logger;
 
-import com.google.gson.JsonObject;
-
 import communication.MessageInformation;
 import communication.queue.receiver.QueueReceiver;
 import helper.Geometry;
 import helper.Geometry.Coordinate;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
-import models.session.RoRSession;
 
-public class Trainstation extends InteractiveGameObject implements PlaceableOnSquare {
+public abstract class Trainstation extends InteractiveGameObject implements PlaceableOnSquare {
 	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
 
 	public static final int RAIL_COUNT_RIGHT = 8;
 	public static final int RAIL_COUNT_LEFT = 6;
-	private List<UUID> trainstationRailIds;
-	private Stock stock;
+	protected List<UUID> trainstationRailIds;
+	protected Stock stock;
 	private Crane crane;
-	private Compass alignment;
-	private UUID playerId;
+	protected Compass alignment;
+	protected UUID playerId;
 
-	private final int CLOCKWISE = 90;
-	private final int COUNTER_CLOCKWISE = -90;
-	
-	private UUID spawnPointForLoco;
-	private UUID spawnPointForCart;
+	protected static final int CLOCKWISE = 90;
+	protected static final int COUNTER_CLOCKWISE = -90;
 
 	transient EditorSession editorSession;
 
@@ -45,7 +39,6 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		this.trainstationRailIds = trainstationRailIds;
 		this.alignment = alignment;
 		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getDescription());
-		notifyCreatedTrainstation();
 	}
 
 	/**
@@ -56,48 +49,6 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 		return alignment;
 	}
 
-	public void setSpawnPointforLoco(UUID railId) {
-		spawnPointForLoco = railId;
-	}
-
-	public UUID getSpawnPointforLoco() {
-		return spawnPointForLoco;
-	}
-
-	/**
-	 * Gibt den SpawnPoint für neue Carts zurück
-	 * @return
-	 */
-	public UUID getSpawnPointForCart() {
-		return spawnPointForCart;
-	}
-
-	/**
-	 * Setzt den SpawnPoint für neue Carts
-	 * @param spawnPointForCart
-	 */
-	public void setSpawnPointForCart(UUID spawnPointForCart) {
-		this.spawnPointForCart = spawnPointForCart;
-	}
-
-	private void notifyCreatedTrainstation() {
-		MessageInformation messageInfo = new MessageInformation("CreateTrainstation");
-		messageInfo.putValue("trainstationId", getId());
-		messageInfo.putValue("alignment", alignment);
-		messageInfo.putValue("xPos", getXPos());
-		messageInfo.putValue("yPos", getYPos());
-		List<JsonObject> rails = new ArrayList<JsonObject>();
-		for (UUID railId : getTrainstationRailIds()) {
-			JsonObject json = new JsonObject();
-			json.addProperty("railId", railId.toString());
-			rails.add(json);
-		}
-		messageInfo.putValue("trainstationRails", rails);
-		messageInfo.putValue("stockId", getStock().getId());
-
-		notifyChange(messageInfo);
-	}
-
 	/**
 	 * Gibt alle IDs der Rails der Trainstation zurück
 	 * @return IDs der trainstationRails
@@ -105,7 +56,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	public List<UUID> getTrainstationRailIds() {
 		return trainstationRailIds;
 	}
-
+	
 	/**
 	 * Gibt den Stock als Object zurück
 	 * @return Den Stock
@@ -136,8 +87,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 	
 	/**
 	 * Gibt die Liste von Rails der Trainstation zurück
-	 * 
-	 * @return
+	 * @return trainstationRails
 	 */
 	public List<Rail> getTrainstationRails() {
 		List<Rail> trainstationRails = new ArrayList<Rail>();
@@ -150,7 +100,6 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 	/**
 	 * Gibt die Liste von Rails der Trainstation umgedreht zurück
-	 * 
 	 * @return
 	 */
 	public List<Rail> getReverseTrainstationRails() {
@@ -169,15 +118,10 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 	/**
 	 * Rotiert die zugehörigen Rails einer Trainstation
-	 * 
-	 * @param trainstationRail
-	 *            Ein Rail der Trainstation
-	 * @param oldRailSquare
-	 *            Square worauf die Rail vorher PlaceableOnSquare war
-	 * @param newRailSquare
-	 *            Square worauf die Rail PlaceableOnSquare werden soll
-	 * @param right
-	 *            Uhrzeigersinn/Gegen Uhrzeigersinn
+	 * @param trainstationRail	Ein Rail der Trainstation
+	 * @param oldRailSquare		Square worauf die Rail vorher PlaceableOnSquare war
+	 * @param newRailSquare		Square worauf die Rail PlaceableOnSquare werden soll
+	 * @param right				Uhrzeigersinn/Gegen Uhrzeigersinn
 	 */
 	private void rotateTrainstationInteractiveGameObjects(List<InteractiveGameObject> trainstationGameObjects, int pivotXPos,
 			int pivotYPos, boolean right) {
@@ -232,7 +176,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 				Rail newRail = new Rail(sessionName, newSquare, railSectionsCompass, false,
 						tmpRail.getTrainstationId(), tmpRail.getId(),tmpRail.placeableOnRail);
 				newSquare.setPlaceableOnSquare(newRail);
-			}else if(tmpTrainstationGameObject instanceof Stock) {
+			} else if(tmpTrainstationGameObject instanceof Stock) {
 				Stock tmpStock = (Stock)tmpTrainstationGameObject;
 
 				// erzeuge neuen Stock und setze intern das Square.PlacableOnSquare
@@ -245,9 +189,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 	/**
 	 * Rotiert das Alignment der Trainstation
-	 * 
-	 * @param right
-	 *            Uhrzeigersinn/Gegen Uhrzeigersinn
+	 * @param right	Uhrzeigersinn/Gegen Uhrzeigersinn
 	 */
 	private void rotateTrainstation(boolean right) {
 		int newIndex;
@@ -267,9 +209,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 	/**
 	 * Rotiert die Trainstation und alle zugehörigen Rails
-	 * 
-	 * @param right
-	 *            Uhrzeigersinn/Gegen Uhrzeigersinn
+	 * @param right	Uhrzeigersinn/Gegen Uhrzeigersinn
 	 */
 	public void rotate(boolean right) {
 		// rotiert die Trainstation
@@ -310,9 +250,7 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 	/**
 	 * Validiert ob man die Rotation umsetzen kann
-	 * 
-	 * @param right
-	 *            Uhrzeigersinn/Gegen Uhrzeigersinn
+	 * @param right	Uhrzeigersinn/Gegen Uhrzeigersinn
 	 * @return (True)Validiert oder (False)nicht validiert
 	 */
 	public boolean validateRotation(boolean right) {
@@ -356,75 +294,4 @@ public class Trainstation extends InteractiveGameObject implements PlaceableOnSq
 
 		return true;
 	}
-
-	@Override
-	public Trainstation loadFromMap(Square square, RoRSession session) {
-		Trainstation oldTrainStation = (Trainstation) square.getPlaceableOnSquare();
-		Trainstation newTrainStation = new Trainstation(session.getDescription(), square,
-				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock());
-		
-		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
-		newTrainStation.setSessionName(session.getDescription());
-		
-		// setze den alten SpawnPoint für die neue Trainstation
-		newTrainStation.setSpawnPointforLoco(oldTrainStation.getSpawnPointforLoco());
-
-		log.info("TrainStation erstellt: " + newTrainStation.toString());
-		return newTrainStation;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + CLOCKWISE;
-		result = prime * result + COUNTER_CLOCKWISE;
-		result = prime * result + ((alignment == null) ? 0 : alignment.hashCode());
-		result = prime * result + ((spawnPointForLoco == null) ? 0 : spawnPointForLoco.hashCode());
-		result = prime * result + ((stock == null) ? 0 : stock.hashCode());
-		result = prime * result + ((trainstationRailIds == null) ? 0 : trainstationRailIds.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Trainstation other = (Trainstation) obj;
-		if (CLOCKWISE != other.CLOCKWISE)
-			return false;
-		if (COUNTER_CLOCKWISE != other.COUNTER_CLOCKWISE)
-			return false;
-		if (alignment != other.alignment)
-			return false;
-		if (spawnPointForLoco == null) {
-			if (other.spawnPointForLoco != null)
-				return false;
-		} else if (!spawnPointForLoco.equals(other.spawnPointForLoco))
-			return false;
-		if (stock == null) {
-			if (other.stock != null)
-				return false;
-		} else if (!stock.equals(other.stock))
-			return false;
-		if (trainstationRailIds == null) {
-			if (other.trainstationRailIds != null)
-				return false;
-		} else if (!trainstationRailIds.equals(other.trainstationRailIds))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Trainstation [trainstationRailIds=" + trainstationRailIds + ", alignment=" + alignment
-				+ ", spawnPointForLoco=" + spawnPointForLoco + "]";
-	}
-
-
-
 }
