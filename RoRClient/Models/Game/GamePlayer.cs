@@ -8,10 +8,17 @@ namespace RoRClient.Models.Game
 {
     public class GamePlayer : Player
     {
+        public enum Color
+        {
+            GREEN = 0,
+            ORANGE = 1,
+            RED = 2,
+            BLUE = 3
+        };
         private int coalCount;
         private int goldCount;
         private int pointCount;
-        private int colorNumber;
+        private Color color;
 
         public GamePlayer(Guid id, String name, int coalCount, int goldCount, int pointCount, bool isHost) : base(id, name, isHost)
         {
@@ -62,18 +69,18 @@ namespace RoRClient.Models.Game
             }
         }
 
-        public int ColorNumber
+        public Color PlayerColor
         {
             get
             {
-                return colorNumber;
+                return color;
             }
             set
             {
-                if(colorNumber != value)
+                if(color != value)
                 {
-                    colorNumber = value;
-                    NotifyPropertyChanged("ColorNumber");
+                    color = value;
+                    NotifyPropertyChanged("Color");
                 }
             }
         }

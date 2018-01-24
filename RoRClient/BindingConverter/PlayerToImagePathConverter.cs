@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using static RoRClient.Models.Game.GamePlayer;
 
 namespace RoRClient.BindingConverter
 {
@@ -23,7 +24,7 @@ namespace RoRClient.BindingConverter
             {
                 Loco loco = (Loco)value;
                 GamePlayer player = (GamePlayer)GameSession.GetInstance().GetPlayerById(loco.PlayerId);
-                int colorNumber = player.ColorNumber;
+                int colorNumber = (int)player.PlayerColor;
                 return IMAGE_FOLDER_PATH + LOCO_IMAGE_START + colorNumber + IMAGE_ENDING;
             }
             else if(value is Stock)
@@ -33,7 +34,7 @@ namespace RoRClient.BindingConverter
                 GamePlayer player = (GamePlayer)playerTrainstation.Player;
                 if (player != null)
                 {
-                    int colorNumber = player.ColorNumber;
+                    int colorNumber = (int)player.PlayerColor;
                     return IMAGE_FOLDER_PATH + STOCK_IMAGE_START + colorNumber + IMAGE_ENDING;
                 }
             }

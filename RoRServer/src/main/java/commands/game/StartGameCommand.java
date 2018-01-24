@@ -13,6 +13,7 @@ import communication.topic.TopicMessageQueue;
 import exceptions.MapNotFoundException;
 import models.game.Crane;
 import models.game.GamePlayer;
+import models.game.Color;
 import models.game.Compass;
 import models.game.GhostLoco;
 import models.game.Map;
@@ -130,7 +131,8 @@ public class StartGameCommand extends CommandBase {
 				if (playerIterator.hasNext()) {
 					GamePlayer player = (GamePlayer)playerIterator.next();
 					// setzt die colorCount für einen Player
-					player.setColorNumber(colorCounter%4);
+					Color color = Color.values()[colorCounter%4];
+					player.setColor(color);
 					playerId = player.getId();
 					generateLoco(gameSession, playerId, oldPlayerTrainstation, oldLocoSpawnPointRail.getSquareFromGameSession());
 				}

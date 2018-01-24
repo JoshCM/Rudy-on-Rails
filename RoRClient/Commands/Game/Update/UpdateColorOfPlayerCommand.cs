@@ -7,24 +7,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static RoRClient.Models.Game.GamePlayer;
 
 namespace RoRClient.Commands.Game.Update
 {
-    class UpdateColorNumberOfPlayerCommand : CommandBase
+    class UpdateColorOfPlayerCommand : CommandBase
     {
         private Guid playerId;
-        private int colorNumber;
+        private Color color;
 
-        public UpdateColorNumberOfPlayerCommand(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        public UpdateColorOfPlayerCommand(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             playerId = messageInformation.GetValueAsGuid("playerId");
-            colorNumber = messageInformation.GetValueAsInt("colorNumber");
+            color = (Color)messageInformation.GetValueAsInt("color");
         }
 
         public override void Execute()
         {
             GamePlayer player = (GamePlayer)GameSession.GetInstance().GetPlayerById(playerId);
-            player.ColorNumber = colorNumber;
+            player.PlayerColor = color;
         }
     }
 }
