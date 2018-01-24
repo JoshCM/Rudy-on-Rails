@@ -84,6 +84,8 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	}
 
 	public UUID getPlayerId() {
+		if (this.playerId == null)
+			return new UUID(0L, 0L);
 		return this.playerId;
 	}
 

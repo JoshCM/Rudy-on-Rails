@@ -123,7 +123,7 @@ public class StartEditorCommandTest {
 		UUID trainstationId = UUID.randomUUID();
 		Playertrainstation loadedTrainstation = new Playertrainstation(editorSession.getDescription(), square, uuids, trainstationId,
 				Compass.NORTH, new Stock(editorSession.getDescription(), editorSession.getMap().getSquare(1, 0),
-						trainstationId, Compass.NORTH));
+						trainstationId, Compass.NORTH), UUID.randomUUID());
 		square.setPlaceableOnSquare(loadedTrainstation);
 
 		Playertrainstation createdTrainstation = loadedTrainstation.loadFromMap(square, editorSession);

@@ -36,7 +36,7 @@ public class CommandDeleterTests {
 
 		Trainstation trainstation = new Playertrainstation(session.getDescription(), session.getMap().getSquare(1, 1),
 				new ArrayList<UUID>(), trainstationId, Compass.EAST,
-				new Stock(session.getDescription(), session.getMap().getSquare(1, 0), trainstationId, stockId, Compass.EAST));
+				new Stock(session.getDescription(), session.getMap().getSquare(1, 0), trainstationId, stockId, Compass.EAST), UUID.randomUUID());
 		session.getMap().getSquare(1, 1).setPlaceableOnSquare(trainstation);
 		DeleteTrainstationCommand command = new DeleteTrainstationCommand(session, messageInformation);
 

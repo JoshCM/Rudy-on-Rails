@@ -52,7 +52,7 @@ namespace RoRClient.Commands.Base
         {
             Square square = session.Map.GetSquare(xPos, yPos);
             Stock stock = (Stock)session.Map.GetPlaceableById(stockId);
-            Playertrainstation trainstation = new Playertrainstation(trainstationId, square, trainstationRails, alignment, stock, playerId);
+            Playertrainstation trainstation = new Playertrainstation(trainstationId, square, trainstationRails, alignment, stock, session.GetPlayerById(playerId));
             square.PlaceableOnSquare = (Playertrainstation)trainstation;
         }
 

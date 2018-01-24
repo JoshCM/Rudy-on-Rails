@@ -1,5 +1,7 @@
 package models.game;
 
+import java.util.UUID;
+
 import models.session.RoRSession;
 
 /**
