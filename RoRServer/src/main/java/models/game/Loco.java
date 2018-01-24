@@ -22,6 +22,7 @@ public class Loco extends TickableGameObject {
 	private Compass drivingDirection;
 	private boolean reversed = false;
 	protected Map map;
+	private GamePlayer player;
 	private static List<Sensor> sensors; // Jede Loco kennt alle Sensoren
 
 	/**
@@ -38,6 +39,7 @@ public class Loco extends TickableGameObject {
 		this.drivingDirection = drivingDirection;
 		this.speed = 0;
 		this.playerId = playerId;
+		this.player =(GamePlayer) GameSessionManager.getInstance().getGameSessionByName(sessionName).getPlayerById(playerId);
 		Loco.sensors = new ArrayList<Sensor>();
 	}
 
@@ -65,7 +67,7 @@ public class Loco extends TickableGameObject {
 		if (speed != 0) {
 			this.timeDeltaCounter += timeDeltaInNanoSeconds;
 			int absoluteSpeed = (int) Math.abs(speed);
-			if (this.timeDeltaCounter >= SEC_IN_NANO / absoluteSpeed) {
+			if ((this.timeDeltaCounter >= SEC_IN_NANO / absoluteSpeed) && player.getCoalCount() > 0) {
 				timeDeltaCounter = 0;
 				if (speed < 0) {
 					if (!reversed) {//Wenn das erstemal nach dem Vorw�rts fahren wieder r�ckw�rts gefahren wird muss die Driving direction ge�ndert werden 
@@ -86,6 +88,9 @@ public class Loco extends TickableGameObject {
 					}
 					drive();
 				}
+				
+				player.spendCoal(this.speed);
+				//player.spendCoal(absoluteSpeed); //Das hier ist die Nicht-Cheat-Variante
 			}
 		}
 	}

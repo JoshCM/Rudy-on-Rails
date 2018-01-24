@@ -10,11 +10,13 @@ namespace RoRClient.Models.Game
     public class Stock : InteractiveGameObject, IPlaceableOnSquare
     {
         private Compass alignment;
+        private Guid trainstationId;
 
-        public Stock(Guid id, Square square, Compass alignment, List<Resource> resources) : base(square)
+        public Stock(Guid id, Square square, Compass alignment, Guid trainstationId) : base(square)
         {
             this.id = id;
             this.alignment = alignment;
+            this.trainstationId = trainstationId;
         }
         public Compass Alignment
         {
@@ -26,6 +28,14 @@ namespace RoRClient.Models.Game
             {
                 alignment = value;
                 NotifyPropertyChanged("Alignment");
+            }
+        }
+
+        public Guid TrainstationId
+        {
+            get
+            {
+                return trainstationId;
             }
         }
     }

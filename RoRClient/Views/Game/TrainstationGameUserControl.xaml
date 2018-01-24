@@ -14,7 +14,7 @@
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=trainstationGameUserControl}"
             Height="{Binding SquareDim, ElementName=trainstationGameUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=trainstationGameUserControl}" Height="{Binding SquareDim, ElementName=trainstationGameUserControl}" Source="pack://application:,,,/Resources/Images/trainstation.png">
+        <Image Width="{Binding SquareDim, ElementName=trainstationGameUserControl}" Height="{Binding SquareDim, ElementName=trainstationGameUserControl}" Source="pack://application:,,,/Resources/Images/trainstation_0.png">
             <Image.InputBindings>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding SelectedTrainstationObjectCommand}"></MouseBinding>
             </Image.InputBindings>

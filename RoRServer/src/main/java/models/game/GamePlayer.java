@@ -3,12 +3,14 @@ package models.game;
 import java.util.UUID;
 
 import communication.MessageInformation;
+import resources.PropertyManager;
 
 public class GamePlayer extends Player{
 
-	private int coalCount;
+	private double coalCount;
 	private int goldCount;
 	private int pointCount;
+	private Color color;
 
 	public GamePlayer(String sessionName, String name, UUID id, boolean isHost) {
 		super(sessionName, name, id, isHost);
@@ -33,7 +35,7 @@ public class GamePlayer extends Player{
 		this.pointCount = 0;
 	}
 
-	public int getCoalCount() {
+	public double getCoalCount() {
 		return coalCount;
 	}
 
@@ -86,6 +88,16 @@ public class GamePlayer extends Player{
 		notifyResourceCountChanged();
 	}
 	
+	/**
+	 * Reduzirt die Kohle des Spielers um
+	 * das Produkt von speed und coalDecreaseFactor
+	 * @param speed
+	 */
+	public void spendCoal(long speed) {
+		this.coalCount -= (double)speed * Double.parseDouble(PropertyManager.getProperty("coalDecreaseFactor"));
+		notifyCoalChanged();
+	}
+	
 	private void notifyResourceCountChanged() {
     	MessageInformation messageInfo = new MessageInformation("UpdateResourcesOfPlayer");
     	messageInfo.putValue("playerId", getId());
@@ -94,4 +106,29 @@ public class GamePlayer extends Player{
     	messageInfo.putValue("pointCount", getPointCount());
     	notifyChange(messageInfo);
     }
+	
+	private void notifyColorChanged() {
+    	MessageInformation messageInfo = new MessageInformation("UpdateColorOfPlayer");
+    	messageInfo.putValue("playerId", getId());
+    	messageInfo.putValue("color", getColor().ordinal());
+    	notifyChange(messageInfo);
+    }
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+		notifyColorChanged();
+	}
+	
+	private void notifyCoalChanged() {
+		MessageInformation messageInfo = new MessageInformation("UpdateCoalOfPlayer");
+		messageInfo.putValue("playerId", getId());
+		messageInfo.putValue("coalCount", getCoalCount());
+		notifyChange(messageInfo);
+	}
+	
+	
 }

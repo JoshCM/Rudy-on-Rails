@@ -84,6 +84,8 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	}
 
 	public UUID getPlayerId() {
+		if (this.playerId == null)
+			return new UUID(0L, 0L);
 		return this.playerId;
 	}
 
@@ -151,6 +153,11 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 			// rotiere und adde der tempList
 			if (trainstationGameObject instanceof Rail) {
 				Rail tmpRail = (Rail) trainstationGameObject;
+				PlaceableOnRail p = tmpRail.getPlaceableOnrail();
+				if(p != null && p instanceof Crane) {
+					Crane c = (Crane)p;
+					c.deleteCrane();
+				}
 				tmpRail.rotate(right, right);
 			} else if (trainstationGameObject instanceof Stock) {
 				Stock tmpStock = (Stock) trainstationGameObject;
@@ -255,11 +262,9 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 		// wir sagen dem Crane das sich alles gedreht hat und wir jetzt auf nem anderen
 		// Square stehen
 		Rail craneRail = getRailbyId(this.crane.getRailId());
-		Square newSquare = EditorSessionManager.getInstance().getEditorSessionByName(sessionName).getMap()
-				.getSquareById(craneRail.getSquareId());
-		// crane.rotateCrane(newSquare, this.alignment);
-		this.crane = new Crane(this.sessionName, newSquare, this.getId(),
-				Crane.getCraneAlignmentbyTrainstationAlignment(this.alignment), craneRail.getId());
+		Square newSquare = EditorSessionManager.getInstance().getEditorSessionByName(sessionName).getMap().getSquareById(craneRail.getSquareId());
+		this.crane = new Crane(this.sessionName, newSquare, this.getId(), Crane.getCraneAlignmentbyTrainstationAlignment(this.alignment), craneRail.getId());
+		craneRail.setPlaceableOnRail(this.crane);
 	}
 
 	private Rail getRailbyId(UUID railId) {
