@@ -40,7 +40,7 @@ public class CreateSwitchCommand extends CommandBase {
             railSectionPositions.add(node4);
         }
 
-        Switch switchRail = new Switch(session.getDescription(), square, railSectionPositions);
+        Switch switchRail = new Switch(session.getSessionName(), square, railSectionPositions);
         square.setPlaceableOnSquare(switchRail);
     }
 }
