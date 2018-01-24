@@ -11,6 +11,8 @@ import models.session.RoRSession;
 public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	private UUID railId, trainstationId;
 	private Compass alignment;
+	private int oldposX;
+	private int oldposY;
 	
 
 	public Crane(String sessionName, Square square, UUID trainstationId, Compass alignment, UUID railId) {
@@ -75,23 +77,24 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	
 	public void moveCrane(Square newSquare) {
 		changeSquare(newSquare);
+//		NotifyCraneDeleted();
 		NotifyCraneMoved();
 	}
 	
 	/**
-	 * move Methode für den Spielmodus
+	 * move Methode fï¿½r den Spielmodus
 	 * @param newSquare
 	 */
 	public void updateCranePosition(Square newSquare) {
+		
 		changeSquare(newSquare);
 		NotifyCraneUpdatePosition();
 	}
-	
-	public void rotateCrane(Square newSquare, Compass trainstationAlignment) {
-		moveCrane(newSquare);
-		this.alignment = getCraneAlignmentbyTrainstationAlignment(alignment);
-		NotifyCraneRotated();
+
+	public void deleteCrane() {
+		NotifyCraneDeleted();
 	}
+	
 	
 	public static Compass getCraneAlignmentbyTrainstationAlignment(Compass trainstationAlignment) {
 		switch(trainstationAlignment) {
@@ -113,10 +116,10 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		return railId;
 	}
 	public Compass getAlignment() {
-		return alignment;		
+		return this.alignment;		
 	}
 	public UUID getTrainstationId() {
-		return trainstationId;
+		return this.trainstationId;
 	}
 	private void NotifyCraneCreated() {
 	// TODO Auto-generated method stub
@@ -125,7 +128,7 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		messageInfo.putValue("squareId", getSquareId());
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
-		messageInfo.putValue("alignment", alignment.toString());
+		messageInfo.putValue("alignment", this.alignment.toString());
 		notifyChange(messageInfo);
 	}
 	
@@ -137,20 +140,22 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	}
 	private void NotifyCraneUpdatePosition() {
 		MessageInformation messageInfo = new MessageInformation("UpdateCranePosition");
+		messageInfo.putValue("oldXPos", oldposX);
+		messageInfo.putValue("oldYPos", oldposY);
 		messageInfo.putValue("newXPos", getXPos());
 		messageInfo.putValue("newYPos", getYPos());
 		notifyChange(messageInfo);
 	}
 	
-	private void NotifyCraneRotated() {
-		MessageInformation messageInfo = new MessageInformation("UpdateAlignmentOfCrane");
-		messageInfo.putValue("XPos", getXPos());
-		messageInfo.putValue("YPos", getYPos());
-		messageInfo.putValue("newAlignment", this.alignment.toString());
+	private void NotifyCraneDeleted() {
+		MessageInformation messageInfo = new MessageInformation("DeleteCrane");
+		messageInfo.putValue("railId", this.railId);
 		notifyChange(messageInfo);
 	}
 	
 	public void changeSquare(Square newSquare) {
+		oldposX = getXPos();
+		oldposY = getYPos();
 		setSquareId(newSquare.getId());
 		setXPos(newSquare.getXIndex());
 		setYPos(newSquare.getYIndex());

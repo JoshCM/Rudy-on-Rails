@@ -121,6 +121,7 @@
     <Compile Include="Commands\Base\CreatePlayertrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreatePublictrainstationCommand.cs" />
+    <Compile Include="Commands\Editor\Delete\DeleteCraneCommand.cs" />
     <Compile Include="Commands\Editor\Other\LeaveEditorCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateActivityOfSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateSignalsCommand.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateSignalsCommand.cs" />
     <Compile Include="Commands\Game\Delete\DeletePlaceableCommand.cs" />
+    <Compile Include="Commands\Game\Other\EndGameCommand.cs" />
     <Compile Include="Commands\Game\Other\RemoveResourceFromMineCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCranePositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateResourceLoadedOntoCartCommand.cs" />
@@ -235,6 +237,7 @@
     <Compile Include="ViewModels\Game\CoalGameViewModel.cs" />
     <Compile Include="ViewModels\Game\ContainerGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GameInteractionsViewModel.cs" />
+    <Compile Include="ViewModels\Game\GameResultViewModel.cs" />
     <Compile Include="ViewModels\Game\GameStatusViewModel.cs" />
     <Compile Include="ViewModels\Game\CraneGameViewModel.cs" />
     <Compile Include="ViewModels\Game\PlayerLocoGameViewModel.cs" />
@@ -333,6 +336,9 @@
     </Compile>
     <Compile Include="Views\Game\GameInteractionUserControl.xaml.cs">
       <DependentUpon>GameInteractionUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\GameResultView.xaml.cs">
+      <DependentUpon>GameResultView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\GoldGameUserControl.xaml.cs">
       <DependentUpon>GoldGameUserControl.xaml</DependentUpon>
@@ -439,6 +445,10 @@
     <Page Include="Views\Game\GameInteractionUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\GameResultView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Game\GoldGameUserControl.xaml">
       <SubType>Designer</SubType>

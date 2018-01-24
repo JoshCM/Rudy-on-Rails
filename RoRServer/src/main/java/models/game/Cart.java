@@ -168,6 +168,10 @@ public class Cart extends TickableGameObject implements PlaceableOnRail {
 		return currentLocoId;
 	}
 	
+	public UUID getPlayerId() {
+		return playerId;
+	}
+	
 	public Resource getResourceNextToCart(boolean right) {
 		PlaceableOnSquare placeableOnSquare = getPlaceableOnSquareNextToCart(right);
 		if(placeableOnSquare != null && placeableOnSquare instanceof Resource) {

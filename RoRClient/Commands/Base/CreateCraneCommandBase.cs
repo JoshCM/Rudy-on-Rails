@@ -19,13 +19,10 @@ namespace RoRClient.Commands.Base
         public CreateCraneCommandBase(RoRSession session, MessageInformation messageInformation): base (session, messageInformation)
         {
 
-            craneId = Guid.Parse(messageInformation.GetValueAsString("craneId"));
+            craneId = messageInformation.GetValueAsGuid("craneId");
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
             alignment = (Compass)Enum.Parse(typeof(Compass), messageInformation.GetValueAsString("alignment"));
-
-
-
         }
 
         public override void Execute()
@@ -33,9 +30,8 @@ namespace RoRClient.Commands.Base
             Square square = session.Map.GetSquare(xPos, yPos);
             Crane crane = new Crane(craneId, square, alignment);
             Rail rail = (Rail)square.PlaceableOnSquare;
+            rail.PlaceableOnRail = null;
             rail.PlaceableOnRail = crane;
-            Console.WriteLine("Crane(" + crane.Square.PosX + "/" + crane.Square.PosY + ")");
-            Console.WriteLine("Rail(" + rail.Square.PosX + "/" + rail.Square.PosY + ")");
         }
     }
 }

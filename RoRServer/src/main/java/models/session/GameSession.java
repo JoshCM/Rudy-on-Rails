@@ -6,6 +6,8 @@ import java.util.UUID;
 import communication.MessageInformation;
 import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
+import models.base.ModelObserver;
+import models.base.ObservableModel;
 import models.game.GamePlayer;
 import models.game.Loco;
 import models.game.Mine;
@@ -21,7 +23,8 @@ import models.scripts.Scripts;
  * Haelt die Map und die Liste von verbundenen Playern
  * Erhaelt ueber einen QueueReceiver Anfragen von Clients, die mit der GameSession verbunden sind
  */
-public class GameSession extends RoRSession{
+public class GameSession extends RoRSession implements ModelObserver {
+	private final static int POINTS_TO_WIN = 100;
 	private final static int TIME_BETWEEN_TICKS_IN_MILLISECONDS = 100;
 	
 	private Thread tickingThread;
@@ -51,11 +54,13 @@ public class GameSession extends RoRSession{
 	private void createHostPlayer(UUID playerId, String playerName) {
 		GamePlayer player = new GamePlayer(getSessionName(), playerName, playerId, true);
 		addPlayer(player);
+		player.addObserver(this);
 	}
 	
 	public Player createPlayer(UUID playerId, String playerName) {
 		GamePlayer player = new GamePlayer(getSessionName(), playerName, playerId, false);
 		addPlayer(player);
+		player.addObserver(this);
 		return player;
 	}
 	
@@ -188,6 +193,23 @@ public class GameSession extends RoRSession{
 
 	public void setAvailablePlayerSlots(int availablePlayerSlots) {
 		this.availablePlayerSlots = availablePlayerSlots;
+	}
+
+	@Override
+	public void update(ObservableModel observable, Object arg) {
+		if(observable instanceof GamePlayer) {
+			GamePlayer player = (GamePlayer)observable;
+			
+			if(player.getPointCount() >= POINTS_TO_WIN){
+				endGame(player);
+			}
+		}
+	}
+
+	private void endGame(GamePlayer winningPlayer) {
+		MessageInformation messageInfo = new MessageInformation("EndGame");
+		messageInfo.putValue("winningPlayerId", winningPlayer.getId());
+		notifyChange(messageInfo);
 	}
 }
 

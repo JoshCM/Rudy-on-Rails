@@ -14,18 +14,22 @@ namespace RoRClient.Commands.Game.Update
     {
         private int newXPos;
         private int newYPos;
+        private int oldYPos;
+        private int oldXPos;
 
 
         public UpdateCranePositionCommand(RoRSession session, MessageInformation message) : base(session, message)
         {
             this.newXPos = message.GetValueAsInt("newXPos");
             this.newYPos = message.GetValueAsInt("newYPos");
+            this.oldXPos = message.GetValueAsInt("oldXPos");
+            this.oldYPos = message.GetValueAsInt("oldYPos");
         }
 
         public override void Execute()
         {
             GameSession game = (GameSession)session;
-            Square square = game.Map.GetSquare(newXPos, newYPos);
+            Square square = game.Map.GetSquare(oldXPos, oldYPos);
             Rail rail = (Rail)square.PlaceableOnSquare;
 
             Crane crane = (Crane)rail.PlaceableOnRail;
