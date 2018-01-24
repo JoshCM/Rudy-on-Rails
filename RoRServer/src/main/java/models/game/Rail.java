@@ -57,8 +57,8 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     	this(sessionName, square, railSectionPositions, false, trainstationId, id);
     }
 
-    public Rail(String sessionName, Square newSquare, List<Compass> railSectionsCompass, boolean b, UUID trainstationId, UUID id, PlaceableOnRail placeableOnRail) {
-    	this(sessionName,newSquare,railSectionsCompass,b,trainstationId,id);
+    public Rail(String sessionName, Square newSquare, List<Compass> railSectionsCompass, boolean withSignals, UUID trainstationId, UUID id, PlaceableOnRail placeableOnRail) {
+    	this(sessionName,newSquare,railSectionsCompass,withSignals,trainstationId,id);
     	this.placeableOnRail = placeableOnRail;
     	
 	}

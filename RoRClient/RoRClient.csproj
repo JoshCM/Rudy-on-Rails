@@ -636,7 +636,7 @@
     <Resource Include="Resources\Images\gras.jpg" />
     <Resource Include="Resources\Images\stock.png" />
     <Resource Include="Resources\Images\stock_cart_1.png" />
-    <Resource Include="Resources\Images\Tools\trainstations\trainstation1.png" />
+    <Resource Include="Resources\Images\Tools\trainstations\playertrainstation.png" />
     <Resource Include="Resources\Images\stock_container_1.png" />
     <Resource Include="Resources\Images\container_points.png" />
     <Resource Include="Resources\Images\btn_back.png" />
@@ -648,9 +648,9 @@
     <Resource Include="Resources\Images\Tools\rail\railcurve_sw.png" />
     <Resource Include="Resources\Images\Tools\rail\rail_ew.png" />
     <Resource Include="Resources\Images\Tools\rail\rail_ns.png" />
-    <Resource Include="Resources\Images\Tools\trainstations\trainstation2.png" />
-    <Resource Include="Resources\Images\Tools\trainstations\trainstation3.png" />
-    <Resource Include="Resources\Images\Tools\trainstations\trainstation4.png" />
+    <Resource Include="Resources\Images\trainstation2.png" />
+    <Resource Include="Resources\Images\trainstation3.png" />
+    <Resource Include="Resources\Images\trainstation4.png" />
     <Resource Include="Resources\Images\ghostcrane.png" />
     <Resource Include="Resources\Images\loco_2.png" />
     <Resource Include="Resources\Images\loco_3.png" />
