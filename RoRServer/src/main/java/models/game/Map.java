@@ -68,7 +68,7 @@ public class Map extends ModelBase {
 		return mapSize;
 	}
 
-	public String getDescription() {
+	public String getName() {
 		return name;
 	}
 

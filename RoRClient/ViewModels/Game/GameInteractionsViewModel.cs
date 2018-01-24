@@ -18,6 +18,7 @@ namespace RoRClient.ViewModels.Game
 {
     public class GameInteractionsViewModel : ViewModelBase
     {
+        private ScriptsViewModel scriptsViewModel;
         private Script selectedGhostLocoScript;
         private Script selectedSensorScript;
         private bool canPlaceSensor = false;
@@ -25,8 +26,10 @@ namespace RoRClient.ViewModels.Game
         private MapGameViewModel mapGameViewModel;
         private int currentNumberOfOwnGhostLocoScript = 1;
 
+        public GameInteractionsViewModel(TaskFactory taskFactory)
         public bool CanConfigureSensor
         {
+            scriptsViewModel = new ScriptsViewModel(GameSession.GetInstance().Scripts, taskFactory);
             get
             {
                 return canConfigureSensor;
@@ -38,6 +41,7 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
+        public ScriptsViewModel ScriptsViewModel
         public bool CanPlaceSensor
         {
             get
@@ -56,11 +60,10 @@ namespace RoRClient.ViewModels.Game
             this.mapGameViewModel = mapGameViewModel;
         }
 
-        public Scripts Scripts
         {
             get
             {
-                return GameSession.GetInstance().Scripts;
+                return scriptsViewModel;
             }
         }
 

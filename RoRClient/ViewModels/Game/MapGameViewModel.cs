@@ -25,9 +25,9 @@ namespace RoRClient.ViewModels.Game
         private TaskFactory taskFactory;
         private GameInteractionsViewModel gameInteractionsViewModel;
 
-        public MapGameViewModel()
+        public MapGameViewModel(TaskFactory taskFactory)
         {
-            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            this.taskFactory = taskFactory;
             map = GameSession.GetInstance().Map;
             InitSquares();
 

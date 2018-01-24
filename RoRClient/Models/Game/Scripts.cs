@@ -11,13 +11,12 @@ namespace RoRClient.Models.Game
 {
     public class Scripts : ModelBase
     {
-        private ObservableCollection<Script> ghostLocoScripts = new ObservableCollection<Script>();
+        private List<Script> ghostLocoScripts = new List<Script>();
         private ObservableCollection<Script> sensorScripts = new ObservableCollection<Script>();
-        private TaskFactory taskFactory;
 
         public Scripts()
         {
-            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+
         }
 
         public void AddScript(Script script)
@@ -25,7 +24,7 @@ namespace RoRClient.Models.Game
             switch (script.ScriptType)
             {
                 case ScriptTypes.GHOSTLOCO:
-                    taskFactory.StartNew(() => ghostLocoScripts.Add(script));
+                    ghostLocoScripts.Add(script);
                     break;
                 case ScriptTypes.SENSOR:
                     taskFactory.StartNew(() => sensorScripts.Add(script));
@@ -33,9 +32,10 @@ namespace RoRClient.Models.Game
                 default:
                     break;
             }
+            NotifyPropertyChanged("GhostLocoScripts", null, script);
         }
 
-        public ObservableCollection<Script> GhostLocoScripts
+        public List<Script> GhostLocoScripts
         {
             get
             {

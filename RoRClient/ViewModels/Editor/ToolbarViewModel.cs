@@ -74,12 +74,9 @@ namespace RoRClient.ViewModels.Editor
                 if (selectedTool != value)
                 {
                     selectedTool = value;
-                    Console.WriteLine(selectedTool);
                     OnPropertyChanged("SelectedTool");
                 }
             }
         }
-
-
     }
 }

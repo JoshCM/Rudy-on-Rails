@@ -100,6 +100,7 @@ public class GameSession extends RoRSession{
 	 */
 	public void stop() {
 		this.stopped = true;
+		queueReceiver.stop();
 	}
 	
 
