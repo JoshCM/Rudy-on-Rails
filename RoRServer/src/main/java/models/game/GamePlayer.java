@@ -6,7 +6,7 @@ import communication.MessageInformation;
 
 public class GamePlayer extends Player{
 
-	private int coalCount;
+	private double coalCount;
 	private int goldCount;
 	private int pointCount;
 
@@ -33,7 +33,7 @@ public class GamePlayer extends Player{
 		this.pointCount = 0;
 	}
 
-	public int getCoalCount() {
+	public double getCoalCount() {
 		return coalCount;
 	}
 
@@ -86,6 +86,11 @@ public class GamePlayer extends Player{
 		notifyResourceCountChanged();
 	}
 	
+	public void spendCoal() {
+		this.coalCount -= 0.25;
+		notifyCoalChanged();
+	}
+	
 	private void notifyResourceCountChanged() {
     	MessageInformation messageInfo = new MessageInformation("UpdateResourcesOfPlayer");
     	messageInfo.putValue("playerId", getId());
@@ -94,4 +99,12 @@ public class GamePlayer extends Player{
     	messageInfo.putValue("pointCount", getPointCount());
     	notifyChange(messageInfo);
     }
+	
+	private void notifyCoalChanged() {
+		MessageInformation messageInfo = new MessageInformation("UpdateCoalOfPlayer");
+		messageInfo.putValue("playerId", getId());
+		messageInfo.putValue("coalCount", getCoalCount());
+	}
+	
+	
 }
