@@ -21,6 +21,7 @@ public class Scripts extends ModelBase {
 	private void loadGhostLocoDefaultScripts() {
 		scripts.add(new Script(getDescription(), "Schnell fahren", ScriptType.GHOSTLOCO, "ghostloco_default_drivefast"));
 		scripts.add(new Script(getDescription(), "Langsam fahren", ScriptType.GHOSTLOCO, "ghostloco_default_driveslow"));
+		scripts.add(new Script(getDescription(), "Gold stehlen", ScriptType.GHOSTLOCO, "ghostloco_default_stealgold"));
 	}
 	
 	public List<Script> getScripts() {

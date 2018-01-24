@@ -4,15 +4,20 @@ import java.util.UUID;
 import communication.MessageInformation;
 import models.scripts.ProxyObject;
 import models.scripts.ScriptableObject;
+import models.session.GameSession;
 import models.session.GameSessionManager;
 
 /**
  * Dem Geisterzug kann ein Script hinterlegt werden, dass ihn steuert
  */
 public class GhostLoco extends Loco {
+	private final static int STEALING_AMOUNT = 10;
+	
 	ScriptableObject scriptableObject;
 	private boolean picksUpGoldContainerNextToRails = false;
 	private boolean picksUpCoalContainerNextToRails = false;
+	private boolean stealsGoldContainerFromOtherPlayers = false;
+	private boolean stealsCoalContainerFromOtherPlayers = false;
 
 	public GhostLoco(String sessionName, Square square, UUID playerId, Compass drivingDirection) {
 		super(sessionName, square, playerId, drivingDirection);
@@ -45,49 +50,71 @@ public class GhostLoco extends Loco {
 		// Das eigentliche Fahren ist in der Oberklasse Loco geregelt
 		super.specificUpdate();
 
-		if (picksUpGoldContainerNextToRails || picksUpCoalContainerNextToRails) {
-			handleResourcePickUps();
-		}
+		handleCartPickUps();
 	}
 
-	private void handleResourcePickUps() {
+	private void handleCartPickUps() {
 		for (Cart cart : getCarts()) {
 			if (cart.getResource() == null) {
-				Resource resourceRight = cart.getResourceNextToCart(true);
-				Resource resourceLeft = cart.getResourceNextToCart(false);
-				boolean done = false;
-
-				if (picksUpGoldContainerNextToRails) {
-					if (resourceRight != null) {
-						if (resourceRight instanceof Gold) {
-							loadResourceOnCartAndRemoveItFromSquare(cart, resourceRight);
-							done = true;
-							break;
-						}
-					} else if (resourceLeft != null) {
-						if (resourceLeft instanceof Gold) {
-							loadResourceOnCartAndRemoveItFromSquare(cart, resourceLeft);
-							done = true;
-							break;
-						}
-					}
+				if (picksUpGoldContainerNextToRails || picksUpCoalContainerNextToRails) {
+					handleContainerPickUpsNextToRail(cart);
 				}
-				if (!done && picksUpCoalContainerNextToRails) {
-					if (resourceRight != null) {
-						if (resourceRight instanceof Coal) {
-							loadResourceOnCartAndRemoveItFromSquare(cart, resourceRight);
-							done = true;
-							break;
-						}
-					} else if (resourceLeft != null) {
-						if (resourceLeft instanceof Coal) {
-							loadResourceOnCartAndRemoveItFromSquare(cart, resourceLeft);
-							done = true;
-							break;
-						}
-					}
+				if(stealsGoldContainerFromOtherPlayers || stealsCoalContainerFromOtherPlayers) {
+					handleStealingContainers(cart);
 				}
 			}	
+		}
+	}
+	
+	private void handleStealingContainers(Cart cart) {
+		if(cart.isNextToStock()) {
+			UUID stockPlayerId = cart.getPlayerIdFromStockNextToCart();
+			
+			// Falls es sich nicht um den eigenen Bahnhof handelt
+			if(!getPlayerId().equals(stockPlayerId)) {
+				GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(sessionName);
+				GamePlayer enemyPlayer = (GamePlayer)gameSession.getPlayerById(stockPlayerId);
+				
+				if(enemyPlayer != null) { // Der Bahnhof könnte auch keinem Spieler gehören, falls es mehr Bahnhöfe als Spieler gibt
+					if(stealsGoldContainerFromOtherPlayers && enemyPlayer.getGoldCount() > 0) {
+						enemyPlayer.removeGold(STEALING_AMOUNT);
+						cart.loadResourceOntoCart(new Gold(getSessionName()));
+					} else if(stealsCoalContainerFromOtherPlayers && enemyPlayer.getCoalCount() > 0) {
+						enemyPlayer.removeGold(STEALING_AMOUNT);
+						cart.loadResourceOntoCart(new Coal(getSessionName()));
+					}
+				}
+			}
+		}
+	}
+	
+	private void handleContainerPickUpsNextToRail(Cart cart) {
+		Resource resourceRight = cart.getResourceNextToCart(true);
+		Resource resourceLeft = cart.getResourceNextToCart(false);
+
+		if (picksUpGoldContainerNextToRails) {
+			if (resourceRight != null) {
+				if (resourceRight instanceof Gold) {
+					loadResourceOnCartAndRemoveItFromSquare(cart, resourceRight);
+					return;
+				}
+			} else if (resourceLeft != null) {
+				if (resourceLeft instanceof Gold) {
+					loadResourceOnCartAndRemoveItFromSquare(cart, resourceLeft);
+					return;
+				}
+			}
+		}
+		if (picksUpCoalContainerNextToRails) {
+			if (resourceRight != null) {
+				if (resourceRight instanceof Coal) {
+					loadResourceOnCartAndRemoveItFromSquare(cart, resourceRight);
+				}
+			} else if (resourceLeft != null) {
+				if (resourceLeft instanceof Coal) {
+					loadResourceOnCartAndRemoveItFromSquare(cart, resourceLeft);
+				}
+			}
 		}
 	}
 	
@@ -111,5 +138,21 @@ public class GhostLoco extends Loco {
 
 	public void setPicksUpCoalContainerNextToRails(boolean picksUpCoalContainerNextToRails) {
 		this.picksUpCoalContainerNextToRails = picksUpCoalContainerNextToRails;
+	}
+
+	public boolean isStealsGoldContainerFromOtherPlayers() {
+		return stealsGoldContainerFromOtherPlayers;
+	}
+
+	public void setStealsGoldContainerFromOtherPlayers(boolean stealsGoldContainerFromOtherPlayers) {
+		this.stealsGoldContainerFromOtherPlayers = stealsGoldContainerFromOtherPlayers;
+	}
+
+	public boolean isStealsCoalContainerFromOtherPlayers() {
+		return stealsCoalContainerFromOtherPlayers;
+	}
+
+	public void setStealsCoalContainerFromOtherPlayers(boolean stealsCoalContainerFromOtherPlayers) {
+		this.stealsCoalContainerFromOtherPlayers = stealsCoalContainerFromOtherPlayers;
 	}
 }

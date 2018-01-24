@@ -18,6 +18,11 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
 		notifyCreatedResource();	
 	}
 	
+	protected Resource(String sessionName, String name) {
+		super(sessionName, new Square(sessionName, -1, -1));
+		this.name = name;
+	}
+	
 	/**
 	 * Erstellen einer neuen Message an die Clients
 	 */
