@@ -1,6 +1,7 @@
 package models.game;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import communication.MessageInformation;
@@ -45,6 +46,7 @@ public class Loco extends TickableGameObject {
 		if (speed != 0) {
 			this.timeDeltaCounter += timeDeltaInNanoSeconds;
 			int absoluteSpeed = (int) Math.abs(speed);
+
 			if (this.timeDeltaCounter >= SEC_IN_NANO / absoluteSpeed) {
 				timeDeltaCounter = 0;
 				if (speed < 0) {
@@ -200,6 +202,24 @@ public class Loco extends TickableGameObject {
 			nextSquare = actSquare;
 		}
 	}
+
+	private boolean checkForCollision(Rail rail){
+		List<Loco> locos = GameSessionManager.getInstance().getGameSession().getLocos();
+		for (Loco loco:locos) {
+			System.out.println(loco.getId());
+			if(!(loco instanceof GhostLoco)) {
+				if (loco.getRail() == rail) {
+					return true;
+				}
+				for (Cart cart : loco.getCarts()) {
+					if (cart.getRail() == rail) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
 	
 	/**
 	 * gibt das Rail zur�ck, dass in angegebener Richtung an das Feld, das
@@ -210,30 +230,38 @@ public class Loco extends TickableGameObject {
 	 * @return die Rail, die in angegebener Richtung steht
 	 */
 	public Rail getNextRail(Compass compass, Square square) {
-		Square retSquare;
+		Square retSquare = null;
+		Rail newRail = null;
+
 		switch (compass) {
 		case NORTH:
 			retSquare = this.map.getSquare(square.getXIndex(), square.getYIndex() - 1);
-			if(retSquare.getPlaceableOnSquare() instanceof Rail)
-				return (Rail) retSquare.getPlaceableOnSquare();
 			break;
 		case EAST:
 			retSquare = this.map.getSquare(square.getXIndex() + 1, square.getYIndex());
-			if(retSquare.getPlaceableOnSquare() instanceof Rail)
-				return (Rail) retSquare.getPlaceableOnSquare();
 			break;
 		case SOUTH:
 			retSquare = this.map.getSquare(square.getXIndex(), square.getYIndex() + 1);
-			if(retSquare.getPlaceableOnSquare() instanceof Rail)
-				return (Rail) retSquare.getPlaceableOnSquare();
 			break;
 		case WEST:
 			retSquare = this.map.getSquare(square.getXIndex() - 1, square.getYIndex());
-			if(retSquare.getPlaceableOnSquare() instanceof Rail)
-				return (Rail) retSquare.getPlaceableOnSquare();
 			break;
 		}
-		return null;
+
+		newRail = (Rail) retSquare.getPlaceableOnSquare();
+
+		if(checkForCollision(newRail)){
+
+			notifyLocoCrashed(newRail);
+			setSpeed(0);
+
+		}
+
+		if(retSquare.getPlaceableOnSquare() instanceof Rail) {
+			return newRail;
+		}
+
+		return newRail;
 	}
 
 	/**
@@ -274,6 +302,12 @@ public class Loco extends TickableGameObject {
 		messageInfo.putValue("yPos", cart.getYPos());
 		messageInfo.putValue("playerId", this.playerId);
 		messageInfo.putValue("currentLocoId", getId());
+		notifyChange(messageInfo);
+	}
+
+	private void notifyLocoCrashed(Rail currentRail){
+		MessageInformation messageInfo = new MessageInformation("UpdateLocoCrashed");
+		messageInfo.putValue("currentLocoId", this.getId());
 		notifyChange(messageInfo);
 	}
 

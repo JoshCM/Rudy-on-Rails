@@ -160,7 +160,6 @@ public class GameSession extends RoRSession{
 		
 		
 	}
-	
 
 	public List<Loco> getLocos() {
 		return locos;

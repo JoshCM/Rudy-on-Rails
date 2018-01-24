@@ -17,6 +17,8 @@ namespace RoRClient.Models.Game
         private int speed;
         private Compass drivingDirection;
         private Guid playerId;
+        private string changeSmokeVisibility = "Hidden";
+        private string changeExplosionVisibility = "Hidden";
 
         public Loco(Guid id, Guid playerId, Compass drivingDirection, Square square) : base(square)
         {
@@ -29,6 +31,48 @@ namespace RoRClient.Models.Game
         {
             carts.Add(cart);
             NotifyPropertyChanged("Carts", null, cart);
+        }
+
+
+        public String ChangeSmokeVisibility
+        {
+            get
+            {
+                return changeSmokeVisibility;
+            }
+            set
+            {
+                changeSmokeVisibility = value;
+            }
+
+        }
+
+        public void UpdateSmokeVisibility(String newVisibility)
+        {
+            changeSmokeVisibility = newVisibility;
+            NotifyPropertyChanged("ChangeSmokeVisibility", this.changeSmokeVisibility, newVisibility);
+        }
+
+        public String ChangeExplosionVisibility
+        {
+            get
+            {
+                Console.WriteLine("should get " + changeExplosionVisibility);
+                return changeExplosionVisibility;
+            }
+            set
+            {
+                Console.WriteLine("should set " + changeExplosionVisibility);
+                changeExplosionVisibility = value;
+            }
+
+        }
+
+        public void UpdateExplosionVisibility(String newVisibility)
+        {
+            Console.WriteLine("should update " + newVisibility);
+            changeExplosionVisibility = newVisibility;
+            NotifyPropertyChanged("ChangeExplosionVisibility", this.changeExplosionVisibility, newVisibility);
         }
 
         public int Speed
@@ -71,6 +115,8 @@ namespace RoRClient.Models.Game
         }
 
         private ObservableCollection<Cart> carts = new ObservableCollection<Cart>();
+        
+
         public ObservableCollection<Cart> Carts
         {
             get

@@ -25,6 +25,15 @@ namespace RoRClient.Commands.Game.Update
             GameSession gameSession = (GameSession)session;
             Loco loco = gameSession.GetLocoById(locoId);
             loco.Speed = speed;
+            
+            if (speed == 0)
+            {
+                loco.UpdateSmokeVisibility("Hidden");
+            }
+            else
+            {
+                loco.UpdateSmokeVisibility("Visible");
+            }
         }
     }
 }
