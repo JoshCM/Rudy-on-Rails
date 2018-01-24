@@ -240,6 +240,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 		Rail craneRail = getRailbyId(this.crane.getRailId());
 		Square newSquare = EditorSessionManager.getInstance().getEditorSessionByName(sessionName).getMap().getSquareById(craneRail.getSquareId());
 		this.crane = new Crane(this.sessionName, newSquare, this.getId(), Crane.getCraneAlignmentbyTrainstationAlignment(this.alignment), craneRail.getId());
+		craneRail.setPlaceableOnRail(this.crane);
 	}
 
 	private Rail getRailbyId(UUID railId) {
