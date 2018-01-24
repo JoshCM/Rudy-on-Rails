@@ -13,7 +13,6 @@ namespace RoRClient.Models.Game
         {
             GHOSTLOCO,
             SENSOR
-             
         }
 
         private string description;

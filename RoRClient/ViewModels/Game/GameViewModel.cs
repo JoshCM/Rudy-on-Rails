@@ -44,10 +44,9 @@ namespace RoRClient.ViewModels.Game
         {
             this.uiState = uiState;
             mapGameViewModel = new MapGameViewModel(taskFactory);
-            gameInteractionsViewModel = new GameInteractionsViewModel(taskFactory);
+            gameInteractionsViewModel = new GameInteractionsViewModel(taskFactory, mapGameViewModel);
             gameStatusViewModel = new GameStatusViewModel();
             topMenuViewModel = new TopMenuViewModel();
-            gameInteractionsViewModel = new GameInteractionsViewModel(mapGameViewModel);
             mapGameViewModel.GameInteractionsViewModel = gameInteractionsViewModel;
         }
     }

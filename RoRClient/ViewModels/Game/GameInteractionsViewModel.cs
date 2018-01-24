@@ -26,10 +26,15 @@ namespace RoRClient.ViewModels.Game
         private MapGameViewModel mapGameViewModel;
         private int currentNumberOfOwnGhostLocoScript = 1;
 
-        public GameInteractionsViewModel(TaskFactory taskFactory)
-        public bool CanConfigureSensor
+        public GameInteractionsViewModel(TaskFactory taskFactory, MapGameViewModel mapGameViewModel)
         {
             scriptsViewModel = new ScriptsViewModel(GameSession.GetInstance().Scripts, taskFactory);
+            this.mapGameViewModel = mapGameViewModel;
+        }
+
+        public bool CanConfigureSensor
+        {
+            
             get
             {
                 return canConfigureSensor;
@@ -42,6 +47,13 @@ namespace RoRClient.ViewModels.Game
         }
 
         public ScriptsViewModel ScriptsViewModel
+        {
+            get
+            {
+                return scriptsViewModel;
+            }
+        }
+
         public bool CanPlaceSensor
         {
             get
@@ -52,18 +64,6 @@ namespace RoRClient.ViewModels.Game
             {
                 canPlaceSensor = value;
                 OnPropertyChanged("CanPlaceSensor");
-            }
-        }
-
-        public GameInteractionsViewModel(MapGameViewModel mapGameViewModel)
-        {
-            this.mapGameViewModel = mapGameViewModel;
-        }
-
-        {
-            get
-            {
-                return scriptsViewModel;
             }
         }
 
