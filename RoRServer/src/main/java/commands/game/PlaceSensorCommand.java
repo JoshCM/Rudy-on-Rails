@@ -42,7 +42,7 @@ public class PlaceSensorCommand extends CommandBase {
 				
 				// Kein Sensor auf Rail
 				if (rail.getSensor() == null) {
-					rail.placeSensor();
+					rail.placeSensor(playerId);
 				}
 				
 			} else {

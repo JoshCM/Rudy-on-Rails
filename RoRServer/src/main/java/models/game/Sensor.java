@@ -23,15 +23,17 @@ public class Sensor extends InteractiveGameObject {
 	public final static int SECOND = 1000;
 	
 	private UUID railId;
+	private UUID playerId;
 	private boolean active;
 	private ScriptableObject scriptableObject;
 	private String currentScriptName;
 	private SensorProxy sensorProxy;
 	private int activeTime = DEFAULT_ACTIME_TIME;
 
-	public Sensor(String sessionName, Square square, UUID railId) {
+	public Sensor(String sessionName, Square square, UUID railId, UUID playerId) {
 		super(sessionName, square);
 		this.railId = railId;
+		this.playerId = playerId;
 		this.active = false;
 		
 		// Vorbereitung für Skripting
@@ -42,12 +44,17 @@ public class Sensor extends InteractiveGameObject {
 		notifySensorPlaced();		
 	}
 	
+	public UUID getPlayerId() {
+		return playerId;
+	}
+	
 	/**
 	 * Schickt eine Nachricht an den Client, um den Sensor auf einer Rail zu platzieren
 	 */
 	private void notifySensorPlaced() {
 		MessageInformation message = new MessageInformation("PlaceSensor");
 		message.putValue("railId", railId);
+		message.putValue("playerId", playerId);
 		notifyChange(message);		
 	}
 	

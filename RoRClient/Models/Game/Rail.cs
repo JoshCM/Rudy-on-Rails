@@ -113,9 +113,9 @@ namespace RoRClient.Models.Game
             }
         }
 
-        public void PlaceSensor()
+        public void PlaceSensor(Guid playerId)
         {
-            Sensor = new Sensor(Square, Id);
+            Sensor = new Sensor(Square, Id, playerId);
             SensorPlaced = true;
         }
 

@@ -1,4 +1,5 @@
 ﻿using RoRClient.Models.Game;
+using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
 using System;
 using System.Collections.Generic;
@@ -48,17 +49,21 @@ namespace RoRClient.ViewModels.Game
 
         private void ActivateMenuForScript()
         {
-            // Bei Klick auf vorhandenen Sensor, kann ein Script dafür ausgewählt werden
-            MapViewModel.GameInteractionsViewModel.CanConfigureSensor = true;
+            
+            if (Rail.Sensor.PlayerId == GameSession.GetInstance().OwnPlayer.Id)
+            {
+                // Bei Klick auf vorhandenen Sensor, kann ein Script dafür ausgewählt werden
+                MapViewModel.GameInteractionsViewModel.CanConfigureSensor = true;
 
-            // Das Rail darunter wird als aktives CanvasViewModel gesetzt
-            MapViewModel.SelectedGameCanvasViewModel = this;
+                // Das Rail darunter wird als aktives CanvasViewModel gesetzt
+                MapViewModel.SelectedGameCanvasViewModel = this;
+
+                // DrownDown für Auswahl zurücksetzten
+                MapViewModel.GameInteractionsViewModel.SelectedSensorScript = null;
+            }
 
             // Es soll kein weiterer Sensor mehr platziert werden können
             MapViewModel.GameInteractionsViewModel.CanPlaceSensor = false;
-
-            // DrownDown für Auswahl zurücksetzten
-            MapViewModel.GameInteractionsViewModel.SelectedSensorScript = null;
         }
     }
 }

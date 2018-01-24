@@ -16,17 +16,19 @@ namespace RoRClient.Commands.Game.Other
     public class PlaceSensorCommand : CommandBase
     {
         private Guid railId;
+        private Guid playerId;
 
         public PlaceSensorCommand(RoRSession session, MessageInformation message) : base(session, message)
         {
             this.railId = message.GetValueAsGuid("railId");
+            this.playerId = message.GetValueAsGuid("playerId");
         }
 
         public override void Execute()
         {
             GameSession gameSession = GameSession.GetInstance();
             Rail rail = (Rail)gameSession.Map.GetPlaceableById(railId);
-            rail.PlaceSensor();
+            rail.PlaceSensor(playerId);
         }
     }
 }

@@ -13,11 +13,13 @@ namespace RoRClient.Models.Game
     public class Sensor : InteractiveGameObject
     {
         private Guid railId;
+        private Guid playerId;
         private bool active;
 
-        public Sensor(Square square, Guid railId) : base(square)
+        public Sensor(Square square, Guid railId, Guid playerId) : base(square)
         {
             this.railId = railId;
+            this.playerId = playerId;
             this.active = false;
         }
 
@@ -31,6 +33,14 @@ namespace RoRClient.Models.Game
             {
                 active = value;
                 NotifyPropertyChanged("Active");
+            }
+        }
+
+        public Guid PlayerId
+        {
+            get
+            {
+                return playerId;
             }
         }
     }

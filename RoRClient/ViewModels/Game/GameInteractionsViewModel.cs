@@ -194,6 +194,7 @@ namespace RoRClient.ViewModels.Game
             Guid selectedModelId = mapGameViewModel.SelectedGameCanvasViewModel.Id;
             message.PutValue("selectedModelId", selectedModelId);
             message.PutValue("scriptId", SelectedSensorScript.Id);
+            message.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
             GameSession.GetInstance().QueueSender.SendMessage("ChangeCurrentScriptOfSensor", message);
         }
 

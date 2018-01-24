@@ -17,11 +17,13 @@ public class ChangeCurrentScriptOfSensorCommand extends CommandBase {
 	
 	private UUID selectedModelId;
 	private UUID scriptId;
+	private UUID playerId;
 
 	public ChangeCurrentScriptOfSensorCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		selectedModelId = messageInfo.getValueAsUUID("selectedModelId");
-		scriptId = messageInfo.getValueAsUUID("scriptId");		
+		scriptId = messageInfo.getValueAsUUID("scriptId");	
+		playerId = messageInfo.getValueAsUUID("playerId");
 	}
 
 	@Override
@@ -35,8 +37,13 @@ public class ChangeCurrentScriptOfSensorCommand extends CommandBase {
 		if (placeable instanceof Rail) {
 			Rail rail = (Rail)placeable;
 			Sensor sensor = rail.getSensor();
-			Script script = gameSession.getScripts().getScriptForId(scriptId);
-			sensor.changeCurrentScriptFilename(script.getFilename());
+			if (playerId.equals(sensor.getPlayerId())) {
+				Script script = gameSession.getScripts().getScriptForId(scriptId);
+				sensor.changeCurrentScriptFilename(script.getFilename());
+			} else {
+				throw new InvalidModelOperationException("Der Sensor gehört dir nicht");
+			}
+
 		} else {
 			throw new InvalidModelOperationException("Keine Rail");
 		}
