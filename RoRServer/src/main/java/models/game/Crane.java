@@ -3,6 +3,9 @@ package models.game;
 import java.util.UUID;
 
 import communication.MessageInformation;
+import models.session.EditorSessionManager;
+import models.session.GameSession;
+import models.session.GameSessionManager;
 import models.session.RoRSession;
 
 public class Crane extends InteractiveGameObject implements PlaceableOnRail{
@@ -49,6 +52,34 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	 * der Kran soll sich bewegen(linear) damit er die Container aufgabeln kann
 	 */
 	public void moveToTakeTheGoods() {
+		
+		int trainstationLength = 4;
+		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(getDescription());
+		
+		for(int i = 0; i < trainstationLength; i++) {
+			switch(this.alignment) {
+			case EAST:	
+				moveCrane(gameSession.getMap().getSquare(this.getXPos(), this.getYPos()));
+				break;
+			case SOUTH:
+				moveCrane(gameSession.getMap().getSquare(this.getXPos(), this.getYPos()));
+				break;
+			case WEST:
+				moveCrane(gameSession.getMap().getSquare(this.getXPos(), this.getYPos()));
+				break;
+			case NORTH:
+				moveCrane(gameSession.getMap().getSquare(this.getXPos(), this.getYPos()));
+				break;
+			}
+		
+		}	
+	}
+	
+
+	/**
+	 * Lagert die Resource, die sich auf einem Wagon befindet, in das Lager
+	 */
+	public void pickUpResourceToStock() {
 		
 	}
 	
