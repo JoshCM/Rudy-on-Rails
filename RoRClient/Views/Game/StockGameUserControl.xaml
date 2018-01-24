@@ -12,10 +12,11 @@
              Canvas.Left="{Binding RealX, ElementName=stockGameUserControl}">
     <UserControl.Resources>
         <converter:CompassToAngleConverter  x:Key="CompassToAngleConverter"/>
+        <converter:PlayerToImagePathConverter x:Key="PlayerToImagePathConverter"/>
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=stockGameUserControl}"
             Height="{Binding SquareDim, ElementName=stockGameUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=stockGameUserControl}" Height="{Binding SquareDim, ElementName=stockGameUserControl}" Source="pack://application:,,,/Resources/Images/stock_container_1.png">
+        <Image Width="{Binding SquareDim, ElementName=stockGameUserControl}" Height="{Binding SquareDim, ElementName=stockGameUserControl}" Source="{Binding Stock, Converter={StaticResource PlayerToImagePathConverter}}">
             <Image.LayoutTransform>
                 <TransformGroup>
                     <RotateTransform Angle="{Binding Stock.Alignment, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" />
