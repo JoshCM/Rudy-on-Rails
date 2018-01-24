@@ -49,30 +49,37 @@ namespace RoRClient.ViewModels.Game
 
         /// <summary>
         /// EditorObject (Rail etc.) ausgewählt + Quicknavigation anzeigen
+        /// Schickt ein CreateCartCommand an den Server mit den Koordinaten
+        /// des CartSpawnPoints
         /// </summary>
         public void SelectTrainstationObject()
         {
             RoRSession gameSession = GameSession.GetInstance();
             MessageInformation messageInformation = new MessageInformation();
 
-            Rail rail = findRail(gameSession.Map);
-
-
+			// TODO: sollte eigentlich bei erstellen des Trainstations als spawnPoint mitgeschickt werden
+            Rail cartSpawnPointRail = findRail(gameSession.Map);
 
             Compass compass = findRailDirection();
-            if(rail != null)
+            System.Console.WriteLine("Compass:" + compass.ToString());
+            if(cartSpawnPointRail != null)
             {
-                messageInformation.PutValue("posX", rail.Square.PosX);
-                messageInformation.PutValue("posY", rail.Square.PosY);
+                messageInformation.PutValue("posX", cartSpawnPointRail.Square.PosX);
+                messageInformation.PutValue("posY", cartSpawnPointRail.Square.PosY);
                 messageInformation.PutValue("compass", compass.ToString());
                 messageInformation.PutValue("playerId",ClientConnection.GetInstance().ClientId);
                 gameSession.QueueSender.SendMessage("CreateCart", messageInformation);
             }
-            
 
-        }
 
-        private Rail findRail(Map map)
+		}
+
+		/// <summary>
+		/// Gibt anhand des Trainstations das Rail zurück das dem CartSpawnPoint entspricht
+		/// </summary>
+		/// <param name="map"></param>
+		/// <returns>Rail, welches CartSpawnPoint ist</returns>
+		private Rail findRail(Map map)
         {
             switch (trainstation.Alignment)
             {
@@ -88,7 +95,12 @@ namespace RoRClient.ViewModels.Game
 
             return null;
         }
-        private Compass findRailDirection()
+
+		/// <summary>
+		/// Gibt das Alignment des CartSpawnPointRails der Trainstation zurück
+		/// </summary>
+		/// <returns>CartSpawnPointRails der Trainstation</returns>
+		private Compass findRailDirection()
         {
             switch (trainstation.Alignment)
             {

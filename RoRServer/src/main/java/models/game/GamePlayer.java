@@ -26,6 +26,17 @@ public class GamePlayer extends Player{
     	messageInfo.putValue("pointCount", getPointCount());
     	notifyChange(messageInfo);
     }
+	
+	private void notifyUpdated() {
+		MessageInformation messageInfo = new MessageInformation("UpdatePlayer");
+    	messageInfo.putValue("playerId", getId());
+    	messageInfo.putValue("playerName", getDescription());
+    	messageInfo.putValue("isHost", getIsHost());
+    	messageInfo.putValue("coalCount", getCoalCount());
+    	messageInfo.putValue("goldCount", getGoldCount());
+    	messageInfo.putValue("pointCount", getPointCount());
+    	notifyChange(messageInfo);
+	}
 
 	private void initializeResourceCounts() {
 		this.coalCount = 25;
@@ -37,24 +48,32 @@ public class GamePlayer extends Player{
 		return coalCount;
 	}
 
-	public void addCoal(int coal) {
-		this.coalCount += coal;
-	}
-
 	public int getGoldCount() {
 		return goldCount;
 	}
 
-	public void addGold(int gold) {
-		this.goldCount += gold;
-	}
-	
 	public int getPointCount() {
 		return pointCount;
 	}
 
+	public void addCoal(int coal) {
+		this.coalCount += coal;
+		notifyUpdated();
+	}
+
+	public void addGold(int count) {
+		this.goldCount += count;
+		notifyUpdated();
+	}
+	
+	public void removeGold(int count) {
+		this.goldCount -= count;
+		notifyUpdated();
+	}
+	
 	public void addPoint(int point) {
 		this.pointCount += point;
+		notifyUpdated();
 	}
 
 }
