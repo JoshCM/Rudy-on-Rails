@@ -13,12 +13,12 @@ namespace RoRClient.Commands.Game.Other
     /// <summary>
     /// Command zum Deaktivieren/Aktivieren von Sensoren auf der Map
     /// </summary>
-    public class ActivateSensorCommand : CommandBase
+    public class SwitchSensorCommand : CommandBase
     {
         private bool active;
         private Guid railId;
 
-        public ActivateSensorCommand(RoRSession session, MessageInformation message) : base(session, message)
+        public SwitchSensorCommand(RoRSession session, MessageInformation message) : base(session, message)
         {
             active = message.GetValueAsBool("active");
             railId = message.GetValueAsGuid("railId");

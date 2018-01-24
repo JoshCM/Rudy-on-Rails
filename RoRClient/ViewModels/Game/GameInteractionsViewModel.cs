@@ -153,7 +153,9 @@ namespace RoRClient.ViewModels.Game
         {
             MessageInformation message = new MessageInformation();
             Guid selectedModelId = mapGameViewModel.SelectedGameCanvasViewModel.Id;
+            Guid playerId = GameSession.GetInstance().OwnPlayer.Id;
             message.PutValue("selectedModelId", selectedModelId);
+            message.PutValue("playerId", playerId);
             GameSession.GetInstance().QueueSender.SendMessage("PlaceSensor", message);
 
             // Button zum Platzieren von Sensoren deaktivieren, damit nicht mehrere Sensoren übereinander liegen

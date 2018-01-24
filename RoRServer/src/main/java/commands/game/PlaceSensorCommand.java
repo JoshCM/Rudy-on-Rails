@@ -5,34 +5,48 @@ import java.util.UUID;
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
+import models.game.Loco;
 import models.game.Map;
 import models.game.Placeable;
-import models.game.PlaceableOnSquare;
 import models.game.Rail;
+import models.game.Square;
+import models.helper.Validator;
+import models.session.GameSession;
 import models.session.RoRSession;
 
 public class PlaceSensorCommand extends CommandBase {
 
 	private UUID selectedModelId;
+	private UUID playerId;
 	
 	public PlaceSensorCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		this.selectedModelId = messageInfo.getValueAsUUID("selectedModelId");
+		this.playerId = messageInfo.getValueAsUUID("playerId");
 	}
 
 	@Override
 	public void execute() {
 		
-		Map map = this.session.getMap();
-		Placeable placeable = map.getPlaceableById(selectedModelId);
+		GameSession gameSession = (GameSession)session;
+		Map map = gameSession.getMap();	
 		
+		Placeable placeable = map.getPlaceableById(selectedModelId);
 		// Es muss ein Rail sein
 		if (placeable instanceof Rail) {
-			Rail rail = (Rail)placeable;
 			
-			// Kein Sensor auf Rail
-			if (rail.getSensor() == null) {
-				rail.placeSensor();
+			Loco loco = gameSession.getLocomotiveByPlayerId(playerId);
+			Rail rail = (Rail)placeable;
+
+			if(Validator.checkLocoInRangeOfRail(map, loco, rail)) {
+				
+				// Kein Sensor auf Rail
+				if (rail.getSensor() == null) {
+					rail.placeSensor();
+				}
+				
+			} else {
+				throw new InvalidModelOperationException("Zug nicht in der Nähe");
 			}
 		} else {
 			throw new InvalidModelOperationException("Keine Rail");

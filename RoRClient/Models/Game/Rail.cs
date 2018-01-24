@@ -118,6 +118,12 @@ namespace RoRClient.Models.Game
             Sensor = new Sensor(Square, Id);
             SensorPlaced = true;
         }
+
+        public void RemoveSensor()
+        {
+            SensorPlaced = false;
+            Sensor = null;
+        }
         public bool hasSensor()
         {
             bool hasSensor = false;

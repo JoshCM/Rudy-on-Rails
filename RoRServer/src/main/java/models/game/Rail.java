@@ -89,6 +89,11 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     	// Die Locos kennen den Sensor und sagen diesem Bescheid, wenn darüber gefahren wird
     	Loco.addSensor(sensor);
     }
+    
+    public void removeSensor() {
+    	sensorActive = false;
+    	sensor = null;
+    }
    
 
     /**
