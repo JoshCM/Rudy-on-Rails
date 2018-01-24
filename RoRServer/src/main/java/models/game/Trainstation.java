@@ -23,6 +23,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	public static final int RAIL_COUNT_LEFT = 6;
 	protected List<UUID> trainstationRailIds;
 	protected Stock stock;
+	protected Resource resource = null;
 	private Crane crane;
 	protected Compass alignment;
 	protected UUID playerId;
@@ -42,7 +43,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	}
 
 	/**
-	 * Gibt die Ausrichtung der Trainstation zurÃ¼ck
+	 * Gibt die Ausrichtung der Trainstation zurück
 	 * @return Ausrichtung als Compass
 	 */
 	public Compass getAlignment() {
@@ -50,7 +51,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	}
 
 	/**
-	 * Gibt alle IDs der Rails der Trainstation zurÃ¼ck
+	 * Gibt alle IDs der Rails der Trainstation zurück
 	 * @return IDs der trainstationRails
 	 */
 	public List<UUID> getTrainstationRailIds() {
@@ -58,7 +59,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	}
 	
 	/**
-	 * Gibt den Stock als Object zurÃ¼ck
+	 * Gibt den Stock als Object zurück
 	 * @return Den Stock
 	 */
 	public Stock getStock() {
@@ -86,7 +87,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	}
 	
 	/**
-	 * Gibt die Liste von Rails der Trainstation zurÃ¼ck
+	 * Gibt die Liste von Rails der Trainstation zurück
 	 * @return trainstationRails
 	 */
 	public List<Rail> getTrainstationRails() {
@@ -99,7 +100,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	}
 
 	/**
-	 * Gibt die Liste von Rails der Trainstation umgedreht zurÃ¼ck
+	 * Gibt die Liste von Rails der Trainstation umgedreht zurück
 	 * @return
 	 */
 	public List<Rail> getReverseTrainstationRails() {
@@ -117,7 +118,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	}
 
 	/**
-	 * Rotiert die zugehÃ¶rigen Rails einer Trainstation
+	 * Rotiert die zugehörigen Rails einer Trainstation
 	 * @param trainstationRail	Ein Rail der Trainstation
 	 * @param oldRailSquare		Square worauf die Rail vorher PlaceableOnSquare war
 	 * @param newRailSquare		Square worauf die Rail PlaceableOnSquare werden soll
@@ -157,7 +158,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 		for (Coordinate coordinate : temptrainstationGameObjectMap.keySet()) {
 
 			InteractiveGameObject tmpTrainstationGameObject = temptrainstationGameObjectMap.get(coordinate);
-			// bekomme sessionname fÃ¼r neue Rail
+			// bekomme sessionname für neue Rail
 			String sessionName = editorSession.getDescription();
 			// bekomme newSquare
 			Square newSquare = (Square) editorSession.getMap().getSquare(coordinate.x, coordinate.y);
@@ -208,7 +209,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	}
 
 	/**
-	 * Rotiert die Trainstation und alle zugehÃ¶rigen Rails
+	 * Rotiert die Trainstation und alle zugehörigen Rails
 	 * @param right	Uhrzeigersinn/Gegen Uhrzeigersinn
 	 */
 	public void rotate(boolean right) {
