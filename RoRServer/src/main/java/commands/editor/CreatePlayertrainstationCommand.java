@@ -49,9 +49,9 @@ public class CreatePlayertrainstationCommand extends CreateTrainstationCommandBa
 			Stock newStock = new Stock(session.getSessionName(), stockSquare, trainstationId, alignment);
 			stockSquare.setPlaceableOnSquare(newStock);
 
-			// Trainstation wird erzeugt und auf Square gesetzt - die playerId wird hier auf null gesetzt, da im Editor diese nicht berüksichtigt werden
+			// Trainstation wird erzeugt und auf Square gesetzt
 			Playertrainstation trainstation = new Playertrainstation(session.getSessionName(), newSquare,
-					createTrainstationRails(map, newSquare, trainstationId, alignment), trainstationId, alignment, newStock, new UUID(0L,0L));
+					createTrainstationRails(map, newSquare, trainstationId, alignment), trainstationId, alignment, newStock);
 			this.setSpawnPoint(trainstation);
 			newSquare.setPlaceableOnSquare(trainstation);
 

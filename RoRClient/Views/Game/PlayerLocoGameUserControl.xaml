@@ -12,13 +12,12 @@
             Canvas.Left="{Binding RealX, ElementName=locoGameUserControl}">
     <UserControl.Resources>
         <converter:CompassToAngleConverter x:Key="CompassToAngleConverter"/>
-        <converter:PlayerToImagePathConverter x:Key="PlayerToImagePathConverter"/>
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=locoGameUserControl}"
             Height="{Binding SquareDim, ElementName=locoGameUserControl}">
         <Image Width="{Binding SquareDim, ElementName=locoGameUserControl}" 
                Height="{Binding SquareDim, ElementName=locoGameUserControl}" 
-               Source="{Binding Loco, Converter={StaticResource PlayerToImagePathConverter}}" Stretch="Fill" RenderTransformOrigin="0.5, 0.5">
+               Source="/RoRClient;component/Resources/Images/loco_4.png" Stretch="Fill" RenderTransformOrigin="0.5, 0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <RotateTransform Angle="{Binding RealRotationAngle, ElementName=locoGameUserControl}" />

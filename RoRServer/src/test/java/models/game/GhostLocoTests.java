@@ -61,9 +61,6 @@ public class GhostLocoTests {
 		// Square, auf dem der Cart steht
 		int squarePosXCart = 0;
 		int squarePosYCart = 1;
-		// Square, auf dem der zweite Cart steht
-		int squarePosXCart2 = 0;
-		int squarePosYCart2 = 2;
 		Compass node1 = Compass.NORTH;
 		Compass node2 = Compass.SOUTH;
 		List<Compass> directions = new ArrayList<>();
@@ -77,17 +74,14 @@ public class GhostLocoTests {
 		Map map = gameSession.getMap();
 		Square squareLoco = map.getSquare(squarePosXLoco, squarePosYLoco);
 		Square squareCart = map.getSquare(squarePosXCart, squarePosYCart);
-		Square squareCart2 = map.getSquare(squarePosXCart2, squarePosYCart2);
 		
 		Rail railLoco = new Rail(gameSession.getSessionName(), squareLoco, directions);
 		Rail railCart = new Rail(gameSession.getSessionName(), squareCart, directions);
-		Rail railCart2 = new Rail(gameSession.getSessionName(), squareCart2, directions);
 
 		squareLoco.setPlaceableOnSquare(railLoco);
 		squareCart.setPlaceableOnSquare(railCart);
-		squareCart2.setPlaceableOnSquare(railCart2);
 		
-		GhostLoco loco = new GhostLoco(gameSession.getSessionName(), squareLoco, player.getId(), node1);
+		GhostLoco loco = new GhostLoco(gameSession.getSessionName(), squareLoco, player.getId(),node1);
 		
 		return loco;
 	}

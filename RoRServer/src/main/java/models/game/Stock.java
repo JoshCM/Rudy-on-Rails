@@ -18,6 +18,7 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare {
 	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
 	private Compass alignment;
 	private UUID trainstationId;
+	private List<Resource> resources = new ArrayList<Resource>();
 
 	public Stock(String sessionName, Square square, UUID trainstationId, Compass alignment) {
 		super(sessionName, square);
@@ -43,10 +44,16 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare {
 		MessageInformation messageInfo = new MessageInformation("CreateStock");
 		messageInfo.putValue("stockId", getId());
 		messageInfo.putValue("squareId", getSquareId());
-		messageInfo.putValue("trainstationId", getTrainstationId());
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
 
+		List<JsonObject> jsonResources = new ArrayList<JsonObject>();
+		for (Resource resource : resources) {
+			JsonObject json = new JsonObject();
+			json.addProperty("resourceId", resource.getId().toString());
+			jsonResources.add(json);
+		}
+		messageInfo.putValue("resourceIds", jsonResources);
 		notifyChange(messageInfo);
 	}
 
@@ -114,4 +121,16 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare {
 		this.setXPos(newSquareOfStock.getXIndex());
 		this.setYPos(newSquareOfStock.getYIndex());
 	}
+
+	public List<Resource> getResources() {
+		return resources;
+	}
+
+	public void addResource(Resource resource) {
+		this.resources.add(resource);
+	}
+
+	
+
+
 }

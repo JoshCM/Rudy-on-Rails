@@ -46,14 +46,14 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	
 	public void moveCrane(Square newSquare) {
 		changeSquare(newSquare);
-//		NotifyCraneDeleted();
 		NotifyCraneMoved();
 	}
 	
-	public void deleteCrane() {
-		NotifyCraneDeleted();
+	public void rotateCrane(Square newSquare, Compass trainstationAlignment) {
+		moveCrane(newSquare);
+		this.alignment = getCraneAlignmentbyTrainstationAlignment(alignment);
+		NotifyCraneRotated();
 	}
-	
 	
 	public static Compass getCraneAlignmentbyTrainstationAlignment(Compass trainstationAlignment) {
 		switch(trainstationAlignment) {
@@ -75,10 +75,10 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		return railId;
 	}
 	public Compass getAlignment() {
-		return this.alignment;		
+		return alignment;		
 	}
 	public UUID getTrainstationId() {
-		return this.trainstationId;
+		return trainstationId;
 	}
 	private void NotifyCraneCreated() {
 	// TODO Auto-generated method stub
@@ -87,7 +87,7 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		messageInfo.putValue("squareId", getSquareId());
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
-		messageInfo.putValue("alignment", this.alignment.toString());
+		messageInfo.putValue("alignment", alignment.toString());
 		notifyChange(messageInfo);
 	}
 	
@@ -98,9 +98,11 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		notifyChange(messageInfo);
 	}
 	
-	private void NotifyCraneDeleted() {
-		MessageInformation messageInfo = new MessageInformation("DeleteCrane");
-		messageInfo.putValue("railId", this.railId);
+	private void NotifyCraneRotated() {
+		MessageInformation messageInfo = new MessageInformation("UpdateAlignmentOfCrane");
+		messageInfo.putValue("XPos", getXPos());
+		messageInfo.putValue("YPos", getYPos());
+		messageInfo.putValue("newAlignment", this.alignment.toString());
 		notifyChange(messageInfo);
 	}
 	

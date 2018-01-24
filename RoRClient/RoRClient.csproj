@@ -105,7 +105,6 @@
     <Compile Include="BindingConverter\BooleanToVisibilityConverter.cs" />
     <Compile Include="BindingConverter\ObjectEqualsConverter.cs" />
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
-    <Compile Include="BindingConverter\PlayerToImagePathConverter.cs" />
     <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
     <Compile Include="BindingConverter\IsNullToBooleanConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
@@ -123,7 +122,6 @@
     <Compile Include="Commands\Base\CreatePlayertrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreatePublictrainstationCommand.cs" />
-    <Compile Include="Commands\Editor\Delete\DeleteCraneCommand.cs" />
     <Compile Include="Commands\Editor\Other\LeaveEditorCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateActivityOfSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateSignalsCommand.cs" />
@@ -165,7 +163,6 @@
     <Compile Include="Commands\Game\Delete\DeletePlaceableCommand.cs" />
     <Compile Include="Commands\Game\Other\EndGameCommand.cs" />
     <Compile Include="Commands\Game\Other\RemoveResourceFromMineCommand.cs" />
-    <Compile Include="Commands\Game\Update\UpdateColorOfPlayerCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateResourceLoadedOntoCartCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayertrainstationCommand.cs" />
@@ -629,13 +626,14 @@
   <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Images\dummy.png" />
-    <Resource Include="Resources\Images\trainstation_0.png" />
+    <Resource Include="Resources\Images\trainstation.png" />
     <Resource Include="Resources\Images\game_minimap_dummy.png" />
     <Resource Include="Resources\Images\game_map_dummy.jpg" />
     <Resource Include="Resources\Images\rotate_right.png" />
     <Resource Include="Resources\Images\rotate_left.png" />
     <Resource Include="Resources\Images\delete.png" />
     <Resource Include="Resources\Images\move.png" />
+    <Resource Include="Resources\Images\loco.png" />
     <Resource Include="Resources\Images\container_coal.png" />
     <Resource Include="Resources\Images\container_gold.png" />
     <Resource Include="Resources\Images\Tools\crossing\rail_crossing.png" />
@@ -644,6 +642,7 @@
     <Resource Include="Resources\Images\signal_green.png" />
     <Resource Include="Resources\Images\signal_red.png" />
     <Resource Include="Resources\Images\loco_debug.png" />
+    <Resource Include="Resources\Images\loco_4.png" />
     <Resource Include="Resources\Images\cart.png" />
     <Resource Include="Resources\Images\Tools\crossing\rail_crossing_with_signals.png" />
     <Resource Include="Resources\Images\mine.png" />
@@ -651,9 +650,10 @@
     <Resource Include="Resources\Images\ghosttrain.png" />
     <Resource Include="Resources\Images\gras.jpg" />
     <Resource Include="Resources\Images\stock.png" />
-    <Resource Include="Resources\Images\stock_cart_0.png" />
+    <Resource Include="Resources\Images\stock_cart_1.png" />
     <Resource Include="Resources\Images\Tools\trainstations\playertrainstation.png" />
     <Resource Include="Resources\Images\stock_container_1.png" />
+    <Resource Include="Resources\Images\sensor.png" />
     <Resource Include="Resources\Images\container_points.png" />
     <Resource Include="Resources\Images\btn_back.png" />
     <Resource Include="Resources\Images\crane.png" />
@@ -664,19 +664,24 @@
     <Resource Include="Resources\Images\Tools\rail\railcurve_sw.png" />
     <Resource Include="Resources\Images\Tools\rail\rail_ew.png" />
     <Resource Include="Resources\Images\Tools\rail\rail_ns.png" />
-    <Resource Include="Resources\Images\trainstation_1.png" />
-    <Resource Include="Resources\Images\trainstation_2.png" />
-    <Resource Include="Resources\Images\trainstation_3.png" />
+    <Resource Include="Resources\Images\trainstation2.png" />
+    <Resource Include="Resources\Images\trainstation3.png" />
+    <Resource Include="Resources\Images\trainstation4.png" />
     <Resource Include="Resources\Images\ghostcrane.png" />
+    <Resource Include="Resources\Images\loco_2.png" />
+    <Resource Include="Resources\Images\loco_3.png" />
     <Resource Include="Resources\Images\rail_EAST_NORTH.png" />
     <Resource Include="Resources\Images\rail_NORTH_WEST.png" />
     <Resource Include="Resources\Images\rail_EAST_SOUTH.png" />
     <Resource Include="Resources\Images\rail_SOUTH_WEST.png" />
     <Resource Include="Resources\Images\rail_EAST_WEST.png" />
     <Resource Include="Resources\Images\rail_NORTH_SOUTH.png" />
-    <Resource Include="Resources\Images\stock_cart_1.png" />
     <Resource Include="Resources\Images\stock_cart_2.png" />
     <Resource Include="Resources\Images\stock_cart_3.png" />
+    <Resource Include="Resources\Images\stock_cart_4.png" />
+    <Resource Include="Resources\Images\stock_container_2.png" />
+    <Resource Include="Resources\Images\stock_container_3.png" />
+    <Resource Include="Resources\Images\stock_container_4.png" />
     <Resource Include="Resources\Images\changeSwitch.png" />
     <Resource Include="Resources\Images\rail_EAST_NORTH_inactive.png" />
     <Resource Include="Resources\Images\rail_EAST_SOUTH_inactive.png" />
@@ -689,14 +694,6 @@
     <Resource Include="Resources\Images\Tools\switch\switch_sn_sw.png" />
     <Resource Include="Resources\Images\Tools\trainstations\publictrainstation.png" />
     <Resource Include="Resources\Images\stock_container_public_ts.png" />
-    <Resource Include="Resources\Images\loco_0.png" />
-    <Resource Include="Resources\Images\loco_1.png" />
-    <Resource Include="Resources\Images\loco_2.png" />
-    <Resource Include="Resources\Images\loco_3.png" />
-    <Resource Include="Resources\Images\stock_container_0.png" />
-    <Resource Include="Resources\Images\stock_container_1.png" />
-    <Resource Include="Resources\Images\stock_container_2.png" />
-    <Resource Include="Resources\Images\stock_container_3.png" />
     <Resource Include="Resources\Images\sensor_active.png" />
     <Resource Include="Resources\Images\sensor_inactive.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />

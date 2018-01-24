@@ -1,7 +1,6 @@
 ﻿using RoRClient.Models.Game;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +12,6 @@ namespace RoRClient.ViewModels.Editor
         public CraneEditorViewModel(Crane crane) : base(crane.Id)
         {
             this.crane = crane;
-            crane.PropertyChanged += OnCraneSquare;
             this.SquarePosX = crane.Square.PosX;
             this.SquarePosY = crane.Square.PosY;
         }
@@ -42,15 +40,6 @@ namespace RoRClient.ViewModels.Editor
         public override void Delete()
         {
             throw new NotImplementedException();
-        }
-
-        private void OnCraneSquare(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Square")
-            {
-                this.SquarePosX = crane.Square.PosX;
-                this.SquarePosY = crane.Square.PosY;
-            }
         }
     }
 }
