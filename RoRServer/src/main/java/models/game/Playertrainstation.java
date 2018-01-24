@@ -66,7 +66,7 @@ public class Playertrainstation extends Trainstation {
 		Playertrainstation oldTrainStation = (Playertrainstation) square.getPlaceableOnSquare();
 		Playertrainstation newTrainStation = new Playertrainstation(session.getDescription(), square,
 				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock());
-		
+		newTrainStation.setCrane(oldTrainStation.getCrane());
 		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
 		newTrainStation.setSessionName(session.getDescription());
 		

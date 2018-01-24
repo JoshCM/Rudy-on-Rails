@@ -19,6 +19,7 @@ public class MoveCraneCommand implements Command{
 	private Stock stock;
 	private Trainstation trainstation;
 	private Crane crane;
+	private UUID playerId;
 	protected GameSession session;
 	
 	public MoveCraneCommand(RoRSession session, MessageInformation messageInfo) { 
@@ -28,7 +29,7 @@ public class MoveCraneCommand implements Command{
 		this.session = (GameSession)session;
 		this.stock = (Stock)session.getMap().getPlaceableOnSquareById(messageInfo.getValueAsUUID("stockId"));
 		this.trainstation = (Trainstation)session.getMap().getPlaceableOnSquareById(this.stock.getTrainstationId());
-		
+		this.playerId = UUID.fromString(messageInfo.getClientid());
 		this.crane = this.trainstation.getCrane();
 		
 	}
@@ -36,9 +37,9 @@ public class MoveCraneCommand implements Command{
 	@Override
 	public void execute() {
 		
-		this.crane.moveToTakeTheGoods();
-		System.out.println("I'm moving for gooood(Crane)");
-		
+		if(this.playerId.equals(this.trainstation.getId())) {
+			this.crane.moveToTakeTheGoods(session.getLocomotiveByPlayerId(playerId),this.stock);
+		}
 	}
 
 }

@@ -22,7 +22,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	public static final int RAIL_COUNT_LEFT = 6;
 	protected List<UUID> trainstationRailIds;
 	protected Stock stock;
-	private Crane crane;
+	protected Crane crane;
 	protected Compass alignment;
 	protected UUID playerId;
 
@@ -32,19 +32,12 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	transient EditorSession editorSession;
 
 	public Trainstation(String sessionName, Square square,List<UUID> trainstationRailIds, UUID id, Compass alignment,
-			Stock stock, Crane crane) {
+			Stock stock) {
 		super(sessionName, square, id);
 		this.stock = stock;
 		this.trainstationRailIds = trainstationRailIds;
 		this.alignment = alignment;
-		this.crane = crane;
 		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getDescription());
-	}
-	
-	public Trainstation(String sessionName, Square square,List<UUID> trainstationRailIds, UUID id, Compass alignment,
-			Stock stock, Crane crane) {
-		this(sessionName,square,trainstationRailIds,id,alignment,stock);
-		this.crane = crane;
 	}
 
 	/**
@@ -327,75 +320,6 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 
 		return true;
 	}
-
-	@Override
-	public Trainstation loadFromMap(Square square, RoRSession session) {
-		Trainstation oldTrainStation = (Trainstation) square.getPlaceableOnSquare();
-		Trainstation newTrainStation = new Trainstation(session.getDescription(), square,
-				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock());
-		
-		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
-		newTrainStation.setSessionName(session.getDescription());
-		
-		// setze den alten SpawnPoint für die neue Trainstation
-		newTrainStation.setSpawnPointforLoco(oldTrainStation.getSpawnPointforLoco());
-
-		log.info("TrainStation erstellt: " + newTrainStation.toString());
-		return newTrainStation;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + CLOCKWISE;
-		result = prime * result + COUNTER_CLOCKWISE;
-		result = prime * result + ((alignment == null) ? 0 : alignment.hashCode());
-		result = prime * result + ((spawnPointForLoco == null) ? 0 : spawnPointForLoco.hashCode());
-		result = prime * result + ((stock == null) ? 0 : stock.hashCode());
-		result = prime * result + ((trainstationRailIds == null) ? 0 : trainstationRailIds.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Trainstation other = (Trainstation) obj;
-		if (CLOCKWISE != other.CLOCKWISE)
-			return false;
-		if (COUNTER_CLOCKWISE != other.COUNTER_CLOCKWISE)
-			return false;
-		if (alignment != other.alignment)
-			return false;
-		if (spawnPointForLoco == null) {
-			if (other.spawnPointForLoco != null)
-				return false;
-		} else if (!spawnPointForLoco.equals(other.spawnPointForLoco))
-			return false;
-		if (stock == null) {
-			if (other.stock != null)
-				return false;
-		} else if (!stock.equals(other.stock))
-			return false;
-		if (trainstationRailIds == null) {
-			if (other.trainstationRailIds != null)
-				return false;
-		} else if (!trainstationRailIds.equals(other.trainstationRailIds))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Trainstation [trainstationRailIds=" + trainstationRailIds + ", alignment=" + alignment
-				+ ", spawnPointForLoco=" + spawnPointForLoco + "]";
-	}
-
 
 
 }

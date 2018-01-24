@@ -51,28 +51,18 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	/**
 	 * der Kran soll sich bewegen(linear) damit er die Container aufgabeln kann
 	 */
-	public void moveToTakeTheGoods() {
+	public void moveToTakeTheGoods(Loco loco, Stock stock) {
 		
-		int trainstationLength = 4;
 		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(getDescription());
 		
-		for(int i = 0; i < trainstationLength; i++) {
-			switch(this.alignment) {
-			case EAST:	
-				moveCrane(gameSession.getMap().getSquare(this.getXPos(), this.getYPos()));
-				break;
-			case SOUTH:
-				moveCrane(gameSession.getMap().getSquare(this.getXPos(), this.getYPos()));
-				break;
-			case WEST:
-				moveCrane(gameSession.getMap().getSquare(this.getXPos(), this.getYPos()));
-				break;
-			case NORTH:
-				moveCrane(gameSession.getMap().getSquare(this.getXPos(), this.getYPos()));
-				break;
+		for(Cart cart : loco.getCarts()) {
+
+			if(cart.getResource() != null) {
+				updateCranePosition(gameSession.getMap().getSquare(cart.getXPos(), cart.getYPos()));
+				Resource resource = cart.unloadResourceFromCart();
+				stock.addResource(resource);
 			}
-		
-		}	
+		}
 	}
 	
 
@@ -86,6 +76,15 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	public void moveCrane(Square newSquare) {
 		changeSquare(newSquare);
 		NotifyCraneMoved();
+	}
+	
+	/**
+	 * move Methode für den Spielmodus
+	 * @param newSquare
+	 */
+	public void updateCranePosition(Square newSquare) {
+		changeSquare(newSquare);
+		NotifyCraneUpdatePosition();
 	}
 	
 	public void rotateCrane(Square newSquare, Compass trainstationAlignment) {
@@ -132,6 +131,12 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	
 	private void NotifyCraneMoved() {
 		MessageInformation messageInfo = new MessageInformation("MoveCrane");
+		messageInfo.putValue("newXPos", getXPos());
+		messageInfo.putValue("newYPos", getYPos());
+		notifyChange(messageInfo);
+	}
+	private void NotifyCraneUpdatePosition() {
+		MessageInformation messageInfo = new MessageInformation("UpdateCranePosition");
 		messageInfo.putValue("newXPos", getXPos());
 		messageInfo.putValue("newYPos", getYPos());
 		notifyChange(messageInfo);
