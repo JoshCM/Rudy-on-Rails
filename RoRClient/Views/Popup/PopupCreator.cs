@@ -24,6 +24,5 @@ namespace RoRClient.Views.Popup
         //    RulesPopup popup = new RulesPopup();
           //  popup.ShowDialog();
        // }
-
     }
 }

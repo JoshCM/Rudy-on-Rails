@@ -26,7 +26,6 @@
         </MenuItem>
         <Label Content="|" Foreground="White" FontSize="20" Margin="5, 0"/>
         <MenuItem Header="_Spielregeln" MinWidth="50" Command="{Binding OpenRulesPopUpCommand}"/>
-            
         <MenuItem Header="_X" Command="{Binding LeaveEditorCommand}" MinWidth="20" Margin="40, 0, 15, 0"/>
     </Menu>
 </UserControl>

@@ -89,7 +89,7 @@
                        Style="{StaticResource DefaultTextBlockStyle}" />
 
                 <Label Content="Sensoren setzen" Style="{StaticResource DefaultSubHeaderStyle}"/>
-                <TextBlock Text="Jeder Spieler kann Sensoren gegen Gold auf dem Schienennetz platzieren. Dafür muss er zuerst unten 'Sensor' auswählen, ein Skript einstellen und danach wird mit Klick auf eine Schiene der Sensor gesetzt. Ein Sensor kann nur in unmittelbarer Nähe vor dem eigenen Zug platziert werden. Ein Sensor kann das Verhalten von Zügen manipulieren, kann Signale und Weichen umstellen. Ein Sensor ist nur eine gewisse zeitlang aktiv und verschwindet danach wieder." 
+                <TextBlock Text="Jeder Spieler kann Sensoren gegen Gold auf dem Schienennetz platzieren. Dafür muss er auf ein Schienenstück klicken, welches in unmittelbarer Nähe vor seinem Zug ist. Danach wählt er unten 'Sensor' aus und der inaktive Sensor erscheint auf der Schiene. Um ein Skript einzustellen, muss der Spieler den Sensor nochmals anklicken. Nach Auswählen eines Skripts, wird der Sensor aktiv. Ein Sensor kann das Verhalten von Zügen manipulieren, kann Signale und Weichen umstellen. Ein Sensor ist nur eine gewisse zeitlang aktiv und verschwindet danach wieder."
                        Style="{StaticResource DefaultTextBlockStyle}" />
 
                 <Label Content="Kollisionen" Style="{StaticResource DefaultSubHeaderStyle}"/>

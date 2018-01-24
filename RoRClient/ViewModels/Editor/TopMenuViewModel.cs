@@ -34,7 +34,6 @@ namespace RoRClient.ViewModels.Editor
         {
             RulesPopup popup = new RulesPopup();
             popup.ShowDialog();
-            // PopupCreator.ShowRules();
         }
 
         private ICommand saveNewMapCommand;
