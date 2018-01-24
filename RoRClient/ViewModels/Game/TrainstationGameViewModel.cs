@@ -60,7 +60,6 @@ namespace RoRClient.ViewModels.Game
 
 
             Compass compass = findRailDirection();
-            System.Console.WriteLine("Compass:" + compass.ToString());
             if(rail != null)
             {
                 messageInformation.PutValue("posX", rail.Square.PosX);

@@ -53,7 +53,7 @@ public class RailSectionTests {
 		Compass node1 = Compass.NORTH;
 		Compass node2 = Compass.SOUTH;
 		Rail rail = createTestRail(node1, node2);
-		RailSection section = new RailSection("test", rail, node1, node2);
+		RailSection section = new RailSection("test", rail, node1, node2, RailSectionStatus.ACTIVE);
 
 		section.rotate(true);
 
@@ -66,7 +66,7 @@ public class RailSectionTests {
 		Compass node1 = Compass.EAST;
 		Compass node2 = Compass.WEST;
 		Rail rail = createTestRail(node1, node2);
-		RailSection section = new RailSection("test", rail, node1, node2);
+		RailSection section = new RailSection("test", rail, node1, node2, RailSectionStatus.ACTIVE);
 
 		section.rotate(true);
 
@@ -79,7 +79,7 @@ public class RailSectionTests {
 		Compass node1 = Compass.NORTH;
 		Compass node2 = Compass.SOUTH;
 		Rail rail = createTestRail(node1, node2);
-		RailSection section = new RailSection("test", rail, node1, node2);
+		RailSection section = new RailSection("test", rail, node1, node2, RailSectionStatus.ACTIVE);
 
 		section.rotate(false);
 
@@ -92,7 +92,7 @@ public class RailSectionTests {
 		Compass node1 = Compass.EAST;
 		Compass node2 = Compass.WEST;
 		Rail rail = createTestRail(node1, node2);
-		RailSection section = new RailSection("test", rail, node1, node2);
+		RailSection section = new RailSection("test", rail, node1, node2, RailSectionStatus.ACTIVE);
 
 		section.rotate(false);
 
@@ -105,7 +105,7 @@ public class RailSectionTests {
 		Compass node1 = Compass.EAST;
 		Compass node2 = Compass.SOUTH;
 		Rail rail = createTestRail(node1, node2);
-		RailSection section = new RailSection("test", rail, node1, node2);
+		RailSection section = new RailSection("test", rail, node1, node2, RailSectionStatus.ACTIVE);
 		Random generator = new Random();
 		int togglecount = generator.nextInt(17);
 

@@ -59,4 +59,33 @@ public class CompassHelper {
 		return Compass.values()[newIndex];
 	}
 
+	public static int getRealXForDirection(Compass direction, int xPos, int yPos, int sideways, int forward) {
+		switch (direction) {
+		case NORTH:
+			return xPos + sideways;
+		case EAST:
+			return xPos + forward;
+		case SOUTH:
+			return xPos - sideways;
+		case WEST:
+			return xPos - forward;
+		default:
+			return -1;
+		}
+	}
+
+	public static int getRealYForDirection(Compass direction, int xPos, int yPos, int sideways, int forward) {
+		switch (direction) {
+		case NORTH:
+			return yPos - forward;
+		case EAST:
+			return yPos + sideways;
+		case SOUTH:
+			return yPos + forward;
+		case WEST:
+			return yPos - sideways;
+		default:
+			return -1;
+		}
+	}
 }
