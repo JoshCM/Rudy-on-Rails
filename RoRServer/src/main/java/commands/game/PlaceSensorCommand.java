@@ -14,6 +14,11 @@ import models.helper.Validator;
 import models.session.GameSession;
 import models.session.RoRSession;
 
+/**
+ * Command zum Setzen von Sensoren
+ * @author apoeh001
+ *
+ */
 public class PlaceSensorCommand extends CommandBase {
 
 	private UUID selectedModelId;
@@ -38,6 +43,7 @@ public class PlaceSensorCommand extends CommandBase {
 			Loco loco = gameSession.getLocomotiveByPlayerId(playerId);
 			Rail rail = (Rail)placeable;
 
+			// Prüft, ob die Loco in der Nähe des Rails ist
 			if(Validator.checkLocoInRangeOfRail(map, loco, rail)) {
 				
 				// Kein Sensor auf Rail

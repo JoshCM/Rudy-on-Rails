@@ -16,12 +16,15 @@ namespace RoRClient.Commands.Game.Other
     public class SwitchSensorCommand : CommandBase
     {
         private bool active;
+        private bool wasActive;
         private Guid railId;
 
         public SwitchSensorCommand(RoRSession session, MessageInformation message) : base(session, message)
         {
             active = message.GetValueAsBool("active");
+            wasActive = message.GetValueAsBool("wasActive");
             railId = message.GetValueAsGuid("railId");
+
         }
 
         public override void Execute()
@@ -29,6 +32,7 @@ namespace RoRClient.Commands.Game.Other
             Rail rail = (Rail)session.Map.GetPlaceableById(railId);
             Sensor sensor = rail.Sensor;
             sensor.Active = active;
+            sensor.WasActive = wasActive;
         }
     }
 }

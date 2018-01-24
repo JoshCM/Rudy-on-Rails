@@ -180,6 +180,7 @@ namespace RoRClient.ViewModels.Game
 
                     if (selectedSensorScript != null) {
                         ChangeCurrentScriptOfSensor();
+                        CanConfigureSensor = false;
                     }
                 }
             }

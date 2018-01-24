@@ -91,6 +91,9 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     	Loco.addSensor(sensor);
     }
     
+    /**
+     * Setzt den Sensor auf der Rail zurück, damit ein neuer platziert werden kann
+     */
     public void removeSensor() {
     	sensorActive = false;
     	sensor = null;
@@ -114,12 +117,10 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 
                 if (s.getPlaceableOnSquare() == null && Math.random() < chanceToSpawn / 100) {
                     if (Math.random() < 0.5) {
-                        Gold gold = new Gold(
-                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getSessionName(), s);
+                        Gold gold = new Gold( getSessionName(), s);
                         s.setPlaceableOnSquare(gold);
                     } else {
-                        Coal coal = new Coal(
-                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getSessionName(), s);
+                        Coal coal = new Coal(getSessionName(), s);
                         s.setPlaceableOnSquare(coal);
                     }
                 }

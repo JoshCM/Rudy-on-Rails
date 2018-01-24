@@ -14,13 +14,14 @@ import models.session.GameSessionManager;
 public class Sensor extends InteractiveGameObject {
 	
 	public final static int DISTANCE_BETWEEN_LOCO_AND_SENSOR = 5;
-	public final static int DEFAULT_ACTIME_TIME = 10;
-	public final static int DEFAULT_DELETE_TIME = 3;
+	public final static int DEFAULT_ACTIME_TIME = 15;
+	public final static int DEFAULT_DELETE_TIME = 5;
 	public final static int SECOND = 1000;
 	
 	private UUID railId;
 	private UUID playerId;
 	private boolean active;
+	private boolean wasActive;
 	private ScriptableObject scriptableObject;
 	private String currentScriptName;
 	private SensorProxy sensorProxy;
@@ -31,6 +32,7 @@ public class Sensor extends InteractiveGameObject {
 		this.railId = railId;
 		this.playerId = playerId;
 		this.active = false;
+		this.wasActive = false;
 		
 		// Vorbereitung für Skripting
 		sensorProxy = new SensorProxy(this, square);
@@ -54,14 +56,23 @@ public class Sensor extends InteractiveGameObject {
 		notifyChange(message);		
 	}
 	
+	/**
+	 * Aktiviert den Sensor, sendet eine Nachricht an den Client und startet 
+	 * den Countdown (in der Zeit ist der Sensor aktiv)
+	 */
 	private void activate() {
 		active = true;
 		notifySwitchSensor();
 		startCountDownForActiveSensor();
 	}
 	
+	/**
+	 * Wird ausgeführt, sobald der Countdown für den aktiven Sensor abgelaufen ist: Deaktiviert den Sensor, 
+	 * sendet eine Nachricht an den Client und startet einen Countdown zum Löschen den Sensors
+	 */
 	private void deactivateAndDelete() {
 		active = false;
+		wasActive = true;
 		notifySwitchSensor();
 		startCountDownToDeleteSensor();
 	}
@@ -88,6 +99,12 @@ public class Sensor extends InteractiveGameObject {
 		scriptableObject.callUpdateOnPythonScript();
 	}
 	
+	/**
+	 * Prüft, ob eine gegebene Position mit der des Sensors übereinstimmt
+	 * @param x: x-Koordinate
+	 * @param y: y-Koordinate
+	 * @return Gibt true zurück, wenn die Position übereinstimmen, false sonst
+	 */
 	public boolean checkPosition(int x, int y) {
 		return getXPos() == x && getYPos() == y;
 	}
@@ -162,6 +179,7 @@ public class Sensor extends InteractiveGameObject {
 		MessageInformation message = new MessageInformation("SwitchSensor");
 		message.putValue("railId", railId);
 		message.putValue("active", active);
+		message.putValue("wasActive", wasActive);
 		notifyChange(message);
 	}
 	
@@ -172,6 +190,7 @@ public class Sensor extends InteractiveGameObject {
 		MessageInformation message = new MessageInformation("DeleteSensor");
 		message.putValue("railId", railId);
 		message.putValue("active", active);
+		message.putValue("wasActive", wasActive);
 		notifyChange(message);
 	}
 }
