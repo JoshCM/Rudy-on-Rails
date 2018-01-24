@@ -22,22 +22,24 @@ namespace RoRClient.BindingConverter
             if(value is Loco)
             {
                 Loco loco = (Loco)value;
-                Player player = GameSession.GetInstance().GetPlayerById(loco.PlayerId);
-                int playerIndex = GameSession.GetInstance().Players.IndexOf(player);
-                return IMAGE_FOLDER_PATH + LOCO_IMAGE_START + playerIndex + IMAGE_ENDING;
+                GamePlayer player = (GamePlayer)GameSession.GetInstance().GetPlayerById(loco.PlayerId);
+                int colorNumber = player.ColorNumber;
+                return IMAGE_FOLDER_PATH + LOCO_IMAGE_START + colorNumber + IMAGE_ENDING;
             }
             else if(value is Stock)
             {
                 Stock stock = (Stock)value;
                 Playertrainstation playerTrainstation = (Playertrainstation)GameSession.GetInstance().Map.GetPlaceableById(stock.TrainstationId);
-                int playerIndex = GameSession.GetInstance().Players.IndexOf(playerTrainstation.Player);
-                return IMAGE_FOLDER_PATH + STOCK_IMAGE_START + playerIndex + IMAGE_ENDING;
+                GamePlayer player = (GamePlayer)playerTrainstation.Player;
+                if (player != null)
+                {
+                    int colorNumber = player.ColorNumber;
+                    return IMAGE_FOLDER_PATH + STOCK_IMAGE_START + colorNumber + IMAGE_ENDING;
+                }
             }
-            else
-            {
-                // wenn type nicht bestimmt muss das hier zurückgegeben werden
-                return null;
-            }
+
+            // wenn type nicht bestimmt muss das hier zurückgegeben werden
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

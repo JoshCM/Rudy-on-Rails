@@ -9,6 +9,7 @@ public class GamePlayer extends Player{
 	private int coalCount;
 	private int goldCount;
 	private int pointCount;
+	private int colorNumber;
 
 	public GamePlayer(String sessionName, String name, UUID id, boolean isHost) {
 		super(sessionName, name, id, isHost);
@@ -94,4 +95,20 @@ public class GamePlayer extends Player{
     	messageInfo.putValue("pointCount", getPointCount());
     	notifyChange(messageInfo);
     }
+	
+	private void notifyColorNumberChanged() {
+    	MessageInformation messageInfo = new MessageInformation("UpdateColorNumberOfPlayer");
+    	messageInfo.putValue("playerId", getId());
+    	messageInfo.putValue("colorNumber", getColorNumber());
+    	notifyChange(messageInfo);
+    }
+
+	public int getColorNumber() {
+		return colorNumber;
+	}
+
+	public void setColorNumber(int colorNumber) {
+		this.colorNumber = colorNumber;
+		notifyColorNumberChanged();
+	}
 }

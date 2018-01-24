@@ -11,6 +11,7 @@ namespace RoRClient.Models.Game
         private int coalCount;
         private int goldCount;
         private int pointCount;
+        private int colorNumber;
 
         public GamePlayer(Guid id, String name, int coalCount, int goldCount, int pointCount, bool isHost) : base(id, name, isHost)
         {
@@ -58,6 +59,22 @@ namespace RoRClient.Models.Game
             {
                 this.pointCount = value;
                 NotifyPropertyChanged("PointCount");
+            }
+        }
+
+        public int ColorNumber
+        {
+            get
+            {
+                return colorNumber;
+            }
+            set
+            {
+                if(colorNumber != value)
+                {
+                    colorNumber = value;
+                    NotifyPropertyChanged("ColorNumber");
+                }
             }
         }
     }

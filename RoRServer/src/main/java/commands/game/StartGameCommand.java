@@ -12,6 +12,7 @@ import communication.queue.receiver.QueueReceiver;
 import communication.topic.TopicMessageQueue;
 import exceptions.MapNotFoundException;
 import models.game.Crane;
+import models.game.GamePlayer;
 import models.game.Compass;
 import models.game.GhostLoco;
 import models.game.Map;
@@ -114,7 +115,7 @@ public class StartGameCommand extends CommandBase {
 		}
 
 		Iterator<Player> playerIterator = gameSession.getPlayers().iterator();
-
+		int colorCounter = 0;
 		// erzeugen der neuen Trainstations auf deren Squares
 		for (Square trainstationSquare : trainstationSquaresToCreate) {
 
@@ -127,7 +128,10 @@ public class StartGameCommand extends CommandBase {
 				Playertrainstation oldPlayerTrainstation = (Playertrainstation)oldTrainStation;
 				Rail oldLocoSpawnPointRail = (Rail) map.getPlaceableOnSquareById(oldPlayerTrainstation.getSpawnPointforLoco());
 				if (playerIterator.hasNext()) {
-					playerId = playerIterator.next().getId();
+					GamePlayer player = (GamePlayer)playerIterator.next();
+					// setzt die colorCount für einen Player
+					player.setColorNumber(colorCounter%4);
+					playerId = player.getId();
 					generateLoco(gameSession, playerId, oldPlayerTrainstation, oldLocoSpawnPointRail.getSquareFromGameSession());
 				}
 				// setzen der PlayerId dem alten PlayerTrainstation, damit der neue PlayerTrainstation sich diese im loadFromMap nehmen kann,
@@ -145,7 +149,8 @@ public class StartGameCommand extends CommandBase {
 			}
 			// Neue Trainstation auf Square setzen
 			trainstationSquare.setPlaceableOnSquare(newTrainStation);
-
+			
+			colorCounter += 1;
 		}
 
 		// generiert an den erzeugenten rails resourcen
