@@ -3,6 +3,7 @@ package models.game;
 import java.util.UUID;
 
 import communication.MessageInformation;
+import resources.PropertyManager;
 
 public class GamePlayer extends Player{
 
@@ -86,8 +87,13 @@ public class GamePlayer extends Player{
 		notifyResourceCountChanged();
 	}
 	
-	public void spendCoal() {
-		this.coalCount -= 0.25;
+	/**
+	 * Reduzirt die Kohle des Spielers um
+	 * das Produkt von speed und coalDecreaseFactor
+	 * @param speed
+	 */
+	public void spendCoal(long speed) {
+		this.coalCount -= (double)speed * Double.parseDouble(PropertyManager.getProperty("coalDecreaseFactor"));
 		notifyCoalChanged();
 	}
 	
@@ -104,6 +110,7 @@ public class GamePlayer extends Player{
 		MessageInformation messageInfo = new MessageInformation("UpdateCoalOfPlayer");
 		messageInfo.putValue("playerId", getId());
 		messageInfo.putValue("coalCount", getCoalCount());
+		notifyChange(messageInfo);
 	}
 	
 	

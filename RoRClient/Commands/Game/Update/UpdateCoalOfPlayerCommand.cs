@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Commands.Game.Update
 {
-    class UpdateCoalOfPlayer:CommandBase
+    class UpdateCoalOfPlayerCommand:CommandBase
     {
         private int newCoalCount = 0;
         private GamePlayer player;
         private GameSession session;
-        public UpdateCoalOfPlayer(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        public UpdateCoalOfPlayerCommand(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             this.newCoalCount = (int)messageInformation.GetValueAsDouble("coalCount");
             this.session = (GameSession)session;
