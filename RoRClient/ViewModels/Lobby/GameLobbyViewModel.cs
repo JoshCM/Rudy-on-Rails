@@ -15,6 +15,7 @@ namespace RoRClient.ViewModels.Lobby
 	    private LobbyModel lobbyModel;
 	    private GameSession gameSession;
         private bool canStartGame;
+        private string selectedMapName;
 
 		public GameLobbyViewModel(UIState uiState, LobbyModel lobbyModel)
         {
@@ -22,7 +23,12 @@ namespace RoRClient.ViewModels.Lobby
 	        this.lobbyModel = lobbyModel;
 	        this.gameSession = GameSession.GetInstance();
 
-            uiState.OnUiStateChanged += OnUiStateChanged;
+            gameSession = GameSession.GetInstance();
+            gameSession.PropertyChanged += OnGameSessionChanged;
+
+            isHost = gameSession.OwnPlayer.IsHost;
+            lobbyModel.ReadMapInfos();
+            lobbyModel.ReadGameInfos();
         }
 
 		/// <summary>
@@ -67,6 +73,38 @@ namespace RoRClient.ViewModels.Lobby
             {
                 canStartGame = value;
                 OnPropertyChanged("CanStartGame");
+            }
+        }
+
+        public string SelectedMapName
+        {
+            get
+            {
+                return selectedMapName;
+            }
+            set
+            {
+                if(selectedMapName != value)
+                {
+                    selectedMapName = value;
+                    ChangeMapName();
+                    OnPropertyChanged("SelectedMapName");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Wenn der Player der Host der GameSession ist, dann wird die MapName-Änderung
+        /// and den Server geschickt und über den Topic der Session an alle Clients der
+        /// GameSession verteilt
+        /// </summary>
+        private void ChangeMapName()
+        {
+            if (gameSession.OwnPlayer.IsHost)
+            {
+                MessageInformation messageInformation = new MessageInformation();
+                messageInformation.PutValue("mapName", selectedMapName);
+                gameSession.QueueSender.SendMessage("ChangeMapSelection", messageInformation);
             }
         }
 
@@ -144,19 +182,6 @@ namespace RoRClient.ViewModels.Lobby
             else if (e.PropertyName == "MapName")
             {
                 CanStartGame = IsHost && gameSession.MapName != "";
-            }
-        }
-
-        private void OnUiStateChanged(object sender, UiChangedEventArgs args)
-        {
-            if (uiState.State == "gameLobby")
-            {
-                gameSession = GameSession.GetInstance();
-                gameSession.PropertyChanged += OnGameSessionChanged;
-
-                isHost = gameSession.OwnPlayer.IsHost;
-				lobbyModel.ReadMapInfos();
-				lobbyModel.ReadGameInfos();
             }
         }
     }
