@@ -16,12 +16,20 @@ public class Scripts extends ModelBase {
 	
 	public void init() {
 		loadGhostLocoDefaultScripts();
+		loadSensorDefaultScripts();
 	}
 	
 	private void loadGhostLocoDefaultScripts() {
 		scripts.add(new Script(getSessionName(), "Schnell fahren", ScriptType.GHOSTLOCO, "ghostloco_default_drivefast"));
 		scripts.add(new Script(getSessionName(), "Langsam fahren", ScriptType.GHOSTLOCO, "ghostloco_default_driveslow"));
 		scripts.add(new Script(getSessionName(), "Gold stehlen", ScriptType.GHOSTLOCO, "ghostloco_default_stealgold"));
+	}
+	
+	private void loadSensorDefaultScripts() {
+		scripts.add(new Script(getSessionName(), "Funny", ScriptType.SENSOR, "funny"));
+		scripts.add(new Script(getSessionName(), "DestroyTrain", ScriptType.SENSOR, "destroy"));
+		scripts.add(new Script(getSessionName(), "InfoTrain", ScriptType.SENSOR, "info"));
+		scripts.add(new Script(getSessionName(), "StopTrain", ScriptType.SENSOR, "stop"));
 	}
 	
 	public List<Script> getScripts() {

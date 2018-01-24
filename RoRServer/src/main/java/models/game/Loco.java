@@ -1,6 +1,8 @@
 package models.game;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.UUID;
 
 import communication.MessageInformation;
@@ -21,6 +23,7 @@ public class Loco extends TickableGameObject {
 	private boolean reversed = false;
 	protected Map map;
 	private GamePlayer player;
+	private static List<Sensor> sensors; // Jede Loco kennt alle Sensoren
 
 	/**
 	 * Konstruktor einer Lok
@@ -37,6 +40,23 @@ public class Loco extends TickableGameObject {
 		this.speed = 0;
 		this.playerId = playerId;
 		this.player =(GamePlayer) GameSessionManager.getInstance().getGameSessionByName(sessionName).getPlayerById(playerId);
+		Loco.sensors = new ArrayList<Sensor>();
+	}
+
+	public static void addSensor(Sensor sensor) {
+		sensors.add(sensor);
+	}
+
+	public void notifySensors() {
+
+		Iterator<Sensor> iter = sensors.iterator();
+		while (iter.hasNext()) {
+			Sensor sensor = iter.next();
+			// Sensor ist aktiv und der Zug befindet sich auf der Position des Sensors
+			if (sensor.isActive() && sensor.checkPosition(getXPos(), getYPos())) {
+				sensor.runScriptOnTrainArrived(this);
+			}
+		}
 	}
 
 	/**
@@ -86,7 +106,10 @@ public class Loco extends TickableGameObject {
 			this.drivingDirection = nextRail.getExitDirection(getDirectionNegation(this.drivingDirection));
 			this.rail = nextRail;
 			this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-			NotifyLocoPositionChanged();
+			notifyLocoPositionChanged();
+			
+			// Die Sensoren erfahren es auch
+			notifySensors();
 		}
 		else {
 			this.speed = 0;
@@ -152,7 +175,7 @@ public class Loco extends TickableGameObject {
 			this.rail = getNextRail(tempDirection, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 			this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(tempDirection));
 			this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-			NotifyLocoPositionChanged();
+			notifyLocoPositionChanged();
 		}
 	}
 	
@@ -265,7 +288,7 @@ public class Loco extends TickableGameObject {
 	/**
 	 * notifiziert wenn die Position der Lok veraendert wurde
 	 */
-	private void NotifyLocoPositionChanged() {
+	private void notifyLocoPositionChanged() {
 		MessageInformation messageInfo = new MessageInformation("UpdateLocoPosition");
 		messageInfo.putValue("locoId", getId());
 		messageInfo.putValue("xPos", getXPos());

@@ -121,6 +121,21 @@ public class Map extends ModelBase {
 		result = prime * result + Arrays.deepHashCode(squares);
 		return result;
 	}
+	
+	/**
+	 * Holt das Placeable von Square oder Rail
+	 * @param id Id des Placeables
+	 * @return null, wenn Square leer ist
+	 */
+	public Placeable getPlaceableById(UUID id) {
+		
+		Placeable placeable = null;
+		placeable = getPlaceableOnSquareById(id);
+		if(placeable == null) {
+			placeable = getPlaceableOnRailById(id);
+		}
+		return placeable;
+	}
 
 	public PlaceableOnSquare getPlaceableOnSquareById(UUID id) {
 		for (Square[] squares : getSquares()) {

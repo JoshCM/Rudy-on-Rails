@@ -100,6 +100,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindingConverter\BooleanToOpacityConverter.cs" />
+    <Compile Include="BindingConverter\BooleanToSensorImagePathConverter.cs" />
     <Compile Include="BindingConverter\BooleanToSignalImagePathConverter.cs" />
     <Compile Include="BindingConverter\BooleanToVisibilityConverter.cs" />
     <Compile Include="BindingConverter\ObjectEqualsConverter.cs" />
@@ -156,6 +157,9 @@
     <Compile Include="Commands\Game\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePublictrainstationCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
+    <Compile Include="Commands\Game\Delete\DeleteSensorCommand.cs" />
+    <Compile Include="Commands\Game\Other\SwitchSensorCommand.cs" />
+    <Compile Include="Commands\Game\Other\PlaceSensorCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateSignalsCommand.cs" />
     <Compile Include="Commands\Game\Delete\DeletePlaceableCommand.cs" />
@@ -206,6 +210,7 @@
     <Compile Include="Models\Game\Publictrainstation.cs" />
     <Compile Include="Models\Game\RailSectionStatus.cs" />
     <Compile Include="Models\Game\Resource.cs" />
+    <Compile Include="Models\Game\Sensor.cs" />
     <Compile Include="Models\Game\Script.cs" />
     <Compile Include="Models\Game\Scripts.cs" />
     <Compile Include="Models\Game\Stock.cs" />
@@ -669,8 +674,6 @@
     <Resource Include="Resources\Images\rail_SOUTH_WEST.png" />
     <Resource Include="Resources\Images\rail_EAST_WEST.png" />
     <Resource Include="Resources\Images\rail_NORTH_SOUTH.png" />
-    <Resource Include="Resources\Images\sensor_aktiv.png" />
-    <Resource Include="Resources\Images\sensor_inaktiv.png" />
     <Resource Include="Resources\Images\stock_cart_1.png" />
     <Resource Include="Resources\Images\stock_cart_2.png" />
     <Resource Include="Resources\Images\stock_cart_3.png" />
@@ -694,6 +697,8 @@
     <Resource Include="Resources\Images\stock_container_1.png" />
     <Resource Include="Resources\Images\stock_container_2.png" />
     <Resource Include="Resources\Images\stock_container_3.png" />
+    <Resource Include="Resources\Images\sensor_active.png" />
+    <Resource Include="Resources\Images\sensor_inactive.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
