@@ -39,7 +39,7 @@ public class AddScriptFromPlayerCommand extends CommandBase {
 		ScriptFileWriter.writeStringToFile(filename, scriptContent);
 		
 		GameSession gameSession = (GameSession)session;
-		Script script = new Script(gameSession.getDescription(), description, scriptType, filename, playerId);
+		Script script = new Script(gameSession.getSessionName(), description, scriptType, filename, playerId);
 		gameSession.getScripts().addScript(script);
 	}
 }

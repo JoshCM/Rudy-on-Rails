@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.activemq.console.command.CreateCommand;
 import org.apache.log4j.Logger;
 
 import communication.MessageInformation;
@@ -32,17 +31,18 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 
 	transient EditorSession editorSession;
 
-	public Trainstation(String sessionName, Square square,List<UUID> trainstationRailIds, UUID id, Compass alignment,
+	public Trainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment,
 			Stock stock) {
 		super(sessionName, square, id);
 		this.stock = stock;
 		this.trainstationRailIds = trainstationRailIds;
 		this.alignment = alignment;
-		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getDescription());
+		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getSessionName());
 	}
 
 	/**
 	 * Gibt die Ausrichtung der Trainstation zurück
+	 * 
 	 * @return Ausrichtung als Compass
 	 */
 	public Compass getAlignment() {
@@ -51,14 +51,16 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 
 	/**
 	 * Gibt alle IDs der Rails der Trainstation zurück
+	 * 
 	 * @return IDs der trainstationRails
 	 */
 	public List<UUID> getTrainstationRailIds() {
 		return trainstationRailIds;
 	}
-	
+
 	/**
 	 * Gibt den Stock als Object zurück
+	 * 
 	 * @return Den Stock
 	 */
 	public Stock getStock() {
@@ -68,7 +70,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	public void setStock(Stock newStock) {
 		this.stock = newStock;
 	}
-	
+
 	public Crane getCrane() {
 		return crane;
 	}
@@ -80,18 +82,19 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	public void setPlayerId(UUID playerId) {
 		this.playerId = playerId;
 	}
-	
+
 	public UUID getPlayerId() {
 		return this.playerId;
 	}
-	
+
 	/**
 	 * Gibt die Liste von Rails der Trainstation zurück
+	 * 
 	 * @return trainstationRails
 	 */
 	public List<Rail> getTrainstationRails() {
 		List<Rail> trainstationRails = new ArrayList<Rail>();
-		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getDescription());
+		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getSessionName());
 		for (UUID railId : trainstationRailIds) {
 			trainstationRails.add((Rail) editorSession.getMap().getPlaceableOnSquareById(railId));
 		}
@@ -100,6 +103,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 
 	/**
 	 * Gibt die Liste von Rails der Trainstation umgedreht zurück
+	 * 
 	 * @return
 	 */
 	public List<Rail> getReverseTrainstationRails() {
@@ -118,13 +122,18 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 
 	/**
 	 * Rotiert die zugehörigen Rails einer Trainstation
-	 * @param trainstationRail	Ein Rail der Trainstation
-	 * @param oldRailSquare		Square worauf die Rail vorher PlaceableOnSquare war
-	 * @param newRailSquare		Square worauf die Rail PlaceableOnSquare werden soll
-	 * @param right				Uhrzeigersinn/Gegen Uhrzeigersinn
+	 * 
+	 * @param trainstationRail
+	 *            Ein Rail der Trainstation
+	 * @param oldRailSquare
+	 *            Square worauf die Rail vorher PlaceableOnSquare war
+	 * @param newRailSquare
+	 *            Square worauf die Rail PlaceableOnSquare werden soll
+	 * @param right
+	 *            Uhrzeigersinn/Gegen Uhrzeigersinn
 	 */
-	private void rotateTrainstationInteractiveGameObjects(List<InteractiveGameObject> trainstationGameObjects, int pivotXPos,
-			int pivotYPos, boolean right) {
+	private void rotateTrainstationInteractiveGameObjects(List<InteractiveGameObject> trainstationGameObjects,
+			int pivotXPos, int pivotYPos, boolean right) {
 		HashMap<Coordinate, InteractiveGameObject> temptrainstationGameObjectMap = new HashMap<Coordinate, InteractiveGameObject>();
 		for (InteractiveGameObject trainstationGameObject : trainstationGameObjects) {
 			int objectXpos = trainstationGameObject.getXPos();
@@ -158,29 +167,37 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 
 			InteractiveGameObject tmpTrainstationGameObject = temptrainstationGameObjectMap.get(coordinate);
 			// bekomme sessionname für neue Rail
-			String sessionName = editorSession.getDescription();
+			String sessionName = editorSession.getSessionName();
 			// bekomme newSquare
 			Square newSquare = (Square) editorSession.getMap().getSquare(coordinate.x, coordinate.y);
 
 			if (tmpTrainstationGameObject instanceof Rail) {
-				Rail tmpRail = (Rail)tmpTrainstationGameObject;
-				
+				Rail tmpRail = (Rail) tmpTrainstationGameObject;
+
 				// nehme RailSections und erzeuge eine Liste von Compass daraus
 				List<RailSection> railSections = tmpRail.getRailSectionList();
 				List<Compass> railSectionsCompass = new ArrayList<Compass>();
-				for(RailSection railsection : railSections) {
+				for (RailSection railsection : railSections) {
 					railSectionsCompass.addAll(railsection.getNodes());
 				}
-				
-				// erzeuge neue Rail und setze intern das Square.PlacableOnSquare
-				Rail newRail = new Rail(sessionName, newSquare, railSectionsCompass, false,
-						tmpRail.getTrainstationId(), tmpRail.getId(),tmpRail.placeableOnRail);
+
+				Rail newRail;
+				// wenn die Rail ein Switch ist
+				if (tmpRail instanceof Switch) {
+					newRail = new Switch(sessionName, newSquare, railSectionsCompass, tmpRail.getTrainstationId(),
+							tmpRail.getId());
+				} else {
+					// erzeuge neue Rail und setze intern das Square.PlacableOnSquare
+					newRail = new Rail(sessionName, newSquare, railSectionsCompass, false, tmpRail.getTrainstationId(),
+							tmpRail.getId(), tmpRail.placeableOnRail);
+				}
 				newSquare.setPlaceableOnSquare(newRail);
-			} else if(tmpTrainstationGameObject instanceof Stock) {
-				Stock tmpStock = (Stock)tmpTrainstationGameObject;
+			} else if (tmpTrainstationGameObject instanceof Stock) {
+				Stock tmpStock = (Stock) tmpTrainstationGameObject;
 
 				// erzeuge neuen Stock und setze intern das Square.PlacableOnSquare
-				Stock newStock = new Stock(sessionName, newSquare, tmpStock.getTrainstationId(), tmpStock.getId(), tmpStock.getAlignment());
+				Stock newStock = new Stock(sessionName, newSquare, tmpStock.getTrainstationId(), tmpStock.getId(),
+						tmpStock.getAlignment());
 				newSquare.setPlaceableOnSquare(newStock);
 				this.stock = newStock;
 			}
@@ -189,7 +206,9 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 
 	/**
 	 * Rotiert das Alignment der Trainstation
-	 * @param right	Uhrzeigersinn/Gegen Uhrzeigersinn
+	 * 
+	 * @param right
+	 *            Uhrzeigersinn/Gegen Uhrzeigersinn
 	 */
 	private void rotateTrainstation(boolean right) {
 		int newIndex;
@@ -209,7 +228,9 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 
 	/**
 	 * Rotiert die Trainstation und alle zugehörigen Rails
-	 * @param right	Uhrzeigersinn/Gegen Uhrzeigersinn
+	 * 
+	 * @param right
+	 *            Uhrzeigersinn/Gegen Uhrzeigersinn
 	 */
 	public void rotate(boolean right) {
 		// rotiert die Trainstation
@@ -230,18 +251,21 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 		trainstationInteractiveGameObjects.add(stock);
 
 		rotateTrainstationInteractiveGameObjects(trainstationInteractiveGameObjects, pivotXPos, pivotYPos, right);
-		
-		//wir sagen dem Crane das sich alles gedreht hat und wir jetzt auf nem anderen Square stehen
+
+		// wir sagen dem Crane das sich alles gedreht hat und wir jetzt auf nem anderen
+		// Square stehen
 		Rail craneRail = getRailbyId(this.crane.getRailId());
-		Square newSquare = EditorSessionManager.getInstance().getEditorSessionByName(sessionName).getMap().getSquareById(craneRail.getSquareId());
-//		crane.rotateCrane(newSquare, this.alignment);
-		this.crane = new Crane(this.sessionName, newSquare, this.getId(), Crane.getCraneAlignmentbyTrainstationAlignment(this.alignment), craneRail.getId());
+		Square newSquare = EditorSessionManager.getInstance().getEditorSessionByName(sessionName).getMap()
+				.getSquareById(craneRail.getSquareId());
+		// crane.rotateCrane(newSquare, this.alignment);
+		this.crane = new Crane(this.sessionName, newSquare, this.getId(),
+				Crane.getCraneAlignmentbyTrainstationAlignment(this.alignment), craneRail.getId());
 	}
 
 	private Rail getRailbyId(UUID railId) {
 		// TODO Auto-generated method stub
-		for(Rail rail: getTrainstationRails()) {
-			if(rail.getId().equals(railId)) {
+		for (Rail rail : getTrainstationRails()) {
+			if (rail.getId().equals(railId)) {
 				return rail;
 			}
 		}
@@ -250,7 +274,9 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 
 	/**
 	 * Validiert ob man die Rotation umsetzen kann
-	 * @param right	Uhrzeigersinn/Gegen Uhrzeigersinn
+	 * 
+	 * @param right
+	 *            Uhrzeigersinn/Gegen Uhrzeigersinn
 	 * @return (True)Validiert oder (False)nicht validiert
 	 */
 	public boolean validateRotation(boolean right) {
@@ -276,7 +302,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 				return false;
 			if (newRailSquare.getPlaceableOnSquare() != null)
 				if (!trainstationRailIds.contains(newRailSquare.getPlaceableOnSquare().getId()))
-					if(!stock.getId().equals(newRailSquare.getPlaceableOnSquare().getId()))
+					if (!stock.getId().equals(newRailSquare.getPlaceableOnSquare().getId()))
 						return false;
 		}
 
