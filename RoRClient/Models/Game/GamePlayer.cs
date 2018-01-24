@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoRClient.Models.Game
 {
-    class GamePlayer : Player
+    public class GamePlayer : Player
     {
         private int coalCount;
         private int goldCount;

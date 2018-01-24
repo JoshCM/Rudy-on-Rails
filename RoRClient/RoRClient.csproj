@@ -157,6 +157,7 @@
     <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateSignalsCommand.cs" />
     <Compile Include="Commands\Game\Delete\DeletePlaceableCommand.cs" />
+    <Compile Include="Commands\Game\Other\EndGameCommand.cs" />
     <Compile Include="Commands\Game\Other\RemoveResourceFromMineCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateResourceLoadedOntoCartCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Commands\Game\Update\UpdateLocoPositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoSpeedCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateNodesOfRailSectionCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateResourcesOfPlayerCommand.cs" />
     <Compile Include="Communication\Dispatcher\QueueDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicEditorDispatcher.cs" />
@@ -232,6 +234,7 @@
     <Compile Include="ViewModels\Game\CoalGameViewModel.cs" />
     <Compile Include="ViewModels\Game\ContainerGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GameInteractionsViewModel.cs" />
+    <Compile Include="ViewModels\Game\GameResultViewModel.cs" />
     <Compile Include="ViewModels\Game\GameStatusViewModel.cs" />
     <Compile Include="ViewModels\Game\CraneGameViewModel.cs" />
     <Compile Include="ViewModels\Game\PlayerLocoGameViewModel.cs" />
@@ -330,6 +333,9 @@
     </Compile>
     <Compile Include="Views\Game\GameInteractionUserControl.xaml.cs">
       <DependentUpon>GameInteractionUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\GameResultView.xaml.cs">
+      <DependentUpon>GameResultView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\GoldGameUserControl.xaml.cs">
       <DependentUpon>GoldGameUserControl.xaml</DependentUpon>
@@ -436,6 +442,10 @@
     <Page Include="Views\Game\GameInteractionUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\GameResultView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Game\GoldGameUserControl.xaml">
       <SubType>Designer</SubType>
@@ -636,7 +646,7 @@
     <Resource Include="Resources\Images\gras.jpg" />
     <Resource Include="Resources\Images\stock.png" />
     <Resource Include="Resources\Images\stock_cart_1.png" />
-    <Resource Include="Resources\Images\Tools\trainstations\trainstation1.png" />
+    <Resource Include="Resources\Images\Tools\trainstations\playertrainstation.png" />
     <Resource Include="Resources\Images\stock_container_1.png" />
     <Resource Include="Resources\Images\container_points.png" />
     <Resource Include="Resources\Images\btn_back.png" />
@@ -648,9 +658,9 @@
     <Resource Include="Resources\Images\Tools\rail\railcurve_sw.png" />
     <Resource Include="Resources\Images\Tools\rail\rail_ew.png" />
     <Resource Include="Resources\Images\Tools\rail\rail_ns.png" />
-    <Resource Include="Resources\Images\Tools\trainstations\trainstation2.png" />
-    <Resource Include="Resources\Images\Tools\trainstations\trainstation3.png" />
-    <Resource Include="Resources\Images\Tools\trainstations\trainstation4.png" />
+    <Resource Include="Resources\Images\trainstation2.png" />
+    <Resource Include="Resources\Images\trainstation3.png" />
+    <Resource Include="Resources\Images\trainstation4.png" />
     <Resource Include="Resources\Images\ghostcrane.png" />
     <Resource Include="Resources\Images\loco_2.png" />
     <Resource Include="Resources\Images\loco_3.png" />
