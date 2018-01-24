@@ -611,7 +611,7 @@
   <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Images\dummy.png" />
-    <Resource Include="Resources\Images\trainstation.png" />
+    <Resource Include="Resources\Images\trainstation_public.png" />
     <Resource Include="Resources\Images\game_minimap_dummy.png" />
     <Resource Include="Resources\Images\game_map_dummy.jpg" />
     <Resource Include="Resources\Images\rotate_right.png" />
@@ -680,6 +680,7 @@
     <Resource Include="Resources\Images\Tools\switch\switch_sn_sw.png" />
     <Resource Include="Resources\Images\Tools\trainstations\publictrainstation.png" />
     <Resource Include="Resources\Images\stock_container_public_ts.png" />
+    <Resource Include="Resources\Images\trainstation.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
