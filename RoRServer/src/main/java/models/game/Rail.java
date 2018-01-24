@@ -425,7 +425,6 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 
 	public boolean hasExitDirection(Compass direction) {
         for (RailSection r : railSectionList) {
-        	System.out.println("In Methode "+r.toString());
             if (r.getNode1().equals(direction))
                 return true;
             if (r.getNode2().equals(direction))

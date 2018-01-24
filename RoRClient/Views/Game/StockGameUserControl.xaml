@@ -12,6 +12,7 @@
              Canvas.Left="{Binding RealX, ElementName=stockGameUserControl}">
     <UserControl.Resources>
         <converter:CompassToAngleConverter  x:Key="CompassToAngleConverter"/>
+        <converter:PlayerToImagePathConverter x:Key="PlayerToImagePathConverter"/>
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=stockGameUserControl}"
             Height="{Binding SquareDim, ElementName=stockGameUserControl}">

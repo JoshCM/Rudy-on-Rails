@@ -62,7 +62,7 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 			if(cart.getResource() != null) {
 				updateCranePosition(gameSession.getMap().getSquare(cart.getXPos(), cart.getYPos()));
 				Resource resource = cart.unloadResourceFromCart();
-				stock.addResource(resource);
+				//stock.addResource(resource);
 			}
 		}
 	}

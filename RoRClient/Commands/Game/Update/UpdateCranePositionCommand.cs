@@ -28,14 +28,25 @@ namespace RoRClient.Commands.Game.Update
 
         public override void Execute()
         {
+            System.Console.WriteLine("newXPos: " + newXPos);
+            System.Console.WriteLine("newYPos: " + newYPos);
+            System.Console.WriteLine("oldXPos: " + oldXPos);
+            System.Console.WriteLine("oldYPos: " + oldYPos);
+
             GameSession game = (GameSession)session;
             Square square = game.Map.GetSquare(oldXPos, oldYPos);
             Rail rail = (Rail)square.PlaceableOnSquare;
 
+
+
             Crane crane = (Crane)rail.PlaceableOnRail;
             crane.Square = game.Map.GetSquare(newXPos, newYPos);
+            Rail newRail = (Rail)crane.Square.PlaceableOnSquare;
+
             rail.PlaceableOnRail = null;
-            rail.PlaceableOnRail = crane;
+            newRail.PlaceableOnRail = crane;
+
+
             Console.WriteLine("newX" + crane.Square.PosX + "newY:" + crane.Square.PosY);
         }
     }

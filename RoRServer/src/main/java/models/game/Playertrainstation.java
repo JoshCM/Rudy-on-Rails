@@ -14,8 +14,9 @@ public class Playertrainstation extends Trainstation {
 	private UUID spawnPointForCart;
 
 	public Playertrainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment,
-			Stock stock) {
+			Stock stock, UUID playerId) {
 		super(sessionName, square, trainstationRailIds, id, alignment, stock);
+		this.setPlayerId(playerId);
 		notifyCreatedPlayertrainstation();
 	}
 
@@ -45,6 +46,7 @@ public class Playertrainstation extends Trainstation {
 	
 	private void notifyCreatedPlayertrainstation() {
 		MessageInformation messageInfo = new MessageInformation("CreatePlayertrainstation");
+		messageInfo.putValue("playerId", getPlayerId());
 		messageInfo.putValue("trainstationId", getId());
 		messageInfo.putValue("alignment", alignment);
 		messageInfo.putValue("xPos", getXPos());
@@ -65,7 +67,7 @@ public class Playertrainstation extends Trainstation {
 	public Playertrainstation loadFromMap(Square square, RoRSession session) {
 		Playertrainstation oldTrainStation = (Playertrainstation) square.getPlaceableOnSquare();
 		Playertrainstation newTrainStation = new Playertrainstation(session.getSessionName(), square,
-				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock());
+				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock(), oldTrainStation.getPlayerId());
 		newTrainStation.setCrane(oldTrainStation.getCrane());
 		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
 		newTrainStation.setSessionName(session.getSessionName());
