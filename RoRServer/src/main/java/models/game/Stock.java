@@ -72,8 +72,8 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare {
 		// die Trainstation die den Stock beinhaltet muss den neuen Stock gesetzt
 		// bekommen,#
 		// sonst hat der Stock der Trainstation keine Observer
-		((Trainstation) session.getMap().getPlaceableOnSquareById(getTrainstationId())).setStock(newStock);
-
+		((Trainstation)session.getMap().getPlaceableOnSquareById(getTrainstationId())).setStock(newStock);
+		
 		return newStock;
 	}
 
@@ -130,10 +130,7 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare {
 		this.resources.add(resource);
 	}
 
-	@Override
-	public void specificUpdate() {
-		// TODO Auto-generated method stub
+	
 
-	}
 
 }

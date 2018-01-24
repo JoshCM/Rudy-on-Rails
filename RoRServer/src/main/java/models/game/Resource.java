@@ -1,6 +1,7 @@
 package models.game;
 
 import communication.MessageInformation;
+import models.session.GameSession;
 
 /**
  * @author Andreas Pöhler, Juliane Lies, Isabell Rott
@@ -10,7 +11,7 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
 	
 	protected int quantity;
 	protected String name;
-
+	
 	protected Resource(String sessionName, Square square, String name) {
 		super(sessionName, square);
 		this.name = name;
@@ -43,7 +44,7 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
 		return name;
 	}
 
-	public void setSessionName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 }

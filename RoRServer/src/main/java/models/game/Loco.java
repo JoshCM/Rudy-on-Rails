@@ -11,7 +11,7 @@ import models.session.GameSessionManager;
  * @author Isabel Rott, Michelle Le Klasse fuer eine Lok, zu der eine Liste von
  *         Carts gehoert
  */
-public abstract class Loco extends InteractiveGameObject {
+public class Loco extends TickableGameObject {
 	private ArrayList<Cart> carts;
 	private Rail rail;
 	private UUID playerId;
@@ -19,7 +19,7 @@ public abstract class Loco extends InteractiveGameObject {
 	private long speed;
 	private Compass drivingDirection;
 	private boolean reversed = false;
-	private Map map;
+	protected Map map;
 
 	/**
 	 * Konstruktor einer Lok
@@ -48,7 +48,7 @@ public abstract class Loco extends InteractiveGameObject {
 			if (this.timeDeltaCounter >= SEC_IN_NANO / absoluteSpeed) {
 				timeDeltaCounter = 0;
 				if (speed < 0) {
-					if (!reversed) {//Wenn das erstemal nach dem Vorwärts fahren wieder rückwärts gefahren wird muss die Driving direction geändert werden 
+					if (!reversed) {//Wenn das erstemal nach dem Vorwï¿½rts fahren wieder rï¿½ckwï¿½rts gefahren wird muss die Driving direction geï¿½ndert werden 
 						reversed = true;
 						reversedDrive(true);
 					} else {
@@ -56,7 +56,7 @@ public abstract class Loco extends InteractiveGameObject {
 					}
 				} else if (speed > 0) {
 					if (reversed) {
-						//Wenn das erstemal nach dem Rückwärts fahren wieder vorfärts gefahren wird muss die Driving direction geändert werden 
+						//Wenn das erstemal nach dem Rï¿½ckwï¿½rts fahren wieder vorfï¿½rts gefahren wird muss die Driving direction geï¿½ndert werden 
 						this.drivingDirection = this.rail.getExitDirection(this.drivingDirection);
 						for (int i = carts.size() - 1; i >= 0; i--) {
 							Cart c = carts.get(i);
@@ -117,7 +117,7 @@ public abstract class Loco extends InteractiveGameObject {
 				cart.setCurrentLocoId(this.getId());
 				nextRail.setPlaceableOnRail(null);
 				this.speed = 0;
-				if(initial) {//Wenn noch nie Vorwärtsgefahren wurde und direkt beim start rückwärts gefahren wird muss die Driving direction geändert werden
+				if(initial) {//Wenn noch nie Vorwï¿½rtsgefahren wurde und direkt beim start rï¿½ckwï¿½rts gefahren wird muss die Driving direction geï¿½ndert werden
 					this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(this.rail.getExitDirection(this.drivingDirection)));
 				}
 				notifyCartToLocoAdded(cart);
@@ -150,11 +150,24 @@ public abstract class Loco extends InteractiveGameObject {
 			NotifyLocoPositionChanged();
 		}
 	}
+	
+	public void addCart() {
+		if (carts.isEmpty()) {
+			addInitialCart();
+		} else {
+			Cart lastCart = this.carts.get(carts.size()-1);
+			Compass back = this.rail.getExitDirection(lastCart.getDrivingDirection());
+			Rail prevRail = getNextRail(back, this.map.getSquare(lastCart.getXPos(), lastCart.getYPos()));
+			Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
+			Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, true, this.getId());
+			carts.add(cart);
+		}
+	}
 
 	/**
 	 * fï¿½gt der Lok initial ein Cart hinzu auf das vorige Feld
 	 */
-	public void addInitialCart() {
+	private void addInitialCart() {
 		if (carts.isEmpty()) {
 			Compass back = this.rail.getExitDirection(this.drivingDirection);
 			Rail prevRail = getNextRail(back, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
@@ -185,22 +198,8 @@ public abstract class Loco extends InteractiveGameObject {
 			cart.notifyUpdatedCart();
 			nextDirection = actDirection;
 			nextSquare = actSquare;
-
 		}
 	}
-
-	public void addCart() {
-		
-		Cart lastCart = this.carts.get(carts.size()-1);
-		Compass back = this.rail.getExitDirection(lastCart.getDrivingDirection());
-		Rail prevRail = getNextRail(back, this.map.getSquare(lastCart.getXPos(), lastCart.getYPos()));
-		Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
-		Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, true, this.getId());
-		carts.add(cart);
-		//NotifyAddedCart(cartSquare, cart.getId());
-		
-	}
-	
 	
 	/**
 	 * gibt das Rail zurï¿½ck, dass in angegebener Richtung an das Feld, das

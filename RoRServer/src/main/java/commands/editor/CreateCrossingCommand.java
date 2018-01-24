@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import commands.base.CommandBase;
 import communication.MessageInformation;
-import models.game.Compass;
-import models.game.Map;
-import models.game.Rail;
-import models.game.Square;
+import models.game.*;
 import models.session.EditorSession;
 import models.session.RoRSession;
 

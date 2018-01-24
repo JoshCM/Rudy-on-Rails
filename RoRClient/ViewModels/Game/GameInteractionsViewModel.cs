@@ -2,6 +2,7 @@
 using RoRClient.Models.Game;
 using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
+using RoRClient.Views.Popup;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,17 +17,20 @@ namespace RoRClient.ViewModels.Game
 {
     public class GameInteractionsViewModel : ViewModelBase
     {
+        private ScriptsViewModel scriptsViewModel;
         private Script selectedGhostLocoScript;
+        private int currentNumberOfOwnGhostLocoScript = 1;
 
-        public GameInteractionsViewModel()
+        public GameInteractionsViewModel(TaskFactory taskFactory)
         {
+            scriptsViewModel = new ScriptsViewModel(GameSession.GetInstance().Scripts, taskFactory);
         }
 
-        public Scripts Scripts
+        public ScriptsViewModel ScriptsViewModel
         {
             get
             {
-                return GameSession.GetInstance().Scripts;
+                return scriptsViewModel;
             }
         }
 
@@ -76,16 +80,15 @@ namespace RoRClient.ViewModels.Game
         /// </summary>
         private void AddGhostLocoScriptFromPlayer()
         {
-            MessageInformation messageInformation = new MessageInformation();
-            string description = "Eigenes Script";
+            string description = "Eigenes Script " + currentNumberOfOwnGhostLocoScript;
+            string filename = CustomFileDialogs.AskUserToSelectPythonScript();
 
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.ShowDialog();
-
-            if(openFileDialog.FileName != "")
+            if (filename != null)
             {
-                string scriptContent = File.ReadAllText(openFileDialog.FileName);
+                string scriptContent = File.ReadAllText(filename);
+                currentNumberOfOwnGhostLocoScript += 1;
 
+                MessageInformation messageInformation = new MessageInformation();
                 messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
                 messageInformation.PutValue("description", description);
                 messageInformation.PutValue("scriptContent", scriptContent);

@@ -26,7 +26,9 @@ namespace RoRClient.ViewModels.Lobby
             this.lobbyModel = lobbyModel;
 
             lobbyModel.PropertyChanged += OnClientModelChanged;
-            uiState.OnUiStateChanged += OnUiStateChanged;
+
+            lobbyModel.StartConnection();
+            lobbyModel.ReadEditorSessions();
         }
 
         public EditorSessionInfo SelectedEditorSessionInfo
@@ -51,12 +53,6 @@ namespace RoRClient.ViewModels.Lobby
             {
                 return lobbyModel;
             }
-        }
-
-        private void OnUiStateChanged(object sender, UiChangedEventArgs args)
-        {
-            lobbyModel.StartConnection();
-            lobbyModel.ReadEditorSessions();
         }
 
         /// <summary>

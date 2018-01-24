@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RoRClient.Models.Game;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,11 @@ namespace RoRClient.Views.Game
     /// </summary>
     public partial class MineGameUserControl : CanvasUserControl
     {
+       
         public MineGameUserControl()
         {
             InitializeComponent();
         }
+        
     }
 }

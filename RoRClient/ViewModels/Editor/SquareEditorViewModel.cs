@@ -79,9 +79,17 @@ namespace RoRClient.ViewModels.Editor
                     {
                         SendCreateRailCommand();
                     }
+                    else if (selectedToolName.Contains("publictrainstation"))
+                    {
+                        SendCreatePublictrainstationCommand();
+                    }
                     else if (selectedToolName.Contains("trainstation"))
                     {
-                        SendCreateTrainstationCommand();
+                        SendCreatePlayertrainstationCommand();
+                    }
+                    else if (selectedToolName.Contains("switch"))
+                    {
+                        SendCreateSwitchCommand();
                     }
                 }
             }   
@@ -134,6 +142,34 @@ namespace RoRClient.ViewModels.Editor
             editorSession.QueueSender.SendMessage("CreateCrossing", messageInformation);
         }
 
+        private void SendCreateSwitchCommand()
+        {
+            // Quick-Navigation von einem möglich vorherigen angeklicken EditorCanvasViewModel ausblenden
+            MapViewModel.IsQuickNavigationVisible = false;
+
+            int xPos = square.PosX;
+            int yPos = square.PosY;
+            EditorSession editorSession = EditorSession.GetInstance();
+            List <RailSection> railSectionList = ToolConverter.ConvertSwitchToRailSections(toolbarViewModel.SelectedTool.Name);
+
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("xPos", xPos);
+            messageInformation.PutValue("yPos", yPos);
+
+            List<JObject> railSections = new List<JObject>();
+            JObject railSectionObject = new JObject();
+            railSectionObject.Add("node1", railSectionList[0].Node1.ToString());
+            railSectionObject.Add("node2", railSectionList[0].Node2.ToString());
+            railSectionObject.Add("node3", railSectionList[1].Node1.ToString());
+            railSectionObject.Add("node4", railSectionList[1].Node2.ToString());
+
+            railSections.Add(railSectionObject);
+
+            messageInformation.PutValue("railSections", railSections);
+
+            editorSession.QueueSender.SendMessage("CreateSwitch", messageInformation);
+        }
+
 
         /// <summary>
         /// Sendet einen Anfrage-Command an den Server, der dort eine Crossing mit Signalen drauf erstellen soll
@@ -155,9 +191,9 @@ namespace RoRClient.ViewModels.Editor
         }
 
         /// <summary>
-        /// Sendet eine Anfrage an den Server der eine Trainstation setzen soll
+        /// Sendet eine Anfrage an den Server der eine Playertrainstation setzen soll
         /// </summary>
-        private void SendCreateTrainstationCommand()
+        private void SendCreatePlayertrainstationCommand()
         {
             int xPos = square.PosX;
             int yPos = square.PosY;
@@ -168,7 +204,24 @@ namespace RoRClient.ViewModels.Editor
             messageInformation.PutValue("yPos", yPos);
             messageInformation.PutValue("alignment", Compass.EAST.ToString());
 
-            editorSession.QueueSender.SendMessage("CreateTrainstation", messageInformation);
+            editorSession.QueueSender.SendMessage("CreatePlayertrainstation", messageInformation);
+        }
+
+        /// <summary>
+        /// Sendet eine Anfrage an den Server der eine Publictrainstation setzen soll
+        /// </summary>
+        private void SendCreatePublictrainstationCommand()
+        {
+            int xPos = square.PosX;
+            int yPos = square.PosY;
+            EditorSession editorSession = EditorSession.GetInstance();
+
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("xPos", xPos);
+            messageInformation.PutValue("yPos", yPos);
+            messageInformation.PutValue("alignment", Compass.EAST.ToString());
+
+            editorSession.QueueSender.SendMessage("CreatePublictrainstation", messageInformation);
         }
 
         public override void RotateLeft()
@@ -182,6 +235,10 @@ namespace RoRClient.ViewModels.Editor
         }
 
         public override void Delete()
+        {
+            throw new NotImplementedException();
+        }
+        public void ChangeSwitch()
         {
             throw new NotImplementedException();
         }

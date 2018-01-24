@@ -20,14 +20,21 @@ namespace RoRClient.ViewModels.Lobby
 		private LobbyModel lobbyModel;
 		private EditorSession editorSession;
         private bool canStartEditor;
+        private string selectedMapName;
 
 		public EditorLobbyViewModel(UIState uiState, LobbyModel lobbyModel)
 		{
 			this.uiState = uiState;
 			this.lobbyModel = lobbyModel;
 			this.editorSession = EditorSession.GetInstance();
-			uiState.OnUiStateChanged += OnUiStateChanged;
-		}
+
+            editorSession = EditorSession.GetInstance();
+            editorSession.PropertyChanged += OnEditorSessionChanged;
+
+            isHost = EditorSession.GetInstance().OwnPlayer.IsHost;
+            lobbyModel.ReadMapInfos();
+            lobbyModel.ReadEditorInfos();
+        }
 
 		/// <summary>
 		/// Die EditorSession muss hier als Property vorhanden sein, damit der MapName
@@ -71,6 +78,38 @@ namespace RoRClient.ViewModels.Lobby
             {
                 canStartEditor = value;
                 OnPropertyChanged("CanStartEditor");
+            }
+        }
+
+        public string SelectedMapName
+        {
+            get
+            {
+                return selectedMapName;
+            }
+            set
+            {
+                if (selectedMapName != value)
+                {
+                    selectedMapName = value;
+                    ChangeMapName();
+                    OnPropertyChanged("SelectedMapName");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Wenn der Player der Host der GameSession ist, dann wird die MapName-Änderung
+        /// and den Server geschickt und über den Topic der Session an alle Clients der
+        /// GameSession verteilt
+        /// </summary>
+        private void ChangeMapName()
+        {
+            if (editorSession.OwnPlayer.IsHost)
+            {
+                MessageInformation messageInformation = new MessageInformation();
+                messageInformation.PutValue("mapName", selectedMapName);
+                editorSession.QueueSender.SendMessage("ChangeMapSelection", messageInformation);
             }
         }
 
@@ -150,18 +189,5 @@ namespace RoRClient.ViewModels.Lobby
                 CanStartEditor = IsHost && editorSession.MapName != "";
             }
         }
-
-		private void OnUiStateChanged(object sender, UiChangedEventArgs args)
-		{
-			if (uiState.State == "editorLobby")
-			{
-                editorSession = EditorSession.GetInstance();
-                editorSession.PropertyChanged += OnEditorSessionChanged;
-
-                isHost = EditorSession.GetInstance().OwnPlayer.IsHost;
-                lobbyModel.ReadMapInfos();
-				lobbyModel.ReadEditorInfos();
-            }
-		}
 	}
 }

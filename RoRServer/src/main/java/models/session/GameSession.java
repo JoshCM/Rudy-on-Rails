@@ -8,6 +8,8 @@ import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
 import models.game.GamePlayer;
 import models.game.Loco;
+import models.game.Mine;
+import models.game.PlayerLoco;
 import models.game.Player;
 import models.game.TickableGameObject;
 import models.scripts.ScriptableObject;
@@ -26,6 +28,7 @@ public class GameSession extends RoRSession{
 	private boolean stopped;
 	private long lastTimeUpdatedInNanoSeconds;
 	private Ticker ticker;
+	private ArrayList<Mine> mines=new ArrayList<>();
 	private ArrayList<Loco> locos = new ArrayList<>();
 	private Scripts scripts;
 	private int availablePlayerSlots;
@@ -97,6 +100,7 @@ public class GameSession extends RoRSession{
 	 */
 	public void stop() {
 		this.stopped = true;
+		queueReceiver.stop();
 	}
 	
 
@@ -148,6 +152,17 @@ public class GameSession extends RoRSession{
 		notifyChange(message);
 	}
 	
+	
+	public void addMine(Mine mine) {
+		if(mine!=null) {
+			this.mines.add(mine);
+			ticker.addObserver(mine);
+		}
+		
+		
+	}
+	
+
 	public List<Loco> getLocos() {
 		return locos;
 	}
