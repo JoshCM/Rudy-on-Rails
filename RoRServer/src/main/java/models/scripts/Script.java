@@ -7,7 +7,8 @@ import models.base.ModelBase;
 
 public class Script extends ModelBase {
 	public enum ScriptType {
-		GHOSTLOCO
+		GHOSTLOCO,
+		SENSOR
 	}
 	
 	private String description;

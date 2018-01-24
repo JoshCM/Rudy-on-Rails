@@ -27,7 +27,10 @@ namespace RoRClient.Views.Game
             SignalDimension = ViewConstants.SIGNAL_DIMENSION;
             UpperSignalPos = ViewConstants.UPPER_SIGNAL_POS;
             LowerSignalPos = ViewConstants.LOWER_SIGNAL_POS;
+            SensorDimension = ViewConstants.SENSOR_DIMENSION;
         }
+
+
 
         public int SignalDimension
         {
@@ -67,5 +70,21 @@ namespace RoRClient.Views.Game
             }
         }
         public static readonly DependencyProperty LowerSignalPosProperty = DependencyProperty.Register("LowerSignalPos", typeof(int), typeof(RailGameUserControl), new UIPropertyMetadata(0));
+
+
+        public int SensorDimension
+        {
+            get
+            {
+                return (int)GetValue(SensorDimensionProperty);
+            }
+            set
+            {
+                SetValue(SensorDimensionProperty, value);
+            }
+        }
+        public static readonly DependencyProperty SensorDimensionProperty = DependencyProperty.Register("SensorDimension", typeof(int), typeof(RailGameUserControl), new UIPropertyMetadata(0));
+
     }
+
 }

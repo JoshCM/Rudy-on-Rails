@@ -23,6 +23,7 @@ namespace RoRClient.ViewModels.Game
     {
         private CanvasGameViewModel gameCanvasViewModel;
         private TaskFactory taskFactory;
+        private GameInteractionsViewModel gameInteractionsViewModel;
 
         public MapGameViewModel(TaskFactory taskFactory)
         {
@@ -38,10 +39,37 @@ namespace RoRClient.ViewModels.Game
             MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
         }
 
+        public GameInteractionsViewModel GameInteractionsViewModel
+        {
+            get
+            {
+                return gameInteractionsViewModel;
+            }
+            set
+            {
+                gameInteractionsViewModel = value;
+            }
+        }
+
         public CanvasGameViewModel GameCanvasViewModel
         {
             get { return gameCanvasViewModel; }
             set { gameCanvasViewModel = value; }
+        }
+
+
+        private CanvasGameViewModel _selectedGameCanvasViewModel;
+        public CanvasGameViewModel SelectedGameCanvasViewModel
+        {
+            get
+            {
+                return _selectedGameCanvasViewModel;
+            }
+            set
+            {
+                _selectedGameCanvasViewModel = value;
+                OnPropertyChanged("SelectedGameCanvasViewModel");
+            }
         }
 
         private ObservableCollection<SquareGameViewModel> squareViewModels =

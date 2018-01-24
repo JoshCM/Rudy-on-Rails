@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.google.gson.JsonObject;
 import communication.MessageInformation;
 import exceptions.RailSectionException;
+import models.session.GameSession;
 import models.session.GameSessionManager;
 import models.session.RoRSession;
 
@@ -24,6 +25,8 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 	private UUID trainstationId;
 	protected List<RailSection> railSectionList;
 	private Resource resource;
+	private Sensor sensor;
+	private boolean sensorActive;
 
     /**
      * Konstruktor für Geraden oder Kurven
@@ -71,6 +74,31 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     public Resource getResource() {
         return resource;
     }
+    
+    public Sensor getSensor() {
+    	return sensor;
+    }
+    
+    /**
+     * Neuen Sensor auf Rail platzieren
+     */
+    public void placeSensor(UUID playerId) {
+    	GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(sessionName);
+    	Square square = gameSession.getMap().getSquareById(getSquareId());
+    	sensor = new Sensor(getSessionName(), square , getId(), playerId);
+    	
+    	// Die Locos kennen den Sensor und sagen diesem Bescheid, wenn darüber gefahren wird
+    	Loco.addSensor(sensor);
+    }
+    
+    /**
+     * Setzt den Sensor auf der Rail zurück, damit ein neuer platziert werden kann
+     */
+    public void removeSensor() {
+    	sensorActive = false;
+    	sensor = null;
+    }
+   
 
     /**
      * Platziert auf den benachbarten Squares (sofern frei) anhand der Schwierigkeit
@@ -89,12 +117,10 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 
                 if (s.getPlaceableOnSquare() == null && Math.random() < chanceToSpawn / 100) {
                     if (Math.random() < 0.5) {
-                        Gold gold = new Gold(
-                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getSessionName(), s);
+                        Gold gold = new Gold( getSessionName(), s);
                         s.setPlaceableOnSquare(gold);
                     } else {
-                        Coal coal = new Coal(
-                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getSessionName(), s);
+                        Coal coal = new Coal(getSessionName(), s);
                         s.setPlaceableOnSquare(coal);
                     }
                 }
