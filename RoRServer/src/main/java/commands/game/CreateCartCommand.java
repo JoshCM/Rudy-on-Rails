@@ -66,4 +66,13 @@ public class CreateCartCommand implements Command{
 		}
 		return false;
 	}
+	public boolean isLocoOrCartOnSquare(Square square, Loco loco) {
+		if(loco.getSquareId()== square.getId())
+			return true;
+		for(Cart c : loco.getCarts())
+			if(c.getSquareId()== square.getId())
+				return true;
+	
+		return false;
+	}
 }

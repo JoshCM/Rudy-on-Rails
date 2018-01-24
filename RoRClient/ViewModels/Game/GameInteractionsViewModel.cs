@@ -17,18 +17,20 @@ namespace RoRClient.ViewModels.Game
 {
     public class GameInteractionsViewModel : ViewModelBase
     {
+        private ScriptsViewModel scriptsViewModel;
         private Script selectedGhostLocoScript;
         private int currentNumberOfOwnGhostLocoScript = 1;
 
-        public GameInteractionsViewModel()
+        public GameInteractionsViewModel(TaskFactory taskFactory)
         {
+            scriptsViewModel = new ScriptsViewModel(GameSession.GetInstance().Scripts, taskFactory);
         }
 
-        public Scripts Scripts
+        public ScriptsViewModel ScriptsViewModel
         {
             get
             {
-                return GameSession.GetInstance().Scripts;
+                return scriptsViewModel;
             }
         }
 

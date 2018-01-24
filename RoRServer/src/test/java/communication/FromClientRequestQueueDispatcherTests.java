@@ -25,6 +25,7 @@ import persistent.MapManager;
 
 public class FromClientRequestQueueDispatcherTests {
 
+	/*
 	@Before
 	public void init() {
 		for (GameSession gameSession : GameSessionManager.getInstance().getGameSessionsAsList()) {
@@ -35,6 +36,7 @@ public class FromClientRequestQueueDispatcherTests {
 			EditorSessionManager.getInstance().removeEditorSession(editorSession);
 		}
 	}
+	*/
 
 	@Test
 	public void FromClientRequestQueueDispatcher_handleCreateEditorSession_createsEditorSessionAndHostPlayer() {

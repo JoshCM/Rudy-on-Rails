@@ -11,14 +11,14 @@ using Newtonsoft.Json.Linq;
 
 namespace RoRClient.Commands.Game.Create
 {
-    class CreateTrainstationCommand : CreateTrainstationCommandBase
+    class CreatePlayertrainstationCommand : CreatePlayertrainstationCommandBase
     {
         /// <summary>
-        /// Setzt die Trainstation und ihre zugehörigen Rails
+        /// Setzt die PlayerTrainstation und ihre zugehörigen Rails
         /// </summary>
         /// <param name="session"></param>
         /// <param name="messageInformation"></param>
-        public CreateTrainstationCommand(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
+        public CreatePlayertrainstationCommand(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             
         }
