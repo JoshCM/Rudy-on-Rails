@@ -49,8 +49,8 @@ namespace RoRClient.ViewModels.Game
 
         private void ActivateMenuForScript()
         {
-            
-            if (Rail.Sensor.PlayerId == GameSession.GetInstance().OwnPlayer.Id)
+            // Das Menü für den Sensor (Auswah eines Scripts) darf nur vom eigenen Spieler benutzt werden, und wenn der Sensor noch nicht aktiv ist
+            if (Rail.Sensor.PlayerId == GameSession.GetInstance().OwnPlayer.Id && (!Rail.Sensor.Active))
             {
                 // Bei Klick auf vorhandenen Sensor, kann ein Script dafür ausgewählt werden
                 MapViewModel.GameInteractionsViewModel.CanConfigureSensor = true;
@@ -60,9 +60,12 @@ namespace RoRClient.ViewModels.Game
 
                 // DrownDown für Auswahl zurücksetzten
                 MapViewModel.GameInteractionsViewModel.SelectedSensorScript = null;
+            } else
+            {
+                MapViewModel.GameInteractionsViewModel.CanConfigureSensor = false;
             }
 
-            // Es soll kein weiterer Sensor mehr platziert werden können
+            // Es soll kein weiterer Sensor mehr platziert werden können und auch 
             MapViewModel.GameInteractionsViewModel.CanPlaceSensor = false;
         }
     }
