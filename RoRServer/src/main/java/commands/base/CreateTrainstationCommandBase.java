@@ -126,7 +126,7 @@ public class CreateTrainstationCommandBase extends CommandBase {
 	 * @return Die Id der neuen Rail
 	 */
 	private UUID createRail(Square trainstationRailSquare, UUID trainstationId, List<Compass> compassList) {
-		Rail rail = new Rail(session.getDescription(), trainstationRailSquare, compassList, trainstationId,
+		Rail rail = new Rail(session.getSessionName(), trainstationRailSquare, compassList, trainstationId,
 				UUID.randomUUID());
 		rail.setSquareId(trainstationRailSquare.getId());
 		trainstationRailSquare.setPlaceableOnSquare(rail);
@@ -134,7 +134,7 @@ public class CreateTrainstationCommandBase extends CommandBase {
 	}
 
 	private UUID createSwitch(Square trainstationRailSquare, UUID trainstationId, List<Compass> compassList) {
-		Rail switchRail = new Switch(session.getDescription(), trainstationRailSquare, compassList);
+		Rail switchRail = new Switch(session.getSessionName(), trainstationRailSquare, compassList);
 		switchRail.setSquareId(trainstationRailSquare.getId());
 		trainstationRailSquare.setPlaceableOnSquare(switchRail);
 		return switchRail.getId();

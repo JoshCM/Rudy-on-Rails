@@ -24,12 +24,12 @@ namespace RoRClient.Commands.Game.Update
 
         public override void Execute()
         {
-            EditorSession editor = (EditorSession)session;
-            Square square = editor.Map.GetSquare(newXPos, newYPos);
+            GameSession game = (GameSession)session;
+            Square square = game.Map.GetSquare(newXPos, newYPos);
             Rail rail = (Rail)square.PlaceableOnSquare;
 
             Crane crane = (Crane)rail.PlaceableOnRail;
-            crane.Square = editor.Map.GetSquare(newXPos, newYPos);
+            crane.Square = game.Map.GetSquare(newXPos, newYPos);
             rail.PlaceableOnRail = null;
             rail.PlaceableOnRail = crane;
             Console.WriteLine("newX" + crane.Square.PosX + "newY:" + crane.Square.PosY);

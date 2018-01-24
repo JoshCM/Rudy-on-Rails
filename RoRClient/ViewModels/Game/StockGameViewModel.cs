@@ -53,7 +53,7 @@ namespace RoRClient.ViewModels.Game
             messageInformation.PutValue("posX", stock.Square.PosX);
             messageInformation.PutValue("posY", stock.Square.PosY);
             messageInformation.PutValue("stockId", stock.Id);
-            gameSession.QueueSender.SendMessage("MoveCrane", messageInformation);
+            gameSession.QueueSender.SendMessage("UpdateCranePosition", messageInformation);
       
 
         }

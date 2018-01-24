@@ -38,11 +38,11 @@ public class Publictrainstation extends Trainstation {
 	@Override
 	public Publictrainstation loadFromMap(Square square, RoRSession session) {
 		Publictrainstation oldTrainStation = (Publictrainstation) square.getPlaceableOnSquare();
-		Publictrainstation newTrainStation = new Publictrainstation(session.getDescription(), square,
+		Publictrainstation newTrainStation = new Publictrainstation(session.getSessionName(), square,
 				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock());
 		newTrainStation.setCrane(oldTrainStation.getCrane());
 		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
-		newTrainStation.setSessionName(session.getDescription());
+		newTrainStation.setSessionName(session.getSessionName());
 
 		log.info("PublicTrainStation erstellt: " + newTrainStation.toString());
 		return newTrainStation;

@@ -90,11 +90,11 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
                 if (s.getPlaceableOnSquare() == null && Math.random() < chanceToSpawn / 100) {
                     if (Math.random() < 0.5) {
                         Gold gold = new Gold(
-                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getDescription(), s);
+                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getSessionName(), s);
                         s.setPlaceableOnSquare(gold);
                     } else {
                         Coal coal = new Coal(
-                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getDescription(), s);
+                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getSessionName(), s);
                         s.setPlaceableOnSquare(coal);
                     }
                 }
@@ -400,9 +400,9 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 
         // Neues Rail erstellen und damit an den Client schicken
         if (rail.getClassName().contains("Switch")) {
-            newRail = new Switch(session.getDescription(), square, railSectionPosition);
+            newRail = new Switch(session.getSessionName(), square, railSectionPosition);
         } else {
-            newRail = new Rail(session.getDescription(), square, railSectionPosition, createSignals, trainstationId, rail.getId());
+            newRail = new Rail(session.getSessionName(), square, railSectionPosition, createSignals, trainstationId, rail.getId());
         }
         System.out.println("Neue Rail erstellt: " + newRail.toString());
 
@@ -422,4 +422,15 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     public Signals getSignals() {
     	return signals;
     }
+
+	public boolean hasExitDirection(Compass direction) {
+        for (RailSection r : railSectionList) {
+        	System.out.println("In Methode "+r.toString());
+            if (r.getNode1().equals(direction))
+                return true;
+            if (r.getNode2().equals(direction))
+                return true;
+        }
+		return false;
+	}
 }

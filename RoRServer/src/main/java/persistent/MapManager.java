@@ -102,7 +102,7 @@ public class MapManager {
 	public static void saveMap(Map map) {
 		String jsonMap = convertMapToJson(map);
 		log.info("Gespeicherte Map: " + jsonMap);
-		saveToFile(jsonMap, map.getDescription());
+		saveToFile(jsonMap, map.getName());
 	}
 
 	public static String convertMapToJson(Map map) {

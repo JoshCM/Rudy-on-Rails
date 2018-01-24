@@ -53,7 +53,7 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	 */
 	public void moveToTakeTheGoods(Loco loco, Stock stock) {
 		
-		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(getDescription());
+		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(getSessionName());
 		
 		for(Cart cart : loco.getCarts()) {
 

@@ -48,12 +48,21 @@ public class Loco extends TickableGameObject {
 			if (this.timeDeltaCounter >= SEC_IN_NANO / absoluteSpeed) {
 				timeDeltaCounter = 0;
 				if (speed < 0) {
-					if (!reversed) {//Wenn das erstemal nach dem Vorwï¿½rts fahren wieder rï¿½ckwï¿½rts gefahren wird muss die Driving direction geï¿½ndert werden 
-						reversed = true;
-						reversedDrive(true);
+					// Wenn Der Zug auf eine Weiche trifft beim rückwärts fahren, dann bleibt er
+					// stehen
+
+					if (!reversed) {// Wenn das erstemal nach dem Vorwï¿½rts fahren wieder rï¿½ckwï¿½rts gefahren
+									// wird muss die Driving direction geï¿½ndert werden
+						if (!isTrainOnSwitch()) {
+							reversed = true;
+							reversedDrive(true);
+						} else {
+							setSpeedAndNotifySpeedChanged(0);
+						}
 					} else {
 						reversedDrive(false);
 					}
+
 				} else if (speed > 0) {
 					if (reversed) {
 						//Wenn das erstemal nach dem Rï¿½ckwï¿½rts fahren wieder vorfï¿½rts gefahren wird muss die Driving direction geï¿½ndert werden 
@@ -70,13 +79,29 @@ public class Loco extends TickableGameObject {
 		}
 	}
 
+	private boolean isTrainOnSwitch() {
+		if(this.rail instanceof Switch)
+			return true;
+		if(this.carts.get(carts.size()-1).getRail() instanceof Switch)
+			return false;
+		for(Cart c : this.getCarts()) {
+			Cart cart = c;
+			if(c.getRail() instanceof Switch)
+				return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Ueberfuehrt die Lok in das naechste moegliche Feld in Fahrtrichtung
 	 */
 	public void drive() {
 		Rail nextRail = getNextRail(this.drivingDirection,
 				this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-		if(nextRail != null) {
+
+		//System.out.println(nextRail.hasExitDirection(getDirectionNegation(this.drivingDirection)));
+		if(nextRail != null && nextRail.hasExitDirection(getDirectionNegation(this.drivingDirection))) {
 			moveCarts(this.rail, this.drivingDirection);
 			this.drivingDirection = nextRail.getExitDirection(getDirectionNegation(this.drivingDirection));
 			this.rail = nextRail;
@@ -84,8 +109,7 @@ public class Loco extends TickableGameObject {
 			NotifyLocoPositionChanged();
 		}
 		else {
-			this.speed = 0;
-			notifySpeedChanged();
+			setSpeedAndNotifySpeedChanged(0);
 		}
 	}
 	
@@ -109,32 +133,40 @@ public class Loco extends TickableGameObject {
 			}
 			
 			Rail nextRail = getNextRail(tempDirection, this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
-			
-			if(nextRail.getPlaceableOnrail() instanceof Cart) {//Wenn eine Cart gefunden wird, also zum andocken
-				Cart cart = (Cart) nextRail.getPlaceableOnrail();
-				cart.setDrivingDirection(actCart.getDrivingDirection());
-				carts.add(cart);
-				cart.setCurrentLocoId(this.getId());
-				nextRail.setPlaceableOnRail(null);
-				this.speed = 0;
-				if(initial) {//Wenn noch nie Vorwï¿½rtsgefahren wurde und direkt beim start rï¿½ckwï¿½rts gefahren wird muss die Driving direction geï¿½ndert werden
-					this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(this.rail.getExitDirection(this.drivingDirection)));
+			if(nextRail!=null) {
+				if(nextRail.getPlaceableOnrail() instanceof Cart) {//Wenn eine Cart gefunden wird, also zum andocken
+					Cart cart = (Cart) nextRail.getPlaceableOnrail();
+					cart.setDrivingDirection(actCart.getDrivingDirection());
+					carts.add(cart);
+					cart.setCurrentLocoId(this.getId());
+					nextRail.setPlaceableOnRail(null);
+					setSpeedAndNotifySpeedChanged(0);
+					if(initial) {//Wenn noch nie Vorwï¿½rtsgefahren wurde und direkt beim start rï¿½ckwï¿½rts gefahren wird muss die Driving direction geï¿½ndert werden
+						this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(this.rail.getExitDirection(this.drivingDirection)));
+					}
+					notifyCartToLocoAdded(cart);
+					break;
 				}
-				notifyCartToLocoAdded(cart);
-				notifySpeedChanged();
-				break;
+				if(nextRail instanceof Rail ) {//Wenn das Nï¿½chste Schienenstï¿½ck leer ist soll der Zug anhalten
+					Compass newDrivingDirection = nextRail.getExitDirection(getDirectionNegation(tempDirection));
+					if(nextRail.hasExitDirection(getDirectionNegation(tempDirection))){
+						actCart.setDrivingDirection(newDrivingDirection);
+						actCart.setRail(nextRail);
+						actCart.updateSquare(this.map.getSquare(nextRail.getXPos(), nextRail.getYPos()));
+						actCart.notifyUpdatedCart();
+					}
+					else {
+						setSpeedAndNotifySpeedChanged(0);
+						break;
+					}
+				}
+				else{
+					setSpeedAndNotifySpeedChanged(0);
+					break;
+				}
 			}
-			
-			if(nextRail instanceof Rail) {//Wenn das Nï¿½chste Schienenstï¿½ck leer ist soll der zu anhalten
-				Compass newDrivingDirection = nextRail.getExitDirection(getDirectionNegation(tempDirection));
-
-				actCart.setDrivingDirection(newDrivingDirection);
-				actCart.setRail(nextRail);
-				actCart.updateSquare(this.map.getSquare(nextRail.getXPos(), nextRail.getYPos()));
-				actCart.notifyUpdatedCart();
-			}
-			else{
-				this.speed = 0; 
+			else {
+				setSpeedAndNotifySpeedChanged(0);
 				break;
 			}
 		}
@@ -151,6 +183,12 @@ public class Loco extends TickableGameObject {
 		}
 	}
 	
+	private void setSpeedAndNotifySpeedChanged(int speed) {
+		this.speed = speed;
+		notifySpeedChanged();
+		
+	}
+
 	public void addCart() {
 		if (carts.isEmpty()) {
 			addInitialCart();

@@ -11,7 +11,7 @@ import models.game.Trainstation;
 import models.session.GameSession;
 import models.session.RoRSession;
 
-public class MoveCraneCommand implements Command{
+public class UpdateCranePositionCommand implements Command{
 	
 	private int xPos;
 	private int yPos;
@@ -22,7 +22,7 @@ public class MoveCraneCommand implements Command{
 	private UUID playerId;
 	protected GameSession session;
 	
-	public MoveCraneCommand(RoRSession session, MessageInformation messageInfo) { 
+	public UpdateCranePositionCommand(RoRSession session, MessageInformation messageInfo) { 
 
 		this.xPos =  messageInfo.getValueAsInt("posX");
 		this.yPos =  messageInfo.getValueAsInt("posY");
@@ -37,7 +37,8 @@ public class MoveCraneCommand implements Command{
 	@Override
 	public void execute() {
 		
-		if(this.playerId.equals(this.trainstation.getId())) {
+		if(this.playerId.equals(this.trainstation.getPlayerId())) {
+			
 			this.crane.moveToTakeTheGoods(session.getLocomotiveByPlayerId(playerId),this.stock);
 		}
 	}
