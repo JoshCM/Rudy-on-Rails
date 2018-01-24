@@ -43,6 +43,7 @@ public class GameSessionManager {
 	 */
 	public void removeGameSession(GameSession gameSession) {
 		gameSession.removePlayers();
+		gameSession.stop();
 		gameSessionMap.remove(gameSession.getDescription());
 	}
 

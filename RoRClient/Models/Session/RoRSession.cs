@@ -110,24 +110,8 @@ namespace RoRClient.Models.Session
 			    if (mapName != value)
 			    {
 				    mapName = value;
-				    changeMapName();
 				    NotifyPropertyChanged("MapName");
 			    }
-		    }
-	    }
-
-	    /// <summary>
-	    /// Wenn der Player der Host der GameSession ist, dann wird die MapName-Änderung
-	    /// and den Server geschickt und über den Topic der Session an alle Clients der
-	    /// GameSession verteilt
-	    /// </summary>
-	    private void changeMapName()
-	    {
-		    if (OwnPlayer.IsHost)
-		    {
-			    MessageInformation messageInformation = new MessageInformation();
-			    messageInformation.PutValue("mapName", MapName);
-			    QueueSender.SendMessage("ChangeMapSelection", messageInformation);
 		    }
 	    }
 

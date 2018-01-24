@@ -1,6 +1,9 @@
 package models.game;
 
 import exceptions.InvalidModelOperationException;
+import models.helper.CompassHelper;
+import models.session.GameSession;
+import models.session.GameSessionManager;
 import models.session.RoRSession;
 
 import java.util.UUID;
@@ -69,9 +72,21 @@ public class Cart extends TickableGameObject implements PlaceableOnRail {
 	public void loadResourceOntoCart(Resource resource) {
 		if (resource != null) {
 			this.resource = resource;
+			notifyResourceLoadedOntoCart();
 		} else {
 			throw new InvalidModelOperationException("Cart bereits beladen");
 		}
+	}
+	
+	private void notifyResourceLoadedOntoCart() {
+		MessageInformation message = new MessageInformation("UpdateResourceLoadedOntoCart");
+		message.putValue("resourceType", resource.getDescription());
+		message.putValue("resourceId", resource.getId());
+		message.putValue("locoId", currentLocoId);
+		message.putValue("cartId", getId());
+		message.putValue("xPos", this.getXPos());
+		message.putValue("yPos", this.getYPos());
+		notifyChange(message);
 	}
 	
 	/**
@@ -131,8 +146,6 @@ public class Cart extends TickableGameObject implements PlaceableOnRail {
 		notifyChange(messageInfo);
 	}
 
-
-
 	public Rail getRail() {
 		return rail;
 	}
@@ -143,5 +156,26 @@ public class Cart extends TickableGameObject implements PlaceableOnRail {
 	
 	public UUID getCurrentLocoId() {
 		return currentLocoId;
+	}
+	
+	public Resource getResourceNextToCart(boolean right) {
+		int sideways = right ? 1 : -1;
+		int squarePosX = CompassHelper.getRealXForDirection(getDrivingDirection(), getXPos(),
+				getYPos(), sideways, 0);
+		int squarePosY = CompassHelper.getRealYForDirection(getDrivingDirection(), getXPos(),
+				getYPos(), sideways, 0);
+
+		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(sessionName);
+		Map map = gameSession.getMap();
+		
+		if (squarePosX <= map.getMapSize() && squarePosY <= map.getMapSize()) {
+			Square square = gameSession.getMap().getSquare(squarePosX, squarePosY);
+			
+			if(square.getPlaceableOnSquare() != null && square.getPlaceableOnSquare() instanceof Resource) {
+				return (Resource)square.getPlaceableOnSquare();
+			}
+		}
+		
+		return null;
 	}
 }

@@ -39,6 +39,7 @@ public class StartEditorCommand extends CommandBase {
 		map.setSessionNameForMapAndSquares(session.getDescription());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
+		map.changeName(map.getName());
 
 		// hier müssen die Rails zuerst erstellt werden, danach die Trainstations
 		// da die Trainstations die Referenzen der noch nicht vorhandenen Rails an den

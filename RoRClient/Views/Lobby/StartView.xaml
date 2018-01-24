@@ -10,31 +10,24 @@
     <UserControl.Resources>
         <ResourceDictionary Source="../Styles.xaml"/>
     </UserControl.Resources>
-    
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
 
-        <Image Source="pack://application:,,,/Resources/Images/start_background.png" Height="900" Width="1600" Grid.ColumnSpan="2" Grid.RowSpan="3"/>
-        <Border Grid.Column="0" Grid.ColumnSpan="2" Background="#FF510404" Height="120" Width="350" Margin="0,30,0,0">
+    <DockPanel>
+        <DockPanel.Background>
+            <ImageBrush ImageSource="pack://application:,,,/Resources/Images/start_background.png" />
+        </DockPanel.Background>
+        
+        <Border DockPanel.Dock="Top" Background="#FF510404" Height="120" Width="350" Margin="0,120,0,0">
             <Label Content="Rudi On Rails" Foreground="White" FontFamily="Birch Std" FontSize="60" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" VerticalAlignment="Center"/>
         </Border>
 
-        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,100,0">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Left" Width="550" Margin="250,50,0,0">
             <TextBlock Text="Spielername " FontFamily="Source Sans Pro" FontSize="30" Foreground="#FF510404" Height="45" Width="180" />
             <TextBox Text="{Binding LobbyModel.PlayerName, Mode=TwoWay}" Height="45" Width="250" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="2" TextChanged="TextBox_TextChanged" FontFamily="Source Sans Pro" FontSize="24"/>
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" >
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"  DockPanel.Dock="Right" Width="550" Margin="0,50,250,0">
             <Button x:Name="editorButton" Command="{Binding SwitchToJoinEditorLobbyView}" Content="ZUM BAU-MODUS" Width="250" Style="{StaticResource DefaultButtonStyle}" Margin="0,0,0,15" />
             <Button x:Name="gameButton" Command="{Binding SwitchToJoinGameLobbyView}" Content="ZUM DAMPF-MODUS" Width="250" Style="{StaticResource DefaultButtonStyle}" Margin="0,15,0,0"/>
         </StackPanel>
-    </Grid>
+    </DockPanel>
 </UserControl>

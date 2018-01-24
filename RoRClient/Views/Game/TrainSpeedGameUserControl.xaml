@@ -9,6 +9,5 @@
     <StackPanel Margin="120, 40" >
         <Label Content="Geschwindigkeit" Foreground="White" FontFamily="Source Sans Pro" FontSize="20" HorizontalAlignment="Center" Margin="20"/>
         <Slider Value="{Binding OwnLoco.Loco.Speed, Mode=OneWay}" Minimum="-1" Maximum="+5" IsSnapToTickEnabled="True" TickFrequency="1" HorizontalContentAlignment="Center"  ValueChanged="SliderValueChanged" />
-
     </StackPanel>
 </UserControl>
