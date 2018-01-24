@@ -5,26 +5,97 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RoRClient.Views.Popup"
         mc:Ignorable="d" WindowStyle="None"
-        Title="Spielregeln" Height="650" Width="700" Background="#f9f1df">
+        Title="Spielregeln" Height="700" Width="900" Background="#f9f1df">
     <Window.Resources>
         <ResourceDictionary Source="../Styles.xaml"/>
     </Window.Resources>
-    
-    <StackPanel>
-       <!-- <StackPanel.Background>
-            <ImageBrush ImageSource="pack://application:,,,/Resources/Images/start_background.png" />
-        </StackPanel.Background> -->
-        <Button Content="X" Background="Transparent" Click="CloseButton_Click" Foreground="#FF510404" FontSize="20" FontWeight="Bold" HorizontalAlignment="Right" Margin="10" BorderBrush="Transparent" />
-        <Border Background="#FF510404" Height="60" Width="200">
-            <Label Content="Spielregeln" Foreground="White" FontFamily="Birch Std" FontSize="40" HorizontalContentAlignment="Center"/>
-        </Border>
-        <StackPanel>
-            <Label Content="Spielziel" Style="{StaticResource DefaultHeaderStyle}"/>
-            
-           
-            <TextBlock Text="hier stehen die Spielregeln..." Foreground="#FF510404" FontFamily="Source Sans Pro" FontSize="24" Margin="0 70 0 20" Padding="20" Height="300" Width="550" />
 
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <Button Content="X" Background="Transparent" Click="CloseButton_Click" Foreground="#FF510404" FontSize="20" FontWeight="Bold" HorizontalAlignment="Right" Margin="10" BorderBrush="Transparent" />
+            <Border Background="#FF510404" Height="60" Width="200">
+                <Label Content="Spielregeln" Foreground="White" FontFamily="Birch Std" FontSize="40" HorizontalContentAlignment="Center"/>
+            </Border>
+            <StackPanel Margin="50">
+                <Border BorderBrush="#FF510404" BorderThickness="2" Height="2" Margin="0 15"/>
+                <TextBlock Text="Rudi On Rails ist ein strategisches Spiel für Groß und Klein für 2-4 Personen. Es geht um das Erstellen von komplexen Schienennetzen mit mehreren Personen. Es können verschiedene Objekte, wie Schienen, Kreuzungen, Weichen, Bahnhöfe, Signale und Minen auf einer Karte positioniert werden. Anschließend können mehrere Spieler gegeneinander auf Karten spielen. Das Spielziel ist eine gewisse Anzahl an Punkte zu erreichen. Um die Punkte zu erreichen, müssen die Spieler mit einem Zug über das Schienennetz fahren, dabei Ressourcen sammeln, diese günstig eintauschen und wieder in seinem Bahnhof lagern. Jeder Spieler besitzt einen Geisterzug, der willkürlich mit einem einstellbaren Verhalten über die Karte fährt und Container an verschiedenen Stellen klaut. Die Schwierigkeit an dem Spiel ist einerseits die Punktzahl zu erreichen, seinen eigenen Bahnhof vor den Geisterzügen der anderen Spieler zu schützen und gleichzeitig das Spielgeschehen für andere zu erschweren, in dem man ihnen 'Steine in den Weg legt'." 
+                       Style="{StaticResource DefaultTextBlockStyle}" Margin="0" />
+                <Border BorderBrush="#FF510404" BorderThickness="2" Height="2" Margin="0 15 "/>
+                <Label Content="Spielziel" Style="{StaticResource DefaultHeaderStyle}" />
+                <TextBlock Text="Ziel des Spiels ist es, so schnell wie möglich Punkte zu erreichen. Wer zuerst 100 Punkte erreicht hat, hat gewonnen." 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+                <Label Content="Vorbereitung" Style="{StaticResource DefaultHeaderStyle}" />
+                <TextBlock Text="Zuerst muss jeder Spieler seinen Spielnamen eingeben. Danach muss er auswählen zwischen dem Bau-Modus und dem Dampf-Modus. In dem Bau-Modus kann der Spieler zusammen mit anderen Spielern eine eigene Spielkarte erstellen. Im Dampf-Modus können Spieler zusammen auf auszuwählenden Karten spielen. " 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+
+                <Label Content="Bau-Modus" Style="{StaticResource DefaultSubHeaderStyle}"/>
+                <TextBlock Text="Hier kann sich der Spieler entscheiden, ob er einen eigenen Bau-Modus starten oder mit anderen Spielern an einer Karte zusammen bauen möchte." 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+                <TextBlock Text="Bei der Auswahl 'einen eigenen Bau-Modus starten', muss der Spieler seinem Bau-Modus einen Namen geben. Um auf einer leeren Karte zu beginnen, muss der Spieler #neue-map-erstellen auswählen. Bei Auswahl einer bereits gespeicherten Karte, kann er diese bearbeiten." 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+                <Label Content="Dampf-Modus" Style="{StaticResource DefaultSubHeaderStyle}"/>
+                <TextBlock Text="Hier kann sich der Spieler entscheiden, ob er einen eigenen Dampf-Modus starten oder zu wartenden Spielern hinzustoßen möchte. " 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+                <TextBlock Text="Bei der Auswahl 'einen eigenen Dampf-Modus starten', muss der Spieler seinem Dampf-Modus einen Namen geben und danach auswählen mit welcher Karte er spielen möchte. " 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+
+
+                <Label Content="Karte bauen und speichern" Style="{StaticResource DefaultHeaderStyle}" />
+                <TextBlock Text="Jeder Spieler kann beliebig viele Elemente, die in der rechten Toolbar zu finden sind, auf der Karte positionieren. Mit Rechtsklick auf ein gesetztes Element kann man dies in beide Richtungen drehen (runder Pfeil), bewegen (Kreuz mit Pfeilen) oder löschen (Mülleimer). " 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+
+                <Label Content="Besonderheiten:" FontSize="18" Foreground="#FF510404" Margin="0 10 0 0" Height="30" />
+                <Label Content="Weichen" Style="{StaticResource DefaultSubHeaderStyle}" />
+                <TextBlock Text="Bei Weichen kann man zusätzlich die Fahrtrichtung wechseln bei Rechtsklick auf das Element (entgegengesetzte Pfeile)." 
+                       Style="{StaticResource DefaultTextBlockStyle}"/>
+                <Label Content="Bahnhöfe" Style="{StaticResource DefaultSubHeaderStyle}" />
+                <TextBlock Text="Bei einem gesetzten Bahnhof muss der Spieler auf das rote Dach des Bahnhofsgebäudes klicken, um Bearbeitungs-Aktionen ausführen zu können." 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+                <Label Content="Kreuzungen mit Signalen" Style="{StaticResource DefaultSubHeaderStyle}" />
+                <TextBlock Text="Der Spieler kann nach dem Setzen dieses Elements mit Rechtsklick ebenfalls die Signale einstellen. Ein Umschaltintervall, eine Strafe bei Überfahren eines roten Signal und Kosten für das Umschalten eines Signals ist vom Spieler einzustellen." 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+                <Label Content="Minen" Style="{StaticResource DefaultSubHeaderStyle}" />
+                <TextBlock Text="Minen kann ein Spieler nur auf geraden Schienenstücken platzieren." 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+               
+                <TextBlock Text="Um die gebaute Karte zu speichern, muss der Spieler in der obigen Menüleiste auf Karte klicken und dort 'Speichern' oder 'Speichern als …' auswählen." 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+
+
+                <Label Content="Spielverlauf" Style="{StaticResource DefaultHeaderStyle}" />
+                <Label Content="Zug fahren" Style="{StaticResource DefaultSubHeaderStyle}"/>
+                <TextBlock Text="Der Zug jedes Spielers startet in seinem Heimat-Bahnhof. Der Zug besteht anfangs aus einer Lok und einem leeren Waggon. Um den Zug vorwärts zu bewegen, muss der Spieler den Geschwindigkeitsregler nach rechts bewegen. Damit der Zug rückwärts fährt, muss der Regler ganz nach links verschoben werden. Beim Fahren des Zuges wird Kohle verbrannt." 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+
+                <Label Content="Weichen stellen" Style="{StaticResource DefaultSubHeaderStyle}"/>
+                <TextBlock Text="Jeder Spieler kann gegen Gold Weichen umstellen, die sich vor dem eigenen Zug befinden. Dafür muss der Spieler nur die Weiche anklicken. " 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+
+                <Label Content="Ressourcen sammeln" Style="{StaticResource DefaultSubHeaderStyle}"/>
+                <TextBlock Text="Jeder Spieler muss mit seinem Zug durch Minen fahren um Ressourcen zu erhalten. Minen stellen Kohle und Gold her und werden nur auf leere Waggons eines Zuges geladen. Danach müssen die Ressourcen vom Spieler zum Heimat-Bahnhof transportiert werden um sie dort mithilfe des Krans abzuladen. Dafür muss der Zug neben dem Bahnhofsgebäude stillstehen. " 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+
+                <Label Content="Ressourcen tauschen" Style="{StaticResource DefaultSubHeaderStyle}"/>
+                <TextBlock Text="Ein Spieler kann Ressourcen tauschen, wenn er mit seinem Zug, der Ressourcen geladen hat, in den öffentlichen Bahnhof fährt und dort ein Tauschverhältnis unten auswählt." 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+
+                <Label Content="Zusätzliche Waggons kaufen" Style="{StaticResource DefaultSubHeaderStyle}"/>
+                <TextBlock Text="Um Waggons zu kaufen, muss der Spieler sich im Heimat-Bahnhof befinden und auf das Dach des Gebäudes klicken. Danach erscheint ein leerer Waggon hinter dem Zug. Das Ankoppeln des Waggons erfolgt automatisch beim Heranfahren." 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+
+                <Label Content="Geisterzug" Style="{StaticResource DefaultSubHeaderStyle}"/>
+                <TextBlock Text="Der Geisterzug jedes Spielers fährt automatisch auf dem Schienennetz, klaut dabei Ressourcen in anderen Heimat-Bahnhöfen und sammelt Container neben den Schienen auf. Wenn der Geisterzug sich im Heimat-Bahnhof befindet, kann er automatisch seine Container abladen. Ebenfalls kann der Spieler ein vordefiniertes Skript auswählen oder ein selbstgeschriebenes Skript hochladen um das Verhalten des Geisterzugs zu definieren." 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+
+                <Label Content="Sensoren setzen" Style="{StaticResource DefaultSubHeaderStyle}"/>
+                <TextBlock Text="Jeder Spieler kann Sensoren gegen Gold auf dem Schienennetz platzieren. Dafür muss er zuerst unten 'Sensor' auswählen, ein Skript einstellen und danach wird mit Klick auf eine Schiene der Sensor gesetzt. Ein Sensor kann nur in unmittelbarer Nähe vor dem eigenen Zug platziert werden. Ein Sensor kann das Verhalten von Zügen manipulieren, kann Signale und Weichen umstellen. Ein Sensor ist nur eine gewisse zeitlang aktiv und verschwindet danach wieder." 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+
+                <Label Content="Kollisionen" Style="{StaticResource DefaultSubHeaderStyle}"/>
+                <TextBlock Text="Wenn ein Spielerzug mit einem anderen Spielerzug zusammenstößt, verlieren die beteiligten Spieler einen Container und bekommen als Strafe Gold abgezogen. Sie starten wieder bei ihrem Heimat-Bahnhof. " 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+            </StackPanel>
         </StackPanel>
-      
-    </StackPanel>
+    </ScrollViewer>
 </Window>

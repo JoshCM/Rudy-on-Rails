@@ -68,4 +68,29 @@
         <Setter Property="Width" Value="200"/>
         <Setter Property="Height" Value="55"/>
     </Style>
+
+    <Style x:Key="DefaultHeaderStyle" TargetType="{x:Type Label}">
+        <Setter Property="Foreground" Value="#FF510404"/>
+        <Setter Property="FontFamily" Value="Birch Std"/>
+        <Setter Property="FontSize" Value="30"/>
+        <Setter Property="Margin" Value="0 25 0 0" />
+    </Style>
+
+    <Style x:Key="DefaultSubHeaderStyle" TargetType="{x:Type Label}">
+        <Setter Property="Foreground" Value="#FF510404"/>
+        <Setter Property="FontFamily" Value="Source Sans Pro"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="FontStyle" Value="Italic"/>
+        <Setter Property="Margin" Value="0 10 0 0" />
+    </Style>
+
+
+    <Style x:Key="DefaultTextBlockStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#FF510404"/>
+        <Setter Property="FontFamily" Value="Source Sans Pro"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="Margin" Value="20 0 0 10" />
+    </Style>
+
 </ResourceDictionary>
