@@ -49,12 +49,12 @@ public class GameSession extends RoRSession{
 	}
 	
 	private void createHostPlayer(UUID playerId, String playerName) {
-		GamePlayer player = new GamePlayer(getDescription(), playerName, playerId, true);
+		GamePlayer player = new GamePlayer(getSessionName(), playerName, playerId, true);
 		addPlayer(player);
 	}
 	
 	public Player createPlayer(UUID playerId, String playerName) {
-		GamePlayer player = new GamePlayer(getDescription(), playerName, playerId, false);
+		GamePlayer player = new GamePlayer(getSessionName(), playerName, playerId, false);
 		addPlayer(player);
 		return player;
 	}

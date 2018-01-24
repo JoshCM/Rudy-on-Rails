@@ -46,11 +46,11 @@ public class CreatePublictrainstationCommand extends CreateTrainstationCommandBa
 			// neuer Stock wird erstellt 
 			// y-1 da die anfangsausrichtung der trainstation immer EAST ist
 			Square stockSquare = map.getSquare(xPos, yPos - 1);
-			Stock newStock = new Stock(session.getDescription(), stockSquare, trainstationId, alignment);
+			Stock newStock = new Stock(session.getSessionName(), stockSquare, trainstationId, alignment);
 			stockSquare.setPlaceableOnSquare(newStock);
 			
 			// Trainstation wird erzeugt und auf Square gesetzt
-			Publictrainstation trainstation = new Publictrainstation(session.getDescription(), newSquare, 
+			Publictrainstation trainstation = new Publictrainstation(session.getSessionName(), newSquare, 
 					createTrainstationRails(map, newSquare, trainstationId, alignment), trainstationId, alignment, newStock);
 			newSquare.setPlaceableOnSquare(trainstation);
 			

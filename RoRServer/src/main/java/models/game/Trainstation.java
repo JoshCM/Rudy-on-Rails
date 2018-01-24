@@ -37,7 +37,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 		this.stock = stock;
 		this.trainstationRailIds = trainstationRailIds;
 		this.alignment = alignment;
-		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getDescription());
+		editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getSessionName());
 	}
 
 	/**
@@ -94,7 +94,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	 */
 	public List<Rail> getTrainstationRails() {
 		List<Rail> trainstationRails = new ArrayList<Rail>();
-		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getDescription());
+		EditorSession editorSession = EditorSessionManager.getInstance().getEditorSessionByName(getSessionName());
 		for (UUID railId : trainstationRailIds) {
 			trainstationRails.add((Rail) editorSession.getMap().getPlaceableOnSquareById(railId));
 		}
@@ -167,7 +167,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 
 			InteractiveGameObject tmpTrainstationGameObject = temptrainstationGameObjectMap.get(coordinate);
 			// bekomme sessionname für neue Rail
-			String sessionName = editorSession.getDescription();
+			String sessionName = editorSession.getSessionName();
 			// bekomme newSquare
 			Square newSquare = (Square) editorSession.getMap().getSquare(coordinate.x, coordinate.y);
 
