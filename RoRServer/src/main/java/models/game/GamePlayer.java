@@ -68,11 +68,10 @@ public class GamePlayer extends Player{
 		}
 		notifyResourceCountChanged();
 	}
-	
 	public int getPointCount() {
 		return pointCount;
 	}
-
+	
 	public void addPoint(int point) {
 		this.pointCount += point;
 		notifyResourceCountChanged();

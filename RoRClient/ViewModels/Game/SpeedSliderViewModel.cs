@@ -14,7 +14,7 @@ namespace RoRClient.ViewModels.Game
     class SpeedSliderViewModel: ViewModelBase
     {
         private int speed;
-        private ICommand updateSpeedCommand;//muss das sein?
+        private ICommand updateSpeedCommand;
         internal ICommand UpdateSpeedCommand(double newValue)
         {
             sendUpdateSpeedCommand(newValue);

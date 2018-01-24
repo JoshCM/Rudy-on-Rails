@@ -11,14 +11,24 @@ import commands.base.Command;
 import commands.editor.CreateRailCommand;
 import commands.editor.CreatePlayertrainstationCommand;
 import commands.editor.StartEditorCommand;
+import commands.game.CreateCartCommand;
 import communication.MessageInformation;
+import exceptions.MapNotFoundException;
+import models.game.Cart;
 import models.game.Compass;
+import models.game.GamePlayer;
+import models.game.Map;
+import models.game.PlayerLoco;
+import models.game.Rail;
 import models.game.Square;
 import models.game.Trainstation;
 import models.game.Playertrainstation;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
+import models.session.GameSession;
+import models.session.GameSessionManager;
 import models.session.RoRSession;
+import persistent.MapManager;
 
 public class CommandCreatorTests {
 	@Test
@@ -100,5 +110,48 @@ public class CommandCreatorTests {
 				assertEquals(editorName, square.getDescription());
 			}
 		}
+	}
+	
+	@Test
+	public void testCartIsCreatedAndDecreasePlayerGold() throws MapNotFoundException {
+		
+		GameSession session = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(),
+				UUID.randomUUID(), "Player");
+		
+		Map map = MapManager.loadMap("GameDefaultMapWithTrainstations");
+		session.setMap(map);
+		
+		GamePlayer player = (GamePlayer) session.getPlayers().get(0);
+		int beforePlayerGoldCount = player.getGoldCount();
+		session.addLoco(new PlayerLoco(session.getSessionName(), map.getSquare(5, 7), player.getId(), Compass.NORTH));
+		
+		int xPosCartSpawnPoint = 5;
+		int yPosCartSpawnPoint = 5;
+		Compass compass = Compass.NORTH;
+		UUID playerId = player.getId();
+		
+		MessageInformation messageInformation = new MessageInformation();
+		messageInformation.putValue("posX", xPosCartSpawnPoint);
+		messageInformation.putValue("posY", yPosCartSpawnPoint);
+		messageInformation.putValue("compass", compass.toString());
+		messageInformation.setClientid(playerId.toString());
+
+		CreateCartCommand command = new CreateCartCommand(session, messageInformation);
+		String commandName = command.getClass().getName();
+		Command createdCommand = null;
+		try {
+			createdCommand = CommandCreator.createCommandForName(commandName, session, messageInformation);
+		} catch (Exception e) {
+
+		}
+		createdCommand.execute();
+		
+		assertNotNull(createdCommand);
+		assertEquals(commandName, createdCommand.getClass().getName());
+		assertEquals(command.getClass(), createdCommand.getClass());
+		assertEquals(beforePlayerGoldCount - 3, player.getGoldCount());
+		
+		Rail cartSpawnPointRail = (Rail)map.getSquare(xPosCartSpawnPoint, yPosCartSpawnPoint).getPlaceableOnSquare();
+		assertEquals(Cart.class, cartSpawnPointRail.getPlaceableOnrail().getClass());
 	}
 }
