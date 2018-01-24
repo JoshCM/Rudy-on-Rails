@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.activemq.console.command.CreateCommand;
 import org.apache.log4j.Logger;
 
 import communication.MessageInformation;
