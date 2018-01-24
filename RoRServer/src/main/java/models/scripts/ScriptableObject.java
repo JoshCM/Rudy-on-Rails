@@ -21,6 +21,7 @@ public class ScriptableObject {
 		if (!currentScriptFilename.isEmpty()) {
 			try {
 				pi.exec("from " + currentScriptFilename + " import update");
+				pi.exec("from " + currentScriptFilename + " import init");
 				pi.set("proxy", proxyObject);
 				currentScriptIsValid = true;
 			} catch(PyException e) {
@@ -40,6 +41,12 @@ public class ScriptableObject {
 			if(!updateMethodThread.isAlive()) {
 				initAndStartUpdateMethodThread();
 			}
+		}
+	}
+	
+	public void callInitOnPythonScript() {
+		if(currentScriptIsValid) {
+			pi.exec("init(proxy)");
 		}
 	}
 	
@@ -74,6 +81,7 @@ public class ScriptableObject {
 		}
 
 		importCurrentScript();
+		callInitOnPythonScript();
 	}
 	
 	public String getCurrentScriptFilename() {

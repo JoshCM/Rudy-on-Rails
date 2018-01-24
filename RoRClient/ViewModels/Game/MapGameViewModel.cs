@@ -24,9 +24,9 @@ namespace RoRClient.ViewModels.Game
         private CanvasGameViewModel gameCanvasViewModel;
         private TaskFactory taskFactory;
 
-        public MapGameViewModel()
+        public MapGameViewModel(TaskFactory taskFactory)
         {
-            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            this.taskFactory = taskFactory;
             map = GameSession.GetInstance().Map;
             InitSquares();
 
@@ -83,16 +83,20 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
-        private LocoGameViewModel ownLoco;
         public LocoGameViewModel OwnLoco
         {
             get
             {
                 foreach(CanvasGameViewModel canvasGameViewModel in locos)
                 {
-                    LocoGameViewModel locoViewModel = (LocoGameViewModel)canvasGameViewModel;
-                    if (locoViewModel.Loco.PlayerId == ClientConnection.GetInstance().ClientId)
-                        return locoViewModel;
+                    if(canvasGameViewModel is LocoGameViewModel)
+                    {
+                        LocoGameViewModel locoViewModel = (LocoGameViewModel)canvasGameViewModel;
+                        if (locoViewModel.Loco.PlayerId == ClientConnection.GetInstance().ClientId)
+                        {
+                            return locoViewModel;
+                        }
+                    }
                 }
                 return null;
             }

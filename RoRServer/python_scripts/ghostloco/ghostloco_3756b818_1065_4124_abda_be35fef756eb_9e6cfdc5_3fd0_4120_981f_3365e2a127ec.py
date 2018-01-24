@@ -1,4 +1,4 @@
-def update(proxy):
+def falsche_update(proxy):
 	proxy.changeSpeed(2)
 	
 	i = 0

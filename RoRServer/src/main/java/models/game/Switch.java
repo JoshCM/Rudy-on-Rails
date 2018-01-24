@@ -1,6 +1,7 @@
 package models.game;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Klasse für eine Rail vom Typ Weiche. Eine Weiche besteht immer aus einer inaktiven Railsection
@@ -12,6 +13,10 @@ public class Switch extends Rail {
     public Switch(String sessionName, Square square, List<Compass> railSectionPositions){
         super(sessionName, square, railSectionPositions);
     }
+    
+    public Switch(String sessionName, Square square, List<Compass> railSectionPositions, UUID trainstationId, UUID id) {
+    	super(sessionName, square, railSectionPositions,trainstationId, id);
+	}
 
     @Override
     protected void createRailSectionsForRailSectionPositions(String sessionName, List<Compass> railSectionPositions) {

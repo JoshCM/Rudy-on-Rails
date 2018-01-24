@@ -11,11 +11,16 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
 	
 	protected int quantity;
 	protected String name;
-	private GameSession game;
+	
 	protected Resource(String sessionName, Square square, String name) {
 		super(sessionName, square);
 		this.name = name;
 		notifyCreatedResource();	
+	}
+	
+	protected Resource(String sessionName, String name) {
+		super(sessionName, new Square(sessionName, -1, -1));
+		this.name = name;
 	}
 	
 	/**
@@ -44,7 +49,7 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
 		return name;
 	}
 
-	public void setSessionName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 }

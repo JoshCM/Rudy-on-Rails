@@ -1,25 +1,22 @@
-package commands.editor;
+package commands.base;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import commands.base.CommandBase;
 import communication.MessageInformation;
-import exceptions.InvalidModelOperationException;
-import models.game.Map;
-import models.game.Rail;
 import models.game.Compass;
 import models.game.Crane;
+import models.game.Map;
+import models.game.Rail;
 import models.game.Square;
-import models.game.Stock;
+import models.game.Switch;
 import models.game.Trainstation;
-import models.helper.Validator;
-import models.session.EditorSession;
 import models.session.RoRSession;
 
-public class CreateTrainstationCommand extends CommandBase {
+public class CreateTrainstationCommandBase extends CommandBase {
+
 	private final static int OUTER_RAILS_COUNT = 8;
 	private final static int INNER_RAILS_COUNT = 6;
 	private final static int OUTER_RAILS_Y = OUTER_RAILS_COUNT / 2 * (-1);
@@ -27,54 +24,16 @@ public class CreateTrainstationCommand extends CommandBase {
 	private static final int CURVED_RAIL_EAST_SOUTH_Y = -3;
 	private static final int CURVED_RAIL_EAST_NORTH_Y = 2;
 	private static final List<Integer> CROSSING_COORDINATES = Arrays.asList(-3, 2);
-
-	private int xPos;
-	private int yPos;
-	private Compass alignment;
-	private Map map;
 	
-	public CreateTrainstationCommand(RoRSession session, MessageInformation messageInfo) {
+	public CreateTrainstationCommandBase(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
-
-		xPos = messageInfo.getValueAsInt("xPos");
-		yPos = messageInfo.getValueAsInt("yPos");
-		alignment = Compass.valueOf(messageInfo.getValueAsString("alignment"));
 	}
 
 	@Override
 	public void execute() {
-		EditorSession editorSession = (EditorSession) session;
-		this.map = editorSession.getMap();
-		Square newSquare = map.getSquare(xPos, yPos);
 
-		if (!Validator.validateTrainstationOnMap(newSquare, alignment, editorSession.getMap())) {
-			throw new InvalidModelOperationException(
-					String.format("Trainstation(x:%s,y:%s) konnte nicht angelegt werden", xPos, yPos));
-		} else {
-			// generiere UUID für Trainstation
-			UUID trainstationId = UUID.randomUUID();
-
-			// neuer Stock wird erstellt
-			// y-1 da die anfangsausrichtung der trainstation immer EAST ist
-			Square stockSquare = map.getSquare(xPos, yPos - 1);
-			Stock newStock = new Stock(session.getDescription(), stockSquare, trainstationId, alignment);
-			stockSquare.setPlaceableOnSquare(newStock);
-			
-			// Trainstation wird erzeugt und auf Square gesetzt
-			Trainstation trainstation = new Trainstation(session.getDescription(), newSquare,
-					createTrainstationRails(map, newSquare, trainstationId), trainstationId, alignment, newStock);
-			this.setSpawnPoint(trainstation);
-			newSquare.setPlaceableOnSquare(trainstation);
-			
-			
-			//der Kran wird erstellt
-			Crane crane = createCrane(stockSquare, trainstation);
-			trainstation.setCrane(crane);
-			
-			
-		}
 	}
-
+	
 	/**
 	 * Erzeugt die Rails einer Trainstation anhand der Square der neuen Trainstation
 	 * 
@@ -86,22 +45,27 @@ public class CreateTrainstationCommand extends CommandBase {
 	 *            Die ID der Trainstation
 	 * @return Eine Liste von IDs der Rails, die erzeugt und platziert wurden
 	 */
-	private List<UUID> createTrainstationRails(Map map, Square square, UUID trainstationId) {
+	protected List<UUID> createTrainstationRails(Map map, Square square, UUID trainstationId, Compass alignment) {
 
 		List<UUID> trainstationRailIds = new ArrayList<UUID>();
 
 		// Railsection werden erstellt
 		List<Compass> northSouthRailSectionPositions = Arrays.asList(Compass.NORTH, Compass.SOUTH);
-		List<Compass> crossRailSectionPositions = Arrays.asList(Compass.NORTH, Compass.SOUTH, Compass.WEST,
-				Compass.EAST);
+
+		// enthält railSectionPositions für Top und Bottom Switch
+		List<List<Compass>> switchRailSectionPositions = Arrays.asList(
+				Arrays.asList(Compass.NORTH, Compass.SOUTH, Compass.NORTH, Compass.WEST),
+				Arrays.asList(Compass.NORTH, Compass.SOUTH, Compass.SOUTH, Compass.WEST));
+		// enthält railSectionPositions für EastSouth Rails
 		List<Compass> eastSouthRailSectionPositions = Arrays.asList(Compass.EAST, Compass.SOUTH);
+		// enthält railSectionPositions für EastNorth Rails
 		List<Compass> eastNorthRailSectionPositions = Arrays.asList(Compass.EAST, Compass.NORTH);
 
 		// Squares der geraden Rails
 		List<Square> straightTrainstationRailSquares = new ArrayList<Square>();
 
-		// Squares der Kreuzungen
-		List<Square> crossingTrainstationRailSquares = new ArrayList<Square>();
+		// Squares der Weichen
+		List<Square> switchTrainstationRailSquares = new ArrayList<Square>();
 
 		// alle außenliegenden Squares werden hinzugefügt
 		for (int i = OUTER_RAILS_Y; i < OUTER_RAILS_COUNT + OUTER_RAILS_Y; i++) {
@@ -111,7 +75,7 @@ public class CreateTrainstationCommand extends CommandBase {
 
 			// wenn die Rail eine Kreuzung werden soll oder eine gerade Rail
 			if (CROSSING_COORDINATES.contains(i))
-				crossingTrainstationRailSquares.add(trainstationRailSquare);
+				switchTrainstationRailSquares.add(trainstationRailSquare);
 			else
 				straightTrainstationRailSquares.add(trainstationRailSquare);
 		}
@@ -140,14 +104,15 @@ public class CreateTrainstationCommand extends CommandBase {
 		}
 
 		// Crossings werden erstellt und auf die jeweilige Square gesetzt
-		for (Square crossingTrainstationRailSquare : crossingTrainstationRailSquares) {
+		for (int i = 0; i < switchTrainstationRailSquares.size(); i++) {
+			Square switchTrainstationRailSquare = switchTrainstationRailSquares.get(i);
 			trainstationRailIds
-					.add(createRail(crossingTrainstationRailSquare, trainstationId, crossRailSectionPositions));
+					.add(createSwitch(switchTrainstationRailSquare, trainstationId, switchRailSectionPositions.get(i)));
 		}
 
 		return trainstationRailIds;
 	}
-
+	
 	/**
 	 * Erzeugt eine Rail auf dem mitgegebenen Square mit einer TrainstationId und
 	 * bestimmten RailSectionPositions
@@ -161,60 +126,68 @@ public class CreateTrainstationCommand extends CommandBase {
 	 * @return Die Id der neuen Rail
 	 */
 	private UUID createRail(Square trainstationRailSquare, UUID trainstationId, List<Compass> compassList) {
-		Rail rail = new Rail(session.getDescription(), trainstationRailSquare, compassList, trainstationId, UUID.randomUUID());
+		Rail rail = new Rail(session.getSessionName(), trainstationRailSquare, compassList, trainstationId,
+				UUID.randomUUID());
 		rail.setSquareId(trainstationRailSquare.getId());
 		trainstationRailSquare.setPlaceableOnSquare(rail);
 		return rail.getId();
 	}
-	
-	public Crane createCrane(Square stock, Trainstation trainstation) {
-		Square craneSquare = findCraneSquare(stock);
+
+	private UUID createSwitch(Square trainstationRailSquare, UUID trainstationId, List<Compass> compassList) {
+		Rail switchRail = new Switch(session.getSessionName(), trainstationRailSquare, compassList);
+		switchRail.setSquareId(trainstationRailSquare.getId());
+		trainstationRailSquare.setPlaceableOnSquare(switchRail);
+		return switchRail.getId();
+	}
+
+	public Crane createCrane(Square stock, Trainstation trainstation, Map map, Compass alignment) {
+		Square craneSquare = findCraneSquare(stock, alignment, map);
 		List<Rail> TrainstationRails = trainstation.getTrainstationRails();
 		Rail craneRail = findCraneRail(TrainstationRails, craneSquare);
-		
-		Compass craneAlignment = getCraneAlignment();
-		
-		Crane newCrane = new Crane(this.session.sessionName, craneSquare, trainstation.getId(),craneAlignment, craneRail.getId());
+
+		Compass craneAlignment = getCraneAlignment(trainstation.getAlignment());
+
+		Crane newCrane = new Crane(this.session.sessionName, craneSquare, trainstation.getId(), craneAlignment,
+				craneRail.getId());
 		craneRail.setPlaceableOnRail(newCrane);
 		return newCrane;
 	}
-	
-	public Square findCraneSquare(Square stock) {
+
+	public Square findCraneSquare(Square stock, Compass alignment, Map map) {
 		Square craneSquare = null;
-		
-		switch (this.alignment) {
+
+		switch (alignment) {
 		case EAST:
-			craneSquare = this.map.getSquare(stock.getXIndex()+1, stock.getYIndex());
+			craneSquare = map.getSquare(stock.getXIndex() + 1, stock.getYIndex());
 			break;
 		case WEST:
-			craneSquare = this.map.getSquare(stock.getXIndex()-1, stock.getYIndex());
+			craneSquare = map.getSquare(stock.getXIndex() - 1, stock.getYIndex());
 			break;
 		case SOUTH:
-			craneSquare = this.map.getSquare(stock.getXIndex(), stock.getYIndex()+1);
+			craneSquare = map.getSquare(stock.getXIndex(), stock.getYIndex() + 1);
 			break;
 		case NORTH:
-			craneSquare = this.map.getSquare(stock.getXIndex(), stock.getYIndex()-1);
+			craneSquare = map.getSquare(stock.getXIndex(), stock.getYIndex() - 1);
 			break;
 		default:
 			break;
 		}
-		
 		return craneSquare;
 	}
-	
+
 	public Rail findCraneRail(List<Rail> trainstationRails, Square craneSquare) {
 		Rail craneRail = null;
-		for(Rail rail : trainstationRails) {
-			if(rail.getXPos() == craneSquare.getXIndex() && rail.getYPos() == craneSquare.getYIndex()) {
+		for (Rail rail : trainstationRails) {
+			if (rail.getXPos() == craneSquare.getXIndex() && rail.getYPos() == craneSquare.getYIndex()) {
 				craneRail = rail;
 				return craneRail;
 			}
-		}	
+		}
 		return craneRail;
 	}
-	
-	public Compass getCraneAlignment() {
-		switch(this.alignment) {
+
+	public Compass getCraneAlignment(Compass alignment) {
+		switch (alignment) {
 		case EAST:
 			return Compass.NORTH;
 		case NORTH:
@@ -225,42 +198,6 @@ public class CreateTrainstationCommand extends CommandBase {
 			return Compass.SOUTH;
 		default:
 			return Compass.EAST;
-		}
-			
-				
-	}
-	
-	
-
-	/**
-	 * Sucht das richtige Rail und setze es als Spawnpoint
-	 * @param trainstation Der neu erzeugte Trainstation
-	 */
-	private void setSpawnPoint(Trainstation trainstation) {
-		int spawnPointX;
-		int spawnPointY;
-		switch (trainstation.getAlignment()) {
-		case EAST:
-			spawnPointX = 1;
-			spawnPointY = 0;
-		case SOUTH:
-			spawnPointX = 0;
-			spawnPointY = 1;
-		case WEST:
-			spawnPointX = -1;
-			spawnPointY = 0;
-		case NORTH:
-			spawnPointX = 0;
-			spawnPointY = -1;
-		default:
-			spawnPointX = 1;
-			spawnPointY = 0;
-		}
-		
-		for(Rail trainstationRail : trainstation.getTrainstationRails()) {
-			if(trainstationRail.getXPos() == trainstation.getXPos() + spawnPointX)
-				if(trainstationRail.getYPos() == trainstation.getYPos() + spawnPointY)
-					trainstation.setSpawnPointforLoco(trainstationRail.getId());
 		}
 	}
 }

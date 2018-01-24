@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using RoRClient.ViewModels.Game;
 using RoRClient.Models.Game;
 using System;
+using System.Threading.Tasks;
 
 namespace RoRClient.ViewModels
 {
@@ -17,6 +18,11 @@ namespace RoRClient.ViewModels
         private UIState uiState = new UIState();
         private LobbyModel lobbyModel = new LobbyModel();
         private ViewModelBase _currentViewModel;
+        private TaskFactory taskFactory;
+
+        private EditorViewModel editorViewModel;
+        private GameViewModel gameViewModel;
+
         public ViewModelBase CurrentViewModel
         {
             get { return _currentViewModel; }
@@ -29,23 +35,40 @@ namespace RoRClient.ViewModels
 
         private void ChangeToView(object sender, UiChangedEventArgs args)
         {
-            CurrentViewModel = viewmodels[args.Statename];
+            switch (args.Statename)
+            {
+                case "start": CurrentViewModel = new StartViewModel(uiState, lobbyModel);
+                        break;
+                case "editor": CurrentViewModel = editorViewModel;
+                    break;
+                case "editorLobby":
+                    CurrentViewModel = new EditorLobbyViewModel(uiState, lobbyModel);
+                    // wird schon hier erzeugt, weil der UiState erst nach allen Commands geändert wird
+                    editorViewModel = new EditorViewModel(uiState, taskFactory);
+                    break;
+                case "game": CurrentViewModel = gameViewModel;
+                    break;
+                case "gameLobby":
+                    CurrentViewModel = new GameLobbyViewModel(uiState, lobbyModel);
+                    // wird schon hier erzeugt, weil der UiState erst nach allen Commands geändert wird
+                    gameViewModel = new GameViewModel(uiState, taskFactory);
+                    break;
+                case "joinEditorLobby": CurrentViewModel = new JoinEditorLobbyViewModel(uiState, lobbyModel);
+                    break;
+                case "joinGameLobby": CurrentViewModel = new JoinGameLobbyViewModel(uiState, lobbyModel);
+                    break;
+                case "gameResult":
+                    CurrentViewModel = new GameResultViewModel(uiState);
+                    break;
+            }
+            //CurrentViewModel = viewmodels[args.Statename];
         }
 
         public MainViewModel()
         {
-
-            viewmodels.Add("start", new StartViewModel(uiState, lobbyModel));
-            viewmodels.Add("editor", new EditorViewModel(uiState));
-	        viewmodels.Add("editorLobby", new EditorLobbyViewModel(uiState, lobbyModel));
-			viewmodels.Add("game", new GameViewModel(uiState));
-            viewmodels.Add("gameLobby", new GameLobbyViewModel(uiState, lobbyModel));
-            viewmodels.Add("joinEditorLobby", new JoinEditorLobbyViewModel(uiState, lobbyModel));
-            viewmodels.Add("joinGameLobby", new JoinGameLobbyViewModel(uiState, lobbyModel));
-
+            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             uiState.OnUiStateChanged += ChangeToView;
-
-            CurrentViewModel = viewmodels["start"];
+            uiState.State = "start";
         }
     }
 }

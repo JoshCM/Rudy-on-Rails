@@ -1,6 +1,8 @@
-﻿using RoRClient.ViewModels.Helper;
+﻿using RoRClient.Models.Session;
+using RoRClient.ViewModels.Helper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,7 @@ namespace RoRClient.ViewModels.Game
         private MapGameViewModel mapGameViewModel;
         private GameStatusViewModel gameStatusViewModel;
         private GameInteractionsViewModel gameInteractionsViewModel;
+        private TopMenuViewModel topMenuViewModel;
 
         #region Properties
         public MapGameViewModel MapGameViewModel
@@ -30,21 +33,33 @@ namespace RoRClient.ViewModels.Game
                 return gameInteractionsViewModel;
             }
         }
+        public TopMenuViewModel TopMenuViewModel
+        {
+            get
+            {
+                return topMenuViewModel;
+            }
+        }
         #endregion
 
-        public GameViewModel(UIState uiState)
+        public GameViewModel(UIState uiState, TaskFactory taskFactory)
         {
             this.uiState = uiState;
-            mapGameViewModel = new MapGameViewModel();
-            gameInteractionsViewModel = new GameInteractionsViewModel();
-            uiState.OnUiStateChanged += OnUiStateChanged;
+            mapGameViewModel = new MapGameViewModel(taskFactory);
+            gameInteractionsViewModel = new GameInteractionsViewModel(taskFactory);
+            gameStatusViewModel = new GameStatusViewModel();
+            topMenuViewModel = new TopMenuViewModel();
+            GameSession.GetInstance().PropertyChanged += OnWinningPlayerChanged;
         }
 
-        private void OnUiStateChanged(object sender, UiChangedEventArgs args)
+        private void OnWinningPlayerChanged(object sender, PropertyChangedEventArgs args)
         {
-            if (uiState.State == "game")
+            if(args.PropertyName == "WinningPlayer")
             {
-                gameStatusViewModel = new GameStatusViewModel();
+                if(GameSession.GetInstance().WinningPlayer != null)
+                {
+                    uiState.State = "gameResult";
+                }
             }
         }
     }

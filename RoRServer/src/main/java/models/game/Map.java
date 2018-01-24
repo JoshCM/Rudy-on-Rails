@@ -68,7 +68,7 @@ public class Map extends ModelBase {
 		return mapSize;
 	}
 
-	public String getDescription() {
+	public String getName() {
 		return name;
 	}
 
@@ -275,18 +275,7 @@ public class Map extends ModelBase {
 				//The Crane likes to move it move it...
 				Crane crane = trainstation.getCrane();
 				Square newSquare = getTrainstationInteractiveGameObjectSquare(crane, trainstation, oldPlaceableOnSquareXPos, oldPlaceableOnSquareYPos);
-				System.out.println("newSquare ("+ newSquare.getXIndex() +"/"+newSquare.getYIndex()+")");
 				crane.moveCrane(newSquare);
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 			}
 		} else {
 			throw new NotMoveableException(String.format("PlaceableOnSquare von %s ist nicht auf %s verschiebbar",

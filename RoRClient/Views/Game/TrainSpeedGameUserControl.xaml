@@ -5,10 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RoRClient.Views.Game"
              mc:Ignorable="d" 
+             xmlns:converter="clr-namespace:RoRClient.BindingConverter"
              d:DesignHeight="225" d:DesignWidth="800" Background="#510404" BorderBrush="White" BorderThickness="5">
-    <StackPanel Margin="120, 40" >
+    <UserControl.Resources>
+        <converter:PlayerToImagePathConverter x:Key="PlayerToImagePathConverter"/>
+    </UserControl.Resources>
+    <StackPanel Margin="120, 10">
         <Label Content="Geschwindigkeit" Foreground="White" FontFamily="Source Sans Pro" FontSize="20" HorizontalAlignment="Center" Margin="20"/>
         <Slider Value="{Binding OwnLoco.Loco.Speed, Mode=OneWay}" Minimum="-1" Maximum="+5" IsSnapToTickEnabled="True" TickFrequency="1" HorizontalContentAlignment="Center"  ValueChanged="SliderValueChanged" />
-
+        <Image Width="75" Height="75" Margin="20" Source="{Binding OwnLoco.Loco, Converter={StaticResource PlayerToImagePathConverter}}" Stretch="Fill" RenderTransformOrigin="0.5, 0.5"/>
     </StackPanel>
 </UserControl>

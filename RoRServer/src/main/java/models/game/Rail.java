@@ -58,8 +58,8 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     	this(sessionName, square, railSectionPositions, false, trainstationId, id);
     }
 
-    public Rail(String sessionName, Square newSquare, List<Compass> railSectionsCompass, boolean b, UUID trainstationId, UUID id, PlaceableOnRail placeableOnRail) {
-    	this(sessionName,newSquare,railSectionsCompass,b,trainstationId,id);
+    public Rail(String sessionName, Square newSquare, List<Compass> railSectionsCompass, boolean withSignals, UUID trainstationId, UUID id, PlaceableOnRail placeableOnRail) {
+    	this(sessionName,newSquare,railSectionsCompass,withSignals,trainstationId,id);
     	this.placeableOnRail = placeableOnRail;
 	}
 
@@ -91,11 +91,11 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
                 if (s.getPlaceableOnSquare() == null && Math.random() < chanceToSpawn / 100) {
                     if (Math.random() < 0.5) {
                         Gold gold = new Gold(
-                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getDescription(), s);
+                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getSessionName(), s);
                         s.setPlaceableOnSquare(gold);
                     } else {
                         Coal coal = new Coal(
-                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getDescription(), s);
+                                GameSessionManager.getInstance().getGameSessionByName(sessionName).getSessionName(), s);
                         s.setPlaceableOnSquare(coal);
                     }
                 }
@@ -406,7 +406,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         if (rail instanceof Switch) {
             newRail = new Switch(session.getDescription(), square, railSectionPosition);
         } else {
-            newRail = new Rail(session.getDescription(), square, railSectionPosition, createSignals, trainstationId, rail.getId());
+            newRail = new Rail(session.getSessionName(), square, railSectionPosition, createSignals, trainstationId, rail.getId());
         }
         System.out.println("Neue Rail erstellt: " + newRail.toString());
 

@@ -79,9 +79,13 @@ namespace RoRClient.ViewModels.Editor
                     {
                         SendCreateRailCommand();
                     }
+                    else if (selectedToolName.Contains("publictrainstation"))
+                    {
+                        SendCreatePublictrainstationCommand();
+                    }
                     else if (selectedToolName.Contains("trainstation"))
                     {
-                        SendCreateTrainstationCommand();
+                        SendCreatePlayertrainstationCommand();
                     }
                     else if (selectedToolName.Contains("switch"))
                     {
@@ -187,9 +191,9 @@ namespace RoRClient.ViewModels.Editor
         }
 
         /// <summary>
-        /// Sendet eine Anfrage an den Server der eine Trainstation setzen soll
+        /// Sendet eine Anfrage an den Server der eine Playertrainstation setzen soll
         /// </summary>
-        private void SendCreateTrainstationCommand()
+        private void SendCreatePlayertrainstationCommand()
         {
             int xPos = square.PosX;
             int yPos = square.PosY;
@@ -200,7 +204,24 @@ namespace RoRClient.ViewModels.Editor
             messageInformation.PutValue("yPos", yPos);
             messageInformation.PutValue("alignment", Compass.EAST.ToString());
 
-            editorSession.QueueSender.SendMessage("CreateTrainstation", messageInformation);
+            editorSession.QueueSender.SendMessage("CreatePlayertrainstation", messageInformation);
+        }
+
+        /// <summary>
+        /// Sendet eine Anfrage an den Server der eine Publictrainstation setzen soll
+        /// </summary>
+        private void SendCreatePublictrainstationCommand()
+        {
+            int xPos = square.PosX;
+            int yPos = square.PosY;
+            EditorSession editorSession = EditorSession.GetInstance();
+
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("xPos", xPos);
+            messageInformation.PutValue("yPos", yPos);
+            messageInformation.PutValue("alignment", Compass.EAST.ToString());
+
+            editorSession.QueueSender.SendMessage("CreatePublictrainstation", messageInformation);
         }
 
         public override void RotateLeft()
