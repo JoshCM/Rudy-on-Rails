@@ -70,7 +70,7 @@ public class Playertrainstation extends Trainstation {
 				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock(), oldTrainStation.getPlayerId());
 		
 		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
-		newTrainStation.setSessionName(session.getDescription());
+		newTrainStation.setSessionName(session.getSessionName());
 		
 		// setze den alten SpawnPoint für die neue Trainstation
 		newTrainStation.setSpawnPointforLoco(oldTrainStation.getSpawnPointforLoco());

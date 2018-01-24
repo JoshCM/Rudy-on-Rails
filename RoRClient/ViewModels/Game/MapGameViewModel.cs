@@ -83,18 +83,19 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
-        private LocoGameViewModel ownLoco;
         public LocoGameViewModel OwnLoco
         {
             get
             {
                 foreach(CanvasGameViewModel canvasGameViewModel in locos)
                 {
-                    if (canvasGameViewModel is LocoGameViewModel)
+                    if(canvasGameViewModel is LocoGameViewModel)
                     {
                         LocoGameViewModel locoViewModel = (LocoGameViewModel)canvasGameViewModel;
                         if (locoViewModel.Loco.PlayerId == ClientConnection.GetInstance().ClientId)
+                        {
                             return locoViewModel;
+                        }
                     }
                 }
                 return null;

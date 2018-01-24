@@ -57,6 +57,9 @@ namespace RoRClient.ViewModels
                     break;
                 case "joinGameLobby": CurrentViewModel = new JoinGameLobbyViewModel(uiState, lobbyModel);
                     break;
+                case "gameResult":
+                    CurrentViewModel = new GameResultViewModel(uiState);
+                    break;
             }
             //CurrentViewModel = viewmodels[args.Statename];
         }

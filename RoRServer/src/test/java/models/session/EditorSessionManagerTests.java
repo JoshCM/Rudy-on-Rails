@@ -15,7 +15,7 @@ public class EditorSessionManagerTests {
 		String editorSessionName = "TestEditorSession";
 		EditorSession editorSession = EditorSessionManager.getInstance().createNewEditorSession(editorSessionName,
 				UUID.randomUUID(), "HostPlayer");
-		assertEquals(editorSessionName, editorSession.getDescription());
+		assertEquals(editorSessionName, editorSession.getSessionName());
 	}
 
 	@Test

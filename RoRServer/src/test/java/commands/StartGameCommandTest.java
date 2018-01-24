@@ -30,7 +30,7 @@ public class StartGameCommandTest {
 		railSectionPositions.add(Compass.NORTH);
 		railSectionPositions.add(Compass.SOUTH);
 
-		Rail loadedRail = new Rail(gameSession.getDescription(), square, railSectionPositions);
+		Rail loadedRail = new Rail(gameSession.getSessionName(), square, railSectionPositions);
 		square.setPlaceableOnSquare(loadedRail);
 
 		Rail createdRail = loadedRail.loadFromMap(square, gameSession);
@@ -45,14 +45,14 @@ public class StartGameCommandTest {
 		// GameSession und Square erstellen
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "HostPlayer");
-		Square square = new Square(gameSession.getDescription(), 1, 1);
+		Square square = new Square(gameSession.getSessionName(), 1, 1);
 
 		// Erstellen eines neuen Bahnhofes
 		List<UUID> uuids = new ArrayList<UUID>();
 		uuids.add(UUID.randomUUID());
 
 		UUID trainstationId = UUID.randomUUID();
-		Playertrainstation loadedTrainstation = new Playertrainstation(gameSession.getDescription(), square, uuids, trainstationId,
+		Playertrainstation loadedTrainstation = new Playertrainstation(gameSession.getSessionName(), square, uuids, trainstationId,
 				Compass.NORTH,
 				new Stock(gameSession.getDescription(), gameSession.getMap().getSquare(1, 0), trainstationId, Compass.NORTH), UUID.randomUUID());
 		square.setPlaceableOnSquare(loadedTrainstation);
@@ -76,9 +76,9 @@ public class StartGameCommandTest {
 		railSectionPositions.add(Compass.NORTH);
 		railSectionPositions.add(Compass.SOUTH);
 
-		Rail rail = new Rail(gameSession.getDescription(), square, railSectionPositions);
+		Rail rail = new Rail(gameSession.getSessionName(), square, railSectionPositions);
 		square.setPlaceableOnSquare(rail);
-		Mine loadedMine = new Mine(gameSession.getDescription(), square, rail.getAlignment(), rail.getId());
+		Mine loadedMine = new Mine(gameSession.getSessionName(), square, rail.getAlignment(), rail.getId());
 		rail.setPlaceableOnRail(loadedMine);
 
 		// Mine laden und vergleichen
