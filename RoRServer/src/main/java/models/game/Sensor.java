@@ -3,11 +3,7 @@ package models.game;
 import java.util.UUID;
 
 import communication.MessageInformation;
-import models.helper.SensorCountdown;
-import models.scripts.ProxyObject;
-import models.scripts.Script;
 import models.scripts.ScriptableObject;
-import models.session.GameSession;
 import models.session.GameSessionManager;
 
 /**
