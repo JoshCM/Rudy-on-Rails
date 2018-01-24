@@ -16,6 +16,27 @@ namespace RoRClient.ViewModels.Editor
 {
     class TopMenuViewModel : ViewModelBase
     {
+        private ICommand openRulesPopUpCommand;
+        
+        public ICommand OpenRulesPopUpCommand
+        {
+            get
+            {
+                if (openRulesPopUpCommand == null)
+                {
+                    openRulesPopUpCommand = new ActionCommand(param => OpenRules());
+                }
+                return openRulesPopUpCommand;
+            }
+        }
+
+        private void OpenRules()
+        {
+            RulesPopup popup = new RulesPopup();
+            popup.ShowDialog();
+            // PopupCreator.ShowRules();
+        }
+
         private ICommand saveNewMapCommand;
         public ICommand SaveNewMapCommand
         {
