@@ -28,7 +28,7 @@ public class CreateSwitchCommand extends CommandBase {
         EditorSession editorSession = (EditorSession) session;
         Map map = editorSession.getMap();
         Square square = map.getSquare(xPos, yPos);
-        List<Compass> railSectionPositions = new ArrayList<Compass>();
+        List<Compass> railSectionPositions = new ArrayList<>();
         for(JsonObject json : railSectionData) {
             Compass node1 = Compass.valueOf(json.get("node1").getAsString());
             Compass node2 = Compass.valueOf(json.get("node2").getAsString());
@@ -40,7 +40,7 @@ public class CreateSwitchCommand extends CommandBase {
             railSectionPositions.add(node4);
         }
 
-        Rail rail = new Switch(session.getDescription(), square, railSectionPositions);
-        square.setPlaceableOnSquare(rail);
+        Switch switchRail = new Switch(session.getDescription(), square, railSectionPositions);
+        square.setPlaceableOnSquare(switchRail);
     }
 }

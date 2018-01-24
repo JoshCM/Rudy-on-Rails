@@ -381,9 +381,17 @@ namespace RoRClient.ViewModels.Editor
         /// </summary>
        private void ChangeSwitch()
         {
-            RailEditorViewModel railEditorViewModel = (RailEditorViewModel)SelectedEditorCanvasViewModel;
-            railEditorViewModel.ChangeSwitch();
+
+            if (SelectedEditorCanvasViewModel is RailEditorViewModel)
+            { 
+                RailEditorViewModel railEditorViewModel = (RailEditorViewModel)SelectedEditorCanvasViewModel;
+                if (railEditorViewModel != null)
+                {
+                    railEditorViewModel.ChangeSwitch();
+                }
+            }
         }
+
 
         /// <summary>
         /// Command für Delete erstellen

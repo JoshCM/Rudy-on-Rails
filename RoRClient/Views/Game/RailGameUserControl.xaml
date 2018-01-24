@@ -23,14 +23,18 @@
                Height="{Binding SquareDim, ElementName=railUserControl}" 
                Source="{Binding Rail.RailSections, Mode=OneWay, Converter={StaticResource RailSectionsToImagePathConverter}, ConverterParameter=inactive}">
             <Image.InputBindings>
+                <MouseBinding MouseAction="RightClick" Command="{Binding ChangeSwitchCommand}"></MouseBinding>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+
             </Image.InputBindings>
         </Image>
         <Image Width="{Binding SquareDim, ElementName=railUserControl}" 
                Height="{Binding SquareDim, ElementName=railUserControl}" 
                Source="{Binding Rail.RailSections, Mode=OneWay, Converter={StaticResource RailSectionsToImagePathConverter}, ConverterParameter=active}">
             <Image.InputBindings>
+                <MouseBinding MouseAction="RightClick" Command="{Binding ChangeSwitchCommand}"></MouseBinding>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+
             </Image.InputBindings>
         </Image>
         <Image  x:Name="SignalNorth"

@@ -13,7 +13,7 @@ import models.helper.StringToEnumConverter;
 /**
  * Klasse für ein Schienenstueck mit "Eingang" und "Ausgang"
  */
-public class RailSection extends ModelBase {
+public class RailSection extends ModelBase implements Comparable {
     private UUID squareId;
     private int squareXPos;
     private int squareYPos;
@@ -45,9 +45,9 @@ public class RailSection extends ModelBase {
     /**
      * @param sessionName
      * @param rail
-     * @param node1                 Gültige Werte sind N,E,S,W und NORTH, EAST, WEST, SOUTH
-     * @param node2                 Gültige Werte sind N,E,S,W und NORTH, EAST, WEST,
-     * @param railSectionStatus     Gülstige Werte sind ACTIVE; INACTIVE, FORBIDDEN
+     * @param node1             Gültige Werte sind N,E,S,W und NORTH, EAST, WEST, SOUTH
+     * @param node2             Gültige Werte sind N,E,S,W und NORTH, EAST, WEST,
+     * @param railSectionStatus Gülstige Werte sind ACTIVE; INACTIVE, FORBIDDEN
      */
     public RailSection(String sessionName, Rail rail, String node1, String node2, String railSectionStatus) {
         this(sessionName, rail, StringToEnumConverter.convertStringToNode(node1), StringToEnumConverter.convertStringToNode(node2),
@@ -66,14 +66,18 @@ public class RailSection extends ModelBase {
     public Compass getNode2() {
         return node2;
     }
-    
-    public List<Compass> getNodes(){
-    	return Arrays.asList(getNode1(), getNode2());
+
+    public List<Compass> getNodes() {
+        return Arrays.asList(getNode1(), getNode2());
     }
 
-    public RailSectionStatus getRailSectionStatus() {return status;}
-    public void setRailSectionStatus(RailSectionStatus railSectionStatus) { this.status = railSectionStatus;}
+    public RailSectionStatus getRailSectionStatus() {
+        return status;
+    }
 
+    public void setRailSectionStatus(RailSectionStatus railSectionStatus) {
+        this.status = railSectionStatus;
+    }
 
     /**
      * Rotiert die RailSectionPositions.
@@ -93,8 +97,10 @@ public class RailSection extends ModelBase {
         node2 = rotateRailSectionPosition(node2, right);
     }
 
-    public void switchActitityStatus()
-    {
+    /**
+     * Wechsel zwischen aktivem und inaktivem Status der RailSection
+     */
+    public void switchActitityStatus() {
         if (status == RailSectionStatus.ACTIVE) {
             status = RailSectionStatus.INACTIVE;
         } else if (status == RailSectionStatus.INACTIVE) {
@@ -102,7 +108,6 @@ public class RailSection extends ModelBase {
         }
         notifyNodesUpdated();
     }
-
 
     /**
      * @return String, der sagt ob Schiene Befahrbar ist oder nicht.
@@ -220,4 +225,11 @@ public class RailSection extends ModelBase {
         }
     }
 
+    @Override
+    public int compareTo(Object o) {
+        RailSection rs = (RailSection) o;
+        if (this == rs) return 0;
+        return (this.status == RailSectionStatus.ACTIVE && rs.status == RailSectionStatus.INACTIVE) ? -1 : 1;
+    }
 }
+
