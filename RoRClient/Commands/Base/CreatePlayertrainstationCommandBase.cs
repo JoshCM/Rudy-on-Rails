@@ -15,6 +15,7 @@ namespace RoRClient.Commands.Base
     {
         Guid trainstationId;
         Guid stockId;
+        Guid playerId;
         private int xPos;
         private int yPos;
         private int stockXPos;
@@ -29,6 +30,7 @@ namespace RoRClient.Commands.Base
         /// <param name="messageInformation"></param>
         public CreatePlayertrainstationCommandBase(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
+            playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             trainstationId = Guid.Parse(messageInformation.GetValueAsString("trainstationId"));
             stockId = Guid.Parse(messageInformation.GetValueAsString("stockId"));
             xPos = messageInformation.GetValueAsInt("xPos");
@@ -50,7 +52,7 @@ namespace RoRClient.Commands.Base
         {
             Square square = session.Map.GetSquare(xPos, yPos);
             Stock stock = (Stock)session.Map.GetPlaceableById(stockId);
-            Playertrainstation trainstation = new Playertrainstation(trainstationId, square, trainstationRails, alignment, stock);
+            Playertrainstation trainstation = new Playertrainstation(trainstationId, square, trainstationRails, alignment, stock, playerId);
             square.PlaceableOnSquare = (Playertrainstation)trainstation;
         }
 

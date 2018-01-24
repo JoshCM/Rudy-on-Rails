@@ -120,6 +120,8 @@ public class StartGameCommand extends CommandBase {
 			
 			// Alte Trainstation holen und neue Trainstation damit erstellen
 			Trainstation oldTrainStation = (Trainstation) trainstationSquare.getPlaceableOnSquare();
+			
+			// TODO: playerTrainstation muss hier schon seine playerId bekommen
 			Trainstation newTrainStation = (Trainstation) oldTrainStation.loadFromMap(trainstationSquare, gameSession);
 			
 			// Neue Trainstation auf Square setzen
