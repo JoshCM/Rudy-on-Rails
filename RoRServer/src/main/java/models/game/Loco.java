@@ -108,12 +108,23 @@ public class Loco extends TickableGameObject {
 			this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 			notifyLocoPositionChanged();
 			
+			handleSignalsPenalty();
+			
 			// Die Sensoren erfahren es auch
 			notifySensors();
 		}
 		else {
 			this.speed = 0;
 			notifySpeedChanged();
+		}
+	}
+
+	// ToDo: schön machen, indem der Zug das nicht selber handled sondern die Signals, Stichwort Observer
+	private void handleSignalsPenalty() {
+		if(rail.getSignals() != null) {
+			if(rail.getSignals().isSignalActive(drivingDirection)) {
+				player.removeGold(rail.getSignals().getPenalty());
+			}
 		}
 	}
 	

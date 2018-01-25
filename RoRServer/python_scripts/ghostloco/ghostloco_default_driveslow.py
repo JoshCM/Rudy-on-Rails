@@ -13,7 +13,7 @@ def update(proxy):
 	else:
 		# Halte, wenn ein Signal eingeschaltet ist
 		if "InactiveSignal" in objectsOnSquare:
-			proxy.changeSpeed(0)
+			proxy.changeSpeed(2)
 		# Fahre weiter, wenn ein Signal ausgeschaltet ist
 		elif "ActiveSignal" in objectsOnSquare:
-			proxy.changeSpeed(2)
+			proxy.changeSpeed(0)
