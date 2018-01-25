@@ -21,14 +21,18 @@ import persistent.MapManager;
 
 public class StartEditorCommand extends CommandBase {
 	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
+	
+	private int mapSize;
 
 	public StartEditorCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
+		mapSize = messageInfo.getValueAsInt("mapSize");
 	}
 
 	private void startNewMap() {
-		Map map = new Map(session.getSessionName());
+		Map map = new Map(session.getSessionName(), mapSize);
 		session.setMap(map);
+		map.notifySize();
 		log.info("create new map");
 	}
 
@@ -39,6 +43,7 @@ public class StartEditorCommand extends CommandBase {
 		map.setSessionNameForMapAndSquares(session.getSessionName());
 		map.addObserver(TopicMessageQueue.getInstance());
 		session.setMap(map);
+		map.notifySize();
 		map.changeName(map.getName());
 
 		// hier müssen die Rails zuerst erstellt werden, danach die Trainstations

@@ -17,6 +17,7 @@ import models.game.TickableGameObject;
 import models.scripts.ScriptableObject;
 import models.scripts.ScriptableObjectManager;
 import models.scripts.Scripts;
+import persistent.MapManager;
 
 /**
  * Oberklasse vom Game-Modus. 
@@ -94,7 +95,8 @@ public class GameSession extends RoRSession implements ModelObserver {
 	 */
 	public boolean isFull() {
 		boolean isFull = false;
-		if (getMap().getAvailablePlayerSlots() == getPlayers().size()) {
+		
+		if (MapManager.getAvailablePlayerSlots(getMapName()) == getPlayers().size()) {
 			isFull = true;
 		}
 		return isFull;

@@ -114,6 +114,7 @@
     <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Base\DeletePlaceableCommandBase.cs" />
     <Compile Include="Commands\Base\CreatePublictrainstationCommandBase.cs" />
+    <Compile Include="Commands\Base\InitMapSizeCommandBase.cs" />
     <Compile Include="Commands\Base\UpdateActivityOfSignalsCommandBase.cs" />
     <Compile Include="Commands\Base\CreateSignalsCommandBase.cs" />
     <Compile Include="Commands\Base\CreateCraneCommandBase.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreatePublictrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeleteCraneCommand.cs" />
+    <Compile Include="Commands\Editor\Other\InitMapSizeCommand.cs" />
     <Compile Include="Commands\Editor\Other\LeaveEditorCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateActivityOfSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateSignalsCommand.cs" />
@@ -158,6 +160,7 @@
     <Compile Include="Commands\Game\Create\CreatePublictrainstationCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Game\Delete\DeleteSensorCommand.cs" />
+    <Compile Include="Commands\Game\Other\InitMapSizeCommand.cs" />
     <Compile Include="Commands\Game\Other\SwitchSensorCommand.cs" />
     <Compile Include="Commands\Game\Other\PlaceSensorCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />
@@ -270,6 +273,7 @@
     <Compile Include="ViewModels\Lobby\GameLobbyViewModel.cs" />
     <Compile Include="ViewModels\Lobby\JoinGameLobbyViewModel.cs" />
     <Compile Include="ViewModels\Lobby\JoinEditorLobbyViewModel.cs" />
+    <Compile Include="ViewModels\Lobby\PossibleMapSize.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Lobby\StartViewModel.cs" />
     <Compile Include="ViewModels\Editor\SquareEditorViewModel.cs" />

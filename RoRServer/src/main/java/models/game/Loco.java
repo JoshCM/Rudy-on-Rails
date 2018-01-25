@@ -94,7 +94,6 @@ public abstract class Loco extends TickableGameObject {
 				}
 
 				spendCoal();
-				// player.spendCoal(absoluteSpeed); //Das hier ist die Nicht-Cheat-Variante
 			}
 		}
 	}

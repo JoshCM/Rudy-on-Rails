@@ -9,8 +9,7 @@ namespace RoRClient.Models.Game
     /// </summary>
     public class Map : ModelBase
     {
-        private const int mapSize = 50;
-        public static int MapSize => mapSize;
+        private int mapSize;
         private string name = "";
         private Square[,] squares;
 
@@ -30,6 +29,22 @@ namespace RoRClient.Models.Game
             }
         }
 
+        public int MapSize
+        {
+            get
+            {
+                return mapSize;
+            }
+            set
+            {
+                if(mapSize != value)
+                {
+                    mapSize = value;
+                    NotifyPropertyChanged("MapSize");
+                }
+            }
+        }
+
         public Square[,] Squares
         {
             get
@@ -42,13 +57,11 @@ namespace RoRClient.Models.Game
             }
         }
 
-        public Map () : base()
+        public Map (int mapSize) : base()
         {
+            this.mapSize = mapSize;
             squares = new Square[mapSize, mapSize];
             InitSquares();
-
-            // nur zum testen der GUI
-            //CreateRandomRailsForTest();
         }
 
         /// <summary>
