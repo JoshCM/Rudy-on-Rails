@@ -44,7 +44,7 @@ public class GamePlayer extends Player{
 		notifyResourceCountChanged();
 	}
 	
-	public void removeCoal(int coal) {
+	public void removeCoal(double coal) {
 		if(coal > coalCount) {
 			coalCount = 0;
 		} else {
@@ -88,16 +88,6 @@ public class GamePlayer extends Player{
 		notifyResourceCountChanged();
 	}
 	
-	/**
-	 * Reduzirt die Kohle des Spielers um
-	 * das Produkt von speed und coalDecreaseFactor
-	 * @param speed
-	 */
-	public void spendCoal(long speed) {
-		this.coalCount -= (double)speed * Double.parseDouble(PropertyManager.getProperty("coalDecreaseFactor"));
-		notifyCoalChanged();
-	}
-	
 	private void notifyResourceCountChanged() {
     	MessageInformation messageInfo = new MessageInformation("UpdateResourcesOfPlayer");
     	messageInfo.putValue("playerId", getId());
@@ -122,13 +112,4 @@ public class GamePlayer extends Player{
 		this.color = color;
 		notifyColorChanged();
 	}
-	
-	private void notifyCoalChanged() {
-		MessageInformation messageInfo = new MessageInformation("UpdateCoalOfPlayer");
-		messageInfo.putValue("playerId", getId());
-		messageInfo.putValue("coalCount", getCoalCount());
-		notifyChange(messageInfo);
-	}
-	
-	
 }

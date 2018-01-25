@@ -155,4 +155,9 @@ public class GhostLoco extends Loco {
 	public void setStealsCoalContainerFromOtherPlayers(boolean stealsCoalContainerFromOtherPlayers) {
 		this.stealsCoalContainerFromOtherPlayers = stealsCoalContainerFromOtherPlayers;
 	}
+
+	@Override
+	public void spendCoal() {
+		// Der Geisterzug verbraucht keine Resourcen zum Fahren
+	}
 }
