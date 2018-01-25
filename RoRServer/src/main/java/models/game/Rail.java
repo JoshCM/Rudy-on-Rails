@@ -450,4 +450,10 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     public Signals getSignals() {
     	return signals;
     }
+
+	public void handleLoco(Loco loco) {
+		if (signals != null) {
+			signals.handleLoco(loco);
+		}		
+	}
 }

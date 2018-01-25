@@ -172,4 +172,10 @@ public class Signals extends TickableGameObject {
 			return false;
 		}
 	}
+
+	public void handleLoco(Loco loco) {
+		if (isSignalActive(loco.getDrivingDirection())) {
+			loco.getPlayer().removeGold(penalty);
+		}
+	}
 }
