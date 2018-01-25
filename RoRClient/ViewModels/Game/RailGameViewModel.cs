@@ -8,9 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using RoRClient.Communication.DataTransferObject;
-using RoRClient.Models.Session;
-using RoRClient.ViewModels.Commands;
-using System.Windows.Input;
 using Newtonsoft.Json.Linq;
 using RoRClient.ViewModels.Helper;
 

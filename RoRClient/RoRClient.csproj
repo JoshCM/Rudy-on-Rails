@@ -108,6 +108,7 @@
     <Compile Include="BindingConverter\PlayerToImagePathConverter.cs" />
     <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
     <Compile Include="BindingConverter\IsNullToBooleanConverter.cs" />
+    <Compile Include="BindingConverter\ResourceToImagePathConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
     <Compile Include="BindingConverter\CompassToAngleConverter.cs" />
     <Compile Include="Commands\Base\ChangeMapSelectionCommandBase.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="Models\Game\GamePlayer.cs" />
     <Compile Include="Models\Game\GhostLoco.cs" />
     <Compile Include="Models\Game\Crane.cs" />
+    <Compile Include="Models\Game\PointContainer.cs" />
     <Compile Include="Models\Game\Gold.cs" />
     <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Mine.cs" />
@@ -248,6 +250,7 @@
     <Compile Include="ViewModels\Game\GameResultViewModel.cs" />
     <Compile Include="ViewModels\Game\GameStatusViewModel.cs" />
     <Compile Include="ViewModels\Game\CraneGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\PointContainerGameViewModel.cs" />
     <Compile Include="ViewModels\Game\PlayerLocoGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GoldGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GhostLocoGameViewModel.cs" />
@@ -348,6 +351,9 @@
     </Compile>
     <Compile Include="Views\Game\GameResultView.xaml.cs">
       <DependentUpon>GameResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\PointContainerGameUserControl.xaml.cs">
+      <DependentUpon>PointContainerGameUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\GoldGameUserControl.xaml.cs">
       <DependentUpon>GoldGameUserControl.xaml</DependentUpon>
@@ -456,6 +462,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Game\GameResultView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Game\PointContainerGameUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
