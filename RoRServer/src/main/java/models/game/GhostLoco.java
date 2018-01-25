@@ -160,4 +160,8 @@ public class GhostLoco extends Loco {
 	public void spendCoal() {
 		// Der Geisterzug verbraucht keine Resourcen zum Fahren
 	}
+	
+	public boolean needsCoalToDrive() {
+		return false;
+	}
 }

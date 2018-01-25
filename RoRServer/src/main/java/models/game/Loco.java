@@ -69,28 +69,30 @@ public abstract class Loco extends TickableGameObject {
 		if (speed != 0) {
 			this.timeDeltaCounter += timeDeltaInNanoSeconds;
 			int absoluteSpeed = (int) Math.abs(speed);
-			if ((this.timeDeltaCounter >= SEC_IN_NANO / absoluteSpeed) && player.getCoalCount() > 0) {
-				timeDeltaCounter = 0;
-				if (speed < 0) {
-					if (!reversed) {// Wenn das erstemal nach dem Vorw�rts fahren wieder r�ckw�rts gefahren wird
-									// muss die Driving direction ge�ndert werden
-						reversed = true;
-						reversedDrive(true);
-					} else {
-						reversedDrive(false);
-					}
-				} else if (speed > 0) {
-					if (reversed) {
-						// Wenn das erstemal nach dem R�ckw�rts fahren wieder vorf�rts gefahren wird
-						// muss die Driving direction ge�ndert werden
-						this.drivingDirection = this.rail.getExitDirection(this.drivingDirection);
-						for (int i = carts.size() - 1; i >= 0; i--) {
-							Cart c = carts.get(i);
-							c.setDrivingDirection(c.getRail().getExitDirection(c.getDrivingDirection()));
+			if ((this.timeDeltaCounter >= SEC_IN_NANO / absoluteSpeed)) {
+				if((needsCoalToDrive() && player.getCoalCount() > 0) || (!needsCoalToDrive())){
+					timeDeltaCounter = 0;
+					if (speed < 0) {
+						if (!reversed) {// Wenn das erstemal nach dem Vorw�rts fahren wieder r�ckw�rts gefahren wird
+										// muss die Driving direction ge�ndert werden
+							reversed = true;
+							reversedDrive(true);
+						} else {
+							reversedDrive(false);
 						}
-						reversed = false;
-					}
-					drive();
+					} else if (speed > 0) {
+						if (reversed) {
+							// Wenn das erstemal nach dem R�ckw�rts fahren wieder vorf�rts gefahren wird
+							// muss die Driving direction ge�ndert werden
+							this.drivingDirection = this.rail.getExitDirection(this.drivingDirection);
+							for (int i = carts.size() - 1; i >= 0; i--) {
+								Cart c = carts.get(i);
+								c.setDrivingDirection(c.getRail().getExitDirection(c.getDrivingDirection()));
+							}
+							reversed = false;
+						}
+						drive();
+					}	
 				}
 
 				spendCoal();
@@ -99,6 +101,7 @@ public abstract class Loco extends TickableGameObject {
 	}
 	
 	public abstract void spendCoal();
+	public abstract boolean needsCoalToDrive();
 
 	/**
 	 * Ueberfuehrt die Lok in das naechste moegliche Feld in Fahrtrichtung

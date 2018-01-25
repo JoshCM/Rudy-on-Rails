@@ -36,4 +36,8 @@ public class PlayerLoco extends Loco {
 		coalToDecrease = Math.abs(coalToDecrease);
 		getPlayer().removeCoal(coalToDecrease);
 	}
+	
+	public boolean needsCoalToDrive() {
+		return true;
+	}
 }
