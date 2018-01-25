@@ -121,6 +121,21 @@ public class Map extends ModelBase {
 		result = prime * result + Arrays.deepHashCode(squares);
 		return result;
 	}
+	
+	/**
+	 * Holt das Placeable von Square oder Rail
+	 * @param id Id des Placeables
+	 * @return null, wenn Square leer ist
+	 */
+	public Placeable getPlaceableById(UUID id) {
+		
+		Placeable placeable = null;
+		placeable = getPlaceableOnSquareById(id);
+		if(placeable == null) {
+			placeable = getPlaceableOnRailById(id);
+		}
+		return placeable;
+	}
 
 	public PlaceableOnSquare getPlaceableOnSquareById(UUID id) {
 		for (Square[] squares : getSquares()) {
@@ -275,18 +290,7 @@ public class Map extends ModelBase {
 				//The Crane likes to move it move it...
 				Crane crane = trainstation.getCrane();
 				Square newSquare = getTrainstationInteractiveGameObjectSquare(crane, trainstation, oldPlaceableOnSquareXPos, oldPlaceableOnSquareYPos);
-				System.out.println("newSquare ("+ newSquare.getXIndex() +"/"+newSquare.getYIndex()+")");
 				crane.moveCrane(newSquare);
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 			}
 		} else {
 			throw new NotMoveableException(String.format("PlaceableOnSquare von %s ist nicht auf %s verschiebbar",

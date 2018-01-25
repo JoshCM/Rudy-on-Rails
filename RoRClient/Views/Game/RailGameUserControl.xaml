@@ -15,6 +15,7 @@
     <UserControl.Resources>
         <converter:RailSectionsToImagePathConverter  x:Key="RailSectionsToImagePathConverter"/>
         <converter:BooleanToSignalImagePathConverter x:Key="BooleanToSignalImagePathConverter"/>
+        <converter:BooleanToSensorImagePathConverter x:Key="BooleanToSensorImagePathConverter"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=railUserControl}"
@@ -23,14 +24,18 @@
                Height="{Binding SquareDim, ElementName=railUserControl}" 
                Source="{Binding Rail.RailSections, Mode=OneWay, Converter={StaticResource RailSectionsToImagePathConverter}, ConverterParameter=inactive}">
             <Image.InputBindings>
+                <MouseBinding MouseAction="RightClick" Command="{Binding ChangeSwitchCommand}"></MouseBinding>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+
             </Image.InputBindings>
         </Image>
         <Image Width="{Binding SquareDim, ElementName=railUserControl}" 
                Height="{Binding SquareDim, ElementName=railUserControl}" 
                Source="{Binding Rail.RailSections, Mode=OneWay, Converter={StaticResource RailSectionsToImagePathConverter}, ConverterParameter=active}">
             <Image.InputBindings>
+                <MouseBinding MouseAction="RightClick" Command="{Binding ChangeSwitchCommand}"></MouseBinding>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+
             </Image.InputBindings>
         </Image>
         <Image  x:Name="SignalNorth"
@@ -87,5 +92,16 @@
                 </TransformGroup>
             </Image.LayoutTransform>
         </Image>
+
+        <Image x:Name="Sensor"
+               Visibility="{Binding Rail.SensorPlaced, Converter={StaticResource BoolToVisibilityConverter}}"
+               Height="{Binding SensorDimension, ElementName=railUserControl}"
+               Width="{Binding SensorDimension, ElementName=railUserControl}"
+               Source="{Binding Rail.Sensor.Active, Converter={StaticResource BooleanToSensorImagePathConverter}}">
+            <Image.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding ActivateMenuForScriptCommand}" />
+            </Image.InputBindings>
+        </Image>
+
     </Canvas>
 </v:CanvasUserControl>

@@ -3,6 +3,7 @@ package models.game;
 import java.util.UUID;
 
 import communication.MessageInformation;
+import resources.PropertyManager;
 
 public class PlayerLoco extends Loco {
 	public PlayerLoco(String sessionName, Square square, UUID playerId, Compass drivingDirection) {
@@ -23,5 +24,15 @@ public class PlayerLoco extends Loco {
 		messageInfo.putValue("drivingDirection", getDrivingDirection().toString());
 		messageInfo.putValue("playerId", getPlayerId());
 		notifyChange(messageInfo);
+	}
+	
+
+	/**
+	 * Reduzirt die Kohle des Spielers um das Produkt von speed und
+	 * coalDecreaseFactor
+	 */
+	public void spendCoal() {
+		double coalToDecrease = (double) getSpeed() * Double.parseDouble(PropertyManager.getProperty("coalDecreaseFactor"));
+		getPlayer().removeCoal(coalToDecrease);
 	}
 }

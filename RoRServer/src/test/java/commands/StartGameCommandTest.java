@@ -54,7 +54,7 @@ public class StartGameCommandTest {
 		UUID trainstationId = UUID.randomUUID();
 		Playertrainstation loadedTrainstation = new Playertrainstation(gameSession.getSessionName(), square, uuids, trainstationId,
 				Compass.NORTH,
-				new Stock(gameSession.getSessionName(), gameSession.getMap().getSquare(1, 0), trainstationId, Compass.NORTH));
+				new Stock(gameSession.getSessionName(), gameSession.getMap().getSquare(1, 0), trainstationId, Compass.NORTH), UUID.randomUUID());
 		square.setPlaceableOnSquare(loadedTrainstation);
 
 		Playertrainstation createdTrainstation = loadedTrainstation.loadFromMap(square, gameSession);
