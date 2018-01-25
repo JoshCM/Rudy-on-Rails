@@ -29,6 +29,8 @@ public class Signals extends TickableGameObject {
 	private boolean southSignalActive;
 	private boolean westSignalActive;
 	
+	private boolean notManuallySwitchableTillNextAutomaticSwitch;
+	
 	private long timeDeltaCounter = 0;
 
 	public Signals(String sessionName, Square square) {
@@ -77,8 +79,20 @@ public class Signals extends TickableGameObject {
 			westSignalActive = false;
 		}
 		
+		notManuallySwitchableTillNextAutomaticSwitch = false;
+		timeDeltaCounter = 0;
 		notifySignalsSwitched();
 	};
+	
+	/**
+	 * Schaltet die Signale um, sofern sie nicht zuletzt von einem Spieler manuell umgestellt wurden
+	 */
+	public void switchSignalsManually() {
+		if(!notManuallySwitchableTillNextAutomaticSwitch) {
+			switchSignals();
+			notManuallySwitchableTillNextAutomaticSwitch = true;
+		}
+	}
 	
 	private void notifySignalsSwitched() {
 		MessageInformation messageInfo = new MessageInformation("UpdateActivityOfSignals");
@@ -133,7 +147,6 @@ public class Signals extends TickableGameObject {
 	public void specificUpdate() {
 		this.timeDeltaCounter += timeDeltaInNanoSeconds;
 		if (this.timeDeltaCounter >= SEC_IN_NANO * autoSwitchIntervalInSeconds) {
-			timeDeltaCounter = 0;
 			switchSignals();
 		}
 	}
@@ -177,5 +190,9 @@ public class Signals extends TickableGameObject {
 		if (isSignalActive(loco.getDrivingDirection())) {
 			loco.getPlayer().removeGold(penalty);
 		}
+	}
+	
+	public boolean isNotManuallySwitchableTillNextAutomaticSwitch() {
+		return notManuallySwitchableTillNextAutomaticSwitch;
 	}
 }
