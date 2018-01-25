@@ -13,12 +13,28 @@ import models.session.RoRSession;
 
 public class Publictrainstation extends Trainstation {
 	
-	private GameSession gameSession;
+	private GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(sessionName);
+	private List<Resource> resources;
 	
 	public Publictrainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id,
 			Compass alignment, Stock stock) {
 		super(sessionName, square, trainstationRailIds, id, alignment, stock);
+		//initializeResourceStock();
 		notifyCreatedPublictrainstation();
+	}
+	
+	public List<Resource> getResources() {
+		return resources;
+	}
+	
+	private void initializeResourceStock() {
+		resources = new ArrayList<Resource>();
+		for (int i = 0; i < 20; i++) {
+			Gold g = new Gold(gameSession.getSessionName());
+			Coal c = new Coal(gameSession.getSessionName());
+			resources.add(g);
+			resources.add(c);
+		}
 	}
 	
 	private void notifyCreatedPublictrainstation() {
@@ -69,19 +85,15 @@ public class Publictrainstation extends Trainstation {
 		}
 	}
 
-	private void exchangeResource(Loco loco) {		
-		gameSession = GameSessionManager.getInstance().getGameSessionByName(sessionName);
+	private void exchangeResource(Loco loco) {
 		GamePlayer player = (GamePlayer) gameSession.getPlayerById(loco.getPlayerId());
 		List<Cart> carts = loco.getCarts();
 		for (Cart cart : carts) {
 			if (cart.getXPos() == this.getXPos() && cart.getYPos() == this.getYPos()
-					&& cart.getResource() != null && stock.getResources().size() != 0) {
+					&& cart.getResource() != null && resources.size() != 0) {
 				
 				// Die Resource der Cart
 				String resourceType = cart.getResource().getDescription();
-				
-				// Die Resources im Stock der Trainstation
-				List<Resource> resources = stock.getResources();
 				
 				for (Resource resource : resources) {
 					if (resourceType == "Gold" && resource.getDescription() == "Coal" /* && ich will Kohle */) {

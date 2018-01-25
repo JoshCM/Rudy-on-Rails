@@ -22,7 +22,6 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	public static final int RAIL_COUNT_LEFT = 6;
 	protected List<UUID> trainstationRailIds;
 	protected Stock stock;
-	protected Resource resource = null;
 	private Crane crane;
 	protected Compass alignment;
 	protected UUID playerId;
