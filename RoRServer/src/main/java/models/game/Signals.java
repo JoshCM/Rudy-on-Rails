@@ -23,6 +23,7 @@ public class Signals extends TickableGameObject {
 	private int penalty = DEFAULT_PENALTY;
 	private int switchCost = DEFAULT_SWITCH_COST;
 
+	// Active bedeutet ein rotes Signal, also Strafe beim drüberfahren
 	private boolean northSignalActive;
 	private boolean eastSignalActive;
 	private boolean southSignalActive;
@@ -169,6 +170,12 @@ public class Signals extends TickableGameObject {
 			return isWestSignalActive();
 		default:
 			return false;
+		}
+	}
+
+	public void handleLoco(Loco loco) {
+		if (isSignalActive(loco.getDrivingDirection())) {
+			loco.getPlayer().removeGold(penalty);
 		}
 	}
 }

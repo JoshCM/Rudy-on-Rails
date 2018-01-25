@@ -1,6 +1,8 @@
-﻿using RoRClient.ViewModels.Helper;
+﻿using RoRClient.Models.Session;
+using RoRClient.ViewModels.Helper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,9 +46,22 @@ namespace RoRClient.ViewModels.Game
         {
             this.uiState = uiState;
             mapGameViewModel = new MapGameViewModel(taskFactory);
-            gameInteractionsViewModel = new GameInteractionsViewModel(taskFactory);
+            gameInteractionsViewModel = new GameInteractionsViewModel(taskFactory, mapGameViewModel);
             gameStatusViewModel = new GameStatusViewModel();
             topMenuViewModel = new TopMenuViewModel();
+            mapGameViewModel.GameInteractionsViewModel = gameInteractionsViewModel;
+            GameSession.GetInstance().PropertyChanged += OnWinningPlayerChanged;
+        }
+
+        private void OnWinningPlayerChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if(args.PropertyName == "WinningPlayer")
+            {
+                if(GameSession.GetInstance().WinningPlayer != null)
+                {
+                    uiState.State = "gameResult";
+                }
+            }
         }
     }
 }

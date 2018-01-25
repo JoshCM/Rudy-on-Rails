@@ -13,6 +13,7 @@ namespace RoRClient.Commands.Base
     class CreateStockCommandBase : CommandBase
     {
         Guid stockId;
+        Guid trainstationId;
         private int xPos;
         private int yPos;
         List<Resource> resources;
@@ -27,25 +28,13 @@ namespace RoRClient.Commands.Base
             stockId = Guid.Parse(messageInformation.GetValueAsString("stockId"));
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
-
-            // über resourceId resources nutzen
-            // TODO: Resources müssen auch ohne auf einem Square zu liegen existieren können,
-            //       da der Stock eine Liste von ihnen hat, die nicht auf dem Spielfeld liegen sollen
-            /*
-            List<JObject> jsonResources = messageInformation.GetValueAsJObjectList("resourceIds");
-            foreach (JObject obj in jsonResources)
-            {
-                Guid resourceId = Guid.Parse(obj.GetValue("resourceId").ToString());
-                Resource resource = (Resource)EditorSession.GetInstance().Map.GetPlaceableById(resourceId);
-                resources.Add(resource);
-            }
-            */
+            trainstationId = Guid.Parse(messageInformation.GetValueAsString("trainstationId"));
         }
 
         public override void Execute()
         {
             Square square = session.Map.GetSquare(xPos, yPos);
-            Stock stock = new Stock(stockId, square, Compass.EAST, resources);
+            Stock stock = new Stock(stockId, square, Compass.EAST, trainstationId);
             square.PlaceableOnSquare = stock;
         }
     }

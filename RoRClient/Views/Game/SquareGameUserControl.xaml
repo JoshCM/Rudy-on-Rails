@@ -19,6 +19,9 @@
             Fill="#f9f1df"
             Stroke="WHITE"
             StrokeThickness="1">
+            <Rectangle.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+            </Rectangle.InputBindings>
         </Rectangle>
 
 

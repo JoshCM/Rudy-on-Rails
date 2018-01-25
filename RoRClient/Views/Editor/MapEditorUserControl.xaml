@@ -88,7 +88,7 @@
                                 Width="20" >
                             </Image>
                         </Button>
-                        <Button Command="{Binding ChangeSwitchCommand}">
+                        <Button Command="{Binding ChangeSwitchCommand}" >
                             <Image 
                                 Source="/RoRClient;component/Resources/Images/changeSwitch.png"
                                 Height="20" 

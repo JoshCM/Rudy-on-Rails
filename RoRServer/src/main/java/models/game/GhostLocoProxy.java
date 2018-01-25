@@ -162,4 +162,20 @@ public class GhostLocoProxy implements ProxyObject {
 	public void setPicksUpCoalContainerNextToRails(boolean picksUpCoalContainerNextToRails) {
 		ghostLoco.setPicksUpGoldContainerNextToRails(picksUpCoalContainerNextToRails);
 	}
+	
+	public boolean isStealsGoldContainerFromOtherPlayers() {
+		return ghostLoco.isStealsGoldContainerFromOtherPlayers();
+	}
+
+	public void setStealsGoldContainerFromOtherPlayers(boolean stealsGoldContainerFromOtherPlayers) {
+		ghostLoco.setStealsGoldContainerFromOtherPlayers(stealsGoldContainerFromOtherPlayers);
+	}
+
+	public boolean isStealsCoalContainerFromOtherPlayers() {
+		return ghostLoco.isStealsCoalContainerFromOtherPlayers();
+	}
+
+	public void setStealsCoalContainerFromOtherPlayers(boolean stealsCoalContainerFromOtherPlayers) {
+		ghostLoco.setStealsCoalContainerFromOtherPlayers(stealsCoalContainerFromOtherPlayers);
+	}
 }
