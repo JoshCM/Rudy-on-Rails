@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RoRClient.Views.Editor"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="1000"
-             Background="MintCream">
+             d:DesignHeight="150" d:DesignWidth="1000"
+             Background="#f9f1df">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -16,54 +16,54 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal" Visibility="{Binding Rail.Signals.Exists, Converter={StaticResource BooleanToVisibilityConverter}}">
-        <StackPanel x:Name="AutoSwitchIntervalInSecondsConfig"  Orientation="Vertical" Margin="10" Width="200">
-            <TextBlock Text="Umschaltintervall" FontSize="14" FontWeight="DemiBold" Margin="0 0 0 10"/>
+        <StackPanel x:Name="AutoSwitchIntervalInSecondsConfig"  Orientation="Vertical" Width="200" Margin="20 10" >
+            <TextBlock Text="Umschaltintervall" Margin="0 0 0 10" Style="{StaticResource DefaultTextBlockHeaderStyle}" />
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <ComboBox Margin="0 0 10 0" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" Height="24" Width="30" SelectedValue="{Binding SelectedAutoSwitchIntervalInSeconds}" SelectedValuePath="Content">
-                    <ComboBoxItem Content="3"/>
-                    <ComboBoxItem Content="5"/>
-                    <ComboBoxItem Content="10"/>
-                    <ComboBoxItem Content="20"/>
-                    <ComboBoxItem Content="30"/>
-                    <ComboBoxItem Content="60"/>
+                <ComboBox Margin="0 0 10 0" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" Height="24" Width="50" SelectedValue="{Binding SelectedAutoSwitchIntervalInSeconds}" SelectedValuePath="Content">
+                    <ComboBoxItem Content="3" FontSize="15"/>
+                    <ComboBoxItem Content="5" FontSize="15"/>
+                    <ComboBoxItem Content="10" FontSize="15"/>
+                    <ComboBoxItem Content="20" FontSize="15"  />
+                    <ComboBoxItem Content="30" FontSize="15"  />
+                    <ComboBoxItem Content="60" FontSize="15"  />
                 </ComboBox>
-                <TextBlock Text="Sekunden" FontSize="14" FontWeight="Normal" VerticalAlignment="Center"/>
+                <TextBlock Text="Sekunden" FontSize="14" VerticalAlignment="Center" Style="{StaticResource DefaultTextStyle}"/>
             </StackPanel>
-            <TextBlock TextWrapping="Wrap" Text="Stelle ein, nach welcher Zeit die Signale automatisch ihren Zustand ändern."/>
+            <TextBlock TextWrapping="Wrap" Text="Stelle ein, nach welcher Zeit die Signale automatisch ihren Zustand ändern." Style="{StaticResource DefaultTextStyle}"/>
         </StackPanel>
 
-        <StackPanel x:Name="PenaltyConfig"  Orientation="Vertical" Margin="10" Width="200">
-            <TextBlock Text="Strafe bei rotem Signal" FontSize="14" FontWeight="DemiBold" Margin="0 0 0 10"/>
+        <StackPanel x:Name="PenaltyConfig"  Orientation="Vertical" Width="200" Margin="20 10">
+            <TextBlock Text="Strafe bei rotem Signal" Margin="0 0 0 10" Style="{StaticResource DefaultTextBlockHeaderStyle}"/>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <ComboBox Margin="0 0 10 0" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" Height="24" Width="30" SelectedValue="{Binding SelectedPenalty}" SelectedValuePath="Content">
+                <ComboBox Margin="0 0 10 0" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" Height="24" Width="50" SelectedValue="{Binding SelectedPenalty}" SelectedValuePath="Content">
+                    <ComboBoxItem Content="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"  />
+                    <ComboBoxItem Content="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"  />
+                    <ComboBoxItem Content="15" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"  />
+                    <ComboBoxItem Content="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"  />
+                    <ComboBoxItem Content="30" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"  />
+                </ComboBox>
+                <TextBlock Text="Gold" FontSize="14" VerticalAlignment="Center" Style="{StaticResource DefaultTextStyle}" />
+            </StackPanel>
+            <TextBlock TextWrapping="Wrap" Text="Wähle die Goldmenge für die Strafe aus, wenn ein Zug über Rot fährt." Style="{StaticResource DefaultTextStyle}"/>
+        </StackPanel>
+
+        <StackPanel x:Name="SwitchCostConfig"  Orientation="Vertical" Width="200" Margin="20 10" >
+            <TextBlock Text="Kosten für das Umschalten" Margin="0 0 0 10" Style="{StaticResource DefaultTextBlockHeaderStyle}"/>
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
+                <ComboBox Margin="0 0 10 0" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" Height="24" Width="50" SelectedValue="{Binding SelectedSwitchCost}" SelectedValuePath="Content">
                     <ComboBoxItem Content="5"/>
                     <ComboBoxItem Content="10"/>
                     <ComboBoxItem Content="15"/>
                     <ComboBoxItem Content="20"/>
                     <ComboBoxItem Content="30"/>
                 </ComboBox>
-                <TextBlock Text="Gold" FontSize="14" FontWeight="Normal" VerticalAlignment="Center"/>
+                <TextBlock Text="Gold" FontSize="14" VerticalAlignment="Center" Style="{StaticResource DefaultTextStyle}"/>
             </StackPanel>
-            <TextBlock TextWrapping="Wrap" Text="Wähle die Goldmenge für die Strafe aus, wenn ein Zug über Rot fährt."/>
+            <TextBlock TextWrapping="Wrap" Text="Wähle die Goldmenge für das Umschalten der Signale aus." Style="{StaticResource DefaultTextStyle}"/>
         </StackPanel>
 
-        <StackPanel x:Name="SwitchCostConfig"  Orientation="Vertical" Margin="10" Width="200">
-            <TextBlock Text="Kosten für das Umschalten" FontSize="14" FontWeight="DemiBold" Margin="0 0 0 10"/>
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
-                <ComboBox Margin="0 0 10 0" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" Height="24" Width="30" SelectedValue="{Binding SelectedSwitchCost}" SelectedValuePath="Content">
-                    <ComboBoxItem Content="5"/>
-                    <ComboBoxItem Content="10"/>
-                    <ComboBoxItem Content="15"/>
-                    <ComboBoxItem Content="20"/>
-                    <ComboBoxItem Content="30"/>
-                </ComboBox>
-                <TextBlock Text="Gold" FontSize="14" FontWeight="Normal" VerticalAlignment="Center"/>
-            </StackPanel>
-            <TextBlock TextWrapping="Wrap" Text="Wähle die Goldmenge für das Umschalten der Signale aus."/>
-        </StackPanel>
-
-        <StackPanel>
-            <Button Content="Übernehmen" Command="{Binding SaveSignalsConfigCommand}" Style="{StaticResource DefaultButtonStyle}" Padding="10" Margin="10"/>
+        <StackPanel Margin="20 20" VerticalAlignment="Bottom" >
+            <Button Content="Übernehmen" Command="{Binding SaveSignalsConfigCommand}" Style="{StaticResource DefaultButtonStyle}" Width="150" Height="45" FontSize="18"/>
         </StackPanel>
     </StackPanel>
 </UserControl>
