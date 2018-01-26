@@ -42,7 +42,7 @@ public class Square extends ModelBase {
 	}
 	
 	public List<Square> getNeighbouringEmptySquares(){
-		List<Square> squares = getNeighbouringEmptySquares();
+		List<Square> squares = getNeighbouringSquares();
 		List<Square> emptySquares = new ArrayList<Square>();
 		for (Square square : squares) {
 			if (square.getPlaceableOnSquare() == null) {
@@ -94,7 +94,7 @@ public class Square extends ModelBase {
 		}
 		
 		// Untenrechts
-		if (yIndex + 1 <= map.getMapSize() && xIndex + 1 >= map.getMapSize()) {
+		if (yIndex + 1 <= map.getMapSize() && xIndex + 1 <= map.getMapSize()) {
 			Square square = map.getSquare(xIndex + 1, yIndex + 1);
 			neighbouringSquares.add(square);
 		}

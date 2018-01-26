@@ -17,8 +17,8 @@ import models.session.RoRSession;
  * Weiche) besitzen
  */
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Comparable<Rail> {
-	private final static int AMOUNT_OF_GOLD_TO_GENERATE = 10;
-	private final static int AMOUNT_OF_COAl_TO_GENERATE = 15;
+	public final static int AMOUNT_OF_GOLD_TO_GENERATE = 10;
+	public final static int AMOUNT_OF_COAl_TO_GENERATE = 15;
 	
     private Signals signals;
 	// muss hier raus und eine Ebene tiefer(RailSection)
@@ -113,18 +113,18 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 
         if (railSquare != null) {
             // Durchgehen der benachbarten Squares, um Ressourcen zu platzieren
-            List<Square> squares = square.getNeighbouringSquares();
+            List<Square> squares = railSquare.getNeighbouringSquares();
             for (Square s : squares) {
 
                 Double chanceToSpawn = Difficulty.HARD.getChanceToSpawnResource();
 
-                if (square.getPlaceableOnSquare() == null && Math.random() < chanceToSpawn / 100) {
+                if (railSquare.getPlaceableOnSquare() == null && Math.random() < chanceToSpawn / 100) {
                     if (Math.random() < 0.5) {
-                        Gold gold = new Gold( getSessionName(), square, AMOUNT_OF_GOLD_TO_GENERATE);
-                        square.setPlaceableOnSquare(gold);
+                        Gold gold = new Gold( getSessionName(), railSquare, AMOUNT_OF_GOLD_TO_GENERATE);
+                        railSquare.setPlaceableOnSquare(gold);
                     } else {
-                        Coal coal = new Coal(getSessionName(), square, AMOUNT_OF_COAl_TO_GENERATE);
-                        square.setPlaceableOnSquare(coal);
+                        Coal coal = new Coal(getSessionName(), railSquare, AMOUNT_OF_COAl_TO_GENERATE);
+                        railSquare.setPlaceableOnSquare(coal);
                     }
                 }
             }

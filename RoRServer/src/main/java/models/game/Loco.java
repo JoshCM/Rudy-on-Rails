@@ -302,6 +302,9 @@ public abstract class Loco extends TickableGameObject {
 		return null;
 	}
 	
+	/**
+	 * Lässt die Ressourcen auf den Carts auf die benachbarten Squares fallen, sofern genug Platz ist
+	 */
 	public void dropResources() {
 		Square trainSquare = map.getSquare(getXPos(), getYPos());
 		List<Square> squares = trainSquare.getNeighbouringEmptySquares();
@@ -314,17 +317,27 @@ public abstract class Loco extends TickableGameObject {
 					cart.removeResourceFromCart();
 					Square s = squareIterator.next();
 					if (resource instanceof Coal) {
-						Coal coal = new Coal(getSessionName(), s);
+						Coal coal = new Coal(getSessionName(), s, Rail.AMOUNT_OF_COAl_TO_GENERATE);
 						s.setPlaceableOnSquare(coal);
 					}
 					if (resource instanceof Gold) {
-						Gold gold = new Gold(getSessionName(), s);
+						Gold gold = new Gold(getSessionName(), s, Rail.AMOUNT_OF_GOLD_TO_GENERATE);
 						s.setPlaceableOnSquare(gold);
 					}
 				}
 			}
 		}
 		
+	}
+	
+	// Methode zum Löschen der restlichen Ressourcen
+	public void dropByCollide() {
+		dropResources();
+		for (Cart cart : getCarts()) {
+			if(cart.getResource() != null) {
+				cart.removeResourceFromCart();
+			}
+		}
 	}
 
 	/**

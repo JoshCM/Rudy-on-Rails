@@ -13,8 +13,8 @@ import models.session.GameSessionManager;
  */
 public class Sensor extends InteractiveGameObject {
 	
-	public final static int DISTANCE_BETWEEN_LOCO_AND_SENSOR = 5;
-	public final static int DEFAULT_ACTIME_TIME = 15;
+	public final static int DISTANCE_BETWEEN_LOCO_AND_SENSOR = 15;
+	public final static int DEFAULT_ACTIME_TIME = 30;
 	public final static int DEFAULT_DELETE_TIME = 5;
 	public final static int SECOND = 1000;
 	
