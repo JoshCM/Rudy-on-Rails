@@ -5,4 +5,6 @@ def init(proxy):
 	
 def update(proxy):
 	# Wird bei Ausführung des Scripts ausgeführt
-    proxy.destroyTrain();
+    object = proxy.getObjectOnSquare()
+    if "Switch" in object:
+    	proxy.changeSwitch()
