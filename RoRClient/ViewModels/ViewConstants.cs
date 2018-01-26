@@ -20,6 +20,7 @@ namespace RoRClient.ViewModels
         private int upperSignalPos;
         private int lowerSignalPos;
         private int sensorDimension;
+        private int mineResourcesDim;
 
         public ViewConstants()
         {
@@ -82,6 +83,7 @@ namespace RoRClient.ViewModels
             SignalDimension = squareDim / 5;
             LowerSignalPos = squareDim - upperSignalPos - signalDimension;
             SensorDimension = SquareDim / 2;
+            MineResourcesDim = SquareDim / 2;
         } 
 
         public int UpperSignalPos
@@ -128,6 +130,22 @@ namespace RoRClient.ViewModels
                 {
                     sensorDimension = value;
                     OnPropertyChanged("SensorDimension");
+                }
+            }
+        }
+
+        public int MineResourcesDim
+        {
+            get
+            {
+                return mineResourcesDim;
+            }
+            set
+            {
+                if (mineResourcesDim != value)
+                {
+                    mineResourcesDim = value;
+                    OnPropertyChanged("MineResourcesDim");
                 }
             }
         }
