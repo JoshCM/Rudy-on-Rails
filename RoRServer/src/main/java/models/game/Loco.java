@@ -103,6 +103,20 @@ public abstract class Loco extends TickableGameObject {
 	public abstract void spendCoal();
 	public abstract boolean needsCoalToDrive();
 
+	private boolean isTrainOnSwitch() {
+		if(this.rail instanceof Switch)
+			return true;
+		if(this.carts.get(carts.size()-1).getRail() instanceof Switch)
+			return false;
+		for(Cart c : this.getCarts()) {
+			Cart cart = c;
+			if(c.getRail() instanceof Switch)
+				return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * Ueberfuehrt die Lok in das naechste moegliche Feld in Fahrtrichtung
 	 */
@@ -162,8 +176,23 @@ public abstract class Loco extends TickableGameObject {
 					this.drivingDirection = this.rail
 							.getExitDirection(getDirectionNegation(this.rail.getExitDirection(this.drivingDirection)));
 				}
-				notifyCartToLocoAdded(cart);
-				notifySpeedChanged();
+				if (nextRail instanceof Rail) { //Zug soll nur fahren, wenn das nextRail auch wirklich ein Rail ist
+					Compass newDrivingDirection = nextRail.getExitDirection(getDirectionNegation(tempDirection));
+					if (nextRail.hasExitDirection(getDirectionNegation(tempDirection))) {
+						actCart.setDrivingDirection(newDrivingDirection);
+						actCart.setRail(nextRail);
+						actCart.updateSquare(this.map.getSquare(nextRail.getXPos(), nextRail.getYPos()));
+						actCart.notifyUpdatedCart();
+					} else {
+						setSpeedAndNotifySpeedChanged(0);
+						break;
+					}
+				} else {
+					setSpeedAndNotifySpeedChanged(0);
+					break;
+				}
+			} else {
+				setSpeedAndNotifySpeedChanged(0);
 				break;
 			}
 
@@ -179,9 +208,8 @@ public abstract class Loco extends TickableGameObject {
 				break;
 			}
 		}
-		if (this.speed != 0) {// Wenn das n�chste schienenst�ck der Cart leer ist darf der Zug nat�rlich auch
-								// nicht weiter d�sen
-			if (initial)
+		if(this.speed != 0) {//Wenn das n�chste schienenst�ck der Cart leer ist darf der Zug nat�rlich auch nicht weiter d�sen
+			if(initial)
 				tempDirection = this.rail.getExitDirection(this.drivingDirection);
 			else
 				tempDirection = this.drivingDirection;
@@ -193,7 +221,7 @@ public abstract class Loco extends TickableGameObject {
 			rail.handleLoco(this);
 		}
 	}
-
+	
 	public void addCart() {
 		if (carts.isEmpty()) {
 			addInitialCart();
