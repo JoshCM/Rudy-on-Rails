@@ -12,6 +12,7 @@ namespace RoRClient.Commands.Base
     class CreateCraneCommandBase : CommandBase
     {
         Guid craneId;
+        private Trainstation trainstation;
         private Compass alignment;
         private int xPos;
         private int yPos;
@@ -23,15 +24,19 @@ namespace RoRClient.Commands.Base
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
             alignment = (Compass)Enum.Parse(typeof(Compass), messageInformation.GetValueAsString("alignment"));
+            Guid trainstationId = Guid.Parse(messageInformation.GetValueAsString("trainstationId"));
+
         }
 
         public override void Execute()
         {
+ 
             Square square = session.Map.GetSquare(xPos, yPos);
             Crane crane = new Crane(craneId, square, alignment);
             Rail rail = (Rail)square.PlaceableOnSquare;
             rail.PlaceableOnRail = null;
             rail.PlaceableOnRail = crane;
+
         }
     }
 }

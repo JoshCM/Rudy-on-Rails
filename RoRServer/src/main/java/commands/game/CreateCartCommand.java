@@ -11,6 +11,7 @@ import models.game.Loco;
 import models.game.PlayerLoco;
 import models.game.Rail;
 import models.game.Square;
+import models.game.Trainstation;
 import models.session.GameSession;
 import models.session.RoRSession;
 import resources.PropertyManager;
@@ -21,6 +22,7 @@ public class CreateCartCommand implements Command{
 	private int yPos;
 	private Compass compass;
 	private UUID playerId;
+	private UUID trainstationOwnerId;
 	protected GameSession session;
 	
 	/**
@@ -34,6 +36,9 @@ public class CreateCartCommand implements Command{
 		this.compass = Compass.valueOf((String) messageInfo.getValue("compass"));
 		this.session = (GameSession)session;
 		this.playerId = UUID.fromString(messageInfo.getClientid());
+		Trainstation trainstation = (Trainstation)this.session.getMap().getPlaceableOnSquareById(messageInfo.getValueAsUUID("trainstationId"));
+		this.trainstationOwnerId = trainstation.getPlayerId();
+		
 	}
 	@Override
 	public void execute() {
@@ -55,12 +60,14 @@ public class CreateCartCommand implements Command{
 	
 	private boolean validateBuyCart(GamePlayer currentPlayer, Loco loco, Rail cartSpawnPointRail) {
 		// die Loco des Players kann nicht mehr als 5 carts besitzen dürfen
-		if(loco.getCarts().size() < Integer.valueOf(PropertyManager.getProperty("max_cart_number"))) {
-			// die cartSpawnPointRail muss leer sein
-			if(cartSpawnPointRail.getPlaceableOnrail()==null) {
-				// der player muss genügend resource(Gold) zur verfügung haben
-				if(currentPlayer.getGoldCount() >= Integer.valueOf(PropertyManager.getProperty("cart_costs"))) {
-					return true;
+		if(this.trainstationOwnerId.equals(this.playerId)) {
+			if(loco.getCarts().size() < Integer.valueOf(PropertyManager.getProperty("max_cart_number"))) {
+				// die cartSpawnPointRail muss leer sein
+				if(cartSpawnPointRail.getPlaceableOnrail()==null) {
+					// der player muss genügend resource(Gold) zur verfügung haben
+					if(currentPlayer.getGoldCount() >= Integer.valueOf(PropertyManager.getProperty("cart_costs"))) {
+						return true;
+					}
 				}
 			}
 		}
