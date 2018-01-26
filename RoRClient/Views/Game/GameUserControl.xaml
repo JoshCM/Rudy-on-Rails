@@ -6,6 +6,11 @@
              xmlns:game="clr-namespace:RoRClient.Views.Game"
              mc:Ignorable="d"
              d:DesignHeight="900" d:DesignWidth="1600" Background="Gray">
+    <UserControl.InputBindings>
+        
+    </UserControl.InputBindings>
+
+
 
     <Grid x:Name="ContentGrid">
         <Grid.RowDefinitions>
@@ -39,5 +44,6 @@
         <game:TrainSpeedGameUserControl Grid.Row="2"
                                         Grid.Column="2"
                                         DataContext="{Binding MapGameViewModel}"/>
+        <game:ScoreboardUserControl Grid.Row="1" Grid.Column="2" Opacity="0.3"/>
     </Grid>
 </UserControl>

@@ -6,6 +6,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using RoRClient.ViewModels.Commands;
 
 namespace RoRClient.ViewModels.Game
 {
@@ -63,5 +66,19 @@ namespace RoRClient.ViewModels.Game
                 }
             }
         }
+
+        public void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.E)
+            {
+                MessageBox.Show("Du hast E gedrückt!", "Knopf gedrückt");
+            }
+
+            if (e.Key == Key.Tab)
+            {
+                MessageBox.Show("Du hast TAB gedrückt!", "Knopf gedrückt");
+            }
+        }
+
     }
 }
