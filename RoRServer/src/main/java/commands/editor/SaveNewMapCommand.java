@@ -8,6 +8,7 @@ import persistent.MapManager;
 
 public class SaveNewMapCommand extends CommandBase {
 	private String mapName;
+	private final static String ext = ".map";
 	
 	public SaveNewMapCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
@@ -22,7 +23,8 @@ public class SaveNewMapCommand extends CommandBase {
 		
 		//setzt die availablePlayerSlots
 		map.initAvailablePlayerSlots();
+		MapManager.setAvailablePlayerSlotsForMapName(map.getName(), map.getAvailablePlayerSlots());
 		
-		MapManager.saveMap(map);
+		MapManager.saveMap(map, ext);
 	}
 }

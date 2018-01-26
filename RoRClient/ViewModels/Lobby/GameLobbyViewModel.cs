@@ -196,7 +196,16 @@ namespace RoRClient.ViewModels.Lobby
             }
             else if (e.PropertyName == "MapName")
             {
-                CanStartGame = IsHost && gameSession.MapName != "";
+                if (IsHost)
+                {
+                    if (gameSession.MapName != "")
+                        CanStartGame = true;
+                }
+                else
+                {
+                    SelectedMapName = gameSession.MapName;
+                }
+                   
             }
         }
     }

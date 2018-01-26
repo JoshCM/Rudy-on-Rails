@@ -96,7 +96,7 @@ public class GameSession extends RoRSession implements ModelObserver {
 	public boolean isFull() {
 		boolean isFull = false;
 		
-		if (MapManager.getAvailablePlayerSlots(getMapName()) == getPlayers().size()) {
+		if (MapManager.getAvailablePlayerSlotsByMapName(getMapName()) == getPlayers().size()) {
 			isFull = true;
 		}
 		return isFull;

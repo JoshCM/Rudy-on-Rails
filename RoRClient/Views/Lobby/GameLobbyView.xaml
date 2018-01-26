@@ -59,7 +59,7 @@
 
         <StackPanel  Margin="100,40,250,-2" Width="400">
             <TextBlock Text="Zur Verfügung stehende Karten:" TextWrapping="Wrap" Height="40" Width="400" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" HorizontalAlignment="Left"/>
-            <ListBox DockPanel.Dock="Right" Height="230" Width="400" SelectedIndex="0" x:Name="GameMapsListBox" ItemsSource="{Binding LobbyModel.MapNames}" SelectedItem="{Binding SelectedMapName, Mode=TwoWay}" IsEnabled="{Binding IsHost}" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404">
+            <ListBox DockPanel.Dock="Right" Height="230" Width="400" x:Name="GameMapsListBox" ItemsSource="{Binding LobbyModel.MapNames}" SelectedItem="{Binding SelectedMapName, Mode=TwoWay}" IsEnabled="{Binding IsHost}" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Style.Triggers>
