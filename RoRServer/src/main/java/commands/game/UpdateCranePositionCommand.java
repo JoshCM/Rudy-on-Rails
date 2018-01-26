@@ -6,6 +6,8 @@ import commands.base.Command;
 import communication.MessageInformation;
 import models.game.Compass;
 import models.game.Crane;
+import models.game.Loco;
+import models.game.Playertrainstation;
 import models.game.Stock;
 import models.game.Trainstation;
 import models.session.GameSession;
@@ -17,10 +19,11 @@ public class UpdateCranePositionCommand implements Command{
 	private int yPos;
 	private UUID stockId;
 	private Stock stock;
-	private Trainstation trainstation;
+	private Playertrainstation trainstation;
 	private Crane crane;
 	private UUID playerId;
 	protected GameSession session;
+	private Loco loco;
 	
 	public UpdateCranePositionCommand(RoRSession session, MessageInformation messageInfo) { 
 
@@ -28,9 +31,10 @@ public class UpdateCranePositionCommand implements Command{
 		this.yPos =  messageInfo.getValueAsInt("posY");
 		this.session = (GameSession)session;
 		this.stock = (Stock)session.getMap().getPlaceableOnSquareById(messageInfo.getValueAsUUID("stockId"));
-		this.trainstation = (Trainstation)session.getMap().getPlaceableOnSquareById(this.stock.getTrainstationId());
+		this.trainstation = (Playertrainstation)session.getMap().getPlaceableOnSquareById(this.stock.getTrainstationId());
 		this.playerId = UUID.fromString(messageInfo.getClientid());
 		this.crane = this.trainstation.getCrane();
+		this.loco = this.session.getLocomotiveByPlayerId(playerId);
 		
 	}
 
@@ -39,8 +43,16 @@ public class UpdateCranePositionCommand implements Command{
 		
 		if(this.playerId.equals(this.trainstation.getPlayerId())) {
 			
-			this.crane.moveToTakeTheGoods(session.getLocomotiveByPlayerId(playerId),this.trainstation);
+			if(validate()) {
+				this.crane.moveToTakeTheGoods(this.loco,this.trainstation);
+			}
 		}
+	}
+	private boolean validate() {
+		if(this.loco.getRail().getId().equals(trainstation.getSpawnPointforLoco())) {
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -14,48 +14,33 @@ namespace RoRClient.Commands.Game.Update
     {
         private int newXPos;
         private int newYPos;
-        private int oldYPos;
-        private int oldXPos;
         private Guid trainstationId;
         private Trainstation trainstation;
         private Crane crane;
+        private Rail craneRail;
 
 
         public UpdateCranePositionCommand(RoRSession session, MessageInformation message) : base(session, message)
         {
             this.newXPos = message.GetValueAsInt("newXPos");
             this.newYPos = message.GetValueAsInt("newYPos");
-            this.oldXPos = message.GetValueAsInt("oldXPos");
-            this.oldYPos = message.GetValueAsInt("oldYPos");
+            Guid railId = Guid.Parse(message.GetValueAsString("railId"));
+            this.craneRail = (Rail)(session.Map.GetPlaceableById(railId));
             this.trainstationId = Guid.Parse(message.GetValueAsString("trainstationId"));
-            Guid trainstationId = Guid.Parse(message.GetValueAsString("trainstationId"));
-            Console.WriteLine("TrainstationID: " + trainstationId);
             this.trainstation = (Trainstation)(session.Map.GetPlaceableById(trainstationId));
 
         }
 
         public override void Execute()
         {
-            System.Console.WriteLine("newXPos: " + newXPos);
-            System.Console.WriteLine("newYPos: " + newYPos);
-            System.Console.WriteLine("oldXPos: " + oldXPos);
-            System.Console.WriteLine("oldYPos: " + oldYPos);
-
+     
             GameSession game = (GameSession)session;
-            Square square = game.Map.GetSquare(oldXPos, oldYPos);
-            Rail rail = (Rail)square.PlaceableOnSquare;
-
-
-
-            Crane crane = (Crane)rail.PlaceableOnRail;
+            Crane crane = trainstation.Crane;
+            craneRail.PlaceableOnRail = null;
             crane.Square = game.Map.GetSquare(newXPos, newYPos);
             Rail newRail = (Rail)crane.Square.PlaceableOnSquare;
-
-            rail.PlaceableOnRail = null;
             newRail.PlaceableOnRail = crane;
 
-
-            Console.WriteLine("newX" + crane.Square.PosX + "newY:" + crane.Square.PosY);
         }
     }
 }

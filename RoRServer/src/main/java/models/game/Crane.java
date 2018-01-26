@@ -11,9 +11,6 @@ import models.session.RoRSession;
 public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	private UUID railId, trainstationId;
 	private Compass alignment;
-	private int oldposX;
-	private int oldposY;
-	
 
 	public Crane(String sessionName, Square square, UUID trainstationId, Compass alignment, UUID railId) {
 		super(sessionName, square);
@@ -57,14 +54,38 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		
 		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(getSessionName());
 		
+		int homeXPos = this.getXPos();
+		int homeYPos = this.getYPos();
+		
+		
 		for(Cart cart : loco.getCarts()) {
-
+		
 			if(cart.getResource() != null) {
 				updateCranePosition(gameSession.getMap().getSquare(cart.getXPos(), cart.getYPos()));
 				Resource resource = cart.unloadResourceFromCart();
-				//stock.addResource(resource);
+				
+				GamePlayer player = (GamePlayer) gameSession.getPlayerById(loco.getPlayerId());
+				
+				if(resource instanceof Gold) {
+					System.out.println("HALLO I BIMS 1 GOLD MIT: " + resource.quantity);
+					player.addGold(resource.quantity);
+				}else if(resource instanceof Coal){
+					System.out.println("HALLO I BIMS 1 KOHLE MIT: " + resource.quantity);
+					player.addCoal(resource.quantity);
+				} else {
+					player.addPoints(resource.quantity);
+				}
+			}
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
+		
+		updateCranePosition(gameSession.getMap().getSquare(homeXPos,homeYPos));
 	}
 	
 
@@ -86,9 +107,9 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	 * @param newSquare
 	 */
 	public void updateCranePosition(Square newSquare) {
-		
 		changeSquare(newSquare);
 		NotifyCraneUpdatePosition();
+		this.railId = ((Rail)newSquare.getPlaceableOnSquare()).getId();
 	}
 
 	public void deleteCrane() {
@@ -141,11 +162,10 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	}
 	private void NotifyCraneUpdatePosition() {
 		MessageInformation messageInfo = new MessageInformation("UpdateCranePosition");
-		messageInfo.putValue("oldXPos", oldposX);
-		messageInfo.putValue("oldYPos", oldposY);
 		messageInfo.putValue("newXPos", getXPos());
 		messageInfo.putValue("newYPos", getYPos());
 		messageInfo.putValue("trainstationId",this.trainstationId);
+		messageInfo.putValue("railId", this.railId);
 		notifyChange(messageInfo);
 	}
 	
@@ -156,8 +176,6 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	}
 	
 	public void changeSquare(Square newSquare) {
-		oldposX = getXPos();
-		oldposY = getYPos();
 		setSquareId(newSquare.getId());
 		setXPos(newSquare.getXIndex());
 		setYPos(newSquare.getYIndex());

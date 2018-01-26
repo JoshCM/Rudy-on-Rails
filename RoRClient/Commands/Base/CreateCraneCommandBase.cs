@@ -24,6 +24,7 @@ namespace RoRClient.Commands.Base
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
             alignment = (Compass)Enum.Parse(typeof(Compass), messageInformation.GetValueAsString("alignment"));
+            Guid trainstationId = Guid.Parse(messageInformation.GetValueAsString("trainstationId"));
 
         }
 
