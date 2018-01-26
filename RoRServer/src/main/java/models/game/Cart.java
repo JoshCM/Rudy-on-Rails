@@ -94,10 +94,22 @@ public class Cart extends TickableGameObject implements PlaceableOnRail {
 	 */
 	public void removeResourceFromCart() {
 		resource = null;
+		notifyRemoveResourceFromCart();
 	}
 	
 	public Resource getResource() {
 		return resource;
+	}
+	
+	public void notifyRemoveResourceFromCart() {
+		MessageInformation message = new MessageInformation("RemoveResourceFromCart");
+		//message.putValue("resourceType", resource.getDescription());
+		//message.putValue("resourceId", resource.getId());
+		message.putValue("locoId", currentLocoId);
+		message.putValue("cartId", getId());
+		message.putValue("xPos", this.getXPos());
+		message.putValue("yPos", this.getYPos());
+		notifyChange(message);
 	}
 	
 	/**

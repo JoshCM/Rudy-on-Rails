@@ -301,6 +301,31 @@ public abstract class Loco extends TickableGameObject {
 		}
 		return null;
 	}
+	
+	public void dropResources() {
+		Square trainSquare = map.getSquare(getXPos(), getYPos());
+		List<Square> squares = trainSquare.getNeighbouringEmptySquares();
+		Iterator<Square> squareIterator = squares.iterator();		
+		
+		for (Cart cart : getCarts()) {
+			if(cart.getResource() != null) {
+				Resource resource = cart.getResource();
+				if(squareIterator.hasNext()) {
+					cart.removeResourceFromCart();
+					Square s = squareIterator.next();
+					if (resource instanceof Coal) {
+						Coal coal = new Coal(getSessionName(), s);
+						s.setPlaceableOnSquare(coal);
+					}
+					if (resource instanceof Gold) {
+						Gold gold = new Gold(getSessionName(), s);
+						s.setPlaceableOnSquare(gold);
+					}
+				}
+			}
+		}
+		
+	}
 
 	/**
 	 * notifiziert wenn die Position der Lok veraendert wurde

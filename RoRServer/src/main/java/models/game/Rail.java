@@ -114,7 +114,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
             List<Square> squares = square.getNeighbouringSquares();
             for (Square s : squares) {
 
-                Double chanceToSpawn = Difficulty.EASY.getChanceToSpawnResource();
+                Double chanceToSpawn = Difficulty.HARD.getChanceToSpawnResource();
 
                 if (s.getPlaceableOnSquare() == null && Math.random() < chanceToSpawn / 100) {
                     if (Math.random() < 0.5) {

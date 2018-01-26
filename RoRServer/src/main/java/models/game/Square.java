@@ -41,8 +41,20 @@ public class Square extends ModelBase {
 		notifyChange(messageInfo);
 	}
 	
+	public List<Square> getNeighbouringEmptySquares(){
+		List<Square> squares = getNeighbouringEmptySquares();
+		List<Square> emptySquares = new ArrayList<Square>();
+		for (Square square : squares) {
+			if (square.getPlaceableOnSquare() == null) {
+				emptySquares.add(square);
+			}
+		}
+		return emptySquares;
+		
+	}
+	
 	/**
-	 * Gibt die benachbarten Squares zurück (Links, Rechts, Oben, Unten)
+	 * Gibt die benachbarten Squares zurück
 	 * @return Die Squares werden als Liste zurückgegeben
 	 */
 	public List<Square> getNeighbouringSquares(){
@@ -53,22 +65,50 @@ public class Square extends ModelBase {
 		
 		// Linkes Square
 		if (xIndex - 1 >= 0) {
-			neighbouringSquares.add(map.getSquare(xIndex - 1, yIndex));
+			Square square = map.getSquare(xIndex - 1, yIndex);
+			neighbouringSquares.add(square);
 		}
 		
 		// Rechtes Square
 		if (xIndex + 1 < map.getMapSize()) {
-			neighbouringSquares.add(map.getSquare(xIndex + 1, yIndex));
+			Square square = map.getSquare(xIndex + 1, yIndex);
+			neighbouringSquares.add(square);
 		}
 		
 		// Oberes Square
 		if (yIndex - 1 >= 0) {
-			neighbouringSquares.add(map.getSquare(xIndex, yIndex - 1));
+			Square square = (map.getSquare(xIndex, yIndex - 1));
+			neighbouringSquares.add(square);
 		}
 		
 		// Unteres Square
 		if (yIndex + 1 < map.getMapSize()) {
-			neighbouringSquares.add(map.getSquare(xIndex, yIndex + 1));
+			Square square = map.getSquare(xIndex, yIndex + 1);
+			neighbouringSquares.add(square);
+		}
+		
+		// Untenlinks
+		if (yIndex + 1 <= map.getMapSize() && xIndex - 1 >= 0) {
+			Square square = map.getSquare(xIndex - 1, yIndex + 1);
+			neighbouringSquares.add(square);
+		}
+		
+		// Untenrechts
+		if (yIndex + 1 <= map.getMapSize() && xIndex + 1 >= map.getMapSize()) {
+			Square square = map.getSquare(xIndex + 1, yIndex + 1);
+			neighbouringSquares.add(square);
+		}
+		
+		// Obenlinks
+		if (yIndex - 1 >= 0 && xIndex - 1 >= 0) {
+			Square square = map.getSquare(xIndex - 1, yIndex - 1);
+			neighbouringSquares.add(square);
+		}
+		
+		// Obenrechts
+		if (yIndex - 1 >= 0 && xIndex + 1 <= map.getMapSize()) {
+			Square square = map.getSquare(xIndex + 1, yIndex - 1);
+			neighbouringSquares.add(square);
 		}
 		
 		return neighbouringSquares;
