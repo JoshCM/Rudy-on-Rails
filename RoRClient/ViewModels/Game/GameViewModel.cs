@@ -51,6 +51,7 @@ namespace RoRClient.ViewModels.Game
             topMenuViewModel = new TopMenuViewModel();
             mapGameViewModel.GameInteractionsViewModel = gameInteractionsViewModel;
             GameSession.GetInstance().PropertyChanged += OnWinningPlayerChanged;
+            ViewConstants.Init();
         }
 
         private void OnWinningPlayerChanged(object sender, PropertyChangedEventArgs args)

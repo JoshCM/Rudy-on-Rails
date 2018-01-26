@@ -22,11 +22,7 @@ namespace RoRClient.ViewModels
 
         public ViewConstants()
         {
-            squareDim = 50;
-            signalDimension = squareDim / 5;
-            upperSignalPos = 4;
-            lowerSignalPos = squareDim - upperSignalPos - signalDimension;
-            sensorDimension = 28;
+            Init();
         }
 
         public static ViewConstants Instance
@@ -71,6 +67,15 @@ namespace RoRClient.ViewModels
                     OnPropertyChanged("SignalDimension");
                 }
             }
+        }
+
+        internal void Init()
+        {
+            SquareDim = 50;
+            SignalDimension = squareDim / 5;
+            UpperSignalPos = 4;
+            LowerSignalPos = squareDim - upperSignalPos - signalDimension;
+            SensorDimension = 28;
         }
 
         public int UpperSignalPos

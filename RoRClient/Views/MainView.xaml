@@ -15,6 +15,10 @@
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding ZoomInCommand}" Key="OemPlus"></KeyBinding>
+        <KeyBinding Command="{Binding ZoomOutCommand}" Key="OemMinus"></KeyBinding>
+    </Window.InputBindings>
     <Window.Resources>
         <DataTemplate x:Name="EditorTemplate" DataType="{x:Type vme:EditorViewModel}">
             <ve:EditorUserControl DataContext="{Binding}"/>

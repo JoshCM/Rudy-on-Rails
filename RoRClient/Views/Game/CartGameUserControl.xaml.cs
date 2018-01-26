@@ -2,6 +2,7 @@
 using RoRClient.ViewModels.Game;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,16 @@ namespace RoRClient.Views.Game
         public CartGameUserControl()
         {
             InitializeComponent();
+            ViewConstants.Instance.PropertyChanged += UpdatePositions;
+
+        }
+
+        private void UpdatePositions(object sender, PropertyChangedEventArgs e)
+        {
+            BeginAnimation(RealXProperty, null);
+            BeginAnimation(RealYProperty, null);
+            RealX = X * ViewConstants.Instance.SquareDim;
+            RealY = Y * ViewConstants.Instance.SquareDim;
         }
 
 

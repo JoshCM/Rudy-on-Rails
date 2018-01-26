@@ -33,6 +33,7 @@ namespace RoRClient.ViewModels.Editor
             toolbarViewModel.PropertyChanged += OnSelectedToolChanged;
             this.taskFactory = taskFactory;
             EditorSession.GetInstance().PropertyChanged += OnEditorSessionChanged;
+            ViewConstants.PropertyChanged += OnViewConstantsChanged;
         }
 
         public CanvasEditorViewModel PreviousSelectedEditorCanvasViewModel
@@ -446,6 +447,12 @@ namespace RoRClient.ViewModels.Editor
                 MapWidth = map.Squares.GetLength(0) * ViewConstants.SquareDim;
                 MapHeight = map.Squares.GetLength(1) * ViewConstants.SquareDim;
             }
+        }
+
+        private void OnViewConstantsChanged(object sender, PropertyChangedEventArgs e)
+        {
+            MapWidth = map.Squares.GetLength(0) * ViewConstants.SquareDim;
+            MapHeight = map.Squares.GetLength(1) * ViewConstants.SquareDim;
         }
     }
 }

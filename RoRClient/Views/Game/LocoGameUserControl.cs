@@ -2,6 +2,7 @@
 using RoRClient.ViewModels.Game;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,15 @@ namespace RoRClient.Views.Game
         private const double speedFactor = 0.7;
         public LocoGameUserControl()
         {
+            ViewConstants.Instance.PropertyChanged += UpdatePositions;
+        }
+
+        private void UpdatePositions(object sender, PropertyChangedEventArgs e)
+        {
+            BeginAnimation(RealXProperty, null);
+            BeginAnimation(RealYProperty, null);
+            RealX = X * ViewConstants.Instance.SquareDim;
+            RealY = Y * ViewConstants.Instance.SquareDim;
         }
 
         public int X
@@ -38,7 +48,6 @@ namespace RoRClient.Views.Game
             double speedRatio = locoGameViewModel.Loco.Speed > 0 ? locoGameViewModel.Loco.Speed * speedFactor : 1;
             LocoGameUserControl.BeginAnimation(LocoGameUserControl.RealXProperty, new Int32Animation { From = LocoGameUserControl.RealX, To = LocoGameUserControl.X * ViewConstants.Instance.SquareDim, SpeedRatio = speedRatio });
         }
-
 
         public int Y
         {

@@ -3,6 +3,7 @@ using RoRClient.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using System.ComponentModel;
 
 namespace RoRClient.Views
 {
@@ -13,6 +14,13 @@ namespace RoRClient.Views
     {
         public CanvasUserControl()
         {
+            ViewConstants.Instance.PropertyChanged += UpdatePositions;
+        }
+
+        private void UpdatePositions(object sender, PropertyChangedEventArgs e)
+        {
+            RealX = X * ViewConstants.Instance.SquareDim;
+            RealY = Y * ViewConstants.Instance.SquareDim;
         }
 
         public int X
@@ -79,18 +87,5 @@ namespace RoRClient.Views
             }
         }
         public static readonly DependencyProperty RealYProperty = DependencyProperty.Register("RealY", typeof(int), typeof(CanvasUserControl), new UIPropertyMetadata(0));
-  
-        public int SquareDim
-        {
-            get
-            {
-                return (int)GetValue(SquareDimProperty);
-            }
-            set
-            {
-                SetValue(SquareDimProperty, value);
-            }
-        }
-        public static readonly DependencyProperty SquareDimProperty = DependencyProperty.Register("SquareDim", typeof(int), typeof(SquareEditorUserControl), new UIPropertyMetadata(0));
     }
 }
