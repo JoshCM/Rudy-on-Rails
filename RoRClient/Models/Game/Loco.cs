@@ -27,6 +27,15 @@ namespace RoRClient.Models.Game
             this.playerId = playerId;
         }
 
+        public void RemoveCartsExceptInitial()
+        {
+            for (int i = 1; i < this.carts.Count; i++)
+            {
+                carts.RemoveAt(i);
+            }
+            NotifyPropertyChanged("Carts");
+        }
+
         public void AddCart(Cart cart)
         {
             carts.Add(cart);
