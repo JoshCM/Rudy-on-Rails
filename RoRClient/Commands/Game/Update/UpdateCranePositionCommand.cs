@@ -36,10 +36,10 @@ namespace RoRClient.Commands.Game.Update
      
             GameSession game = (GameSession)session;
             Crane crane = trainstation.Crane;
-            craneRail.PlaceableOnRail = null; 
+            craneRail.PlaceableOnRail = null;
+            crane.Square = game.Map.GetSquare(newXPos, newYPos);
             Rail newRail = (Rail)crane.Square.PlaceableOnSquare;
             newRail.PlaceableOnRail = crane;
-            crane.Square = game.Map.GetSquare(newXPos, newYPos);
 
         }
     }
