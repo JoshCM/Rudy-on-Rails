@@ -11,9 +11,6 @@ import models.session.RoRSession;
 public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	private UUID railId, trainstationId;
 	private Compass alignment;
-	private int oldposX;
-	private int oldposY;
-	
 
 	public Crane(String sessionName, Square square, UUID trainstationId, Compass alignment, UUID railId) {
 		super(sessionName, square);
@@ -86,9 +83,9 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	 * @param newSquare
 	 */
 	public void updateCranePosition(Square newSquare) {
-		
 		changeSquare(newSquare);
 		NotifyCraneUpdatePosition();
+		this.railId = ((Rail)newSquare.getPlaceableOnSquare()).getId();
 	}
 
 	public void deleteCrane() {
@@ -141,11 +138,10 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	}
 	private void NotifyCraneUpdatePosition() {
 		MessageInformation messageInfo = new MessageInformation("UpdateCranePosition");
-		messageInfo.putValue("oldXPos", oldposX);
-		messageInfo.putValue("oldYPos", oldposY);
 		messageInfo.putValue("newXPos", getXPos());
 		messageInfo.putValue("newYPos", getYPos());
 		messageInfo.putValue("trainstationId",this.trainstationId);
+		messageInfo.putValue("railId", this.railId);
 		notifyChange(messageInfo);
 	}
 	
@@ -156,8 +152,6 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	}
 	
 	public void changeSquare(Square newSquare) {
-		oldposX = getXPos();
-		oldposY = getYPos();
 		setSquareId(newSquare.getId());
 		setXPos(newSquare.getXIndex());
 		setYPos(newSquare.getYIndex());

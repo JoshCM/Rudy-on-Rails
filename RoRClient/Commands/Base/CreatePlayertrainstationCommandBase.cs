@@ -13,17 +13,16 @@ namespace RoRClient.Commands.Base
 {
     class CreatePlayertrainstationCommandBase : CommandBase
     {
-        Guid trainstationId;
-        Guid stockId;
-        Guid playerId;
-        private int xPos;
-        private int yPos;
-        private int stockXPos;
-        private int stockYPos;
-        private int craneXPos;
-        private int craneYPos;
-        private Compass alignment;
-        List<Rail> trainstationRails = new List<Rail>();
+        protected Guid trainstationId;
+        protected Guid stockId;
+        protected Guid playerId;
+        protected int xPos;
+        protected int yPos;
+        protected int stockXPos;
+        protected int stockYPos;
+        protected Compass alignment;
+        protected List<Rail> trainstationRails = new List<Rail>();
+        protected Playertrainstation trainstation;
 
         /// <summary>
         /// Setzt die PlayerTrainstation und ihre zugehörigen Rails
@@ -35,9 +34,6 @@ namespace RoRClient.Commands.Base
             playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             trainstationId = Guid.Parse(messageInformation.GetValueAsString("trainstationId"));
             stockId = Guid.Parse(messageInformation.GetValueAsString("stockId"));
-
-           // craneXPos = messageInformation.GetValueAsInt("craneXPos");
-            //craneYPos = messageInformation.GetValueAsInt("craneYPos");
 
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
@@ -59,14 +55,8 @@ namespace RoRClient.Commands.Base
             Square square = session.Map.GetSquare(xPos, yPos);
             Stock stock = (Stock)session.Map.GetPlaceableById(stockId);
 
-         //   Square craneSquare = session.Map.GetSquare(craneXPos, craneYPos);
-          //  Rail rail = (Rail)craneSquare.PlaceableOnSquare;
-         //   Crane crane = (Crane)rail.PlaceableOnRail;
-
-            Playertrainstation trainstation = new Playertrainstation(trainstationId, square, trainstationRails, alignment, stock, session.GetPlayerById(playerId));
+            trainstation = new Playertrainstation(trainstationId, square, trainstationRails, alignment, stock, session.GetPlayerById(playerId));
             square.PlaceableOnSquare = (Playertrainstation)trainstation;
-       //     trainstation.Crane = crane;
-          //  Console.WriteLine("CRANEID: " + crane.Id);
 
         }
 
