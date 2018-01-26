@@ -29,14 +29,22 @@ namespace RoRClient.BindingConverter
             }
             else if(value is Stock)
             {
+
                 Stock stock = (Stock)value;
-                Playertrainstation playerTrainstation = (Playertrainstation)GameSession.GetInstance().Map.GetPlaceableById(stock.TrainstationId);
-                GamePlayer player = (GamePlayer)playerTrainstation.Player;
-                if (player != null)
+                Trainstation trainstation = (Trainstation)GameSession.GetInstance().Map.GetPlaceableById(stock.TrainstationId);
+                if (trainstation is Playertrainstation)
                 {
-                    int colorNumber = (int)player.PlayerColor;
-                    return IMAGE_FOLDER_PATH + STOCK_IMAGE_START + colorNumber + IMAGE_ENDING;
+                    GamePlayer player = (GamePlayer)((Playertrainstation)trainstation).Player;
+                    if (player != null)
+                    {
+                        int colorNumber = (int)player.PlayerColor;
+                        return IMAGE_FOLDER_PATH + STOCK_IMAGE_START + colorNumber + IMAGE_ENDING;
+                    }
+                } else if (trainstation is Publictrainstation)
+                {
+                    return IMAGE_FOLDER_PATH + STOCK_IMAGE_START + "public_ts" + IMAGE_ENDING;
                 }
+
             }
 
             // wenn type nicht bestimmt muss das hier zurückgegeben werden

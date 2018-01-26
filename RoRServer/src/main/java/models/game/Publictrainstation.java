@@ -26,14 +26,12 @@ public class Publictrainstation extends Trainstation {
 	
 	private void initializeResourceStock() {
 		resources = new ArrayList<Resource>();
-		for (int i = 0; i < 20; i++) {
-			Gold g = new Gold(getSessionName());
-			Coal c = new Coal(getSessionName());
-			PointContainer p = new PointContainer(getSessionName());
-			resources.add(g);
-			resources.add(c);
-			resources.add(p);
-		}
+		Gold g = new Gold(getSessionName(), 100);
+		Coal c = new Coal(getSessionName(), 100);
+		PointContainer p = new PointContainer(getSessionName(), 100);
+		resources.add(g);
+		resources.add(c);
+		resources.add(p);
 	}
 	
 	private void notifyCreatedPublictrainstation() {
@@ -50,6 +48,8 @@ public class Publictrainstation extends Trainstation {
 		}
 		messageInfo.putValue("trainstationRails", rails);
 		messageInfo.putValue("stockId", getStock().getId());
+		
+		//müssen Ressourcen auch mitgegeben werden?
 
 		notifyChange(messageInfo);
 	}
@@ -72,70 +72,80 @@ public class Publictrainstation extends Trainstation {
 		return "PublicTrainstation [trainstationRailIds=" + trainstationRailIds + ", alignment=" + alignment + "]";
 	}
 	
-	private void locoAtPublictrainstation() {
+	private void exchangeResourcesAtPublictrainstation() {
 		for (Rail rail : this.getTrainstationRails()) {
 			Square trainstationSquare = rail.getSquareFromGameSession();
 			if (trainstationSquare != null) {
 				if (trainstationSquare.getPlaceableOnSquare() instanceof PlayerLoco) {
 					Loco loco = (Loco) trainstationSquare.getPlaceableOnSquare();
-					exchangeResource(loco);
+					List<Cart> carts = loco.getCarts();
+					Cart cart = carts.get(0);
+					
+					exchangeResource(cart);
 				}
 			}
 		}
 	}
 
-	private void exchangeResource(Loco loco) {
-		List<Cart> carts = loco.getCarts();
-		for (Cart cart : carts) {
-			if (cart.getXPos() == this.getXPos() && cart.getYPos() == this.getYPos()
-					&& cart.getResource() != null && resources.size() != 0) {
-				
-				// Die Resource der Cart
-				Resource resourceCart = cart.getResource();
-				
-				for (Resource resourceTrainstation : resources) {
-					if (resourceCart instanceof Gold && resourceTrainstation instanceof Coal /* && ich will Kohle */) {
-						// 1 Gold : 1 Kohle
-						Resource r = cart.getResource();
+	private void exchangeResource(Cart cart) {
+		if (this.getTrainstationRails().contains(cart.getXPos()) && this.getTrainstationRails().contains(cart.getYPos())
+				&& cart.getResource() != null && resources.size() != 0) {
+			
+			// Die Resource der Cart
+			Resource resourceCart = cart.getResource();
+			
+			for (Resource resourceTrainstation : resources) {
+				if (resourceCart instanceof Gold && resourceTrainstation instanceof Coal /* && ich will Kohle */) {
+					// 1 Gold : 1 Kohle
+					if (resourceCart.getQuantity() > 1) {
+						resourceCart.setQuantity(resourceCart.getQuantity() - 1);
+					} else if (resourceCart.getQuantity() == 1) {
 						cart.removeResourceFromCart();
-						resources.remove(resourceTrainstation);
-						resources.add(r);
-						cart.loadResourceOntoCart(resourceTrainstation);
+						Resource r = resourceTrainstation;
+						r.setQuantity(1);
+						cart.loadResourceOntoCart(r);
+					} else {
+						log.info("Tauschverhältnis Gold 1 : 1 Kohle. Der Spieler besitzt zu wenig Gold!");
+					}
+					
+					resourceTrainstation.setQuantity(resourceTrainstation.getQuantity() + 1);
+					// Eigentlich müsste Kohle noch aus Trainstation-Quantity gelöscht werden
+					
+					notifyResourceExchanged(resourceCart.getDescription());
+				}
+				if (resourceCart instanceof Coal && resourceTrainstation instanceof Gold /* && ich will Gold */) {
+					// 3 Kohle : 1 Gold
+					if (resourceCart.getQuantity() > 3) {
+						resourceCart.setQuantity(resourceCart.getQuantity() - 1);
+					} else if (resourceCart.getQuantity() == 3) {
+						cart.removeResourceFromCart();
+						Resource r = resourceTrainstation;
+						r.setQuantity(1);
+						cart.loadResourceOntoCart(r);
+					} else {
+						log.info("Tauschverhältnis Kohle 3 : 1 Gold. Der Spieler besitzt zu wenig Kohle!");
+					}
+					
+					resourceTrainstation.setQuantity(resourceTrainstation.getQuantity() + 1);
 						
-						notifyResourceExchanged(resourceCart.getDescription());
+					notifyResourceExchanged(resourceCart.getDescription());
+				}
+				if (resourceCart instanceof Gold && resourceTrainstation instanceof PointContainer /* && ich will Punkte */) {
+					// 2 Gold : 1 Punkte
+					if (resourceCart.getQuantity() > 2) {
+						resourceCart.setQuantity(resourceCart.getQuantity() - 1);
+					} else if (resourceCart.getQuantity() == 2) {
+						cart.removeResourceFromCart();
+						Resource r = resourceTrainstation;
+						r.setQuantity(1);
+						cart.loadResourceOntoCart(r);
+					} else {
+						log.info("Tauschverhältnis Gold 2 : 1 Punkt. Der Spieler besitzt zu wenig Gold!");
 					}
-					if (resourceCart instanceof Coal && resourceTrainstation instanceof Gold /* && ich will Gold */) {
-						// 3 Kohle : 1 Gold
-						if (carts.size() >= 3 /* && 3x Coal */) {
-							for (Cart c : carts) {
-								if (c.getResource().getDescription() == "Coal") {
-									Resource r = c.getResource();
-									c.removeResourceFromCart();
-									resources.add(r);
-								}
-							}
-							resources.remove(resourceTrainstation);
-							cart.loadResourceOntoCart(resourceTrainstation);
-							
-							notifyResourceExchanged(resourceCart.getDescription());
-						}
-					}
-					if (resourceCart instanceof Gold && resourceTrainstation instanceof PointContainer /* && ich will Punkte */) {
-						// 2 Gold : 1 Punkte
-						if (carts.size() >= 2 /* && 2x Gold */) {
-							for (Cart c : carts) {
-								if (c.getResource().getDescription() == "Gold") {
-									Resource r = c.getResource();
-									c.removeResourceFromCart();
-									resources.add(r);
-								}
-							}
-							resources.remove(resourceTrainstation);
-							cart.loadResourceOntoCart(resourceTrainstation);
-							
-							notifyResourceExchanged(resourceCart.getDescription());
-						}
-					}
+					
+					resourceTrainstation.setQuantity(resourceTrainstation.getQuantity() + 1);
+					
+					notifyResourceExchanged(resourceCart.getDescription());
 				}
 			}
 		}

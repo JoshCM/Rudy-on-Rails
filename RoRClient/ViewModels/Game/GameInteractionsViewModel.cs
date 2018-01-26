@@ -25,8 +25,7 @@ namespace RoRClient.ViewModels.Game
         private bool canConfigureSensor = false;
         private MapGameViewModel mapGameViewModel;
         private int currentNumberOfOwnGhostLocoScript = 1;
-        private bool canExchangeResource = false;
-        private Resource selectedResource;
+        private String selectedResource;
 
         public GameInteractionsViewModel(TaskFactory taskFactory, MapGameViewModel mapGameViewModel)
         {
@@ -66,20 +65,6 @@ namespace RoRClient.ViewModels.Game
             {
                 canPlaceSensor = value;
                 OnPropertyChanged("CanPlaceSensor");
-            }
-        }
-
-        public bool CanExchangeResource
-        {
-
-            get
-            {
-                return canExchangeResource;
-            }
-            set
-            {
-                canExchangeResource = value;
-                OnPropertyChanged("CanExchangeResource");
             }
         }
 
@@ -215,36 +200,7 @@ namespace RoRClient.ViewModels.Game
             GameSession.GetInstance().QueueSender.SendMessage("ChangeCurrentScriptOfSensor", message);
         }
 
-        /// <summary>
-        /// Command zum Austauschen von Ressourcen am Öffentlichen Bahnhof
-        /// </summary>
-        private ICommand exchangeResourceCommand;
-        public ICommand ExchangeResourceCommand
-        {
-            get
-            {
-                if (exchangeResourceCommand == null)
-                {
-                    exchangeResourceCommand = new ActionCommand(param => exchangeResource());
-                }
-                return exchangeResourceCommand;
-            }
-        }
-
-        /// <summary>
-        /// Schickt eine Nachricht, um zu überprüfen, ob eine Ressource ausgetauscht werden kann (steht Loco vor Bahnhof?)
-        /// </summary>
-        private void exchangeResource()
-        {
-            MessageInformation message = new MessageInformation();
-
-            GameSession.GetInstance().QueueSender.SendMessage("ExchangeResource", message);
-        }
-
-        /// <summary>
-        /// Ausgewählte Resource
-        /// </summary>
-        public Resource SelectedResource
+        public String SelectedResource
         {
             get
             {
@@ -256,15 +212,36 @@ namespace RoRClient.ViewModels.Game
                 {
                     selectedResource = value;
                     OnPropertyChanged("SelectedResource");
-
-                    if (selectedResource != null)
-                    {
-                        ChangeCurrentScriptOfSensor();
-                        CanExchangeResource = false;
-                    }
                 }
             }
         }
 
+        /// <summary>
+        /// Command zum Austauschen von Ressourcen am Öffentlichen Bahnhof
+        /// </summary>
+        private ICommand exchangeResourceCommand;
+        public ICommand ExchangeResourceCommand
+        {
+            get
+            {
+                if (exchangeResourceCommand == null)
+                {
+                    exchangeResourceCommand = new ActionCommand(param => ExchangeResource());
+                }
+                return exchangeResourceCommand;
+            }
+        }
+
+        /// <summary>
+        /// Schickt eine Nachricht, um zu überprüfen, ob eine Ressource ausgetauscht werden kann (steht Loco vor Bahnhof?)
+        /// </summary>
+        private void ExchangeResource()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("resourcentausch", SelectedResource);
+            messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
+
+            GameSession.GetInstance().QueueSender.SendMessage("ExchangeResource", messageInformation);
+        }
     }
 }
