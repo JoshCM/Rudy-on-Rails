@@ -430,6 +430,9 @@
     </Compile>
     <Compile Include="Views\Popup\CustomFileDialogs.cs" />
     <Compile Include="Views\Popup\PopupCreator.cs" />
+    <Compile Include="Views\Popup\RulesPopup.xaml.cs">
+      <DependentUpon>RulesPopup.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\Editor\PublictrainstationEditorUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -603,6 +606,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Popup\AskUserForStringPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Popup\RulesPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

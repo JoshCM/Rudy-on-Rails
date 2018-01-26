@@ -16,6 +16,28 @@ namespace RoRClient.ViewModels.Game
 {
     class TopMenuViewModel : ViewModelBase
     {
+        private ICommand openRulesPopUpCommand;
+
+        public ICommand OpenRulesPopUpCommand
+        {
+            get
+            {
+                if (openRulesPopUpCommand == null)
+                {
+                    openRulesPopUpCommand = new ActionCommand(param => OpenRules());
+                }
+                return openRulesPopUpCommand;
+            }
+        }
+
+        private void OpenRules()
+        {
+            RulesPopup popup = new RulesPopup();
+            popup.ShowDialog();
+        }
+
+
+
         private ICommand leaveGameCommand;
         public ICommand LeaveGameCommand
         {
@@ -36,5 +58,7 @@ namespace RoRClient.ViewModels.Game
             messageInformation.PutValue("isHost", GameSession.GetInstance().OwnPlayer.IsHost);
             GameSession.GetInstance().QueueSender.SendMessage("LeaveGame", messageInformation);
         }
+
+
     }
 }
