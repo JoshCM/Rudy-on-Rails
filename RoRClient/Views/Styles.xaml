@@ -81,6 +81,13 @@
         <Setter Property="Height" Value="45"/>
     </Style>
 
+    <Style x:Key="DefaultHeaderStyle" TargetType="{x:Type Label}">
+        <Setter Property="Foreground" Value="#FF510404"/>
+        <Setter Property="FontFamily" Value="Birch Std"/>
+        <Setter Property="FontSize" Value="25"/>
+        <Setter Property="Margin" Value="0 15 0 0" />
+    </Style>
+
     <Style x:Key="DefaultSubHeaderStyle" TargetType="{x:Type Label}">
         <Setter Property="Foreground" Value="#FF510404"/>
         <Setter Property="FontFamily" Value="Source Sans Pro"/>
