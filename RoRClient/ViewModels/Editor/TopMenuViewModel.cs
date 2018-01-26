@@ -81,7 +81,7 @@ namespace RoRClient.ViewModels.Editor
             }
             else
             {
-                MessageBox.Show("Ungültiger Filename du Opfer!");
+                MessageBox.Show("Ungültiger Filename!");
             }
         }
 
