@@ -14,11 +14,9 @@
              Width="auto"
              d:DesignWidth="1920">
     <Menu IsMainMenu="True" Background="#ff510404" FontFamily="Source Sans Pro" Foreground="White" FontSize="18" Typography.Capitals="SmallCaps" Margin="0, 10" HorizontalAlignment="Right" >
+        <MenuItem Header="_Sofort Start" Command="{Binding StartGameCommand}" MinWidth="50"/>
+        <Label Content="|" Foreground="White" FontSize="20" Margin="5, 0"/>
         <MenuItem Header="_Karte" MinWidth="50">
-            <MenuItem Header="_Neu..." Background="#ff510404" />
-            <Separator Background="#ff510404"  />
-            <MenuItem Header="_Öffnen..." Background="#ff510404" />
-            <Separator Background="#ff510404" />
             <MenuItem Header="_Speichern" Command="{Binding SaveMapCommand}" Background="#ff510404"/>
             <MenuItem Header="_Speichern als..." Command="{Binding SaveNewMapCommand}" Background="#ff510404"/>
             <Separator Background="#ff510404" />

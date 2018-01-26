@@ -32,15 +32,16 @@ public abstract class RoRSession extends ModelBase {
 		queueReceiver.setup();
 	}
 
-	public void removePlayer(Player player) {
+	public void removePlayer(Player player, boolean notifiable) {
 		this.players.remove(player);
-		notifyPlayerLeft(player);
+		if(notifiable)
+			notifyPlayerLeft(player);
 	}
 
-	public void removePlayers() {
+	public void removePlayers(boolean notifiable) {
 		for (int i = getPlayers().size() - 1; i >= 0; i--) {
 			Player player = getPlayers().get(i);
-			removePlayer(player);
+			removePlayer(player, notifiable);
 		}
 	}
 

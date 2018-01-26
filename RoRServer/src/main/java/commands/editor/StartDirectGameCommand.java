@@ -1,20 +1,19 @@
-package commands.game;
+package commands.editor;
 
 import java.util.UUID;
 
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import models.game.Player;
-import models.session.GameSession;
-import models.session.GameSessionManager;
+import models.session.EditorSession;
+import models.session.EditorSessionManager;
 import models.session.RoRSession;
 
-public class LeaveGameCommand extends CommandBase {
-	
+public class StartDirectGameCommand extends CommandBase {
+
 	private UUID playerId;
 	private boolean isHost;
-
-	public LeaveGameCommand(RoRSession session, MessageInformation messageInfo) {
+	public StartDirectGameCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		playerId = messageInfo.getValueAsUUID("playerId");
 		isHost = messageInfo.getValueAsBoolean("isHost");
@@ -23,13 +22,11 @@ public class LeaveGameCommand extends CommandBase {
 	@Override
 	public void execute() {
 		Player player = session.getPlayerById(playerId);
-		
+
 		// Alle Spieler löschen wenn Spieler Host ist
-		if(isHost) {
-			GameSessionManager.getInstance().removeGameSession((GameSession)session);
-		// Nur Spieler löschen
-		} else {
-			session.removePlayer(player, true);
-		}
+		if (isHost) {
+			EditorSessionManager.getInstance().removeEditorSession((EditorSession) session, true);
+		} 
 	}
+
 }

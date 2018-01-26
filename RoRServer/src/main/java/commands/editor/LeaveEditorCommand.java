@@ -25,10 +25,10 @@ public class LeaveEditorCommand extends CommandBase {
 
 		// Alle Spieler löschen wenn Spieler Host ist
 		if (isHost) {
-			EditorSessionManager.getInstance().removeEditorSession((EditorSession) session);
+			EditorSessionManager.getInstance().removeEditorSession((EditorSession) session, true);
 			// Nur Spieler löschen
 		} else {
-			session.removePlayer(player);
+			session.removePlayer(player, true);
 		}
 	}
 }

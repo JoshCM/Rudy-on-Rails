@@ -32,12 +32,13 @@ public class EditorSessionManager {
         editorSessionMap.put(editorName, editorSession);
         return editorSession;
     }
+    
     /**
      * Entfernt spezifische EditorSession aus HashMap
      * @param editorSession
      */
-    public void removeEditorSession(EditorSession editorSession){
-    	editorSession.removePlayers();
+    public void removeEditorSession(EditorSession editorSession, boolean notifiable){
+    	editorSession.removePlayers(notifiable);
         editorSessionMap.remove(editorSession.getSessionName());
     }
     

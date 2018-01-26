@@ -6,6 +6,8 @@ using RoRClient.ViewModels.Game;
 using RoRClient.Models.Game;
 using System;
 using System.Threading.Tasks;
+using RoRClient.Communication;
+using System.Windows;
 
 namespace RoRClient.ViewModels
 {
@@ -53,15 +55,22 @@ namespace RoRClient.ViewModels
                     // wird schon hier erzeugt, weil der UiState erst nach allen Commands geändert wird
                     gameViewModel = new GameViewModel(uiState, taskFactory);
                     break;
-                case "joinEditorLobby": CurrentViewModel = new JoinEditorLobbyViewModel(uiState, lobbyModel);
+                case "joinEditorLobby":
+                    if (ClientConnection.GetInstance().Session != null)
+                        CurrentViewModel = new JoinEditorLobbyViewModel(uiState, lobbyModel);
+                    else
+                        MessageBox.Show("Server nicht erreichbar!");
                     break;
-                case "joinGameLobby": CurrentViewModel = new JoinGameLobbyViewModel(uiState, lobbyModel);
+                case "joinGameLobby":
+                    if (ClientConnection.GetInstance().Session != null)
+                        CurrentViewModel = new JoinGameLobbyViewModel(uiState, lobbyModel);
+                    else
+                        MessageBox.Show("Server nicht erreichbar!");
                     break;
                 case "gameResult":
                     CurrentViewModel = new GameResultViewModel(uiState);
                     break;
             }
-            //CurrentViewModel = viewmodels[args.Statename];
         }
 
         public MainViewModel()

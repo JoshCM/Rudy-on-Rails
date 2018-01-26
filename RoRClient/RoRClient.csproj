@@ -128,6 +128,7 @@
     <Compile Include="Commands\Editor\Delete\DeleteCraneCommand.cs" />
     <Compile Include="Commands\Editor\Other\InitMapSizeCommand.cs" />
     <Compile Include="Commands\Editor\Other\LeaveEditorCommand.cs" />
+    <Compile Include="Commands\Editor\Other\StartDirectGameCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateActivityOfSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateCraneCommand.cs" />

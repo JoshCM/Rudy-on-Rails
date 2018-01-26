@@ -104,12 +104,33 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
+        private ICommand startGameCommand;
+        public ICommand StartGameCommand
+        {
+            get
+            {
+                if (startGameCommand == null)
+                {
+                    startGameCommand = new ActionCommand(param => StartGame());
+                }
+                return startGameCommand;
+            }
+        }
+
         private void LeaveEditor()
         {
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("playerId", EditorSession.GetInstance().OwnPlayer.Id);
             messageInformation.PutValue("isHost", EditorSession.GetInstance().OwnPlayer.IsHost);
             EditorSession.GetInstance().QueueSender.SendMessage("LeaveEditor", messageInformation);
+        }
+
+        private void StartGame()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("playerId", EditorSession.GetInstance().OwnPlayer.Id);
+            messageInformation.PutValue("isHost", EditorSession.GetInstance().OwnPlayer.IsHost);
+            EditorSession.GetInstance().QueueSender.SendMessage("StartDirectGame", messageInformation);
         }
     }
 }
