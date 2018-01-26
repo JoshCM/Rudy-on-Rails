@@ -33,6 +33,11 @@ public class PlayerLoco extends Loco {
 	 */
 	public void spendCoal() {
 		double coalToDecrease = (double) getSpeed() * Double.parseDouble(PropertyManager.getProperty("coalDecreaseFactor"));
+		coalToDecrease = Math.abs(coalToDecrease);
 		getPlayer().removeCoal(coalToDecrease);
+	}
+	
+	public boolean needsCoalToDrive() {
+		return true;
 	}
 }

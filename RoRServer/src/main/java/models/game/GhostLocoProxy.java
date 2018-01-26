@@ -160,7 +160,7 @@ public class GhostLocoProxy implements ProxyObject {
 	}
 	
 	public void setPicksUpCoalContainerNextToRails(boolean picksUpCoalContainerNextToRails) {
-		ghostLoco.setPicksUpGoldContainerNextToRails(picksUpCoalContainerNextToRails);
+		ghostLoco.setPicksUpCoalContainerNextToRails(picksUpCoalContainerNextToRails);
 	}
 	
 	public boolean isStealsGoldContainerFromOtherPlayers() {
@@ -177,5 +177,17 @@ public class GhostLocoProxy implements ProxyObject {
 
 	public void setStealsCoalContainerFromOtherPlayers(boolean stealsCoalContainerFromOtherPlayers) {
 		ghostLoco.setStealsCoalContainerFromOtherPlayers(stealsCoalContainerFromOtherPlayers);
+	}
+	
+	public int getGoldCount() {
+		return ghostLoco.getPlayer().getGoldCount();
+	}
+	
+	public int getCoalCount() {
+		return (int)ghostLoco.getPlayer().getCoalCount();
+	}
+	
+	public int getPointCount() {
+		return ghostLoco.getPlayer().getPointCount();
 	}
 }

@@ -18,15 +18,16 @@ import exceptions.NotMoveableException;
 public class Map extends ModelBase {
 	private String name;
 	private Square squares[][];
-	private final int mapSize = 50;
+	private int mapSize;
 	private int availablePlayerSlots;
 
 	/**
 	 * Jedes Square auf der Map braucht einen Index, um jedem Objekt, das auf einem
 	 * Square platziert wird, ein eindeutiges Objekt zuzuordnen
 	 */
-	public Map(String sessionName) {
+	public Map(String sessionName, int mapSize) {
 		super(sessionName);
+		this.mapSize = mapSize;
 		squares = new Square[mapSize][mapSize];
 		
 		for(int x= 0; x < mapSize; x++) {
@@ -330,6 +331,12 @@ public class Map extends ModelBase {
 		messageInformation.putValue("oldYPos", oldSquare.getYIndex());
 		messageInformation.putValue("newXPos", newSquare.getXIndex());
 		messageInformation.putValue("newYPos", newSquare.getYIndex());
+		notifyChange(messageInformation);
+	}
+
+	public void notifySize() {
+		MessageInformation messageInformation = new MessageInformation("InitMapSize");
+		messageInformation.putValue("mapSize", mapSize);
 		notifyChange(messageInformation);
 	}
 }

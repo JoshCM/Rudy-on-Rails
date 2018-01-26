@@ -8,9 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using RoRClient.Communication.DataTransferObject;
-using RoRClient.Models.Session;
-using RoRClient.ViewModels.Commands;
-using System.Windows.Input;
 using Newtonsoft.Json.Linq;
 using RoRClient.ViewModels.Helper;
 
@@ -42,24 +39,11 @@ namespace RoRClient.ViewModels.Game
             {
                 if (changeSwitchCommand == null)
                 {
-                    changeSwitchCommand = new ActionCommand(param => SendChangeSwitchCommand());
+                    changeSwitchCommand = new ActionCommand(param => ChangeStatusOfRail());
                 }
                 return changeSwitchCommand;
             }
         }
-
-        private void SendChangeSwitchCommand()
-        {
-            MessageInformation messageInformation = new MessageInformation();
-            GameSession gameSession = GameSession.GetInstance();
-
-            MessageInformation messageInfo = new MessageInformation();
-            messageInformation.PutValue("xPos", r.Square.PosX);
-            messageInformation.PutValue("yPos", r.Square.PosY);
-            messageInformation.PutValue("change", true);
-            GameSession.GetInstance().QueueSender.SendMessage("ChangeSwitch", messageInformation);
-        }
-    
 
         private void SetScriptForSensor()
         {
@@ -100,6 +84,46 @@ namespace RoRClient.ViewModels.Game
 
             // Es soll kein weiterer Sensor mehr platziert werden können und auch 
             MapViewModel.GameInteractionsViewModel.CanPlaceSensor = false;
+        }
+
+        private void ChangeStatusOfRail()
+        {
+            if (Rail.Signals.Exists)
+            {
+                SendSwitchSignalsCommand();
+            }
+            else
+            {
+                // ToDo: Hier überprüfen, ob es sich wirklich um eine Weiche handelt. Und/Oder auf Server prüfen.
+                SendChangeSwitchCommand();
+            }
+        }
+
+        private void SendChangeSwitchCommand()
+        {
+            MessageInformation messageInformation = new MessageInformation();
+            GameSession gameSession = GameSession.GetInstance();
+
+            MessageInformation messageInfo = new MessageInformation();
+            messageInformation.PutValue("xPos", r.Square.PosX);
+            messageInformation.PutValue("yPos", r.Square.PosY);
+            messageInformation.PutValue("change", true);
+            GameSession.GetInstance().QueueSender.SendMessage("ChangeSwitch", messageInformation);
+        }
+
+        private void SendSwitchSignalsCommand()
+        {
+            if (Rail.Signals.Exists)
+            {
+                MessageInformation messageInformation = new MessageInformation();
+                GameSession gameSession = GameSession.GetInstance();
+
+                MessageInformation messageInfo = new MessageInformation();
+                messageInformation.PutValue("xPos", r.Square.PosX);
+                messageInformation.PutValue("yPos", r.Square.PosY);
+                messageInformation.PutValue("playerId", gameSession.OwnPlayer.Id.ToString());
+                GameSession.GetInstance().QueueSender.SendMessage("SwitchSignals", messageInformation);
+            }
         }
     }
 }

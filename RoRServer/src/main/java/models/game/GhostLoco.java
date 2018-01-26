@@ -1,5 +1,6 @@
 package models.game;
 
+import java.util.Random;
 import java.util.UUID;
 import communication.MessageInformation;
 import models.scripts.ProxyObject;
@@ -12,6 +13,7 @@ import models.session.GameSessionManager;
  */
 public class GhostLoco extends Loco {
 	private final static int STEALING_AMOUNT = 10;
+	private final static int CHANCE_TO_STEAL_POINT_CONTAINER_IN_PERCENT = 33;
 	
 	ScriptableObject scriptableObject;
 	private boolean picksUpGoldContainerNextToRails = false;
@@ -75,8 +77,17 @@ public class GhostLoco extends Loco {
 				GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(sessionName);
 				GamePlayer enemyPlayer = (GamePlayer)gameSession.getPlayerById(stockPlayerId);
 				
-				if(enemyPlayer != null) { // Der Bahnhof könnte auch keinem Spieler gehören, falls es mehr Bahnhöfe als Spieler gibt
-					if(stealsGoldContainerFromOtherPlayers && enemyPlayer.getGoldCount() > 0) {
+				if(enemyPlayer != null) { // Der Bahnhof könnte auch keinem Spieler gehören, falls es mehr Bahnhöfe als Spieler gibt				
+					Random rand = new Random();
+					boolean stealPointContainerIfPossible = false;
+					if(rand.nextInt(100) + 1 <= CHANCE_TO_STEAL_POINT_CONTAINER_IN_PERCENT) {
+						stealPointContainerIfPossible = true;
+					}
+					
+					if(stealPointContainerIfPossible && enemyPlayer.getPointCount() > 0) {
+						enemyPlayer.removePoints(STEALING_AMOUNT);
+						cart.loadResourceOntoCart(new PointContainer(getSessionName()));
+					} else if(stealsGoldContainerFromOtherPlayers && enemyPlayer.getGoldCount() > 0) {
 						enemyPlayer.removeGold(STEALING_AMOUNT);
 						cart.loadResourceOntoCart(new Gold(getSessionName()));
 					} else if(stealsCoalContainerFromOtherPlayers && enemyPlayer.getCoalCount() > 0) {
@@ -159,5 +170,9 @@ public class GhostLoco extends Loco {
 	@Override
 	public void spendCoal() {
 		// Der Geisterzug verbraucht keine Resourcen zum Fahren
+	}
+	
+	public boolean needsCoalToDrive() {
+		return false;
 	}
 }

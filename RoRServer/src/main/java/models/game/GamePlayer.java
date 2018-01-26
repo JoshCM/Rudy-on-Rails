@@ -32,7 +32,7 @@ public class GamePlayer extends Player{
 	private void initializeResourceCounts() {
 		this.coalCount = 25;
 		this.goldCount = 10;
-		this.pointCount = 0;
+		this.pointCount = 20;
 	}
 
 	public double getCoalCount() {
