@@ -57,6 +57,11 @@
             <ComboBox Text="Wähle Tausch" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" Margin="0 0 0 10" />
             <Button Content="Auswählen" Style="{StaticResource DefaultButtonStyleDampfmodus}"/>
         </StackPanel>
-        
+
+        <StackPanel>
+            <Label Content="=HALLO" IsEnabled="{Binding PublictrainstationViewModel.Trainstation.Tradeable}">
+            </Label>
+        </StackPanel>
+
     </StackPanel>
 </UserControl>

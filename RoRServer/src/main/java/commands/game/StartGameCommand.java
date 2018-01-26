@@ -16,6 +16,7 @@ import models.game.GamePlayer;
 import models.game.Color;
 import models.game.Compass;
 import models.game.GhostLoco;
+import models.game.Loco;
 import models.game.Map;
 import models.game.Mine;
 import models.game.Player;
@@ -25,6 +26,7 @@ import models.game.Square;
 import models.game.Stock;
 import models.game.Trainstation;
 import models.game.Playertrainstation;
+import models.game.Publictrainstation;
 import models.session.GameSession;
 import models.session.RoRSession;
 import persistent.MapManager;
@@ -148,6 +150,7 @@ public class StartGameCommand extends CommandBase {
 			} else {
 				// Trainstation ist eine PublicTrainstation
 				newTrainStation = (Trainstation) oldTrainStation.loadFromMap(trainstationSquare, gameSession);
+				Loco.addPublicTrainStation((Publictrainstation)newTrainStation);
 			}
 			// Neue Trainstation auf Square setzen
 			trainstationSquare.setPlaceableOnSquare(newTrainStation);

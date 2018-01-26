@@ -35,6 +35,14 @@ public class Publictrainstation extends Trainstation {
 		notifyChange(messageInfo);
 	}
 	
+	public void showTradeMenu() {
+		MessageInformation message = new MessageInformation("ShowTradeRelationCommand");
+		message.putValue("trainstationId", getId());
+		message.putValue("playerId", getPlayerId());
+		message.putValue("tradeable", true);
+		notifyChange(message);
+	}
+	
 	@Override
 	public Publictrainstation loadFromMap(Square square, RoRSession session) {
 		Publictrainstation oldTrainStation = (Publictrainstation) square.getPlaceableOnSquare();
