@@ -7,13 +7,10 @@ import java.util.UUID;
 import com.google.gson.JsonObject;
 
 import communication.MessageInformation;
-import models.session.GameSession;
-import models.session.GameSessionManager;
 import models.session.RoRSession;
 
 public class Publictrainstation extends Trainstation {
-	
-	private GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(sessionName);
+
 	private List<Resource> resources;
 	
 	public Publictrainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id,
@@ -30,10 +27,12 @@ public class Publictrainstation extends Trainstation {
 	private void initializeResourceStock() {
 		resources = new ArrayList<Resource>();
 		for (int i = 0; i < 20; i++) {
-			Gold g = new Gold(gameSession.getSessionName());
-			Coal c = new Coal(gameSession.getSessionName());
+			Gold g = new Gold(getSessionName());
+			Coal c = new Coal(getSessionName());
+			PointContainer p = new PointContainer(getSessionName());
 			resources.add(g);
 			resources.add(c);
+			resources.add(p);
 		}
 	}
 	
@@ -86,31 +85,26 @@ public class Publictrainstation extends Trainstation {
 	}
 
 	private void exchangeResource(Loco loco) {
-		GamePlayer player = (GamePlayer) gameSession.getPlayerById(loco.getPlayerId());
 		List<Cart> carts = loco.getCarts();
 		for (Cart cart : carts) {
 			if (cart.getXPos() == this.getXPos() && cart.getYPos() == this.getYPos()
 					&& cart.getResource() != null && resources.size() != 0) {
 				
 				// Die Resource der Cart
-				String resourceType = cart.getResource().getDescription();
+				Resource resourceCart = cart.getResource();
 				
-				for (Resource resource : resources) {
-					if (resourceType == "Gold" && resource.getDescription() == "Coal" /* && ich will Kohle */) {
+				for (Resource resourceTrainstation : resources) {
+					if (resourceCart instanceof Gold && resourceTrainstation instanceof Coal /* && ich will Kohle */) {
 						// 1 Gold : 1 Kohle
 						Resource r = cart.getResource();
 						cart.removeResourceFromCart();
-						resources.remove(resource);
+						resources.remove(resourceTrainstation);
 						resources.add(r);
-						cart.loadResourceOntoCart(resource);
+						cart.loadResourceOntoCart(resourceTrainstation);
 						
-						notifyResourceExchanged(resourceType);
-						
-						// Playerkonto aktualisieren
-						player.removeGold(1);
-						player.addCoal(1);
+						notifyResourceExchanged(resourceCart.getDescription());
 					}
-					if (resourceType == "Coal" && resource.getDescription() == "Gold" /* && ich will Gold */) {
+					if (resourceCart instanceof Coal && resourceTrainstation instanceof Gold /* && ich will Gold */) {
 						// 3 Kohle : 1 Gold
 						if (carts.size() >= 3 /* && 3x Coal */) {
 							for (Cart c : carts) {
@@ -120,17 +114,13 @@ public class Publictrainstation extends Trainstation {
 									resources.add(r);
 								}
 							}
-							resources.remove(resource);
-							cart.loadResourceOntoCart(resource);
+							resources.remove(resourceTrainstation);
+							cart.loadResourceOntoCart(resourceTrainstation);
 							
-							notifyResourceExchanged(resourceType);
-							
-							// Playerkonto aktualisieren
-							player.removeCoal(3);
-							player.addGold(1);
+							notifyResourceExchanged(resourceCart.getDescription());
 						}
 					}
-					if (resourceType == "Gold" /* && ich will Punkte */) {
+					if (resourceCart instanceof Gold && resourceTrainstation instanceof PointContainer /* && ich will Punkte */) {
 						// 2 Gold : 1 Punkte
 						if (carts.size() >= 2 /* && 2x Gold */) {
 							for (Cart c : carts) {
@@ -140,13 +130,10 @@ public class Publictrainstation extends Trainstation {
 									resources.add(r);
 								}
 							}
-							// Wie werden Punkte in Trainstation gehändelt?
+							resources.remove(resourceTrainstation);
+							cart.loadResourceOntoCart(resourceTrainstation);
 							
-							notifyResourceExchanged(resourceType);
-							
-							//Playerkonto aktualisieren
-							player.removeGold(2);
-							player.addPoints(1);
+							notifyResourceExchanged(resourceCart.getDescription());
 						}
 					}
 				}
