@@ -196,16 +196,6 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         return railSectionList;
     }
 
-    public RailSection getActivDirection() {
-        for (RailSection railSection : railSectionList) {
-            if(railSection.getRailSectionStatus() == RailSectionStatus.ACTIVE){
-                return railSection;
-            }
-        }
-	    return railSectionList.get(0);
-    }
-
-
     public UUID getTrainstationId() {
         return trainstationId;
     }
@@ -300,6 +290,16 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         }
 
         return result;
+    }
+
+    public List <Compass> getAllCompasNodesOfRailSections(){
+        List <Compass> allNodes =  new ArrayList<Compass>();
+        for (RailSection railSection: railSectionList) {
+            for (Compass compass : railSection.getNodes()) {
+                allNodes.add(compass);
+            }
+        }
+        return allNodes;
     }
 
     @Override
