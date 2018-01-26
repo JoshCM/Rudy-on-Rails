@@ -35,7 +35,6 @@ namespace RoRClient.Commands.Game.Update
 
             cart.UpdateOnboardResource(null);
            
-            cart.updateOnboardResourceImagePath(null);
         }
     }
 }

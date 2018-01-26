@@ -150,11 +150,13 @@ public abstract class Loco extends TickableGameObject {
 
 		Cart actCart = null;
 		Compass tempDirection;
-		// beim R�ckw�rtsfahren ist nat�rlich die letzte Cart vorne, also bewegen wir
+		// beim R�ckw�rtsfahren ist nat�rlich die letzte Cart vorne, also bewegen
+		// wir
 		// erst die Carts und dann nach der for-Schleife den Zuch
 		for (int i = carts.size() - 1; i >= 0; i--) {
 			actCart = carts.get(i);
-			// Wenn von Vorw�rts in R�ckw�rts ge�ndert wird muss die Drivingdirection
+			// Wenn von Vorw�rts in R�ckw�rts ge�ndert wird muss die
+			// Drivingdirection
 			// erstmal umgedreht werden.
 			if (initial) {
 				tempDirection = actCart.getRail().getExitDirection(actCart.getDrivingDirection());
@@ -171,31 +173,16 @@ public abstract class Loco extends TickableGameObject {
 				cart.setCurrentLocoId(this.getId());
 				nextRail.setPlaceableOnRail(null);
 				this.speed = 0;
-				if (initial) {// Wenn noch nie Vorw�rtsgefahren wurde und direkt beim start r�ckw�rts gefahren
+				if (initial) {// Wenn noch nie Vorw�rtsgefahren wurde und direkt beim start r�ckw�rts
+								// gefahren
 								// wird muss die Driving direction ge�ndert werden
 					this.drivingDirection = this.rail
 							.getExitDirection(getDirectionNegation(this.rail.getExitDirection(this.drivingDirection)));
 				}
-				if (nextRail instanceof Rail) { //Zug soll nur fahren, wenn das nextRail auch wirklich ein Rail ist
-					Compass newDrivingDirection = nextRail.getExitDirection(getDirectionNegation(tempDirection));
-					if (nextRail.hasExitDirection(getDirectionNegation(tempDirection))) {
-						actCart.setDrivingDirection(newDrivingDirection);
-						actCart.setRail(nextRail);
-						actCart.updateSquare(this.map.getSquare(nextRail.getXPos(), nextRail.getYPos()));
-						actCart.notifyUpdatedCart();
-					} else {
-						setSpeedAndNotifySpeedChanged(0);
-						break;
-					}
-				} else {
-					setSpeedAndNotifySpeedChanged(0);
-					break;
-				}
-			} else {
-				setSpeedAndNotifySpeedChanged(0);
+				notifyCartToLocoAdded(cart);
+				notifySpeedChanged();
 				break;
 			}
-
 			if (nextRail instanceof Rail) {// Wenn das N�chste Schienenst�ck leer ist soll der zu anhalten
 				Compass newDrivingDirection = nextRail.getExitDirection(getDirectionNegation(tempDirection));
 
@@ -208,8 +195,10 @@ public abstract class Loco extends TickableGameObject {
 				break;
 			}
 		}
-		if(this.speed != 0) {//Wenn das n�chste schienenst�ck der Cart leer ist darf der Zug nat�rlich auch nicht weiter d�sen
-			if(initial)
+
+		if (this.speed != 0) {// Wenn das n�chste schienenst�ck der Cart leer ist darf der Zug nat�rlich
+								// auch nicht weiter d�sen
+			if (initial)
 				tempDirection = this.rail.getExitDirection(this.drivingDirection);
 			else
 				tempDirection = this.drivingDirection;
