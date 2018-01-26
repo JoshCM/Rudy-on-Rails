@@ -33,11 +33,13 @@ namespace RoRClient.Models.Game
             {
                 return coalCount;
             }
-
             set
             {
-                this.coalCount = value;
-                NotifyPropertyChanged("CoalCount");
+                if(coalCount != value)
+                {
+                    this.coalCount = value;
+                    NotifyPropertyChanged("CoalCount");
+                }
             }
         }
 
@@ -47,11 +49,13 @@ namespace RoRClient.Models.Game
             {
                 return goldCount;
             }
-
             set
             {
-                this.goldCount = value;
-                NotifyPropertyChanged("GoldCount");
+                if (goldCount != value)
+                {
+                    this.goldCount = value;
+                    NotifyPropertyChanged("GoldCount");
+                }
             }
         }
 
@@ -61,11 +65,13 @@ namespace RoRClient.Models.Game
             {
                 return pointCount;
             }
-
             set
             {
-                this.pointCount = value;
-                NotifyPropertyChanged("PointCount");
+                if (pointCount != value)
+                {
+                    this.pointCount = value;
+                    NotifyPropertyChanged("PointCount");
+                }
             }
         }
 
