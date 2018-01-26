@@ -7,10 +7,6 @@
              xmlns:converter="clr-namespace:RoRClient.BindingConverter"
              mc:Ignorable="d" 
              d:DesignHeight="225" d:DesignWidth="800" Background="#510404" BorderBrush="White" BorderThickness="5" Focusable="True">
-    <UserControl.InputBindings>
-        <KeyBinding Key="E" Command="{Binding OnKeyDownHandler}" CommandParameter="E"/>
-        <KeyBinding Key="Tab" Command="{Binding OnKeyDownHandler}" CommandParameter="Tab"/>
-    </UserControl.InputBindings>
 
     <UserControl.Resources>
         <ResourceDictionary>

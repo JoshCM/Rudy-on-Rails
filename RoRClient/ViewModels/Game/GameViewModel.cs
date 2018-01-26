@@ -19,6 +19,7 @@ namespace RoRClient.ViewModels.Game
         private GameStatusViewModel gameStatusViewModel;
         private GameInteractionsViewModel gameInteractionsViewModel;
         private TopMenuViewModel topMenuViewModel;
+        private ScoreboardViewModel scoreboardViewModel;
 
         #region Properties
         public MapGameViewModel MapGameViewModel
@@ -45,6 +46,11 @@ namespace RoRClient.ViewModels.Game
         }
         #endregion
 
+        public ScoreboardViewModel ScoreboardViewModel
+        {
+            get { return scoreboardViewModel; }
+        }
+
         public GameViewModel(UIState uiState, TaskFactory taskFactory)
         {
             this.uiState = uiState;
@@ -52,6 +58,7 @@ namespace RoRClient.ViewModels.Game
             gameInteractionsViewModel = new GameInteractionsViewModel(taskFactory, mapGameViewModel);
             gameStatusViewModel = new GameStatusViewModel();
             topMenuViewModel = new TopMenuViewModel();
+            scoreboardViewModel = new ScoreboardViewModel();
             mapGameViewModel.GameInteractionsViewModel = gameInteractionsViewModel;
             GameSession.GetInstance().PropertyChanged += OnWinningPlayerChanged;
             ViewConstants.Init();
@@ -67,19 +74,5 @@ namespace RoRClient.ViewModels.Game
                 }
             }
         }
-
-        public void OnKeyDownHandler(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.E)
-            {
-                MessageBox.Show("Du hast E gedrückt!", "Knopf gedrückt");
-            }
-
-            if (e.Key == Key.Tab)
-            {
-                MessageBox.Show("Du hast TAB gedrückt!", "Knopf gedrückt");
-            }
-        }
-
     }
 }

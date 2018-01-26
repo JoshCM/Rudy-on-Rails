@@ -18,6 +18,7 @@
     <Window.InputBindings>
         <KeyBinding Command="{Binding ZoomInCommand}" Key="OemPlus"></KeyBinding>
         <KeyBinding Command="{Binding ZoomOutCommand}" Key="OemMinus"></KeyBinding>
+        <KeyBinding Command="{Binding ToggleScoreboardCommand}" Key="Tab"></KeyBinding>
     </Window.InputBindings>
     <Window.Resources>
         <DataTemplate x:Name="EditorTemplate" DataType="{x:Type vme:EditorViewModel}">

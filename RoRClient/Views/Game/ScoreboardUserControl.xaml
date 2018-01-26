@@ -3,24 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:RoRClient.Views.Game"
+             xmlns:game="clr-namespace:RoRClient.ViewModels.Game"
+             xmlns:session="clr-namespace:RoRClient.Models.Session"
+             x:Name="scoreboardUserControl"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="200"
              Background="Transparent">
+    <UserControl.Resources>
+        <game:ScoreboardViewModel x:Key="ScoreboardViewModel" />
+    </UserControl.Resources>
     <Grid>
-        <Grid Background="White" Margin="10" Opacity="0.9">
-
-            <ListBox x:Name="GamePlayersListBox" ItemsSource="{Binding LobbyModel.GameInfos}" FontFamily="Source Sans Pro" FontSize="20" Margin="15" Background="Blue" Opacity="0.7">
+        <Grid x:Name="ScoreboardGrid"  Background="White" Opacity="0.9" Margin="10">
+            <ListBox Width="200"  
+                     ItemsSource="{Binding ScoreboardViewModel.PlayerList}"   
+                     IsSynchronizedWithCurrentItem="True">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel.Resources>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Margin" Value="10,10,0,0" />
-                                </Style>
-                            </StackPanel.Resources>
-                            <TextBlock Text="{Binding Player.Name}" />
-                            <TextBlock>SCORE HERE</TextBlock>
+                        <StackPanel>
+                            <TextBlock Foreground="Black" Text="{Binding Name}" />
+                            <TextBlock Foreground="Black" Text="{Binding CoalCount}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

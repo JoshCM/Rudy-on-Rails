@@ -4,13 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:game="clr-namespace:RoRClient.Views.Game"
+             xmlns:vm="clr-namespace:RoRClient.ViewModels.Game"
              mc:Ignorable="d"
              d:DesignHeight="900" d:DesignWidth="1600" Background="Gray">
-    <UserControl.InputBindings>
-        
-    </UserControl.InputBindings>
-
-
+    <UserControl.Resources>
+        <vm:ScoreboardViewModel x:Key="ScoreboardViewModel"/>
+    </UserControl.Resources>
 
     <Grid x:Name="ContentGrid">
         <Grid.RowDefinitions>
@@ -44,6 +43,6 @@
         <game:TrainSpeedGameUserControl Grid.Row="2"
                                         Grid.Column="2"
                                         DataContext="{Binding MapGameViewModel}"/>
-        <game:ScoreboardUserControl Grid.Row="1" Grid.Column="2" Opacity="0.3"/>
+        <game:ScoreboardUserControl Grid.Row="1" Grid.Column="2" Opacity="{Binding ScoreboardViewModel.Opacity}" />
     </Grid>
 </UserControl>
