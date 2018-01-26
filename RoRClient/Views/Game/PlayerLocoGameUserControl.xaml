@@ -27,8 +27,8 @@
             </Image.RenderTransform>
         </Image>
         <Image gif:ImageBehavior.AnimatedSource="/RoRClient;component/Resources/Images/smoke.gif" 
-               Width="{Binding SquareDim, ElementName=locoGameUserControl}" 
-               Height="{Binding SquareDim, ElementName=locoGameUserControl}"
+               Width="{Binding ViewConstants.SquareDim, ElementName=locoGameUserControl}" 
+               Height="{Binding ViewConstants.SquareDim, ElementName=locoGameUserControl}"
                Stretch="Fill" RenderTransformOrigin="0.5, 0.5"
                Visibility="{Binding Path=Loco.ChangeSmokeVisibility, UpdateSourceTrigger=PropertyChanged}">
             <Image.RenderTransform>
@@ -38,8 +38,8 @@
             </Image.RenderTransform>
         </Image>
         <Image gif:ImageBehavior.AnimatedSource="/RoRClient;component/Resources/Images/explosion.gif" 
-               Width="{Binding SquareDim, ElementName=locoGameUserControl}" 
-               Height="{Binding SquareDim, ElementName=locoGameUserControl}"
+               Width="{Binding ViewConstants.SquareDim, ElementName=locoGameUserControl}" 
+               Height="{Binding ViewConstants.SquareDim, ElementName=locoGameUserControl}"
                Stretch="Fill" RenderTransformOrigin="0.5, 0.5"
                Visibility="{Binding Path=Loco.ChangeExplosionVisibility, UpdateSourceTrigger=PropertyChanged}">
         </Image>
