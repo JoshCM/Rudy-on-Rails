@@ -31,7 +31,6 @@ namespace RoRClient.Commands.Game.Update
             Loco crashedLoco = GameSession.GetInstance().GetLocoById(currentLocoId);
             Cart resourceDroppingCart = crashedLoco.GetCartById(cartId);
             resourceDroppingCart.UpdateOnboardResource(null);
-            resourceDroppingCart.updateOnboardResourceImagePath(null);
             Square square = session.Map.GetSquare(droppedToSquareX, droppedToSquareY);
 
             Type resourceType = Type.GetType(prefix + resourceName);
