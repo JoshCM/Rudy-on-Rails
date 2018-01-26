@@ -1,6 +1,7 @@
 package models.game;
 
 import exceptions.InvalidModelOperationException;
+import models.helper.CompassHelper;
 import models.session.GameSession;
 import models.session.GameSessionManager;
 import models.session.RoRSession;
