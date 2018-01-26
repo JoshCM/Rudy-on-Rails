@@ -13,6 +13,7 @@ namespace RoRClient.ViewModels
     public class ViewConstants : NotifyPropertyChangedBase
     {
         private static ViewConstants instance;
+        private TaskFactory taskFactory;
 
         private int squareDim;
         private int signalDimension;
@@ -123,6 +124,18 @@ namespace RoRClient.ViewModels
                     sensorDimension = value;
                     OnPropertyChanged("SensorDimension");
                 }
+            }
+        }
+
+        public TaskFactory TaskFactory
+        {
+            get
+            {
+                return taskFactory;
+            }
+            set
+            {
+                taskFactory = value;
             }
         }
     }

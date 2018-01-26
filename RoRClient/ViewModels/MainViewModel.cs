@@ -69,6 +69,7 @@ namespace RoRClient.ViewModels
         public MainViewModel()
         {
             taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            ViewConstants.TaskFactory = taskFactory;
             uiState.OnUiStateChanged += ChangeToView;
             uiState.State = "start";
         }

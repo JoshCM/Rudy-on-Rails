@@ -17,10 +17,15 @@ namespace RoRClient.Views.Game
         private const double speedFactor = 0.7;
         public LocoGameUserControl()
         {
-            ViewConstants.Instance.PropertyChanged += UpdatePositions;
+            ViewConstants.Instance.PropertyChanged += OnViewConstantsChanged;
         }
 
-        private void UpdatePositions(object sender, PropertyChangedEventArgs e)
+        private void OnViewConstantsChanged(object sender, PropertyChangedEventArgs e)
+        {
+            ViewConstants.Instance.TaskFactory.StartNew(() => UpdatePositions());
+        }
+
+        private void UpdatePositions()
         {
             BeginAnimation(RealXProperty, null);
             BeginAnimation(RealYProperty, null);
