@@ -238,10 +238,19 @@ namespace RoRClient.ViewModels.Game
         private void ExchangeResource()
         {
             MessageInformation messageInformation = new MessageInformation();
-            messageInformation.PutValue("resourcentausch", SelectedResource);
             messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
+            // TrainstaitionId muss noch mitgegeben werden
 
-            GameSession.GetInstance().QueueSender.SendMessage("ExchangeResource", messageInformation);
+            if (SelectedResource == "Gold zu Kohle tauschen")
+            {
+                GameSession.GetInstance().QueueSender.SendMessage("ExchangeGoldToCoal", messageInformation);
+            } else if (SelectedResource == "Kohle zu Gold tauschen")
+            {
+                GameSession.GetInstance().QueueSender.SendMessage("ExchangeCoalToGold", messageInformation);
+            } else if (SelectedResource == "Gold zu Punkten tauschen")
+            {
+                GameSession.GetInstance().QueueSender.SendMessage("ExchangeGoldToPoints", messageInformation);
+            }
         }
     }
 }
