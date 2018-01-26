@@ -15,12 +15,15 @@ import models.session.GameSessionManager;
 import models.session.RoRSession;
 
 public class Mine extends TickableGameObject implements PlaceableOnRail {
+	private final static int AMOUNT_OF_COAL_TO_LOAD = 15;
+	private final static int AMOUNT_OF_GOLD_TO_LOAD = 10;
+	private final long SEC_IN_NANO = 1000000000;
+	
 	private List<Resource> resources = new ArrayList<Resource>();
 	private UUID railId;
 	private Compass alignment;
 	private final int maxNumberOfResource = 10;
 	private long timeDeltaCounter = 0;// Summe der Zeit zwischen den Ticks
-	private final long SEC_IN_NANO = 1000000000;
 	private Resource res = null;
 	protected RoRSession session;
 	protected GameSession gameSession;
@@ -172,9 +175,9 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 				.getSquareById(getSquareId());
 		Random random = new Random();
 		if (random.nextFloat() <= 0.7) {
-			res = new Coal(this.sessionName, square);
+			res = new Coal(this.sessionName, square, AMOUNT_OF_COAL_TO_LOAD);
 		} else {
-			res = new Gold(this.sessionName, square);
+			res = new Gold(this.sessionName, square, AMOUNT_OF_GOLD_TO_LOAD);
 
 		}
 		return res;
