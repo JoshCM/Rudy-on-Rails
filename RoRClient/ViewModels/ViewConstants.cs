@@ -50,6 +50,7 @@ namespace RoRClient.ViewModels
                 {
                     squareDim = value;
                     OnPropertyChanged("SquareDim");
+                    UpdateValuesDependentOnSquareDim();
                 }
             }
         }
@@ -70,14 +71,18 @@ namespace RoRClient.ViewModels
             }
         }
 
-        internal void Init()
+        public void Init()
         {
             SquareDim = 50;
-            SignalDimension = squareDim / 5;
             UpperSignalPos = 4;
-            LowerSignalPos = squareDim - upperSignalPos - signalDimension;
-            SensorDimension = 28;
         }
+
+        public void UpdateValuesDependentOnSquareDim()
+        {
+            SignalDimension = squareDim / 5;
+            LowerSignalPos = squareDim - upperSignalPos - signalDimension;
+            SensorDimension = SquareDim / 2;
+        } 
 
         public int UpperSignalPos
         {
