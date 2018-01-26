@@ -11,12 +11,12 @@
                      Canvas.Top="{Binding RealY, ElementName=squareUserControl}"
                      Canvas.Left="{Binding RealX, ElementName=squareUserControl}"
                      >
-    <Canvas Width="{Binding SquareDim, ElementName=squareUserControl}"
-            Height="{Binding SquareDim, ElementName=squareUserControl}">
+    <Canvas Width="{Binding ViewConstants.SquareDim}"
+            Height="{Binding ViewConstants.SquareDim}">
 
         <Rectangle
-            Width="{Binding SquareDim, ElementName=squareUserControl}"
-            Height="{Binding SquareDim, ElementName=squareUserControl}"
+            Width="{Binding ViewConstants.SquareDim}"
+            Height="{Binding ViewConstants.SquareDim}"
             Fill="#f9f1df"
             Stroke="WHITE"
             StrokeThickness="1">

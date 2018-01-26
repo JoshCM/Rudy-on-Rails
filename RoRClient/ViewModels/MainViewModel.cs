@@ -6,6 +6,8 @@ using RoRClient.ViewModels.Game;
 using RoRClient.Models.Game;
 using System;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using RoRClient.ViewModels.Commands;
 
 namespace RoRClient.ViewModels
 {
@@ -67,8 +69,56 @@ namespace RoRClient.ViewModels
         public MainViewModel()
         {
             taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            ViewConstants.TaskFactory = taskFactory;
             uiState.OnUiStateChanged += ChangeToView;
             uiState.State = "start";
+        }
+
+        private ICommand zoomInCommand;
+        public ICommand ZoomInCommand
+        {
+            get
+            {
+                if (zoomInCommand == null)
+                {
+                    zoomInCommand = new ActionCommand(param => ZoomIn());
+                }
+                return zoomInCommand;
+            }
+        }
+
+        private bool IsInSession()
+        {
+            return uiState.State == "game" || uiState.State == "editor";
+        }
+
+        private void ZoomIn()
+        {
+            if (IsInSession())
+            {
+                ViewConstants.SquareDim += 20;
+            }
+        }
+
+        private ICommand zoomOutCommand;
+        public ICommand ZoomOutCommand
+        {
+            get
+            {
+                if (zoomOutCommand == null)
+                {
+                    zoomOutCommand = new ActionCommand(param => ZoomOut());
+                }
+                return zoomOutCommand;
+            }
+        }
+
+        private void ZoomOut()
+        {
+            if(IsInSession() && ViewConstants.SquareDim >= 20)
+            {
+                ViewConstants.SquareDim -= 20;
+            }
         }
     }
 }

@@ -21,6 +21,7 @@ namespace RoRClient.ViewModels.Lobby
 		private LobbyModel lobbyModel;
 		private EditorSession editorSession;
         private bool canStartEditor;
+        private bool editorIsNotStarted = true;
         private string selectedMapName;
 
         private ObservableCollection<PossibleMapSize> possibleMapSizes = new ObservableCollection<PossibleMapSize>();
@@ -136,6 +137,19 @@ namespace RoRClient.ViewModels.Lobby
             }
         }
 
+        public bool EditorIsNotStarted
+        {
+            get
+            {
+                return editorIsNotStarted;
+            }
+            set
+            {
+                editorIsNotStarted = value;
+                OnPropertyChanged("EditorIsNotStarted");
+            }
+        }
+
         public string SelectedMapName
         {
             get
@@ -211,6 +225,7 @@ namespace RoRClient.ViewModels.Lobby
 		{
 			if (EditorSession.GetInstance().OwnPlayer.IsHost)
 			{
+                EditorIsNotStarted = false;
 				MessageInformation messageInformation = new MessageInformation();
                 messageInformation.PutValue("mapSize", selectedPossibleMapSize.MapSize);
 				EditorSession.GetInstance().QueueSender.SendMessage("StartEditor", messageInformation);

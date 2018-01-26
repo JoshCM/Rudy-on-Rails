@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace RoRClient.Models.Game
 {
@@ -160,5 +161,13 @@ namespace RoRClient.Models.Game
             }
         }
         #endregion
+
+        public bool IsSwitch
+        {
+            get
+            {
+                return railSections.Where(x => x.Status == RailSectionStatus.INACTIVE).Count() >= 1;
+            }
+        }
     }
 }

@@ -102,7 +102,7 @@ public abstract class RoRSession extends ModelBase {
 		messageInfo.putValue("mapName", getMapName());
 		if(this instanceof GameSession) {
 			GameSession gameSession = (GameSession) this;	
-			int availablePlayers = MapManager.getAvailablePlayerSlots(getMapName());
+			int availablePlayers = MapManager.getAvailablePlayerSlotsByMapName(getMapName());
 			gameSession.setAvailablePlayerSlots(availablePlayers);
 			messageInfo.putValue("availablePlayerSlots", gameSession.getAvailablePlayerSlots());
 		

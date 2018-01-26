@@ -162,6 +162,7 @@
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Game\Delete\DeleteSensorCommand.cs" />
     <Compile Include="Commands\Game\Other\InitMapSizeCommand.cs" />
+    <Compile Include="Commands\Game\Other\RemoveResourceFromCartCommand.cs" />
     <Compile Include="Commands\Game\Other\SwitchSensorCommand.cs" />
     <Compile Include="Commands\Game\Other\PlaceSensorCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />
@@ -280,6 +281,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Lobby\StartViewModel.cs" />
     <Compile Include="ViewModels\Editor\SquareEditorViewModel.cs" />
+    <Compile Include="ViewModels\NotifyPropertyChangedBase.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\Editor\CanvasEditorViewModel.cs" />
     <Compile Include="ViewModels\Helper\INotifyPropertyChangedExtended.cs" />
