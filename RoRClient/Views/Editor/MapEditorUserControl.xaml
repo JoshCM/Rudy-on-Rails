@@ -13,11 +13,12 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Styles.xaml"/>    
+                <ResourceDictionary Source="../Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <converter:ObjectIsNullToBoolConverter  x:Key="ObjectIsNullToBoolConverter"/>
         </ResourceDictionary>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <converter:ObjectIsNullToBoolConverter  x:Key="ObjectIsNullToBoolConverter"/>
+
     </UserControl.Resources>
 
     <DockPanel>
