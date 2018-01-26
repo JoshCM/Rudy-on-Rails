@@ -14,18 +14,18 @@
         <converter:BooleanToSignalImagePathConverter x:Key="BooleanToSignalImagePathConverter"/>
         <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
-    <Canvas Width="{Binding SquareDim, ElementName=railUserControl}"
-            Height="{Binding SquareDim, ElementName=railUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=railUserControl}" 
-               Height="{Binding SquareDim, ElementName=railUserControl}" 
+    <Canvas Width="{Binding ViewConstants.SquareDim}"
+            Height="{Binding ViewConstants.SquareDim}">
+        <Image Width="{Binding ViewConstants.SquareDim}" 
+               Height="{Binding ViewConstants.SquareDim}" 
                Source="{Binding Rail.RailSections, Mode=OneWay, Converter={StaticResource RailSectionsToImagePathConverter}, ConverterParameter=inactive}">
             <Image.InputBindings>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding CreatePlaceableOnRailCommand}"/>
                 <MouseBinding MouseAction="RightClick" Command="{Binding SelectInteractiveGameObjectCommand}"/>
             </Image.InputBindings>
         </Image>
-        <Image Width="{Binding SquareDim, ElementName=railUserControl}" 
-               Height="{Binding SquareDim, ElementName=railUserControl}" 
+        <Image Width="{Binding ViewConstants.SquareDim}" 
+               Height="{Binding ViewConstants.SquareDim}" 
                Source="{Binding Rail.RailSections, Mode=OneWay, Converter={StaticResource RailSectionsToImagePathConverter}, ConverterParameter=active}">
             <Image.InputBindings>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding CreatePlaceableOnRailCommand}"/>
@@ -34,10 +34,10 @@
         </Image>
         <Image  x:Name="SignalNorth"
                 Visibility="{Binding Rail.Signals.Exists, Converter={StaticResource BoolToVisibilityConverter}}"
-                Canvas.Top="{Binding UpperSignalPos, ElementName=railUserControl}"
-                Canvas.Left="{Binding UpperSignalPos, ElementName=railUserControl}"
-                Height="{Binding SignalDimension, ElementName=railUserControl}"
-                Width="{Binding SignalDimension, ElementName=railUserControl}"
+                Canvas.Top="{Binding ViewConstants.UpperSignalPos}"
+                Canvas.Left="{Binding ViewConstants.UpperSignalPos}"
+                Height="{Binding ViewConstants.SignalDimension}"
+                Width="{Binding ViewConstants.SignalDimension}"
                 Source="{Binding Rail.Signals.NorthSignalActive, Converter={StaticResource BooleanToSignalImagePathConverter}}">
             <Image.LayoutTransform>
                 <TransformGroup>
@@ -47,10 +47,10 @@
         </Image>
         <Image  x:Name="SignalSouth"
                 Visibility="{Binding Rail.Signals.Exists, Converter={StaticResource BoolToVisibilityConverter}}"
-                Canvas.Top="{Binding LowerSignalPos, ElementName=railUserControl}"
-                Canvas.Left="{Binding LowerSignalPos, ElementName=railUserControl}"
-                Height="{Binding SignalDimension, ElementName=railUserControl}"
-                Width="{Binding SignalDimension, ElementName=railUserControl}"
+                Canvas.Top="{Binding ViewConstants.LowerSignalPos}"
+                Canvas.Left="{Binding ViewConstants.LowerSignalPos}"
+                Height="{Binding ViewConstants.SignalDimension}"
+                Width="{Binding ViewConstants.SignalDimension}"
                 Source="{Binding Rail.Signals.SouthSignalActive, Converter={StaticResource BooleanToSignalImagePathConverter}}">
             <Image.LayoutTransform>
                 <TransformGroup>
@@ -61,10 +61,10 @@
 
         <Image  x:Name="SignalEast"
                 Visibility="{Binding Rail.Signals.Exists, Converter={StaticResource BoolToVisibilityConverter}}"
-                Canvas.Top="{Binding UpperSignalPos, ElementName=railUserControl}"
-                Canvas.Left="{Binding LowerSignalPos, ElementName=railUserControl}"
-                Height="{Binding SignalDimension, ElementName=railUserControl}"
-                Width="{Binding SignalDimension, ElementName=railUserControl}"
+                Canvas.Top="{Binding ViewConstants.UpperSignalPos}"
+                Canvas.Left="{Binding ViewConstants.LowerSignalPos}"
+                Height="{Binding ViewConstants.SignalDimension}"
+                Width="{Binding ViewConstants.SignalDimension}"
                 Source="{Binding Rail.Signals.EastSignalActive, Converter={StaticResource BooleanToSignalImagePathConverter}}">
             <Image.LayoutTransform>
                 <TransformGroup>
@@ -75,10 +75,10 @@
 
         <Image  x:Name="SignalWest"
                 Visibility="{Binding Rail.Signals.Exists, Converter={StaticResource BoolToVisibilityConverter}}"
-                Canvas.Top="{Binding LowerSignalPos, ElementName=railUserControl}"
-                Canvas.Left="{Binding UpperSignalPos, ElementName=railUserControl}"
-                Height="{Binding SignalDimension, ElementName=railUserControl}"
-                Width="{Binding SignalDimension, ElementName=railUserControl}"
+                Canvas.Top="{Binding ViewConstants.LowerSignalPos}"
+                Canvas.Left="{Binding ViewConstants.UpperSignalPos}"
+                Height="{Binding ViewConstants.SignalDimension}"
+                Width="{Binding ViewConstants.SignalDimension}"
                 Source="{Binding Rail.Signals.WestSignalActive, Converter={StaticResource BooleanToSignalImagePathConverter}}">
             <Image.LayoutTransform>
                 <TransformGroup>

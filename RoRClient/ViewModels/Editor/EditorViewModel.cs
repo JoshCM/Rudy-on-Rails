@@ -55,6 +55,7 @@ namespace RoRClient.ViewModels.Editor
             mapViewModel = new MapEditorViewModel(toolbarViewModel, taskFactory);
             topMenuViewModel = new TopMenuViewModel();
             objectConfigurationViewModel = new ObjectConfigurationViewModel(mapViewModel);
+            ViewConstants.Init();
         }
     }
 }
