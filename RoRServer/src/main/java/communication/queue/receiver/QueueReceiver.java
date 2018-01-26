@@ -59,4 +59,12 @@ public class QueueReceiver implements MessageListener {
 			e.printStackTrace();
 		}
 	}
+	
+	public void stop() {
+		try {
+			consumer.close();
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
+	}
 }

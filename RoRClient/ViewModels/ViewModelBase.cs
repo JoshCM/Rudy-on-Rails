@@ -10,14 +10,15 @@ namespace RoRClient.ViewModels
     /// <summary>
     /// Base Klasse für ViewModels, damit alle das INotifyPropertyChanged Interface besitzen
     /// </summary>
-    public class ViewModelBase : INotifyPropertyChanged
+    public class ViewModelBase : NotifyPropertyChangedBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        public virtual void OnPropertyChanged(string propertyName)
+        private ViewConstants viewConstants;
+
+        public ViewConstants ViewConstants
         {
-            if (PropertyChanged != null)
+            get
             {
-                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                return ViewConstants.Instance;
             }
         }
     }

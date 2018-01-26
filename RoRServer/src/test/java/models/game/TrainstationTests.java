@@ -8,8 +8,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import commands.CommandCreator;
 import commands.base.Command;
-import commands.editor.CreateTrainstationCommand;
-import commands.editor.MoveTrainstationCommand;
+import commands.editor.CreatePlayertrainstationCommand;
+import commands.editor.MovePlayertrainstationCommand;
 import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
 import exceptions.NotMoveableException;
@@ -28,7 +28,7 @@ public class TrainstationTests {
 
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
-		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
+		CreatePlayertrainstationCommand command = new CreatePlayertrainstationCommand(session, messageInformation);
 
 		String commandName = command.getClass().getName();
 		Command createdCommand = null;
@@ -47,8 +47,8 @@ public class TrainstationTests {
 		initValidTrainstationCommand(x, y);
 		Square square = session.getMap().getSquare(x, y);
 		Assert.assertNotNull(square.getPlaceableOnSquare());
-		Assert.assertEquals(Trainstation.class, square.getPlaceableOnSquare().getClass());
-		List<UUID> railIds = ((Trainstation) square.getPlaceableOnSquare()).getTrainstationRailIds();
+		Assert.assertEquals(Playertrainstation.class, square.getPlaceableOnSquare().getClass());
+		List<UUID> railIds = ((Playertrainstation) square.getPlaceableOnSquare()).getTrainstationRailIds();
 		Assert.assertEquals(14, railIds.size());
 	}
 
@@ -61,7 +61,7 @@ public class TrainstationTests {
 
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
-		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
+		CreatePlayertrainstationCommand command = new CreatePlayertrainstationCommand(session, messageInformation);
 
 		String commandName = command.getClass().getName();
 		Command createdCommand = null;
@@ -87,9 +87,9 @@ public class TrainstationTests {
 		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "Player");
 		Square square = session.getMap().getSquare(trainstationX + 1, trainstationY);
-		square.setPlaceableOnSquare(new Rail(session.getDescription(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
+		square.setPlaceableOnSquare(new Rail(session.getSessionName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
-		CreateTrainstationCommand command = new CreateTrainstationCommand(session, messageInformation);
+		CreatePlayertrainstationCommand command = new CreatePlayertrainstationCommand(session, messageInformation);
 
 		String commandName = command.getClass().getName();
 		Command createdCommand = null;
@@ -209,7 +209,7 @@ public class TrainstationTests {
 		messageInformation.putValue("newYPos", movedTrainstationY);
 		messageInformation.putValue("id", createdTrainstation.getId());
 		
-		MoveTrainstationCommand command = new MoveTrainstationCommand(session, messageInformation);
+		MovePlayertrainstationCommand command = new MovePlayertrainstationCommand(session, messageInformation);
 
 		String commandName = command.getClass().getName();
 		Command moveCommand = null;
@@ -255,7 +255,7 @@ public class TrainstationTests {
 		messageInformation.putValue("newYPos", movedTrainstationY);
 		messageInformation.putValue("id", createdTrainstation.getId());
 		
-		MoveTrainstationCommand command = new MoveTrainstationCommand(session, messageInformation);
+		MovePlayertrainstationCommand command = new MovePlayertrainstationCommand(session, messageInformation);
 
 		String commandName = command.getClass().getName();
 		Command moveCommand = null;

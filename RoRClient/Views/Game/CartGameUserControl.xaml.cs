@@ -2,6 +2,7 @@
 using RoRClient.ViewModels.Game;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,9 +28,21 @@ namespace RoRClient.Views.Game
         public CartGameUserControl()
         {
             InitializeComponent();
-            SquareDim = ViewConstants.SQUARE_DIM;
+            ViewConstants.Instance.PropertyChanged += OnViewConstantsChanged;
         }
 
+        private void OnViewConstantsChanged(object sender, PropertyChangedEventArgs e)
+        {
+            ViewConstants.Instance.TaskFactory.StartNew(() => UpdatePositions());
+        }
+
+        private void UpdatePositions()
+        {
+            BeginAnimation(RealXProperty, null);
+            BeginAnimation(RealYProperty, null);
+            RealX = X * ViewConstants.Instance.SquareDim;
+            RealY = Y * ViewConstants.Instance.SquareDim;
+        }
 
         public int X
         {
@@ -51,9 +64,9 @@ namespace RoRClient.Views.Game
             double speedRatio = cartGameViewModel.Cart.Speed > 0 ? cartGameViewModel.Cart.Speed * speedFactor : 1;
             if(cartGameUserControl.RealX == 0)
             {
-                cartGameUserControl.RealX = cartGameViewModel.SquarePosX * ViewConstants.SQUARE_DIM;
+                cartGameUserControl.RealX = cartGameViewModel.SquarePosX * ViewConstants.Instance.SquareDim;
             }
-            cartGameUserControl.BeginAnimation(CartGameUserControl.RealXProperty, new Int32Animation { From = cartGameUserControl.RealX, To = cartGameUserControl.X * ViewConstants.SQUARE_DIM, SpeedRatio = speedRatio });
+            cartGameUserControl.BeginAnimation(CartGameUserControl.RealXProperty, new Int32Animation { From = cartGameUserControl.RealX, To = cartGameUserControl.X * ViewConstants.Instance.SquareDim, SpeedRatio = speedRatio });
         }
 
 
@@ -77,9 +90,9 @@ namespace RoRClient.Views.Game
             double speedRatio = cartGameViewModel.Cart.Speed > 0 ? cartGameViewModel.Cart.Speed * speedFactor : 1;
             if (cartGameUserControl.RealY == 0)
             {
-                cartGameUserControl.RealY = cartGameViewModel.SquarePosY * ViewConstants.SQUARE_DIM;
+                cartGameUserControl.RealY = cartGameViewModel.SquarePosY * ViewConstants.Instance.SquareDim;
             }
-            cartGameUserControl.BeginAnimation(CartGameUserControl.RealYProperty, new Int32Animation { From = cartGameUserControl.RealY, To = cartGameUserControl.Y * ViewConstants.SQUARE_DIM, SpeedRatio = speedRatio });
+            cartGameUserControl.BeginAnimation(CartGameUserControl.RealYProperty, new Int32Animation { From = cartGameUserControl.RealY, To = cartGameUserControl.Y * ViewConstants.Instance.SquareDim, SpeedRatio = speedRatio });
         }
 
         public int RealX
@@ -107,20 +120,6 @@ namespace RoRClient.Views.Game
             }
         }
         public static readonly DependencyProperty RealYProperty = DependencyProperty.Register("RealY", typeof(int), typeof(CartGameUserControl), new UIPropertyMetadata(0));
-
-        public int SquareDim
-        {
-            get
-            {
-                return (int)GetValue(SquareDimProperty);
-            }
-            set
-            {
-                SetValue(SquareDimProperty, value);
-            }
-        }
-        public static readonly DependencyProperty SquareDimProperty = DependencyProperty.Register("SquareDim", typeof(int), typeof(CartGameUserControl), new UIPropertyMetadata(0));
-
 
         public int RotationAngle
         {

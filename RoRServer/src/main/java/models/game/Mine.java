@@ -15,14 +15,16 @@ import models.session.GameSessionManager;
 import models.session.RoRSession;
 
 public class Mine extends TickableGameObject implements PlaceableOnRail {
+	private final static int AMOUNT_OF_COAL_TO_LOAD = 15;
+	private final static int AMOUNT_OF_GOLD_TO_LOAD = 10;
+	private final long SEC_IN_NANO = 1000000000;
+	
 	private List<Resource> resources = new ArrayList<Resource>();
 	private UUID railId;
 	private Compass alignment;
 	private final int maxNumberOfResource = 10;
 	private long timeDeltaCounter = 0;// Summe der Zeit zwischen den Ticks
-	private final long SEC_IN_NANO = 1000000000;
 	private Resource res = null;
-	private Square square;
 	protected RoRSession session;
 	protected GameSession gameSession;
 	int i = 1;
@@ -64,8 +66,7 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 	}
 
 	/**
-	 * Methode zum Drehen der Mine nach Links (Dreht die Rail darunter gleich
-	 * mit)
+	 * Methode zum Drehen der Mine nach Links (Dreht die Rail darunter gleich mit)
 	 */
 	public void rotateLeft() {
 		// Das Rail wird direkt mit verschoben
@@ -78,8 +79,7 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 	}
 
 	/**
-	 * Methode zum Drehen der Mine nach Rechts (Dreht die Rail darunter gleich
-	 * mit)
+	 * Methode zum Drehen der Mine nach Rechts (Dreht die Rail darunter gleich mit)
 	 */
 	public void rotateRight() {
 		// Das Rail wird direkt mit verschoben
@@ -125,7 +125,7 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 		result = prime * result + ((resources == null) ? 0 : resources.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public void specificUpdate() {
 		this.timeDeltaCounter += timeDeltaInNanoSeconds;
@@ -136,13 +136,12 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 				if (!(loco instanceof GhostLoco)){
 						List<Cart> carts = loco.getCarts();
 					for (Cart cart : carts) {
-						if (cart.getXPos() == this.getXPos() && cart.getYPos() == this.getYPos() && cart.getResource() == null && resources.size() != 0) {
+						if (cart.getXPos() == this.getXPos() && cart.getYPos() == this.getYPos()
+								&& cart.getResource() == null && resources.size() != 0) {
 
-							System.out.println("cart ist in mine");
 							cart.loadResourceOntoCart(resources.get(0));
-							notifyResourceLoadedOntoCart(loco, cart);
 
-							resources.remove(0);
+							removeResource();
 							break;
 						}
 					}
@@ -154,23 +153,23 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 			if (resources.size() < maxNumberOfResource) {
 				res = minedResource();
 				resources.add(res);
-				// log.info("res=" + res.getName()+i);
-				System.out.println("res=" + res.getSessionName() + i);
 				i += 1;
 			}
-
-			
 		}
 	}
 
-	private void notifyResourceLoadedOntoCart(Loco loco,Cart cart) {
-		MessageInformation message = new MessageInformation("UpdateResourceLoadedOntoCart");
-		message.putValue("Resource", resources.get(0).name);
-		message.putValue("LocoId", loco.getId());
-		message.putValue("CartId", cart.getId());
-		message.putValue("XPos", this.getXPos());
-		message.putValue("YPos", this.getYPos());
-		notifyChange(message);
+	private void removeResource() {
+		String resourceType = resources.get(0).getDescription();
+		resources.remove(0);
+		notifyResourceRemoved(resourceType);
+	}
+	
+	private void notifyResourceRemoved(String resourceType) {
+		MessageInformation messageInfo = new MessageInformation("RemoveResourceFromMine");
+		messageInfo.putValue("xPos", getXPos());
+		messageInfo.putValue("yPos", getYPos());
+		messageInfo.putValue("resourceType", resourceType);
+		notifyChange(messageInfo);
 	}
 
 	public Resource minedResource() {
@@ -178,9 +177,9 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 				.getSquareById(getSquareId());
 		Random random = new Random();
 		if (random.nextFloat() <= 0.7) {
-			res = new Coal(this.sessionName, square);
+			res = new Coal(this.sessionName, square, AMOUNT_OF_COAL_TO_LOAD);
 		} else {
-			res = new Gold(this.sessionName, square);
+			res = new Gold(this.sessionName, square, AMOUNT_OF_GOLD_TO_LOAD);
 
 		}
 		return res;
@@ -211,14 +210,6 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 	}
 
 	public UUID getRailId() {
-
 		return railId;
-
 	}
-
-	public void setSquare(Square newSquare) {
-		// TODO Auto-generated method stub
-		square = newSquare;
-	}
-
 }

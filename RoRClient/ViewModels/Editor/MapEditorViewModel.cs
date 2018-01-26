@@ -26,14 +26,14 @@ namespace RoRClient.ViewModels.Editor
 
         private CanvasEditorViewModel _previousSelectEditorCanvasViewModel;
 
-        public MapEditorViewModel(ToolbarViewModel toolbarViewModel)
+        public MapEditorViewModel(ToolbarViewModel toolbarViewModel, TaskFactory taskFactory)
         {
             this.toolbarViewModel = toolbarViewModel;
-            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             map = EditorSession.GetInstance().Map;
-            InitSquares();
-            MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
-            MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+            toolbarViewModel.PropertyChanged += OnSelectedToolChanged;
+            this.taskFactory = taskFactory;
+            EditorSession.GetInstance().PropertyChanged += OnEditorSessionChanged;
+            ViewConstants.PropertyChanged += OnViewConstantsChanged;
         }
 
         public CanvasEditorViewModel PreviousSelectedEditorCanvasViewModel
@@ -59,6 +59,10 @@ namespace RoRClient.ViewModels.Editor
             {
                 _selectedEditorCanvasViewModel = value;
                 OnPropertyChanged("SelectedEditorCanvasViewModel");
+                if(_selectedEditorCanvasViewModel == null)
+                {
+                    IsQuickNavigationVisible = false;
+                }
             }
         }
 
@@ -132,28 +136,6 @@ namespace RoRClient.ViewModels.Editor
                 squareViewModel.MapViewModel = this;
                 squareViewModels.Add(squareViewModel);
                 square.PropertyChanged += OnSquarePropertyChanged;
-
-                /*
-                if (square.PlaceableOnSquare != null)
-                {
-                    switch (square.PlaceableOnSquare.GetType().Name)
-                    {
-                        case "Rail":
-                            Rail rail = (Rail)square.PlaceableOnSquare;
-                            RailEditorViewModel railViewModel = new RailEditorViewModel(rail);
-                            railViewModel.ToolbarViewModel = toolbarViewModel;
-                            placeableOnSquareCollection.Add(railViewModel);
-                            rail.PropertyChanged += OnRailPropertyChanged;
-                            break;
-                        case "Trainstation":
-                            Trainstation trainstation = (Trainstation)square.PlaceableOnSquare;
-                            TrainstationEditorViewModel trainstationViewModel = new TrainstationEditorViewModel(trainstation);
-                            placeableOnSquareCollection.Add(trainstationViewModel);
-                            trainstation.PropertyChanged += OnTrainstationPropertyChanged;
-                            break;
-                    }
-                }
-                */
             }
         }
 
@@ -215,7 +197,14 @@ namespace RoRClient.ViewModels.Editor
                     taskFactory.StartNew(() => placeableOnRailCollection.Add(viewModel));
                 }
             }
+        }
 
+        private void OnSelectedToolChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "SelectedTool")
+            {
+                SelectedEditorCanvasViewModel = null;
+            }
         }
 
         private void OnTrainstationPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -381,9 +370,17 @@ namespace RoRClient.ViewModels.Editor
         /// </summary>
        private void ChangeSwitch()
         {
-            RailEditorViewModel railEditorViewModel = (RailEditorViewModel)SelectedEditorCanvasViewModel;
-            railEditorViewModel.ChangeSwitch();
+
+            if (SelectedEditorCanvasViewModel is RailEditorViewModel)
+            { 
+                RailEditorViewModel railEditorViewModel = (RailEditorViewModel)SelectedEditorCanvasViewModel;
+                if (railEditorViewModel != null)
+                {
+                    railEditorViewModel.ChangeSwitch();
+                }
+            }
         }
+
 
         /// <summary>
         /// Command für Delete erstellen
@@ -435,10 +432,27 @@ namespace RoRClient.ViewModels.Editor
         /// </summary>
         private void Move()
         {
-	        SelectedEditorCanvasViewModel?.Move();
+	        SelectedEditorCanvasViewModel.Move();
 
 	        // Quicknavigation nach dem Verschieben nicht mehr anzeigen
             IsQuickNavigationVisible = false;
+        }
+
+        private void OnEditorSessionChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Map")
+            {
+                map = EditorSession.GetInstance().Map;
+                InitSquares();
+                MapWidth = map.Squares.GetLength(0) * ViewConstants.SquareDim;
+                MapHeight = map.Squares.GetLength(1) * ViewConstants.SquareDim;
+            }
+        }
+
+        private void OnViewConstantsChanged(object sender, PropertyChangedEventArgs e)
+        {
+            MapWidth = map.Squares.GetLength(0) * ViewConstants.SquareDim;
+            MapHeight = map.Squares.GetLength(1) * ViewConstants.SquareDim;
         }
     }
 }

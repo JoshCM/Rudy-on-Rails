@@ -26,7 +26,7 @@ namespace RoRClient.Models.Session
 
         public RoRSession()
         {
-            map = new Map();
+            map = new Map(50);
         }
 
         public string Name
@@ -46,7 +46,6 @@ namespace RoRClient.Models.Session
             queueSender = new QueueSender(topicName);
         }
 
-
         public Map Map
         {
             get
@@ -56,6 +55,7 @@ namespace RoRClient.Models.Session
             set
             {
                 map = value;
+                NotifyPropertyChanged("Map");
             }
         }
 
@@ -110,24 +110,8 @@ namespace RoRClient.Models.Session
 			    if (mapName != value)
 			    {
 				    mapName = value;
-				    changeMapName();
 				    NotifyPropertyChanged("MapName");
 			    }
-		    }
-	    }
-
-	    /// <summary>
-	    /// Wenn der Player der Host der GameSession ist, dann wird die MapName-Änderung
-	    /// and den Server geschickt und über den Topic der Session an alle Clients der
-	    /// GameSession verteilt
-	    /// </summary>
-	    private void changeMapName()
-	    {
-		    if (OwnPlayer.IsHost)
-		    {
-			    MessageInformation messageInformation = new MessageInformation();
-			    messageInformation.PutValue("mapName", MapName);
-			    QueueSender.SendMessage("ChangeMapSelection", messageInformation);
 		    }
 	    }
 

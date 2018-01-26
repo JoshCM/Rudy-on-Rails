@@ -23,25 +23,47 @@ namespace RoRClient.ViewModels.Game
     {
         private CanvasGameViewModel gameCanvasViewModel;
         private TaskFactory taskFactory;
+        private GameInteractionsViewModel gameInteractionsViewModel;
 
-        public MapGameViewModel()
+        public MapGameViewModel(TaskFactory taskFactory)
         {
-            taskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            this.taskFactory = taskFactory;
             map = GameSession.GetInstance().Map;
-            InitSquares();
+            GameSession.GetInstance().PropertyChanged += OnGameSessionChanged;
+            ViewConstants.PropertyChanged += OnViewConstantsChanged;
+        }
 
-            GameSession.GetInstance().PropertyChanged += OnLocoAddedInGameSession;
-            //TO-DO: nur zum Testen
-            //CreateRandomRails();
-
-            MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
-            MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+        public GameInteractionsViewModel GameInteractionsViewModel
+        {
+            get
+            {
+                return gameInteractionsViewModel;
+            }
+            set
+            {
+                gameInteractionsViewModel = value;
+            }
         }
 
         public CanvasGameViewModel GameCanvasViewModel
         {
             get { return gameCanvasViewModel; }
             set { gameCanvasViewModel = value; }
+        }
+
+
+        private CanvasGameViewModel _selectedGameCanvasViewModel;
+        public CanvasGameViewModel SelectedGameCanvasViewModel
+        {
+            get
+            {
+                return _selectedGameCanvasViewModel;
+            }
+            set
+            {
+                _selectedGameCanvasViewModel = value;
+                OnPropertyChanged("SelectedGameCanvasViewModel");
+            }
         }
 
         private ObservableCollection<SquareGameViewModel> squareViewModels =
@@ -83,16 +105,20 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
-        private LocoGameViewModel ownLoco;
         public LocoGameViewModel OwnLoco
         {
             get
             {
                 foreach(CanvasGameViewModel canvasGameViewModel in locos)
                 {
-                    LocoGameViewModel locoViewModel = (LocoGameViewModel)canvasGameViewModel;
-                    if (locoViewModel.Loco.PlayerId == ClientConnection.GetInstance().ClientId)
-                        return locoViewModel;
+                    if(canvasGameViewModel is LocoGameViewModel)
+                    {
+                        LocoGameViewModel locoViewModel = (LocoGameViewModel)canvasGameViewModel;
+                        if (locoViewModel.Loco.PlayerId == ClientConnection.GetInstance().ClientId)
+                        {
+                            return locoViewModel;
+                        }
+                    }
                 }
                 return null;
             }
@@ -213,7 +239,7 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
-        private void OnLocoAddedInGameSession(object sender, PropertyChangedEventArgs e)
+        private void OnGameSessionChanged(object sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == "Locos")
             {
@@ -232,6 +258,19 @@ namespace RoRClient.ViewModels.Game
 
                 loco.PropertyChanged += OnCartAddedInLoco;
             }
+            else if(e.PropertyName == "Map")
+            {
+                map = GameSession.GetInstance().Map;
+                InitSquares();
+                MapWidth = map.Squares.GetLength(0) * ViewConstants.SquareDim;
+                MapHeight = map.Squares.GetLength(1) * ViewConstants.SquareDim;
+            }
+        }
+
+        private void OnViewConstantsChanged(object sender, PropertyChangedEventArgs e)
+        {
+            MapWidth = map.Squares.GetLength(0) * ViewConstants.SquareDim;
+            MapHeight = map.Squares.GetLength(1) * ViewConstants.SquareDim;
         }
 
         private void OnCartAddedInLoco(object sender, PropertyChangedEventArgs e)

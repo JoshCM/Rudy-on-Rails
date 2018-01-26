@@ -33,9 +33,14 @@
                                 <ve:RailEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
-                        <DataTemplate DataType="{x:Type vm:TrainstationEditorViewModel}">
+                        <DataTemplate DataType="{x:Type vm:PlayertrainstationEditorViewModel}">
                             <Canvas>
-                                <ve:TrainstationEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                                <ve:PlayertrainstationEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type vm:PublictrainstationEditorViewModel}">
+                            <Canvas>
+                                <ve:PublictrainstationEditorUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type vm:StockEditorViewModel}">
@@ -83,7 +88,7 @@
                                 Width="20" >
                             </Image>
                         </Button>
-                        <Button Command="{Binding ChangeSwitchCommand}">
+                        <Button Command="{Binding ChangeSwitchCommand}" >
                             <Image 
                                 Source="/RoRClient;component/Resources/Images/changeSwitch.png"
                                 Height="20" 

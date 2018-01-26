@@ -4,13 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RoRClient.Views.Lobby"
+             xmlns:converter="clr-namespace:RoRClient.BindingConverter"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1600">
     <UserControl.Resources>
-        <ResourceDictionary Source="../Styles.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        </ResourceDictionary>
     </UserControl.Resources>
-    
-    <DockPanel>
+
+    <DockPanel IsEnabled="{Binding EditorIsNotStarted}">
         <DockPanel.Background>
             <ImageBrush ImageSource="pack://application:,,,/Resources/Images/start_background.png"/>
         </DockPanel.Background>
@@ -45,7 +51,7 @@
             <Button x:Name="leaveEditorInfosButton" Command="{Binding LeaveEditorCommand}" Height="55" Width="55" FontSize="25" Background="#FF510404"  VerticalAlignment="Top" Margin="0,30,10,0" >
                 <Image Source="/RoRClient;component/Resources/Images/btn_back.png"></Image>
             </Button>
-            <Button x:Name="startEditor" Command="{Binding StartEditorCommand}"
+            <Button x:Name="startEditor" Command="{Binding StartEditorCommand}" Visibility="{Binding IsHost, Converter={StaticResource BooleanToVisibilityConverter}}"
                     Content="Editor starten" IsEnabled="{Binding CanStartEditor}" Style="{StaticResource DefaultButtonStyle}" VerticalAlignment="Top" Margin="10,30,10,0"/>
             <Button x:Name="refreshEditorInfosButton" Command="{Binding RefreshEditorInfosCommand}"
                     Content="Aktualisieren" Style="{StaticResource DefaultButtonStyle}" VerticalAlignment="Top" Margin="10,30,10,0"/>
@@ -54,7 +60,7 @@
 
         <StackPanel  Margin="100,40,250,0">
             <TextBlock Text="Zur Verfügung stehende Karten:" TextWrapping="Wrap" Height="40" Width="400" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" HorizontalAlignment="Left"/>
-            <ListBox DockPanel.Dock="Right" Height="230" Width="400" IsSynchronizedWithCurrentItem="True" x:Name="EditorMapsListBox" ItemsSource="{Binding LobbyModel.MapNames}" SelectedItem="{Binding Path=EditorSession.MapName, Mode=TwoWay}" IsEnabled="{Binding IsHost}" HorizontalAlignment="Left" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" >
+            <ListBox DockPanel.Dock="Right" Height="230" Width="400" IsSynchronizedWithCurrentItem="True" x:Name="EditorMapsListBox" ItemsSource="{Binding LobbyModel.MapNames}" SelectedItem="{Binding SelectedMapName, Mode=TwoWay}" IsEnabled="{Binding IsHost}" HorizontalAlignment="Left" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" >
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Style.Triggers>
@@ -79,6 +85,16 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <StackPanel Orientation="Horizontal" Margin="0 10 0 10" Visibility="{Binding IsHost, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <TextBlock Text="Mapgröße" Height="30" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Center" Margin="0 0 10 0"/>
+                <ComboBox IsEnabled="{Binding NewMapIsSelected}"
+                          Text="Wähle Script" Style="{StaticResource DefaultComboBoxStyle}" 
+                          ItemContainerStyle="{StaticResource DefaultComboBoxItem}" 
+                          ItemsSource="{Binding PossibleMapSizes}" 
+                          HorizontalAlignment="Left" DisplayMemberPath="Description" 
+                          SelectedValue="{Binding SelectedPossibleMapSize}"
+                          />
+            </StackPanel>
         </StackPanel>
     </DockPanel>
 </UserControl>

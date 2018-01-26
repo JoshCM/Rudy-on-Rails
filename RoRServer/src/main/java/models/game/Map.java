@@ -2,6 +2,7 @@ package models.game;
 
 import models.base.ModelBase;
 import models.helper.Validator;
+import persistent.MapManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,15 +19,16 @@ import exceptions.NotMoveableException;
 public class Map extends ModelBase {
 	private String name;
 	private Square squares[][];
-	private final int mapSize = 50;
+	private int mapSize;
 	private int availablePlayerSlots;
 
 	/**
 	 * Jedes Square auf der Map braucht einen Index, um jedem Objekt, das auf einem
 	 * Square platziert wird, ein eindeutiges Objekt zuzuordnen
 	 */
-	public Map(String sessionName) {
+	public Map(String sessionName, int mapSize) {
 		super(sessionName);
+		this.mapSize = mapSize;
 		squares = new Square[mapSize][mapSize];
 		
 		for(int x= 0; x < mapSize; x++) {
@@ -39,10 +41,10 @@ public class Map extends ModelBase {
 	
 	public void initAvailablePlayerSlots() {
 		removeAvailablePlayerSlots();
-		createAvailablePlayerSlots();
+		searchAvailablePlayerSlots();
 	}
 	
-	private void createAvailablePlayerSlots() {
+	private void searchAvailablePlayerSlots() {
 		for(Square[] squares : getSquares()) {
 			for(Square square : squares) {
 				if(square.getPlaceableOnSquare() instanceof Trainstation) {
@@ -68,7 +70,7 @@ public class Map extends ModelBase {
 		return mapSize;
 	}
 
-	public String getDescription() {
+	public String getName() {
 		return name;
 	}
 
@@ -120,6 +122,21 @@ public class Map extends ModelBase {
 		result = prime * result + mapSize;
 		result = prime * result + Arrays.deepHashCode(squares);
 		return result;
+	}
+	
+	/**
+	 * Holt das Placeable von Square oder Rail
+	 * @param id Id des Placeables
+	 * @return null, wenn Square leer ist
+	 */
+	public Placeable getPlaceableById(UUID id) {
+		
+		Placeable placeable = null;
+		placeable = getPlaceableOnSquareById(id);
+		if(placeable == null) {
+			placeable = getPlaceableOnRailById(id);
+		}
+		return placeable;
 	}
 
 	public PlaceableOnSquare getPlaceableOnSquareById(UUID id) {
@@ -275,18 +292,7 @@ public class Map extends ModelBase {
 				//The Crane likes to move it move it...
 				Crane crane = trainstation.getCrane();
 				Square newSquare = getTrainstationInteractiveGameObjectSquare(crane, trainstation, oldPlaceableOnSquareXPos, oldPlaceableOnSquareYPos);
-				System.out.println("newSquare ("+ newSquare.getXIndex() +"/"+newSquare.getYIndex()+")");
 				crane.moveCrane(newSquare);
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
 			}
 		} else {
 			throw new NotMoveableException(String.format("PlaceableOnSquare von %s ist nicht auf %s verschiebbar",
@@ -326,6 +332,12 @@ public class Map extends ModelBase {
 		messageInformation.putValue("oldYPos", oldSquare.getYIndex());
 		messageInformation.putValue("newXPos", newSquare.getXIndex());
 		messageInformation.putValue("newYPos", newSquare.getYIndex());
+		notifyChange(messageInformation);
+	}
+
+	public void notifySize() {
+		MessageInformation messageInformation = new MessageInformation("InitMapSize");
+		messageInformation.putValue("mapSize", mapSize);
 		notifyChange(messageInformation);
 	}
 }

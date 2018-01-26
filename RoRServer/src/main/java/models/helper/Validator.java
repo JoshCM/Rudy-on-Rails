@@ -5,8 +5,10 @@ import java.util.List;
 
 import models.game.Compass;
 import models.game.InteractiveGameObject;
+import models.game.Loco;
 import models.game.Map;
 import models.game.Rail;
+import models.game.Sensor;
 import models.game.Square;
 import models.game.Trainstation;
 
@@ -190,5 +192,31 @@ public class Validator {
 		}
 
 		return true;
+	}
+	
+	public static boolean checkLocoInRangeOfRail(Map map, Loco loco, Rail rail) {
+
+		
+		boolean locoInRangeOfRail = false;
+		
+		Square locoOnSquare = map.getSquareById(loco.getSquareId());
+		int locoXPos = locoOnSquare.getXIndex();
+		int locoYPos = locoOnSquare.getYIndex();
+		
+		int railXPos = rail.getXPos();
+		int railYPos = rail.getYPos();
+		
+		int allowedDistance = Sensor.DISTANCE_BETWEEN_LOCO_AND_SENSOR;
+		
+		int a = Math.abs(railXPos - locoXPos);
+		int b = Math.abs(railYPos - locoYPos);
+		int actualDistance = (int)Math.sqrt(a*a + b*b);
+		System.out.println("Distance: " + actualDistance);
+		
+		if (actualDistance <= allowedDistance) {
+			locoInRangeOfRail = true;
+		}
+
+		return locoInRangeOfRail;
 	}
 }

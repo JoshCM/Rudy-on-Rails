@@ -7,14 +7,11 @@ import models.session.RoRSession;
  * Klasse für Ressource Kohle
  */
 public class Gold extends Resource{
-	
-	public Gold(String sessionName, Square square) {
-		super(sessionName, square, "Gold");
+	public Gold(String sessionName, Square square, int quantity) {
+		super(sessionName, square, "Gold", quantity);
 	}
-
-	@Override
-	public PlaceableOnSquare loadFromMap(Square square, RoRSession session) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public Gold(String sessionName, int quantity) {
+		super(sessionName, "Gold", quantity);
 	}
 }

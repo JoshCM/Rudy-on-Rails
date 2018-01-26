@@ -29,9 +29,14 @@
                                 <vg:RailGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
-                        <DataTemplate DataType="{x:Type game:TrainstationGameViewModel}">
+                        <DataTemplate DataType="{x:Type game:PlayertrainstationGameViewModel}">
                             <Canvas>
-                                <vg:TrainstationGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                                <vg:PlayertrainstationGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type game:PublictrainstationGameViewModel}">
+                            <Canvas>
+                                <vg:PlayertrainstationGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type game:StockGameViewModel}">
@@ -47,6 +52,11 @@
                         <DataTemplate DataType="{x:Type game:CoalGameViewModel}">
                             <Canvas>
                                 <vg:CoalGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type game:PointContainerGameViewModel}">
+                            <Canvas>
+                                <vg:PointContainerGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.Resources>

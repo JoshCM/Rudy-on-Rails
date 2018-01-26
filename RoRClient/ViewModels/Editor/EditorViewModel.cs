@@ -48,13 +48,14 @@ namespace RoRClient.ViewModels.Editor
             }
         }
 
-        public EditorViewModel(UIState uiState)
+        public EditorViewModel(UIState uiState, TaskFactory taskFactory)
         {
             this.uiState = uiState;
             toolbarViewModel = new ToolbarViewModel();
-            mapViewModel = new MapEditorViewModel(toolbarViewModel);
+            mapViewModel = new MapEditorViewModel(toolbarViewModel, taskFactory);
             topMenuViewModel = new TopMenuViewModel();
             objectConfigurationViewModel = new ObjectConfigurationViewModel(mapViewModel);
+            ViewConstants.Init();
         }
     }
 }

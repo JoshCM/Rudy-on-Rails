@@ -10,10 +10,10 @@
                      Canvas.Top="{Binding RealY, ElementName=goldUserControl}"
                      Canvas.Left="{Binding RealX, ElementName=goldUserControl}">
 
-    <Canvas Width="{Binding SquareDim, ElementName=goldUserControl}"
-            Height="{Binding SquareDim, ElementName=goldUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=goldUserControl}" 
-               Height="{Binding SquareDim, ElementName=goldUserControl}" 
+    <Canvas Width="{Binding ViewConstants.SquareDim}"
+            Height="{Binding ViewConstants.SquareDim}">
+        <Image Width="{Binding ViewConstants.SquareDim}" 
+               Height="{Binding ViewConstants.SquareDim}" 
                Source="/RoRClient;component/Resources/Images/container_gold.png" Stretch="Fill">
         </Image>
     </Canvas>

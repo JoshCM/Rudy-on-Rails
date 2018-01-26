@@ -1,6 +1,9 @@
 package models.game;
 
 import exceptions.InvalidModelOperationException;
+import models.helper.CompassHelper;
+import models.session.GameSession;
+import models.session.GameSessionManager;
 import models.session.RoRSession;
 
 import java.util.UUID;
@@ -69,9 +72,21 @@ public class Cart extends TickableGameObject implements PlaceableOnRail {
 	public void loadResourceOntoCart(Resource resource) {
 		if (resource != null) {
 			this.resource = resource;
+			notifyResourceLoadedOntoCart();
 		} else {
 			throw new InvalidModelOperationException("Cart bereits beladen");
 		}
+	}
+	
+	private void notifyResourceLoadedOntoCart() {
+		MessageInformation message = new MessageInformation("UpdateResourceLoadedOntoCart");
+		message.putValue("resourceType", resource.getDescription());
+		message.putValue("resourceId", resource.getId());
+		message.putValue("locoId", currentLocoId);
+		message.putValue("cartId", getId());
+		message.putValue("xPos", this.getXPos());
+		message.putValue("yPos", this.getYPos());
+		notifyChange(message);
 	}
 	
 	/**
@@ -79,10 +94,18 @@ public class Cart extends TickableGameObject implements PlaceableOnRail {
 	 */
 	public void removeResourceFromCart() {
 		resource = null;
+		notifyRemoveResourceFromCart();
 	}
 	
 	public Resource getResource() {
 		return resource;
+	}
+	
+	public void notifyRemoveResourceFromCart() {
+		MessageInformation message = new MessageInformation("RemoveResourceFromCart");
+		message.putValue("locoId", currentLocoId);
+		message.putValue("cartId", getId());
+		notifyChange(message);
 	}
 	
 	/**
@@ -131,8 +154,6 @@ public class Cart extends TickableGameObject implements PlaceableOnRail {
 		notifyChange(messageInfo);
 	}
 
-
-
 	public Rail getRail() {
 		return rail;
 	}
@@ -143,5 +164,67 @@ public class Cart extends TickableGameObject implements PlaceableOnRail {
 	
 	public UUID getCurrentLocoId() {
 		return currentLocoId;
+	}
+	
+	public UUID getPlayerId() {
+		return playerId;
+	}
+	
+	public Resource getResourceNextToCart(boolean right) {
+		PlaceableOnSquare placeableOnSquare = getPlaceableOnSquareNextToCart(right);
+		if(placeableOnSquare != null && placeableOnSquare instanceof Resource) {
+			return (Resource)placeableOnSquare;
+		}
+		return null;
+	}
+	
+	private Stock getStockNextToCart() {
+		PlaceableOnSquare placeableOnSquare = getPlaceableOnSquareNextToCart(true);
+		
+		// Wenn auf der rechten Seite nicht gefunden, dann prüfe auf der linken
+		if((placeableOnSquare == null) || (placeableOnSquare != null && !(placeableOnSquare instanceof Stock))) {
+			placeableOnSquare = getPlaceableOnSquareNextToCart(false);
+		}
+		
+		if (placeableOnSquare != null && placeableOnSquare instanceof Stock) {
+			return (Stock)placeableOnSquare;
+		}
+		return null;
+	}
+	
+	public boolean isNextToStock() {
+		return getStockNextToCart() != null;
+	}
+	
+	public UUID getPlayerIdFromStockNextToCart() {
+		Stock stock = getStockNextToCart();
+		if (stock != null) {
+			GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(sessionName);
+			Map map = gameSession.getMap();
+			Trainstation trainstation = (Trainstation)map.getPlaceableOnSquareById(stock.getTrainstationId());
+		    return trainstation.getPlayerId();
+		}
+		return null;
+	}
+	
+	private PlaceableOnSquare getPlaceableOnSquareNextToCart(boolean right) {
+		int sideways = right ? 1 : -1;
+		int squarePosX = CompassHelper.getRealXForDirection(getDrivingDirection(), getXPos(),
+				getYPos(), sideways, 0);
+		int squarePosY = CompassHelper.getRealYForDirection(getDrivingDirection(), getXPos(),
+				getYPos(), sideways, 0);
+
+		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(sessionName);
+		Map map = gameSession.getMap();
+		
+		if (squarePosX <= map.getMapSize() && squarePosY <= map.getMapSize()) {
+			Square square = gameSession.getMap().getSquare(squarePosX, squarePosY);
+			
+			if(square.getPlaceableOnSquare() != null) {
+				return square.getPlaceableOnSquare();
+			}
+		}
+		
+		return null;
 	}
 }

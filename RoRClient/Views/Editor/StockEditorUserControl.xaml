@@ -13,9 +13,9 @@
     <UserControl.Resources>
         <converter:CompassToAngleConverter  x:Key="CompassToAngleConverter"/>
     </UserControl.Resources>
-    <Canvas Width="{Binding SquareDim, ElementName=stockEditorUserControl}"
-            Height="{Binding SquareDim, ElementName=stockEditorUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=stockEditorUserControl}" Height="{Binding SquareDim, ElementName=stockEditorUserControl}" Source="pack://application:,,,/Resources/Images/stock_container_1.png">
+    <Canvas Width="{Binding ViewConstants.SquareDim}"
+            Height="{Binding ViewConstants.SquareDim}">
+        <Image Width="{Binding ViewConstants.SquareDim}" Height="{Binding ViewConstants.SquareDim}" Source="pack://application:,,,/Resources/Images/stock_container_0.png">
             <Image.LayoutTransform>
                 <TransformGroup>
                     <RotateTransform Angle="{Binding Stock.Alignment, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" />
