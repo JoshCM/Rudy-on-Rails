@@ -1,5 +1,6 @@
 ﻿using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Game;
+using RoRClient.Models.Lobby;
 using RoRClient.Models.Session;
 using RoRClient.ViewModels.Commands;
 using RoRClient.ViewModels.Helper;
@@ -16,7 +17,7 @@ namespace RoRClient.ViewModels.Lobby
 	    private GameSession gameSession;
         private bool canStartGame;
         private bool gameIsNotStarted = true;
-        private string selectedMapName;
+        private MapInfo selectedMapInfo;
 
 		public GameLobbyViewModel(UIState uiState, LobbyModel lobbyModel)
         {
@@ -90,19 +91,19 @@ namespace RoRClient.ViewModels.Lobby
             }
         }
 
-        public string SelectedMapName
+        public MapInfo SelectedMapInfo
         {
             get
             {
-                return selectedMapName;
+                return selectedMapInfo;
             }
             set
             {
-                if(selectedMapName != value)
+                if(selectedMapInfo != value)
                 {
-                    selectedMapName = value;
+                    selectedMapInfo = value;
                     ChangeMapName();
-                    OnPropertyChanged("SelectedMapName");
+                    OnPropertyChanged("SelectedMapInfo");
                 }
             }
         }
@@ -117,7 +118,7 @@ namespace RoRClient.ViewModels.Lobby
             if (gameSession.OwnPlayer.IsHost)
             {
                 MessageInformation messageInformation = new MessageInformation();
-                messageInformation.PutValue("mapName", selectedMapName);
+                messageInformation.PutValue("mapName", selectedMapInfo.Name);
                 gameSession.QueueSender.SendMessage("ChangeMapSelection", messageInformation);
             }
         }
@@ -198,12 +199,12 @@ namespace RoRClient.ViewModels.Lobby
             {
                 if (IsHost)
                 {
-                    if (gameSession.MapName != "")
+                    if (gameSession.MapName != "" && gameSession.Players.Count <= lobbyModel.MapInfos.Count)
                         CanStartGame = true;
                 }
                 else
                 {
-                    SelectedMapName = gameSession.MapName;
+                    selectedMapInfo.Name = gameSession.MapName;
                 }
                    
             }
