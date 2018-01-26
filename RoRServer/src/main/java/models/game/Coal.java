@@ -15,10 +15,4 @@ public class Coal extends Resource {
 	public Coal(String sessionName) {
 		super(sessionName, "Coal");
 	}
-
-	@Override
-	public PlaceableOnSquare loadFromMap(Square square, RoRSession session) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

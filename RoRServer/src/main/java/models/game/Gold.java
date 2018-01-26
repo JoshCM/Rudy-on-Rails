@@ -14,10 +14,4 @@ public class Gold extends Resource{
 	public Gold(String sessionName) {
 		super(sessionName, "Gold");
 	}
-
-	@Override
-	public PlaceableOnSquare loadFromMap(Square square, RoRSession session) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

@@ -16,7 +16,6 @@ namespace RoRClient.Commands.Base
         Guid trainstationId;
         private int xPos;
         private int yPos;
-        List<Resource> resources;
 
         /// <summary>
         /// Setzt den Stock einer Trainstation

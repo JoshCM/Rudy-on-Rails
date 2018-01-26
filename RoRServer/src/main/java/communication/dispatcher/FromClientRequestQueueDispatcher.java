@@ -163,8 +163,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 			sendErrorMessage(clientId, "SessionAlreadyStarted");
 			return;
 		}
-		
-		
+				
 		if (gameSession.isFull()) {
 			sendErrorMessage(clientId, "SessionAlreadyFull");
 			return;

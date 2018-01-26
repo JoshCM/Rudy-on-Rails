@@ -3,7 +3,7 @@ def init(proxy):
 	proxy.setPicksUpGoldContainerNextToRails(False)
 	proxy.setStealsGoldContainerFromOtherPlayers(True)
 	proxy.setStealsCoalContainerFromOtherPlayers(False)
-	proxy.changeSpeed(5)
+	proxy.changeSpeed(1)
 
 
 def update(proxy):
@@ -15,7 +15,7 @@ def update(proxy):
 	else:
 		# Halte, wenn ein Signal eingeschaltet ist
 		if "InactiveSignal" in objectsOnSquare:
-			proxy.changeSpeed(5)
+			proxy.changeSpeed(1)
 		# Fahre weiter, wenn ein Signal ausgeschaltet ist
 		elif "ActiveSignal" in objectsOnSquare:
 			proxy.changeSpeed(0)

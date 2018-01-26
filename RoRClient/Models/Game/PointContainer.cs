@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace RoRClient.Models.Game
 {
     /// <summary>
-    /// Klasse für Ressource Kohle
+    /// Klasse für Ressource Gold
     /// </summary>
-    public class Coal : Resource, IPlaceableOnSquare
+    public class PointContainer : Resource, IPlaceableOnSquare
     {
-        public Coal(Guid id, Square square) : base(id, square)
+        public PointContainer(Guid id, Square square) : base(id, square)
         {
             this.id = id;
         }

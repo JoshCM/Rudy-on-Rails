@@ -29,14 +29,7 @@ namespace RoRClient.ViewModels.Game
         {
             this.taskFactory = taskFactory;
             map = GameSession.GetInstance().Map;
-            InitSquares();
-
-            GameSession.GetInstance().PropertyChanged += OnLocoAddedInGameSession;
-            //TO-DO: nur zum Testen
-            //CreateRandomRails();
-
-            MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
-            MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+            GameSession.GetInstance().PropertyChanged += OnGameSessionChanged;
         }
 
         public GameInteractionsViewModel GameInteractionsViewModel
@@ -245,7 +238,7 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
-        private void OnLocoAddedInGameSession(object sender, PropertyChangedEventArgs e)
+        private void OnGameSessionChanged(object sender, PropertyChangedEventArgs e)
         {
             if(e.PropertyName == "Locos")
             {
@@ -263,6 +256,13 @@ namespace RoRClient.ViewModels.Game
                 }
 
                 loco.PropertyChanged += OnCartAddedInLoco;
+            }
+            else if(e.PropertyName == "Map")
+            {
+                map = GameSession.GetInstance().Map;
+                InitSquares();
+                MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
+                MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
             }
         }
 

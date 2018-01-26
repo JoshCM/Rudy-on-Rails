@@ -54,6 +54,11 @@
                                 <vg:CoalGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
                             </Canvas>
                         </DataTemplate>
+                        <DataTemplate DataType="{x:Type game:PointContainerGameViewModel}">
+                            <Canvas>
+                                <vg:PointContainerGameUserControl DataContext="{Binding}" X="{Binding SquarePosX}" Y="{Binding SquarePosY}"/>
+                            </Canvas>
+                        </DataTemplate>
                     </ItemsControl.Resources>
                 </ItemsControl>
 
