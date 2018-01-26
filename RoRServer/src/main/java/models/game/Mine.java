@@ -15,7 +15,7 @@ import models.session.GameSessionManager;
 import models.session.RoRSession;
 
 public class Mine extends TickableGameObject implements PlaceableOnRail {
-	private final static int AMOUNT_OF_COAL_TO_LOAD = 15;
+	private final static int AMOUNT_OF_COAL_TO_LOAD = 20;
 	private final static int AMOUNT_OF_GOLD_TO_LOAD = 10;
 	private final long SEC_IN_NANO = 1000000000;
 	

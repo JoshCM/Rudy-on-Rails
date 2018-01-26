@@ -13,6 +13,9 @@ namespace RoRClient.Commands.Game.Create
 {
     class CreatePlayertrainstationCommand : CreatePlayertrainstationCommandBase
     {
+
+        private int craneXPos;
+        private int craneYPos;
         /// <summary>
         /// Setzt die PlayerTrainstation und ihre zugehörigen Rails
         /// </summary>
@@ -21,6 +24,22 @@ namespace RoRClient.Commands.Game.Create
         public CreatePlayertrainstationCommand(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
             
+            craneXPos = messageInformation.GetValueAsInt("craneXPos");
+            craneYPos = messageInformation.GetValueAsInt("craneYPos");
+
+
+        }
+
+        public override void Execute() 
+        {
+            base.Execute();
+
+            Square craneSquare = session.Map.GetSquare(craneXPos, craneYPos);
+            Rail rail = (Rail)craneSquare.PlaceableOnSquare;
+            Crane crane = (Crane)rail.PlaceableOnRail;
+
+            trainstation.Crane = crane;
+
         }
     }
 }

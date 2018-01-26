@@ -34,7 +34,7 @@ namespace RoRClient.Commands.Game.Other
             }
             else if (resourceType == "Coal")
             {
-                mine.RemoveGold(mine.Coals.ElementAt(0));
+                mine.RemoveCoal(mine.Coals.ElementAt(0));
             }
         }
     }
