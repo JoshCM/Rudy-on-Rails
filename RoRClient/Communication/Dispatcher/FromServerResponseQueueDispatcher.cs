@@ -203,15 +203,17 @@ namespace RoRClient.Communication.Dispatcher
 		/// <param name="messageInformation"></param>
 		public void HandleReadMapInfos(MessageInformation messageInformation)
 	    {
-		    lobbyModel.ClearMapNames();
+		    lobbyModel.ClearMapInfos();
 
 		    GameSession gameSession = GameSession.GetInstance();
 
 		    List<JObject> mapInfoList = messageInformation.GetValueAsJObjectList("mapInfo");
 		    foreach (JObject obj in mapInfoList)
 		    {
-			    string mapName = obj.GetValue("mapName").ToString();
-			    lobbyModel.AddMapName(mapName);
+                string mapName = obj.GetValue("mapName").ToString();
+                int availablePlayerSlots = (int)obj.GetValue("availablePlayerSlots");
+                MapInfo mapInfo = new MapInfo(mapName, availablePlayerSlots);
+			    lobbyModel.AddMapInfo(mapInfo);
 		    }
 	    }
 

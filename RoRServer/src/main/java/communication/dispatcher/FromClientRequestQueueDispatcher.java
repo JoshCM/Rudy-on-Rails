@@ -298,6 +298,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		for (String mapName : mapNames) {
 			JsonObject json = new JsonObject();
 			json.addProperty("mapName", mapName);
+			json.addProperty("availablePlayerSlots", MapManager.getAvailablePlayerSlotsByMapName(mapName));
 			mapInfos.add(json);
 		}
 		
