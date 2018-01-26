@@ -8,12 +8,12 @@
              x:Name="scoreboardUserControl"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="200"
-             Background="Transparent">
+             Background="Transparent" IsHitTestVisible="False">
     <UserControl.Resources>
         <game:ScoreboardViewModel x:Key="ScoreboardViewModel" />
     </UserControl.Resources>
-    <Grid>
-        <Grid x:Name="ScoreboardGrid"  Background="White" Opacity="0.9" Margin="10">
+    <Grid IsHitTestVisible="False">
+        <Grid x:Name="ScoreboardGrid"  Background="White" Opacity="0.9" Margin="10" IsHitTestVisible="False">
             <ListBox Width="200"  
                      ItemsSource="{Binding ScoreboardViewModel.PlayerList}"   
                      IsSynchronizedWithCurrentItem="True">
