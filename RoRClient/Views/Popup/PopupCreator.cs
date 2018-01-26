@@ -18,5 +18,11 @@ namespace RoRClient.Views.Popup
             }
             return "";
         }
+
+       // public static void ShowRules()
+        //{
+        //    RulesPopup popup = new RulesPopup();
+          //  popup.ShowDialog();
+       // }
     }
 }

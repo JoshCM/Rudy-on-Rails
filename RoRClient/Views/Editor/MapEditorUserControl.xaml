@@ -11,12 +11,18 @@
         mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="1200">
 
     <UserControl.Resources>
-        <converter:ObjectIsNullToBoolConverter  x:Key="ObjectIsNullToBoolConverter"/>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <converter:ObjectIsNullToBoolConverter  x:Key="ObjectIsNullToBoolConverter"/>
+        </ResourceDictionary>
+
     </UserControl.Resources>
 
     <DockPanel>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Bottom">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Bottom" Template="{DynamicResource ScrollViewerControlTemplate}">
             <Canvas x:Name="thisCanvas" Background="White" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
                 <ItemsControl ItemsSource="{Binding SquareViewModels}">
                     <ItemsControl.ItemTemplate>
