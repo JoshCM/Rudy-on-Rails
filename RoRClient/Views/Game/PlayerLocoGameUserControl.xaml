@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:gif="http://wpfanimatedgif.codeplex.com"
-             xmlns:v="clr-namespace:RoRClient.Views"
              xmlns:local="clr-namespace:RoRClient.Views.Game"
              x:Name="locoGameUserControl"
              mc:Ignorable="d" 
