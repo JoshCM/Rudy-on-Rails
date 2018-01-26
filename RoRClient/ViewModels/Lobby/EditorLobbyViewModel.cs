@@ -11,6 +11,7 @@ using System.Windows.Input;
 using RoRClient.Communication.DataTransferObject;
 using RoRClient.ViewModels.Commands;
 using System.Collections.ObjectModel;
+using RoRClient.Models.Lobby;
 
 namespace RoRClient.ViewModels.Lobby
 {
@@ -22,7 +23,7 @@ namespace RoRClient.ViewModels.Lobby
 		private EditorSession editorSession;
         private bool canStartEditor;
         private bool editorIsNotStarted = true;
-        private string selectedMapName;
+        private MapInfo selectedMapInfo;
 
         private ObservableCollection<PossibleMapSize> possibleMapSizes = new ObservableCollection<PossibleMapSize>();
         private PossibleMapSize selectedPossibleMapSize;
@@ -150,21 +151,21 @@ namespace RoRClient.ViewModels.Lobby
             }
         }
 
-        public string SelectedMapName
+        public MapInfo SelectedMapInfo
         {
             get
             {
-                return selectedMapName;
+                return selectedMapInfo;
             }
             set
             {
-                if (selectedMapName != value)
+                if (selectedMapInfo != value)
                 {
-                    selectedMapName = value;
+                    selectedMapInfo = value;
                     ChangeMapName();
-                    OnPropertyChanged("SelectedMapName");
+                    OnPropertyChanged("SelectedMapInfo");
 
-                    if (selectedMapName != null && selectedMapName.StartsWith("#"))
+                    if (selectedMapInfo != null && selectedMapInfo.Name.StartsWith("#"))
                     {
                         NewMapIsSelected = true;
                     } else
@@ -185,7 +186,7 @@ namespace RoRClient.ViewModels.Lobby
             if (editorSession.OwnPlayer.IsHost)
             {
                 MessageInformation messageInformation = new MessageInformation();
-                messageInformation.PutValue("mapName", selectedMapName);
+                messageInformation.PutValue("mapName", selectedMapInfo.Name);
                 editorSession.QueueSender.SendMessage("ChangeMapSelection", messageInformation);
             }
         }

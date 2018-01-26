@@ -60,7 +60,7 @@
 
         <StackPanel  Margin="100,40,250,0">
             <TextBlock Text="Zur Verfügung stehende Karten:" TextWrapping="Wrap" Height="40" Width="400" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" HorizontalAlignment="Left"/>
-            <ListBox DockPanel.Dock="Right" Height="230" Width="400" IsSynchronizedWithCurrentItem="True" x:Name="EditorMapsListBox" ItemsSource="{Binding LobbyModel.MapNames}" SelectedItem="{Binding SelectedMapName, Mode=TwoWay}" IsEnabled="{Binding IsHost}" HorizontalAlignment="Left" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" >
+            <ListBox DockPanel.Dock="Right" Height="230" Width="400" IsSynchronizedWithCurrentItem="True" x:Name="EditorMapsListBox" ItemsSource="{Binding LobbyModel.MapInfos}" SelectedItem="{Binding SelectedMapInfo, Mode=TwoWay}" IsEnabled="{Binding IsHost}" HorizontalAlignment="Left" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" >
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Style.Triggers>
@@ -80,7 +80,7 @@
                                     <Setter Property="Margin" Value="10,10,0,0" />
                                 </Style>
                             </StackPanel.Resources>
-                            <TextBlock Text="{Binding}"/>
+                            <TextBlock Text="{Binding Name}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
