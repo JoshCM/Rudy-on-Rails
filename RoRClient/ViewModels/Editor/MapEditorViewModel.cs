@@ -443,8 +443,8 @@ namespace RoRClient.ViewModels.Editor
             {
                 map = EditorSession.GetInstance().Map;
                 InitSquares();
-                MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
-                MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+                MapWidth = map.Squares.GetLength(0) * ViewConstants.SquareDim;
+                MapHeight = map.Squares.GetLength(1) * ViewConstants.SquareDim;
             }
         }
     }

@@ -280,6 +280,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Lobby\StartViewModel.cs" />
     <Compile Include="ViewModels\Editor\SquareEditorViewModel.cs" />
+    <Compile Include="ViewModels\NotifyPropertyChangedBase.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\Editor\CanvasEditorViewModel.cs" />
     <Compile Include="ViewModels\Helper\INotifyPropertyChangedExtended.cs" />

@@ -13,7 +13,6 @@ namespace RoRClient.Views
     {
         public CanvasUserControl()
         {
-            SquareDim = ViewConstants.SQUARE_DIM;
         }
 
         public int X
@@ -32,7 +31,7 @@ namespace RoRClient.Views
         private static void OnXchanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             CanvasUserControl canvasUserControl = (CanvasUserControl)d;
-            canvasUserControl.RealX = canvasUserControl.X * ViewConstants.SQUARE_DIM;
+            canvasUserControl.RealX = canvasUserControl.X * ViewConstants.Instance.SquareDim;
         }
 
 
@@ -52,7 +51,7 @@ namespace RoRClient.Views
         private static void OnYchanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             CanvasUserControl canvasUserControl = (CanvasUserControl)d;
-            canvasUserControl.RealY = canvasUserControl.Y * ViewConstants.SQUARE_DIM;
+            canvasUserControl.RealY = canvasUserControl.Y * ViewConstants.Instance.SquareDim;
         }
 
         public int RealX
