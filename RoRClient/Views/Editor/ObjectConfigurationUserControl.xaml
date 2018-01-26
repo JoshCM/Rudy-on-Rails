@@ -10,7 +10,7 @@
              Background="MintCream" BorderBrush="#FF510404" BorderThickness="6">
     <UserControl.Resources>
         <DataTemplate x:Name="RailTemplate" DataType="{x:Type vme:RailConfigurationViewModel}">
-            <local:Sl DataContext="{Binding}"/>
+            <local:RailConfigurationUserControl DataContext="{Binding}"/>
         </DataTemplate>
     </UserControl.Resources>
 
