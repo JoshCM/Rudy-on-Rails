@@ -1,6 +1,8 @@
 package models.game;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.UUID;
 
 import communication.MessageInformation;
@@ -50,28 +52,27 @@ public class Loco extends TickableGameObject {
 				if (speed < 0) {
 					// Wenn Der Zug auf eine Weiche trifft beim  rückwärtsfahren, dann bleibt er
 					// stehen
-
 					if (!reversed) {// Wenn das erstemal nach dem Vorw�rts fahren wieder r�ckw�rts gefahren
 									// wird muss die Driving direction ge�ndert werden
-						if (!isTrainOnSwitch()) {
-							reversed = true;
-							reversedDrive(true);
-						} else {
-							setSpeedAndNotifySpeedChanged(0);
+						this.drivingDirection = this.rail.getExitDirection(this.drivingDirection);
+						for (Cart c : getCarts()) {
+							c.setDrivingDirection(c.getRail().getExitDirection(c.getDrivingDirection()));
 						}
+						reversed = true;
+						drive(true);
 					} else {
-						reversedDrive(false);
+						drive(true);
 					}
 
 				} else if (speed > 0) {
 					if (reversed) {
 						//Wenn das erstemal nach dem R�ckw�rts fahren wieder vorf�rts gefahren wird muss die Driving direction ge�ndert werden 
 						this.drivingDirection = this.rail.getExitDirection(this.drivingDirection);
-						for (int i = carts.size() - 1; i >= 0; i--) {
-							Cart c = carts.get(i);
+						for (Cart c : getCarts()) {
 							c.setDrivingDirection(c.getRail().getExitDirection(c.getDrivingDirection()));
 						}
 						reversed = false;
+						drive(false);
 					}
 					drive(false);
 				}
@@ -81,138 +82,70 @@ public class Loco extends TickableGameObject {
 
 	public void drive(boolean reversed){
 	    if(!reversed){
-            Rail nextRail = getNextRail(this.drivingDirection, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
+            Rail nextRail = getNextRail(this.drivingDirection, rail.getSquareFromGameSession());
             //Wenn keine nächste Rail existiert halte den Zug an
             //Andernfalls, wenn es eine Rail gibt sollte die auch einen Eingang haben zum rein fahren andernfalls stoppe
             if(nextRail != null &&nextRail instanceof Rail && nextRail.hasExitDirection(getDirectionNegation(this.drivingDirection))){
                 //Merke dir die aktuellen Loco Eigenschaften für die Carts
                 Rail currentLocoRail = this.rail;
                 Compass currentLocoDrivingDirection = this.drivingDirection;
-                UUID currentLocoSquareId = this.getSquareId();
-                moveLoco(nextRail);
-                moveCarts(currentLocoRail, currentLocoDrivingDirection, currentLocoSquareId);
+                
+                Compass nextDrivingDirection = nextRail.getExitDirection(getDirectionNegation(getDrivingDirection()));
+                
+                moveLoco(nextRail, nextDrivingDirection);
+                moveCarts(currentLocoRail, currentLocoDrivingDirection);
             }
             else{
                 setSpeedAndNotifySpeedChanged(0);
             }
         }
         else{
-
+        	Cart lastCart = getLastCart();
+        	Rail nextRail = getNextRail(lastCart.getDrivingDirection(), lastCart.getRail().getSquareFromGameSession());
+        	if(nextRail != null && nextRail.getPlaceableOnrail() instanceof Cart) {
+        		linkupCartToCarts(nextRail);//Cart ankoppeln
+        	}
+        	else if(nextRail != null && nextRail instanceof Rail && nextRail.hasExitDirection(getDirectionNegation(lastCart.getDrivingDirection()))) {
+        		
+        		//Die Eigenschaften der Ersten Cart (also direkt hinter der Loco) m�ssen gespeichert werden damit sie der Lok �bergeben werden k�nnen
+        		Compass firstCartDrivingDirection = getFirstCart().getDrivingDirection();
+        		Rail firstCartRail = getFirstCart().getRail();
+        		
+        		Compass nextDrivingDirection = nextRail.getExitDirection(getDirectionNegation(lastCart.getDrivingDirection()));
+        		moveCarts(nextRail, nextDrivingDirection);
+        		
+        		moveLoco(firstCartRail, firstCartDrivingDirection);
+        	}
+        	else {
+        		setSpeedAndNotifySpeedChanged(0);
+        	} 	
         }
     }
+	private void linkupCartToCarts(Rail nextRail) {
+		Cart cart = (Cart)nextRail.getPlaceableOnrail();
+		cart.setDrivingDirection(getLastCart().getDrivingDirection());
+		cart.setCurrentLocoId(getId());
+		carts.add(cart);
+		nextRail.setPlaceableOnRail(null);
+		setSpeedAndNotifySpeedChanged(0);
+		notifyCartToLocoAdded(cart);
+	}
+	
+    private Cart getLastCart() {
+		return getCarts().get(getCarts().size()-1);
+	}
+    
+    private Cart getFirstCart() {
+    	return getCarts().get(0);
+    }
 
-    public void moveLoco(Rail nextRail){
+	public void moveLoco(Rail nextRail, Compass nextDrivingDirection){
 	    //hole dir die DrivingDirection von dem nächste Rail und übergebe das Gegentei von der aktuellen Fahrrichtung
 	    this.drivingDirection = nextRail.getExitDirection(getDirectionNegation(getDrivingDirection()));
 	    this.rail = nextRail;
-	    this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
+	    this.updateSquare(this.rail.getSquareFromGameSession());
 	    notifyLocoPositionChanged();
     }
-
-	private boolean isTrainOnSwitch() {
-		if(this.rail instanceof Switch)
-			return true;
-		if(this.carts.get(carts.size()-1).getRail() instanceof Switch)
-			return false;
-		for(Cart c : this.getCarts()) {
-			Cart cart = c;
-			if(c.getRail() instanceof Switch)
-				return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Ueberfuehrt die Lok in das naechste moegliche Feld in Fahrtrichtung
-	 */
-	/*public void drive() {
-		Rail nextRail = getNextRail(this.drivingDirection,
-				this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-
-		//System.out.println(nextRail.hasExitDirection(getDirectionNegation(this.drivingDirection)));
-		if(nextRail != null && nextRail.hasExitDirection(getDirectionNegation(this.drivingDirection))) {
-			moveCarts(this.rail, this.drivingDirection);
-			this.drivingDirection = nextRail.getExitDirection(getDirectionNegation(this.drivingDirection));
-			this.rail = nextRail;
-			this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-			notifyLocoPositionChanged();
-		}
-		else {
-			setSpeedAndNotifySpeedChanged(0);
-		}
-	}*/
-	
-	/**
-	 * Zug f�hrt r�ckwerts(letzter Wagon f�hrt)
-	 * @param initial: Sagt ob der Zug grade von vorw�rts in R�ckw�rts 
-	 */
-	public void reversedDrive(boolean initial) {
-
-		Cart actCart = null;
-		Compass tempDirection;
-
-		for (int i = carts.size() - 1; i >= 0; i--) {
-			actCart = carts.get(i);
-			// Wenn von Vorwärts in Rückwärts geändert wird muss die
-			// Drivingdirection erstmal umgedreht werden.
-			if (initial) {
-				tempDirection = actCart.getRail().getExitDirection(actCart.getDrivingDirection());
-			} else {
-				tempDirection = actCart.getDrivingDirection();
-			}
-
-			Rail nextRail = getNextRail(tempDirection, this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
-
-			if (nextRail != null) {
-				if (nextRail.getPlaceableOnrail() instanceof Cart) {// Wenn eine Cart gefunden wird, also zum andocken
-					Cart cart = (Cart) nextRail.getPlaceableOnrail();
-					cart.setDrivingDirection(actCart.getDrivingDirection());
-					carts.add(cart);
-					cart.setCurrentLocoId(this.getId());
-					nextRail.setPlaceableOnRail(null);
-					setSpeedAndNotifySpeedChanged(0);
-					if (initial) {// Wenn noch nie Vorw�rtsgefahren wurde und direkt beim start r�ckw�rts
-									// gefahren wird muss die Driving direction ge�ndert werden
-						this.drivingDirection = this.rail.getExitDirection(
-								getDirectionNegation(this.rail.getExitDirection(this.drivingDirection)));
-					}
-					notifyCartToLocoAdded(cart);
-					break;
-				}
-				if (nextRail instanceof Rail) { //Zug soll nur fahren, wenn das nextRail auch wirklich ein Rail ist
-					Compass newDrivingDirection = nextRail.getExitDirection(getDirectionNegation(tempDirection));
-					if (nextRail.hasExitDirection(getDirectionNegation(tempDirection))) {
-						actCart.setDrivingDirection(newDrivingDirection);
-						actCart.setRail(nextRail);
-						actCart.updateSquare(this.map.getSquare(nextRail.getXPos(), nextRail.getYPos()));
-						actCart.notifyUpdatedCart();
-					} else {
-						setSpeedAndNotifySpeedChanged(0);
-						break;
-					}
-				} else {
-					setSpeedAndNotifySpeedChanged(0);
-					break;
-				}
-			} else {
-				setSpeedAndNotifySpeedChanged(0);
-				break;
-			}
-		}
-		if (this.speed != 0) {// Wenn das n�chste schienenst�ck der Cart leer ist darf der Zug nat�rlich
-								// auch nicht weiter d�sen
-			if (initial)
-				tempDirection = this.rail.getExitDirection(this.drivingDirection);
-			else
-				tempDirection = this.drivingDirection;
-
-			this.rail = getNextRail(tempDirection, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-			this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(tempDirection));
-			this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-			notifyLocoPositionChanged();
-		}
-	}
 	
 	private void setSpeedAndNotifySpeedChanged(int speed) {
 		this.speed = speed;
@@ -252,23 +185,33 @@ public class Loco extends TickableGameObject {
 	 * 
 	 * @param nextRail
 	 */
-	public void moveCarts(Rail nextRail, Compass nextDrivingDirection, UUID nextSquareId) {
-		for (Cart cart : carts) {
+	public void moveCarts(Rail nextRail, Compass nextDrivingDirection) {
+		
+		ArrayList<Cart> newCartList = new ArrayList<Cart>(carts); 
+		if(reversed) {
+			Collections.reverse(newCartList);
+			//newCartList.remove(newCartList.size()-1);
+		}		
+		Square nextSquare = nextRail.getSquareFromGameSession();
+		for (Cart cart : newCartList) {
 		    //Speichere die aktuellen Cart Eigenschaft für das nächste Cart
             Compass actDrivingDirection = cart.getDrivingDirection();
             Rail actRail = cart.getRail();
-            UUID actSquareId = cart.getSquareId();
+
             //Setze die neuen Cart Eigenschaften
-            cart.setSquareId(nextSquareId);
             cart.setRail(nextRail);
             cart.setDrivingDirection(nextDrivingDirection);
+            cart.updateSquare(nextSquare);
+
+            
             //Setze die neuen für Cart Eigenschaften für den nächsten Cart
             nextRail = actRail;
             nextDrivingDirection = actDrivingDirection;
-            nextSquareId = actSquareId;
+            nextSquare = actRail.getSquareFromGameSession();
+            
             //Update die Cart Eigenschaften
             cart.notifyUpdatedCart();
-		}
+		}	
 	}
 	
 	/**
