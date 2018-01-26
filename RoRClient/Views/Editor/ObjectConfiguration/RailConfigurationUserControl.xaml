@@ -36,11 +36,11 @@
             <TextBlock Text="Strafe bei rotem Signal" Margin="0 0 0 10" Style="{StaticResource DefaultTextBlockHeaderStyle}"/>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <ComboBox Margin="0 0 10 0" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" Height="24" Width="50" SelectedValue="{Binding SelectedPenalty}" SelectedValuePath="Content">
-                    <ComboBoxItem Content="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"  />
-                    <ComboBoxItem Content="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"  />
-                    <ComboBoxItem Content="15" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"  />
-                    <ComboBoxItem Content="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"  />
-                    <ComboBoxItem Content="30" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"  />
+                    <ComboBoxItem Content="5" FontSize="15"  />
+                    <ComboBoxItem Content="10" FontSize="15"  />
+                    <ComboBoxItem Content="15" FontSize="15"  />
+                    <ComboBoxItem Content="20" FontSize="15"  />
+                    <ComboBoxItem Content="30" FontSize="15"  />
                 </ComboBox>
                 <TextBlock Text="Gold" FontSize="14" VerticalAlignment="Center" Style="{StaticResource DefaultTextStyle}" />
             </StackPanel>
@@ -51,18 +51,18 @@
             <TextBlock Text="Kosten für das Umschalten" Margin="0 0 0 10" Style="{StaticResource DefaultTextBlockHeaderStyle}"/>
             <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                 <ComboBox Margin="0 0 10 0" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" Height="24" Width="50" SelectedValue="{Binding SelectedSwitchCost}" SelectedValuePath="Content">
-                    <ComboBoxItem Content="5"/>
-                    <ComboBoxItem Content="10"/>
-                    <ComboBoxItem Content="15"/>
-                    <ComboBoxItem Content="20"/>
-                    <ComboBoxItem Content="30"/>
+                    <ComboBoxItem Content="5" FontSize="15"/>
+                    <ComboBoxItem Content="10" FontSize="15"/>
+                    <ComboBoxItem Content="15" FontSize="15"/>
+                    <ComboBoxItem Content="20" FontSize="15"/>
+                    <ComboBoxItem Content="30" FontSize="15"/>
                 </ComboBox>
                 <TextBlock Text="Gold" FontSize="14" VerticalAlignment="Center" Style="{StaticResource DefaultTextStyle}"/>
             </StackPanel>
             <TextBlock TextWrapping="Wrap" Text="Wähle die Goldmenge für das Umschalten der Signale aus." Style="{StaticResource DefaultTextStyle}"/>
         </StackPanel>
 
-        <StackPanel Margin="20 20" VerticalAlignment="Bottom" >
+        <StackPanel Margin="20 0 20 20" VerticalAlignment="Bottom" >
             <Button Content="Übernehmen" Command="{Binding SaveSignalsConfigCommand}" Style="{StaticResource DefaultButtonStyle}" Width="150" Height="45" FontSize="18"/>
         </StackPanel>
     </StackPanel>
