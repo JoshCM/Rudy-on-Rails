@@ -86,13 +86,13 @@ public class GhostLoco extends Loco {
 					
 					if(stealPointContainerIfPossible && enemyPlayer.getPointCount() > 0) {
 						enemyPlayer.removePoints(STEALING_AMOUNT);
-						cart.loadResourceOntoCart(new PointContainer(getSessionName()));
+						cart.loadResourceOntoCart(new PointContainer(getSessionName(), STEALING_AMOUNT));
 					} else if(stealsGoldContainerFromOtherPlayers && enemyPlayer.getGoldCount() > 0) {
 						enemyPlayer.removeGold(STEALING_AMOUNT);
-						cart.loadResourceOntoCart(new Gold(getSessionName()));
+						cart.loadResourceOntoCart(new Gold(getSessionName(), STEALING_AMOUNT));
 					} else if(stealsCoalContainerFromOtherPlayers && enemyPlayer.getCoalCount() > 0) {
 						enemyPlayer.removeGold(STEALING_AMOUNT);
-						cart.loadResourceOntoCart(new Coal(getSessionName()));
+						cart.loadResourceOntoCart(new Coal(getSessionName(), STEALING_AMOUNT));
 					}
 				}
 			}
