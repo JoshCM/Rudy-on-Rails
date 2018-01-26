@@ -67,7 +67,7 @@ namespace RoRClient.ViewModels.Game
                 messageInformation.PutValue("posX", cartSpawnPointRail.Square.PosX);
                 messageInformation.PutValue("posY", cartSpawnPointRail.Square.PosY);
                 messageInformation.PutValue("compass", compass.ToString());
-                messageInformation.PutValue("playerId",ClientConnection.GetInstance().ClientId);
+                messageInformation.PutValue("trainstationId", trainstation.Id); 
                 gameSession.QueueSender.SendMessage("CreateCart", messageInformation);
             }
 

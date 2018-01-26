@@ -3,12 +3,14 @@ package models.game;
 import java.util.UUID;
 
 import communication.MessageInformation;
+import models.session.EditorSessionManager;
+import models.session.GameSession;
+import models.session.GameSessionManager;
 import models.session.RoRSession;
 
 public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	private UUID railId, trainstationId;
 	private Compass alignment;
-	
 
 	public Crane(String sessionName, Square square, UUID trainstationId, Compass alignment, UUID railId) {
 		super(sessionName, square);
@@ -44,12 +46,72 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		return newCrane;
 	}
 	
+	
+	/**
+	 * der Kran soll sich bewegen(linear) damit er die Container aufgabeln kann
+	 */
+	public void moveToTakeTheGoods(Loco loco, Trainstation trainstation) {
+		
+		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(getSessionName());
+		
+		int homeXPos = this.getXPos();
+		int homeYPos = this.getYPos();
+		
+		
+		for(Cart cart : loco.getCarts()) {
+		
+			if(cart.getResource() != null) {
+				updateCranePosition(gameSession.getMap().getSquare(cart.getXPos(), cart.getYPos()));
+				Resource resource = cart.unloadResourceFromCart();
+				
+				GamePlayer player = (GamePlayer) gameSession.getPlayerById(loco.getPlayerId());
+				
+				if(resource instanceof Gold) {
+					System.out.println("HALLO I BIMS 1 GOLD MIT: " + resource.quantity);
+					player.addGold(resource.quantity);
+				}else if(resource instanceof Coal){
+					System.out.println("HALLO I BIMS 1 KOHLE MIT: " + resource.quantity);
+					player.addCoal(resource.quantity);
+				} else {
+					player.addPoints(resource.quantity);
+				}
+			}
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		updateCranePosition(gameSession.getMap().getSquare(homeXPos,homeYPos));
+	}
+	
+
+	/**
+	 * Lagert die Resource, die sich auf einem Wagon befindet, in das Lager
+	 */
+	public void pickUpResourceToStock() {
+		
+	}
+	
 	public void moveCrane(Square newSquare) {
 		changeSquare(newSquare);
 //		NotifyCraneDeleted();
 		NotifyCraneMoved();
 	}
 	
+	/**
+	 * move Methode f�r den Spielmodus
+	 * @param newSquare
+	 */
+	public void updateCranePosition(Square newSquare) {
+		changeSquare(newSquare);
+		NotifyCraneUpdatePosition();
+		this.railId = ((Rail)newSquare.getPlaceableOnSquare()).getId();
+	}
+
 	public void deleteCrane() {
 		NotifyCraneDeleted();
 	}
@@ -85,6 +147,7 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		MessageInformation messageInfo = new MessageInformation("CreateCrane");
 		messageInfo.putValue("craneId", getId());
 		messageInfo.putValue("squareId", getSquareId());
+		messageInfo.putValue("trainstationId", this.trainstationId);
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
 		messageInfo.putValue("alignment", this.alignment.toString());
@@ -95,6 +158,14 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		MessageInformation messageInfo = new MessageInformation("MoveCrane");
 		messageInfo.putValue("newXPos", getXPos());
 		messageInfo.putValue("newYPos", getYPos());
+		notifyChange(messageInfo);
+	}
+	private void NotifyCraneUpdatePosition() {
+		MessageInformation messageInfo = new MessageInformation("UpdateCranePosition");
+		messageInfo.putValue("newXPos", getXPos());
+		messageInfo.putValue("newYPos", getYPos());
+		messageInfo.putValue("trainstationId",this.trainstationId);
+		messageInfo.putValue("railId", this.railId);
 		notifyChange(messageInfo);
 	}
 	

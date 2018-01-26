@@ -17,6 +17,9 @@
     <Canvas Width="{Binding ViewConstants.SquareDim}"
             Height="{Binding ViewConstants.SquareDim}">
         <Image Width="{Binding ViewConstants.SquareDim}" Height="{Binding ViewConstants.SquareDim}" Source="{Binding Stock, Converter={StaticResource PlayerToImagePathConverter}}">
+            <Image.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectedStockObjectCommand}"></MouseBinding>
+            </Image.InputBindings>
             <Image.LayoutTransform>
                 <TransformGroup>
                     <RotateTransform Angle="{Binding Stock.Alignment, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" />
