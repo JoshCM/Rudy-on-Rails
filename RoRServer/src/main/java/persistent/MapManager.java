@@ -110,7 +110,24 @@ public class MapManager {
 	public static void saveMap(Map map, String ending) {
 		String jsonMap = convertMapToJson(map);
 		log.info("Gespeicherte Map: " + jsonMap);
-		saveToFile(jsonMap, map.getName(), ending);
+		
+		String mapSizeDescription = getMapSizeDescriptionForMap(map);
+		String filename = map.getName() + " (" + mapSizeDescription+ ", " + map.getAvailablePlayerSlots() + " Spieler)";
+		saveToFile(jsonMap, filename, ending);
+	}
+
+	private static String getMapSizeDescriptionForMap(Map map) {
+		String mapSizeDescription = "";
+		if(map.getMapSize() <= 30) {
+			mapSizeDescription = "Sehr klein";
+		} else if(map.getMapSize() <= 50) {
+			mapSizeDescription = "Klein";
+		} else if(map.getMapSize() <= 50) {
+			mapSizeDescription = "Normal";
+		} else {
+			mapSizeDescription = "Groß";
+		}
+		return mapSizeDescription;
 	}
 
 	public static String convertMapToJson(Map map) {
