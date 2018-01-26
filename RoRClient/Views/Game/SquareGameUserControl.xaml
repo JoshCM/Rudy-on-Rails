@@ -10,22 +10,18 @@
                      d:DesignHeight="300" d:DesignWidth="300"
                      Canvas.Top="{Binding RealY, ElementName=squareUserControl}"
                      Canvas.Left="{Binding RealX, ElementName=squareUserControl}">
-    <Canvas Width="{Binding SquareDim, ElementName=squareUserControl}"
-            Height="{Binding SquareDim, ElementName=squareUserControl}">
+    <Canvas Width="{Binding ViewConstants.SquareDim}"
+            Height="{Binding ViewConstants.SquareDim}">
 
         <Rectangle
-            Width="{Binding SquareDim, ElementName=squareUserControl}"
-            Height="{Binding SquareDim, ElementName=squareUserControl}"
+            Width="{Binding ViewConstants.SquareDim}"
+            Height="{Binding ViewConstants.SquareDim}"
             Fill="#f9f1df"
             Stroke="WHITE"
             StrokeThickness="1">
+            <Rectangle.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
+            </Rectangle.InputBindings>
         </Rectangle>
-
-
-        <!--
-        <Image Width="{Binding SquareDim, ElementName=squareUserControl}" 
-               Height="{Binding SquareDim, ElementName=squareUserControl}" 
-               Source="/RoRClient;component/Resources/Images/gras.jpg" Stretch="Fill" > 
-        </Image> -->
     </Canvas>
 </v:CanvasUserControl>

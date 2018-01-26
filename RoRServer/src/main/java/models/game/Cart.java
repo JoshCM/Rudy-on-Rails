@@ -94,10 +94,18 @@ public class Cart extends TickableGameObject implements PlaceableOnRail {
 	 */
 	public void removeResourceFromCart() {
 		resource = null;
+		notifyRemoveResourceFromCart();
 	}
 	
 	public Resource getResource() {
 		return resource;
+	}
+	
+	public void notifyRemoveResourceFromCart() {
+		MessageInformation message = new MessageInformation("RemoveResourceFromCart");
+		message.putValue("locoId", currentLocoId);
+		message.putValue("cartId", getId());
+		notifyChange(message);
 	}
 	
 	/**
@@ -180,21 +188,27 @@ public class Cart extends TickableGameObject implements PlaceableOnRail {
 		return null;
 	}
 	
-	public boolean isNextToStock() {
+	private Stock getStockNextToCart() {
 		PlaceableOnSquare placeableOnSquare = getPlaceableOnSquareNextToCart(true);
-		if(placeableOnSquare == null) {
+		
+		// Wenn auf der rechten Seite nicht gefunden, dann prüfe auf der linken
+		if((placeableOnSquare == null) || (placeableOnSquare != null && !(placeableOnSquare instanceof Stock))) {
 			placeableOnSquare = getPlaceableOnSquareNextToCart(false);
 		}
-		return (placeableOnSquare != null && placeableOnSquare instanceof Stock);
+		
+		if (placeableOnSquare != null && placeableOnSquare instanceof Stock) {
+			return (Stock)placeableOnSquare;
+		}
+		return null;
+	}
+	
+	public boolean isNextToStock() {
+		return getStockNextToCart() != null;
 	}
 	
 	public UUID getPlayerIdFromStockNextToCart() {
-		PlaceableOnSquare placeableOnSquare = getPlaceableOnSquareNextToCart(true);
-		if(placeableOnSquare == null) {
-			placeableOnSquare = getPlaceableOnSquareNextToCart(false);
-		}
-		if (placeableOnSquare != null && placeableOnSquare instanceof Stock) {
-			Stock stock = (Stock)placeableOnSquare;
+		Stock stock = getStockNextToCart();
+		if (stock != null) {
 			GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(sessionName);
 			Map map = gameSession.getMap();
 			Trainstation trainstation = (Trainstation)map.getPlaceableOnSquareById(stock.getTrainstationId());

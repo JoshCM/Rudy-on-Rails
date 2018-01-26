@@ -15,6 +15,7 @@ namespace RoRClient.ViewModels.Game
         private TaskFactory taskFactory;
         private Scripts scripts;
         private ObservableCollection<Script> ghostLocoScripts = new ObservableCollection<Script>();
+        private ObservableCollection<Script> sensorScripts = new ObservableCollection<Script>();
 
         public ScriptsViewModel(Scripts scripts, TaskFactory taskFactory)
         {
@@ -30,6 +31,11 @@ namespace RoRClient.ViewModels.Game
             {
                 taskFactory.StartNew(() => ghostLocoScripts.Add(eventArgs.NewValue));
             }
+
+            if (e.PropertyName == "SensorScripts")
+            {
+                taskFactory.StartNew(() => sensorScripts.Add(eventArgs.NewValue));
+            }
         }
 
         public ObservableCollection<Script> GhostLocoScripts
@@ -37,6 +43,14 @@ namespace RoRClient.ViewModels.Game
             get
             {
                 return ghostLocoScripts;
+            }
+        }
+
+        public ObservableCollection<Script> SensorScripts
+        {
+            get
+            {
+                return sensorScripts;
             }
         }
     }

@@ -10,6 +10,8 @@ using RoRClient.ViewModels.Helper;
 using System.Windows.Input;
 using RoRClient.Communication.DataTransferObject;
 using RoRClient.ViewModels.Commands;
+using System.Collections.ObjectModel;
+using RoRClient.Models.Lobby;
 
 namespace RoRClient.ViewModels.Lobby
 {
@@ -20,13 +22,19 @@ namespace RoRClient.ViewModels.Lobby
 		private LobbyModel lobbyModel;
 		private EditorSession editorSession;
         private bool canStartEditor;
-        private string selectedMapName;
+        private bool editorIsNotStarted = true;
+        private MapInfo selectedMapInfo;
 
-		public EditorLobbyViewModel(UIState uiState, LobbyModel lobbyModel)
-		{
-			this.uiState = uiState;
-			this.lobbyModel = lobbyModel;
-			this.editorSession = EditorSession.GetInstance();
+        private ObservableCollection<PossibleMapSize> possibleMapSizes = new ObservableCollection<PossibleMapSize>();
+        private PossibleMapSize selectedPossibleMapSize;
+        private bool newMapIsSelected;
+
+        public EditorLobbyViewModel(UIState uiState, LobbyModel lobbyModel)
+        {
+            this.uiState = uiState;
+            this.lobbyModel = lobbyModel;
+            this.editorSession = EditorSession.GetInstance();
+            InitPossibleMapSizes();
 
             editorSession = EditorSession.GetInstance();
             editorSession.PropertyChanged += OnEditorSessionChanged;
@@ -36,11 +44,60 @@ namespace RoRClient.ViewModels.Lobby
             lobbyModel.ReadEditorInfos();
         }
 
-		/// <summary>
-		/// Die EditorSession muss hier als Property vorhanden sein, damit der MapName
-		/// in der MapListBox gebindet werden kann
-		/// </summary>
-		public EditorSession EditorSession
+        private void InitPossibleMapSizes()
+        {
+            possibleMapSizes.Add(new PossibleMapSize(30, "Sehr klein (30x30)"));
+            possibleMapSizes.Add(new PossibleMapSize(50, "Klein (50x50)"));
+            possibleMapSizes.Add(new PossibleMapSize(70, "Mittel (70x70)"));
+            possibleMapSizes.Add(new PossibleMapSize(100, "Groß (100x100)"));
+            selectedPossibleMapSize = possibleMapSizes[1];
+        }
+
+        public ObservableCollection<PossibleMapSize> PossibleMapSizes
+        {
+            get
+            {
+                return possibleMapSizes;
+            }
+        }
+
+        public PossibleMapSize SelectedPossibleMapSize
+        {
+            get
+            {
+                return selectedPossibleMapSize;
+            }
+            set
+            {
+                if(selectedPossibleMapSize != value)
+                {
+                    selectedPossibleMapSize = value;
+                    OnPropertyChanged("SelectedPossibleMapSize");
+                }
+            }
+        }
+
+        public bool NewMapIsSelected
+        {
+            get
+            {
+                return newMapIsSelected;
+            }
+            set
+            {
+                if(newMapIsSelected != value)
+                {
+                    newMapIsSelected = value;
+                    OnPropertyChanged("NewMapIsSelected");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Die EditorSession muss hier als Property vorhanden sein, damit der MapName
+        /// in der MapListBox gebindet werden kann
+        /// </summary>
+        public EditorSession EditorSession
 		{
 			get { return editorSession; }
 			set { editorSession = value; }
@@ -81,19 +138,40 @@ namespace RoRClient.ViewModels.Lobby
             }
         }
 
-        public string SelectedMapName
+        public bool EditorIsNotStarted
         {
             get
             {
-                return selectedMapName;
+                return editorIsNotStarted;
             }
             set
             {
-                if (selectedMapName != value)
+                editorIsNotStarted = value;
+                OnPropertyChanged("EditorIsNotStarted");
+            }
+        }
+
+        public MapInfo SelectedMapInfo
+        {
+            get
+            {
+                return selectedMapInfo;
+            }
+            set
+            {
+                if (selectedMapInfo != value)
                 {
-                    selectedMapName = value;
+                    selectedMapInfo = value;
                     ChangeMapName();
-                    OnPropertyChanged("SelectedMapName");
+                    OnPropertyChanged("SelectedMapInfo");
+
+                    if (selectedMapInfo != null && selectedMapInfo.Name.StartsWith("#"))
+                    {
+                        NewMapIsSelected = true;
+                    } else
+                    {
+                        NewMapIsSelected = false;
+                    }
                 }
             }
         }
@@ -108,7 +186,7 @@ namespace RoRClient.ViewModels.Lobby
             if (editorSession.OwnPlayer.IsHost)
             {
                 MessageInformation messageInformation = new MessageInformation();
-                messageInformation.PutValue("mapName", selectedMapName);
+                messageInformation.PutValue("mapName", selectedMapInfo.Name);
                 editorSession.QueueSender.SendMessage("ChangeMapSelection", messageInformation);
             }
         }
@@ -148,7 +226,9 @@ namespace RoRClient.ViewModels.Lobby
 		{
 			if (EditorSession.GetInstance().OwnPlayer.IsHost)
 			{
+                EditorIsNotStarted = false;
 				MessageInformation messageInformation = new MessageInformation();
+                messageInformation.PutValue("mapSize", selectedPossibleMapSize.MapSize);
 				EditorSession.GetInstance().QueueSender.SendMessage("StartEditor", messageInformation);
 			}
 		}

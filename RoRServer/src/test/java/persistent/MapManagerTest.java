@@ -14,7 +14,7 @@ public class MapManagerTest {
 	@Test
 	public void mapManager_SavedAndLoadedMapAreEqual() {
 		String sessionName = "TestSession";
-		Map map = new Map(sessionName);
+		Map map = new Map(sessionName, 50);
 		Square railSquare = map.getSquare(0, 0);
 		List<Compass> railSectionPositions = new ArrayList<Compass>();
 		railSectionPositions.add(Compass.NORTH);

@@ -10,7 +10,7 @@ namespace RoRClientTests
         [TestMethod]
         public void ConstructorCreatesAllSquares()
         {
-            Map map = new Map();
+            Map map = new Map(50);
             int counter = 0;
             
             foreach(Square square in map.Squares)
@@ -21,7 +21,7 @@ namespace RoRClientTests
                 }
             }
 
-            Assert.AreEqual(Map.MapSize * Map.MapSize, counter);
+            Assert.AreEqual(50, counter);
         }
     }
 }

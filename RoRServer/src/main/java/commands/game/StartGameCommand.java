@@ -46,7 +46,6 @@ public class StartGameCommand extends CommandBase {
 		} catch (MapNotFoundException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	private void startLoadedMap(Map map) {
@@ -54,6 +53,7 @@ public class StartGameCommand extends CommandBase {
 		log.info("loading map: " + gameSession.getMapName());
 		map.setSessionNameForMapAndSquares(gameSession.getSessionName());
 		map.addObserver(TopicMessageQueue.getInstance());
+		map.notifySize();
 		gameSession.setMap(map);
 
 		// hier mÃ¼ssen die Rails zuerst erstellt werden, danach die Trainstations

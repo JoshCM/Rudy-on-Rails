@@ -12,10 +12,10 @@
     <UserControl.Resources>
         <converter:CompassToAngleConverter  x:Key="CompassToAngleConverter"/>
     </UserControl.Resources>
-    <Canvas Width="{Binding SquareDim, ElementName=craneGameUserControl}"
-            Height="{Binding SquareDim, ElementName=craneGameUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=craneGameUserControl}" 
-               Height="{Binding SquareDim, ElementName=craneGameUserControl}" 
+    <Canvas Width="{Binding ViewConstants.SquareDim}"
+            Height="{Binding ViewConstants.SquareDim}">
+        <Image Width="{Binding ViewConstants.SquareDim}" 
+               Height="{Binding ViewConstants.SquareDim}" 
                Source="pack://application:,,,/Resources/Images/crane.png">
             <Image.LayoutTransform>
                 <TransformGroup>

@@ -32,24 +32,21 @@ namespace RoRClient.Commands.Game.Update
         public override void Execute()
         {
             Mine mine = GameSession.GetInstance().getMineByPosition(xPos, yPos);
-        
             Loco loco = GameSession.GetInstance().GetLocoById(locoId);
             Cart cart = loco.GetCartById(cartId);      
-            
-            String newImagePath = null;
 
             if (resourceType == "Gold")
             {
                 cart.UpdateOnboardResource(new Gold(resourceId, null));
-                newImagePath = "/RoRClient;component/Resources/Images/container_gold.png";
             }
             else if (resourceType == "Coal")
             {
                 cart.UpdateOnboardResource(new Coal(resourceId, null));
-                newImagePath = "/RoRClient;component/Resources/Images/container_coal.png";
             }
-
-            cart.updateOnboardResourceImagePath(newImagePath);
+            else if (resourceType == "PointContainer")
+            {
+                cart.UpdateOnboardResource(new PointContainer(resourceId, null));
+            }
         }
     }
 }

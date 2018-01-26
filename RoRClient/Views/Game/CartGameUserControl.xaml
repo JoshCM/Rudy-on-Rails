@@ -13,13 +13,14 @@
     <UserControl.Resources>
         <converter:CompassToAngleConverter x:Key="CompassToAngleConverter"/>
         <converter:BooleanToOpacityConverter x:Key="BooleanToOpacityConverter"/>
+        <converter:ResourceToImagePathConverter x:Key="ResourceToImagePathConverter"/>
         <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" IsInverse="True"/>
     </UserControl.Resources>
-    <Canvas Width="{Binding SquareDim, ElementName=cartGameUserControl}"
-            Height="{Binding SquareDim, ElementName=cartGameUserControl}"
+    <Canvas Width="{Binding ViewConstants.SquareDim}"
+            Height="{Binding ViewConstants.SquareDim}"
             Visibility="{Binding IsGhostCartAndDoesNotBelongToPlayer, Converter={StaticResource BooleanToVisibilityConverter}}">
-        <Image Width="{Binding SquareDim, ElementName=cartGameUserControl}" 
-               Height="{Binding SquareDim, ElementName=cartGameUserControl}" 
+        <Image Width="{Binding ViewConstants.SquareDim}" 
+               Height="{Binding ViewConstants.SquareDim}" 
                Source="/RoRClient;component/Resources/Images/cart.png" Stretch="Fill" RenderTransformOrigin="0.5, 0.5" Opacity="{Binding Cart.IsGhostCart, Converter={StaticResource BooleanToOpacityConverter}}">
             <Image.RenderTransform>
                 <TransformGroup>
@@ -27,9 +28,9 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <Image Width="{Binding SquareDim, ElementName=cartGameUserControl}" 
-               Height="{Binding SquareDim, ElementName=cartGameUserControl}" 
-                Source="{Binding Path=Cart.OnboardResourceImagePath, UpdateSourceTrigger=PropertyChanged}" Stretch="Fill" RenderTransformOrigin="0.5, 0.5">
+        <Image Width="{Binding ViewConstants.SquareDim}" 
+               Height="{Binding ViewConstants.SquareDim}" 
+                Source="{Binding Cart.OnboardResource, Converter={StaticResource ResourceToImagePathConverter}}" Stretch="Fill" RenderTransformOrigin="0.5, 0.5">
             <Image.RenderTransform>
                 <TransformGroup>
                     <RotateTransform Angle="{Binding RealRotationAngle, ElementName=cartGameUserControl}" />

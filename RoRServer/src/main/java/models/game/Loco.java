@@ -1,19 +1,22 @@
 package models.game;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
 
 import communication.MessageInformation;
 import models.session.GameSessionManager;
+import resources.PropertyManager;
 
 /**
  * 
  * @author Isabel Rott, Michelle Le Klasse fuer eine Lok, zu der eine Liste von
  *         Carts gehoert
  */
-public class Loco extends TickableGameObject {
+public abstract class Loco extends TickableGameObject {
 	private ArrayList<Cart> carts;
 	private Rail rail;
 	private UUID playerId;
@@ -22,6 +25,8 @@ public class Loco extends TickableGameObject {
 	private Compass drivingDirection;
 	private boolean reversed = false;
 	protected Map map;
+	private GamePlayer player;
+	private static List<Sensor> sensors; // Jede Loco kennt alle Sensoren
 
 	/**
 	 * Konstruktor einer Lok
@@ -37,6 +42,25 @@ public class Loco extends TickableGameObject {
 		this.drivingDirection = drivingDirection;
 		this.speed = 0;
 		this.playerId = playerId;
+		this.player = (GamePlayer) GameSessionManager.getInstance().getGameSessionByName(sessionName)
+				.getPlayerById(playerId);
+		Loco.sensors = new ArrayList<Sensor>();
+	}
+
+	public static void addSensor(Sensor sensor) {
+		sensors.add(sensor);
+	}
+
+	public void notifySensors() {
+
+		Iterator<Sensor> iter = sensors.iterator();
+		while (iter.hasNext()) {
+			Sensor sensor = iter.next();
+			// Sensor ist aktiv und der Zug befindet sich auf der Position des Sensors
+			if (sensor.isActive() && sensor.checkPosition(getXPos(), getYPos())) {
+				sensor.runScriptOnTrainArrived(this);
+			}
+		}
 	}
 
 	/**
@@ -76,9 +100,14 @@ public class Loco extends TickableGameObject {
 					}
 					drive(false);
 				}
+
+				spendCoal();
 			}
 		}
 	}
+	
+	public abstract void spendCoal();
+	public abstract boolean needsCoalToDrive();
 
 	public void drive(boolean reversed){
 	    if(!reversed){
@@ -107,7 +136,7 @@ public class Loco extends TickableGameObject {
         	}
         	else if(nextRail != null && nextRail instanceof Rail && nextRail.hasExitDirection(getDirectionNegation(lastCart.getDrivingDirection()))) {
         		
-        		//Die Eigenschaften der Ersten Cart (also direkt hinter der Loco) müssen gespeichert werden damit sie der Lok übergeben werden können
+        		//Die Eigenschaften der Ersten Cart (also direkt hinter der Loco) mï¿½ssen gespeichert werden damit sie der Lok ï¿½bergeben werden kï¿½nnen
         		Compass firstCartDrivingDirection = getFirstCart().getDrivingDirection();
         		Rail firstCartRail = getFirstCart().getRail();
         		
@@ -157,11 +186,12 @@ public class Loco extends TickableGameObject {
 		if (carts.isEmpty()) {
 			addInitialCart();
 		} else {
-			Cart lastCart = this.carts.get(carts.size()-1);
+			Cart lastCart = this.carts.get(carts.size() - 1);
 			Compass back = this.rail.getExitDirection(lastCart.getDrivingDirection());
 			Rail prevRail = getNextRail(back, this.map.getSquare(lastCart.getXPos(), lastCart.getYPos()));
 			Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
-			Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, true, this.getId());
+			Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, true,
+					this.getId());
 			carts.add(cart);
 		}
 	}
@@ -174,7 +204,8 @@ public class Loco extends TickableGameObject {
 			Compass back = this.rail.getExitDirection(this.drivingDirection);
 			Rail prevRail = getNextRail(back, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 			Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
-			Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, true, this.getId());
+			Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, true,
+					this.getId());
 			carts.add(cart);
 		}
 	}
@@ -213,7 +244,7 @@ public class Loco extends TickableGameObject {
             cart.notifyUpdatedCart();
 		}	
 	}
-	
+
 	/**
 	 * gibt das Rail zurï¿½ck, dass in angegebener Richtung an das Feld, das
 	 * mitgegeben wird, angekoppelt ist
@@ -227,22 +258,22 @@ public class Loco extends TickableGameObject {
 		switch (compass) {
 		case NORTH:
 			retSquare = this.map.getSquare(square.getXIndex(), square.getYIndex() - 1);
-			if(retSquare.getPlaceableOnSquare() instanceof Rail)
+			if (retSquare.getPlaceableOnSquare() instanceof Rail)
 				return (Rail) retSquare.getPlaceableOnSquare();
 			break;
 		case EAST:
 			retSquare = this.map.getSquare(square.getXIndex() + 1, square.getYIndex());
-			if(retSquare.getPlaceableOnSquare() instanceof Rail)
+			if (retSquare.getPlaceableOnSquare() instanceof Rail)
 				return (Rail) retSquare.getPlaceableOnSquare();
 			break;
 		case SOUTH:
 			retSquare = this.map.getSquare(square.getXIndex(), square.getYIndex() + 1);
-			if(retSquare.getPlaceableOnSquare() instanceof Rail)
+			if (retSquare.getPlaceableOnSquare() instanceof Rail)
 				return (Rail) retSquare.getPlaceableOnSquare();
 			break;
 		case WEST:
 			retSquare = this.map.getSquare(square.getXIndex() - 1, square.getYIndex());
-			if(retSquare.getPlaceableOnSquare() instanceof Rail)
+			if (retSquare.getPlaceableOnSquare() instanceof Rail)
 				return (Rail) retSquare.getPlaceableOnSquare();
 			break;
 		}
@@ -269,6 +300,44 @@ public class Loco extends TickableGameObject {
 		}
 		return null;
 	}
+	
+	/**
+	 * LÃ¤sst die Ressourcen auf den Carts auf die benachbarten Squares fallen, sofern genug Platz ist
+	 */
+	public void dropResources() {
+		Square trainSquare = map.getSquare(getXPos(), getYPos());
+		List<Square> squares = trainSquare.getNeighbouringEmptySquares();
+		Iterator<Square> squareIterator = squares.iterator();		
+		
+		for (Cart cart : getCarts()) {
+			if(cart.getResource() != null) {
+				Resource resource = cart.getResource();
+				if(squareIterator.hasNext()) {
+					cart.removeResourceFromCart();
+					Square s = squareIterator.next();
+					if (resource instanceof Coal) {
+						Coal coal = new Coal(getSessionName(), s, Rail.AMOUNT_OF_COAl_TO_GENERATE);
+						s.setPlaceableOnSquare(coal);
+					}
+					if (resource instanceof Gold) {
+						Gold gold = new Gold(getSessionName(), s, Rail.AMOUNT_OF_GOLD_TO_GENERATE);
+						s.setPlaceableOnSquare(gold);
+					}
+				}
+			}
+		}
+		
+	}
+	
+	// Methode zum LÃ¶schen der restlichen Ressourcen
+	public void dropByCollide() {
+		dropResources();
+		for (Cart cart : getCarts()) {
+			if(cart.getResource() != null) {
+				cart.removeResourceFromCart();
+			}
+		}
+	}
 
 	/**
 	 * notifiziert wenn die Position der Lok veraendert wurde
@@ -281,6 +350,7 @@ public class Loco extends TickableGameObject {
 		messageInfo.putValue("drivingDirection", drivingDirection.toString());
 		notifyChange(messageInfo);
 	}
+
 	private void notifyCartToLocoAdded(Cart cart) {
 		MessageInformation messageInfo = new MessageInformation("UpdateCartToLoco");
 		messageInfo.putValue("xPos", cart.getXPos());
@@ -289,7 +359,6 @@ public class Loco extends TickableGameObject {
 		messageInfo.putValue("currentLocoId", getId());
 		notifyChange(messageInfo);
 	}
-
 
 	public void changeSpeed(int speed) {
 		this.speed = speed;
@@ -340,8 +409,12 @@ public class Loco extends TickableGameObject {
 	public UUID getPlayerId() {
 		return playerId;
 	}
-	
+
 	public Compass getDrivingDirection() {
 		return drivingDirection;
+	}
+	
+	public GamePlayer getPlayer() {
+		return player;
 	}
 }

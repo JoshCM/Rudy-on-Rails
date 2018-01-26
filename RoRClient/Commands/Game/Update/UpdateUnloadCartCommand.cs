@@ -34,8 +34,6 @@ namespace RoRClient.Commands.Game.Update
             Cart cart = loco.GetCartById(cartId);
 
             cart.UpdateOnboardResource(null);
-           
-            cart.updateOnboardResourceImagePath(null);
         }
     }
 }
