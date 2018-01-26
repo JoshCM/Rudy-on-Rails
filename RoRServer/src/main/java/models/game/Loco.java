@@ -73,11 +73,41 @@ public class Loco extends TickableGameObject {
 						}
 						reversed = false;
 					}
-					drive();
+					drive(false);
 				}
 			}
 		}
 	}
+
+	public void drive(boolean reversed){
+	    if(!reversed){
+            Rail nextRail = getNextRail(this.drivingDirection, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
+            //Wenn keine nächste Rail existiert halte den Zug an
+            //Andernfalls, wenn es eine Rail gibt sollte die auch einen Eingang haben zum rein fahren andernfalls stoppe
+            if(nextRail != null &&nextRail instanceof Rail && nextRail.hasExitDirection(getDirectionNegation(this.drivingDirection))){
+                //Merke dir die aktuellen Loco Eigenschaften für die Carts
+                Rail currentLocoRail = this.rail;
+                Compass currentLocoDrivingDirection = this.drivingDirection;
+                UUID currentLocoSquareId = this.getSquareId();
+                moveLoco(nextRail);
+                moveCarts(currentLocoRail, currentLocoDrivingDirection, currentLocoSquareId);
+            }
+            else{
+                setSpeedAndNotifySpeedChanged(0);
+            }
+        }
+        else{
+
+        }
+    }
+
+    public void moveLoco(Rail nextRail){
+	    //hole dir die DrivingDirection von dem nächste Rail und übergebe das Gegentei von der aktuellen Fahrrichtung
+	    this.drivingDirection = nextRail.getExitDirection(getDirectionNegation(getDrivingDirection()));
+	    this.rail = nextRail;
+	    this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
+	    notifyLocoPositionChanged();
+    }
 
 	private boolean isTrainOnSwitch() {
 		if(this.rail instanceof Switch)
@@ -96,7 +126,7 @@ public class Loco extends TickableGameObject {
 	/**
 	 * Ueberfuehrt die Lok in das naechste moegliche Feld in Fahrtrichtung
 	 */
-	public void drive() {
+	/*public void drive() {
 		Rail nextRail = getNextRail(this.drivingDirection,
 				this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 
@@ -106,12 +136,12 @@ public class Loco extends TickableGameObject {
 			this.drivingDirection = nextRail.getExitDirection(getDirectionNegation(this.drivingDirection));
 			this.rail = nextRail;
 			this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-			NotifyLocoPositionChanged();
+			notifyLocoPositionChanged();
 		}
 		else {
 			setSpeedAndNotifySpeedChanged(0);
 		}
-	}
+	}*/
 	
 	/**
 	 * Zug f�hrt r�ckwerts(letzter Wagon f�hrt)
@@ -180,7 +210,7 @@ public class Loco extends TickableGameObject {
 			this.rail = getNextRail(tempDirection, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 			this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(tempDirection));
 			this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
-			NotifyLocoPositionChanged();
+			notifyLocoPositionChanged();
 		}
 	}
 	
@@ -220,23 +250,24 @@ public class Loco extends TickableGameObject {
 	 * bewegt alle Wagons, die an einer Lok h�ngen, sobald sich eine Lok um ein Feld
 	 * weiter bewegt hat
 	 * 
-	 * @param forward
+	 * @param nextRail
 	 */
-	public void moveCarts(Rail forward, Compass actDirectionOfLoco) {
-		Square nextSquare = this.map.getSquare(forward.getXPos(), forward.getYPos());
-		Square actSquare = null;
-		Compass nextDirection = actDirectionOfLoco;
-		Compass actDirection = null;
-
+	public void moveCarts(Rail nextRail, Compass nextDrivingDirection, UUID nextSquareId) {
 		for (Cart cart : carts) {
-			actSquare = this.map.getSquareById(cart.getSquareId());
-			actDirection = cart.getDrivingDirection();
-			cart.updateSquare(nextSquare);
-			cart.setRail((Rail) nextSquare.getPlaceableOnSquare());
-			cart.setDrivingDirection(nextDirection);
-			cart.notifyUpdatedCart();
-			nextDirection = actDirection;
-			nextSquare = actSquare;
+		    //Speichere die aktuellen Cart Eigenschaft für das nächste Cart
+            Compass actDrivingDirection = cart.getDrivingDirection();
+            Rail actRail = cart.getRail();
+            UUID actSquareId = cart.getSquareId();
+            //Setze die neuen Cart Eigenschaften
+            cart.setSquareId(nextSquareId);
+            cart.setRail(nextRail);
+            cart.setDrivingDirection(nextDrivingDirection);
+            //Setze die neuen für Cart Eigenschaften für den nächsten Cart
+            nextRail = actRail;
+            nextDrivingDirection = actDrivingDirection;
+            nextSquareId = actSquareId;
+            //Update die Cart Eigenschaften
+            cart.notifyUpdatedCart();
 		}
 	}
 	
@@ -299,7 +330,7 @@ public class Loco extends TickableGameObject {
 	/**
 	 * notifiziert wenn die Position der Lok veraendert wurde
 	 */
-	private void NotifyLocoPositionChanged() {
+	private void notifyLocoPositionChanged() {
 		MessageInformation messageInfo = new MessageInformation("UpdateLocoPosition");
 		messageInfo.putValue("locoId", getId());
 		messageInfo.putValue("xPos", getXPos());
