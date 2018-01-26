@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:RoRClient.Views"
              xmlns:vm="clr-namespace:RoRClient.ViewModels"
+             xmlns:converter="clr-namespace:RoRClient.BindingConverter"
              mc:Ignorable="d"
              d:DesignHeight="900" d:DesignWidth="1600">
     <UserControl.Resources>
@@ -16,7 +17,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <DockPanel>
+    <DockPanel IsEnabled="{Binding GameIsNotStarted}">
         <DockPanel.Background>
             <ImageBrush ImageSource="pack://application:,,,/Resources/Images/start_background.png"/>
         </DockPanel.Background>
@@ -58,7 +59,7 @@
 
         <StackPanel  Margin="100,40,250,-2" Width="400">
             <TextBlock Text="Zur Verfügung stehende Karten:" TextWrapping="Wrap" Height="40" Width="400" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404" HorizontalAlignment="Left"/>
-            <ListBox DockPanel.Dock="Right" Height="230" Width="400" SelectedIndex="0" x:Name="GameMapsListBox" ItemsSource="{Binding LobbyModel.MapNames}" SelectedItem="{Binding SelectedMapName, Mode=TwoWay}" IsEnabled="{Binding IsHost}" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404">
+            <ListBox DockPanel.Dock="Right" Height="230" Width="400" x:Name="GameMapsListBox" ItemsSource="{Binding LobbyModel.MapNames}" SelectedItem="{Binding SelectedMapName, Mode=TwoWay}" IsEnabled="{Binding IsHost}" FontFamily="Source Sans Pro" FontSize="20" Foreground="#FF510404">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Style.Triggers>

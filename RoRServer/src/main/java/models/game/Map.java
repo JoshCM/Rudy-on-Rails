@@ -2,6 +2,7 @@ package models.game;
 
 import models.base.ModelBase;
 import models.helper.Validator;
+import persistent.MapManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,10 +41,10 @@ public class Map extends ModelBase {
 	
 	public void initAvailablePlayerSlots() {
 		removeAvailablePlayerSlots();
-		createAvailablePlayerSlots();
+		searchAvailablePlayerSlots();
 	}
 	
-	private void createAvailablePlayerSlots() {
+	private void searchAvailablePlayerSlots() {
 		for(Square[] squares : getSquares()) {
 			for(Square square : squares) {
 				if(square.getPlaceableOnSquare() instanceof Trainstation) {

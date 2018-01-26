@@ -15,6 +15,7 @@ namespace RoRClient.ViewModels.Lobby
 	    private LobbyModel lobbyModel;
 	    private GameSession gameSession;
         private bool canStartGame;
+        private bool gameIsNotStarted = true;
         private string selectedMapName;
 
 		public GameLobbyViewModel(UIState uiState, LobbyModel lobbyModel)
@@ -73,6 +74,19 @@ namespace RoRClient.ViewModels.Lobby
             {
                 canStartGame = value;
                 OnPropertyChanged("CanStartGame");
+            }
+        }
+
+        public bool GameIsNotStarted
+        {
+            get
+            {
+                return gameIsNotStarted;
+            }
+            set
+            {
+                gameIsNotStarted = value;
+                OnPropertyChanged("GameIsNotStarted");
             }
         }
 
@@ -143,7 +157,8 @@ namespace RoRClient.ViewModels.Lobby
         {
             if (GameSession.GetInstance().OwnPlayer.IsHost)
             {
-				MessageInformation messageInformation = new MessageInformation();
+                GameIsNotStarted = false;
+                MessageInformation messageInformation = new MessageInformation();
                 GameSession.GetInstance().QueueSender.SendMessage("StartGame", messageInformation);
             }
         }
@@ -181,7 +196,16 @@ namespace RoRClient.ViewModels.Lobby
             }
             else if (e.PropertyName == "MapName")
             {
-                CanStartGame = IsHost && gameSession.MapName != "";
+                if (IsHost)
+                {
+                    if (gameSession.MapName != "")
+                        CanStartGame = true;
+                }
+                else
+                {
+                    SelectedMapName = gameSession.MapName;
+                }
+                   
             }
         }
     }
