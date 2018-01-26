@@ -48,6 +48,8 @@ public class Playertrainstation extends Trainstation {
 		MessageInformation messageInfo = new MessageInformation("CreatePlayertrainstation");
 		messageInfo.putValue("playerId", getPlayerId());
 		messageInfo.putValue("trainstationId", getId());
+		//messageInfo.putValue("craneXPos", this.crane.getXPos());
+		//messageInfo.putValue("craneYPos", this.crane.getYPos());
 		messageInfo.putValue("alignment", alignment);
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());

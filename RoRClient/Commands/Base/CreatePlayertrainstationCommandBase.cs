@@ -20,6 +20,8 @@ namespace RoRClient.Commands.Base
         private int yPos;
         private int stockXPos;
         private int stockYPos;
+        private int craneXPos;
+        private int craneYPos;
         private Compass alignment;
         List<Rail> trainstationRails = new List<Rail>();
 
@@ -33,9 +35,12 @@ namespace RoRClient.Commands.Base
             playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             trainstationId = Guid.Parse(messageInformation.GetValueAsString("trainstationId"));
             stockId = Guid.Parse(messageInformation.GetValueAsString("stockId"));
+
+           // craneXPos = messageInformation.GetValueAsInt("craneXPos");
+            //craneYPos = messageInformation.GetValueAsInt("craneYPos");
+
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
-
             alignment = (Compass)Enum.Parse(typeof(Compass), messageInformation.GetValueAsString("alignment"));
 
             // über railids rails nutzen
@@ -50,10 +55,19 @@ namespace RoRClient.Commands.Base
 
         public override void Execute()
         {
+
             Square square = session.Map.GetSquare(xPos, yPos);
             Stock stock = (Stock)session.Map.GetPlaceableById(stockId);
+
+         //   Square craneSquare = session.Map.GetSquare(craneXPos, craneYPos);
+          //  Rail rail = (Rail)craneSquare.PlaceableOnSquare;
+         //   Crane crane = (Crane)rail.PlaceableOnRail;
+
             Playertrainstation trainstation = new Playertrainstation(trainstationId, square, trainstationRails, alignment, stock, session.GetPlayerById(playerId));
             square.PlaceableOnSquare = (Playertrainstation)trainstation;
+       //     trainstation.Crane = crane;
+          //  Console.WriteLine("CRANEID: " + crane.Id);
+
         }
 
 

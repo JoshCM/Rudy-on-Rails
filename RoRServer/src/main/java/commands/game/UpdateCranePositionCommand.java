@@ -39,7 +39,7 @@ public class UpdateCranePositionCommand implements Command{
 		
 		if(this.playerId.equals(this.trainstation.getPlayerId())) {
 			
-			this.crane.moveToTakeTheGoods(session.getLocomotiveByPlayerId(playerId),this.stock);
+			this.crane.moveToTakeTheGoods(session.getLocomotiveByPlayerId(playerId),this.trainstation);
 		}
 	}
 

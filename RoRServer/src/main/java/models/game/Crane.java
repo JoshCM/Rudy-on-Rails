@@ -53,7 +53,7 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 	/**
 	 * der Kran soll sich bewegen(linear) damit er die Container aufgabeln kann
 	 */
-	public void moveToTakeTheGoods(Loco loco, Stock stock) {
+	public void moveToTakeTheGoods(Loco loco, Trainstation trainstation) {
 		
 		GameSession gameSession = GameSessionManager.getInstance().getGameSessionByName(getSessionName());
 		
@@ -126,6 +126,7 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		MessageInformation messageInfo = new MessageInformation("CreateCrane");
 		messageInfo.putValue("craneId", getId());
 		messageInfo.putValue("squareId", getSquareId());
+		messageInfo.putValue("trainstationId", this.trainstationId);
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
 		messageInfo.putValue("alignment", this.alignment.toString());
@@ -144,6 +145,7 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		messageInfo.putValue("oldYPos", oldposY);
 		messageInfo.putValue("newXPos", getXPos());
 		messageInfo.putValue("newYPos", getYPos());
+		messageInfo.putValue("trainstationId",this.trainstationId);
 		notifyChange(messageInfo);
 	}
 	

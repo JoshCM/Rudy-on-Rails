@@ -48,7 +48,7 @@ public class Loco extends TickableGameObject {
 			if (this.timeDeltaCounter >= SEC_IN_NANO / absoluteSpeed) {
 				timeDeltaCounter = 0;
 				if (speed < 0) {
-					// Wenn Der Zug auf eine Weiche trifft beim r�ckw�rts fahren, dann bleibt er
+					// Wenn Der Zug auf eine Weiche trifft beim  rückwärtsfahren, dann bleibt er
 					// stehen
 
 					if (!reversed) {// Wenn das erstemal nach dem Vorw�rts fahren wieder r�ckw�rts gefahren
@@ -121,61 +121,62 @@ public class Loco extends TickableGameObject {
 
 		Cart actCart = null;
 		Compass tempDirection;
-		//beim R�ckw�rtsfahren ist nat�rlich die letzte Cart vorne, also bewegen wir erst die Carts und dann nach der for-Schleife den Zuch
+
 		for (int i = carts.size() - 1; i >= 0; i--) {
 			actCart = carts.get(i);
-			//Wenn von Vorw�rts in R�ckw�rts ge�ndert wird muss die Drivingdirection erstmal umgedreht werden.
-			if(initial) {
+			// Wenn von Vorwärts in Rückwärts geändert wird muss die
+			// Drivingdirection erstmal umgedreht werden.
+			if (initial) {
 				tempDirection = actCart.getRail().getExitDirection(actCart.getDrivingDirection());
-			}
-			else {
+			} else {
 				tempDirection = actCart.getDrivingDirection();
 			}
-			
+
 			Rail nextRail = getNextRail(tempDirection, this.map.getSquare(actCart.getXPos(), actCart.getYPos()));
-			if(nextRail!=null) {
-				if(nextRail.getPlaceableOnrail() instanceof Cart) {//Wenn eine Cart gefunden wird, also zum andocken
+
+			if (nextRail != null) {
+				if (nextRail.getPlaceableOnrail() instanceof Cart) {// Wenn eine Cart gefunden wird, also zum andocken
 					Cart cart = (Cart) nextRail.getPlaceableOnrail();
 					cart.setDrivingDirection(actCart.getDrivingDirection());
 					carts.add(cart);
 					cart.setCurrentLocoId(this.getId());
 					nextRail.setPlaceableOnRail(null);
 					setSpeedAndNotifySpeedChanged(0);
-					if(initial) {//Wenn noch nie Vorw�rtsgefahren wurde und direkt beim start r�ckw�rts gefahren wird muss die Driving direction ge�ndert werden
-						this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(this.rail.getExitDirection(this.drivingDirection)));
+					if (initial) {// Wenn noch nie Vorw�rtsgefahren wurde und direkt beim start r�ckw�rts
+									// gefahren wird muss die Driving direction ge�ndert werden
+						this.drivingDirection = this.rail.getExitDirection(
+								getDirectionNegation(this.rail.getExitDirection(this.drivingDirection)));
 					}
 					notifyCartToLocoAdded(cart);
 					break;
 				}
-				if(nextRail instanceof Rail ) {//Wenn das N�chste Schienenst�ck leer ist soll der Zug anhalten
+				if (nextRail instanceof Rail) { //Zug soll nur fahren, wenn das nextRail auch wirklich ein Rail ist
 					Compass newDrivingDirection = nextRail.getExitDirection(getDirectionNegation(tempDirection));
-					if(nextRail.hasExitDirection(getDirectionNegation(tempDirection))){
+					if (nextRail.hasExitDirection(getDirectionNegation(tempDirection))) {
 						actCart.setDrivingDirection(newDrivingDirection);
 						actCart.setRail(nextRail);
 						actCart.updateSquare(this.map.getSquare(nextRail.getXPos(), nextRail.getYPos()));
 						actCart.notifyUpdatedCart();
-					}
-					else {
+					} else {
 						setSpeedAndNotifySpeedChanged(0);
 						break;
 					}
-				}
-				else{
+				} else {
 					setSpeedAndNotifySpeedChanged(0);
 					break;
 				}
-			}
-			else {
+			} else {
 				setSpeedAndNotifySpeedChanged(0);
 				break;
 			}
 		}
-		if(this.speed != 0) {//Wenn das n�chste schienenst�ck der Cart leer ist darf der Zug nat�rlich auch nicht weiter d�sen
-			if(initial)
+		if (this.speed != 0) {// Wenn das n�chste schienenst�ck der Cart leer ist darf der Zug nat�rlich
+								// auch nicht weiter d�sen
+			if (initial)
 				tempDirection = this.rail.getExitDirection(this.drivingDirection);
 			else
 				tempDirection = this.drivingDirection;
-			
+
 			this.rail = getNextRail(tempDirection, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 			this.drivingDirection = this.rail.getExitDirection(getDirectionNegation(tempDirection));
 			this.updateSquare(this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));

@@ -16,6 +16,9 @@ namespace RoRClient.Commands.Game.Update
         private int newYPos;
         private int oldYPos;
         private int oldXPos;
+        private Guid trainstationId;
+        private Trainstation trainstation;
+        private Crane crane;
 
 
         public UpdateCranePositionCommand(RoRSession session, MessageInformation message) : base(session, message)
@@ -24,6 +27,11 @@ namespace RoRClient.Commands.Game.Update
             this.newYPos = message.GetValueAsInt("newYPos");
             this.oldXPos = message.GetValueAsInt("oldXPos");
             this.oldYPos = message.GetValueAsInt("oldYPos");
+            this.trainstationId = Guid.Parse(message.GetValueAsString("trainstationId"));
+            Guid trainstationId = Guid.Parse(message.GetValueAsString("trainstationId"));
+            Console.WriteLine("TrainstationID: " + trainstationId);
+            this.trainstation = (Trainstation)(session.Map.GetPlaceableById(trainstationId));
+
         }
 
         public override void Execute()

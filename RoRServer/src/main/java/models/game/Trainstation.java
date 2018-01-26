@@ -74,6 +74,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	public Crane getCrane() {
 		return crane;
 	}
+	
 
 	public void setCrane(Crane crane) {
 		this.crane = crane;
