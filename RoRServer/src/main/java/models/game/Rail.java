@@ -458,4 +458,14 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 			signals.handleLoco(loco);
 		}		
 	}
+
+	public boolean hasExitDirection(Compass direction) {
+        for (RailSection r : railSectionList) {
+            if (r.getNode1().equals(direction))
+                return true;
+            if (r.getNode2().equals(direction))
+                return true;
+        }
+		return false;
+	}
 }

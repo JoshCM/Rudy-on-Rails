@@ -308,6 +308,7 @@ public class FromClientRequestQueueDispatcher extends DispatcherBase {
 		if(possibleEditorSessionManager.getEditorSessionByName(messageInformation.getValueAsString("sessionName")) != null){
 			JsonObject json = new JsonObject();
 			json.addProperty("mapName", PropertyManager.getProperty("newMap"));
+			json.addProperty("availablePlayerSlots", 100);
 			mapInfos.add(json);
 		}
 
