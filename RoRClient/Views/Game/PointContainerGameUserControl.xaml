@@ -10,10 +10,10 @@
                      Canvas.Top="{Binding RealY, ElementName=pointContainerUserControl}"
                      Canvas.Left="{Binding RealX, ElementName=pointContainerUserControl}">
 
-    <Canvas Width="{Binding SquareDim, ElementName=pointContainerUserControl}"
-            Height="{Binding SquareDim, ElementName=pointContainerUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=pointContainerUserControl}" 
-               Height="{Binding SquareDim, ElementName=pointContainerUserControl}" 
+    <Canvas Width="{Binding ViewConstants.SquareDim}"
+            Height="{Binding ViewConstants.SquareDim}">
+        <Image Width="{Binding ViewConstants.SquareDim}" 
+               Height="{Binding ViewConstants.SquareDim}" 
                Source="/RoRClient;component/Resources/Images/container_points.png" Stretch="Fill">
         </Image>
     </Canvas>

@@ -13,11 +13,11 @@
     <UserControl.Resources>
         <converter:CompassToAngleConverter  x:Key="CompassToAngleConverter"/>
     </UserControl.Resources>
-    <Canvas Width="{Binding SquareDim, ElementName=mineUserControl}"
-            Height="{Binding SquareDim, ElementName=mineUserControl}">
+    <Canvas Width="{Binding ViewConstants.SquareDim}"
+            Height="{Binding ViewConstants.SquareDim}">
 
-        <Image Width="{Binding SquareDim, ElementName=mineUserControl}" 
-               Height="{Binding SquareDim, ElementName=mineUserControl}" 
+        <Image Width="{Binding ViewConstants.SquareDim}" 
+               Height="{Binding ViewConstants.SquareDim}" 
                Source="/RoRClient;component/Resources/Images/mine.png" Stretch="Fill">
             <Image.InputBindings>
                 <MouseBinding MouseAction="RightClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>

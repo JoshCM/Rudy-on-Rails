@@ -10,10 +10,10 @@
                      Canvas.Top="{Binding RealY, ElementName=coalUserControl}"
                      Canvas.Left="{Binding RealX, ElementName=coalUserControl}">
 
-    <Canvas Width="{Binding SquareDim, ElementName=coalUserControl}"
-            Height="{Binding SquareDim, ElementName=coalUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=coalUserControl}" 
-               Height="{Binding SquareDim, ElementName=coalUserControl}" 
+    <Canvas Width="{Binding ViewConstants.SquareDim}"
+            Height="{Binding ViewConstants.SquareDim}">
+        <Image Width="{Binding ViewConstants.SquareDim}" 
+               Height="{Binding ViewConstants.SquareDim}" 
                Source="/RoRClient;component/Resources/Images/container_coal.png" Stretch="Fill">
         </Image>
     </Canvas>

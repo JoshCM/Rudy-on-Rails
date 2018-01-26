@@ -13,12 +13,12 @@
     <UserControl.Resources>
         <converter:CompassToAngleConverter  x:Key="CompassToAngleConverter"/>
     </UserControl.Resources>
-    <Canvas Width="{Binding SquareDim, ElementName=mineUserControl}"
-            Height="{Binding SquareDim, ElementName=mineUserControl}">
+    <Canvas Width="{Binding ViewConstants.SquareDim}"
+            Height="{Binding ViewConstants.SquareDim}">
         <Grid x:Name="GridContainer" Height="Auto" Width="Auto">
 
-            <Image Width="{Binding SquareDim, ElementName=mineUserControl}" 
-               Height="{Binding SquareDim, ElementName=mineUserControl}" 
+            <Image Width="{Binding ViewConstants.SquareDim}" 
+               Height="{Binding ViewConstants.SquareDim}" 
                 Source="/RoRClient;component/Resources/Images/mine.png" Stretch="Fill">
                 <Image.LayoutTransform>
                     <TransformGroup>
@@ -29,18 +29,16 @@
                     <MouseBinding MouseAction="LeftClick" Command="{Binding SelectInteractiveGameObjectCommand}"></MouseBinding>
                 </Image.InputBindings>
             </Image>
-            <Grid Height="25" Width="50">
+            <Grid Height="{Binding ViewConstants.MineResourcesDim}" Width="{Binding ViewConstants.SquareDim}">
                 <Grid.Background>
                     <SolidColorBrush Color="White" Opacity="0.3"/>
                 </Grid.Background>
-                <Image x:Name="Bild0" Width="25" Height="25" HorizontalAlignment="left" Source="/RoRClient;component/Resources/Images/container_gold.png"/>
-                <Label x:Name="Text0" FontSize="14" HorizontalAlignment="Left" Content="{Binding Path=Mine.GoldCount, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" Foreground="#FFF9F9F9" />
+                <Image x:Name="Bild0" Width="{Binding ViewConstants.MineResourcesDim}" Height="{Binding ViewConstants.MineResourcesDim}" HorizontalAlignment="left" Source="/RoRClient;component/Resources/Images/container_gold.png"/>
+                <Label x:Name="Text0" Width="{Binding ViewConstants.MineResourcesDim}" Height="{Binding ViewConstants.MineResourcesDim}" FontSize="14" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Content="{Binding Path=Mine.GoldCount, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" Foreground="#FFF9F9F9" />
 
-                <Image Width="25" Height="25" HorizontalAlignment="Right" Source="/RoRClient;component/Resources/Images/container_coal.png"/>
-                <Label x:Name="Text1" FontSize="14" HorizontalAlignment="Right" Content="{Binding Path=Mine.CoalCount, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" Foreground="#FFF9F9F9" />
+                <Image Width="{Binding ViewConstants.MineResourcesDim}" Height="{Binding ViewConstants.MineResourcesDim}" HorizontalAlignment="Right" Source="/RoRClient;component/Resources/Images/container_coal.png"/>
+                <Label x:Name="Text1" Width="{Binding ViewConstants.MineResourcesDim}" Height="{Binding ViewConstants.MineResourcesDim}" FontSize="14" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Content="{Binding Path=Mine.CoalCount, UpdateSourceTrigger=PropertyChanged}"  VerticalAlignment="Center" Foreground="#FFF9F9F9" />
             </Grid>
-
-
         </Grid>
     </Canvas>
  </v:CanvasUserControl>

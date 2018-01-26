@@ -33,6 +33,7 @@ namespace RoRClient.ViewModels.Editor
             toolbarViewModel.PropertyChanged += OnSelectedToolChanged;
             this.taskFactory = taskFactory;
             EditorSession.GetInstance().PropertyChanged += OnEditorSessionChanged;
+            ViewConstants.PropertyChanged += OnViewConstantsChanged;
         }
 
         public CanvasEditorViewModel PreviousSelectedEditorCanvasViewModel
@@ -61,6 +62,38 @@ namespace RoRClient.ViewModels.Editor
                 if(_selectedEditorCanvasViewModel == null)
                 {
                     IsQuickNavigationVisible = false;
+                }
+
+                UpdateSelectedItemIsSwitch();
+            }
+        }
+
+        private void UpdateSelectedItemIsSwitch()
+        {
+            if (_selectedEditorCanvasViewModel is RailEditorViewModel)
+            {
+                RailEditorViewModel railEditorViewModel = (RailEditorViewModel)_selectedEditorCanvasViewModel;
+                SelectedItemIsSwitch = railEditorViewModel.Rail.IsSwitch;
+            }
+            else
+            {
+                SelectedItemIsSwitch = false;
+            }
+        }
+
+        private bool selectedItemIsSwitch;
+        public bool SelectedItemIsSwitch
+        {
+            get
+            {
+                return selectedItemIsSwitch;
+            }
+            set
+            {
+                if(selectedItemIsSwitch != value)
+                {
+                    selectedItemIsSwitch = value;
+                    OnPropertyChanged("SelectedItemIsSwitch");
                 }
             }
         }
@@ -443,9 +476,15 @@ namespace RoRClient.ViewModels.Editor
             {
                 map = EditorSession.GetInstance().Map;
                 InitSquares();
-                MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
-                MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+                MapWidth = map.Squares.GetLength(0) * ViewConstants.SquareDim;
+                MapHeight = map.Squares.GetLength(1) * ViewConstants.SquareDim;
             }
+        }
+
+        private void OnViewConstantsChanged(object sender, PropertyChangedEventArgs e)
+        {
+            MapWidth = map.Squares.GetLength(0) * ViewConstants.SquareDim;
+            MapHeight = map.Squares.GetLength(1) * ViewConstants.SquareDim;
         }
     }
 }

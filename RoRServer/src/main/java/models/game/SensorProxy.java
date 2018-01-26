@@ -44,13 +44,7 @@ public class SensorProxy implements ProxyObject {
 	/** 
 	 * In Arbeit
 	 */
-	public void dropResources() {
-		List<Square> squares = square.getNeighbouringSquares();
-		for (Cart cart : loco.getCarts()) {
-			if(cart.getResource() != null) {
-				Resource resource = cart.getResource();
-				cart.removeResourceFromCart();
-			}
-		}
+	public void dropResourcesFromTrain() {
+		loco.dropResources();
 	}
 }
