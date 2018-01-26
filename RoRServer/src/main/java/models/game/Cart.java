@@ -1,7 +1,6 @@
 package models.game;
 
 import exceptions.InvalidModelOperationException;
-import models.helper.CompassHelper;
 import models.session.GameSession;
 import models.session.GameSessionManager;
 import models.session.RoRSession;
@@ -164,6 +163,31 @@ public class Cart extends TickableGameObject implements PlaceableOnRail {
 	
 	public UUID getCurrentLocoId() {
 		return currentLocoId;
+	}
+
+	public void dropResource(Resource droppedResource) {
+		// TODO Auto-generated method stub
+		Square actSquare=GameSessionManager.getInstance().getGameSession().getMap().getSquareById(this.getSquareId());
+		for(Square nsquare:actSquare.getNeighbouringSquares()){
+			if(nsquare.getPlaceableOnSquare()==null){
+				nsquare.setPlaceableOnSquare(droppedResource);
+				System.out.println("Resource "+droppedResource.toString()+" ist auf Square X:"+nsquare.getXIndex()+" Y:"+nsquare.getYIndex());
+				notifyResourceDropped(nsquare,droppedResource);
+				break;
+			}
+		}
+	}
+
+	private void notifyResourceDropped(Square nsquare,Resource resource) {
+		// TODO Auto-generated method stub
+		MessageInformation messageInfo = new MessageInformation("UpdateDroppedResourcePosition");
+		messageInfo.putValue("cartId", this.getId());
+		messageInfo.putValue("currentLocoId", getCurrentLocoId());
+		messageInfo.putValue("droppedToSquareX", nsquare.getXIndex());
+		messageInfo.putValue("droppedToSquareY", nsquare.getYIndex());
+		messageInfo.putValue("resource", resource.name);
+		messageInfo.putValue("resourceId", resource.getId());
+		notifyChange(messageInfo);
 	}
 	
 	public UUID getPlayerId() {

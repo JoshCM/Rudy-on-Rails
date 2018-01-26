@@ -250,7 +250,7 @@ public abstract class Loco extends TickableGameObject {
 	private boolean checkForCollision(Rail rail){
 		List<Loco> locos = GameSessionManager.getInstance().getGameSession().getLocos();
 		for (Loco loco:locos) {
-			System.out.println(loco.getId());
+			
 			if(!(loco instanceof GhostLoco)) {
 				if (loco.getRail() == rail) {
 					return true;
@@ -295,9 +295,12 @@ public abstract class Loco extends TickableGameObject {
 		newRail = (Rail) retSquare.getPlaceableOnSquare();
 
 		if(checkForCollision(newRail)){
-
 			notifyLocoCrashed(newRail);
-			setSpeed(0);
+			changeSpeed(0);
+			for(Cart cart :getCarts()){
+				Resource droppedResource=cart.unloadResourceFromCart();
+				cart.dropResource(droppedResource);
+			}
 		}
 
 		if(retSquare.getPlaceableOnSquare() instanceof Rail) {

@@ -109,16 +109,14 @@ namespace RoRClient.ViewModels.Game
         {
             get
             {
-                foreach(CanvasGameViewModel canvasGameViewModel in locos)
+                foreach (CanvasGameViewModel canvasGameViewModel in locos)
                 {
-                    if(canvasGameViewModel is LocoGameViewModel)
-                    {
+                    if (!(canvasGameViewModel is CartGameViewModel)){
                         LocoGameViewModel locoViewModel = (LocoGameViewModel)canvasGameViewModel;
                         if (locoViewModel.Loco.PlayerId == ClientConnection.GetInstance().ClientId)
-                        {
                             return locoViewModel;
-                        }
                     }
+                
                 }
                 return null;
             }

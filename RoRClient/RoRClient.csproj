@@ -167,10 +167,8 @@
     <Compile Include="Commands\Game\Other\PlaceSensorCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateSignalsCommand.cs" />
-    <Compile Include="Commands\Game\Delete\DeletePlaceableCommand.cs" />
-    <Compile Include="Commands\Game\Other\EndGameCommand.cs" />
-    <Compile Include="Commands\Game\Other\RemoveResourceFromMineCommand.cs" />
-    <Compile Include="Commands\Game\Update\UpdateColorOfPlayerCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateDroppedResourcePositionCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateLocoCrashedCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateResourceLoadedOntoCartCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayertrainstationCommand.cs" />
