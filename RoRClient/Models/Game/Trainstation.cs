@@ -11,6 +11,7 @@ namespace RoRClient.Models.Game
         private List<Rail> trainstationRails;
         private Compass alignment;
         private Stock stock;
+        private Crane crane;
 
         public Trainstation(Guid id, Square square, List<Rail> trainstationRails, Compass alignment, Stock stock) : base(square)
         {
@@ -31,6 +32,22 @@ namespace RoRClient.Models.Game
         public Stock Stock
         {
             get { return stock; }
+        }
+
+
+        public Crane Crane
+        {
+            get
+            {
+                return crane;
+            }
+            set
+            {
+                if (crane == null)
+                {
+                    crane = value;
+                }
+            }
         }
 
         public Compass Alignment

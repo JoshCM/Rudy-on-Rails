@@ -6,6 +6,7 @@ using RoRClient.ViewModels.Commands;
 using RoRClient.ViewModels.Helper;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Linq;
 
 namespace RoRClient.ViewModels.Lobby
 {
@@ -31,6 +32,9 @@ namespace RoRClient.ViewModels.Lobby
             isHost = gameSession.OwnPlayer.IsHost;
             lobbyModel.ReadMapInfos();
             lobbyModel.ReadGameInfos();
+
+            // initial kann kein spiel gestartet werden
+            CanStartGame = false;
         }
 
 		/// <summary>
@@ -199,14 +203,19 @@ namespace RoRClient.ViewModels.Lobby
             {
                 if (IsHost)
                 {
-                    if (gameSession.MapName != "" && gameSession.Players.Count <= lobbyModel.MapInfos.Count)
-                        CanStartGame = true;
+                    CanStartGame = gameSession.MapName != "" && gameSession.Players.Count <= selectedMapInfo.AvailablePlayerSlots;
                 }
                 else
                 {
-                    selectedMapInfo.Name = gameSession.MapName;
+                    selectedMapInfo = LobbyModel.MapInfos.Where(x => x.Name == gameSession.MapName).FirstOrDefault();
                 }
                    
+            }else if(e.PropertyName == "Players")
+            {
+                if (IsHost)
+                {
+                    CanStartGame = gameSession.MapName != "" && gameSession.Players.Count <= lobbyModel.MapInfos.Count;
+                }
             }
         }
     }
