@@ -23,7 +23,7 @@ namespace RoRClient.BindingConverter
         {
             bool boolValue = (bool)value;
 
-            if(boolValue)
+            if(!boolValue) // inactive == ich darf drüber fahren
             {
                 return IMAGE_FOLDER_PATH + "signal_green.png";
             } else

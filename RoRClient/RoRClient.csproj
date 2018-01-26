@@ -100,18 +100,22 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BindingConverter\BooleanToOpacityConverter.cs" />
+    <Compile Include="BindingConverter\BooleanToSensorImagePathConverter.cs" />
     <Compile Include="BindingConverter\BooleanToSignalImagePathConverter.cs" />
     <Compile Include="BindingConverter\BooleanToVisibilityConverter.cs" />
     <Compile Include="BindingConverter\ObjectEqualsConverter.cs" />
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
+    <Compile Include="BindingConverter\PlayerToImagePathConverter.cs" />
     <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
     <Compile Include="BindingConverter\IsNullToBooleanConverter.cs" />
+    <Compile Include="BindingConverter\ResourceToImagePathConverter.cs" />
     <Compile Include="BindingConverter\RailSectionToImagePathConverter.cs" />
     <Compile Include="BindingConverter\CompassToAngleConverter.cs" />
     <Compile Include="Commands\Base\ChangeMapSelectionCommandBase.cs" />
     <Compile Include="Commands\Base\CommandBase.cs" />
     <Compile Include="Commands\Base\DeletePlaceableCommandBase.cs" />
     <Compile Include="Commands\Base\CreatePublictrainstationCommandBase.cs" />
+    <Compile Include="Commands\Base\InitMapSizeCommandBase.cs" />
     <Compile Include="Commands\Base\UpdateActivityOfSignalsCommandBase.cs" />
     <Compile Include="Commands\Base\CreateSignalsCommandBase.cs" />
     <Compile Include="Commands\Base\CreateCraneCommandBase.cs" />
@@ -121,6 +125,8 @@
     <Compile Include="Commands\Base\CreatePlayertrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
     <Compile Include="Commands\Editor\Create\CreatePublictrainstationCommand.cs" />
+    <Compile Include="Commands\Editor\Delete\DeleteCraneCommand.cs" />
+    <Compile Include="Commands\Editor\Other\InitMapSizeCommand.cs" />
     <Compile Include="Commands\Editor\Other\LeaveEditorCommand.cs" />
     <Compile Include="Commands\Editor\Update\UpdateActivityOfSignalsCommand.cs" />
     <Compile Include="Commands\Editor\Create\CreateSignalsCommand.cs" />
@@ -154,10 +160,16 @@
     <Compile Include="Commands\Game\Create\CreatePlayerCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePublictrainstationCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
+    <Compile Include="Commands\Game\Delete\DeleteSensorCommand.cs" />
+    <Compile Include="Commands\Game\Other\InitMapSizeCommand.cs" />
+    <Compile Include="Commands\Game\Other\SwitchSensorCommand.cs" />
+    <Compile Include="Commands\Game\Other\PlaceSensorCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateSignalsCommand.cs" />
     <Compile Include="Commands\Game\Delete\DeletePlaceableCommand.cs" />
+    <Compile Include="Commands\Game\Other\EndGameCommand.cs" />
     <Compile Include="Commands\Game\Other\RemoveResourceFromMineCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateColorOfPlayerCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateResourceLoadedOntoCartCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayertrainstationCommand.cs" />
@@ -170,6 +182,7 @@
     <Compile Include="Commands\Game\Update\UpdateLocoPositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoSpeedCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateNodesOfRailSectionCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateResourcesOfPlayerCommand.cs" />
     <Compile Include="Communication\Dispatcher\QueueDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicEditorDispatcher.cs" />
@@ -192,6 +205,7 @@
     <Compile Include="Models\Game\GamePlayer.cs" />
     <Compile Include="Models\Game\GhostLoco.cs" />
     <Compile Include="Models\Game\Crane.cs" />
+    <Compile Include="Models\Game\PointContainer.cs" />
     <Compile Include="Models\Game\Gold.cs" />
     <Compile Include="Models\Game\Loco.cs" />
     <Compile Include="Models\Game\Mine.cs" />
@@ -200,6 +214,7 @@
     <Compile Include="Models\Game\Publictrainstation.cs" />
     <Compile Include="Models\Game\RailSectionStatus.cs" />
     <Compile Include="Models\Game\Resource.cs" />
+    <Compile Include="Models\Game\Sensor.cs" />
     <Compile Include="Models\Game\Script.cs" />
     <Compile Include="Models\Game\Scripts.cs" />
     <Compile Include="Models\Game\Stock.cs" />
@@ -232,8 +247,10 @@
     <Compile Include="ViewModels\Game\CoalGameViewModel.cs" />
     <Compile Include="ViewModels\Game\ContainerGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GameInteractionsViewModel.cs" />
+    <Compile Include="ViewModels\Game\GameResultViewModel.cs" />
     <Compile Include="ViewModels\Game\GameStatusViewModel.cs" />
     <Compile Include="ViewModels\Game\CraneGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\PointContainerGameViewModel.cs" />
     <Compile Include="ViewModels\Game\PlayerLocoGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GoldGameViewModel.cs" />
     <Compile Include="ViewModels\Game\GhostLocoGameViewModel.cs" />
@@ -259,6 +276,7 @@
     <Compile Include="ViewModels\Lobby\GameLobbyViewModel.cs" />
     <Compile Include="ViewModels\Lobby\JoinGameLobbyViewModel.cs" />
     <Compile Include="ViewModels\Lobby\JoinEditorLobbyViewModel.cs" />
+    <Compile Include="ViewModels\Lobby\PossibleMapSize.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Lobby\StartViewModel.cs" />
     <Compile Include="ViewModels\Editor\SquareEditorViewModel.cs" />
@@ -330,6 +348,12 @@
     </Compile>
     <Compile Include="Views\Game\GameInteractionUserControl.xaml.cs">
       <DependentUpon>GameInteractionUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\GameResultView.xaml.cs">
+      <DependentUpon>GameResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Game\PointContainerGameUserControl.xaml.cs">
+      <DependentUpon>PointContainerGameUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\GoldGameUserControl.xaml.cs">
       <DependentUpon>GoldGameUserControl.xaml</DependentUpon>
@@ -439,6 +463,14 @@
     <Page Include="Views\Game\GameInteractionUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game\GameResultView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Game\PointContainerGameUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Game\GoldGameUserControl.xaml">
       <SubType>Designer</SubType>
@@ -618,14 +650,13 @@
   <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Images\dummy.png" />
-    <Resource Include="Resources\Images\trainstation.png" />
+    <Resource Include="Resources\Images\trainstation_0.png" />
     <Resource Include="Resources\Images\game_minimap_dummy.png" />
     <Resource Include="Resources\Images\game_map_dummy.jpg" />
     <Resource Include="Resources\Images\rotate_right.png" />
     <Resource Include="Resources\Images\rotate_left.png" />
     <Resource Include="Resources\Images\delete.png" />
     <Resource Include="Resources\Images\move.png" />
-    <Resource Include="Resources\Images\loco.png" />
     <Resource Include="Resources\Images\container_coal.png" />
     <Resource Include="Resources\Images\container_gold.png" />
     <Resource Include="Resources\Images\Tools\crossing\rail_crossing.png" />
@@ -634,7 +665,6 @@
     <Resource Include="Resources\Images\signal_green.png" />
     <Resource Include="Resources\Images\signal_red.png" />
     <Resource Include="Resources\Images\loco_debug.png" />
-    <Resource Include="Resources\Images\loco_4.png" />
     <Resource Include="Resources\Images\cart.png" />
     <Resource Include="Resources\Images\Tools\crossing\rail_crossing_with_signals.png" />
     <Resource Include="Resources\Images\mine.png" />
@@ -642,9 +672,8 @@
     <Resource Include="Resources\Images\ghosttrain.png" />
     <Resource Include="Resources\Images\gras.jpg" />
     <Resource Include="Resources\Images\stock.png" />
-    <Resource Include="Resources\Images\stock_cart_1.png" />
-    <Resource Include="Resources\Images\Tools\trainstations\trainstation1.png" />
-    <Resource Include="Resources\Images\stock_container_1.png" />
+    <Resource Include="Resources\Images\stock_cart_0.png" />
+    <Resource Include="Resources\Images\Tools\trainstations\playertrainstation.png" />
     <Resource Include="Resources\Images\container_points.png" />
     <Resource Include="Resources\Images\btn_back.png" />
     <Resource Include="Resources\Images\crane.png" />
@@ -655,26 +684,19 @@
     <Resource Include="Resources\Images\Tools\rail\railcurve_sw.png" />
     <Resource Include="Resources\Images\Tools\rail\rail_ew.png" />
     <Resource Include="Resources\Images\Tools\rail\rail_ns.png" />
-    <Resource Include="Resources\Images\Tools\trainstations\trainstation2.png" />
-    <Resource Include="Resources\Images\Tools\trainstations\trainstation3.png" />
-    <Resource Include="Resources\Images\Tools\trainstations\trainstation4.png" />
+    <Resource Include="Resources\Images\trainstation_1.png" />
+    <Resource Include="Resources\Images\trainstation_2.png" />
+    <Resource Include="Resources\Images\trainstation_3.png" />
     <Resource Include="Resources\Images\ghostcrane.png" />
-    <Resource Include="Resources\Images\loco_2.png" />
-    <Resource Include="Resources\Images\loco_3.png" />
     <Resource Include="Resources\Images\rail_EAST_NORTH.png" />
     <Resource Include="Resources\Images\rail_NORTH_WEST.png" />
     <Resource Include="Resources\Images\rail_EAST_SOUTH.png" />
     <Resource Include="Resources\Images\rail_SOUTH_WEST.png" />
     <Resource Include="Resources\Images\rail_EAST_WEST.png" />
     <Resource Include="Resources\Images\rail_NORTH_SOUTH.png" />
-    <Resource Include="Resources\Images\sensor_aktiv.png" />
-    <Resource Include="Resources\Images\sensor_inaktiv.png" />
+    <Resource Include="Resources\Images\stock_cart_1.png" />
     <Resource Include="Resources\Images\stock_cart_2.png" />
     <Resource Include="Resources\Images\stock_cart_3.png" />
-    <Resource Include="Resources\Images\stock_cart_4.png" />
-    <Resource Include="Resources\Images\stock_container_2.png" />
-    <Resource Include="Resources\Images\stock_container_3.png" />
-    <Resource Include="Resources\Images\stock_container_4.png" />
     <Resource Include="Resources\Images\changeSwitch.png" />
     <Resource Include="Resources\Images\rail_EAST_NORTH_inactive.png" />
     <Resource Include="Resources\Images\rail_EAST_SOUTH_inactive.png" />
@@ -687,6 +709,16 @@
     <Resource Include="Resources\Images\Tools\switch\switch_sn_sw.png" />
     <Resource Include="Resources\Images\Tools\trainstations\publictrainstation.png" />
     <Resource Include="Resources\Images\stock_container_public_ts.png" />
+    <Resource Include="Resources\Images\loco_0.png" />
+    <Resource Include="Resources\Images\loco_1.png" />
+    <Resource Include="Resources\Images\loco_2.png" />
+    <Resource Include="Resources\Images\loco_3.png" />
+    <Resource Include="Resources\Images\stock_container_0.png" />
+    <Resource Include="Resources\Images\stock_container_1.png" />
+    <Resource Include="Resources\Images\stock_container_2.png" />
+    <Resource Include="Resources\Images\stock_container_3.png" />
+    <Resource Include="Resources\Images\sensor_active.png" />
+    <Resource Include="Resources\Images\sensor_inactive.png" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

@@ -12,6 +12,7 @@ namespace RoRClient.Models.Session
     public class GameSession : RoRSession
     {
         private static GameSession gameSession = null;
+        private GamePlayer winningPlayer;
         protected ObservableCollection<Loco> locos = new ObservableCollection<Loco>();
         protected ObservableCollection<Mine> mines = new ObservableCollection<Mine>();
         protected ObservableCollection<Cart> carts = new ObservableCollection<Cart>();
@@ -41,6 +42,19 @@ namespace RoRClient.Models.Session
             get
             {
                 return locos;
+            }
+        }
+
+        public GamePlayer WinningPlayer
+        {
+            get
+            {
+                return winningPlayer;
+            }
+            set
+            {
+                winningPlayer = value;
+                NotifyPropertyChanged("WinningPlayer");
             }
         }
 

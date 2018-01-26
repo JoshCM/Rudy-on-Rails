@@ -2,6 +2,7 @@ package models.game;
 
 import communication.MessageInformation;
 import models.session.GameSession;
+import models.session.RoRSession;
 
 /**
  * @author Andreas Pöhler, Juliane Lies, Isabell Rott
@@ -16,6 +17,11 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
 		super(sessionName, square);
 		this.name = name;
 		notifyCreatedResource();	
+	}
+	
+	protected Resource(String sessionName, String name) {
+		super(sessionName, new Square(sessionName, -1, -1));
+		this.name = name;
 	}
 	
 	/**
@@ -46,5 +52,10 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	@Override
+	public PlaceableOnSquare loadFromMap(Square square, RoRSession session) {
+		return null;
 	}
 }

@@ -28,6 +28,7 @@
                                  Grid.Column="0"
                                  Grid.ColumnSpan="3" 
                                  DataContext="{Binding MapGameViewModel}"/>
+        <game:GameInteractionUserControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
 
         <game:TopMenuUserControl Grid.Row="0"
                                    Grid.Column="1"

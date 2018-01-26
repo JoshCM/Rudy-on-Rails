@@ -102,7 +102,7 @@ public class MapManager {
 	public static void saveMap(Map map) {
 		String jsonMap = convertMapToJson(map);
 		log.info("Gespeicherte Map: " + jsonMap);
-		saveToFile(jsonMap, map.getDescription());
+		saveToFile(jsonMap, map.getName());
 	}
 
 	public static String convertMapToJson(Map map) {
@@ -117,6 +117,15 @@ public class MapManager {
 	
 	public static int loadAvailablePlayerSlots(String mapName) throws MapNotFoundException {
 		return loadMap(mapName).getAvailablePlayerSlots();
+	}
+	
+	public static int getAvailablePlayerSlots(String mapName) {
+		String jsonMap = readFromFile(mapName);
+		String searchString = "availablePlayerSlots\": ";
+		int indexOfAvailablePlayerSlots = jsonMap.indexOf(searchString) + searchString.length();
+		int indexOfEndOfAvailablePlayerSlots = jsonMap.substring(indexOfAvailablePlayerSlots).indexOf(",") + indexOfAvailablePlayerSlots;
+		int availablePlayerSlots = Integer.parseInt(jsonMap.substring(indexOfAvailablePlayerSlots, indexOfEndOfAvailablePlayerSlots));
+		return availablePlayerSlots;
 	}
 
 	/**

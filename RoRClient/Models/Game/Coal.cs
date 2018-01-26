@@ -11,12 +11,9 @@ namespace RoRClient.Models.Game
     /// </summary>
     public class Coal : Resource, IPlaceableOnSquare
     {
-
-        private Square square;
         public Coal(Guid id, Square square) : base(id, square)
         {
             this.id = id;
-            this.square = square;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace RoRClient.Models.Session
 
         public RoRSession()
         {
-            map = new Map();
+            map = new Map(50);
         }
 
         public string Name
@@ -46,7 +46,6 @@ namespace RoRClient.Models.Session
             queueSender = new QueueSender(topicName);
         }
 
-
         public Map Map
         {
             get
@@ -56,6 +55,7 @@ namespace RoRClient.Models.Session
             set
             {
                 map = value;
+                NotifyPropertyChanged("Map");
             }
         }
 

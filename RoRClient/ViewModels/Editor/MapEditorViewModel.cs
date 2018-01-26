@@ -30,12 +30,9 @@ namespace RoRClient.ViewModels.Editor
         {
             this.toolbarViewModel = toolbarViewModel;
             map = EditorSession.GetInstance().Map;
-            InitSquares();
-            MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
-            MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
-
             toolbarViewModel.PropertyChanged += OnSelectedToolChanged;
             this.taskFactory = taskFactory;
+            EditorSession.GetInstance().PropertyChanged += OnEditorSessionChanged;
         }
 
         public CanvasEditorViewModel PreviousSelectedEditorCanvasViewModel
@@ -372,9 +369,17 @@ namespace RoRClient.ViewModels.Editor
         /// </summary>
        private void ChangeSwitch()
         {
-            RailEditorViewModel railEditorViewModel = (RailEditorViewModel)SelectedEditorCanvasViewModel;
-            railEditorViewModel.ChangeSwitch();
+
+            if (SelectedEditorCanvasViewModel is RailEditorViewModel)
+            { 
+                RailEditorViewModel railEditorViewModel = (RailEditorViewModel)SelectedEditorCanvasViewModel;
+                if (railEditorViewModel != null)
+                {
+                    railEditorViewModel.ChangeSwitch();
+                }
+            }
         }
+
 
         /// <summary>
         /// Command für Delete erstellen
@@ -430,6 +435,17 @@ namespace RoRClient.ViewModels.Editor
 
 	        // Quicknavigation nach dem Verschieben nicht mehr anzeigen
             IsQuickNavigationVisible = false;
+        }
+
+        private void OnEditorSessionChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Map")
+            {
+                map = EditorSession.GetInstance().Map;
+                InitSquares();
+                MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
+                MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+            }
         }
     }
 }

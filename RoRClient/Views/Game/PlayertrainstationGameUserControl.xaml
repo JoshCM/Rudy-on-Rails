@@ -14,7 +14,10 @@
     </UserControl.Resources>
     <Canvas Width="{Binding SquareDim, ElementName=playertrainstationGameUserControl}"
             Height="{Binding SquareDim, ElementName=playertrainstationGameUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=playertrainstationGameUserControl}" Height="{Binding SquareDim, ElementName=playertrainstationGameUserControl}" Source="pack://application:,,,/Resources/Images/trainstation.png">
+        <Image Width="{Binding SquareDim, ElementName=playertrainstationGameUserControl}" Height="{Binding SquareDim, ElementName=playertrainstationGameUserControl}" Source="pack://application:,,,/Resources/Images/trainstation_0.png">
+            <Image.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding SelectedTrainstationObjectCommand}"></MouseBinding>
+            </Image.InputBindings>
             <Image.LayoutTransform>
                 <TransformGroup>
                     <RotateTransform Angle="{Binding Playertrainstation.Alignment, Mode=OneWay, Converter={StaticResource TrainstationAlignmentToAngleConverter}}" />
