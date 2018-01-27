@@ -344,11 +344,13 @@ public abstract class Loco extends TickableGameObject {
 	 */
 	private void notifyLocoPositionChanged() {
 		MessageInformation messageInfo = new MessageInformation("UpdateLocoPosition");
-		messageInfo.putValue("locoId", getId());
-		messageInfo.putValue("xPos", getXPos());
-		messageInfo.putValue("yPos", getYPos());
-		messageInfo.putValue("drivingDirection", drivingDirection.toString());
-		notifyChange(messageInfo);
+		if(drivingDirection!= null) {
+			messageInfo.putValue("locoId", getId());
+			messageInfo.putValue("xPos", getXPos());
+			messageInfo.putValue("yPos", getYPos());
+			messageInfo.putValue("drivingDirection", drivingDirection.toString());
+			notifyChange(messageInfo);
+		}
 	}
 
 	private void notifyCartToLocoAdded(Cart cart) {
