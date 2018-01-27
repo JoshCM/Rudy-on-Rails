@@ -431,7 +431,11 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 
         // Neues Rail erstellen und damit an den Client schicken
         if (rail instanceof Switch) {
-            newRail = new Switch(session.getSessionName(), square, railSectionPosition);
+            if (rail.getTrainstationId() != null) {
+                newRail = new Switch(session.getSessionName(), square, railSectionPosition, rail.getTrainstationId(), rail.getId());
+            } else {
+                newRail = new Switch(session.getSessionName(), square, railSectionPosition);
+            }
         } else {
             newRail = new Rail(session.getSessionName(), square, railSectionPosition, createSignals, trainstationId, rail.getId());
         }
