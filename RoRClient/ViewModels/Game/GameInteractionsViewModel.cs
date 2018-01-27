@@ -251,9 +251,10 @@ namespace RoRClient.ViewModels.Game
         /// </summary>
         private void ExchangeResource()
         {
+            RoRSession gameSession = GameSession.GetInstance();
             MessageInformation messageInformation = new MessageInformation();
-            messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
-            // TrainstaitionId muss noch mitgegeben werden
+            messageInformation.PutValue("playerId", gameSession.OwnPlayer.Id);
+            messageInformation.PutValue("trainstationId", ((GameSession)gameSession).GetTradeableTrainstation().Id);
 
             if (SelectedResource == "Gold zu Kohle tauschen")
             {

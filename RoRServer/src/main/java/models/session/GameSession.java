@@ -12,6 +12,7 @@ import models.game.GamePlayer;
 import models.game.Loco;
 import models.game.Mine;
 import models.game.PlayerLoco;
+import models.game.Publictrainstation;
 import models.game.Player;
 import models.game.TickableGameObject;
 import models.scripts.ScriptableObject;
@@ -34,6 +35,7 @@ public class GameSession extends RoRSession implements ModelObserver {
 	private Ticker ticker;
 	private ArrayList<Mine> mines=new ArrayList<>();
 	private ArrayList<Loco> locos = new ArrayList<>();
+	private ArrayList<Publictrainstation> publictrainstations = new ArrayList<>();
 	private Scripts scripts;
 	private int availablePlayerSlots;
 	private ScriptableObjectManager scriptableObjectManager;
@@ -152,6 +154,21 @@ public class GameSession extends RoRSession implements ModelObserver {
 		}
 	}
 	
+	public void addPublictrainstation(Publictrainstation publictrainstation) {
+		if(publictrainstation != null) {
+			publictrainstations.add(publictrainstation);
+		}
+	}
+	
+	public Publictrainstation getPublictrainstationById(UUID id) {
+		for (Publictrainstation t : publictrainstations) {
+			if (t.getId().toString().equals(id.toString())) {
+				return t;
+			}
+		}
+		return null;
+	}
+	
 	@Override
 	protected void notifyPlayerLeft(Player player) {
 		MessageInformation message = new MessageInformation("LeaveGame");
@@ -169,7 +186,6 @@ public class GameSession extends RoRSession implements ModelObserver {
 		
 	}
 	
-
 	public List<Loco> getLocos() {
 		return locos;
 	}

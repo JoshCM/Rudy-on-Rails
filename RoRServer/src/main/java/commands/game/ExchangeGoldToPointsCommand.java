@@ -6,7 +6,6 @@ import java.util.UUID;
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import models.game.Cart;
-import models.game.Coal;
 import models.game.Gold;
 import models.game.Loco;
 import models.game.PointContainer;
@@ -17,16 +16,18 @@ import models.session.RoRSession;
 public class ExchangeGoldToPointsCommand extends CommandBase {
 	
 	private UUID playerId;
+	private UUID trainstationId;
 
 	public ExchangeGoldToPointsCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		this.playerId = messageInfo.getValueAsUUID("playerId");
+		this.trainstationId = messageInfo.getValueAsUUID("trainstationId");
 	}
 
 	@Override
 	public void execute() {
         GameSession gameSession = (GameSession)session;
-        Publictrainstation trainstation;
+        Publictrainstation trainstation = gameSession.getPublictrainstationById(trainstationId);
         Loco loco = gameSession.getLocomotiveByPlayerId(playerId);
         
         List<Cart> carts = loco.getCarts();

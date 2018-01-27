@@ -36,7 +36,7 @@ namespace RoRClient.ViewModels.Game
             MessageInformation message = new MessageInformation();
             message.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
             message.PutValue("publicTrainstationId", Id);
-            GameSession.GetInstance().QueueSender.SendMessage("ActiveTradeReation", message);
+            GameSession.GetInstance().QueueSender.SendMessage("ActivateTradeMenu", message);
         }
     }
 }

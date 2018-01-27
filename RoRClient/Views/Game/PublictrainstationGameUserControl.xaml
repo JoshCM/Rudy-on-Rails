@@ -14,7 +14,7 @@
     </UserControl.Resources>
     <Canvas Width="{Binding ViewConstants.SquareDim}"
             Height="{Binding ViewConstants.SquareDim}">
-        <Image Width="{Binding ViewConstants.SquareDim}" Height="{Binding ViewConstants.SquareDim}" Source="pack://application:,,,/Resources/Images/trainstation_0.png">
+        <Image Width="{Binding ViewConstants.SquareDim}" Height="{Binding ViewConstants.SquareDim}" Source="pack://application:,,,/Resources/Images/trainstation_public.png">
             <Image.LayoutTransform>
                 <TransformGroup>
                     <RotateTransform Angle="{Binding Publictrainstation.Alignment, Mode=OneWay, Converter={StaticResource TrainstationAlignmentToAngleConverter}}" />

@@ -144,7 +144,7 @@ public class Publictrainstation extends Trainstation {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Playertrainstation other = (Playertrainstation) obj;
+		Publictrainstation other = (Publictrainstation) obj;
 		if (CLOCKWISE != other.CLOCKWISE)
 			return false;
 		if (COUNTER_CLOCKWISE != other.COUNTER_CLOCKWISE)

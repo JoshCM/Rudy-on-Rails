@@ -16,16 +16,18 @@ import models.session.RoRSession;
 public class ExchangeGoldToCoalCommand extends CommandBase {
 	
 	private UUID playerId;
+	private UUID trainstationId;
 
 	public ExchangeGoldToCoalCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		this.playerId = messageInfo.getValueAsUUID("playerId");
+		this.trainstationId = messageInfo.getValueAsUUID("trainstationId");
 	}
 
 	@Override
 	public void execute() {
         GameSession gameSession = (GameSession)session;
-        Publictrainstation trainstation;
+        Publictrainstation trainstation = gameSession.getPublictrainstationById(trainstationId);
         Loco loco = gameSession.getLocomotiveByPlayerId(playerId);
         
         List<Cart> carts = loco.getCarts();
