@@ -12,7 +12,7 @@ using static RoRClient.Models.Game.GamePlayer;
 
 namespace RoRClient.BindingConverter
 {
-    class EditorPlayerToImagePathConverter : IValueConverter
+    class EditorStockToImagePathConverter : IValueConverter
     {
         private const string IMAGE_FOLDER_PATH = "..\\..\\Resources\\Images\\";
         private const string STOCK_IMAGE_START = "stock_container_";

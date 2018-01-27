@@ -12,11 +12,11 @@
              Canvas.Left="{Binding RealX, ElementName=stockEditorUserControl}">
     <UserControl.Resources>
         <converter:CompassToAngleConverter x:Key="CompassToAngleConverter"/>
-        <converter:EditorPlayerToImagePathConverter x:Key="EditorPlayerToImagePathConverter"/>
+        <converter:EditorStockToImagePathConverter x:Key="EditorStockToImagePathConverter"/>
     </UserControl.Resources>
     <Canvas Width="{Binding ViewConstants.SquareDim}"
             Height="{Binding ViewConstants.SquareDim}">
-        <Image Width="{Binding ViewConstants.SquareDim}" Height="{Binding ViewConstants.SquareDim}" Source="{Binding Stock, Converter={StaticResource EditorPlayerToImagePathConverter}}">
+        <Image Width="{Binding ViewConstants.SquareDim}" Height="{Binding ViewConstants.SquareDim}" Source="{Binding Stock, Converter={StaticResource EditorStockToImagePathConverter}}">
             <Image.LayoutTransform>
                 <TransformGroup>
                     <RotateTransform Angle="{Binding Stock.Alignment, Mode=OneWay, Converter={StaticResource CompassToAngleConverter}}" />

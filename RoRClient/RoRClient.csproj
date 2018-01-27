@@ -105,7 +105,7 @@
     <Compile Include="BindingConverter\BooleanToVisibilityConverter.cs" />
     <Compile Include="BindingConverter\ObjectEqualsConverter.cs" />
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
-    <Compile Include="BindingConverter\EditorPlayerToImagePathConverter.cs" />
+    <Compile Include="BindingConverter\EditorStockToImagePathConverter.cs" />
     <Compile Include="BindingConverter\PlayerToImagePathConverter.cs" />
     <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
     <Compile Include="BindingConverter\IsNullToBooleanConverter.cs" />
