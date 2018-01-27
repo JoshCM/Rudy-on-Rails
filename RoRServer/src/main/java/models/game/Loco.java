@@ -265,7 +265,6 @@ public abstract class Loco extends TickableGameObject {
 				}
 
 				for (Cart cart : loco.getCarts()) {
-
 					if (cart.getRail() == rail) {
 						return true;
 					}
@@ -303,13 +302,11 @@ public abstract class Loco extends TickableGameObject {
 		}
 
 		newRail = (Rail) retSquare.getPlaceableOnSquare();
-		if (!(this instanceof GhostLoco)) {
-			if (checkForCollision(newRail)) {
-				notifyLocoCrashed(newRail);
-				changeSpeed(0);
-				dropByCollide();
-				removeCartsExceptInitial();
-			}
+		if (checkForCollision(newRail)) {
+			notifyLocoCrashed(newRail);
+			changeSpeed(0);
+			dropByCollide();
+			removeCartsExceptInitial();
 		}
 
 		if (retSquare.getPlaceableOnSquare() instanceof Rail) {

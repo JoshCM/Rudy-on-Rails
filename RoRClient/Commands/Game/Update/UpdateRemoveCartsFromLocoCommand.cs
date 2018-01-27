@@ -22,8 +22,7 @@ namespace RoRClient.Commands.Game.Update
         {
             Guid locoId = message.GetValueAsGuid("locoId");
             Loco tempLoco=GameSession.GetInstance().GetLocoById(locoId);
-            tempLoco.RemoveCartsExceptInitial();
-            
+            tempLoco.RemoveCartsExceptInitial(); 
         }
     }
 }
