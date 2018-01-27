@@ -9,7 +9,7 @@
              VerticalAlignment="Stretch"
              HorizontalContentAlignment="Stretch"
              VerticalContentAlignment="Stretch"
-             d:DesignHeight="1050" d:DesignWidth="1680"
+             d:DesignHeight="900" d:DesignWidth="1600"
              >
     <UserControl.InputBindings>
         <KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding TopMenuViewModel.SaveMapCommand}"/>

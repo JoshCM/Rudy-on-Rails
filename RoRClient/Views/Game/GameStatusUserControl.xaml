@@ -12,19 +12,61 @@
             <Image Width="40" 
                    Height="40"
                    Source="/RoRClient;component/Resources/Images/container_coal.png" Stretch="Uniform"/>
-            <Label Content="{Binding GamePlayer.CoalCount}" MinHeight="20" MinWidth="50" HorizontalContentAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="White"/>
+            <TextBlock Text="{Binding GamePlayer.CoalCount, NotifyOnTargetUpdated=True}" MinHeight="20" MinWidth="50" HorizontalAlignment="Center" TextAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="White">
+                <TextBlock.Triggers>
+                    <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation 
+                                Storyboard.TargetProperty="FontSize"             
+                                From="20" 
+                                To="14" 
+                                Duration="0:0:1"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </TextBlock.Triggers>
+            </TextBlock>
         </StackPanel>
         <StackPanel Orientation="Vertical" Margin="10,0,10,0">
             <Image Width="40" 
                    Height="40"
                    Source="/RoRClient;component/Resources/Images/container_gold.png" Stretch="Uniform"/>
-            <Label Content="{Binding GamePlayer.GoldCount}" MinHeight="20" MinWidth="50" HorizontalContentAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="White"/>
+            <TextBlock Text="{Binding GamePlayer.GoldCount, NotifyOnTargetUpdated=True}" MinHeight="20" MinWidth="50" HorizontalAlignment="Center" TextAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="White">
+                <TextBlock.Triggers>
+                    <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation 
+                                Storyboard.TargetProperty="FontSize"             
+                                From="20" 
+                                To="14" 
+                                Duration="0:0:1"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </TextBlock.Triggers>
+            </TextBlock>
         </StackPanel>
         <StackPanel Orientation="Vertical" Margin="10,0,10,0">
             <Image Width="40" 
                    Height="40"
                    Source="/RoRClient;component/Resources/Images/container_points.png" Stretch="Uniform"/>
-            <Label Content="{Binding GamePlayer.PointCount}" MinHeight="20" MinWidth="50" HorizontalContentAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="White"/>
+            <TextBlock Text="{Binding GamePlayer.PointCount, NotifyOnTargetUpdated=True}" MinHeight="20" MinWidth="50" HorizontalAlignment="Center" TextAlignment="Center" FontSize="14" FontWeight="Bold" Foreground="White">
+                <TextBlock.Triggers>
+                    <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation 
+                                Storyboard.TargetProperty="FontSize"             
+                                From="20" 
+                                To="14" 
+                                Duration="0:0:1"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </TextBlock.Triggers>
+            </TextBlock>
         </StackPanel>
     </StackPanel>
 </UserControl>
