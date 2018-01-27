@@ -83,11 +83,13 @@ namespace RoRClient.Models.Session
         public void AddPlayer(Player player)
         {
             players.Add(player);
+            NotifyPropertyChanged("Players");
         }
 
         public void RemovePlayer(Player player)
         {
             players.Remove(player);
+            NotifyPropertyChanged("Players");
         }
 
         public Player GetPlayerById(Guid playerId)

@@ -19,6 +19,14 @@ public class Playertrainstation extends Trainstation {
 		this.setPlayerId(playerId);
 		notifyCreatedPlayertrainstation();
 	}
+	
+	public Playertrainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment,
+			Stock stock, UUID playerId,Crane crane) {
+		super(sessionName, square, trainstationRailIds, id, alignment, stock);
+		this.setPlayerId(playerId);
+		this.crane = crane;
+		notifyCreatedPlayertrainstation();
+	}
 
 	public void setSpawnPointforLoco(UUID railId) {
 		spawnPointForLoco = railId;
@@ -48,6 +56,10 @@ public class Playertrainstation extends Trainstation {
 		MessageInformation messageInfo = new MessageInformation("CreatePlayertrainstation");
 		messageInfo.putValue("playerId", getPlayerId());
 		messageInfo.putValue("trainstationId", getId());
+		if(this.crane != null) {
+			messageInfo.putValue("craneXPos", this.crane.getXPos());
+			messageInfo.putValue("craneYPos", this.crane.getYPos());
+		}
 		messageInfo.putValue("alignment", alignment);
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
@@ -67,8 +79,7 @@ public class Playertrainstation extends Trainstation {
 	public Playertrainstation loadFromMap(Square square, RoRSession session) {
 		Playertrainstation oldTrainStation = (Playertrainstation) square.getPlaceableOnSquare();
 		Playertrainstation newTrainStation = new Playertrainstation(session.getSessionName(), square,
-				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock(), oldTrainStation.getPlayerId());
-		
+				oldTrainStation.getTrainstationRailIds(), oldTrainStation.getId(), oldTrainStation.alignment, oldTrainStation.getStock(), oldTrainStation.getPlayerId(), oldTrainStation.crane);
 		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses Objekts mitbekommen kann
 		newTrainStation.setSessionName(session.getSessionName());
 		

@@ -22,7 +22,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	public static final int RAIL_COUNT_LEFT = 6;
 	protected List<UUID> trainstationRailIds;
 	protected Stock stock;
-	private Crane crane;
+	protected Crane crane;
 	protected Compass alignment;
 	protected UUID playerId;
 
@@ -31,7 +31,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 
 	transient EditorSession editorSession;
 
-	public Trainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id, Compass alignment,
+	public Trainstation(String sessionName, Square square,List<UUID> trainstationRailIds, UUID id, Compass alignment,
 			Stock stock) {
 		super(sessionName, square, id);
 		this.stock = stock;
@@ -74,6 +74,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 	public Crane getCrane() {
 		return crane;
 	}
+	
 
 	public void setCrane(Crane crane) {
 		this.crane = crane;
@@ -277,6 +278,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 		return null;
 	}
 
+
 	/**
 	 * Validiert ob man die Rotation umsetzen kann
 	 * 
@@ -325,4 +327,6 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 
 		return true;
 	}
+
+
 }

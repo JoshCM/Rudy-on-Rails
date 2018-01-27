@@ -10,9 +10,11 @@ namespace RoRClient.Models.Lobby
     class MapInfo : ModelBase
     {
 	    private string name;
-	    public MapInfo(string name)
+        private int availablePlayerSlots;
+	    public MapInfo(string name, int availablePlayerSlots)
 	    {
 		    this.name = name;
+            this.availablePlayerSlots = availablePlayerSlots;
 	    }
 
 	    public string Name
@@ -20,5 +22,17 @@ namespace RoRClient.Models.Lobby
 		    get { return name; }
 		    set { this.name = value; }
 	    }
+
+        public int AvailablePlayerSlots
+        {
+            get
+            {
+                return availablePlayerSlots;
+            }
+            set
+            {
+                this.availablePlayerSlots = value;
+            }
+        }
     }
 }

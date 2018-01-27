@@ -198,16 +198,6 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         return railSectionList;
     }
 
-    public RailSection getActivDirection() {
-        for (RailSection railSection : railSectionList) {
-            if(railSection.getRailSectionStatus() == RailSectionStatus.ACTIVE){
-                return railSection;
-            }
-        }
-	    return railSectionList.get(0);
-    }
-
-
     public UUID getTrainstationId() {
         return trainstationId;
     }
@@ -302,6 +292,16 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         }
 
         return result;
+    }
+
+    public List <Compass> getAllCompasNodesOfRailSections(){
+        List <Compass> allNodes =  new ArrayList<Compass>();
+        for (RailSection railSection: railSectionList) {
+            for (Compass compass : railSection.getNodes()) {
+                allNodes.add(compass);
+            }
+        }
+        return allNodes;
     }
 
     @Override
@@ -432,7 +432,11 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 
         // Neues Rail erstellen und damit an den Client schicken
         if (rail instanceof Switch) {
-            newRail = new Switch(session.getSessionName(), square, railSectionPosition);
+            if (rail.getTrainstationId() != null) {
+                newRail = new Switch(session.getSessionName(), square, railSectionPosition, rail.getTrainstationId(), rail.getId());
+            } else {
+                newRail = new Switch(session.getSessionName(), square, railSectionPosition);
+            }
         } else {
             newRail = new Rail(session.getSessionName(), square, railSectionPosition, createSignals, trainstationId, rail.getId());
         }
@@ -457,5 +461,15 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		if (signals != null) {
 			signals.handleLoco(loco);
 		}		
+	}
+
+	public boolean hasExitDirection(Compass direction) {
+        for (RailSection r : railSectionList) {
+            if (r.getNode1().equals(direction))
+                return true;
+            if (r.getNode2().equals(direction))
+                return true;
+        }
+		return false;
 	}
 }

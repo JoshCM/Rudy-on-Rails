@@ -13,13 +13,16 @@ namespace RoRClient.Commands.Base
 {
     class CreatePlayertrainstationCommandBase : CommandBase
     {
-        Guid trainstationId;
-        Guid stockId;
-        Guid playerId;
-        private int xPos;
-        private int yPos;
-        private Compass alignment;
-        List<Rail> trainstationRails = new List<Rail>();
+        protected Guid trainstationId;
+        protected Guid stockId;
+        protected Guid playerId;
+        protected int xPos;
+        protected int yPos;
+        protected int stockXPos;
+        protected int stockYPos;
+        protected Compass alignment;
+        protected List<Rail> trainstationRails = new List<Rail>();
+        protected Playertrainstation trainstation;
 
         /// <summary>
         /// Setzt die PlayerTrainstation und ihre zugehörigen Rails
@@ -31,9 +34,9 @@ namespace RoRClient.Commands.Base
             playerId = Guid.Parse(messageInformation.GetValueAsString("playerId"));
             trainstationId = Guid.Parse(messageInformation.GetValueAsString("trainstationId"));
             stockId = Guid.Parse(messageInformation.GetValueAsString("stockId"));
+
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
-
             alignment = (Compass)Enum.Parse(typeof(Compass), messageInformation.GetValueAsString("alignment"));
 
             // über railids rails nutzen
@@ -48,10 +51,13 @@ namespace RoRClient.Commands.Base
 
         public override void Execute()
         {
+
             Square square = session.Map.GetSquare(xPos, yPos);
             Stock stock = (Stock)session.Map.GetPlaceableById(stockId);
-            Playertrainstation trainstation = new Playertrainstation(trainstationId, square, trainstationRails, alignment, stock, session.GetPlayerById(playerId));
+
+            trainstation = new Playertrainstation(trainstationId, square, trainstationRails, alignment, stock, session.GetPlayerById(playerId));
             square.PlaceableOnSquare = (Playertrainstation)trainstation;
+
         }
 
 

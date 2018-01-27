@@ -63,6 +63,38 @@ namespace RoRClient.ViewModels.Editor
                 {
                     IsQuickNavigationVisible = false;
                 }
+
+                UpdateSelectedItemIsSwitch();
+            }
+        }
+
+        private void UpdateSelectedItemIsSwitch()
+        {
+            if (_selectedEditorCanvasViewModel is RailEditorViewModel)
+            {
+                RailEditorViewModel railEditorViewModel = (RailEditorViewModel)_selectedEditorCanvasViewModel;
+                SelectedItemIsSwitch = railEditorViewModel.Rail.IsSwitch;
+            }
+            else
+            {
+                SelectedItemIsSwitch = false;
+            }
+        }
+
+        private bool selectedItemIsSwitch;
+        public bool SelectedItemIsSwitch
+        {
+            get
+            {
+                return selectedItemIsSwitch;
+            }
+            set
+            {
+                if(selectedItemIsSwitch != value)
+                {
+                    selectedItemIsSwitch = value;
+                    OnPropertyChanged("SelectedItemIsSwitch");
+                }
             }
         }
 

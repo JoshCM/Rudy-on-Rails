@@ -11,11 +11,18 @@
         mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="1200">
 
     <UserControl.Resources>
-        <converter:ObjectIsNullToBoolConverter  x:Key="ObjectIsNullToBoolConverter"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <converter:ObjectIsNullToBoolConverter  x:Key="ObjectIsNullToBoolConverter"/>
+        </ResourceDictionary>
+
     </UserControl.Resources>
 
     <DockPanel>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Bottom">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Bottom" Template="{DynamicResource ScrollViewerControlTemplate}">
             <Canvas x:Name="thisCanvas" Background="White" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
                 <ItemsControl ItemsSource="{Binding SquareViewModels}">
                     <ItemsControl.ItemTemplate>
@@ -67,18 +74,18 @@
 
                 <Popup Name="quickNavigation" IsOpen="{Binding IsQuickNavigationVisible}" Placement="Mouse" >
                     <StackPanel Orientation="Horizontal" >
-                        <Button Command="{Binding RotateRightCommand}">
-                            <Image
-                                Source="/RoRClient;component/Resources/Images/rotate_right.png" 
-                                Height="20"  
-                                Width="20" >
-                            </Image>
-                        </Button>
                         <Button Command="{Binding RotateLeftCommand}">
                             <Image 
                                 Source="/RoRClient;component/Resources/Images/rotate_left.png" 
                                 Height="20"
                                 Width="20">
+                            </Image>
+                        </Button>
+                        <Button Command="{Binding RotateRightCommand}">
+                            <Image
+                                Source="/RoRClient;component/Resources/Images/rotate_right.png" 
+                                Height="20"  
+                                Width="20" >
                             </Image>
                         </Button>
                         <Button Command="{Binding MoveCommand}">
@@ -88,7 +95,7 @@
                                 Width="20" >
                             </Image>
                         </Button>
-                        <Button Command="{Binding ChangeSwitchCommand}" >
+                        <Button Command="{Binding ChangeSwitchCommand}" Visibility="{Binding SelectedItemIsSwitch, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Image 
                                 Source="/RoRClient;component/Resources/Images/changeSwitch.png"
                                 Height="20" 
