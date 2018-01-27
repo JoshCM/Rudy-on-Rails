@@ -107,7 +107,6 @@ namespace RoRClient.ViewModels.Game
             MessageInformation messageInfo = new MessageInformation();
             messageInformation.PutValue("xPos", r.Square.PosX);
             messageInformation.PutValue("yPos", r.Square.PosY);
-            messageInformation.PutValue("change", true);
             GameSession.GetInstance().QueueSender.SendMessage("ChangeSwitch", messageInformation);
         }
 
