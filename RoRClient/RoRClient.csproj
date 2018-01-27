@@ -162,6 +162,7 @@
     <Compile Include="Commands\Game\Create\CreateRailCommand.cs" />
     <Compile Include="Commands\Game\Delete\DeleteSensorCommand.cs" />
     <Compile Include="Commands\Game\Other\InitMapSizeCommand.cs" />
+    <Compile Include="Commands\Game\Other\RemoveResourceFromCartCommand.cs" />
     <Compile Include="Commands\Game\Other\SwitchSensorCommand.cs" />
     <Compile Include="Commands\Game\Other\PlaceSensorCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />
@@ -170,6 +171,7 @@
     <Compile Include="Commands\Game\Other\EndGameCommand.cs" />
     <Compile Include="Commands\Game\Other\RemoveResourceFromMineCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateColorOfPlayerCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateCranePositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateResourceLoadedOntoCartCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayertrainstationCommand.cs" />
@@ -182,6 +184,7 @@
     <Compile Include="Commands\Game\Update\UpdateLocoPositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoSpeedCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateNodesOfRailSectionCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateUnloadCartCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateResourcesOfPlayerCommand.cs" />
     <Compile Include="Communication\Dispatcher\QueueDispatcherBase.cs" />
     <Compile Include="Communication\Dispatcher\TopicDispatcherBase.cs" />
@@ -280,6 +283,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Lobby\StartViewModel.cs" />
     <Compile Include="ViewModels\Editor\SquareEditorViewModel.cs" />
+    <Compile Include="ViewModels\NotifyPropertyChangedBase.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\Editor\CanvasEditorViewModel.cs" />
     <Compile Include="ViewModels\Helper\INotifyPropertyChangedExtended.cs" />
@@ -421,6 +425,9 @@
     </Compile>
     <Compile Include="Views\Popup\CustomFileDialogs.cs" />
     <Compile Include="Views\Popup\PopupCreator.cs" />
+    <Compile Include="Views\Popup\RulesPopup.xaml.cs">
+      <DependentUpon>RulesPopup.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\Editor\PublictrainstationEditorUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -597,6 +604,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Popup\RulesPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -644,6 +655,7 @@
   <ItemGroup>
     <Resource Include="Resources\Images\dummy.png" />
     <Resource Include="Resources\Images\trainstation_0.png" />
+    <Resource Include="Resources\Images\trainstation_public.png" />
     <Resource Include="Resources\Images\game_minimap_dummy.png" />
     <Resource Include="Resources\Images\game_map_dummy.jpg" />
     <Resource Include="Resources\Images\rotate_right.png" />

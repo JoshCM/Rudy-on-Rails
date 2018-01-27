@@ -3,6 +3,7 @@ using RoRClient.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using System.ComponentModel;
 
 namespace RoRClient.Views
 {
@@ -13,7 +14,18 @@ namespace RoRClient.Views
     {
         public CanvasUserControl()
         {
-            SquareDim = ViewConstants.SQUARE_DIM;
+            ViewConstants.Instance.PropertyChanged += OnViewConstantsChanged;
+        }
+
+        private void OnViewConstantsChanged(object sender, PropertyChangedEventArgs e)
+        {
+            ViewConstants.Instance.TaskFactory.StartNew(() => UpdatePositions());
+        }
+
+        private void UpdatePositions()
+        {
+            RealX = X * ViewConstants.Instance.SquareDim;
+            RealY = Y * ViewConstants.Instance.SquareDim;
         }
 
         public int X
@@ -32,7 +44,7 @@ namespace RoRClient.Views
         private static void OnXchanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             CanvasUserControl canvasUserControl = (CanvasUserControl)d;
-            canvasUserControl.RealX = canvasUserControl.X * ViewConstants.SQUARE_DIM;
+            canvasUserControl.RealX = canvasUserControl.X * ViewConstants.Instance.SquareDim;
         }
 
 
@@ -52,7 +64,7 @@ namespace RoRClient.Views
         private static void OnYchanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             CanvasUserControl canvasUserControl = (CanvasUserControl)d;
-            canvasUserControl.RealY = canvasUserControl.Y * ViewConstants.SQUARE_DIM;
+            canvasUserControl.RealY = canvasUserControl.Y * ViewConstants.Instance.SquareDim;
         }
 
         public int RealX
@@ -80,18 +92,5 @@ namespace RoRClient.Views
             }
         }
         public static readonly DependencyProperty RealYProperty = DependencyProperty.Register("RealY", typeof(int), typeof(CanvasUserControl), new UIPropertyMetadata(0));
-  
-        public int SquareDim
-        {
-            get
-            {
-                return (int)GetValue(SquareDimProperty);
-            }
-            set
-            {
-                SetValue(SquareDimProperty, value);
-            }
-        }
-        public static readonly DependencyProperty SquareDimProperty = DependencyProperty.Register("SquareDim", typeof(int), typeof(SquareEditorUserControl), new UIPropertyMetadata(0));
     }
 }

@@ -17,8 +17,8 @@ import models.session.RoRSession;
  * Weiche) besitzen
  */
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Comparable<Rail> {
-	private final static int AMOUNT_OF_GOLD_TO_GENERATE = 10;
-	private final static int AMOUNT_OF_COAl_TO_GENERATE = 15;
+	public final static int AMOUNT_OF_GOLD_TO_GENERATE = 10;
+	public final static int AMOUNT_OF_COAl_TO_GENERATE = 15;
 	
     private Signals signals;
 	// muss hier raus und eine Ebene tiefer(RailSection)
@@ -115,7 +115,8 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
             // Durchgehen der benachbarten Squares, um Ressourcen zu platzieren
             List<Square> squares = railSquare.getNeighbouringSquares();
             for (Square square : squares) {
-                Double chanceToSpawn = Difficulty.EASY.getChanceToSpawnResource();
+
+                Double chanceToSpawn = Difficulty.HARD.getChanceToSpawnResource();
 
                 if (square.getPlaceableOnSquare() == null && Math.random() < chanceToSpawn / 100) {
                     if (Math.random() < 0.5) {
@@ -460,5 +461,15 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		if (signals != null) {
 			signals.handleLoco(loco);
 		}		
+	}
+
+	public boolean hasExitDirection(Compass direction) {
+        for (RailSection r : railSectionList) {
+            if (r.getNode1().equals(direction))
+                return true;
+            if (r.getNode2().equals(direction))
+                return true;
+        }
+		return false;
 	}
 }

@@ -30,6 +30,7 @@ namespace RoRClient.ViewModels.Game
             this.taskFactory = taskFactory;
             map = GameSession.GetInstance().Map;
             GameSession.GetInstance().PropertyChanged += OnGameSessionChanged;
+            ViewConstants.PropertyChanged += OnViewConstantsChanged;
         }
 
         public GameInteractionsViewModel GameInteractionsViewModel
@@ -261,9 +262,15 @@ namespace RoRClient.ViewModels.Game
             {
                 map = GameSession.GetInstance().Map;
                 InitSquares();
-                MapWidth = map.Squares.GetLength(0) * ViewConstants.SQUARE_DIM;
-                MapHeight = map.Squares.GetLength(1) * ViewConstants.SQUARE_DIM;
+                MapWidth = map.Squares.GetLength(0) * ViewConstants.SquareDim;
+                MapHeight = map.Squares.GetLength(1) * ViewConstants.SquareDim;
             }
+        }
+
+        private void OnViewConstantsChanged(object sender, PropertyChangedEventArgs e)
+        {
+            MapWidth = map.Squares.GetLength(0) * ViewConstants.SquareDim;
+            MapHeight = map.Squares.GetLength(1) * ViewConstants.SquareDim;
         }
 
         private void OnCartAddedInLoco(object sender, PropertyChangedEventArgs e)

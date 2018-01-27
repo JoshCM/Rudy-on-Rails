@@ -1,5 +1,4 @@
-﻿using RoRClient.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,19 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RoRClient.Views.Game
+namespace RoRClient.Views.Popup
 {
     /// <summary>
-    /// Interaktionslogik für RailGameUserControl.xaml
+    /// Interaktionslogik für RulesPopup.xaml
     /// </summary>
-    public partial class RailGameUserControl : CanvasUserControl
+    public partial class RulesPopup : Window
     {
-        public RailGameUserControl()
+        public RulesPopup()
         {
             InitializeComponent();
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close(); 
         }
     }
 }

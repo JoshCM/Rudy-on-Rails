@@ -18,7 +18,7 @@ namespace RoRClient.Models.Game
         private ObservableCollection<GameSessionInfo> gameSessionInfos = new ObservableCollection<GameSessionInfo>();
 	    private ObservableCollection<GameInfo> gameInfos = new ObservableCollection<GameInfo>();
 	    private ObservableCollection<EditorInfo> editorInfos = new ObservableCollection<EditorInfo>();
-		private ObservableCollection<string> mapNames = new ObservableCollection<string>();
+		private ObservableCollection<MapInfo> mapInfos = new ObservableCollection<MapInfo>();
 
 		private string playerName = "fresh_meat_" + Guid.NewGuid().ToString();
 
@@ -80,9 +80,9 @@ namespace RoRClient.Models.Game
 		    }
 	    }
 
-	    public ObservableCollection<string> MapNames
+	    public ObservableCollection<MapInfo> MapInfos
 	    {
-		    get { return mapNames; }
+		    get { return mapInfos; }
 	    }
 
 		public void StartConnection()
@@ -235,16 +235,16 @@ namespace RoRClient.Models.Game
 		    NotifyPropertyChanged("EditorInfos");
 	    }
 
-		public void AddMapName(string mapName)
+		public void AddMapInfo(MapInfo mapInfo)
 	    {
-		    taskFactory.StartNew(() => mapNames.Add(mapName));
-		    NotifyPropertyChanged("MapNames");
+		    taskFactory.StartNew(() => mapInfos.Add(mapInfo));
+		    NotifyPropertyChanged("MapInfos");
 	    }
 
-	    public void ClearMapNames()
+	    public void ClearMapInfos()
 	    {
-		    taskFactory.StartNew(() => mapNames.Clear());
-		    NotifyPropertyChanged("MapNames");
+		    taskFactory.StartNew(() => mapInfos.Clear());
+		    NotifyPropertyChanged("MapInfos");
 	    }
 	}
 }
