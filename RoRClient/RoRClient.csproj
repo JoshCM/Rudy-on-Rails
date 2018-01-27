@@ -164,6 +164,7 @@
     <Compile Include="Commands\Game\Delete\DeleteSensorCommand.cs" />
     <Compile Include="Commands\Game\Other\InitMapSizeCommand.cs" />
     <Compile Include="Commands\Game\Other\RemoveResourceFromCartCommand.cs" />
+    <Compile Include="Commands\Game\Other\ShowTradeRelationCommand.cs" />
     <Compile Include="Commands\Game\Other\SwitchSensorCommand.cs" />
     <Compile Include="Commands\Game\Other\PlaceSensorCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />

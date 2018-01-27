@@ -20,6 +20,9 @@
                     <RotateTransform Angle="{Binding Publictrainstation.Alignment, Mode=OneWay, Converter={StaticResource TrainstationAlignmentToAngleConverter}}" />
                 </TransformGroup>
             </Image.LayoutTransform>
+            <Image.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding ActivateTradeMenuCommand}" />
+            </Image.InputBindings>
         </Image>
     </Canvas>
 </v:CanvasUserControl>

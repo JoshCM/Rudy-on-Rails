@@ -61,6 +61,11 @@
             </ComboBox>
             <Button Content="Auswählen" Command="{Binding ExchangeResourceCommand}" Style="{StaticResource DefaultButtonStyleDampfmodus}"/>
         </StackPanel>
-        
+
+        <StackPanel>
+            <Label Content="=HALLO" IsEnabled="{Binding PublictrainstationViewModel.Trainstation.Tradeable}">
+            </Label>
+        </StackPanel>
+
     </StackPanel>
 </UserControl>

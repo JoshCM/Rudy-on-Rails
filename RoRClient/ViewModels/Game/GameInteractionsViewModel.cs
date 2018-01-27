@@ -26,6 +26,7 @@ namespace RoRClient.ViewModels.Game
         private MapGameViewModel mapGameViewModel;
         private int currentNumberOfOwnGhostLocoScript = 1;
         private String selectedResource;
+        private bool tradeRelation = false;
 
         public GameInteractionsViewModel(TaskFactory taskFactory, MapGameViewModel mapGameViewModel)
         {
@@ -44,6 +45,19 @@ namespace RoRClient.ViewModels.Game
             {
                 canConfigureSensor = value;
                 OnPropertyChanged("CanConfigureSensor");
+            }
+        }
+
+        public bool TradeRelation
+        {
+            get
+            {
+                return tradeRelation;
+            }
+            set
+            {
+                tradeRelation = value;
+                OnPropertyChanged("TradeRelation");
             }
         }
 
