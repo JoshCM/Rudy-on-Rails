@@ -105,25 +105,38 @@ public class Publictrainstation extends Trainstation {
 	
 	public Gold exchangeCoalToGold(Coal c) {
 		// Kohle 3 : 1 Gold
+		double exchangeRate = 0.0;
 		if (c.getQuantity() >= 3) {
-			Gold gold = new Gold(getSessionName(), (c.getQuantity() / 3));
+			if ((c.getQuantity() % 3 == 0)) {
+				exchangeRate = c.getQuantity() / 3;
+			} else if (c.getQuantity() % 3 != 0) {
+				exchangeRate = Math.floor(c.getQuantity() / 3);
+			}
+			Gold gold = new Gold(getSessionName(), (int)exchangeRate);
 			return gold;
 		} else {
-			log.info("Tauschverhältnis Gold 1 : 1 Kohle. Der Spieler besitzt zu wenig Gold!");
+			log.info("Tauschverhältnis Kohle 3 : 1 Gold. Der Spieler besitzt zu wenig Kohle!");
 		}
 		return null;
 	}
 	
 	public PointContainer exchangeGoldToPoints(Gold g) {
 		// Gold 2 : 1 Punkte
+		double exchangeRate = 0.0;
 		if (g.getQuantity() >= 2) {
-			PointContainer points = new PointContainer(getSessionName(), (g.getQuantity() / 2));
+			if (g.getQuantity() % 2 == 0) {
+				exchangeRate = g.getQuantity() / 2;
+			} else if (g.getQuantity() % 2 != 0) {
+				exchangeRate = Math.floor(g.getQuantity() / 2);
+			}
+			PointContainer points = new PointContainer(getSessionName(), (int)exchangeRate);
 			return points;
 		} else {
-			log.info("Tauschverhältnis Gold 1 : 1 Kohle. Der Spieler besitzt zu wenig Gold!");
+			log.info("Tauschverhältnis Gold 2 : 1 Punkt. Der Spieler besitzt zu wenig Punkte!");
 		}
 		return null;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

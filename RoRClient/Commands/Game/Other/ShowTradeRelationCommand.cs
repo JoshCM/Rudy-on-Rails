@@ -32,7 +32,6 @@ namespace RoRClient.Commands.Game.Other
             {
                 Trainstation trainstation = (Trainstation)gameSession.Map.GetPlaceableById(trainstationId);
                 trainstation.Tradeable = tradeable;
-                Console.WriteLine("Toller JulianeCommand");
             }
         }
     }

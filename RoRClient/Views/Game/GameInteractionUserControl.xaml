@@ -63,8 +63,14 @@
         </StackPanel>
 
         <StackPanel>
-            <Label Content="=HALLO" IsEnabled="{Binding PublictrainstationViewModel.Trainstation.Tradeable}">
+            <Label Content="Tauschverhältnis" IsEnabled="{Binding PublictrainstationViewModel.Trainstation.Tradeable}" Foreground="white" Style="{StaticResource DefaultSubHeaderStyle}">
             </Label>
+            <TextBlock Text="Gold 1 : 1 Kohle" Foreground="white" Style="{StaticResource DefaultTextBlockStyle}" Margin="0" />
+            <Border BorderBrush="white" BorderThickness="2" Height="2" Margin="0 15 "/>
+            <TextBlock Text="Kohle 3 : 1 Gold" Foreground="white" Style="{StaticResource DefaultTextBlockStyle}" Margin="0" />
+            <Border BorderBrush="white" BorderThickness="2" Height="2" Margin="0 15 "/>
+            <TextBlock Text="Gold 2 : 1 Punkt" Foreground="white" Style="{StaticResource DefaultTextBlockStyle}" Margin="0" />
+            <Border BorderBrush="white" BorderThickness="2" Height="2" Margin="0 15 "/>
         </StackPanel>
 
     </StackPanel>
