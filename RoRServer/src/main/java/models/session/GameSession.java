@@ -35,7 +35,6 @@ public class GameSession extends RoRSession implements ModelObserver {
 	private Ticker ticker;
 	private ArrayList<Mine> mines=new ArrayList<>();
 	private ArrayList<Loco> locos = new ArrayList<>();
-	private ArrayList<Publictrainstation> publictrainstations = new ArrayList<>();
 	private Scripts scripts;
 	private int availablePlayerSlots;
 	private ScriptableObjectManager scriptableObjectManager;
@@ -152,21 +151,6 @@ public class GameSession extends RoRSession implements ModelObserver {
 			locos.add(loco);
 			ticker.addObserver(loco);
 		}
-	}
-	
-	public void addPublictrainstation(Publictrainstation publictrainstation) {
-		if(publictrainstation != null) {
-			publictrainstations.add(publictrainstation);
-		}
-	}
-	
-	public Publictrainstation getPublictrainstationById(UUID id) {
-		for (Publictrainstation t : publictrainstations) {
-			if (t.getId().toString().equals(id.toString())) {
-				return t;
-			}
-		}
-		return null;
 	}
 	
 	@Override

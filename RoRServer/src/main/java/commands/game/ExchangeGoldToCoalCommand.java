@@ -9,6 +9,7 @@ import models.game.Cart;
 import models.game.Coal;
 import models.game.Gold;
 import models.game.Loco;
+import models.game.Map;
 import models.game.Publictrainstation;
 import models.session.GameSession;
 import models.session.RoRSession;
@@ -27,7 +28,8 @@ public class ExchangeGoldToCoalCommand extends CommandBase {
 	@Override
 	public void execute() {
         GameSession gameSession = (GameSession)session;
-        Publictrainstation trainstation = gameSession.getPublictrainstationById(trainstationId);
+        Map map = gameSession.getMap();
+        Publictrainstation trainstation = (Publictrainstation)map.getPlaceableOnSquareById(trainstationId);
         Loco loco = gameSession.getLocomotiveByPlayerId(playerId);
         
         List<Cart> carts = loco.getCarts();
