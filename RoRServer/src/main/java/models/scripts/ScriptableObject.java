@@ -2,9 +2,6 @@ package models.scripts;
 
 import org.python.core.PyException;
 import org.python.util.PythonInterpreter;
-
-import com.sun.media.jfxmedia.logging.Logger;
-
 import communication.dispatcher.FromClientRequestQueueDispatcher;
 
 public class ScriptableObject {

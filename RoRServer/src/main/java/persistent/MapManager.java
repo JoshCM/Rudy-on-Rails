@@ -114,6 +114,9 @@ public class MapManager {
 		String mapSizeDescription = getMapSizeDescriptionForMap(map);
 		String filename = map.getName() + " (" + mapSizeDescription+ ", " + map.getAvailablePlayerSlots() + " Spieler)";
 		saveToFile(jsonMap, filename, ending);
+		
+		// speichert die available player slots in der maps.slots
+		setAvailablePlayerSlotsForMapName(filename, map.getAvailablePlayerSlots());
 	}
 
 	private static String getMapSizeDescriptionForMap(Map map) {
@@ -188,7 +191,6 @@ public class MapManager {
 		HashMap<String, Double> availablePlayerSlotsMap = getAvailablePlayerSlotsMap();
 		for(Entry<String, Double> entry : availablePlayerSlotsMap.entrySet()) {
 			if (entry.getKey().equals(mapName)) {
-				// workaround, da in dem entry immer ein double ist
 	    		return entry.getValue().intValue();
 			}
 		}
