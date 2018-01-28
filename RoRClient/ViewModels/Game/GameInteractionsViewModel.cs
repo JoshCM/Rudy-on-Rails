@@ -25,6 +25,7 @@ namespace RoRClient.ViewModels.Game
         private bool canConfigureSensor = false;
         private MapGameViewModel mapGameViewModel;
         private int currentNumberOfOwnGhostLocoScript = 1;
+        private int currentNumberOfOwnSensorScript = 1;
 
         public GameInteractionsViewModel(TaskFactory taskFactory, MapGameViewModel mapGameViewModel)
         {
@@ -126,6 +127,38 @@ namespace RoRClient.ViewModels.Game
                 messageInformation.PutValue("description", description);
                 messageInformation.PutValue("scriptContent", scriptContent);
                 messageInformation.PutValue("scriptType", ScriptTypes.GHOSTLOCO.ToString());
+                GameSession.GetInstance().QueueSender.SendMessage("AddScriptFromPlayer", messageInformation);
+            }
+        }
+
+        private ICommand addSensorScriptFromPlayerCommand;
+        public ICommand AddSensorScriptFromPlayerCommand
+        {
+            get
+            {
+                if (addSensorScriptFromPlayerCommand == null)
+                {
+                    addSensorScriptFromPlayerCommand = new ActionCommand(param => AddSensorScriptFromPlayer());
+                }
+                return addSensorScriptFromPlayerCommand;
+            }
+        }
+
+        private void AddSensorScriptFromPlayer()
+        {
+            string description = "Eigenes Script " + currentNumberOfOwnSensorScript;
+            string filename = CustomFileDialogs.AskUserToSelectPythonScript();
+
+            if (filename != null)
+            {
+                string scriptContent = File.ReadAllText(filename);
+                currentNumberOfOwnSensorScript += 1;
+
+                MessageInformation messageInformation = new MessageInformation();
+                messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
+                messageInformation.PutValue("description", description);
+                messageInformation.PutValue("scriptContent", scriptContent);
+                messageInformation.PutValue("scriptType", ScriptTypes.SENSOR.ToString());
                 GameSession.GetInstance().QueueSender.SendMessage("AddScriptFromPlayer", messageInformation);
             }
         }
