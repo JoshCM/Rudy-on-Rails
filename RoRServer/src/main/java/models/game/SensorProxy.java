@@ -111,7 +111,7 @@ public class SensorProxy implements ProxyObject {
 	 */
 	public void changeSwitchInterval(int switchInterval) {
 		
-		if (switchInterval >= 5 && switchInterval <= 20) {
+		if (switchInterval >= 0 && switchInterval <= 20) {
 			Placeable placeable = square.getPlaceableOnSquare();
 			if (placeable instanceof Rail) {
 				Rail rail = (Rail)placeable;

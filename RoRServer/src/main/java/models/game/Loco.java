@@ -174,6 +174,7 @@ public abstract class Loco extends TickableGameObject {
 	    this.rail = nextRail;
 	    this.updateSquare(this.rail.getSquareFromGameSession());
 	    notifyLocoPositionChanged();
+	    notifySensors();
     }
 	
 	private void setSpeedAndNotifySpeedChanged(int speed) {
