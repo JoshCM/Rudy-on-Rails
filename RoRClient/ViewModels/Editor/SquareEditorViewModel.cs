@@ -83,7 +83,7 @@ namespace RoRClient.ViewModels.Editor
                     {
                         SendCreatePublictrainstationCommand();
                     }
-                    else if (selectedToolName.Contains("trainstation"))
+                    else if (selectedToolName.Contains("playertrainstation"))
                     {
                         SendCreatePlayertrainstationCommand();
                     }

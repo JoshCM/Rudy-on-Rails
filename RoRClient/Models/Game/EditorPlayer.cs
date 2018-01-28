@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace RoRClient.Models.Game
 {
     class EditorPlayer : Player
-    { 
+    {
+
         public EditorPlayer(Guid id, String name, bool isHost) : base(id, name, isHost)
         { 
         }
