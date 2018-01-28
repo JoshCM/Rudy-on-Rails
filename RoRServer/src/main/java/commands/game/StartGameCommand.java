@@ -145,6 +145,7 @@ public class StartGameCommand extends CommandBase {
 				Rail rail = (Rail) map.getPlaceableOnSquareById(newPlayerTrainStation.getSpawnPointforLoco());
 				//Square locoSpawnPointSquare = rail.getSquareFromGameSession();
 				newTrainStation = newPlayerTrainStation;
+				gameSession.setPlayerTrainstations((Playertrainstation) newTrainStation);
 			} else {
 				// Trainstation ist eine PublicTrainstation
 				newTrainStation = (Trainstation) oldTrainStation.loadFromMap(trainstationSquare, gameSession);
@@ -173,7 +174,7 @@ public class StartGameCommand extends CommandBase {
 		gameSession.addLoco(ghostLoco);
 	}
 
-	private Compass getLocoDirectionbyTrainstation(Compass compass) {
+	public static Compass getLocoDirectionbyTrainstation(Compass compass) {
 		switch (compass) {
 		case NORTH:
 			return Compass.EAST;

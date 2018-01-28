@@ -125,6 +125,7 @@ namespace RoRClient.Models.Game
             SensorPlaced = false;
             Sensor = null;
         }
+
         public bool hasSensor()
         {
             bool hasSensor = false;

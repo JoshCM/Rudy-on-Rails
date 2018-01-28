@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
 
+import commands.game.StartGameCommand;
 import communication.MessageInformation;
 import models.session.GameSessionManager;
 import resources.PropertyManager;
@@ -306,7 +307,22 @@ public abstract class Loco extends TickableGameObject {
 			notifyLocoCrashed(newRail);
 			changeSpeed(0);
 			dropByCollide();
+
+			Map map=GameSessionManager.getInstance().getGameSession().getMap();
+			List<Playertrainstation> playerTrainstations = GameSessionManager.getInstance().getGameSession().getPlayerTrainstations();
+
+			for(Playertrainstation trainstation : playerTrainstations){
+				if(trainstation.getPlayerId() == getPlayerId()){
+					Rail locoSpawnRail = (Rail)map.getPlaceableById(trainstation.getSpawnPointforLoco());
+					this.drivingDirection = StartGameCommand.getLocoDirectionbyTrainstation(trainstation.getAlignment());
+					setXPos(locoSpawnRail.getXPos());
+					setYPos(locoSpawnRail.getYPos());
+					notifyLocoPositionChanged();
+
+				}
+			}
 			removeCartsExceptInitial();
+
 		}
 
 		if (retSquare.getPlaceableOnSquare() instanceof Rail) {
@@ -317,19 +333,23 @@ public abstract class Loco extends TickableGameObject {
 	
 
 	private void removeCartsExceptInitial() {
-		// TODO Auto-generated method stub
-		List<Cart> carts=getCarts();
-		for(int i=1;i<carts.size();i++){
-			carts.remove(i);
-			notifyRemoveCartsExceptInitial();
+
+		for(Cart cart:carts){
+			notifyRemoveCartsExceptInitial(cart.getRail(), cart);
+			carts.remove(cart);
 		}
-		
+
+		notifyRemoveCartsExceptInitial(carts.get(0).getRail(), carts.get(0));
+		carts.remove(0);
+		addInitialCart();
 	}
 
-	private void notifyRemoveCartsExceptInitial() {
-		// TODO Auto-generated method stub
-		MessageInformation messageInformation=new MessageInformation("UpdateRemoveCartsFromLoco");
+	private void notifyRemoveCartsExceptInitial(Rail tempRail, Cart tempCart) {
+		MessageInformation messageInformation=new MessageInformation("DeleteCart");
 		messageInformation.putValue("locoId", this.getId());
+		messageInformation.putValue("railId", tempRail.getId());
+		messageInformation.putValue("cartId",tempCart.getId());
+
 		notifyChange(messageInformation);
 	}
 
@@ -404,6 +424,7 @@ public abstract class Loco extends TickableGameObject {
 		messageInfo.putValue("drivingDirection", drivingDirection.toString());
 		notifyChange(messageInfo);
 	}
+
 
 	private void notifyCartToLocoAdded(Cart cart) {
 		MessageInformation messageInfo = new MessageInformation("UpdateCartToLoco");

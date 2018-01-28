@@ -8,12 +8,7 @@ import communication.dispatcher.GameSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
 import models.base.ModelObserver;
 import models.base.ObservableModel;
-import models.game.GamePlayer;
-import models.game.Loco;
-import models.game.Mine;
-import models.game.PlayerLoco;
-import models.game.Player;
-import models.game.TickableGameObject;
+import models.game.*;
 import models.scripts.ScriptableObject;
 import models.scripts.ScriptableObjectManager;
 import models.scripts.Scripts;
@@ -34,6 +29,7 @@ public class GameSession extends RoRSession implements ModelObserver {
 	private Ticker ticker;
 	private ArrayList<Mine> mines=new ArrayList<>();
 	private ArrayList<Loco> locos = new ArrayList<>();
+	private ArrayList<Playertrainstation> playerTrainstations;
 	private Scripts scripts;
 	private int availablePlayerSlots;
 	private ScriptableObjectManager scriptableObjectManager;
@@ -49,6 +45,7 @@ public class GameSession extends RoRSession implements ModelObserver {
 		this.queueReceiver = new QueueReceiver(name, dispatcher);
 		this.ticker = new Ticker();
 		this.stopped = false;
+		this.playerTrainstations = new ArrayList<Playertrainstation>();
 		this.startTicking();
 	}
 	
@@ -165,8 +162,6 @@ public class GameSession extends RoRSession implements ModelObserver {
 			this.mines.add(mine);
 			ticker.addObserver(mine);
 		}
-		
-		
 	}
 
 	public List<Loco> getLocos() {
@@ -175,6 +170,14 @@ public class GameSession extends RoRSession implements ModelObserver {
 	
 	public Scripts getScripts() {
 		return scripts;
+	}
+
+	public ArrayList<Playertrainstation> getPlayerTrainstations() {
+		return playerTrainstations;
+	}
+
+	public void setPlayerTrainstations(Playertrainstation playertrainstation) {
+		playerTrainstations.add(playertrainstation);
 	}
 	
 	@Override

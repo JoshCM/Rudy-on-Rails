@@ -7,8 +7,11 @@ import communication.MessageInformation;
 import models.session.RoRSession;
 
 public class CommandCreator {
-	public static Command createCommandForName(String commandName, RoRSession session,
-			MessageInformation messageInformation)
+	public static Command createCommandForName(
+			String commandName,
+			RoRSession session,
+			MessageInformation messageInformation
+	)
 			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, ClassNotFoundException {
 
