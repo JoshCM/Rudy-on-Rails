@@ -23,10 +23,13 @@ public class Signals extends TickableGameObject {
 	private int penalty = DEFAULT_PENALTY;
 	private int switchCost = DEFAULT_SWITCH_COST;
 
+	// Active bedeutet ein rotes Signal, also Strafe beim drüberfahren
 	private boolean northSignalActive;
 	private boolean eastSignalActive;
 	private boolean southSignalActive;
 	private boolean westSignalActive;
+	
+	private boolean notManuallySwitchableTillNextAutomaticSwitch;
 	
 	private long timeDeltaCounter = 0;
 
@@ -76,8 +79,20 @@ public class Signals extends TickableGameObject {
 			westSignalActive = false;
 		}
 		
+		notManuallySwitchableTillNextAutomaticSwitch = false;
+		timeDeltaCounter = 0;
 		notifySignalsSwitched();
 	};
+	
+	/**
+	 * Schaltet die Signale um, sofern sie nicht zuletzt von einem Spieler manuell umgestellt wurden
+	 */
+	public void switchSignalsManually() {
+		if(!notManuallySwitchableTillNextAutomaticSwitch) {
+			switchSignals();
+			notManuallySwitchableTillNextAutomaticSwitch = true;
+		}
+	}
 	
 	private void notifySignalsSwitched() {
 		MessageInformation messageInfo = new MessageInformation("UpdateActivityOfSignals");
@@ -132,7 +147,6 @@ public class Signals extends TickableGameObject {
 	public void specificUpdate() {
 		this.timeDeltaCounter += timeDeltaInNanoSeconds;
 		if (this.timeDeltaCounter >= SEC_IN_NANO * autoSwitchIntervalInSeconds) {
-			timeDeltaCounter = 0;
 			switchSignals();
 		}
 	}
@@ -142,6 +156,21 @@ public class Signals extends TickableGameObject {
 		this.penalty = penalty;
 		this.switchCost = switchCost;
 		
+		notifyConfigChanged();
+	}
+	
+	public void changePenalty(int penalty) {
+		this.penalty = penalty;
+		notifyConfigChanged();
+	}
+	
+	public void changeSwitchCost(int switchCost) {
+		this.switchCost = switchCost;
+		notifyConfigChanged();
+	}
+	
+	public void changeSwitchInterval(int autoSwitchIntervalInSeconds) {
+		this.autoSwitchIntervalInSeconds = autoSwitchIntervalInSeconds;
 		notifyConfigChanged();
 	}
 	
@@ -170,5 +199,15 @@ public class Signals extends TickableGameObject {
 		default:
 			return false;
 		}
+	}
+
+	public void handleLoco(Loco loco) {
+		if (isSignalActive(loco.getDrivingDirection())) {
+			loco.getPlayer().removeGold(penalty);
+		}
+	}
+	
+	public boolean isNotManuallySwitchableTillNextAutomaticSwitch() {
+		return notManuallySwitchableTillNextAutomaticSwitch;
 	}
 }

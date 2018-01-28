@@ -14,9 +14,9 @@
         <converter:CompassToAngleConverter  x:Key="CompassToAngleConverter"/>
         <converter:PlayerToImagePathConverter x:Key="PlayerToImagePathConverter"/>
     </UserControl.Resources>
-    <Canvas Width="{Binding SquareDim, ElementName=stockGameUserControl}"
-            Height="{Binding SquareDim, ElementName=stockGameUserControl}">
-        <Image Width="{Binding SquareDim, ElementName=stockGameUserControl}" Height="{Binding SquareDim, ElementName=stockGameUserControl}" Source="pack://application:,,,/Resources/Images/stock_container_1.png">
+    <Canvas Width="{Binding ViewConstants.SquareDim}"
+            Height="{Binding ViewConstants.SquareDim}">
+        <Image Width="{Binding ViewConstants.SquareDim}" Height="{Binding ViewConstants.SquareDim}" Source="{Binding Stock, Converter={StaticResource PlayerToImagePathConverter}}">
             <Image.InputBindings>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding SelectedStockObjectCommand}"></MouseBinding>
             </Image.InputBindings>

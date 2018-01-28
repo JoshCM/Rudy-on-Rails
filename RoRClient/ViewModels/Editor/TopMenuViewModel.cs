@@ -16,6 +16,26 @@ namespace RoRClient.ViewModels.Editor
 {
     class TopMenuViewModel : ViewModelBase
     {
+        private ICommand openRulesPopUpCommand;
+        
+        public ICommand OpenRulesPopUpCommand
+        {
+            get
+            {
+                if (openRulesPopUpCommand == null)
+                {
+                    openRulesPopUpCommand = new ActionCommand(param => OpenRules());
+                }
+                return openRulesPopUpCommand;
+            }
+        }
+
+        private void OpenRules()
+        {
+            RulesPopup popup = new RulesPopup();
+            popup.ShowDialog();
+        }
+
         private ICommand saveNewMapCommand;
         public ICommand SaveNewMapCommand
         {
@@ -81,7 +101,7 @@ namespace RoRClient.ViewModels.Editor
             }
             else
             {
-                MessageBox.Show("Ungültiger Filename du Opfer!");
+                MessageBox.Show("Ungültiger Filename!");
             }
         }
 

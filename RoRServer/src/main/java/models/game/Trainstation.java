@@ -278,6 +278,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 		return null;
 	}
 
+
 	/**
 	 * Validiert ob man die Rotation umsetzen kann
 	 * 

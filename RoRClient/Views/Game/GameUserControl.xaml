@@ -5,18 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:game="clr-namespace:RoRClient.Views.Game"
              mc:Ignorable="d"
-             d:DesignHeight="900" d:DesignWidth="1600" Background="Gray">
+             d:DesignHeight="900" d:DesignWidth="1600" Background="White">
 
     <Grid x:Name="ContentGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="9*" />
             <RowDefinition Height="3*" />
+
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
         <game:GameStatusUserControl Grid.Row="0"
@@ -28,6 +29,7 @@
                                  Grid.Column="0"
                                  Grid.ColumnSpan="3" 
                                  DataContext="{Binding MapGameViewModel}"/>
+        <game:GameInteractionUserControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
 
         <game:TopMenuUserControl Grid.Row="0"
                                    Grid.Column="1"

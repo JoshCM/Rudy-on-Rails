@@ -26,7 +26,6 @@ public abstract class RoRSession extends ModelBase {
 	
 	public RoRSession(String name) {
 		super(name);
-		map = new Map(name);
 	}
 		
 	public void setup() {
@@ -102,15 +101,11 @@ public abstract class RoRSession extends ModelBase {
 		MessageInformation messageInfo = new MessageInformation("ChangeMapSelection");
 		messageInfo.putValue("mapName", getMapName());
 		if(this instanceof GameSession) {
-			GameSession gameSession = (GameSession) this;
-			int availablePlayers;
-			try {
-				availablePlayers = MapManager.loadAvailablePlayerSlots(getMapName());
-				gameSession.setAvailablePlayerSlots(availablePlayers);
-				messageInfo.putValue("availablePlayerSlots", gameSession.getAvailablePlayerSlots());
-			} catch (MapNotFoundException e) {
-				e.printStackTrace();
-			}
+			GameSession gameSession = (GameSession) this;	
+			int availablePlayers = MapManager.getAvailablePlayerSlotsByMapName(getMapName());
+			gameSession.setAvailablePlayerSlots(availablePlayers);
+			messageInfo.putValue("availablePlayerSlots", gameSession.getAvailablePlayerSlots());
+		
 		}
 		notifyChange(messageInfo);
 	}

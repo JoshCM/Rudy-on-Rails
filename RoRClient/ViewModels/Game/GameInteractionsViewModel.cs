@@ -5,6 +5,7 @@ using RoRClient.ViewModels.Commands;
 using RoRClient.Views.Popup;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -19,11 +20,31 @@ namespace RoRClient.ViewModels.Game
     {
         private ScriptsViewModel scriptsViewModel;
         private Script selectedGhostLocoScript;
+        private Script selectedSensorScript;
+        private bool canPlaceSensor = false;
+        private bool canConfigureSensor = false;
+        private MapGameViewModel mapGameViewModel;
         private int currentNumberOfOwnGhostLocoScript = 1;
+        private int currentNumberOfOwnSensorScript = 1;
 
-        public GameInteractionsViewModel(TaskFactory taskFactory)
+        public GameInteractionsViewModel(TaskFactory taskFactory, MapGameViewModel mapGameViewModel)
         {
             scriptsViewModel = new ScriptsViewModel(GameSession.GetInstance().Scripts, taskFactory);
+            this.mapGameViewModel = mapGameViewModel;
+        }
+
+        public bool CanConfigureSensor
+        {
+            
+            get
+            {
+                return canConfigureSensor;
+            }
+            set
+            {
+                canConfigureSensor = value;
+                OnPropertyChanged("CanConfigureSensor");
+            }
         }
 
         public ScriptsViewModel ScriptsViewModel
@@ -31,6 +52,19 @@ namespace RoRClient.ViewModels.Game
             get
             {
                 return scriptsViewModel;
+            }
+        }
+
+        public bool CanPlaceSensor
+        {
+            get
+            {
+                return canPlaceSensor;
+            }
+            set
+            {
+                canPlaceSensor = value;
+                OnPropertyChanged("CanPlaceSensor");
             }
         }
 
@@ -96,5 +130,107 @@ namespace RoRClient.ViewModels.Game
                 GameSession.GetInstance().QueueSender.SendMessage("AddScriptFromPlayer", messageInformation);
             }
         }
+
+        private ICommand addSensorScriptFromPlayerCommand;
+        public ICommand AddSensorScriptFromPlayerCommand
+        {
+            get
+            {
+                if (addSensorScriptFromPlayerCommand == null)
+                {
+                    addSensorScriptFromPlayerCommand = new ActionCommand(param => AddSensorScriptFromPlayer());
+                }
+                return addSensorScriptFromPlayerCommand;
+            }
+        }
+
+        private void AddSensorScriptFromPlayer()
+        {
+            string description = "Eigenes Script " + currentNumberOfOwnSensorScript;
+            string filename = CustomFileDialogs.AskUserToSelectPythonScript();
+
+            if (filename != null)
+            {
+                string scriptContent = File.ReadAllText(filename);
+                currentNumberOfOwnSensorScript += 1;
+
+                MessageInformation messageInformation = new MessageInformation();
+                messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
+                messageInformation.PutValue("description", description);
+                messageInformation.PutValue("scriptContent", scriptContent);
+                messageInformation.PutValue("scriptType", ScriptTypes.SENSOR.ToString());
+                GameSession.GetInstance().QueueSender.SendMessage("AddScriptFromPlayer", messageInformation);
+            }
+        }
+
+        /// <summary>
+        /// Command zum Platzieren eines Sensors
+        /// </summary>
+        private ICommand placeSensorCommand;
+        public ICommand PlaceSensorCommand
+        {
+            get
+            {
+                if(placeSensorCommand == null)
+                {
+                    placeSensorCommand = new ActionCommand(param => PlaceSensor());
+                }
+                return placeSensorCommand;
+            }
+        }
+
+        /// <summary>
+        /// Schickt eine Nachricht mit dem ausgewählten Canvas an den Server, um zu prüfen, ob dort ein Sensor platziert werden kann
+        /// </summary>
+        private void PlaceSensor()
+        {
+            MessageInformation message = new MessageInformation();
+            Guid selectedModelId = mapGameViewModel.SelectedGameCanvasViewModel.Id;
+            Guid playerId = GameSession.GetInstance().OwnPlayer.Id;
+            message.PutValue("selectedModelId", selectedModelId);
+            message.PutValue("playerId", playerId);
+            GameSession.GetInstance().QueueSender.SendMessage("PlaceSensor", message);
+
+            // Button zum Platzieren von Sensoren deaktivieren, damit nicht mehrere Sensoren übereinander liegen
+            CanPlaceSensor = false;
+        }
+
+        /// <summary>
+        /// Aktuell ausgewähltes Script für Sensor
+        /// </summary>
+        public Script SelectedSensorScript
+        {
+            get
+            {
+                return selectedSensorScript;
+            }
+            set
+            {
+                if (selectedSensorScript != value)
+                {
+                    selectedSensorScript = value;
+                    OnPropertyChanged("SelectedSensorScript");
+
+                    if (selectedSensorScript != null) {
+                        ChangeCurrentScriptOfSensor();
+                        CanConfigureSensor = false;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Ändert das Script für den Sensor
+        /// </summary>
+        private void ChangeCurrentScriptOfSensor()
+        {
+            MessageInformation message = new MessageInformation();
+            Guid selectedModelId = mapGameViewModel.SelectedGameCanvasViewModel.Id;
+            message.PutValue("selectedModelId", selectedModelId);
+            message.PutValue("scriptId", SelectedSensorScript.Id);
+            message.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
+            GameSession.GetInstance().QueueSender.SendMessage("ChangeCurrentScriptOfSensor", message);
+        }
+
     }
 }

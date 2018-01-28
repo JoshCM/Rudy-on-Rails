@@ -26,7 +26,7 @@ namespace RoRClient.Models.Session
 
         public RoRSession()
         {
-            map = new Map();
+            map = new Map(50);
         }
 
         public string Name
@@ -46,7 +46,6 @@ namespace RoRClient.Models.Session
             queueSender = new QueueSender(topicName);
         }
 
-
         public Map Map
         {
             get
@@ -56,6 +55,7 @@ namespace RoRClient.Models.Session
             set
             {
                 map = value;
+                NotifyPropertyChanged("Map");
             }
         }
 
@@ -83,11 +83,13 @@ namespace RoRClient.Models.Session
         public void AddPlayer(Player player)
         {
             players.Add(player);
+            NotifyPropertyChanged("Players");
         }
 
         public void RemovePlayer(Player player)
         {
             players.Remove(player);
+            NotifyPropertyChanged("Players");
         }
 
         public Player GetPlayerById(Guid playerId)

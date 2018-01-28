@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace RoRClient.Models.Game
 {
@@ -15,6 +16,8 @@ namespace RoRClient.Models.Game
         private Guid trainstationId;
         private ObservableCollection<RailSection> railSections = new ObservableCollection<RailSection>();
         private Signals signals;
+        private Sensor sensor;
+        private Boolean sensorPlaced = false;
 
         public Guid TrainstationId
         {
@@ -36,7 +39,7 @@ namespace RoRClient.Models.Game
             }
 
             this.square = square;
-            Signals = new Signals(Guid.Empty); 
+            Signals = new Signals(Guid.Empty);
         }
 
         /// <summary>
@@ -68,15 +71,6 @@ namespace RoRClient.Models.Game
             NotifyPropertyChanged("RailSections");
         }
 
-        #region Properties
-        public ObservableCollection<RailSection> RailSections
-        {
-            get
-            {
-                return railSections;
-            }
-        }
-
         public Signals Signals
         {
             get
@@ -90,6 +84,63 @@ namespace RoRClient.Models.Game
                     signals = value;
                     NotifyPropertyChanged("Signals");
                 }
+            }
+        }
+
+        public Sensor Sensor
+        {
+            get
+            {
+                return sensor;
+            }
+            set
+            {
+                sensor = value;
+                NotifyPropertyChanged("Sensor");
+            }
+        }
+
+        public Boolean SensorPlaced
+        {
+            get
+            {
+                return sensorPlaced;
+            }
+
+            set
+            {
+                sensorPlaced = value;
+                NotifyPropertyChanged("SensorPlaced");
+            }
+        }
+
+        public void PlaceSensor(Guid playerId)
+        {
+            Sensor = new Sensor(Square, Id, playerId);
+            SensorPlaced = true;
+        }
+
+        public void RemoveSensor()
+        {
+            SensorPlaced = false;
+            Sensor = null;
+        }
+        public bool hasSensor()
+        {
+            bool hasSensor = false;
+            if (Sensor != null)
+            {
+                hasSensor = true;
+            }
+            return hasSensor;
+        }
+
+        #region Properties
+        public ObservableCollection<RailSection> RailSections
+        {
+            get
+            {
+                return railSections;
             }
         }
 
@@ -110,5 +161,13 @@ namespace RoRClient.Models.Game
             }
         }
         #endregion
+
+        public bool IsSwitch
+        {
+            get
+            {
+                return railSections.Where(x => x.Status == RailSectionStatus.INACTIVE).Count() >= 1;
+            }
+        }
     }
 }

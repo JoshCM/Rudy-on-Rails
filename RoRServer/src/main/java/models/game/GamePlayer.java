@@ -3,10 +3,11 @@ package models.game;
 import java.util.UUID;
 
 import communication.MessageInformation;
+import resources.PropertyManager;
 
 public class GamePlayer extends Player{
 
-	private int coalCount;
+	private double coalCount;
 	private int goldCount;
 	private int pointCount;
 	private Color color;
@@ -29,12 +30,12 @@ public class GamePlayer extends Player{
     }
 
 	private void initializeResourceCounts() {
-		this.coalCount = 25;
-		this.goldCount = 10;
-		this.pointCount = 0;
+		this.coalCount = 1000;
+		this.goldCount = 1000;
+		this.pointCount = 20;
 	}
 
-	public int getCoalCount() {
+	public double getCoalCount() {
 		return coalCount;
 	}
 
@@ -43,7 +44,7 @@ public class GamePlayer extends Player{
 		notifyResourceCountChanged();
 	}
 	
-	public void removeCoal(int coal) {
+	public void removeCoal(double coal) {
 		if(coal > coalCount) {
 			coalCount = 0;
 		} else {

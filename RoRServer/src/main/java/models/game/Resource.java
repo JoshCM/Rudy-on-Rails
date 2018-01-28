@@ -2,6 +2,7 @@ package models.game;
 
 import communication.MessageInformation;
 import models.session.GameSession;
+import models.session.RoRSession;
 
 /**
  * @author Andreas Pöhler, Juliane Lies, Isabell Rott
@@ -12,14 +13,16 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
 	protected int quantity;
 	protected String name;
 	
-	protected Resource(String sessionName, Square square, String name) {
+	protected Resource(String sessionName, Square square, String name, int quantity) {
 		super(sessionName, square);
 		this.name = name;
+		this.quantity = quantity;
 		notifyCreatedResource();	
 	}
 	
-	protected Resource(String sessionName, String name) {
+	protected Resource(String sessionName, String name, int quantity) {
 		super(sessionName, new Square(sessionName, -1, -1));
+		this.quantity = quantity;
 		this.name = name;
 	}
 	
@@ -51,5 +54,10 @@ public abstract class Resource extends InteractiveGameObject implements Placeabl
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	@Override
+	public PlaceableOnSquare loadFromMap(Square square, RoRSession session) {
+		return null;
 	}
 }
