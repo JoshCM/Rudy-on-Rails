@@ -22,7 +22,7 @@ public class ChangeSpeedOfLocomotiveCommand extends CommandBase {
     @Override
     public void execute() {
         GameSession gameSession = (GameSession)session;
-        Loco loco = gameSession.getLocomotiveByPlayerId(UUID.fromString(clientId));
+        Loco loco = gameSession.getPlayerLocoByPlayerId(UUID.fromString(clientId));
         loco.changeSpeed(locoSpeed);
     }
 }

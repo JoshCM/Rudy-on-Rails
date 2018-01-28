@@ -30,7 +30,7 @@ public class ExchangeGoldToCoalCommand extends CommandBase {
         GameSession gameSession = (GameSession)session;
         Map map = gameSession.getMap();
         Publictrainstation trainstation = (Publictrainstation)map.getPlaceableOnSquareById(trainstationId);
-        Loco loco = gameSession.getLocomotiveByPlayerId(playerId);
+        Loco loco = gameSession.getPlayerLocoByPlayerId(playerId);
         
         List<Cart> carts = loco.getCarts();
         

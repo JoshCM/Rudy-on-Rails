@@ -33,10 +33,12 @@ public class AddScriptFromPlayerCommand extends CommandBase {
 	public void execute() {
 		String playerIdAsString = playerId.toString().replace("-", "_");
 		String newIdAsString = UUID.randomUUID().toString().replace("-", "_");
+		
 		// Eindeutiger Filename wird generiert aus playerId und einer zufälligen UUID
-		String filename = "ghostloco_" + playerIdAsString + "_" + newIdAsString;
+		String filename = scriptType.toString().toLowerCase() + "_" + playerIdAsString + "_" + newIdAsString;
+		
 		// Python-Script wird gespeichert
-		ScriptFileWriter.writeStringToFile(filename, scriptContent);
+		ScriptFileWriter.writeStringToFile(scriptType, filename, scriptContent);
 		
 		GameSession gameSession = (GameSession)session;
 		Script script = new Script(gameSession.getSessionName(), description, scriptType, filename, playerId);

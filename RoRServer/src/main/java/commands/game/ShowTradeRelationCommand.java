@@ -27,7 +27,7 @@ public class ShowTradeRelationCommand extends CommandBase {
 		
 		GameSession gameSession = (GameSession)session;
 		Map map = gameSession.getMap();
-		Loco loco = gameSession.getLocomotiveByPlayerId(playerId);
+		Loco loco = gameSession.getPlayerLocoByPlayerId(playerId);
 		Publictrainstation publicTrainstation = (Publictrainstation)map.getPlaceableOnSquareById(publicTrainstationId);
 		if (Validator.checkLocoInRangeOfSquare(map, loco, map.getSquareById(publicTrainstation.getSquareId()), 100)){
 			publicTrainstation.showTradeMenu();

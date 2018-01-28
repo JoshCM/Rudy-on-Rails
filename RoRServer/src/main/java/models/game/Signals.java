@@ -159,6 +159,21 @@ public class Signals extends TickableGameObject {
 		notifyConfigChanged();
 	}
 	
+	public void changePenalty(int penalty) {
+		this.penalty = penalty;
+		notifyConfigChanged();
+	}
+	
+	public void changeSwitchCost(int switchCost) {
+		this.switchCost = switchCost;
+		notifyConfigChanged();
+	}
+	
+	public void changeSwitchInterval(int autoSwitchIntervalInSeconds) {
+		this.autoSwitchIntervalInSeconds = autoSwitchIntervalInSeconds;
+		notifyConfigChanged();
+	}
+	
 	private void notifyConfigChanged() {
 		MessageInformation messageInfo = new MessageInformation("UpdateConfigOfSignals");
 		messageInfo.putValue("signalsId", getId());

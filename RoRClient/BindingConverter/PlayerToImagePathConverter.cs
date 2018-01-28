@@ -39,11 +39,11 @@ namespace RoRClient.BindingConverter
                         int colorNumber = (int)player.PlayerColor;
                         return IMAGE_FOLDER_PATH + STOCK_IMAGE_START + colorNumber + IMAGE_ENDING;
                     }
-                } else if (trainstation is Publictrainstation)
+                }
+                else if (trainstation is Publictrainstation)
                 {
                     return IMAGE_FOLDER_PATH + STOCK_IMAGE_START + "public_ts" + IMAGE_ENDING;
                 }
-
             }
 
             // wenn type nicht bestimmt muss das hier zurückgegeben werden
