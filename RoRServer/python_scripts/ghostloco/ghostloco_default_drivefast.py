@@ -10,6 +10,10 @@
 # Mögliche Fehler-Strings in der Liste: ("NotOnMap", "NotVisible")
 # Mögliche Objekt-Strings in der Liste: ("OwnTrainstation", "OtherTrainstation", "Rail", "ActiveSignal", "InactiveSignal", "Mine", "Loco")
 
+# proxy.getObjectsOnSquareBehindLastCart()
+# Gleiches Verhalten wie getObjectsOnSquare, bloß handelt es sich hier um das Feld hinter dem letzten Waggon
+# Kann zum Beispiel genutzt werden, um herauszufinden, ob hinter dem Geisterzug ein Cart zum ankoppeln bereitsteht
+
 # proxy.setPicksUpCoalContainerNextToRails(True|False)
 # Wenn true, dann nimmt der Geisterzug Kohle-Container, an denen er vorbeifährt, mit
 
@@ -54,7 +58,7 @@
 # proxy.hasResourcesOnCarts()
 # Gibt true zurück, wenn mindestens einer der Waggons etwas geladen hat
 
-default_speed = 5
+default_speed = 4
 
 
 # Hier können Startwerte gesetzt werden
@@ -71,6 +75,13 @@ def init(proxy):
 # Wird in regelmäßigen Abständen aufgerufen
 def update(proxy):
 	global default_speed
+
+	# Waggon ankoppeln
+	#if "Cart" in proxy.getObjectsOnSquareBehindLastCart():
+	#	proxy.changeSpeed(-1)
+	#	import time 
+	#	time.sleep(3)
+	#	proxy.changeSpeed(default_speed)
 
 	# Halte zum Abladen von Resourcen und fahre anschließend weiter
 	if "OwnTrainstation" in proxy.getObjectsOnSquare(1, 0) or "OwnTrainstation" in proxy.getObjectsOnSquare(-1, 0):
