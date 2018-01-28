@@ -35,7 +35,14 @@ namespace RoRClient.ViewModels.Game
 
         public void ShowTradeRelation()
         {
-            MapViewModel.GameInteractionsViewModel.CanExchangeResource = true;
+            if (!this.Trainstation.Tradeable)
+            {
+                MapViewModel.GameInteractionsViewModel.CanExchangeResource = true;
+            } else
+            {
+                MapViewModel.GameInteractionsViewModel.CanExchangeResource = false;
+            }
+
 
             MessageInformation message = new MessageInformation();
             message.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);

@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="../Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <converter:IsNullToBooleanConverter x:Key="IsNullToBooleanConverter"/>
+            <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" IsInverse="False"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -64,7 +65,7 @@
             <Button Content="Auswählen" Command="{Binding ExchangeResourceCommand}" Style="{StaticResource DefaultButtonStyleDampfmodus}"/>
         </StackPanel>
 
-        <StackPanel Visibility="Hidden" >
+        <StackPanel Visibility="{Binding CanExchangeResource, Converter={StaticResource BooleanToVisibilityConverter}}" >
             <Label Content="Tauschverhältnis" Foreground="white" Style="{StaticResource DefaultSubHeaderStyle}">
             </Label>
             <TextBlock Text="Gold 1 : 1 Kohle" Foreground="white" Style="{StaticResource DefaultTextBlockStyle}" Margin="0" />
