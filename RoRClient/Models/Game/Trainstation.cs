@@ -30,19 +30,6 @@ namespace RoRClient.Models.Game
             }
         }
 
-        public bool Tradeable
-        {
-            get
-            {
-                return tradeable;
-            }
-            set
-            {
-                tradeable = value;
-                NotifyPropertyChanged("Tradeable");
-            }
-        }
-
         public Stock Stock
         {
             get { return stock; }
@@ -74,6 +61,19 @@ namespace RoRClient.Models.Game
             {
                 alignment = value;
                 NotifyPropertyChanged("Alignment");
+            }
+        }
+
+        public bool Tradeable
+        {
+            get
+            {
+                return tradeable;
+            }
+            set
+            {
+                tradeable = value;
+                NotifyPropertyChanged("Tradeable");
             }
         }
     }

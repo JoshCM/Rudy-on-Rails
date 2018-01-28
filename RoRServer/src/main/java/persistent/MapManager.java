@@ -125,7 +125,7 @@ public class MapManager {
 		} else if(map.getMapSize() <= 50) {
 			mapSizeDescription = "Normal";
 		} else {
-			mapSizeDescription = "GroÃŸ";
+			mapSizeDescription = "Groß";
 		}
 		return mapSizeDescription;
 	}

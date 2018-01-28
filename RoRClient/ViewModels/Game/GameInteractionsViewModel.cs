@@ -26,6 +26,7 @@ namespace RoRClient.ViewModels.Game
         private MapGameViewModel mapGameViewModel;
         private int currentNumberOfOwnGhostLocoScript = 1;
         private String selectedResource;
+        private bool canExchangeResource = false;
         private bool tradeRelation = false;
 
         public GameInteractionsViewModel(TaskFactory taskFactory, MapGameViewModel mapGameViewModel)
@@ -45,19 +46,6 @@ namespace RoRClient.ViewModels.Game
             {
                 canConfigureSensor = value;
                 OnPropertyChanged("CanConfigureSensor");
-            }
-        }
-
-        public bool TradeRelation
-        {
-            get
-            {
-                return tradeRelation;
-            }
-            set
-            {
-                tradeRelation = value;
-                OnPropertyChanged("TradeRelation");
             }
         }
 
@@ -230,6 +218,20 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
+        public bool CanExchangeResource
+        {
+
+            get
+            {
+                return canExchangeResource;
+            }
+            set
+            {
+                canExchangeResource = value;
+                OnPropertyChanged("CanExchangeResource");
+            }
+        }
+
         /// <summary>
         /// Command zum Austauschen von Ressourcen am Öffentlichen Bahnhof
         /// </summary>
@@ -265,6 +267,19 @@ namespace RoRClient.ViewModels.Game
             } else if (SelectedResource == "Gold zu Punkten tauschen")
             {
                 GameSession.GetInstance().QueueSender.SendMessage("ExchangeGoldToPoints", messageInformation);
+            }
+        }
+
+        public bool TradeRelation
+        {
+            get
+            {
+                return tradeRelation;
+            }
+            set
+            {
+                tradeRelation = value;
+                OnPropertyChanged("TradeRelation");
             }
         }
     }

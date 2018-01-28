@@ -11,12 +11,12 @@ import models.helper.Validator;
 import models.session.GameSession;
 import models.session.RoRSession;
 
-public class ActivateTradeMenuCommand extends CommandBase {
+public class ShowTradeRelationCommand extends CommandBase {
 	
 	private UUID playerId;
 	private UUID publicTrainstationId;
 
-	public ActivateTradeMenuCommand(RoRSession session, MessageInformation messageInfo) {
+	public ShowTradeRelationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		playerId = messageInfo.getValueAsUUID("playerId");
 		publicTrainstationId = messageInfo.getValueAsUUID("publicTrainstationId");

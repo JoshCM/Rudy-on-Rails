@@ -13,30 +13,32 @@ namespace RoRClient.ViewModels.Game
 {
     class PublictrainstationGameViewModel : TrainstationGameViewModel
     {
-        public PublictrainstationGameViewModel(Trainstation trainstation) : base(trainstation)
-        {
+        Publictrainstation publictrainstation;
 
+        public PublictrainstationGameViewModel(Publictrainstation trainstation) : base(trainstation)
+        {
+            this.publictrainstation = trainstation;
         }
 
-        private ICommand activateTradeMenuCommand;
-        public ICommand ActivateTradeMenuCommand
+        private ICommand showTradeRelationCommand;
+        public ICommand ShowTradeRelationCommand
         {
             get
             {
-                if (activateTradeMenuCommand == null)
+                if (showTradeRelationCommand == null)
                 {
-                    activateTradeMenuCommand = new ActionCommand(param => ActivateTradeMenu());
+                    showTradeRelationCommand = new ActionCommand(param => ShowTradeRelation());
                 }
-                return activateTradeMenuCommand;
+                return showTradeRelationCommand;
             }
         }
 
-        public void ActivateTradeMenu()
-        {
+        public void ShowTradeRelation()
+        {            
             MessageInformation message = new MessageInformation();
             message.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
             message.PutValue("publicTrainstationId", Id);
-            GameSession.GetInstance().QueueSender.SendMessage("ActivateTradeMenu", message);
+            GameSession.GetInstance().QueueSender.SendMessage("ShowTradeRelation", message);
         }
     }
 }

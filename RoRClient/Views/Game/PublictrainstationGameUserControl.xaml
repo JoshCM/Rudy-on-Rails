@@ -21,7 +21,7 @@
                 </TransformGroup>
             </Image.LayoutTransform>
             <Image.InputBindings>
-                <MouseBinding MouseAction="LeftClick" Command="{Binding ActivateTradeMenuCommand}" />
+                <MouseBinding MouseAction="LeftClick" Command="{Binding ShowTradeRelationCommand}" />
             </Image.InputBindings>
         </Image>
     </Canvas>

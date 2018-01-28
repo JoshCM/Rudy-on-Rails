@@ -28,11 +28,11 @@ namespace RoRClient.Commands.Game.Other
 
             GameSession gameSession = (GameSession)session;
 
-            if(gameSession.OwnPlayer.Id == playerId)
-            {
-                Trainstation trainstation = (Trainstation)gameSession.Map.GetPlaceableById(trainstationId);
+            //if (gameSession.OwnPlayer.Id == playerId)
+            //{
+                Publictrainstation trainstation = (Publictrainstation)gameSession.Map.GetPlaceableById(trainstationId);
                 trainstation.Tradeable = tradeable;
-            }
+            //}
         }
     }
 }

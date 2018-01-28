@@ -29,10 +29,6 @@ namespace RoRClient.Commands.Base
         /// <param name="messageInformation"></param>
         public CreatePublictrainstationCommandBase(RoRSession session, MessageInformation messageInformation) : base(session, messageInformation)
         {
-            if (session.GetType() == typeof(GameSession))
-            {
-                this.gameSession = (GameSession)session;
-            }
             trainstationId = Guid.Parse(messageInformation.GetValueAsString("trainstationId"));
             stockId = Guid.Parse(messageInformation.GetValueAsString("stockId"));
             xPos = messageInformation.GetValueAsInt("xPos");
@@ -54,9 +50,11 @@ namespace RoRClient.Commands.Base
         {
             Square square = session.Map.GetSquare(xPos, yPos);
             Stock stock = (Stock)session.Map.GetPlaceableById(stockId);
+
             trainstation = new Publictrainstation(trainstationId, square, trainstationRails, alignment, stock);
             if (session.GetType() == typeof(GameSession))
             {
+                this.gameSession = (GameSession)session;
                 gameSession.addPublictrainstation(trainstation);
             }
             square.PlaceableOnSquare = (Publictrainstation)trainstation;

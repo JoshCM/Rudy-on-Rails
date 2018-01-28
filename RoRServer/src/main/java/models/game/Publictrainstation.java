@@ -10,13 +10,10 @@ import communication.MessageInformation;
 import models.session.RoRSession;
 
 public class Publictrainstation extends Trainstation {
-
-	private List<Resource> resources;
 	
 	public Publictrainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id,
 			Compass alignment, Stock stock) {
 		super(sessionName, square, trainstationRailIds, id, alignment, stock);
-		initializeResourceStock();
 		notifyCreatedPublictrainstation();
 	}
 	
@@ -26,20 +23,6 @@ public class Publictrainstation extends Trainstation {
 		this.setPlayerId(playerId);
 		this.crane = crane;
 		notifyCreatedPublictrainstation();
-	}
-	
-	public List<Resource> getResources() {
-		return resources;
-	}
-	
-	private void initializeResourceStock() {
-		resources = new ArrayList<Resource>();
-		Gold g = new Gold(getSessionName(), 100);
-		Coal c = new Coal(getSessionName(), 100);
-		PointContainer p = new PointContainer(getSessionName(), 100);
-		resources.add(g);
-		resources.add(c);
-		resources.add(p);
 	}
 	
 	private void notifyCreatedPublictrainstation() {
@@ -60,14 +43,12 @@ public class Publictrainstation extends Trainstation {
 		}
 		messageInfo.putValue("trainstationRails", rails);
 		messageInfo.putValue("stockId", getStock().getId());
-		
-		//müssen Ressourcen auch mitgegeben werden?
 
 		notifyChange(messageInfo);
 	}
 	
 	public void showTradeMenu() {
-		MessageInformation message = new MessageInformation("ShowTradeRelationCommand");
+		MessageInformation message = new MessageInformation("ShowTradeRelation");
 		message.putValue("trainstationId", getId());
 		message.putValue("playerId", getPlayerId());
 		message.putValue("tradeable", true);
