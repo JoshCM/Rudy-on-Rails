@@ -94,7 +94,13 @@ public class GhostLocoProxy implements ProxyObject {
 
 		if (placeableOnSquare != null) {
 			if (placeableOnSquare instanceof Trainstation) {
-				result.add("Trainstation");
+				Trainstation trainstation = (Trainstation)placeableOnSquare;
+				// Eigener Bahnhof
+				if(trainstation.getPlayerId() != null && trainstation.getPlayerId().equals(ghostLoco.getPlayerId())) {
+					result.add("OwnTrainstation");
+				} else {					
+					result.add("OtherTrainstation");
+				}
 			} else if (placeableOnSquare instanceof Rail) {
 				fillObjectStringListWithValuesFromRail(result, placeableOnSquare);
 			} else if (placeableOnSquare instanceof Resource) {
@@ -134,9 +140,15 @@ public class GhostLocoProxy implements ProxyObject {
 		}
 	}
 
+	/**
+	 * Prüft, ob das angegebenen Feld für den Geisterzug sichtbar ist
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	private boolean isSquareVisibleForProxy(int x, int y) {
 		if (x >= -VISIBLE_SQUARE_AMOUNT_SIDEWAYS && x <= VISIBLE_SQUARE_AMOUNT_SIDEWAYS) {
-			if (y <= VISIBLE_SQUARE_AMOUNT_FORWARD) {
+			if (y >= 0 && y <= VISIBLE_SQUARE_AMOUNT_FORWARD) {
 				return true;
 			}
 		}
@@ -189,5 +201,9 @@ public class GhostLocoProxy implements ProxyObject {
 	
 	public int getPointCount() {
 		return ghostLoco.getPlayer().getPointCount();
+	}
+	
+	public boolean hasResourcesOnCarts() {
+		return ghostLoco.hasResourcesOnCarts();
 	}
 }
