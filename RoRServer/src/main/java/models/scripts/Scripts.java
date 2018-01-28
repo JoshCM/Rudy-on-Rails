@@ -31,6 +31,8 @@ public class Scripts extends ModelBase {
 		scripts.add(new Script(getSessionName(), "InfoTrain", ScriptType.SENSOR, "info"));
 		scripts.add(new Script(getSessionName(), "StopTrain", ScriptType.SENSOR, "stop"));
 		scripts.add(new Script(getSessionName(), "DropResources", ScriptType.SENSOR, "drop"));
+		scripts.add(new Script(getSessionName(), "ChangeSwitch", ScriptType.SENSOR, "switch"));
+		scripts.add(new Script(getSessionName(), "ChangeSignalInterval", ScriptType.SENSOR, "signals"));
 	}
 	
 	public List<Script> getScripts() {

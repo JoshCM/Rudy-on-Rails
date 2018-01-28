@@ -208,7 +208,10 @@ public class MapManager {
 			if(availablePlayerSlotsMapFile.exists()) {
 				HashMap<String, Double> availablePlayerSlotsMap = new HashMap<>();
 				availablePlayerSlotsMap = gsonLoader.fromJson(readFromFile(MAP_PLAYER_SLOTS, slots),availablePlayerSlotsMap.getClass());
-				return availablePlayerSlotsMap;
+				if(availablePlayerSlotsMap != null)
+					return availablePlayerSlotsMap;
+				else
+					return new HashMap<String, Double>();
 			}else {
 				return new HashMap<String, Double>();
 			}

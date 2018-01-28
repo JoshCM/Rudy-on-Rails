@@ -174,6 +174,7 @@ public abstract class Loco extends TickableGameObject {
 	    this.rail = nextRail;
 	    this.updateSquare(this.rail.getSquareFromGameSession());
 	    notifyLocoPositionChanged();
+	    notifySensors();
     }
 	
 	private void setSpeedAndNotifySpeedChanged(int speed) {
@@ -344,11 +345,13 @@ public abstract class Loco extends TickableGameObject {
 	 */
 	private void notifyLocoPositionChanged() {
 		MessageInformation messageInfo = new MessageInformation("UpdateLocoPosition");
-		messageInfo.putValue("locoId", getId());
-		messageInfo.putValue("xPos", getXPos());
-		messageInfo.putValue("yPos", getYPos());
-		messageInfo.putValue("drivingDirection", drivingDirection.toString());
-		notifyChange(messageInfo);
+		if(drivingDirection!= null) {
+			messageInfo.putValue("locoId", getId());
+			messageInfo.putValue("xPos", getXPos());
+			messageInfo.putValue("yPos", getYPos());
+			messageInfo.putValue("drivingDirection", drivingDirection.toString());
+			notifyChange(messageInfo);
+		}
 	}
 
 	private void notifyCartToLocoAdded(Cart cart) {
@@ -361,8 +364,10 @@ public abstract class Loco extends TickableGameObject {
 	}
 
 	public void changeSpeed(int speed) {
-		this.speed = speed;
-		notifySpeedChanged();
+		if(this.speed != speed) {
+			this.speed = speed;
+			notifySpeedChanged();
+		}
 	}
 
 	private void notifySpeedChanged() {
@@ -374,7 +379,9 @@ public abstract class Loco extends TickableGameObject {
 
 	// Getter und Setter
 	public void setSpeed(int speed) {
-		this.speed = speed;
+		if(this.speed != speed) {			
+			this.speed = speed;
+		}
 	}
 
 	public ArrayList<Cart> getCarts() {
@@ -416,5 +423,14 @@ public abstract class Loco extends TickableGameObject {
 	
 	public GamePlayer getPlayer() {
 		return player;
+	}
+	
+	public boolean hasResourcesOnCarts() {
+		for(Cart cart : carts) {
+			if(cart.getResource() != null) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
