@@ -32,6 +32,7 @@ namespace RoRClient.Commands.Game.Update
             Loco loco = gameSession.GetLocoById(locoId);
             loco.Square = square;
             loco.DrivingDirection = drivingDirection;
+            loco.Sound.play(loco.Speed);
         }
     }
 }

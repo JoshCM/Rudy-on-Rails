@@ -237,6 +237,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Sound\LocoSound.cs" />
+    <Compile Include="Sound\SoundBase.cs" />
     <Compile Include="ViewModels\Base\CanvasViewModelBase.cs" />
     <Compile Include="ViewModels\Editor\PublictrainstationEditorViewModel.cs" />
     <Compile Include="ViewModels\Editor\TrainstationEditorViewModel.cs" />
@@ -653,6 +655,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Sound\Sounds\004.wav" />
+    <Content Include="Sound\Sounds\tschuk.wav" />
     <Resource Include="Resources\Images\dummy.png" />
     <Resource Include="Resources\Images\trainstation_0.png" />
     <Resource Include="Resources\Images\trainstation_public.png" />
