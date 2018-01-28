@@ -6,6 +6,7 @@ import commands.base.Command;
 import communication.MessageInformation;
 import models.game.Compass;
 import models.game.Crane;
+import models.game.GhostLoco;
 import models.game.Loco;
 import models.game.Playertrainstation;
 import models.game.Stock;
@@ -34,22 +35,25 @@ public class UpdateCranePositionCommand implements Command{
 		this.trainstation = (Playertrainstation)session.getMap().getPlaceableOnSquareById(this.stock.getTrainstationId());
 		this.playerId = UUID.fromString(messageInfo.getClientid());
 		this.crane = this.trainstation.getCrane();
-		this.loco = this.session.getLocomotiveByPlayerId(playerId);
+		this.loco = this.session.getPlayerLocoByPlayerId(playerId);
 		
 	}
 
 	@Override
 	public void execute() {
-		
 		if(this.playerId.equals(this.trainstation.getPlayerId())) {
+			GhostLoco ghostLoco = session.getGhostLocoByPlayerId(playerId);
+			if(validatePosition(ghostLoco)) {
+				this.crane.moveToTakeTheGoods(ghostLoco, trainstation);
+			}
 			
-			if(validate()) {
-				this.crane.moveToTakeTheGoods(this.loco,this.trainstation);
+			if(validatePosition(loco)) {
+				this.crane.moveToTakeTheGoods(loco, trainstation);
 			}
 		}
 	}
-	private boolean validate() {
-		if(this.loco.getRail().getId().equals(trainstation.getSpawnPointforLoco())) {
+	private boolean validatePosition(Loco loco) {
+		if(loco.getRail().getId().equals(trainstation.getSpawnPointforLoco())) {
 			return true;
 		}
 		return false;
