@@ -223,6 +223,28 @@ namespace RoRClient.ViewModels
                 StopOwnLocoInput?.Invoke(this, e);
             }
         }
-#endregion
+
+        private ICommand unloadCartsCommand;
+        public ICommand UnloadCartsCommand
+        {
+            get
+            {
+                if (unloadCartsCommand == null)
+                {
+                    unloadCartsCommand = new ActionCommand(param => RaiseUnloadCartsEvent(new EventArgs()));
+                }
+                return unloadCartsCommand;
+            }
+        }
+
+        public static event EventHandler UnloadCartsInput;
+        private void RaiseUnloadCartsEvent(EventArgs e)
+        {
+            if (uiState.State == "game")
+            {
+                UnloadCartsInput?.Invoke(this, e);
+            }
+        }
+        #endregion
     }
 }

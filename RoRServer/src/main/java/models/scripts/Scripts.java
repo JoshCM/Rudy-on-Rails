@@ -20,9 +20,10 @@ public class Scripts extends ModelBase {
 	}
 	
 	private void loadGhostLocoDefaultScripts() {
-		scripts.add(new Script(getSessionName(), "Schnell fahren", ScriptType.GHOSTLOCO, "ghostloco_default_drivefast"));
-		scripts.add(new Script(getSessionName(), "Langsam fahren", ScriptType.GHOSTLOCO, "ghostloco_default_driveslow"));
-		scripts.add(new Script(getSessionName(), "Gold stehlen", ScriptType.GHOSTLOCO, "ghostloco_default_stealgold"));
+		scripts.add(new Script(getSessionName(), "Default (schnell)", ScriptType.GHOSTLOCO, "ghostloco_default_drivefast"));
+		scripts.add(new Script(getSessionName(), "Default (langsam)", ScriptType.GHOSTLOCO, "ghostloco_default_driveslow"));
+		scripts.add(new Script(getSessionName(), "Nur Gold stehlen", ScriptType.GHOSTLOCO, "ghostloco_default_stealgold"));
+		scripts.add(new Script(getSessionName(), "Nichts machen", ScriptType.GHOSTLOCO, "ghostloco_default_doNothing"));
 	}
 	
 	private void loadSensorDefaultScripts() {
