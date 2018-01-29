@@ -149,7 +149,8 @@ namespace RoRClient.ViewModels
         /// </summary>
         private void ToggleScoreboard()
         {
-            if (IsInSession())
+            // Darf nur im Game geöffnet werden
+            if (uiState.State == "game")
             {
                 ScoreboardViewModel scoreboardViewModel = gameViewModel.ScoreboardViewModel;
                 scoreboardViewModel.ToggleScoreboard();
