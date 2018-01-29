@@ -150,6 +150,8 @@ public abstract class Loco extends TickableGameObject {
         	} 	
         }
     }
+	
+	//Wagon wird an den Zug angekoppelt
 	private void linkupCartToCarts(Rail nextRail) {
 		Cart cart = (Cart)nextRail.getPlaceableOnrail();
 		cart.setDrivingDirection(getLastCart().getDrivingDirection());

@@ -67,10 +67,8 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 				GamePlayer player = (GamePlayer) gameSession.getPlayerById(loco.getPlayerId());
 				
 				if(resource instanceof Gold) {
-					System.out.println("HALLO I BIMS 1 GOLD MIT: " + resource.quantity);
 					player.addGold(resource.quantity);
 				}else if(resource instanceof Coal){
-					System.out.println("HALLO I BIMS 1 KOHLE MIT: " + resource.quantity);
 					player.addCoal(resource.quantity);
 				} else {
 					player.addPoints(resource.quantity);

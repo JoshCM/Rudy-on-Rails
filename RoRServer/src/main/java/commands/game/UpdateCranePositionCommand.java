@@ -54,7 +54,10 @@ public class UpdateCranePositionCommand implements Command{
 	}
 	private boolean validatePosition(Loco loco) {
 		if(loco.getRail().getId().equals(trainstation.getSpawnPointforLoco())) {
-			return true;
+			
+			if(loco.getSpeed() == 0) {
+				return true;
+			}
 		}
 		return false;
 	}
