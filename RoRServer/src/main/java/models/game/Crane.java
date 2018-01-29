@@ -61,16 +61,16 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		for(Cart cart : loco.getCarts()) {
 		
 			if(cart.getResource() != null) {
-				updateCranePosition(gameSession.getMap().getSquare(cart.getXPos(), cart.getYPos()));
+				if(!cart.getSquareId().equals(this.getSquareId())) {
+					updateCranePosition(gameSession.getMap().getSquare(cart.getXPos(), cart.getYPos()));
+				}
 				Resource resource = cart.unloadResourceFromCart();
 				
 				GamePlayer player = (GamePlayer) gameSession.getPlayerById(loco.getPlayerId());
 				
 				if(resource instanceof Gold) {
-					System.out.println("HALLO I BIMS 1 GOLD MIT: " + resource.quantity);
 					player.addGold(resource.quantity);
 				}else if(resource instanceof Coal){
-					System.out.println("HALLO I BIMS 1 KOHLE MIT: " + resource.quantity);
 					player.addCoal(resource.quantity);
 				} else {
 					player.addPoints(resource.quantity);
@@ -78,7 +78,7 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 			}
 			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(700);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
