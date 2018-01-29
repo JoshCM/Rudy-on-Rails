@@ -13,6 +13,7 @@ import models.game.GhostLoco;
 import models.game.Loco;
 import models.game.Mine;
 import models.game.PlayerLoco;
+import models.game.Publictrainstation;
 import models.game.Player;
 import models.game.TickableGameObject;
 import models.scripts.ScriptableObject;
@@ -183,7 +184,6 @@ public class GameSession extends RoRSession implements ModelObserver {
 		
 	}
 	
-
 	public List<Loco> getLocos() {
 		return locos;
 	}
