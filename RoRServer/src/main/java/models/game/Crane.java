@@ -61,7 +61,9 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 		for(Cart cart : loco.getCarts()) {
 		
 			if(cart.getResource() != null) {
-				updateCranePosition(gameSession.getMap().getSquare(cart.getXPos(), cart.getYPos()));
+				if(!cart.getSquareId().equals(this.getSquareId())) {
+					updateCranePosition(gameSession.getMap().getSquare(cart.getXPos(), cart.getYPos()));
+				}
 				Resource resource = cart.unloadResourceFromCart();
 				
 				GamePlayer player = (GamePlayer) gameSession.getPlayerById(loco.getPlayerId());
@@ -76,7 +78,7 @@ public class Crane extends InteractiveGameObject implements PlaceableOnRail{
 			}
 			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(700);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
