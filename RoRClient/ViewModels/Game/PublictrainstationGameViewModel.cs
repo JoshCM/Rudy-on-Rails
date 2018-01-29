@@ -20,34 +20,25 @@ namespace RoRClient.ViewModels.Game
             this.publictrainstation = trainstation;
         }
 
-        private ICommand showTradeRelationCommand;
-        public ICommand ShowTradeRelationCommand
+        private ICommand selectPublictrainstationCommand;
+        public ICommand SelectPublictrainstationCommand
         {
             get
             {
-                if (showTradeRelationCommand == null)
+                if (selectPublictrainstationCommand == null)
                 {
-                    showTradeRelationCommand = new ActionCommand(param => ShowTradeRelation());
+                    selectPublictrainstationCommand = new ActionCommand(param => SelectPublictrainstation());
                 }
-                return showTradeRelationCommand;
+                return selectPublictrainstationCommand;
             }
         }
 
-        public void ShowTradeRelation()
+        public void SelectPublictrainstation()
         {
-            if (!this.Trainstation.Tradeable)
-            {
-                MapViewModel.GameInteractionsViewModel.CanExchangeResource = true;
-            } else
-            {
-                MapViewModel.GameInteractionsViewModel.CanExchangeResource = false;
-            }
-
-
             MessageInformation message = new MessageInformation();
             message.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
-            message.PutValue("publicTrainstationId", Id);
-            GameSession.GetInstance().QueueSender.SendMessage("ShowTradeRelation", message);
+            message.PutValue("publicTrainstationId", publictrainstation.Id);
+            GameSession.GetInstance().QueueSender.SendMessage("SelectPublictrainstation", message);
         }
     }
 }

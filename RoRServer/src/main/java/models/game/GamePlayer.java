@@ -11,6 +11,7 @@ public class GamePlayer extends Player{
 	private int goldCount;
 	private int pointCount;
 	private Color color;
+	private Publictrainstation currentSelectedPublictrainstation;
 
 	public GamePlayer(String sessionName, String name, UUID id, boolean isHost) {
 		super(sessionName, name, id, isHost);
@@ -28,6 +29,14 @@ public class GamePlayer extends Player{
     	messageInfo.putValue("pointCount", getPointCount());
     	notifyChange(messageInfo);
     }
+	
+	public void setCurrentSelectedPublictrainstation (Publictrainstation currentSelectedPublictrainstation) {
+		this.currentSelectedPublictrainstation = currentSelectedPublictrainstation;
+	}
+	
+	public Publictrainstation getCurrentSelectedPublictrainstation() {
+		return currentSelectedPublictrainstation;
+	}
 
 	private void initializeResourceCounts() {
 		this.coalCount = 1000;
