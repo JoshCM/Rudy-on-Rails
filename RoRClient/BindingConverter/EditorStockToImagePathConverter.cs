@@ -22,11 +22,10 @@ namespace RoRClient.BindingConverter
             if(value is Stock)
             {
                 Stock stock = (Stock)value;
-                Trainstation trainstation = (Trainstation)EditorSession.GetInstance().Map.GetPlaceableById(stock.TrainstationId);
-                if (trainstation is Playertrainstation)
+                if (stock.TrainstationType == TrainstationType.PLAYER)
                 {
                     return IMAGE_FOLDER_PATH + STOCK_IMAGE_START + "0" + IMAGE_ENDING;
-                } else if (trainstation is Publictrainstation)
+                } else if (stock.TrainstationType == TrainstationType.PUBLIC)
                 {
                     return IMAGE_FOLDER_PATH + STOCK_IMAGE_START + "public_ts" + IMAGE_ENDING;
                 }
