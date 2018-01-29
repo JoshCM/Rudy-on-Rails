@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
  * */
 public class Switch extends Rail {
     private Compass switchableDirectionEntry;
+    private RailSection activeRailSection;
+    private RailSection inactiveRailSection;
 
 
     public Switch(String sessionName, Square square, List<Compass> railSectionPositions){
@@ -17,7 +19,9 @@ public class Switch extends Rail {
     
     public Switch(String sessionName, Square square, List<Compass> railSectionPositions, UUID trainstationId, UUID id) {
     	super(sessionName, square, railSectionPositions,trainstationId, id);
-	}
+        setEntryNodeofSwitch();
+
+    }
 
     @Override
     protected void createRailSectionsForRailSectionPositions(String sessionName, List<Compass> railSectionPositions) {
@@ -26,6 +30,8 @@ public class Switch extends Rail {
                     railSectionPositions.get(1), RailSectionStatus.ACTIVE);
             RailSection section2 = new RailSection(sessionName, this, railSectionPositions.get(2),
                     railSectionPositions.get(3), RailSectionStatus.INACTIVE);
+            this.activeRailSection = section1;
+            this.inactiveRailSection = section2;
             railSectionList.add(section1);
             railSectionList.add(section2);
         }
@@ -38,12 +44,12 @@ public class Switch extends Rail {
      */
     @Override
     public Compass getExitDirection(Compass direction) {
-        RailSection railSection;
+        RailSection railSection = inactiveRailSection;
+
         if (direction == switchableDirectionEntry) {
-            railSection = getActiveRailSection();
-        } else {
-            railSection = getInActiveRailSection();
+            railSection = activeRailSection;
         }
+
         return railSection.getNode1() == direction? railSection.getNode2() : railSection.getNode1();
     }
 
@@ -54,24 +60,10 @@ public class Switch extends Rail {
         for (RailSection section : railSectionList) {
             section.switchActitityStatus();
         }
-    }
+        RailSection temp = inactiveRailSection;
+        inactiveRailSection = activeRailSection;
+        activeRailSection = temp;
 
-    public RailSection getActiveRailSection() {
-        for (RailSection railSection: railSectionList) {
-            if(railSection.getRailSectionStatus() == RailSectionStatus.ACTIVE) {
-                return railSection;
-            }
-        }
-        return null;
-    }
-
-    public RailSection getInActiveRailSection() {
-        for (RailSection railSection: railSectionList) {
-            if(railSection.getRailSectionStatus() == RailSectionStatus.INACTIVE) {
-                return railSection;
-            }
-        }
-        return null;
     }
 
     /**
@@ -79,15 +71,13 @@ public class Switch extends Rail {
      * Railsections vertreten ist. Nur von dieser Seite aus sind die Fahrtrichtungen variierbar
      */
     void setEntryNodeofSwitch() {
-        final Set<Compass> set1 = new HashSet<Compass>();
+        Set<Compass> set1 = new HashSet<Compass>();
 
-        for (Compass compass : getAllCompasNodesOfRailSections()) {
+        for (Compass compass : getAllCompassNodesOfRailSections()) {
             if (!set1.add(compass)) {
-                this.switchableDirectionEntry = compass ;
+                this.switchableDirectionEntry = compass;
             }
         }
-
-
     }
 
 }
