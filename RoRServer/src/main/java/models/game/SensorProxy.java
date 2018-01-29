@@ -78,8 +78,43 @@ public class SensorProxy implements ProxyObject {
 		return object;
 	}
 	
+	private String getObjectOnSuroundingSquare(Square square) {
+		String object = new String();
+		Placeable placeable = square.getPlaceableOnSquare();
+		if (placeable instanceof Rail) {
+			Rail rail = (Rail)placeable;
+			if (rail.getSignals() != null) {
+				object = "Signals";
+			}
+			if (rail instanceof Switch) {
+				object = "Switch";
+			}
+		}
+		System.out.println("OBJECT: " + object);
+		return object;
+	}
+	
 	/**
-	 * Umschalten der Weiche, sofern vorhanden
+	 * Gibt eine Liste der Square um Sensors zurück
+	 * @return
+	 */
+	public List<Square> getSquaresAroundSensor(){
+		return square.getNeighbouringSquares();
+	}
+	
+	/**
+	 * Stellt die Weiche auf dem mitgegebenen Square um
+	 * @param square
+	 */
+	public void changeSwitchAroundSensor(Square square) {
+		if (square.getPlaceableOnSquare() instanceof Switch) {
+			Switch changeSwitch = (Switch)square.getPlaceableOnSquare();
+			changeSwitch.changeSwitch();
+		}
+	}
+	
+	/**
+	 * Umschalten der Weiche auf welcher der Sensor liegt, sofern vorhanden
 	 */
 	public void changeSwitch() {
 		Placeable placeable = square.getPlaceableOnSquare();
@@ -87,7 +122,7 @@ public class SensorProxy implements ProxyObject {
 			Switch changeSwitch = (Switch)placeable;
 			changeSwitch.changeSwitch();
 		}
-	}
+	}	
 	
 	/**
 	 * Setzt die Kosten für das Umschalten der Signale
@@ -152,5 +187,19 @@ public class SensorProxy implements ProxyObject {
 				signals.switchSignals();
 			}
 		}
+	}
+	
+	/**
+	 * Erstellt eine Liste der Objekte um den Sensor als Strings zusammen
+	 * @return Liste mit Strings von Signals und Switch
+	 */
+	public List<String> getObjectsAroundSensorAsStrings() {
+		List<String> objects = new ArrayList<String>();
+		for (Square s : square.getNeighbouringSquares()) {
+			if(s.getPlaceableOnSquare() instanceof Switch) {
+				objects.add(getObjectOnSuroundingSquare(s));
+			}
+		}
+		return objects;
 	}
 }

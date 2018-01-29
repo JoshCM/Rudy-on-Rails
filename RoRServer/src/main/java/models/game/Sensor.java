@@ -38,7 +38,6 @@ public class Sensor extends InteractiveGameObject {
 		// Vorbereitung für Skripting
 		sensorProxy = new SensorProxy(this, square);
 		scriptableObject = new ScriptableObject(sensorProxy);
-		// GameSessionManager.getInstance().getGameSessionByName(sessionName).addScriptableObject(scriptableObject);
 		
 		notifySensorPlaced();		
 	}
