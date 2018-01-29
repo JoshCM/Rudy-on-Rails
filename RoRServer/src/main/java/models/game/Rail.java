@@ -445,6 +445,8 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         // Sonderfall für Krezungen, die Signale haben
         // ToDo: Refactoring, wenn die Modelstruktur umgebaut wurde!
         if(createSignals) {
+        	Signals oldSignals = rail.getSignals();
+        	newRail.getSignals().changeConfig(oldSignals.getAutoSwitchIntervalInSeconds(), oldSignals.getPenalty(), oldSignals.getSwitchCost());
         	if(rail.getSignals().isWestSignalActive() && rail.getSignals().isEastSignalActive()) {
         		newRail.getSignals().switchSignals();
         	}
