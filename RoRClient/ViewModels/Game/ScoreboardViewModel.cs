@@ -41,7 +41,7 @@ namespace RoRClient.ViewModels.Game
         {
             foreach (GamePlayer player in PlayerList)
             {
-                Console.WriteLine("Name" + player.Name + " Kohle " + player.CoalCount);
+                Console.WriteLine("Name" + player.Name + " Punkte " + player.PointCount);
             }
 
             if (Opacity == 1.0)

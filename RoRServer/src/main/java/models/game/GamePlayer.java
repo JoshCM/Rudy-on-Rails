@@ -42,9 +42,13 @@ public class GamePlayer extends Player{
 	}
 
 	private void initializeResourceCounts() {
-		this.coalCount = Integer.valueOf(PropertyManager.getProperty("initial_coal_count"));
-		this.goldCount = Integer.valueOf(PropertyManager.getProperty("initial_gold_count"));
-		this.pointCount = Integer.valueOf(PropertyManager.getProperty("initial_point_count"));;
+		if(this.getDescription() == "RobinHood") {
+			this.pointCount = 49;
+		}else {
+			this.coalCount = Integer.valueOf(PropertyManager.getProperty("initial_coal_count"));
+			this.goldCount = Integer.valueOf(PropertyManager.getProperty("initial_gold_count"));
+			this.pointCount = Integer.valueOf(PropertyManager.getProperty("initial_point_count"));
+		}
 	}
 
 	public double getCoalCount() {
