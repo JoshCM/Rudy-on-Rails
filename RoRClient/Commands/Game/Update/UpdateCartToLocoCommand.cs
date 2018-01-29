@@ -29,19 +29,18 @@ namespace RoRClient.Commands.Game.Update
         public override void Execute()
         {
             GameSession gameSession = GameSession.GetInstance();
-
-
             Square square = gameSession.Map.GetSquare(xPos, yPos);
             Player player = gameSession.GetPlayerById(playerId);
 
             Loco loco = gameSession.GetLocoById(currentLocoId);
             Rail rail = square.PlaceableOnSquare as Rail;
             Cart cart = rail.PlaceableOnRail as Cart;
+            if(loco is GhostLoco)
+            {
+                cart.IsGhostCart = true;
+            }
             loco.AddCart(cart);
             rail.PlaceableOnRail = null;
-
-
-
         }
     }
 }

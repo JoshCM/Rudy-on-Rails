@@ -11,6 +11,7 @@ import models.game.Mine;
 import models.game.Rail;
 import models.game.Square;
 import models.game.Stock;
+import models.game.TrainstationType;
 import models.game.Playertrainstation;
 import models.session.GameSession;
 import models.session.GameSessionManager;
@@ -54,7 +55,7 @@ public class StartGameCommandTest {
 		UUID trainstationId = UUID.randomUUID();
 		Playertrainstation loadedTrainstation = new Playertrainstation(gameSession.getSessionName(), square, uuids, trainstationId,
 				Compass.NORTH,
-				new Stock(gameSession.getSessionName(), gameSession.getMap().getSquare(1, 0), trainstationId, Compass.NORTH), UUID.randomUUID());
+				new Stock(gameSession.getSessionName(), gameSession.getMap().getSquare(1, 0), trainstationId, Compass.NORTH, TrainstationType.PLAYER), UUID.randomUUID());
 		square.setPlaceableOnSquare(loadedTrainstation);
 
 		Playertrainstation createdTrainstation = loadedTrainstation.loadFromMap(square, gameSession);

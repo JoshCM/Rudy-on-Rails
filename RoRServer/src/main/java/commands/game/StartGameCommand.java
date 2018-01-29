@@ -151,7 +151,6 @@ public class StartGameCommand extends CommandBase {
 			} else {
 				// Trainstation ist eine PublicTrainstation
 				newTrainStation = (Publictrainstation) oldTrainStation.loadFromMap(trainstationSquare, gameSession);
-				Loco.addPublicTrainStation((Publictrainstation)newTrainStation);
 			}
 			// Neue Trainstation auf Square setzen
 			trainstationSquare.setPlaceableOnSquare(newTrainStation);

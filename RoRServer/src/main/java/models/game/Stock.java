@@ -15,32 +15,28 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare {
 	static Logger log = Logger.getLogger(QueueReceiver.class.getName());
 	private Compass alignment;
 	private UUID trainstationId;
+	private TrainstationType trainstationType;
 
-	public Stock(String sessionName, Square square, UUID trainstationId, Compass alignment) {
-		super(sessionName, square);
-		setAlignment(alignment);
-		setTrainstationId(trainstationId);
 
-		// zu testzwecken
-		// addResource(new Coal(sessionName, square));
-		notifyCreatedStock();
-	}
-
-	public Stock(String sessionName, Square square, UUID trainstationId, UUID id, Compass alignment) {
+	public Stock(String sessionName, Square square, UUID trainstationId, UUID id, Compass alignment, TrainstationType trainstationType) {
 		super(sessionName, square, id);
-		setAlignment(alignment);
-		setTrainstationId(trainstationId);
-
-		// zu testzwecken
-		// addResource(new Coal(sessionName, square));
+		this.setTrainstationType(trainstationType);
+		this.setTrainstationId(trainstationId);
+		this.setAlignment(alignment);
 		notifyCreatedStock();
 	}
+	
+	public Stock(String sessionName, Square square, UUID trainstationId, Compass alignment, TrainstationType trainstationType) {
+		this(sessionName, square, trainstationId, UUID.randomUUID(), alignment, trainstationType);
+	}
+
 
 	private void notifyCreatedStock() {
 		MessageInformation messageInfo = new MessageInformation("CreateStock");
 		messageInfo.putValue("stockId", getId());
 		messageInfo.putValue("squareId", getSquareId());
 		messageInfo.putValue("trainstationId", getTrainstationId());
+		messageInfo.putValue("trainstationType", getTrainstationType().toString());
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
 
@@ -51,7 +47,7 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare {
 	public PlaceableOnSquare loadFromMap(Square square, RoRSession session) {
 		Stock stock = (Stock) square.getPlaceableOnSquare();
 		Stock newStock = new Stock(session.getSessionName(), square, stock.getTrainstationId(), stock.getId(),
-				stock.getAlignment());
+				stock.getAlignment(), stock.getTrainstationType());
 
 		// der sessionName muss neu gesetzt werden, damit der Observer Änderungen dieses
 		// Objekts mitbekommen kann
@@ -110,5 +106,13 @@ public class Stock extends InteractiveGameObject implements PlaceableOnSquare {
 		this.setSquareId(newSquareOfStock.getId());
 		this.setXPos(newSquareOfStock.getXIndex());
 		this.setYPos(newSquareOfStock.getYIndex());
+	}
+
+	public TrainstationType getTrainstationType() {
+		return trainstationType;
+	}
+
+	public void setTrainstationType(TrainstationType trainstationType) {
+		this.trainstationType = trainstationType;
 	}
 }

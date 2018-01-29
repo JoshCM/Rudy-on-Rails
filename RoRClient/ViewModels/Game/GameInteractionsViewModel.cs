@@ -27,7 +27,6 @@ namespace RoRClient.ViewModels.Game
         private int currentNumberOfOwnGhostLocoScript = 1;
         private int currentNumberOfOwnSensorScript = 1;
         private String selectedResource;
-        private bool canExchangeResource = false;
         private bool tradeRelation = false;
 
         public GameInteractionsViewModel(TaskFactory taskFactory, MapGameViewModel mapGameViewModel)
@@ -251,20 +250,6 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
-        public bool CanExchangeResource
-        {
-
-            get
-            {
-                return canExchangeResource;
-            }
-            set
-            {
-                canExchangeResource = value;
-                OnPropertyChanged("CanExchangeResource");
-            }
-        }
-
         /// <summary>
         /// Command zum Austauschen von Ressourcen am Öffentlichen Bahnhof
         /// </summary>
@@ -289,7 +274,6 @@ namespace RoRClient.ViewModels.Game
             RoRSession gameSession = GameSession.GetInstance();
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("playerId", gameSession.OwnPlayer.Id);
-            messageInformation.PutValue("trainstationId", ((GameSession)gameSession).GetTradeableTrainstation().Id);
 
             if (SelectedResource == "Gold zu Kohle tauschen")
             {

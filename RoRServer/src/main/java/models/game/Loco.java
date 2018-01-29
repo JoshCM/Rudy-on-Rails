@@ -28,7 +28,6 @@ public abstract class Loco extends TickableGameObject {
 	protected Map map;
 	private GamePlayer player;
 	private static List<Sensor> sensors; // Jede Loco kennt alle Sensoren
-	private static List<Publictrainstation> publicTrainstations; // Jede Loco kennt alle PublicTrainstations
 
 	/**
 	 * Konstruktor einer Lok
@@ -47,15 +46,10 @@ public abstract class Loco extends TickableGameObject {
 		this.player = (GamePlayer) GameSessionManager.getInstance().getGameSessionByName(sessionName)
 				.getPlayerById(playerId);
 		Loco.sensors = new ArrayList<Sensor>();
-		Loco.publicTrainstations = new ArrayList<Publictrainstation>();
 	}
 
 	public static void addSensor(Sensor sensor) {
 		sensors.add(sensor);
-	}
-	
-	public static void addPublicTrainStation(Publictrainstation publicTrainstation) {
-		publicTrainstations.add(publicTrainstation);
 	}
 	
 	public void notifySensors() {
@@ -179,8 +173,8 @@ public abstract class Loco extends TickableGameObject {
 
 	public void moveLoco(Rail nextRail, Compass nextDrivingDirection){
 	    //hole dir die DrivingDirection von dem nächste Rail und übergebe das Gegentei von der aktuellen Fahrrichtung
-	    this.drivingDirection = nextRail.getExitDirection(getDirectionNegation(getDrivingDirection()));
-	    this.rail = nextRail;
+	    this.drivingDirection = nextDrivingDirection;
+		this.rail = nextRail;
 	    this.updateSquare(this.rail.getSquareFromGameSession());
 	    notifyLocoPositionChanged();
 	    notifySensors();

@@ -10,6 +10,7 @@ using RoRClient.Models.Base;
 using RoRClient.Communication.Topic;
 using RoRClient.Communication.DataTransferObject;
 using RoRClient.Communication;
+using RoRClient.ViewModels;
 
 namespace RoRClient.Models.Session
 {
@@ -23,10 +24,12 @@ namespace RoRClient.Models.Session
 
         protected QueueSender queueSender;
         protected TopicReceiver topicReceiver;
+        private TaskFactory taskFactory;
 
         public RoRSession()
         {
             map = new Map(50);
+            taskFactory = ViewConstants.Instance.TaskFactory;
         }
 
         public string Name
@@ -88,7 +91,7 @@ namespace RoRClient.Models.Session
 
         public void RemovePlayer(Player player)
         {
-            players.Remove(player);
+            taskFactory.StartNew(() => players.Remove(player));
             NotifyPropertyChanged("Players");
         }
 

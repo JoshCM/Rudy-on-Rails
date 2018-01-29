@@ -4,19 +4,23 @@ import java.util.UUID;
 
 import commands.base.CommandBase;
 import communication.MessageInformation;
-import models.game.Loco;
+import models.game.GamePlayer;
 import models.game.Map;
 import models.game.Publictrainstation;
-import models.helper.Validator;
 import models.session.GameSession;
 import models.session.RoRSession;
 
-public class ShowTradeRelationCommand extends CommandBase {
+/**
+ * Merkt sich die aktuell ausgewählte Publictrainstation des Players
+ * @author irott001
+ *
+ */
+public class SelectPublictrainstationCommand extends CommandBase {
 	
 	private UUID playerId;
 	private UUID publicTrainstationId;
 
-	public ShowTradeRelationCommand(RoRSession session, MessageInformation messageInfo) {
+	public SelectPublictrainstationCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		playerId = messageInfo.getValueAsUUID("playerId");
 		publicTrainstationId = messageInfo.getValueAsUUID("publicTrainstationId");
@@ -27,11 +31,9 @@ public class ShowTradeRelationCommand extends CommandBase {
 		
 		GameSession gameSession = (GameSession)session;
 		Map map = gameSession.getMap();
-		Loco loco = gameSession.getPlayerLocoByPlayerId(playerId);
 		Publictrainstation publicTrainstation = (Publictrainstation)map.getPlaceableOnSquareById(publicTrainstationId);
-		if (Validator.checkLocoInRangeOfSquare(map, loco, map.getSquareById(publicTrainstation.getSquareId()), 100)){
-			publicTrainstation.showTradeMenu();
-		}
+		GamePlayer player = (GamePlayer)gameSession.getPlayerById(playerId);
+		player.setCurrentSelectedPublictrainstation(publicTrainstation);
 	}
 
 }

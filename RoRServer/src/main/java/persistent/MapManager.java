@@ -128,7 +128,7 @@ public class MapManager {
 		} else if(map.getMapSize() <= 50) {
 			mapSizeDescription = "Normal";
 		} else {
-			mapSizeDescription = "Groß";
+			mapSizeDescription = "Groï¿½";
 		}
 		return mapSizeDescription;
 	}
@@ -254,6 +254,9 @@ public class MapManager {
 				if (fileEntry.isFile() && fileEntry.getName().endsWith(ext))
 					mapList.add(fileEntry.getName().replace(ext, ""));
 			}
+		}else {
+			// erzeugt den maps-Ordner wenn er noch nicht existiert
+			folder.mkdir();
 		}
 		return mapList;
 	}

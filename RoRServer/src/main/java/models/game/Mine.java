@@ -13,10 +13,12 @@ import models.session.EditorSessionManager;
 import models.session.GameSession;
 import models.session.GameSessionManager;
 import models.session.RoRSession;
+import resources.PropertyManager;
 
 public class Mine extends TickableGameObject implements PlaceableOnRail {
-	private final static int AMOUNT_OF_COAL_TO_LOAD = 20;
-	private final static int AMOUNT_OF_GOLD_TO_LOAD = 10;
+	private final static int AMOUNT_OF_COAL_TO_LOAD = Integer.valueOf(PropertyManager.getProperty("amount_of_coal_load"));
+	private final static int AMOUNT_OF_GOLD_TO_LOAD = Integer.valueOf(PropertyManager.getProperty("amount_of_gold_load"));
+	private final static int TIME_TO_PRODUCE_RESOURCE_IN_SECONDS = Integer.valueOf(PropertyManager.getProperty("time_to_produce_resource_in_seconds"));
 	private final long SEC_IN_NANO = 1000000000;
 	
 	private List<Resource> resources = new ArrayList<Resource>();
@@ -133,20 +135,22 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 			gameSession = GameSessionManager.getInstance().getGameSessionByName(sessionName);
 			List<Loco> locos = gameSession.getLocos();
 			for (Loco loco : locos) {
-				List<Cart> carts = loco.getCarts();
-				for (Cart cart : carts) {
-					if (cart.getXPos() == this.getXPos() && cart.getYPos() == this.getYPos()
-							&& cart.getResource() == null && resources.size() != 0) {
+				if(!(loco instanceof GhostLoco)) {
+					List<Cart> carts = loco.getCarts();
+					for (Cart cart : carts) {
+						if (cart.getXPos() == this.getXPos() && cart.getYPos() == this.getYPos()
+								&& cart.getResource() == null && resources.size() != 0) {
 
-						cart.loadResourceOntoCart(resources.get(0));
+							cart.loadResourceOntoCart(resources.get(0));
 
-						removeResource();
-						break;
-					}
+							removeResource();
+							break;
+						}
+					}	
 				}
 			}
 		}
-		if (this.timeDeltaCounter >= SEC_IN_NANO * 4) {
+		if (this.timeDeltaCounter >= SEC_IN_NANO * TIME_TO_PRODUCE_RESOURCE_IN_SECONDS) {
 			this.timeDeltaCounter = 0;
 			if (resources.size() < maxNumberOfResource) {
 				res = minedResource();
