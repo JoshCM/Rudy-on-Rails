@@ -36,7 +36,7 @@ public class ExchangeCoalToGoldCommand extends CommandBase {
         Loco loco = gameSession.getPlayerLocoByPlayerId(playerId);
         GamePlayer player = (GamePlayer)gameSession.getPlayerById(playerId);
         
-        if (player.getCurrentSelectedPublictrainstation() == null){
+        if (player.getCurrentSelectedPublictrainstation() != null) {
             Publictrainstation publictrainstation = player.getCurrentSelectedPublictrainstation();
             Square publicTrainstationSquare = map.getSquareById(publictrainstation.getSquareId());
 
@@ -51,8 +51,12 @@ public class ExchangeCoalToGoldCommand extends CommandBase {
     	        		c.loadResourceOntoCart(gold);
     	        	}
     	        }
+    		} else {
+    			throw new InvalidModelOperationException("Loco steht nicht vor Publictrainstation.");
     		}
-        } throw new InvalidModelOperationException("Keine Publictrainstaiton ausgewählt!");
+        } else {
+        	throw new InvalidModelOperationException("Keine Publictrainstation ausgewählt!");
+        }
 
 	}
 

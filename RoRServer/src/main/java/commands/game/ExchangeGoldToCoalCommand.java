@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import commands.base.CommandBase;
 import communication.MessageInformation;
+import exceptions.InvalidModelOperationException;
 import models.game.Cart;
 import models.game.Coal;
 import models.game.GamePlayer;
@@ -34,7 +35,7 @@ public class ExchangeGoldToCoalCommand extends CommandBase {
         Loco loco = gameSession.getPlayerLocoByPlayerId(playerId);
         GamePlayer player = (GamePlayer)gameSession.getPlayerById(playerId);
         
-        if (player.getCurrentSelectedPublictrainstation() == null) {
+        if (player.getCurrentSelectedPublictrainstation() != null) {
             Publictrainstation publictrainstation = player.getCurrentSelectedPublictrainstation();
             Square publicTrainstationSquare = map.getSquareById(publictrainstation.getSquareId());
 
@@ -50,7 +51,11 @@ public class ExchangeGoldToCoalCommand extends CommandBase {
 			    		c.loadResourceOntoCart(coal);
 			    	}
 			    }
+    		} else {
+    			throw new InvalidModelOperationException("Loco steht nicht vor Publictrainstation.");
     		}
+        } else {
+        	throw new InvalidModelOperationException("Keine Publictrainstation ausgewählt!");
         }
 	}
 }
