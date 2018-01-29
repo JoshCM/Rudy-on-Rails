@@ -81,6 +81,7 @@ namespace RoRClient.ViewModels
             uiState.State = "start";
         }
 
+        #region Hotkeys
         private ICommand zoomInCommand;
 
         public ICommand ZoomInCommand
@@ -156,5 +157,72 @@ namespace RoRClient.ViewModels
                 scoreboardViewModel.ToggleScoreboard();
             }
         }
+
+        private ICommand increaseSpeedCommand;
+        public ICommand IncreaseSpeedCommand
+        {
+            get
+            {
+                if (increaseSpeedCommand == null)
+                {
+                    increaseSpeedCommand = new ActionCommand(param => RaiseIncreaseSpeedEvent(new EventArgs()));
+                }
+                return increaseSpeedCommand;
+            }
+        }
+
+        public static event EventHandler IncreaseSpeedInput;
+        private void RaiseIncreaseSpeedEvent(EventArgs e)
+        {
+            if (uiState.State == "game")
+            {
+                IncreaseSpeedInput?.Invoke(this, e);
+            }
+        }
+
+        private ICommand decreaseSpeedCommand;
+        public ICommand DecreaseSpeedCommand
+        {
+            get
+            {
+                if (decreaseSpeedCommand == null)
+                {
+                    decreaseSpeedCommand = new ActionCommand(param => RaiseDecreaseSpeedEvent(new EventArgs()));
+                }
+                return decreaseSpeedCommand;
+            }
+        }
+
+        public static event EventHandler DecreaseSpeedInput;
+        private void RaiseDecreaseSpeedEvent(EventArgs e)
+        {
+            if (uiState.State == "game")
+            {
+                DecreaseSpeedInput?.Invoke(this, e);
+            }
+        }
+
+        private ICommand stopOwnLocoCommand;
+        public ICommand StopOwnLocoCommand
+        {
+            get
+            {
+                if (stopOwnLocoCommand == null)
+                {
+                    stopOwnLocoCommand = new ActionCommand(param => RaiseStopOwnLocoEvent(new EventArgs()));
+                }
+                return stopOwnLocoCommand;
+            }
+        }
+
+        public static event EventHandler StopOwnLocoInput;
+        private void RaiseStopOwnLocoEvent(EventArgs e)
+        {
+            if (uiState.State == "game")
+            {
+                StopOwnLocoInput?.Invoke(this, e);
+            }
+        }
+#endregion
     }
 }

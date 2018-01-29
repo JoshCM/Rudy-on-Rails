@@ -19,6 +19,9 @@
         <KeyBinding Command="{Binding ZoomInCommand}" Key="OemPlus"></KeyBinding>
         <KeyBinding Command="{Binding ZoomOutCommand}" Key="OemMinus"></KeyBinding>
         <KeyBinding Command="{Binding ToggleScoreboardCommand}" Key="Tab"></KeyBinding>
+        <KeyBinding Command="{Binding IncreaseSpeedCommand}" Key="Right"></KeyBinding>
+        <KeyBinding Command="{Binding DecreaseSpeedCommand}" Key="Left"></KeyBinding>
+        <KeyBinding Command="{Binding StopOwnLocoCommand}" Key="Down"></KeyBinding>
     </Window.InputBindings>
     <Window.Resources>
         <DataTemplate x:Name="EditorTemplate" DataType="{x:Type vme:EditorViewModel}">
