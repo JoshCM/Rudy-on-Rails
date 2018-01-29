@@ -103,7 +103,7 @@ public class RailSection extends ModelBase implements Comparable {
     public void switchActitityStatus() {
         if (status == RailSectionStatus.ACTIVE) {
             status = RailSectionStatus.INACTIVE;
-        } else if (status == RailSectionStatus.INACTIVE) {
+        } else {
             status = RailSectionStatus.ACTIVE;
         }
         notifyNodesUpdated();

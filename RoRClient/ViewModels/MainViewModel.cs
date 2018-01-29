@@ -6,6 +6,8 @@ using RoRClient.ViewModels.Game;
 using RoRClient.Models.Game;
 using System;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using RoRClient.ViewModels.Commands;
 
@@ -39,25 +41,30 @@ namespace RoRClient.ViewModels
         {
             switch (args.Statename)
             {
-                case "start": CurrentViewModel = new StartViewModel(uiState, lobbyModel);
-                        break;
-                case "editor": CurrentViewModel = editorViewModel;
+                case "start":
+                    CurrentViewModel = new StartViewModel(uiState, lobbyModel);
+                    break;
+                case "editor":
+                    CurrentViewModel = editorViewModel;
                     break;
                 case "editorLobby":
                     CurrentViewModel = new EditorLobbyViewModel(uiState, lobbyModel);
                     // wird schon hier erzeugt, weil der UiState erst nach allen Commands geändert wird
                     editorViewModel = new EditorViewModel(uiState, taskFactory);
                     break;
-                case "game": CurrentViewModel = gameViewModel;
+                case "game":
+                    CurrentViewModel = gameViewModel;
                     break;
                 case "gameLobby":
                     CurrentViewModel = new GameLobbyViewModel(uiState, lobbyModel);
                     // wird schon hier erzeugt, weil der UiState erst nach allen Commands geändert wird
                     gameViewModel = new GameViewModel(uiState, taskFactory);
                     break;
-                case "joinEditorLobby": CurrentViewModel = new JoinEditorLobbyViewModel(uiState, lobbyModel);
+                case "joinEditorLobby":
+                    CurrentViewModel = new JoinEditorLobbyViewModel(uiState, lobbyModel);
                     break;
-                case "joinGameLobby": CurrentViewModel = new JoinGameLobbyViewModel(uiState, lobbyModel);
+                case "joinGameLobby":
+                    CurrentViewModel = new JoinGameLobbyViewModel(uiState, lobbyModel);
                     break;
                 case "gameResult":
                     CurrentViewModel = new GameResultViewModel(uiState);
@@ -75,6 +82,7 @@ namespace RoRClient.ViewModels
         }
 
         private ICommand zoomInCommand;
+
         public ICommand ZoomInCommand
         {
             get
@@ -101,6 +109,7 @@ namespace RoRClient.ViewModels
         }
 
         private ICommand zoomOutCommand;
+
         public ICommand ZoomOutCommand
         {
             get
@@ -115,9 +124,35 @@ namespace RoRClient.ViewModels
 
         private void ZoomOut()
         {
-            if(IsInSession() && ViewConstants.SquareDim >= 20)
+            if (IsInSession() && ViewConstants.SquareDim >= 20)
             {
                 ViewConstants.SquareDim -= 20;
+            }
+        }
+
+        private ICommand toggleScoreboardCommand;
+
+        public ICommand ToggleScoreboardCommand
+        {
+            get
+            {
+                if (toggleScoreboardCommand == null)
+                {
+                    toggleScoreboardCommand = new ActionCommand(param => ToggleScoreboard());
+                }
+                return toggleScoreboardCommand;
+            }
+        }
+
+        /// <summary>
+        /// Setzt die Opacity des Scoreboards auf 1 oder 0.
+        /// </summary>
+        private void ToggleScoreboard()
+        {
+            if (IsInSession())
+            {
+                ScoreboardViewModel scoreboardViewModel = gameViewModel.ScoreboardViewModel;
+                scoreboardViewModel.ToggleScoreboard();
             }
         }
     }

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:RoRClient.Views.Game"
              xmlns:converter="clr-namespace:RoRClient.BindingConverter"
              mc:Ignorable="d" 
-             d:DesignHeight="225" d:DesignWidth="800" Background="#510404" BorderBrush="White" BorderThickness="5">
+             d:DesignHeight="225" d:DesignWidth="800" Background="#510404" BorderBrush="White" BorderThickness="5" Focusable="True">
 
     <UserControl.Resources>
         <ResourceDictionary>

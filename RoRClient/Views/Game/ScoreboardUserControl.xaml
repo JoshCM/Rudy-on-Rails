@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="RoRClient.Views.Game.ScoreboardUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:game="clr-namespace:RoRClient.ViewModels.Game"
+             xmlns:session="clr-namespace:RoRClient.Models.Session"
+             x:Name="scoreboardUserControl"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="200"
+             Background="Transparent" IsHitTestVisible="False">
+    <UserControl.Resources>
+        <game:ScoreboardViewModel x:Key="ScoreboardViewModel" />
+    </UserControl.Resources>
+    <Grid IsHitTestVisible="False">
+        <Grid x:Name="ScoreboardGrid"  Background="White" Opacity="0.9" Margin="10" IsHitTestVisible="False">
+            <ListBox Width="200"  
+                     ItemsSource="{Binding ScoreboardViewModel.PlayerList}"   
+                     IsSynchronizedWithCurrentItem="True">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Foreground="Black" Text="{Binding Name}" />
+                            <TextBlock Foreground="Black" Text="{Binding CoalCount}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </Grid>
+</UserControl>
