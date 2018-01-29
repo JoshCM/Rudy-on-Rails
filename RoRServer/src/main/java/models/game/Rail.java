@@ -294,7 +294,7 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         return result;
     }
 
-    public List <Compass> getAllCompasNodesOfRailSections(){
+    public List <Compass> getAllCompassNodesOfRailSections(){
         List <Compass> allNodes =  new ArrayList<Compass>();
         for (RailSection railSection: railSectionList) {
             for (Compass compass : railSection.getNodes()) {
