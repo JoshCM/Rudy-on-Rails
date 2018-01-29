@@ -105,6 +105,7 @@
     <Compile Include="BindingConverter\BooleanToVisibilityConverter.cs" />
     <Compile Include="BindingConverter\ObjectEqualsConverter.cs" />
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
+    <Compile Include="BindingConverter\EditorStockToImagePathConverter.cs" />
     <Compile Include="BindingConverter\PlayerToImagePathConverter.cs" />
     <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
     <Compile Include="BindingConverter\IsNullToBooleanConverter.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
     <Compile Include="ViewModels\Game\MineGameViewModel.cs" />
     <Compile Include="ViewModels\Game\PublictrainstationGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\ScoreboardViewModel.cs" />
     <Compile Include="ViewModels\Game\ScriptsViewModel.cs" />
     <Compile Include="ViewModels\Game\TopMenuViewModel.cs" />
     <Compile Include="ViewModels\Game\TrainstationGameViewModel.cs" />
@@ -380,6 +382,9 @@
     <Compile Include="Views\Game\PublictrainstationGameUserControl.xaml.cs">
       <DependentUpon>PublictrainstationGameUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\ScoreboardUserControl.xaml.cs">
+      <DependentUpon>ScoreboardUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\SquareGameUserControl.xaml.cs">
       <DependentUpon>SquareGameUserControl.xaml</DependentUpon>
     </Compile>
@@ -403,9 +408,6 @@
     </Compile>
     <Compile Include="Views\Game\PlayertrainstationGameUserControl.xaml.cs">
       <DependentUpon>PlayertrainstationGameUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Game\TrainstationGameUserControl.xaml.cs">
-      <DependentUpon>TrainstationGameUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Lobby\EditorLobbyView.xaml.cs">
       <DependentUpon>EditorLobbyView.xaml</DependentUpon>
@@ -502,6 +504,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Game\ScoreboardUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Game\SquareGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -533,10 +539,6 @@
     <Page Include="Views\Game\PlayertrainstationGameUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Game\TrainstationGameUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Lobby\EditorLobbyView.xaml">
       <SubType>Designer</SubType>
@@ -684,7 +686,6 @@
     <Resource Include="Resources\Images\container_points.png" />
     <Resource Include="Resources\Images\btn_back.png" />
     <Resource Include="Resources\Images\crane.png" />
-    <Resource Include="Resources\Images\Tools\other\crane.png" />
     <Resource Include="Resources\Images\Tools\rail\railcurve_ne.png" />
     <Resource Include="Resources\Images\Tools\rail\railcurve_nw.png" />
     <Resource Include="Resources\Images\Tools\rail\railcurve_se.png" />

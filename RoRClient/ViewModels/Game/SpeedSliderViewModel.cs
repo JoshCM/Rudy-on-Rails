@@ -14,27 +14,29 @@ namespace RoRClient.ViewModels.Game
     class SpeedSliderViewModel: ViewModelBase
     {
         private int speed;
-        private ICommand updateSpeedCommand;
-        internal ICommand UpdateSpeedCommand(double newValue)
+
+        public SpeedSliderViewModel()
         {
-            sendUpdateSpeedCommand(newValue);
-            return updateSpeedCommand;
+            
         }
 
-        private void sendUpdateSpeedCommand(double newValue)
+        private void SendUpdateSpeedCommand(double newValue)
         {
             MessageInformation messageInformation = new MessageInformation();
             GameSession gameSession = GameSession.GetInstance();
-
             messageInformation.PutValue("locoSpeed", newValue);
-
             gameSession.QueueSender.SendMessage("ChangeSpeedOfLocomotive", messageInformation);
         }
 
-        private void OnSpeedPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
+       
 
+        private ICommand updateSpeedCommand;
+        internal ICommand UpdateSpeedCommand(double newValue)
+        {
+            SendUpdateSpeedCommand(newValue);
+            return updateSpeedCommand;
         }
+
         private int Speed
         {
             get
@@ -47,6 +49,5 @@ namespace RoRClient.ViewModels.Game
                     speed = value;
             }
         }
-
     }
 }

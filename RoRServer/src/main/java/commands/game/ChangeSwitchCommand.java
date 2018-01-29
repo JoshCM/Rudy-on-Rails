@@ -31,23 +31,32 @@ public class ChangeSwitchCommand extends CommandBase {
         GamePlayer currentPlayer = (GamePlayer)session.getPlayerById(playerId);
 
         if (railSwitch instanceof Switch) {
-            if (!checkIfPlayerIsSwitchOwner(((Switch) railSwitch), gameSession)){
-                currentPlayer.removeGold(Integer.valueOf(PropertyManager.getProperty("change_switch_costs")));
-            }
-            ((Switch)railSwitch).changeSwitch();
+            if (getTrainstationFromSwitch((Switch)railSwitch, gameSession) != null) {
+                if (isPlayerSwitchOwner(getTrainstationFromSwitch((Switch)railSwitch, gameSession))) {
+                    ((Switch)railSwitch).changeSwitch();
+                }
+            } else {
+                if (!(currentPlayer.getGoldCount() <= 0)) {
+                    currentPlayer.removeGold(Integer.valueOf(PropertyManager.getProperty("change_switch_costs")));
+                    ((Switch)railSwitch).changeSwitch();
+                }
 
+            }
         }
     }
 
-    private boolean checkIfPlayerIsSwitchOwner(Switch railSwitch, GameSession gameSession) {
+    private Trainstation getTrainstationFromSwitch(Switch railSwitch, GameSession gameSession) {
         if(!railSwitch.getTrainstationId().equals(new UUID(0, 0))) {
             Map map = gameSession.getMap();
-            Trainstation trainstation = (Trainstation)map.getPlaceableOnSquareById(railSwitch.getTrainstationId());
+            return (Trainstation) map.getPlaceableOnSquareById(railSwitch.getTrainstationId());
+        }
+        return null;
+    }
 
-            if(playerId.equals(trainstation.getPlayerId())) {
 
+    private boolean isPlayerSwitchOwner(Trainstation trainstation) {
+        if(playerId.equals(trainstation.getPlayerId())) {
                 return true;
-            }
         }
         return false;
     }

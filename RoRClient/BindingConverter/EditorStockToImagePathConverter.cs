@@ -12,35 +12,20 @@ using static RoRClient.Models.Game.GamePlayer;
 
 namespace RoRClient.BindingConverter
 {
-    class PlayerToImagePathConverter : IValueConverter
+    class EditorStockToImagePathConverter : IValueConverter
     {
         private const string IMAGE_FOLDER_PATH = "..\\..\\Resources\\Images\\";
         private const string STOCK_IMAGE_START = "stock_container_";
-        private const string LOCO_IMAGE_START = "loco_";
         private const string IMAGE_ENDING = ".png";
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value is Loco)
-            {
-                Loco loco = (Loco)value;
-                GamePlayer player = (GamePlayer)GameSession.GetInstance().GetPlayerById(loco.PlayerId);
-                int colorNumber = (int)player.PlayerColor;
-                return IMAGE_FOLDER_PATH + LOCO_IMAGE_START + colorNumber + IMAGE_ENDING;
-            }
-            else if(value is Stock)
+            if(value is Stock)
             {
                 Stock stock = (Stock)value;
-                Trainstation trainstation = (Trainstation)GameSession.GetInstance().Map.GetPlaceableById(stock.TrainstationId);
-                if (trainstation is Playertrainstation)
+                if (stock.TrainstationType == TrainstationType.PLAYER)
                 {
-                    GamePlayer player = (GamePlayer)((Playertrainstation)trainstation).Player;
-                    if (player != null)
-                    {
-                        int colorNumber = (int)player.PlayerColor;
-                        return IMAGE_FOLDER_PATH + STOCK_IMAGE_START + colorNumber + IMAGE_ENDING;
-                    }
-                }
-                else if (trainstation is Publictrainstation)
+                    return IMAGE_FOLDER_PATH + STOCK_IMAGE_START + "0" + IMAGE_ENDING;
+                } else if (stock.TrainstationType == TrainstationType.PUBLIC)
                 {
                     return IMAGE_FOLDER_PATH + STOCK_IMAGE_START + "public_ts" + IMAGE_ENDING;
                 }

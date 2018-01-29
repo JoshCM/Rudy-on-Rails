@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 import communication.MessageInformation;
+import models.helper.Validator;
 import models.session.GameSessionManager;
 import resources.PropertyManager;
 
@@ -50,7 +51,7 @@ public abstract class Loco extends TickableGameObject {
 	public static void addSensor(Sensor sensor) {
 		sensors.add(sensor);
 	}
-
+	
 	public void notifySensors() {
 
 		Iterator<Sensor> iter = sensors.iterator();
@@ -150,6 +151,8 @@ public abstract class Loco extends TickableGameObject {
         	} 	
         }
     }
+	
+	//Wagon wird an den Zug angekoppelt
 	private void linkupCartToCarts(Rail nextRail) {
 		Cart cart = (Cart)nextRail.getPlaceableOnrail();
 		cart.setDrivingDirection(getLastCart().getDrivingDirection());
@@ -170,8 +173,8 @@ public abstract class Loco extends TickableGameObject {
 
 	public void moveLoco(Rail nextRail, Compass nextDrivingDirection){
 	    //hole dir die DrivingDirection von dem nächste Rail und übergebe das Gegentei von der aktuellen Fahrrichtung
-	    this.drivingDirection = nextRail.getExitDirection(getDirectionNegation(getDrivingDirection()));
-	    this.rail = nextRail;
+	    this.drivingDirection = nextDrivingDirection;
+		this.rail = nextRail;
 	    this.updateSquare(this.rail.getSquareFromGameSession());
 	    notifyLocoPositionChanged();
 	    notifySensors();

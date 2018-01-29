@@ -10,10 +10,6 @@
 # Mögliche Fehler-Strings in der Liste: ("NotOnMap", "NotVisible")
 # Mögliche Objekt-Strings in der Liste: ("OwnTrainstation", "OtherTrainstation", "Rail", "ActiveSignal", "InactiveSignal", "Mine", "Loco")
 
-# proxy.getObjectsOnSquareBehindLastCart()
-# Gleiches Verhalten wie getObjectsOnSquare, bloß handelt es sich hier um das Feld hinter dem letzten Waggon
-# Kann zum Beispiel genutzt werden, um herauszufinden, ob hinter dem Geisterzug ein Cart zum ankoppeln bereitsteht
-
 # proxy.setPicksUpCoalContainerNextToRails(True|False)
 # Wenn true, dann nimmt der Geisterzug Kohle-Container, an denen er vorbeifährt, mit
 
@@ -58,61 +54,17 @@
 # proxy.hasResourcesOnCarts()
 # Gibt true zurück, wenn mindestens einer der Waggons etwas geladen hat
 
-default_speed = 4
+default_speed = 0
 
 
 # Hier können Startwerte gesetzt werden
 # Wird bei Aktivierung des Scripts genau einmal aufgerufen
 def init(proxy):
 	global default_speed
-	proxy.setPicksUpCoalContainerNextToRails(False)
-	proxy.setPicksUpGoldContainerNextToRails(True)
-	proxy.setStealsGoldContainerFromOtherPlayers(True)
 	proxy.changeSpeed(default_speed)
 
 
 # Hier kann das Verhalten des Geisterzugs gescriptet werden
 # Wird in regelmäßigen Abständen aufgerufen
 def update(proxy):
-	global default_speed
-
-	# Waggon ankoppeln
-	if "Cart" in proxy.getObjectsOnSquareBehindLastCart():
-		proxy.changeSpeed(-1)
-		import time 
-		time.sleep(3)
-		proxy.changeSpeed(default_speed)
-
-	# Halte zum Abladen von Resourcen und fahre anschließend weiter
-	if "OwnTrainstation" in proxy.getObjectsOnSquare(1, 0) or "OwnTrainstation" in proxy.getObjectsOnSquare(-1, 0):
-		if proxy.hasResourcesOnCarts():
-			proxy.changeSpeed(0)
-		else:
-			proxy.changeSpeed(default_speed)
-
-	# Schaue genau ein Feld vor dich
-	objectsOnSquare = proxy.getObjectsOnSquare(0, 1)
-
-	# Fahre rückwärts, wenn die Strecke zuende ist
-	if "Rail" not in objectsOnSquare:
-		proxy.changeSpeed(-1)
-	else:
-		# Fahre weiter, wenn ein Signal ausgeschaltet ist
-		if "InactiveSignal" in objectsOnSquare:
-			proxy.changeSpeed(default_speed)
-		# Halte, wenn ein eingeschaltetes Signal vor dem Geisterzug ist
-		elif "ActiveSignal" in objectsOnSquare:
-			proxy.changeSpeed(0)
-
-	# Wenn der Spieler wenig Kohle hat, dann sollte er Kohle von neben den Gleisen mitnehmen bzw. klauen
-	if proxy.getCoalCount() <= 20:
-		proxy.setPicksUpCoalContainerNextToRails(True)
-		proxy.setPicksUpGoldContainerNextToRails(False)
-		proxy.setStealsCoalContainerFromOtherPlayers(True)
-		proxy.setStealsGoldContainerFromOtherPlayers(False)
-	# Falls der Spieler genug Kohle hat, dann sollte der Geisterzug lieber Gold aufsammeln bzw. klauen
-	else:
-		proxy.setPicksUpCoalContainerNextToRails(False)
-		proxy.setPicksUpGoldContainerNextToRails(True)
-		proxy.setStealsCoalContainerFromOtherPlayers(False)
-		proxy.setStealsGoldContainerFromOtherPlayers(True)
+	pass

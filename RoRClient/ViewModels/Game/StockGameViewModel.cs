@@ -19,6 +19,8 @@ namespace RoRClient.ViewModels.Game
             this.stock = stock;
             this.SquarePosX = stock.Square.PosX;
             this.SquarePosY = stock.Square.PosY;
+
+            MainViewModel.UnloadCartsInput += OnUnloadCartsInput;
         }
 
         public Stock Stock
@@ -42,6 +44,11 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
+        private void OnUnloadCartsInput(object sender, EventArgs eventArgs)
+        {
+            SelectStockObject();
+        }
+
         /// <summary>
         /// EditorObject (Rail etc.) ausgewählt + Quicknavigation anzeigen
         /// </summary>
@@ -54,9 +61,6 @@ namespace RoRClient.ViewModels.Game
             messageInformation.PutValue("posY", stock.Square.PosY);
             messageInformation.PutValue("stockId", stock.Id);
             gameSession.QueueSender.SendMessage("UpdateCranePosition", messageInformation);
-      
-
         }
-
     }
 }

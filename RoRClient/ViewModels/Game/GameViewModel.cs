@@ -6,6 +6,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using RoRClient.ViewModels.Commands;
 
 namespace RoRClient.ViewModels.Game
 {
@@ -16,6 +19,7 @@ namespace RoRClient.ViewModels.Game
         private GameStatusViewModel gameStatusViewModel;
         private GameInteractionsViewModel gameInteractionsViewModel;
         private TopMenuViewModel topMenuViewModel;
+        private ScoreboardViewModel scoreboardViewModel;
 
         #region Properties
         public MapGameViewModel MapGameViewModel
@@ -42,6 +46,11 @@ namespace RoRClient.ViewModels.Game
         }
         #endregion
 
+        public ScoreboardViewModel ScoreboardViewModel
+        {
+            get { return scoreboardViewModel; }
+        }
+
         public GameViewModel(UIState uiState, TaskFactory taskFactory)
         {
             this.uiState = uiState;
@@ -49,6 +58,7 @@ namespace RoRClient.ViewModels.Game
             gameInteractionsViewModel = new GameInteractionsViewModel(taskFactory, mapGameViewModel);
             gameStatusViewModel = new GameStatusViewModel();
             topMenuViewModel = new TopMenuViewModel();
+            scoreboardViewModel = new ScoreboardViewModel();
             mapGameViewModel.GameInteractionsViewModel = gameInteractionsViewModel;
             GameSession.GetInstance().PropertyChanged += OnWinningPlayerChanged;
             ViewConstants.Init();

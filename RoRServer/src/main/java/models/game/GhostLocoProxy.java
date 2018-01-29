@@ -55,6 +55,16 @@ public class GhostLocoProxy implements ProxyObject {
 
 		return result;
 	}
+	
+	public List<String> getObjectsOnSquareBehindLastCart() {
+		Cart lastCart = ghostLoco.getCarts().get(ghostLoco.getCarts().size()-1);
+		int squarePosX = CompassHelper.getRealXForDirection(ghostLoco.getDirectionNegation(lastCart.getDrivingDirection()), lastCart.getXPos(),
+				lastCart.getYPos(), 0, 1);
+		int squarePosY = CompassHelper.getRealYForDirection(ghostLoco.getDirectionNegation(lastCart.getDrivingDirection()), lastCart.getXPos(),
+				lastCart.getYPos(), 0, 1);
+		List<String> result = collectObjectsFromSquareAsStrings(squarePosX, squarePosY);
+		return result;
+	}
 
 	/**
 	 * Gibt eine Liste von Objekten, die sich auf diesem Feld befinden als String
@@ -131,6 +141,10 @@ public class GhostLocoProxy implements ProxyObject {
 
 		if (rail.getPlaceableOnrail() != null && rail.getPlaceableOnrail() instanceof Mine) {
 			result.add("Mine");
+		}
+		
+		if (rail.getPlaceableOnrail() != null && rail.getPlaceableOnrail() instanceof Cart) {
+			result.add("Cart");
 		}
 
 		for (Loco loco : gameSession.getLocos()) {
