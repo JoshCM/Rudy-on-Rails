@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:RoRClient.Views.Game"
              xmlns:converter="clr-namespace:RoRClient.BindingConverter"
              mc:Ignorable="d" 
-             d:DesignHeight="225" d:DesignWidth="800" Background="#510404" BorderBrush="White" BorderThickness="5" Focusable="True">
+             d:DesignHeight="225" d:DesignWidth="900" Background="#510404" BorderBrush="White" BorderThickness="5" Focusable="True">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -19,7 +19,7 @@
     </UserControl.Resources>
 
     <StackPanel Orientation="Horizontal">
-        <StackPanel Margin="20 20 10 10">
+        <StackPanel Margin="50 20 10 10">
             <Button Content="Geisterzug" Style="{StaticResource DefaultButtonStyleDampfmodus}" 
                     Margin="0 0 0 10"/>
             <ComboBox IsEditable="{Binding SelectedGhostLocoScript, Converter={StaticResource IsNullToBooleanConverter}}"
@@ -53,7 +53,7 @@
                     Style="{StaticResource DefaultButtonStyleDampfmodus}" />
         </StackPanel>
 
-        <StackPanel Margin="20 20 10 10">
+        <StackPanel Margin="50 20 10 10">
             <Button Content="Ressourcentausch" 
                     IsEnabled="{Binding CanExchangeResource}" 
                     Style="{StaticResource DefaultButtonStyleDampfmodus}" Margin="0 0 0 10"/>
@@ -65,15 +65,12 @@
             <Button Content="Auswählen" Command="{Binding ExchangeResourceCommand}" Style="{StaticResource DefaultButtonStyleDampfmodus}"/>
         </StackPanel>
 
-        <StackPanel Visibility="{Binding CanExchangeResource, Converter={StaticResource BooleanToVisibilityConverter}}" >
-            <Label Content="Tauschverhältnis" Foreground="white" Style="{StaticResource DefaultSubHeaderStyle}">
-            </Label>
-            <TextBlock Text="Gold 1 : 1 Kohle" Foreground="white" Style="{StaticResource DefaultTextBlockStyle}" Margin="0" />
-            <Border BorderBrush="white" BorderThickness="2" Height="2" Margin="0 15 "/>
-            <TextBlock Text="Kohle 3 : 1 Gold" Foreground="white" Style="{StaticResource DefaultTextBlockStyle}" Margin="0" />
-            <Border BorderBrush="white" BorderThickness="2" Height="2" Margin="0 15 "/>
-            <TextBlock Text="Gold 2 : 1 Punkt" Foreground="white" Style="{StaticResource DefaultTextBlockStyle}" Margin="0" />
-            <Border BorderBrush="white" BorderThickness="2" Height="2" Margin="0 15 "/>
+        <StackPanel Margin="10 25 10 10" Visibility="{Binding CanExchangeResource, Converter={StaticResource BooleanToVisibilityConverter}}" >
+            <Label Content="Tauschverhältnisse" Foreground="White" FontSize="18" FontFamily="Source Sans Pro" FontWeight="DemiBold"/>
+            <TextBlock Text="Gold 1 : 1 Kohle" Foreground="White" FontSize="15" Style="{StaticResource DefaultTextStyle}" Margin="15 5 5 5"  />
+            <!-- <Border BorderBrush="white" BorderThickness="2" Height="2" Margin="0 15 "/> -->
+            <TextBlock Text="Kohle 3 : 1 Gold" Foreground="White" FontSize="15" Style="{StaticResource DefaultTextStyle}" Margin="15 5 5 5" />
+            <TextBlock Text="Gold 2 : 1 Punkt" Foreground="White" FontSize="15" Style="{StaticResource DefaultTextStyle}" Margin="15 5 5 5" />
         </StackPanel>
     </StackPanel>
 </UserControl>
