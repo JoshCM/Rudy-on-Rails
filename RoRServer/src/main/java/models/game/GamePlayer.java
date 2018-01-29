@@ -12,6 +12,9 @@ public class GamePlayer extends Player{
 	private int pointCount;
 	private Color color;
 	private Publictrainstation currentSelectedPublictrainstation;
+	public static int START_GOLD = 20;
+	public static int START_COAL = 250;
+	public static int START_POINTS = 0;
 
 	public GamePlayer(String sessionName, String name, UUID id, boolean isHost) {
 		super(sessionName, name, id, isHost);
@@ -39,9 +42,9 @@ public class GamePlayer extends Player{
 	}
 
 	private void initializeResourceCounts() {
-		this.coalCount = 1000;
-		this.goldCount = 1000;
-		this.pointCount = 20;
+		this.coalCount = GamePlayer.START_COAL;
+		this.goldCount = GamePlayer.START_GOLD;
+		this.pointCount = GamePlayer.START_GOLD;
 	}
 
 	public double getCoalCount() {

@@ -5,10 +5,12 @@ import java.util.UUID;
 import commands.base.CommandBase;
 import communication.MessageInformation;
 import exceptions.InvalidModelOperationException;
+import models.game.GamePlayer;
 import models.game.Loco;
 import models.game.Map;
 import models.game.Placeable;
 import models.game.Rail;
+import models.game.Sensor;
 import models.game.Square;
 import models.helper.Validator;
 import models.session.GameSession;
@@ -23,11 +25,13 @@ public class PlaceSensorCommand extends CommandBase {
 
 	private UUID selectedModelId;
 	private UUID playerId;
+	private GamePlayer player;
 	
 	public PlaceSensorCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
 		this.selectedModelId = messageInfo.getValueAsUUID("selectedModelId");
 		this.playerId = messageInfo.getValueAsUUID("playerId");
+		this.player = (GamePlayer)session.getPlayerById(playerId);
 	}
 
 	@Override
@@ -48,6 +52,7 @@ public class PlaceSensorCommand extends CommandBase {
 				
 				// Kein Sensor auf Rail
 				if (rail.getSensor() == null) {
+					player.removeGold(Sensor.SENSOR_COST);
 					rail.placeSensor(playerId);
 				}
 				
