@@ -10,6 +10,7 @@ import models.game.Compass;
 import models.game.Crane;
 import models.game.Square;
 import models.game.Stock;
+import models.game.TrainstationType;
 import models.game.Publictrainstation;
 import models.helper.Validator;
 import models.session.EditorSession;
@@ -46,7 +47,7 @@ public class CreatePublictrainstationCommand extends CreateTrainstationCommandBa
 			// neuer Stock wird erstellt 
 			// y-1 da die anfangsausrichtung der trainstation immer EAST ist
 			Square stockSquare = map.getSquare(xPos, yPos - 1);
-			Stock newStock = new Stock(session.getSessionName(), stockSquare, trainstationId, alignment);
+			Stock newStock = new Stock(session.getSessionName(), stockSquare, trainstationId, alignment, TrainstationType.PUBLIC);
 			stockSquare.setPlaceableOnSquare(newStock);
 			
 			// Trainstation wird erzeugt und auf Square gesetzt

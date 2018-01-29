@@ -16,6 +16,7 @@ namespace RoRClient.Commands.Base
         Guid trainstationId;
         private int xPos;
         private int yPos;
+        private TrainstationType trainstationType;
 
         /// <summary>
         /// Setzt den Stock einer Trainstation
@@ -28,12 +29,13 @@ namespace RoRClient.Commands.Base
             xPos = messageInformation.GetValueAsInt("xPos");
             yPos = messageInformation.GetValueAsInt("yPos");
             trainstationId = Guid.Parse(messageInformation.GetValueAsString("trainstationId"));
+            trainstationType = (TrainstationType)Enum.Parse(typeof(TrainstationType), messageInformation.GetValueAsString("trainstationType"));
         }
 
         public override void Execute()
         {
             Square square = session.Map.GetSquare(xPos, yPos);
-            Stock stock = new Stock(stockId, square, Compass.EAST, trainstationId);
+            Stock stock = new Stock(stockId, square, Compass.EAST, trainstationId, trainstationType);
             square.PlaceableOnSquare = stock;
         }
     }

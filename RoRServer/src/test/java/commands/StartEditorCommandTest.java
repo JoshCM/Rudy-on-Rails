@@ -14,6 +14,7 @@ import communication.MessageInformation;
 import models.game.Rail;
 import models.game.Square;
 import models.game.Stock;
+import models.game.TrainstationType;
 import models.game.Playertrainstation;
 import models.session.EditorSession;
 import models.session.EditorSessionManager;
@@ -123,7 +124,7 @@ public class StartEditorCommandTest {
 		UUID trainstationId = UUID.randomUUID();
 		Playertrainstation loadedTrainstation = new Playertrainstation(editorSession.getSessionName(), square, uuids, trainstationId,
 				Compass.NORTH, new Stock(editorSession.getSessionName(), editorSession.getMap().getSquare(1, 0),
-						trainstationId, Compass.NORTH), UUID.randomUUID());
+						trainstationId, Compass.NORTH, TrainstationType.PLAYER), UUID.randomUUID());
 		square.setPlaceableOnSquare(loadedTrainstation);
 
 		Playertrainstation createdTrainstation = loadedTrainstation.loadFromMap(square, editorSession);
