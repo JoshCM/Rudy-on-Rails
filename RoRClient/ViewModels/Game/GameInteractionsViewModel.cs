@@ -26,6 +26,9 @@ namespace RoRClient.ViewModels.Game
         private MapGameViewModel mapGameViewModel;
         private int currentNumberOfOwnGhostLocoScript = 1;
         private int currentNumberOfOwnSensorScript = 1;
+        private String selectedResource;
+        private bool canExchangeResource = false;
+        private bool tradeRelation = false;
 
         public GameInteractionsViewModel(TaskFactory taskFactory, MapGameViewModel mapGameViewModel)
         {
@@ -232,5 +235,85 @@ namespace RoRClient.ViewModels.Game
             GameSession.GetInstance().QueueSender.SendMessage("ChangeCurrentScriptOfSensor", message);
         }
 
+        public String SelectedResource
+        {
+            get
+            {
+                return selectedResource;
+            }
+            set
+            {
+                if (selectedResource != value)
+                {
+                    selectedResource = value;
+                    OnPropertyChanged("SelectedResource");
+                }
+            }
+        }
+
+        public bool CanExchangeResource
+        {
+
+            get
+            {
+                return canExchangeResource;
+            }
+            set
+            {
+                canExchangeResource = value;
+                OnPropertyChanged("CanExchangeResource");
+            }
+        }
+
+        /// <summary>
+        /// Command zum Austauschen von Ressourcen am Öffentlichen Bahnhof
+        /// </summary>
+        private ICommand exchangeResourceCommand;
+        public ICommand ExchangeResourceCommand
+        {
+            get
+            {
+                if (exchangeResourceCommand == null)
+                {
+                    exchangeResourceCommand = new ActionCommand(param => ExchangeResource());
+                }
+                return exchangeResourceCommand;
+            }
+        }
+
+        /// <summary>
+        /// Schickt eine Nachricht, um zu überprüfen, ob eine Ressource ausgetauscht werden kann (steht Loco vor Bahnhof?)
+        /// </summary>
+        private void ExchangeResource()
+        {
+            RoRSession gameSession = GameSession.GetInstance();
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("playerId", gameSession.OwnPlayer.Id);
+            messageInformation.PutValue("trainstationId", ((GameSession)gameSession).GetTradeableTrainstation().Id);
+
+            if (SelectedResource == "Gold zu Kohle tauschen")
+            {
+                GameSession.GetInstance().QueueSender.SendMessage("ExchangeGoldToCoal", messageInformation);
+            } else if (SelectedResource == "Kohle zu Gold tauschen")
+            {
+                GameSession.GetInstance().QueueSender.SendMessage("ExchangeCoalToGold", messageInformation);
+            } else if (SelectedResource == "Gold zu Punkten tauschen")
+            {
+                GameSession.GetInstance().QueueSender.SendMessage("ExchangeGoldToPoints", messageInformation);
+            }
+        }
+
+        public bool TradeRelation
+        {
+            get
+            {
+                return tradeRelation;
+            }
+            set
+            {
+                tradeRelation = value;
+                OnPropertyChanged("TradeRelation");
+            }
+        }
     }
 }

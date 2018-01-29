@@ -19,6 +19,8 @@ namespace RoRClient.Commands.Base
         private int yPos;
         private Compass alignment;
         List<Rail> trainstationRails = new List<Rail>();
+        GameSession gameSession;
+        protected Publictrainstation trainstation;
 
         /// <summary>
         /// Setzt die PublicTrainstation und ihre zugehörigen Rails
@@ -48,8 +50,14 @@ namespace RoRClient.Commands.Base
         {
             Square square = session.Map.GetSquare(xPos, yPos);
             Stock stock = (Stock)session.Map.GetPlaceableById(stockId);
-            Publictrainstation trainstation = new Publictrainstation(trainstationId, square, trainstationRails, alignment, stock);
-            square.PlaceableOnSquare = trainstation;
+
+            trainstation = new Publictrainstation(trainstationId, square, trainstationRails, alignment, stock);
+            if (session.GetType() == typeof(GameSession))
+            {
+                this.gameSession = (GameSession)session;
+                gameSession.addPublictrainstation(trainstation);
+            }
+            square.PlaceableOnSquare = (Publictrainstation)trainstation;
         }
     }
 }

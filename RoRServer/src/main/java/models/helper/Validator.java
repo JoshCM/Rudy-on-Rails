@@ -219,4 +219,30 @@ public class Validator {
 
 		return locoInRangeOfRail;
 	}
+	
+	public static boolean checkLocoInRangeOfSquare(Map map, Loco loco, Square square, int distance) {
+
+		
+		boolean locoInRangeOfSquare = false;
+		
+		Square locoOnSquare = map.getSquareById(loco.getSquareId());
+		int locoXPos = locoOnSquare.getXIndex();
+		int locoYPos = locoOnSquare.getYIndex();
+		
+		int railXPos = square.getXIndex();
+		int railYPos = square.getYIndex();
+		
+		int allowedDistance = distance;
+		
+		int a = Math.abs(railXPos - locoXPos);
+		int b = Math.abs(railYPos - locoYPos);
+		int actualDistance = (int)Math.sqrt(a*a + b*b);
+		System.out.println("Distance: " + actualDistance);
+		
+		if (actualDistance <= allowedDistance) {
+			locoInRangeOfSquare = true;
+		}
+
+		return locoInRangeOfSquare;
+	}
 }

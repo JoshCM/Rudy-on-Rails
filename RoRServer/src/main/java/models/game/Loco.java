@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 import communication.MessageInformation;
+import models.helper.Validator;
 import models.session.GameSessionManager;
 import resources.PropertyManager;
 
@@ -27,6 +28,7 @@ public abstract class Loco extends TickableGameObject {
 	protected Map map;
 	private GamePlayer player;
 	private static List<Sensor> sensors; // Jede Loco kennt alle Sensoren
+	private static List<Publictrainstation> publicTrainstations; // Jede Loco kennt alle PublicTrainstations
 
 	/**
 	 * Konstruktor einer Lok
@@ -45,12 +47,17 @@ public abstract class Loco extends TickableGameObject {
 		this.player = (GamePlayer) GameSessionManager.getInstance().getGameSessionByName(sessionName)
 				.getPlayerById(playerId);
 		Loco.sensors = new ArrayList<Sensor>();
+		Loco.publicTrainstations = new ArrayList<Publictrainstation>();
 	}
 
 	public static void addSensor(Sensor sensor) {
 		sensors.add(sensor);
 	}
-
+	
+	public static void addPublicTrainStation(Publictrainstation publicTrainstation) {
+		publicTrainstations.add(publicTrainstation);
+	}
+	
 	public void notifySensors() {
 
 		Iterator<Sensor> iter = sensors.iterator();
