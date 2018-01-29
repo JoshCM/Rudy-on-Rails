@@ -686,7 +686,6 @@
     <Resource Include="Resources\Images\container_points.png" />
     <Resource Include="Resources\Images\btn_back.png" />
     <Resource Include="Resources\Images\crane.png" />
-    <Resource Include="Resources\Images\Tools\other\crane.png" />
     <Resource Include="Resources\Images\Tools\rail\railcurve_ne.png" />
     <Resource Include="Resources\Images\Tools\rail\railcurve_nw.png" />
     <Resource Include="Resources\Images\Tools\rail\railcurve_se.png" />
