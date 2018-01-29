@@ -9,7 +9,6 @@ namespace RoRClient.Models.Game
     /// <summary>
     /// Klasse für Playertrainstations, die einem Square zugeordnet sind
     /// und eine Liste von Rails, die zu der Trainstation gehören
-    /// TODO: Für den Game-Modus muss Playertrainstation einem Spieler zugeordnet sein
     /// </summary>
     public class Playertrainstation : Trainstation
     {

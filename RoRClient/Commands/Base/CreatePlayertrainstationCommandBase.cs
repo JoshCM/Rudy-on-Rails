@@ -18,8 +18,6 @@ namespace RoRClient.Commands.Base
         protected Guid playerId;
         protected int xPos;
         protected int yPos;
-        protected int stockXPos;
-        protected int stockYPos;
         protected Compass alignment;
         protected List<Rail> trainstationRails = new List<Rail>();
         protected Playertrainstation trainstation;

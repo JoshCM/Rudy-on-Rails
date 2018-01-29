@@ -69,7 +69,8 @@ namespace RoRClient.ViewModels.Game
                     MapViewModel.GameInteractionsViewModel.CanPlaceSensor = true;
                 }
                 
-            } else
+            }
+            else
             {
                 MapViewModel.GameInteractionsViewModel.CanPlaceSensor = false;
             }
