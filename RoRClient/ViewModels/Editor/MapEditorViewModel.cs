@@ -214,7 +214,7 @@ namespace RoRClient.ViewModels.Editor
                 if (rail.PlaceableOnRail == null)
                 {
                     IModel model = (IModel)eventArgs.OldValue;
-                    CanvasEditorViewModel result = placeableOnRailCollection.Where(x => x.Id == model.Id).First();
+                    CanvasEditorViewModel result = placeableOnRailCollection.Where(x => x.Id == model.Id).FirstOrDefault();
 
                     if (result != null)
                     {
