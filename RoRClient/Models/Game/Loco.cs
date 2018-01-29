@@ -112,6 +112,11 @@ namespace RoRClient.Models.Game
                 }
             }
         }
+        public void UpdateDrivingDirectionAfterRespawn(Compass newDrivingDirection)
+        {
+            drivingDirection = newDrivingDirection;
+            NotifyPropertyChanged("UpdateDrivingDirection", this.drivingDirection, newDrivingDirection);
+        }
         public Guid PlayerId
         {
             get

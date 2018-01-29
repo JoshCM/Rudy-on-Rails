@@ -173,6 +173,7 @@
     <Compile Include="Commands\Game\Delete\DeletePlaceableCommand.cs" />
     <Compile Include="Commands\Game\Other\EndGameCommand.cs" />
     <Compile Include="Commands\Game\Other\RemoveResourceFromMineCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateLocoForRespawnCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateColorOfPlayerCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCranePositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoCrashedCommand.cs" />

@@ -174,7 +174,7 @@ public class StartGameCommand extends CommandBase {
 		gameSession.addLoco(ghostLoco);
 	}
 
-	public static Compass getLocoDirectionbyTrainstation(Compass compass) {
+	public Compass getLocoDirectionbyTrainstation(Compass compass) {
 		switch (compass) {
 		case NORTH:
 			return Compass.EAST;

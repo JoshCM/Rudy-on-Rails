@@ -194,6 +194,13 @@ public abstract class Loco extends TickableGameObject {
 
 	}
 
+	public void addCartAfterRespawn(Rail cartSpawnRail) {
+		Square cartSquare = cartSpawnRail.getSquareFromGameSession();
+		Cart cart = new Cart(this.sessionName, cartSquare, this.drivingDirection, playerId, true, this.getId());
+		carts.add(cart);
+
+	}
+
 	public void addCart() {
 		if (carts.isEmpty()) {
 			addInitialCart();
@@ -307,22 +314,9 @@ public abstract class Loco extends TickableGameObject {
 			notifyLocoCrashed(newRail);
 			changeSpeed(0);
 			dropByCollide();
-
-			Map map=GameSessionManager.getInstance().getGameSession().getMap();
-			List<Playertrainstation> playerTrainstations = GameSessionManager.getInstance().getGameSession().getPlayerTrainstations();
-
-			for(Playertrainstation trainstation : playerTrainstations){
-				if(trainstation.getPlayerId() == getPlayerId()){
-					Rail locoSpawnRail = (Rail)map.getPlaceableById(trainstation.getSpawnPointforLoco());
-					this.drivingDirection = StartGameCommand.getLocoDirectionbyTrainstation(trainstation.getAlignment());
-					setXPos(locoSpawnRail.getXPos());
-					setYPos(locoSpawnRail.getYPos());
-					notifyLocoPositionChanged();
-
-				}
-			}
 			removeCartsExceptInitial();
-
+			Rail cartSpawnRail=findTrainstationAndRespawn();
+			addCartAfterRespawn(cartSpawnRail);
 		}
 
 		if (retSquare.getPlaceableOnSquare() instanceof Rail) {
@@ -330,25 +324,58 @@ public abstract class Loco extends TickableGameObject {
 		}
 		return newRail;
 	}
-	
+
+	public Rail findTrainstationAndRespawn() {
+		Map map = GameSessionManager.getInstance().getGameSession().getMap();
+		List<Playertrainstation> playerTrainstations = GameSessionManager.getInstance().getGameSession()
+				.getPlayerTrainstations();
+		Rail cartSpawnRail=null;
+		for (Playertrainstation trainstation : playerTrainstations) {
+			if (trainstation.getPlayerId() == getPlayerId()) {
+				Rail locoSpawnRail = (Rail) map.getPlaceableById(trainstation.getSpawnPointforLoco());
+				cartSpawnRail = (Rail) map.getPlaceableById(trainstation.getSpawnPointForCart());
+				Compass newDrivingDirection = getDrivingDirectionAfterRespawn(this.drivingDirection);
+				setDrivingDirection(newDrivingDirection);
+				setXPos(locoSpawnRail.getXPos());
+				setYPos(locoSpawnRail.getYPos());
+				notifyLocoPositionForRespawn();
+
+			}
+		}
+		return cartSpawnRail;
+	}
+
+	private Compass getDrivingDirectionAfterRespawn(Compass drivingDirection) {
+		switch (drivingDirection) {
+		case NORTH:
+			return Compass.EAST;
+		case EAST:
+			return Compass.SOUTH;
+		case SOUTH:
+			return Compass.WEST;
+		case WEST:
+			return Compass.NORTH;
+		}
+		return null;
+	}
 
 	private void removeCartsExceptInitial() {
 
-		for(Cart cart:carts){
+		for (Cart cart : carts) {
 			notifyRemoveCartsExceptInitial(cart.getRail(), cart);
 			carts.remove(cart);
 		}
 
 		notifyRemoveCartsExceptInitial(carts.get(0).getRail(), carts.get(0));
 		carts.remove(0);
-		addInitialCart();
+
 	}
 
 	private void notifyRemoveCartsExceptInitial(Rail tempRail, Cart tempCart) {
-		MessageInformation messageInformation=new MessageInformation("DeleteCart");
+		MessageInformation messageInformation = new MessageInformation("DeleteCart");
 		messageInformation.putValue("locoId", this.getId());
 		messageInformation.putValue("railId", tempRail.getId());
-		messageInformation.putValue("cartId",tempCart.getId());
+		messageInformation.putValue("cartId", tempCart.getId());
 
 		notifyChange(messageInformation);
 	}
@@ -416,15 +443,23 @@ public abstract class Loco extends TickableGameObject {
 	/**
 	 * notifiziert wenn die Position der Lok veraendert wurde
 	 */
+	private void notifyLocoPositionForRespawn() {
+		MessageInformation messageInfo = new MessageInformation("UpdateLocoForRespawn");
+		messageInfo.putValue("locoId", getId());
+		messageInfo.putValue("xPos", getXPos());
+		messageInfo.putValue("yPos", getYPos());
+		messageInfo.putValue("drivingDirection", getDrivingDirection().toString());
+		notifyChange(messageInfo);
+	}
+
 	private void notifyLocoPositionChanged() {
 		MessageInformation messageInfo = new MessageInformation("UpdateLocoPosition");
 		messageInfo.putValue("locoId", getId());
 		messageInfo.putValue("xPos", getXPos());
 		messageInfo.putValue("yPos", getYPos());
-		messageInfo.putValue("drivingDirection", drivingDirection.toString());
+		messageInfo.putValue("drivingDirection", getDrivingDirection().toString());
 		notifyChange(messageInfo);
 	}
-
 
 	private void notifyCartToLocoAdded(Cart cart) {
 		MessageInformation messageInfo = new MessageInformation("UpdateCartToLoco");
@@ -472,6 +507,10 @@ public abstract class Loco extends TickableGameObject {
 
 	public void setCarts(ArrayList<Cart> carts) {
 		this.carts = carts;
+	}
+
+	public void setDrivingDirection(Compass drivingdirection) {
+		this.drivingDirection = drivingdirection;
 	}
 
 	/**
