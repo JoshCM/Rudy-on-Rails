@@ -127,13 +127,24 @@ public abstract class Loco extends TickableGameObject {
 			if (nextRail != null && nextRail instanceof Rail
 					&& nextRail.hasExitDirection(getDirectionNegation(this.drivingDirection))) {
 				// Merke dir die aktuellen Loco Eigenschaften für die Carts
-				Rail currentLocoRail = this.rail;
-				Compass currentLocoDrivingDirection = this.drivingDirection;
+				Rail currentLocoRail;
+				Compass currentLocoDrivingDirection;
+				Compass nextDrivingDirection;
 
-				Compass nextDrivingDirection = nextRail.getExitDirection(getDirectionNegation(getDrivingDirection()));
-
-				moveLoco(nextRail, nextDrivingDirection);
-				moveCarts(currentLocoRail, currentLocoDrivingDirection);
+				if (checkForCollision(nextRail)) {
+					setSpeedAndNotifySpeedChanged(0);
+					notifyLocoCrashed(nextRail);
+					dropByCollide();
+					removeCartsExceptInitial();
+					findTrainstationAndRespawn();
+					addCartAfterRespawn();
+				}else{
+					currentLocoRail = this.rail;
+					currentLocoDrivingDirection = this.drivingDirection;
+					nextDrivingDirection = nextRail.getExitDirection(getDirectionNegation(getDrivingDirection()));
+					moveLoco(nextRail, nextDrivingDirection);
+					moveCarts(currentLocoRail, currentLocoDrivingDirection);
+				}
 			} else {
 				setSpeedAndNotifySpeedChanged(0);
 			}
@@ -144,18 +155,25 @@ public abstract class Loco extends TickableGameObject {
 				linkupCartToCarts(nextRail);// Cart ankoppeln
 			} else if (nextRail != null && nextRail instanceof Rail
 					&& nextRail.hasExitDirection(getDirectionNegation(lastCart.getDrivingDirection()))) {
-
 				// Die Eigenschaften der Ersten Cart (also direkt hinter der
 				// Loco) m�ssen gespeichert werden damit sie der Lok
 				// �bergeben werden k�nnen
-				Compass firstCartDrivingDirection = getFirstCart().getDrivingDirection();
-				Rail firstCartRail = getFirstCart().getRail();
+				if (checkForCollision(nextRail)) {
+					setSpeedAndNotifySpeedChanged(0);
+					notifyLocoCrashed(nextRail);
+					dropByCollide();
+					removeCartsExceptInitial();
+					findTrainstationAndRespawn();
+					addCartAfterRespawn();
+				}else {
+					Compass firstCartDrivingDirection = getFirstCart().getDrivingDirection();
+					Rail firstCartRail = getFirstCart().getRail();
 
-				Compass nextDrivingDirection = nextRail
-						.getExitDirection(getDirectionNegation(lastCart.getDrivingDirection()));
-				moveCarts(nextRail, nextDrivingDirection);
-
-				moveLoco(firstCartRail, firstCartDrivingDirection);
+					Compass nextDrivingDirection = nextRail.getExitDirection(
+							getDirectionNegation(lastCart.getDrivingDirection()));
+					moveCarts(nextRail, nextDrivingDirection);
+					moveLoco(firstCartRail, firstCartDrivingDirection);
+				}
 			} else {
 				setSpeedAndNotifySpeedChanged(0);
 			}
@@ -192,13 +210,18 @@ public abstract class Loco extends TickableGameObject {
 	private void setSpeedAndNotifySpeedChanged(int speed) {
 		this.speed = speed;
 		notifySpeedChanged();
-
 	}
 
 	public void addCartAfterRespawn() {
-		Cart cart = new Cart(this.sessionName, cartSpawnSquare, getDrivingDirection(), playerId, true, this.getId());
+		Cart cart = new Cart(
+				this.sessionName,
+				cartSpawnSquare,
+				getDrivingDirection(),
+				playerId,
+				true,
+				this.getId());
 		carts.add(cart);
-		
+		notifyCartToLocoAddedAfterRespawn();
 	}
 
 	public void addCart() {
@@ -266,13 +289,12 @@ public abstract class Loco extends TickableGameObject {
 
 	private boolean checkForCollision(Rail rail) {
 		List<Loco> locos = GameSessionManager.getInstance().getGameSession().getLocos();
-		for (Loco loco : locos) {
 
+		for (Loco loco : locos) {
 			if (!(loco instanceof GhostLoco)) {
 				if (loco.getRail() == rail) {
 					return true;
 				}
-
 				for (Cart cart : loco.getCarts()) {
 					if (cart.getRail() == rail) {
 						return true;
@@ -310,25 +332,15 @@ public abstract class Loco extends TickableGameObject {
 			break;
 		}
 
-		newRail = (Rail) retSquare.getPlaceableOnSquare();
-		if (checkForCollision(newRail)) {
-			setSpeedAndNotifySpeedChanged(0);
-			notifyLocoCrashed(newRail);
-			dropByCollide();
-			removeCartsExceptInitial();
-			addCartAfterRespawn(cartSpawnRail);
-			findTrainstationAndRespawn();
-		}
-
 		if (retSquare.getPlaceableOnSquare() instanceof Rail) {
-			return newRail;
+			newRail = (Rail) retSquare.getPlaceableOnSquare();
 		}
 		return newRail;
 	}
 
 	public void findTrainstationAndRespawn() {
 		Map map = GameSessionManager.getInstance().getGameSession().getMap();
-		Rail cartSpawnRail = null;
+		Rail locoSpawnRail = null;
 
 		List<Playertrainstation> playerTrainstations =
 				GameSessionManager
@@ -338,40 +350,64 @@ public abstract class Loco extends TickableGameObject {
 
 		for (Playertrainstation trainstation : playerTrainstations) {
 			if (trainstation.getPlayerId() == getPlayerId()) {
-				Rail locoSpawnRail = (Rail) map.getPlaceableById(trainstation.getSpawnPointforLoco());
+				locoSpawnRail = (Rail) map.getPlaceableById(trainstation.getSpawnPointforLoco());
+//				setXPos(locoSpawnRail.getXPos());
+//				setYPos(locoSpawnRail.getYPos());
+				Compass newDrivingDirection = getDrivingDirectionAfterRespawn(trainstation.getAlignment());
+//				setDrivingDirection(newDrivingDirection);
 
-				Compass newDrivingDirection = getDrivingDirectionAfterRespawn(this.drivingDirection);
-				setDrivingDirection(newDrivingDirection);
-				setXPos(locoSpawnRail.getXPos());
-				setYPos(locoSpawnRail.getYPos());
-				notifyLocoPositionForRespawn();
+                this.drivingDirection = newDrivingDirection;
+                this.rail = locoSpawnRail;
+                this.updateSquare(this.rail.getSquareFromGameSession());
+                notifyLocoPositionForRespawn();
 			}
 		}
 	}
 
 	private Compass getDrivingDirectionAfterRespawn(Compass drivingDirection) {
+
+	    Compass newDrivingDirection = Compass.SOUTH;
+
 		switch (drivingDirection) {
 		case NORTH:
-			return Compass.EAST;
+            newDrivingDirection = Compass.EAST;
+            break;
 		case EAST:
-			return Compass.SOUTH;
+            newDrivingDirection = Compass.SOUTH;
+            break;
 		case SOUTH:
-			return Compass.WEST;
+            newDrivingDirection = Compass.WEST;
+            break;
 		case WEST:
-			return Compass.NORTH;
+            newDrivingDirection = Compass.NORTH;
+            break;
 		}
-		return null;
+		return newDrivingDirection;
 	}
 
 	private void removeCartsExceptInitial() {
 
-		for (Cart cart : carts) {
+	    /*
+	    Iterator<Cart> iter = carts.iterator();
+        while (iter.hasNext()) {
+            Cart cart = iter.next();
+            notifyRemoveCartsExceptInitial(cart.getRail(), cart);
+            carts.remove(cart);
+        }
+        */
+
+        List<Cart> removeCars = new ArrayList<Cart>();
+
+        for (Cart cart : carts) {
 			notifyRemoveCartsExceptInitial(cart.getRail(), cart);
-			carts.remove(cart);
+			//carts.remove(cart);
+            removeCars.add(cart);
 		}
 
-		notifyRemoveCartsExceptInitial(carts.get(0).getRail(), carts.get(0));
-		carts.remove(0);
+        carts.removeAll(removeCars);
+
+        //notifyRemoveCartsExceptInitial(carts.get(0).getRail(), carts.get(0));
+		//carts.remove(0);
 
 	}
 
@@ -464,7 +500,15 @@ public abstract class Loco extends TickableGameObject {
 		messageInfo.putValue("drivingDirection", getDrivingDirection().toString());
 		notifyChange(messageInfo);
 	}
-
+	public void notifyCartToLocoAddedAfterRespawn(){
+		MessageInformation messageInfo = new MessageInformation("UpdateCartToLocoAfterRespawn");
+		messageInfo.putValue("xPos", carts.get(0).getXPos());
+		messageInfo.putValue("yPos", carts.get(0).getYPos());
+		messageInfo.putValue("cartId",carts.get(0).getId());
+		messageInfo.putValue("playerId", this.playerId);
+		messageInfo.putValue("currentLocoId", getId());
+		notifyChange(messageInfo);
+	}
 	private void notifyCartToLocoAdded(Cart cart) {
 		MessageInformation messageInfo = new MessageInformation("UpdateCartToLoco");
 		messageInfo.putValue("xPos", cart.getXPos());
