@@ -77,11 +77,11 @@ def update(proxy):
 	global default_speed
 
 	# Waggon ankoppeln
-	#if "Cart" in proxy.getObjectsOnSquareBehindLastCart():
-	#	proxy.changeSpeed(-1)
-	#	import time 
-	#	time.sleep(3)
-	#	proxy.changeSpeed(default_speed)
+	if "Cart" in proxy.getObjectsOnSquareBehindLastCart():
+		proxy.changeSpeed(-1)
+		import time 
+		time.sleep(3)
+		proxy.changeSpeed(default_speed)
 
 	# Halte zum Abladen von Resourcen und fahre anschließend weiter
 	if "OwnTrainstation" in proxy.getObjectsOnSquare(1, 0) or "OwnTrainstation" in proxy.getObjectsOnSquare(-1, 0):
