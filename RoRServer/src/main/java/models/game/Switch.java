@@ -44,13 +44,27 @@ public class Switch extends Rail {
      */
     @Override
     public Compass getExitDirection(Compass direction) {
-        RailSection railSection = inactiveRailSection;
+        RailSection railSection = getRailSectionFromCompass(direction);
 
         if (direction == switchableDirectionEntry) {
             railSection = activeRailSection;
         }
-
         return railSection.getNode1() == direction? railSection.getNode2() : railSection.getNode1();
+    }
+
+
+    /**
+     * Findet die richtige RailSection zu einem gegebenen Compass
+     * @param compass - Richtung die zu einer Railsection gehört
+     * @return RailSection
+     */
+    private RailSection getRailSectionFromCompass(Compass compass) {
+        for (RailSection railSection : railSectionList) {
+            if (railSection.getNode1() == compass || railSection.getNode2() == compass ) {
+                return railSection;
+            }
+        }
+        return null;
     }
 
     /**
@@ -65,6 +79,8 @@ public class Switch extends Rail {
         activeRailSection = temp;
 
     }
+
+
 
     /**
      * Setzt den die Eingangsrichtung für eine Weiche. Der Eingang ist immer der Compassknoten der zweimal in den
