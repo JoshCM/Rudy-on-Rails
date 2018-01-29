@@ -133,16 +133,18 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 			gameSession = GameSessionManager.getInstance().getGameSessionByName(sessionName);
 			List<Loco> locos = gameSession.getLocos();
 			for (Loco loco : locos) {
-				List<Cart> carts = loco.getCarts();
-				for (Cart cart : carts) {
-					if (cart.getXPos() == this.getXPos() && cart.getYPos() == this.getYPos()
-							&& cart.getResource() == null && resources.size() != 0) {
+				if(!(loco instanceof GhostLoco)) {
+					List<Cart> carts = loco.getCarts();
+					for (Cart cart : carts) {
+						if (cart.getXPos() == this.getXPos() && cart.getYPos() == this.getYPos()
+								&& cart.getResource() == null && resources.size() != 0) {
 
-						cart.loadResourceOntoCart(resources.get(0));
+							cart.loadResourceOntoCart(resources.get(0));
 
-						removeResource();
-						break;
-					}
+							removeResource();
+							break;
+						}
+					}	
 				}
 			}
 		}
