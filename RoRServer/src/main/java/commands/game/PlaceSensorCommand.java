@@ -40,7 +40,7 @@ public class PlaceSensorCommand extends CommandBase {
 		// Es muss ein Rail sein
 		if (placeable instanceof Rail) {
 			
-			Loco loco = gameSession.getLocomotiveByPlayerId(playerId);
+			Loco loco = gameSession.getPlayerLocoByPlayerId(playerId);
 			Rail rail = (Rail)placeable;
 
 			// Prüft, ob die Loco in der Nähe des Rails ist

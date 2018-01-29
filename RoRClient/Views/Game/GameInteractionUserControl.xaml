@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="../Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <converter:IsNullToBooleanConverter x:Key="IsNullToBooleanConverter"/>
+            <converter:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" IsInverse="False"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -53,10 +54,26 @@
         </StackPanel>
 
         <StackPanel Margin="20 20 10 10">
-            <Button Content="Ressourcentausch" Style="{StaticResource DefaultButtonStyleDampfmodus}" Margin="0 0 0 10"/>
-            <ComboBox Text="Wähle Tausch" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" Margin="0 0 0 10" />
-            <Button Content="Auswählen" Style="{StaticResource DefaultButtonStyleDampfmodus}"/>
+            <Button Content="Ressourcentausch" 
+                    IsEnabled="{Binding CanExchangeResource}" 
+                    Style="{StaticResource DefaultButtonStyleDampfmodus}" Margin="0 0 0 10"/>
+            <ComboBox Text="Wähle Tausch" SelectedValue="{Binding SelectedResource}" SelectedValuePath="Content" IsEnabled="{Binding CanExchangeResource}" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" Margin="0 0 0 10" >
+                <ComboBoxItem Content="Gold zu Kohle tauschen"/>
+                <ComboBoxItem Content="Kohle zu Gold tauschen"/>
+                <ComboBoxItem Content="Gold zu Punkten tauschen"/>
+            </ComboBox>
+            <Button Content="Auswählen" Command="{Binding ExchangeResourceCommand}" Style="{StaticResource DefaultButtonStyleDampfmodus}"/>
         </StackPanel>
-        
+
+        <StackPanel Visibility="{Binding CanExchangeResource, Converter={StaticResource BooleanToVisibilityConverter}}" >
+            <Label Content="Tauschverhältnis" Foreground="white" Style="{StaticResource DefaultSubHeaderStyle}">
+            </Label>
+            <TextBlock Text="Gold 1 : 1 Kohle" Foreground="white" Style="{StaticResource DefaultTextBlockStyle}" Margin="0" />
+            <Border BorderBrush="white" BorderThickness="2" Height="2" Margin="0 15 "/>
+            <TextBlock Text="Kohle 3 : 1 Gold" Foreground="white" Style="{StaticResource DefaultTextBlockStyle}" Margin="0" />
+            <Border BorderBrush="white" BorderThickness="2" Height="2" Margin="0 15 "/>
+            <TextBlock Text="Gold 2 : 1 Punkt" Foreground="white" Style="{StaticResource DefaultTextBlockStyle}" Margin="0" />
+            <Border BorderBrush="white" BorderThickness="2" Height="2" Margin="0 15 "/>
+        </StackPanel>
     </StackPanel>
 </UserControl>

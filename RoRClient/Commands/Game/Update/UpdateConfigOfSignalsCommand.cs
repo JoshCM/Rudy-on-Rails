@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RoRClient.Commands.Editor.Update
+namespace RoRClient.Commands.Game.Update
 {
     public class UpdateConfigOfSignalsCommand : UpdateConfigOfSignalsCommandBase
     {

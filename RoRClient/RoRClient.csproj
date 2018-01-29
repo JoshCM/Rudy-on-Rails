@@ -105,6 +105,7 @@
     <Compile Include="BindingConverter\BooleanToVisibilityConverter.cs" />
     <Compile Include="BindingConverter\ObjectEqualsConverter.cs" />
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
+    <Compile Include="BindingConverter\EditorStockToImagePathConverter.cs" />
     <Compile Include="BindingConverter\PlayerToImagePathConverter.cs" />
     <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
     <Compile Include="BindingConverter\IsNullToBooleanConverter.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Commands\Base\CreateStockCommandBase.cs" />
     <Compile Include="Commands\Base\CreatePlayertrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
+    <Compile Include="Commands\Base\UpdateConfigOfSignalsCommandBase.cs" />
     <Compile Include="Commands\Editor\Create\CreatePublictrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeleteCraneCommand.cs" />
     <Compile Include="Commands\Editor\Other\InitMapSizeCommand.cs" />
@@ -163,6 +165,7 @@
     <Compile Include="Commands\Game\Delete\DeleteSensorCommand.cs" />
     <Compile Include="Commands\Game\Other\InitMapSizeCommand.cs" />
     <Compile Include="Commands\Game\Other\RemoveResourceFromCartCommand.cs" />
+    <Compile Include="Commands\Game\Other\ShowTradeRelationCommand.cs" />
     <Compile Include="Commands\Game\Other\SwitchSensorCommand.cs" />
     <Compile Include="Commands\Game\Other\PlaceSensorCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />
@@ -171,6 +174,7 @@
     <Compile Include="Commands\Game\Other\EndGameCommand.cs" />
     <Compile Include="Commands\Game\Other\RemoveResourceFromMineCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateColorOfPlayerCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateConfigOfSignalsCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCranePositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateResourceLoadedOntoCartCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
@@ -406,9 +410,6 @@
     <Compile Include="Views\Game\PlayertrainstationGameUserControl.xaml.cs">
       <DependentUpon>PlayertrainstationGameUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Game\TrainstationGameUserControl.xaml.cs">
-      <DependentUpon>TrainstationGameUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Lobby\EditorLobbyView.xaml.cs">
       <DependentUpon>EditorLobbyView.xaml</DependentUpon>
     </Compile>
@@ -539,10 +540,6 @@
     <Page Include="Views\Game\PlayertrainstationGameUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Game\TrainstationGameUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Lobby\EditorLobbyView.xaml">
       <SubType>Designer</SubType>

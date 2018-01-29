@@ -44,7 +44,7 @@ public class CreateCartCommand implements Command{
 	public void execute() {
 		Square cartSpawnPointSquare = this.session.getMap().getSquare(xPos, yPos);
 		Rail cartSpawnPointRail = (Rail) cartSpawnPointSquare.getPlaceableOnSquare();
-		Loco loco = session.getLocomotiveByPlayerId(playerId);
+		Loco loco = session.getPlayerLocoByPlayerId(playerId);
 		GamePlayer currentPlayer = (GamePlayer)session.getPlayerById(playerId);
 		
 		if(validateBuyCart(currentPlayer, loco, cartSpawnPointRail)) {
