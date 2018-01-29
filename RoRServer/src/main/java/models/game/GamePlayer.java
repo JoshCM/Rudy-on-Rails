@@ -43,7 +43,7 @@ public class GamePlayer extends Player{
 
 	private void initializeResourceCounts() {
 		if(this.getDescription() == "RobinHood") {
-			this.pointCount = 99;
+			this.pointCount = 49;
 		}else {
 			this.coalCount = Integer.valueOf(PropertyManager.getProperty("initial_coal_count"));
 			this.goldCount = Integer.valueOf(PropertyManager.getProperty("initial_gold_count"));
