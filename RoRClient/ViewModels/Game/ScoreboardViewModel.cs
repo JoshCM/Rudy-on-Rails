@@ -13,21 +13,13 @@ namespace RoRClient.ViewModels.Game
     {
         private double opacity;
 
-        public ObservableCollection<GamePlayer> playerList;
-
-        public ObservableCollection<GamePlayer> PlayerList
+        public ObservableCollection<Player> PlayerList
         {
-            get { return playerList; }
+            get { return GameSession.GetInstance().Players; }
         }
 
         public ScoreboardViewModel()
         {
-            playerList = new ObservableCollection<GamePlayer>();
-            foreach(Player player in GameSession.GetInstance().Players)
-            {
-                GamePlayer gamePlayer = player as GamePlayer;
-                PlayerList.Add(gamePlayer);
-            }
             opacity = 0.0;
         }
 
@@ -39,11 +31,6 @@ namespace RoRClient.ViewModels.Game
 
         public void ToggleScoreboard()
         {
-            foreach (GamePlayer player in PlayerList)
-            {
-                Console.WriteLine("Name" + player.Name + " Punkte " + player.PointCount);
-            }
-
             if (Opacity == 1.0)
             {
                 Opacity = 0.0;
