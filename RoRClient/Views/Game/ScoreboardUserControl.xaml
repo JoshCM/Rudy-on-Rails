@@ -21,7 +21,7 @@
                     <DataTemplate>
                         <StackPanel>
                             <TextBlock Foreground="Black" Text="{Binding Name}" />
-                            <TextBlock Foreground="Black" Text="{Binding CoalCount}"/>
+                            <TextBlock Foreground="Black" Text="{Binding PointCount}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
