@@ -8,24 +8,37 @@
              x:Name="scoreboardUserControl"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="200"
-             Background="Transparent" IsHitTestVisible="False">
+             Background="Transparent" IsHitTestVisible="False"
+             Width="600">
     <UserControl.Resources>
         <game:ScoreboardViewModel x:Key="ScoreboardViewModel" />
     </UserControl.Resources>
     <Grid IsHitTestVisible="False">
-        <Grid x:Name="ScoreboardGrid"  Background="White" Opacity="0.9" Margin="10" IsHitTestVisible="False">
-            <ListBox Width="200"  
-                     ItemsSource="{Binding ScoreboardViewModel.PlayerList}"   
-                     IsSynchronizedWithCurrentItem="True">
-                <ListBox.ItemTemplate>
+        <Grid x:Name="ScoreboardGrid"  Background="White" Opacity="0.6" Margin="10" IsHitTestVisible="False">
+            <ItemsControl  
+                     ItemsSource="{Binding ScoreboardViewModel.PlayerList}">
+                <ItemsControl.Template>
+                    <ControlTemplate>
+                        <Border Background="White">
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Name" FontWeight="Bold" Width="450" Foreground="#FF510404" FontFamily="Source Sans Pro" FontSize="18" HorizontalAlignment="Left" Margin="20 0 0 0"/>
+                                    <TextBlock Text="Punkte" FontWeight="Bold" Foreground="#FF510404" FontFamily="Source Sans Pro" FontSize="18" Margin="20 0 0 0" TextAlignment="Right"/>
+                                </StackPanel>
+                                <ItemsPresenter />
+                            </StackPanel>
+                        </Border>
+                    </ControlTemplate>
+                </ItemsControl.Template>
+                <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Foreground="Black" Text="{Binding Name}" />
-                            <TextBlock Foreground="Black" Text="{Binding CoalCount}"/>
+                        <StackPanel Orientation="Horizontal" Margin="0 0 10 0">
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold" Width="450" Foreground="#FF510404" FontFamily="Source Sans Pro" FontSize="16" HorizontalAlignment="Left" Margin="20 0 0 0"/>
+                            <TextBlock Text="{Binding PointCount}" FontWeight="Bold" Foreground="#FF510404" FontFamily="Source Sans Pro" FontSize="16" Margin="20 0 0 0" TextAlignment="Right"/>
                         </StackPanel>
                     </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Grid>
     </Grid>
 </UserControl>

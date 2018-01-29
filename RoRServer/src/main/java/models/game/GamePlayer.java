@@ -14,7 +14,7 @@ public class GamePlayer extends Player{
 	private Publictrainstation currentSelectedPublictrainstation;
 	public static int START_GOLD = 20;
 	public static int START_COAL = 250;
-	public static int START_POINTS = 0;
+	public static int START_POINTS = 10;
 
 	public GamePlayer(String sessionName, String name, UUID id, boolean isHost) {
 		super(sessionName, name, id, isHost);
