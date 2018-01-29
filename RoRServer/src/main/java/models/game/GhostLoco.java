@@ -7,13 +7,14 @@ import models.scripts.ProxyObject;
 import models.scripts.ScriptableObject;
 import models.session.GameSession;
 import models.session.GameSessionManager;
+import resources.PropertyManager;
 
 /**
  * Dem Geisterzug kann ein Script hinterlegt werden, dass ihn steuert
  */
 public class GhostLoco extends Loco {
-	private final static int STEALING_AMOUNT = 10;
-	private final static int CHANCE_TO_STEAL_POINT_CONTAINER_IN_PERCENT = 33;
+	private final static int STEALING_AMOUNT = Integer.valueOf(PropertyManager.getProperty("stealing_amount"));
+	private final static int CHANCE_TO_STEAL_POINT_CONTAINER_IN_PERCENT = Integer.valueOf(PropertyManager.getProperty("chance_to_steal_point_container_in_percent"));
 	
 	ScriptableObject scriptableObject;
 	private boolean picksUpGoldContainerNextToRails = false;
