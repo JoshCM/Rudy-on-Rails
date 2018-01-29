@@ -15,6 +15,7 @@ import models.game.Square;
 import models.helper.Validator;
 import models.session.GameSession;
 import models.session.RoRSession;
+import resources.PropertyManager;
 
 /**
  * Command zum Setzen von Sensoren
@@ -26,6 +27,7 @@ public class PlaceSensorCommand extends CommandBase {
 	private UUID selectedModelId;
 	private UUID playerId;
 	private GamePlayer player;
+	private static int sensor_gold_costs = Integer.valueOf(PropertyManager.getProperty("sensor_gold_costs"));
 	
 	public PlaceSensorCommand(RoRSession session, MessageInformation messageInfo) {
 		super(session, messageInfo);
@@ -52,7 +54,7 @@ public class PlaceSensorCommand extends CommandBase {
 				
 				// Kein Sensor auf Rail
 				if (rail.getSensor() == null) {
-					player.removeGold(Sensor.SENSOR_COST);
+					player.removeGold(sensor_gold_costs);
 					rail.placeSensor(playerId);
 				}
 				
