@@ -316,8 +316,8 @@ public abstract class Loco extends TickableGameObject {
 			notifyLocoCrashed(newRail);
 			dropByCollide();
 			removeCartsExceptInitial();
+			addCartAfterRespawn(cartSpawnRail);
 			findTrainstationAndRespawn();
-			setSpeedAndNotifySpeedChanged(0);
 		}
 
 		if (retSquare.getPlaceableOnSquare() instanceof Rail) {
@@ -328,7 +328,12 @@ public abstract class Loco extends TickableGameObject {
 
 	public void findTrainstationAndRespawn() {
 		Map map = GameSessionManager.getInstance().getGameSession().getMap();
-		List<Playertrainstation> playerTrainstations = GameSessionManager.getInstance().getGameSession()
+		Rail cartSpawnRail = null;
+
+		List<Playertrainstation> playerTrainstations =
+				GameSessionManager
+				.getInstance()
+				.getGameSession()
 				.getPlayerTrainstations();
 
 		for (Playertrainstation trainstation : playerTrainstations) {
@@ -340,8 +345,6 @@ public abstract class Loco extends TickableGameObject {
 				setXPos(locoSpawnRail.getXPos());
 				setYPos(locoSpawnRail.getYPos());
 				notifyLocoPositionForRespawn();
-				addCartAfterRespawn();
-				
 			}
 		}
 	}
