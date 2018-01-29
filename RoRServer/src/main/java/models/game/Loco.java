@@ -27,6 +27,7 @@ public abstract class Loco extends TickableGameObject {
 	private boolean reversed = false;
 	protected Map map;
 	private GamePlayer player;
+	private Square cartSpawnSquare;
 	private static List<Sensor> sensors; // Jede Loco kennt alle Sensoren
 
 	/**
@@ -194,11 +195,10 @@ public abstract class Loco extends TickableGameObject {
 
 	}
 
-	public void addCartAfterRespawn(Rail cartSpawnRail) {
-		Square cartSquare = cartSpawnRail.getSquareFromGameSession();
-		Cart cart = new Cart(this.sessionName, cartSquare, this.drivingDirection, playerId, true, this.getId());
+	public void addCartAfterRespawn() {
+		Cart cart = new Cart(this.sessionName, cartSpawnSquare, getDrivingDirection(), playerId, true, this.getId());
 		carts.add(cart);
-
+		
 	}
 
 	public void addCart() {
@@ -223,6 +223,7 @@ public abstract class Loco extends TickableGameObject {
 			Compass back = this.rail.getExitDirection(this.drivingDirection);
 			Rail prevRail = getNextRail(back, this.map.getSquare(this.rail.getXPos(), this.rail.getYPos()));
 			Square cartSquare = this.map.getSquare(prevRail.getXPos(), prevRail.getYPos());
+			cartSpawnSquare = cartSquare;
 			Cart cart = new Cart(this.sessionName, cartSquare, getDirectionNegation(back), playerId, true,
 					this.getId());
 			carts.add(cart);
@@ -311,12 +312,12 @@ public abstract class Loco extends TickableGameObject {
 
 		newRail = (Rail) retSquare.getPlaceableOnSquare();
 		if (checkForCollision(newRail)) {
+			setSpeedAndNotifySpeedChanged(0);
 			notifyLocoCrashed(newRail);
-			changeSpeed(0);
 			dropByCollide();
 			removeCartsExceptInitial();
-			Rail cartSpawnRail=findTrainstationAndRespawn();
-			addCartAfterRespawn(cartSpawnRail);
+			findTrainstationAndRespawn();
+			setSpeedAndNotifySpeedChanged(0);
 		}
 
 		if (retSquare.getPlaceableOnSquare() instanceof Rail) {
@@ -325,24 +326,24 @@ public abstract class Loco extends TickableGameObject {
 		return newRail;
 	}
 
-	public Rail findTrainstationAndRespawn() {
+	public void findTrainstationAndRespawn() {
 		Map map = GameSessionManager.getInstance().getGameSession().getMap();
 		List<Playertrainstation> playerTrainstations = GameSessionManager.getInstance().getGameSession()
 				.getPlayerTrainstations();
-		Rail cartSpawnRail=null;
+
 		for (Playertrainstation trainstation : playerTrainstations) {
 			if (trainstation.getPlayerId() == getPlayerId()) {
 				Rail locoSpawnRail = (Rail) map.getPlaceableById(trainstation.getSpawnPointforLoco());
-				cartSpawnRail = (Rail) map.getPlaceableById(trainstation.getSpawnPointForCart());
+
 				Compass newDrivingDirection = getDrivingDirectionAfterRespawn(this.drivingDirection);
 				setDrivingDirection(newDrivingDirection);
 				setXPos(locoSpawnRail.getXPos());
 				setYPos(locoSpawnRail.getYPos());
 				notifyLocoPositionForRespawn();
-
+				addCartAfterRespawn();
+				
 			}
 		}
-		return cartSpawnRail;
 	}
 
 	private Compass getDrivingDirectionAfterRespawn(Compass drivingDirection) {
