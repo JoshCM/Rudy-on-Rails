@@ -165,7 +165,6 @@
     <Compile Include="Commands\Game\Delete\DeleteSensorCommand.cs" />
     <Compile Include="Commands\Game\Other\InitMapSizeCommand.cs" />
     <Compile Include="Commands\Game\Other\RemoveResourceFromCartCommand.cs" />
-    <Compile Include="Commands\Game\Other\ShowTradeRelationCommand.cs" />
     <Compile Include="Commands\Game\Other\SwitchSensorCommand.cs" />
     <Compile Include="Commands\Game\Other\PlaceSensorCommand.cs" />
     <Compile Include="Commands\Game\Create\CreateStockCommand.cs" />
@@ -687,7 +686,6 @@
     <Resource Include="Resources\Images\container_points.png" />
     <Resource Include="Resources\Images\btn_back.png" />
     <Resource Include="Resources\Images\crane.png" />
-    <Resource Include="Resources\Images\Tools\other\crane.png" />
     <Resource Include="Resources\Images\Tools\rail\railcurve_ne.png" />
     <Resource Include="Resources\Images\Tools\rail\railcurve_nw.png" />
     <Resource Include="Resources\Images\Tools\rail\railcurve_se.png" />

@@ -20,7 +20,7 @@ public class UpdateCranePositionCommand implements Command{
 	private int yPos;
 	private UUID stockId;
 	private Stock stock;
-	private Playertrainstation trainstation;
+	private Trainstation trainstation;
 	private Crane crane;
 	private UUID playerId;
 	protected GameSession session;
@@ -32,7 +32,7 @@ public class UpdateCranePositionCommand implements Command{
 		this.yPos =  messageInfo.getValueAsInt("posY");
 		this.session = (GameSession)session;
 		this.stock = (Stock)session.getMap().getPlaceableOnSquareById(messageInfo.getValueAsUUID("stockId"));
-		this.trainstation = (Playertrainstation)session.getMap().getPlaceableOnSquareById(this.stock.getTrainstationId());
+		this.trainstation = (Trainstation)session.getMap().getPlaceableOnSquareById(this.stock.getTrainstationId());
 		this.playerId = UUID.fromString(messageInfo.getClientid());
 		this.crane = this.trainstation.getCrane();
 		this.loco = this.session.getPlayerLocoByPlayerId(playerId);
@@ -41,19 +41,23 @@ public class UpdateCranePositionCommand implements Command{
 
 	@Override
 	public void execute() {
-		if(this.playerId.equals(this.trainstation.getPlayerId())) {
-			GhostLoco ghostLoco = session.getGhostLocoByPlayerId(playerId);
-			if(validatePosition(ghostLoco)) {
-				this.crane.moveToTakeTheGoods(ghostLoco, trainstation);
-			}
-			
-			if(validatePosition(loco)) {
-				this.crane.moveToTakeTheGoods(loco, trainstation);
+		
+		if (trainstation instanceof Playertrainstation) {
+			if(this.playerId.equals(this.trainstation.getPlayerId())) {
+				GhostLoco ghostLoco = session.getGhostLocoByPlayerId(playerId);
+				if(validatePosition(ghostLoco)) {
+					this.crane.moveToTakeTheGoods(ghostLoco, trainstation);
+				}
+				
+				if(validatePosition(loco)) {
+					this.crane.moveToTakeTheGoods(loco, trainstation);
+				}
 			}
 		}
 	}
+	
 	private boolean validatePosition(Loco loco) {
-		if(loco.getRail().getId().equals(trainstation.getSpawnPointforLoco())) {
+		if(loco.getRail().getId().equals(((Playertrainstation)trainstation).getSpawnPointforLoco())) {
 			
 			if(loco.getSpeed() == 0) {
 				return true;
@@ -61,5 +65,4 @@ public class UpdateCranePositionCommand implements Command{
 		}
 		return false;
 	}
-
 }

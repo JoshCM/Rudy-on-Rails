@@ -11,6 +11,8 @@ import models.session.RoRSession;
 
 public class Publictrainstation extends Trainstation {
 	
+	public static int TRADE_DISTANCE = 1;
+	
 	public Publictrainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id,
 			Compass alignment, Stock stock) {
 		super(sessionName, square, trainstationRailIds, id, alignment, stock);
