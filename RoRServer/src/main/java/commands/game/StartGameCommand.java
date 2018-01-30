@@ -148,6 +148,9 @@ public class StartGameCommand extends CommandBase {
 				Rail rail = (Rail) map.getPlaceableOnSquareById(newPlayerTrainStation.getSpawnPointforLoco());
 				//Square locoSpawnPointSquare = rail.getSquareFromGameSession();
 				newTrainStation = newPlayerTrainStation;
+				
+				// setzt die farbe des naechsten spieler eins weiter
+				colorCounter += 1;
 			} else {
 				// Trainstation ist eine PublicTrainstation
 				newTrainStation = (Publictrainstation) oldTrainStation.loadFromMap(trainstationSquare, gameSession);
@@ -155,7 +158,7 @@ public class StartGameCommand extends CommandBase {
 			// Neue Trainstation auf Square setzen
 			trainstationSquare.setPlaceableOnSquare(newTrainStation);
 			
-			colorCounter += 1;
+			
 		}
 
 		// generiert an den erzeugenten rails resourcen
