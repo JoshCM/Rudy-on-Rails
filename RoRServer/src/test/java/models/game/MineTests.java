@@ -45,7 +45,11 @@ public class MineTests {
 	private Mine createTestGameMine() {
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "HostPlayer");
-		Square square = gameSession.getMap().getSquare(0, 0);
+		
+		Map map = new Map("gameSession",50);
+		gameSession.setMap(map);
+		
+		Square square = map.getSquare(0, 0);
 
 		// Neue Mine mit Rail erstellen
 		List<Compass> railSectionPositions = new ArrayList<Compass>();
@@ -69,7 +73,10 @@ public class MineTests {
 		// GameSession und Square erstellen
 		EditorSession editorSession = EditorSessionManager.getInstance()
 				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
-		Square square = editorSession.getMap().getSquare(0, 0);
+		Map map = new Map("editorSession",50);
+		editorSession.setMap(map);
+		
+		Square square = map.getSquare(0, 0);
 
 		// Neue Mine mit Rail erstellen
 		List<Compass> railSectionPositions = new ArrayList<Compass>();
@@ -92,7 +99,11 @@ public class MineTests {
 		// GameSession und Square erstellen
 		EditorSession editorSession = EditorSessionManager.getInstance()
 				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "HostPlayer");
-		Square square = editorSession.getMap().getSquare(0, 0);
+		
+		Map map = new Map("editorSession",50);
+		editorSession.setMap(map);
+		
+		Square square = map.getSquare(0, 0);
 
 		// Neue Mine mit Rail erstellen
 		List<Compass> railSectionPositions = new ArrayList<Compass>();

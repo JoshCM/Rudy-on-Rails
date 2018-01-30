@@ -27,7 +27,9 @@ public class RailSectionTests {
 
 		EditorSession editorSession = EditorSessionManager.getInstance()
 				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "Player");
-		Map map = editorSession.getMap();
+		Map map = new Map("editorSession",50);
+		editorSession.setMap(map);
+		
 		Square square = map.getSquare(squarePosX, squarePosY);
 
 		new Rail(editorSession.getSessionName(), square, railSectionPositions);
@@ -42,7 +44,9 @@ public class RailSectionTests {
 
 		EditorSession editorSession = EditorSessionManager.getInstance()
 				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "Player");
-		Map map = editorSession.getMap();
+		Map map = new Map("editorSession",50);
+		editorSession.setMap(map);
+		
 		Square square = map.getSquare(squarePosX, squarePosY);
 
 		return new Rail(editorSession.getSessionName(), square, railSectionPositions);
