@@ -28,6 +28,7 @@ public abstract class Loco extends TickableGameObject {
 	private boolean reversed = false;
 	protected Map map;
 	private GamePlayer player;
+	private Loco crashedLoco = null;
 	private Square cartSpawnSquare;
 	private static List<Sensor> sensors; // Jede Loco kennt alle Sensoren
 
@@ -119,6 +120,15 @@ public abstract class Loco extends TickableGameObject {
 
 	public abstract boolean needsCoalToDrive();
 
+	private void collisionEvent(Rail nextRail){
+		setSpeedAndNotifySpeedChanged(0);
+		notifyLocoCrashed(nextRail);
+		dropByCollide();
+		removeCartsExceptInitial();
+		findTrainstationAndRespawn();
+		addCartAfterRespawn();
+	}
+
 	public void drive(boolean reversed) {
 		if (!reversed) {
 			Rail nextRail = getNextRail(this.drivingDirection, rail.getSquareFromGameSession());
@@ -132,13 +142,14 @@ public abstract class Loco extends TickableGameObject {
 				Compass nextDrivingDirection;
 
 				if (checkForCollision(nextRail)) {
-					setSpeedAndNotifySpeedChanged(0);
-					notifyLocoCrashed(nextRail);
-					dropByCollide();
-					removeCartsExceptInitial();
-					findTrainstationAndRespawn();
-					addCartAfterRespawn();
-				}else{
+					collisionEvent(nextRail);
+					if(crashedLoco != null){
+						Rail crashedLocoNextRail = crashedLoco.getNextRail(
+								crashedLoco.drivingDirection,
+								crashedLoco.getRail().getSquareFromGameSession());
+						crashedLoco.collisionEvent(crashedLocoNextRail);
+					}
+				} else{
 					currentLocoRail = this.rail;
 					currentLocoDrivingDirection = this.drivingDirection;
 					nextDrivingDirection = nextRail.getExitDirection(getDirectionNegation(getDrivingDirection()));
@@ -159,13 +170,14 @@ public abstract class Loco extends TickableGameObject {
 				// Loco) m�ssen gespeichert werden damit sie der Lok
 				// �bergeben werden k�nnen
 				if (checkForCollision(nextRail)) {
-					setSpeedAndNotifySpeedChanged(0);
-					notifyLocoCrashed(nextRail);
-					dropByCollide();
-					removeCartsExceptInitial();
-					findTrainstationAndRespawn();
-					addCartAfterRespawn();
-				}else {
+					collisionEvent(nextRail);
+					if(crashedLoco != null){
+						Rail crashedLocoNextRail = crashedLoco.getNextRail(
+								crashedLoco.drivingDirection,
+								crashedLoco.getRail().getSquareFromGameSession());
+						crashedLoco.collisionEvent(crashedLocoNextRail);
+					}
+				} else {
 					Compass firstCartDrivingDirection = getFirstCart().getDrivingDirection();
 					Rail firstCartRail = getFirstCart().getRail();
 
@@ -294,10 +306,12 @@ public abstract class Loco extends TickableGameObject {
 		for (Loco loco : locos) {
 			if (!(loco instanceof GhostLoco)) {
 				if (loco.getRail() == rail) {
+					crashedLoco = loco;
 					return true;
 				}
 				for (Cart cart : loco.getCarts()) {
 					if (cart.getRail() == rail) {
+						crashedLoco = loco;
 						return true;
 					}
 				}

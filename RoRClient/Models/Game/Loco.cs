@@ -96,7 +96,6 @@ namespace RoRClient.Models.Game
                 }
             }
         }
-     
         public Compass DrivingDirection
         {
             get
@@ -114,8 +113,7 @@ namespace RoRClient.Models.Game
         }
         public void UpdateDrivingDirectionAfterRespawn(Compass newDrivingDirection)
         {
-            drivingDirection = newDrivingDirection;
-            NotifyPropertyChanged("UpdateDrivingDirection", this.drivingDirection, newDrivingDirection);
+            DrivingDirection = newDrivingDirection;
         }
         public Guid PlayerId
         {

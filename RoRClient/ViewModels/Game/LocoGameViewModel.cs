@@ -32,6 +32,7 @@ namespace RoRClient.ViewModels.Game
         /// </summary>
         private void SetAngleAccordingToDrivingDirection()
         {
+            Console.WriteLine("\n\n SETANGLE:" + loco.DrivingDirection + "\n\n");
             switch (loco.DrivingDirection)
             {
                 case Compass.EAST:
@@ -104,6 +105,7 @@ namespace RoRClient.ViewModels.Game
             }
             if(e.PropertyName == "UpdateDrivingDirection")
             {
+                Console.WriteLine("\n\n DRIVING DIRECTION: " + loco.DrivingDirection + "\n\n REAL DRIVING DIRECTION: " + RealDrivingDirection + "\n\n");
                 PropertyChangedExtendedEventArgs<Compass> eventArgs = (PropertyChangedExtendedEventArgs<Compass>)e;
                 Compass model = eventArgs.NewValue;
                 switch (model)

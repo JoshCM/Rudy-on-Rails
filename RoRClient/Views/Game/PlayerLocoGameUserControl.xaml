@@ -43,7 +43,4 @@
                Visibility="{Binding Path=Loco.ChangeExplosionVisibility, UpdateSourceTrigger=PropertyChanged}">
         </Image>
     </Canvas>
-
-
-
 </local:LocoGameUserControl>

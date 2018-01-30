@@ -20,15 +20,10 @@ namespace RoRClient.Commands.Game.Update
 
         public override void Execute()
         {
-            
             Guid locoId = message.GetValueAsGuid("currentLocoId");
             Loco crashedLoco = GameSession.GetInstance().GetLocoById(locoId);
-            Console.WriteLine("_____________________________________________________________________\n");
-            Console.WriteLine("Gude Executeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee  " + locoId);
-            Console.WriteLine("_____________________________________________________________________\n");
             crashedLoco.UpdateSmokeVisibility("Hidden");
             crashedLoco.UpdateExplosionVisibility("Visible");
-            
         }
     }
 }
