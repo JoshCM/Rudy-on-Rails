@@ -28,7 +28,8 @@
                       ItemContainerStyle="{StaticResource DefaultComboBoxItem}" 
                       ItemsSource="{Binding ScriptsViewModel.GhostLocoScripts}" 
                       HorizontalAlignment="Left" DisplayMemberPath="Description" 
-                      SelectedValue="{Binding SelectedGhostLocoScript}" Margin="0 0 0 10"/>
+                      SelectedValue="{Binding SelectedGhostLocoScript}" Margin="0 0 0 10"
+                      Focusable="False"/>
             <Button Content="Script hochladen" Command="{Binding AddGhostLocoScriptFromPlayerCommand}" 
                     Style="{StaticResource DefaultButtonStyleDampfmodus}" 
                     HorizontalAlignment="Left" Margin="0 0 0 10"/>
@@ -47,7 +48,8 @@
                       ItemsSource="{Binding ScriptsViewModel.SensorScripts}"
                       HorizontalAlignment="Left" DisplayMemberPath="Description"
                       SelectedValue="{Binding SelectedSensorScript}"
-                      Margin="0 0 0 10"/>
+                      Margin="0 0 0 10"
+                      Focusable="False"/>
             <Button Content="Script hochladen" 
                     Command="{Binding AddSensorScriptFromPlayerCommand}" 
                     Style="{StaticResource DefaultButtonStyleDampfmodus}" />
@@ -56,7 +58,7 @@
         <StackPanel Margin="50 20 10 10">
             <Button Content="Ressourcentausch"
                     Style="{StaticResource DefaultButtonStyleDampfmodus}" Margin="0 0 0 10"/>
-            <ComboBox Text="Wähle Tausch" SelectedValue="{Binding SelectedResource}" SelectedValuePath="Content" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" Margin="0 0 0 10" >
+            <ComboBox Text="Wähle Tausch" SelectedValue="{Binding SelectedResource}" SelectedValuePath="Content" Style="{StaticResource DefaultComboBoxStyle}" ItemContainerStyle="{StaticResource DefaultComboBoxItem}" Margin="0 0 0 10" Focusable="False" >
                 <ComboBoxItem Content="Gold zu Kohle tauschen"/>
                 <ComboBoxItem Content="Kohle zu Gold tauschen"/>
                 <ComboBoxItem Content="Gold zu Punkten tauschen"/>
