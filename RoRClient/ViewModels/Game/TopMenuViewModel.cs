@@ -98,6 +98,8 @@ namespace RoRClient.ViewModels.Game
             messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
             messageInformation.PutValue("isHost", GameSession.GetInstance().OwnPlayer.IsHost);
             GameSession.GetInstance().QueueSender.SendMessage("LeaveGame", messageInformation);
+            SoundManager.StopSounds();
+            SoundManager.DeleteSounds();
 
         }
 
