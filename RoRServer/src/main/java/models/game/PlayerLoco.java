@@ -6,6 +6,7 @@ import communication.MessageInformation;
 import resources.PropertyManager;
 
 public class PlayerLoco extends Loco {
+	private final double coalDecreaseFactor = Double.parseDouble(PropertyManager.getProperty("coal_decrease_factor"));
 	public PlayerLoco(String sessionName, Square square, UUID playerId, Compass drivingDirection) {
 		super(sessionName, square, playerId, drivingDirection);
 		
@@ -32,7 +33,7 @@ public class PlayerLoco extends Loco {
 	 * coalDecreaseFactor
 	 */
 	public void spendCoal() {
-		double coalToDecrease = (double) getSpeed() * Double.parseDouble(PropertyManager.getProperty("coalDecreaseFactor"));
+		double coalToDecrease = (double) getSpeed() * coalDecreaseFactor;
 		coalToDecrease = Math.abs(coalToDecrease);
 		getPlayer().removeCoal(coalToDecrease);
 	}

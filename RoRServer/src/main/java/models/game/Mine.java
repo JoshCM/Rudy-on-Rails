@@ -19,16 +19,19 @@ public class Mine extends TickableGameObject implements PlaceableOnRail {
 	private final static int AMOUNT_OF_COAL_TO_LOAD = Integer.valueOf(PropertyManager.getProperty("amount_of_coal_load"));
 	private final static int AMOUNT_OF_GOLD_TO_LOAD = Integer.valueOf(PropertyManager.getProperty("amount_of_gold_load"));
 	private final static int TIME_TO_PRODUCE_RESOURCE_IN_SECONDS = Integer.valueOf(PropertyManager.getProperty("time_to_produce_resource_in_seconds"));
+	private final static int MAX_NUMBER_OF_RESOURCES = Integer.valueOf(PropertyManager.getProperty("max_number_of_resources"));
 	private final long SEC_IN_NANO = 1000000000;
 	
 	private List<Resource> resources = new ArrayList<Resource>();
 	private UUID railId;
 	private Compass alignment;
-	private final int maxNumberOfResource = 10;
+	private final int maxNumberOfResource = MAX_NUMBER_OF_RESOURCES;
 	private long timeDeltaCounter = 0;// Summe der Zeit zwischen den Ticks
 	private Resource res = null;
 	protected RoRSession session;
 	protected GameSession gameSession;
+	
+	// was zur hölle ist i?
 	int i = 1;
 
 	public Mine(String sessionName, Square square, Compass alignment, UUID railId) {

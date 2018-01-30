@@ -1,6 +1,7 @@
 package models.game;
 
 import communication.MessageInformation;
+import resources.PropertyManager;
 
 /**
  * Die Signals werden in der Rail verwendet und stellen die vier Signale (Norden, Osten, Westen, Süden) dar.
@@ -12,9 +13,9 @@ import communication.MessageInformation;
  * Anwendungsfall reduziert, um die Logik überschaubar zu halten.
  */
 public class Signals extends TickableGameObject {
-	private final static int DEFAULT_AUTO_SWITCH_INTERVAL_IN_SECONDS = 5;
-	private final static int DEFAULT_PENALTY = 5;
-	private final static int DEFAULT_SWITCH_COST = 5;
+	private final static int DEFAULT_AUTO_SWITCH_INTERVAL_IN_SECONDS = Integer.valueOf(PropertyManager.getProperty("default_auto_switch_interval_in_seconds"));
+	private final static int DEFAULT_PENALTY = Integer.valueOf(PropertyManager.getProperty("default_penalty"));
+	private final static int DEFAULT_SWITCH_COST = Integer.valueOf(PropertyManager.getProperty("default_switch_cost"));
 
 	private int squarePosX;
 	private int squarePosY;

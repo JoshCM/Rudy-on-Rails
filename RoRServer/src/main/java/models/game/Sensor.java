@@ -5,6 +5,7 @@ import java.util.UUID;
 import communication.MessageInformation;
 import models.scripts.ScriptableObject;
 import models.session.GameSessionManager;
+import resources.PropertyManager;
 
 /**
  * Model für Sensor
@@ -13,11 +14,11 @@ import models.session.GameSessionManager;
  */
 public class Sensor extends InteractiveGameObject {
 	
-	public final static int DISTANCE_BETWEEN_LOCO_AND_SENSOR = 5;
-	public final static int DEFAULT_ACTIME_TIME = 15;
-	public final static int DEFAULT_DELETE_TIME = 5;
+	public final static int DISTANCE_BETWEEN_LOCO_AND_SENSOR = Integer.valueOf(PropertyManager.getProperty("distance_between_loco_and_sensor"));
+	public final static int DEFAULT_ACTIME_TIME = Integer.valueOf(PropertyManager.getProperty("default_actime_time"));
+	public final static int DEFAULT_DELETE_TIME = Integer.valueOf(PropertyManager.getProperty("default_delete_time"));
+	public final static int SENSOR_COST = Integer.valueOf(PropertyManager.getProperty("sensor_cost"));
 	public final static int SECOND = 1000;
-	public final static int SENSOR_COST = 10;
 	
 	private UUID railId;
 	private UUID playerId;

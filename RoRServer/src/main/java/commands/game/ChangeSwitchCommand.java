@@ -13,6 +13,7 @@ public class ChangeSwitchCommand extends CommandBase {
     private int xPos;
     private int yPos;
     private UUID playerId;
+    private final int changeSwitchCosts = Integer.valueOf(PropertyManager.getProperty("change_switch_costs"));
 
     public ChangeSwitchCommand(RoRSession session, MessageInformation messageInfo) {
         super(session, messageInfo);
@@ -37,7 +38,7 @@ public class ChangeSwitchCommand extends CommandBase {
                 }
             } else {
                 if (!(currentPlayer.getGoldCount() <= 0)) {
-                    currentPlayer.removeGold(Integer.valueOf(PropertyManager.getProperty("change_switch_costs")));
+                    currentPlayer.removeGold(changeSwitchCosts);
                     ((Switch)railSwitch).changeSwitch();
                 }
 

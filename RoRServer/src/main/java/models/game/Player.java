@@ -1,8 +1,6 @@
 package models.game;
 
-import communication.MessageInformation;
 import models.base.ModelBase;
-
 import java.util.UUID;
 
 public class Player extends ModelBase {
