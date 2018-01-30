@@ -65,32 +65,41 @@
 
                 <Label Content="Spielverlauf" Style="{StaticResource DefaultHeaderStyle}" />
                 <Label Content="Zug fahren" Style="{StaticResource DefaultSubHeaderStyle}"/>
-                <TextBlock Text="Der Zug jedes Spielers startet in seinem Heimat-Bahnhof. Der Zug besteht anfangs aus einer Lok und einem leeren Waggon. Um den Zug vorwärts zu bewegen, muss der Spieler den Geschwindigkeitsregler nach rechts bewegen. Damit der Zug rückwärts fährt, muss der Regler ganz nach links verschoben werden. Beim Fahren des Zuges wird Kohle verbrannt." 
+                <TextBlock Text="Der Zug jedes Spielers startet in seinem Heimat-Bahnhof. Der Zug besteht anfangs aus einer Lok und einem leeren Waggon. Um den Zug vorwärts zu bewegen, muss der Spieler den Geschwindigkeitsregler nach rechts bewegen oder die Taste 'd' drücken. Um den Geschwindigkeit zu verringern bzw. rückwärts zu fahren, kann den Regler nach links bewegt werden oder die Taste 'a' benutzen. Für das Stillstehen des Zuges kann der Spieler 's' drücken oder den Regler wieder auf die Anfangsposition setzen. Beim Fahren des Zuges wird Kohle verbrannt." 
                        Style="{StaticResource DefaultTextBlockStyle}" />
 
-                <Label Content="Weichen stellen" Style="{StaticResource DefaultSubHeaderStyle}"/>
-                <TextBlock Text="Jeder Spieler kann gegen Gold Weichen umstellen, die sich vor dem eigenen Zug befinden. Dafür muss der Spieler nur die Weiche anklicken. " 
+                <Label Content="Weichen umstellen" Style="{StaticResource DefaultSubHeaderStyle}"/>
+                <TextBlock Text="Jeder Spieler kann gegen Gold Weichen umstellen, die sich vor dem eigenen Zug befinden. Dafür muss der Spieler nur die Weiche mit Rechtsklick anklicken. " 
                        Style="{StaticResource DefaultTextBlockStyle}" />
 
                 <Label Content="Ressourcen sammeln" Style="{StaticResource DefaultSubHeaderStyle}"/>
-                <TextBlock Text="Jeder Spieler muss mit seinem Zug durch Minen fahren um Ressourcen zu erhalten. Minen stellen Kohle und Gold her und werden nur auf leere Waggons eines Zuges geladen. Danach müssen die Ressourcen vom Spieler zum Heimat-Bahnhof transportiert werden um sie dort mithilfe des Krans abzuladen. Dafür muss der Zug neben dem Bahnhofsgebäude stillstehen. " 
+                <TextBlock Text="Jeder Spieler muss mit seinem Zug durch Minen fahren, um Ressourcen zu erhalten. Minen stellen Kohle und Gold her und werden nur auf leere Waggons eines Zuges geladen. Danach müssen die Ressourcen vom Spieler zum Heimat-Bahnhof transportiert werden, um sie dort mithilfe des Krans abzuladen. Erst dann werden die Ressourcen auf das Spielerkonto addiert." 
                        Style="{StaticResource DefaultTextBlockStyle}" />
 
                 <Label Content="Ressourcen tauschen" Style="{StaticResource DefaultSubHeaderStyle}"/>
-                <TextBlock Text="Ein Spieler kann Ressourcen tauschen, wenn er mit seinem Zug, der Ressourcen geladen hat, in den öffentlichen Bahnhof fährt und dort ein Tauschverhältnis unten auswählt." 
+                <TextBlock Text="Ein Spieler kann Ressourcen tauschen, wenn er mit seinem Zug, der Ressourcen geladen hat, in den öffentlichen Bahnhof fährt. Mit Klick auf den Bahnhof wird dieser ausgewählt. Wenn der Zug sich in dem öffentlichen Bahnhof befindet, kann das gewünschte Tauschverhältnis unten im Interaktionsfeld ausgewählt werden." 
+                       Style="{StaticResource DefaultTextBlockStyle}" />
+
+                <Label Content="Ressourcen abladen" Style="{StaticResource DefaultSubHeaderStyle}"/>
+                <TextBlock Text="Der Zug muss in den Heimat-Bahnhof direkt neben dem Bahnhofsgebäude (rotes Dach) fahren, sodass sich der erste Waggon unter dem Kran befindet. Mit einem Klick auf das Containerlager oder auf die Taste 'u' werden alle Container des Zuges abgeladen." 
                        Style="{StaticResource DefaultTextBlockStyle}" />
 
                 <Label Content="Zusätzliche Waggons kaufen" Style="{StaticResource DefaultSubHeaderStyle}"/>
-                <TextBlock Text="Um Waggons zu kaufen, muss der Spieler sich im Heimat-Bahnhof befinden und auf das Dach des Gebäudes klicken. Danach erscheint ein leerer Waggon hinter dem Zug. Das Ankoppeln des Waggons erfolgt automatisch beim Heranfahren." 
+                <TextBlock Text="Um Waggons zu kaufen, muss der Spieler sich im Heimat-Bahnhof befinden und auf das Dach des Gebäudes klicken. Danach erscheint ein leerer Waggon hinter dem Zug. Um den Waggon anzukoppeln, muss der Zug rückwärts an den Waggon heranfahren. " 
                        Style="{StaticResource DefaultTextBlockStyle}" />
 
                 <Label Content="Geisterzug" Style="{StaticResource DefaultSubHeaderStyle}"/>
-                <TextBlock Text="Der Geisterzug jedes Spielers fährt automatisch auf dem Schienennetz, klaut dabei Ressourcen in anderen Heimat-Bahnhöfen und sammelt Container neben den Schienen auf. Wenn der Geisterzug sich im Heimat-Bahnhof befindet, kann er automatisch seine Container abladen. Ebenfalls kann der Spieler ein vordefiniertes Skript auswählen oder ein selbstgeschriebenes Skript hochladen um das Verhalten des Geisterzugs zu definieren." 
+                <TextBlock Text="Der Geisterzug jedes Spielers fährt auf dem Schienennetz los, wenn der Spieler ein Skript in dem Interaktionsfeld ausgewählt hat oder ein selbstgeschriebenes Skript hochgeladen hat. In den Skripts kann eingestellt werden, dass der Geisterzug beim Fahren Ressourcen in anderen Heimat-Bahnhöfen klauen oder Container neben den Schienen aufsammeln kann. Wenn der Geisterzug sich im eigenen Heimat-Bahnhof befindet, kann der Spieler durch Klick auf das Containerlager seine Container abladen. " 
                        Style="{StaticResource DefaultTextBlockStyle}" />
 
                 <Label Content="Sensoren setzen" Style="{StaticResource DefaultSubHeaderStyle}"/>
-                <TextBlock Text="Jeder Spieler kann Sensoren gegen Gold auf dem Schienennetz platzieren. Dafür muss er auf ein Schienenstück klicken, welches in unmittelbarer Nähe vor seinem Zug ist. Danach wählt er unten 'Sensor' aus und der inaktive Sensor erscheint auf der Schiene. Um ein Skript einzustellen, muss der Spieler den Sensor nochmals anklicken. Nach Auswählen eines Skripts, wird der Sensor aktiv. Ein Sensor kann das Verhalten von Zügen manipulieren, kann Signale und Weichen umstellen. Ein Sensor ist nur eine gewisse zeitlang aktiv und verschwindet danach wieder."
+                <TextBlock Text="Jeder Spieler kann Sensoren gegen Gold auf dem Schienennetz platzieren. Dafür muss er auf ein Schienenstück klicken, welches in unmittelbarer Nähe vor seinem Zug ist. Danach wählt er unten 'Sensor platzieren' aus und der inaktive Sensor erscheint auf der Schiene. Um ein Skript einzustellen, muss der Spieler den Sensor nochmals anklicken und per Dropdown-Menü ein Skript auswählen oder ein selbstgeschriebenes Skript hochladen. Erst dann wird der Sensor aktiv. Ein Sensor ist nur eine gewisse Zeit aktiv und verschwindet danach wieder."
                        Style="{StaticResource DefaultTextBlockStyle}" />
+
+                <Label Content="Sensoren setzen" Style="{StaticResource DefaultSubHeaderStyle}"/>
+
+
+
 
                 <Label Content="Kollisionen" Style="{StaticResource DefaultSubHeaderStyle}"/>
                 <TextBlock Text="Wenn ein Spielerzug mit einem anderen Spielerzug zusammenstößt, verlieren die beteiligten Spieler einen Container und bekommen als Strafe Gold abgezogen. Sie starten wieder bei ihrem Heimat-Bahnhof. " 
