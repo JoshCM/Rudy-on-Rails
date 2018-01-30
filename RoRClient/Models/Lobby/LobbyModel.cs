@@ -20,7 +20,7 @@ namespace RoRClient.Models.Game
 	    private ObservableCollection<EditorInfo> editorInfos = new ObservableCollection<EditorInfo>();
 		private ObservableCollection<MapInfo> mapInfos = new ObservableCollection<MapInfo>();
 
-		private string playerName = "fresh_meat_" + Guid.NewGuid().ToString();
+		private string playerName = "Jöndhard Biffel";
 
         private QueueSender fromClientRequestSender;
         private FromServerResponseReceiver queueReceiver;
