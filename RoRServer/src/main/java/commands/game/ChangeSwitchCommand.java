@@ -37,7 +37,7 @@ public class ChangeSwitchCommand extends CommandBase {
                 if (isPlayerSwitchOwner(getTrainstationFromSwitch((Switch)railSwitch, gameSession))) {
                     ((Switch)railSwitch).changeSwitch();
                 }
-                if (trainstation instanceof Publictrainstation && currentPlayer.getGoldCount() >= 0 ) {
+                if (trainstation instanceof Publictrainstation && currentPlayer.getGoldCount() > 0 ) {
                     currentPlayer.removeGold(Integer.valueOf(PropertyManager.getProperty("change_switch_costs")));
                     ((Switch)railSwitch).changeSwitch();
                 }
