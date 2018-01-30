@@ -73,7 +73,7 @@ public abstract class Loco extends TickableGameObject {
 	 */
 	@Override
 	public void specificUpdate() {
-		if (speed != 0) {
+		if (speed != 0 && canDrive()) {
 			this.timeDeltaCounter += timeDeltaInNanoSeconds;
 			int absoluteSpeed = (int) Math.abs(speed);
 			if (this.timeDeltaCounter >= SEC_IN_NANO / absoluteSpeed) {
@@ -116,6 +116,10 @@ public abstract class Loco extends TickableGameObject {
 		}
 	}
 
+	private boolean canDrive() {
+		return (!(needsCoalToDrive()) || (needsCoalToDrive() && getPlayer().getCoalCount() > 0)); 
+	}
+
 	public abstract void spendCoal();
 
 	public abstract boolean needsCoalToDrive();
@@ -142,7 +146,8 @@ public abstract class Loco extends TickableGameObject {
 				}
 				removeCartsExceptInitial();
 				findTrainstationAndRespawn();
-				addCartAfterRespawn();
+				//addCartAfterRespawn();
+				addCart();
 			}
 		});
 		countdown.start();

@@ -5,4 +5,4 @@ def init(proxy):
 	
 def update(proxy):
 	# Wird bei Ausführung des Scripts ausgeführt
-    proxy.destroyTrain();
+    pass

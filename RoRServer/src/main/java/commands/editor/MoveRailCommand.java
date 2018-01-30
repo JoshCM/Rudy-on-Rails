@@ -16,10 +16,12 @@ public class MoveRailCommand extends CommandBase{
 		super(session, messageInfo);
 		EditorSession editorSession = (EditorSession) session;
 		Rail rail = (Rail)editorSession.getMap().getPlaceableOnSquareById(messageInfo.getValueAsUUID("id"));
-		int newXPos = messageInfo.getValueAsInt("newXPos");
-		int newYPos = messageInfo.getValueAsInt("newYPos");
-		this.oldSquare = editorSession.getMap().getSquareById(rail.getSquareId());
-		this.newSquare = editorSession.getMap().getSquare(newXPos, newYPos);
+		if (rail != null) {
+			int newXPos = messageInfo.getValueAsInt("newXPos");
+			int newYPos = messageInfo.getValueAsInt("newYPos");
+			this.oldSquare = editorSession.getMap().getSquareById(rail.getSquareId());
+			this.newSquare = editorSession.getMap().getSquare(newXPos, newYPos);
+		}
 	}
 
 	@Override

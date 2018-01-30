@@ -140,15 +140,6 @@ namespace RoRClient.ViewModels.Game
 
                 RealDrivingDirection = eventArgs.NewValue;
             }
-
-            if (e.PropertyName == "Respawned")
-            {
-                if (loco.Respawned == true)
-                {
-                    RealDrivingDirection = loco.DrivingDirection;
-                    loco.Respawned = false;
-                }
-            }
         }
 
         private void InvertDrivingDirection()
