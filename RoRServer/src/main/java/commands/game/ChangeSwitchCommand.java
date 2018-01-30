@@ -32,16 +32,20 @@ public class ChangeSwitchCommand extends CommandBase {
         GamePlayer currentPlayer = (GamePlayer)session.getPlayerById(playerId);
 
         if (railSwitch instanceof Switch) {
-            if (getTrainstationFromSwitch((Switch)railSwitch, gameSession) != null) {
+            Trainstation trainstation = getTrainstationFromSwitch((Switch) railSwitch, gameSession);
+            if (trainstation != null) {
                 if (isPlayerSwitchOwner(getTrainstationFromSwitch((Switch)railSwitch, gameSession))) {
+                    ((Switch)railSwitch).changeSwitch();
+                }
+                if (trainstation instanceof Publictrainstation && currentPlayer.getGoldCount() >= 0 ) {
+                    currentPlayer.removeGold(Integer.valueOf(PropertyManager.getProperty("change_switch_costs")));
                     ((Switch)railSwitch).changeSwitch();
                 }
             } else {
                 if (!(currentPlayer.getGoldCount() <= 0)) {
-                    currentPlayer.removeGold(changeSwitchCosts);
+                    currentPlayer.removeGold(Integer.valueOf(PropertyManager.getProperty("change_switch_costs")));
                     ((Switch)railSwitch).changeSwitch();
                 }
-
             }
         }
     }
@@ -57,7 +61,7 @@ public class ChangeSwitchCommand extends CommandBase {
 
     private boolean isPlayerSwitchOwner(Trainstation trainstation) {
         if(playerId.equals(trainstation.getPlayerId())) {
-                return true;
+            return true;
         }
         return false;
     }
