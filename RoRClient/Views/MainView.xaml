@@ -17,15 +17,19 @@
     </Window.DataContext>
     <Window.InputBindings>
         <KeyBinding Command="{Binding ZoomInCommand}" Key="OemPlus"></KeyBinding>
+        <KeyBinding Command="{Binding ZoomInCommand}" Key="Add"></KeyBinding>
         <KeyBinding Command="{Binding ZoomOutCommand}" Key="OemMinus"></KeyBinding>
+        <KeyBinding Command="{Binding ZoomOutCommand}" Key="Subtract"></KeyBinding>
+        <KeyBinding Command="{Binding ToggleScoreboardCommand}" Key="NumPad0"></KeyBinding>
         <KeyBinding Command="{Binding ToggleScoreboardCommand}" Key="Tab"></KeyBinding>
         <KeyBinding Command="{Binding IncreaseSpeedCommand}" Key="Right"></KeyBinding>
+        <KeyBinding Command="{Binding IncreaseSpeedCommand}" Key="NumPad6"></KeyBinding>
         <KeyBinding Command="{Binding DecreaseSpeedCommand}" Key="Left"></KeyBinding>
+        <KeyBinding Command="{Binding DecreaseSpeedCommand}" Key="NumPad4"></KeyBinding>
         <KeyBinding Command="{Binding StopOwnLocoCommand}" Key="Down"></KeyBinding>
-        <KeyBinding Command="{Binding IncreaseSpeedCommand}" Key="D"></KeyBinding>
-        <KeyBinding Command="{Binding DecreaseSpeedCommand}" Key="A"></KeyBinding>
-        <KeyBinding Command="{Binding StopOwnLocoCommand}" Key="S"></KeyBinding>
-        <KeyBinding Command="{Binding UnloadCartsCommand}" Key="U"></KeyBinding>
+        <KeyBinding Command="{Binding StopOwnLocoCommand}" Key="NumPad5"></KeyBinding>
+        <KeyBinding Command="{Binding UnloadCartsCommand}" Key="Up"></KeyBinding>
+        <KeyBinding Command="{Binding UnloadCartsCommand}" Key="NumPad8"></KeyBinding>
     </Window.InputBindings>
     <Window.Resources>
         <DataTemplate x:Name="EditorTemplate" DataType="{x:Type vme:EditorViewModel}">

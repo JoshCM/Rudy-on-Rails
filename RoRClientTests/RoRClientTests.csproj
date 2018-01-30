@@ -51,7 +51,6 @@
     <Compile Include="BindingConverter\RailSectionToImagePathConverterTests.cs" />
     <Compile Include="Model\MapTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\Editor\ToolbarViewModelTest.cs" />
     <Compile Include="ViewModels\Helper\ViewModelFactoryTests.cs" />
     <Compile Include="Views\Editor\Helper\RegexValidatorTests.cs" />
     <Compile Include="Views\Editor\Helper\ToolConverterTest.cs" />

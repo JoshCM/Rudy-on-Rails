@@ -21,7 +21,7 @@ namespace RoRClientTests
                 }
             }
 
-            Assert.AreEqual(50, counter);
+            Assert.AreEqual(2500, counter);
         }
     }
 }

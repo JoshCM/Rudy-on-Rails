@@ -230,8 +230,10 @@ public class Cart extends TickableGameObject implements PlaceableOnRail {
 		if (squarePosX <= map.getMapSize() && squarePosY <= map.getMapSize()) {
 			Square square = gameSession.getMap().getSquare(squarePosX, squarePosY);
 			
-			if(square.getPlaceableOnSquare() != null) {
-				return square.getPlaceableOnSquare();
+			if(square != null) {
+				if(square.getPlaceableOnSquare() != null) {
+					return square.getPlaceableOnSquare();
+				}
 			}
 		}
 		
