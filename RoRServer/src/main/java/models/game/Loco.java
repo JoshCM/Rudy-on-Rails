@@ -124,9 +124,28 @@ public abstract class Loco extends TickableGameObject {
 		setSpeedAndNotifySpeedChanged(0);
 		notifyLocoCrashed(nextRail);
 		dropByCollide();
-		removeCartsExceptInitial();
-		findTrainstationAndRespawn();
-		addCartAfterRespawn();
+		countdownForRespawn();
+	}
+
+	private void countdownForRespawn() {
+		Thread countdown = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				int seconds = 2;
+				while(seconds > 0) {
+					try {
+						Thread.sleep(1000);
+						seconds--;
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				removeCartsExceptInitial();
+				findTrainstationAndRespawn();
+				addCartAfterRespawn();
+			}
+		});
+		countdown.start();
 	}
 
 	public void drive(boolean reversed) {

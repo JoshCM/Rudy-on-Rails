@@ -124,7 +124,6 @@ public class Sensor extends InteractiveGameObject {
 	 */
 	private void startCountDownForActiveSensor() {
 		Thread countdown = new Thread(new Runnable() {
-
 			@Override
 			public void run() {
 				int seconds = activeTime;
