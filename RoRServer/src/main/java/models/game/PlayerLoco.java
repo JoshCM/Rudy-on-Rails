@@ -29,7 +29,7 @@ public class PlayerLoco extends Loco {
 	
 
 	/**
-	 * Reduzirt die Kohle des Spielers um das Produkt von speed und
+	 * Reduziert die Kohle des Spielers um das Produkt von speed und
 	 * coalDecreaseFactor
 	 */
 	public void spendCoal() {
