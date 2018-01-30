@@ -13,7 +13,9 @@
     <StackPanel Margin="50, 10" Orientation="Horizontal">
         <StackPanel Margin="20 0" Width="300">
             <Label Content="Geschwindigkeit" Foreground="White" FontFamily="Source Sans Pro" FontSize="20" HorizontalAlignment="Center" Margin="20"/>
-            <Slider Value="{Binding OwnLoco.Loco.Speed, Mode=OneWay}" Minimum="-1" Maximum="+5" IsSnapToTickEnabled="True" TickFrequency="1" HorizontalContentAlignment="Center"  ValueChanged="SliderValueChanged" />
+            <Slider Value="{Binding OwnLoco.Loco.Speed, Mode=OneWay}" 
+                    Minimum="-1" Maximum="+5" IsSnapToTickEnabled="True" 
+                    TickFrequency="1" TickPlacement="BottomRight" HorizontalContentAlignment="Center" ValueChanged="SliderValueChanged" />
         </StackPanel>
         <StackPanel Margin="20 0 0 0" Width="300">
             <Label Content="Mein Zug" Foreground="White" FontFamily="Source Sans Pro" FontSize="20" HorizontalAlignment="Center" Margin="20"/>

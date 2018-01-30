@@ -16,18 +16,18 @@
             <ImageBrush ImageSource="pack://application:,,,/Resources/Images/start_background.png" />
         </DockPanel.Background>
         
-        <Border DockPanel.Dock="Top" Background="#FF510404" Height="120" Width="350" Margin="0,120,0,0">
+        <Border DockPanel.Dock="Top" Background="#FF510404" Height="120" MinWidth="350" MaxWidth="600" Margin="0,120,0,0">
             <Label Content="Rudi On Rails" Foreground="White" FontFamily="Birch Std" FontSize="60" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" VerticalAlignment="Center"/>
         </Border>
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Left" Width="550" Margin="250,50,0,0">
             <TextBlock Text="Spielername " FontFamily="Source Sans Pro" FontSize="30" Foreground="#FF510404" Height="45" Width="180" />
-            <TextBox Text="{Binding LobbyModel.PlayerName, Mode=TwoWay}" Height="45" Width="250" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="2" TextChanged="TextBox_TextChanged" FontFamily="Source Sans Pro" FontSize="24"/>
+            <TextBox Text="{Binding LobbyModel.PlayerName, Mode=TwoWay}" Height="45" MinWidth="250" MaxWidth="350" Foreground="#FF510404" BorderBrush="#FF510404" BorderThickness="2" TextChanged="TextBox_TextChanged" FontFamily="Source Sans Pro" FontSize="24"/>
         </StackPanel>
 
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center"  DockPanel.Dock="Right" Width="550" Margin="0,50,250,0">
-            <Button x:Name="editorButton" Command="{Binding SwitchToJoinEditorLobbyView}" Content="ZUM BAU-MODUS" Width="250" Style="{StaticResource DefaultButtonStyle}" Margin="0,0,0,15" />
-            <Button x:Name="gameButton" Command="{Binding SwitchToJoinGameLobbyView}" Content="ZUM DAMPF-MODUS" Width="250" Style="{StaticResource DefaultButtonStyle}" Margin="0,15,0,0"/>
+            <Button x:Name="editorButton" Command="{Binding SwitchToJoinEditorLobbyView}" Content="ZUM BAU-MODUS" MinWidth="300" MaxWidth="400" Style="{StaticResource DefaultButtonStyle}" Margin="0,0,0,15" />
+            <Button x:Name="gameButton" Command="{Binding SwitchToJoinGameLobbyView}" Content="ZUM DAMPF-MODUS" MinWidth="300" MaxWidth="400" Style="{StaticResource DefaultButtonStyle}" Margin="0,15,0,0"/>
         </StackPanel>
     </DockPanel>
 </UserControl>
