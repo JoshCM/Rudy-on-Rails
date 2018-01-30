@@ -27,14 +27,8 @@ public class Scripts extends ModelBase {
 	}
 	
 	private void loadSensorDefaultScripts() {
-		scripts.add(new Script(getSessionName(), "Funny", ScriptType.SENSOR, "funny"));
-		scripts.add(new Script(getSessionName(), "DestroyTrain", ScriptType.SENSOR, "destroy"));
-		scripts.add(new Script(getSessionName(), "InfoTrain", ScriptType.SENSOR, "info"));
-		scripts.add(new Script(getSessionName(), "StopTrain", ScriptType.SENSOR, "stop"));
-		scripts.add(new Script(getSessionName(), "DropResources", ScriptType.SENSOR, "drop"));
-		scripts.add(new Script(getSessionName(), "ChangeSwitch", ScriptType.SENSOR, "switch"));
-		scripts.add(new Script(getSessionName(), "ChangeSignalInterval", ScriptType.SENSOR, "signals"));
-		scripts.add(new Script(getSessionName(), "ChangeSwitch2", ScriptType.SENSOR, "switch2"));
+		scripts.add(new Script(getSessionName(), "Loco anhalten", ScriptType.SENSOR, "stop"));
+		scripts.add(new Script(getSessionName(), "Weiche umstellen", ScriptType.SENSOR, "switch"));
 	}
 	
 	public List<Script> getScripts() {

@@ -103,7 +103,7 @@ public class SensorProxy implements ProxyObject {
 	}
 	
 	/**
-	 * Stellt die Weiche auf dem mitgegebenen Square um
+	 * Stellt die Weiche auf dem mitgegebenen Square um, sofern eine Weiche darauf liegt
 	 * @param square
 	 */
 	public void changeSwitchAroundSensor(Square square) {
