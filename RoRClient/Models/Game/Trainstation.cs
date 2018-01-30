@@ -12,6 +12,7 @@ namespace RoRClient.Models.Game
         private Compass alignment;
         private Stock stock;
         private Crane crane;
+        private bool tradeable = false;
 
         public Trainstation(Guid id, Square square, List<Rail> trainstationRails, Compass alignment, Stock stock) : base(square)
         {
@@ -60,6 +61,19 @@ namespace RoRClient.Models.Game
             {
                 alignment = value;
                 NotifyPropertyChanged("Alignment");
+            }
+        }
+
+        public bool Tradeable
+        {
+            get
+            {
+                return tradeable;
+            }
+            set
+            {
+                tradeable = value;
+                NotifyPropertyChanged("Tradeable");
             }
         }
     }

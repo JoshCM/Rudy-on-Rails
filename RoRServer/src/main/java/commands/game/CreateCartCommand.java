@@ -44,18 +44,19 @@ public class CreateCartCommand implements Command{
 	public void execute() {
 		Square cartSpawnPointSquare = this.session.getMap().getSquare(xPos, yPos);
 		Rail cartSpawnPointRail = (Rail) cartSpawnPointSquare.getPlaceableOnSquare();
-		Loco loco = session.getLocomotiveByPlayerId(playerId);
+		Loco loco = session.getPlayerLocoByPlayerId(playerId);
 		GamePlayer currentPlayer = (GamePlayer)session.getPlayerById(playerId);
 		
-		if(validateBuyCart(currentPlayer, loco, cartSpawnPointRail)) {
-			// abziehen des Goldes des Players
-			currentPlayer.removeGold(Integer.valueOf(PropertyManager.getProperty("cart_costs")));
-			
-			// erstellen des Carts und setzzen auf das richtige Rail
-			Cart cart = new Cart(session.sessionName, cartSpawnPointSquare, compass, playerId, false, null);
-			cartSpawnPointRail.setPlaceableOnRail(cart);
+		if(!isLocoOrCartOnSquare(cartSpawnPointSquare,loco)) {
+			if(validateBuyCart(currentPlayer, loco, cartSpawnPointRail)) {
+				// abziehen des Goldes des Players
+				currentPlayer.removeGold(Integer.valueOf(PropertyManager.getProperty("cart_costs")));
+				
+				// erstellen des Carts und setzzen auf das richtige Rail
+				Cart cart = new Cart(session.sessionName, cartSpawnPointSquare, compass, playerId, false, null);
+				cartSpawnPointRail.setPlaceableOnRail(cart);
+			}
 		}
-		
 	}
 	
 	private boolean validateBuyCart(GamePlayer currentPlayer, Loco loco, Rail cartSpawnPointRail) {
@@ -73,6 +74,8 @@ public class CreateCartCommand implements Command{
 		}
 		return false;
 	}
+	
+	//prüft ob lok oder wagon auf dem zu platzierenden Feld steht
 	public boolean isLocoOrCartOnSquare(Square square, Loco loco) {
 		if(loco.getSquareId()== square.getId())
 			return true;

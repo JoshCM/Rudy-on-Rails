@@ -23,7 +23,6 @@ public class SaveNewMapCommand extends CommandBase {
 		
 		//setzt die availablePlayerSlots
 		map.initAvailablePlayerSlots();
-		MapManager.setAvailablePlayerSlotsForMapName(map.getName(), map.getAvailablePlayerSlots());
 		
 		MapManager.saveMap(map, ext);
 	}

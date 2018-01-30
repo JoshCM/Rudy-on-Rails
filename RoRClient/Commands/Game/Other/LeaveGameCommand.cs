@@ -24,18 +24,21 @@ namespace RoRClient.Commands.Game.Other
             Boolean deleteGameSession = false;
             Player player = GameSession.GetInstance().GetPlayerById(playerId);
 
-            // Wenn der Spieler Host ist oder kein anderer
-            if (player == GameSession.GetInstance().OwnPlayer || player.IsHost)
+            if (player != null)
             {
-                deleteGameSession = true;
-            }
+                // Wenn der Spieler Host ist oder kein anderer
+                if (player == GameSession.GetInstance().OwnPlayer || player.IsHost)
+                {
+                    deleteGameSession = true;
+                }
 
-            GameSession.GetInstance().RemovePlayer(player);
+                GameSession.GetInstance().RemovePlayer(player);
 
-            // Dann auch die GameSession löschen
-            if (deleteGameSession)
-            {
-                GameSession.GetInstance().DeleteGameSession();
+                // Dann auch die GameSession löschen
+                if (deleteGameSession)
+                {
+                    GameSession.GetInstance().DeleteGameSession();
+                }
             }
         }
     }

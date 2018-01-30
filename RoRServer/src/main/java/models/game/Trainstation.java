@@ -205,7 +205,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 
 				// erzeuge neuen Stock und setze intern das Square.PlacableOnSquare
 				Stock newStock = new Stock(sessionName, newSquare, tmpStock.getTrainstationId(), tmpStock.getId(),
-						tmpStock.getAlignment());
+						tmpStock.getAlignment(), tmpStock.getTrainstationType());
 				newSquare.setPlaceableOnSquare(newStock);
 				this.stock = newStock;
 			}
@@ -277,6 +277,7 @@ public abstract class Trainstation extends InteractiveGameObject implements Plac
 		}
 		return null;
 	}
+
 
 	/**
 	 * Validiert ob man die Rotation umsetzen kann

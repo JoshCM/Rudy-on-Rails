@@ -9,15 +9,18 @@ import communication.queue.receiver.QueueReceiver;
 import models.base.ModelObserver;
 import models.base.ObservableModel;
 import models.game.GamePlayer;
+import models.game.GhostLoco;
 import models.game.Loco;
 import models.game.Mine;
 import models.game.PlayerLoco;
+import models.game.Publictrainstation;
 import models.game.Player;
 import models.game.TickableGameObject;
 import models.scripts.ScriptableObject;
 import models.scripts.ScriptableObjectManager;
 import models.scripts.Scripts;
 import persistent.MapManager;
+import resources.PropertyManager;
 
 /**
  * Oberklasse vom Game-Modus. 
@@ -25,7 +28,7 @@ import persistent.MapManager;
  * Erhaelt ueber einen QueueReceiver Anfragen von Clients, die mit der GameSession verbunden sind
  */
 public class GameSession extends RoRSession implements ModelObserver {
-	private final static int POINTS_TO_WIN = 100;
+	private final static int POINTS_TO_WIN = Integer.valueOf(PropertyManager.getProperty("points_to_win"));
 	private final static int TIME_BETWEEN_TICKS_IN_MILLISECONDS = 100;
 	
 	private Thread tickingThread;
@@ -132,10 +135,23 @@ public class GameSession extends RoRSession implements ModelObserver {
 	 * @param playerId
 	 * @return
 	 */
-	public Loco getLocomotiveByPlayerId(UUID playerId) {
+	public PlayerLoco getPlayerLocoByPlayerId(UUID playerId) {
 		for (Loco loc : locos) {
-			if (loc.getPlayerId().toString().equals(playerId.toString())) {
-				return loc;
+			if (loc.getPlayerId().toString().equals(playerId.toString()) && loc instanceof PlayerLoco) {
+				return (PlayerLoco)loc;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * @param playerId
+	 * @return Die GhostLoco des Spielers mit der hereingereichten playerId
+	 */
+	public GhostLoco getGhostLocoByPlayerId(UUID playerId) {
+		for (Loco loco : locos) {
+			if (loco.getPlayerId().equals(playerId) && loco instanceof GhostLoco) {
+				return (GhostLoco)loco;
 			}
 		}
 		return null;
@@ -169,7 +185,6 @@ public class GameSession extends RoRSession implements ModelObserver {
 		
 	}
 	
-
 	public List<Loco> getLocos() {
 		return locos;
 	}

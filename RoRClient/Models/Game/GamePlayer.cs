@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,17 +28,24 @@ namespace RoRClient.Models.Game
             PointCount = pointCount;
         }
 
+        public static explicit operator GamePlayer(ObservableCollection<Player> v)
+        {
+            throw new NotImplementedException();
+        }
+
         public int CoalCount
         {
             get
             {
                 return coalCount;
             }
-
             set
             {
-                this.coalCount = value;
-                NotifyPropertyChanged("CoalCount");
+                if(coalCount != value)
+                {
+                    this.coalCount = value;
+                    NotifyPropertyChanged("CoalCount");
+                }
             }
         }
 
@@ -47,11 +55,13 @@ namespace RoRClient.Models.Game
             {
                 return goldCount;
             }
-
             set
             {
-                this.goldCount = value;
-                NotifyPropertyChanged("GoldCount");
+                if (goldCount != value)
+                {
+                    this.goldCount = value;
+                    NotifyPropertyChanged("GoldCount");
+                }
             }
         }
 
@@ -61,11 +71,13 @@ namespace RoRClient.Models.Game
             {
                 return pointCount;
             }
-
             set
             {
-                this.pointCount = value;
-                NotifyPropertyChanged("PointCount");
+                if (pointCount != value)
+                {
+                    this.pointCount = value;
+                    NotifyPropertyChanged("PointCount");
+                }
             }
         }
 

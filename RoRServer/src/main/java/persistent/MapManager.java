@@ -114,6 +114,9 @@ public class MapManager {
 		String mapSizeDescription = getMapSizeDescriptionForMap(map);
 		String filename = map.getName() + " (" + mapSizeDescription+ ", " + map.getAvailablePlayerSlots() + " Spieler)";
 		saveToFile(jsonMap, filename, ending);
+		
+		// speichert die available player slots in der maps.slots
+		setAvailablePlayerSlotsForMapName(filename, map.getAvailablePlayerSlots());
 	}
 
 	private static String getMapSizeDescriptionForMap(Map map) {
@@ -125,7 +128,7 @@ public class MapManager {
 		} else if(map.getMapSize() <= 50) {
 			mapSizeDescription = "Normal";
 		} else {
-			mapSizeDescription = "Groß";
+			mapSizeDescription = "Gro�";
 		}
 		return mapSizeDescription;
 	}
@@ -188,7 +191,6 @@ public class MapManager {
 		HashMap<String, Double> availablePlayerSlotsMap = getAvailablePlayerSlotsMap();
 		for(Entry<String, Double> entry : availablePlayerSlotsMap.entrySet()) {
 			if (entry.getKey().equals(mapName)) {
-				// workaround, da in dem entry immer ein double ist
 	    		return entry.getValue().intValue();
 			}
 		}
@@ -208,7 +210,10 @@ public class MapManager {
 			if(availablePlayerSlotsMapFile.exists()) {
 				HashMap<String, Double> availablePlayerSlotsMap = new HashMap<>();
 				availablePlayerSlotsMap = gsonLoader.fromJson(readFromFile(MAP_PLAYER_SLOTS, slots),availablePlayerSlotsMap.getClass());
-				return availablePlayerSlotsMap;
+				if(availablePlayerSlotsMap != null)
+					return availablePlayerSlotsMap;
+				else
+					return new HashMap<String, Double>();
 			}else {
 				return new HashMap<String, Double>();
 			}
@@ -249,6 +254,9 @@ public class MapManager {
 				if (fileEntry.isFile() && fileEntry.getName().endsWith(ext))
 					mapList.add(fileEntry.getName().replace(ext, ""));
 			}
+		}else {
+			// erzeugt den maps-Ordner wenn er noch nicht existiert
+			folder.mkdir();
 		}
 		return mapList;
 	}

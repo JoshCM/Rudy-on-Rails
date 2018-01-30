@@ -134,7 +134,7 @@ public class CreateTrainstationCommandBase extends CommandBase {
 	}
 
 	private UUID createSwitch(Square trainstationRailSquare, UUID trainstationId, List<Compass> compassList) {
-		Rail switchRail = new Switch(session.getSessionName(), trainstationRailSquare, compassList);
+		Rail switchRail = new Switch(session.getSessionName(), trainstationRailSquare, compassList, trainstationId, UUID.randomUUID());
 		switchRail.setSquareId(trainstationRailSquare.getId());
 		trainstationRailSquare.setPlaceableOnSquare(switchRail);
 		return switchRail.getId();

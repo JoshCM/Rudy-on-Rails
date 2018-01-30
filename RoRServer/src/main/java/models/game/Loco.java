@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 import communication.MessageInformation;
+import models.helper.Validator;
 import models.session.GameSessionManager;
 import resources.PropertyManager;
 
@@ -50,7 +51,7 @@ public abstract class Loco extends TickableGameObject {
 	public static void addSensor(Sensor sensor) {
 		sensors.add(sensor);
 	}
-
+	
 	public void notifySensors() {
 
 		Iterator<Sensor> iter = sensors.iterator();
@@ -150,6 +151,8 @@ public abstract class Loco extends TickableGameObject {
         	} 	
         }
     }
+	
+	//Wagon wird an den Zug angekoppelt
 	private void linkupCartToCarts(Rail nextRail) {
 		Cart cart = (Cart)nextRail.getPlaceableOnrail();
 		cart.setDrivingDirection(getLastCart().getDrivingDirection());
@@ -170,10 +173,11 @@ public abstract class Loco extends TickableGameObject {
 
 	public void moveLoco(Rail nextRail, Compass nextDrivingDirection){
 	    //hole dir die DrivingDirection von dem nächste Rail und übergebe das Gegentei von der aktuellen Fahrrichtung
-	    this.drivingDirection = nextRail.getExitDirection(getDirectionNegation(getDrivingDirection()));
-	    this.rail = nextRail;
+	    this.drivingDirection = nextDrivingDirection;
+		this.rail = nextRail;
 	    this.updateSquare(this.rail.getSquareFromGameSession());
 	    notifyLocoPositionChanged();
+	    notifySensors();
     }
 	
 	private void setSpeedAndNotifySpeedChanged(int speed) {
@@ -344,11 +348,13 @@ public abstract class Loco extends TickableGameObject {
 	 */
 	private void notifyLocoPositionChanged() {
 		MessageInformation messageInfo = new MessageInformation("UpdateLocoPosition");
-		messageInfo.putValue("locoId", getId());
-		messageInfo.putValue("xPos", getXPos());
-		messageInfo.putValue("yPos", getYPos());
-		messageInfo.putValue("drivingDirection", drivingDirection.toString());
-		notifyChange(messageInfo);
+		if(drivingDirection!= null) {
+			messageInfo.putValue("locoId", getId());
+			messageInfo.putValue("xPos", getXPos());
+			messageInfo.putValue("yPos", getYPos());
+			messageInfo.putValue("drivingDirection", drivingDirection.toString());
+			notifyChange(messageInfo);
+		}
 	}
 
 	private void notifyCartToLocoAdded(Cart cart) {
@@ -361,8 +367,10 @@ public abstract class Loco extends TickableGameObject {
 	}
 
 	public void changeSpeed(int speed) {
-		this.speed = speed;
-		notifySpeedChanged();
+		if(this.speed != speed) {
+			this.speed = speed;
+			notifySpeedChanged();
+		}
 	}
 
 	private void notifySpeedChanged() {
@@ -374,7 +382,9 @@ public abstract class Loco extends TickableGameObject {
 
 	// Getter und Setter
 	public void setSpeed(int speed) {
-		this.speed = speed;
+		if(this.speed != speed) {			
+			this.speed = speed;
+		}
 	}
 
 	public ArrayList<Cart> getCarts() {
@@ -416,5 +426,14 @@ public abstract class Loco extends TickableGameObject {
 	
 	public GamePlayer getPlayer() {
 		return player;
+	}
+	
+	public boolean hasResourcesOnCarts() {
+		for(Cart cart : carts) {
+			if(cart.getResource() != null) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

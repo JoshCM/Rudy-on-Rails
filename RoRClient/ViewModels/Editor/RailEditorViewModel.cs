@@ -90,7 +90,6 @@ namespace RoRClient.ViewModels.Editor
             MessageInformation messageInformation = new MessageInformation();
             messageInformation.PutValue("xPos", rail.Square.PosX);
             messageInformation.PutValue("yPos", rail.Square.PosY);
-            messageInformation.PutValue("change", true);
             EditorSession.GetInstance().QueueSender.SendMessage("ChangeSwitch", messageInformation);
         }
 

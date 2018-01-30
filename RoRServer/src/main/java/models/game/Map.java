@@ -47,7 +47,7 @@ public class Map extends ModelBase {
 	private void searchAvailablePlayerSlots() {
 		for(Square[] squares : getSquares()) {
 			for(Square square : squares) {
-				if(square.getPlaceableOnSquare() instanceof Trainstation) {
+				if(square.getPlaceableOnSquare() instanceof Playertrainstation) {
 					addAvailablePlayerSlot();
 				}
 			}

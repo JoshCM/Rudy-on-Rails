@@ -17,6 +17,7 @@ namespace RoRClient.Models.Session
         protected ObservableCollection<Loco> locos = new ObservableCollection<Loco>();
         protected ObservableCollection<Mine> mines = new ObservableCollection<Mine>();
         protected ObservableCollection<Cart> carts = new ObservableCollection<Cart>();
+        protected ObservableCollection<Publictrainstation> publictrainstations = new ObservableCollection<Publictrainstation>();
         private Scripts scripts = new Scripts();
 
         private GameSession() : base()
@@ -112,6 +113,31 @@ namespace RoRClient.Models.Session
                 if (mine.Square.PosX == xPos && mine.Square.PosY == yPos)
                 {
                     return mine;
+                }
+            }
+            return null;
+        }
+
+        public ObservableCollection<Publictrainstation> Publictrainstations
+        {
+            get
+            {
+                return publictrainstations;
+            }
+        }
+
+        public void addPublictrainstation(Publictrainstation publictrainstation)
+        {
+            publictrainstations.Add(publictrainstation);
+        }
+
+        public Publictrainstation GetTradeableTrainstation()
+        {
+            foreach (Publictrainstation t in publictrainstations)
+            {
+                if (t.Tradeable)
+                {
+                    return t;
                 }
             }
             return null;
