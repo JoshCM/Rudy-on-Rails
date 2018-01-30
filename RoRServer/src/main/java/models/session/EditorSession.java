@@ -7,6 +7,7 @@ import communication.dispatcher.EditorSessionDispatcher;
 import communication.queue.receiver.QueueReceiver;
 import models.game.EditorPlayer;
 import models.game.Player;
+import resources.PropertyManager;
 
 /**
  * Oberklasse vom Editor-Modus. 
@@ -18,6 +19,8 @@ public class EditorSession extends RoRSession {
 		super(name);
 		
 		createHostPlayer(hostPlayerId, hostPlayerName);
+		// setzt im Editor die defaultMap auf eine neue Map
+		setMapName(PropertyManager.getProperty("newMap"));
 	
 		EditorSessionDispatcher dispatcher = new EditorSessionDispatcher(this);
 		this.queueReceiver = new QueueReceiver(name, dispatcher);

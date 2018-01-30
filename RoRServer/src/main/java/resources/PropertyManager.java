@@ -12,7 +12,7 @@ public class PropertyManager {
 
 	private final static String PROPERTIES_NAME = "src/main/java/resources/config.properties";
 	// wird anstatt PROPERTIES_NAME bei einer exportierten Jar gebraucht
-	private final static String PROPERTIES_NAME_EXPORT = "config.properties";
+	// private final static String PROPERTIES_NAME_EXPORT = "config.properties";
 	private static Properties properties = new Properties();
 
 	static {

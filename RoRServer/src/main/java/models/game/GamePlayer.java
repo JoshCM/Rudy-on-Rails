@@ -12,9 +12,9 @@ public class GamePlayer extends Player{
 	private int pointCount;
 	private Color color;
 	private Publictrainstation currentSelectedPublictrainstation;
-	public static int START_GOLD = 20;
-	public static int START_COAL = 250;
-	public static int START_POINTS = 10;
+	public static int START_GOLD = Integer.valueOf(PropertyManager.getProperty("initial_gold_count"));
+	public static int START_COAL = Integer.valueOf(PropertyManager.getProperty("initial_coal_count"));
+	public static int START_POINTS = Integer.valueOf(PropertyManager.getProperty("initial_point_count"));
 
 	public GamePlayer(String sessionName, String name, UUID id, boolean isHost) {
 		super(sessionName, name, id, isHost);
@@ -42,13 +42,9 @@ public class GamePlayer extends Player{
 	}
 
 	private void initializeResourceCounts() {
-		if(this.getDescription() == "RobinHood") {
-			this.pointCount = 49;
-		}else {
-			this.coalCount = Integer.valueOf(PropertyManager.getProperty("initial_coal_count"));
-			this.goldCount = Integer.valueOf(PropertyManager.getProperty("initial_gold_count"));
-			this.pointCount = Integer.valueOf(PropertyManager.getProperty("initial_point_count"));
-		}
+		this.coalCount = START_COAL;
+		this.goldCount = START_GOLD;
+		this.pointCount = START_POINTS;
 	}
 
 	public double getCoalCount() {
