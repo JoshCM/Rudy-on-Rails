@@ -108,7 +108,10 @@ public abstract class Loco extends TickableGameObject {
 	}
 	
 	private boolean canDrive() {
-		return (!(needsCoalToDrive()) || (needsCoalToDrive() && getPlayer().getCoalCount() > 0)); 
+		boolean cD = (!(needsCoalToDrive()) || (needsCoalToDrive() && getPlayer().getCoalCount() > 0));
+		if(!cD)
+    		setSpeedAndNotifySpeedChanged(0);
+		return cD; 
 	}
 	
 	public abstract void spendCoal();

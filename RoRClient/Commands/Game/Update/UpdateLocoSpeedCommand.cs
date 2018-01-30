@@ -25,7 +25,7 @@ namespace RoRClient.Commands.Game.Update
             GameSession gameSession = (GameSession)session;
             Loco loco = gameSession.GetLocoById(locoId);
             loco.Speed = speed;
-            if (session.OwnPlayer.Id.Equals(loco.PlayerId))
+            if (session.OwnPlayer.Id.Equals(loco.PlayerId)&& loco is PlayerLoco)
             {
                 if(loco.Sound == null)
                 {
