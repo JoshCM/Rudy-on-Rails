@@ -122,7 +122,7 @@ namespace RoRClient.ViewModels.Game
 
             if (scriptNameFromUser == null)
             {
-                string description = "Eigenes Script " + currentNumberOfOwnGhostLocoScript;
+                scriptNameFromUser = "Eigenes Script " + currentNumberOfOwnGhostLocoScript;
             }
 
             if (filename != null)
@@ -159,7 +159,7 @@ namespace RoRClient.ViewModels.Game
 
             if (scriptNameFromUser == null)
             {
-                string description = "Eigenes Script " + currentNumberOfOwnGhostLocoScript;
+                scriptNameFromUser = "Eigenes Script " + currentNumberOfOwnGhostLocoScript;
             }
 
             if (filename != null)
