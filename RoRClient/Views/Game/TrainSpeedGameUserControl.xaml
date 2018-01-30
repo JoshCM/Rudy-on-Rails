@@ -16,7 +16,7 @@
             <Slider Value="{Binding OwnLoco.Loco.Speed, Mode=OneWay}" 
                     Minimum="-1" Maximum="+5" IsSnapToTickEnabled="True" 
                     TickFrequency="1" TickPlacement="BottomRight" HorizontalContentAlignment="Center" ValueChanged="SliderValueChanged" Height="17" >
-                <Slider.Background>
+                <!--<Slider.Background>
                     <VisualBrush>
                         <VisualBrush.Visual>
                             <Grid>
@@ -43,7 +43,7 @@
                             </Grid>
                         </VisualBrush.Visual>
                     </VisualBrush>
-                </Slider.Background>
+                </Slider.Background> -->
             </Slider>
             
             

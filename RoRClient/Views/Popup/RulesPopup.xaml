@@ -65,7 +65,7 @@
 
                 <Label Content="Spielverlauf" Style="{StaticResource DefaultHeaderStyle}" />
                 <Label Content="Zug fahren" Style="{StaticResource DefaultSubHeaderStyle}"/>
-                <TextBlock Text="Der Zug jedes Spielers startet in seinem Heimat-Bahnhof. Der Zug besteht anfangs aus einer Lok und einem leeren Waggon. Um den Zug vorwärts zu bewegen, muss der Spieler den Geschwindigkeitsregler nach rechts bewegen oder die Taste 'd' drücken. Um den Geschwindigkeit zu verringern bzw. rückwärts zu fahren, kann den Regler nach links bewegt werden oder die Taste 'a' benutzen. Für das Stillstehen des Zuges kann der Spieler 's' drücken oder den Regler wieder auf die Anfangsposition setzen. Beim Fahren des Zuges wird Kohle verbrannt." 
+                <TextBlock Text="Der Zug jedes Spielers startet in seinem Heimat-Bahnhof. Der Zug besteht anfangs aus einer Lok und einem leeren Waggon. Um den Zug vorwärts zu bewegen, muss der Spieler den Geschwindigkeitsregler nach rechts bewegen oder die rechte Pfeil-Taste drücken. Um den Geschwindigkeit zu verringern bzw. rückwärts zu fahren, kann den Regler nach links bewegt werden oder die linke Pfeil-Taste benutzen. Für das Stillstehen des Zuges kann der Spieler die 'Pfeilnachunten-Taste' oder den Regler wieder auf die Anfangsposition setzen. Beim Fahren des Zuges wird Kohle verbrannt." 
                        Style="{StaticResource DefaultTextBlockStyle}" />
 
                 <Label Content="Weichen umstellen" Style="{StaticResource DefaultSubHeaderStyle}"/>
