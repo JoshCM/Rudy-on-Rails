@@ -21,7 +21,7 @@
    
 
     <DockPanel>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Bottom" Template="{DynamicResource ScrollViewerControlTemplate}">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" DockPanel.Dock="Bottom" Template="{DynamicResource ScrollViewerControlTemplate}" Focusable="False">
             <Canvas Background="White" x:Name="MapCanvas" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
                 <ItemsControl ItemsSource="{Binding SquareViewModels}">
                     <ItemsControl.ItemTemplate>
