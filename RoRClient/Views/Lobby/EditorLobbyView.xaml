@@ -21,7 +21,7 @@
             <ImageBrush ImageSource="pack://application:,,,/Resources/Images/start_background.png"/>
         </DockPanel.Background>
 
-        <Border DockPanel.Dock="Top" Background="#FF510404" Height="120" Width="350" Margin="0,120,0,0">
+        <Border DockPanel.Dock="Top" Background="#FF510404" Height="120" MinWidth="350" MaxWidth="600" Margin="0,120,0,0">
             <Label Content="Rudi On Rails" Foreground="White" FontFamily="Birch Std" FontSize="60" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" VerticalAlignment="Center"/>
         </Border>
 
