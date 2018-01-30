@@ -146,7 +146,6 @@ public abstract class Loco extends TickableGameObject {
 				}
 				removeCartsExceptInitial();
 				findTrainstationAndRespawn();
-				//addCartAfterRespawn();
 				addCart();
 			}
 		});
@@ -329,7 +328,8 @@ public abstract class Loco extends TickableGameObject {
 			List<Loco> locos = GameSessionManager.getInstance().getGameSession().getLocos();
 
 			for (Loco loco : locos) {
-				if (!(loco instanceof GhostLoco) && loco != this) {
+				// GhostLocos und die eigene Lok werden hier ausgeschlossen
+				if (!(loco instanceof GhostLoco) && loco != this) { 
 					if (loco.getRail() == rail) {
 						crashedLoco = loco;
 						return true;
@@ -393,10 +393,7 @@ public abstract class Loco extends TickableGameObject {
 		for (Playertrainstation trainstation : playerTrainstations) {
 			if (trainstation.getPlayerId() == getPlayerId()) {
 				locoSpawnRail = (Rail) map.getPlaceableById(trainstation.getSpawnPointforLoco());
-//				setXPos(locoSpawnRail.getXPos());
-//				setYPos(locoSpawnRail.getYPos());
 				Compass newDrivingDirection = getDrivingDirectionAfterRespawn(trainstation.getAlignment());
-//				setDrivingDirection(newDrivingDirection);
 
                 this.drivingDirection = newDrivingDirection;
                 this.rail = locoSpawnRail;

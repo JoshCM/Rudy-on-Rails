@@ -57,52 +57,10 @@ namespace RoRClient.ViewModels.Game
                 SquarePosX = loco.Square.PosX;
                 SquarePosY = loco.Square.PosY;
 
-                if (RealDrivingDirection != loco.DrivingDirection)
-                {
-                    switch (loco.DrivingDirection)
-                    {
-                        case Compass.NORTH:
-                            if (RealDrivingDirection.Equals(Compass.EAST))
-                                Angle -= 90;
-                            else if (RealDrivingDirection.Equals(Compass.WEST))
-                                Angle += 90;
-                            else
-                                Angle += 180;
-                            break;
-                        case Compass.EAST:
-                            if (RealDrivingDirection.Equals(Compass.SOUTH))
-                                Angle -= 90;
-                            else if (RealDrivingDirection.Equals(Compass.NORTH))
-                                Angle += 90;
-                            else
-                                Angle += 180;
-                            break;
-                        case Compass.SOUTH:
-                            if (RealDrivingDirection.Equals(Compass.WEST))
-                                Angle -= 90;
-                            else if (RealDrivingDirection.Equals(Compass.EAST))
-                                Angle += 90;
-                            else
-                                Angle += 180;
-                            break;
-                        case Compass.WEST:
-                            if (RealDrivingDirection.Equals(Compass.NORTH))
-                                Angle -= 90;
-                            else if (RealDrivingDirection.Equals(Compass.SOUTH))
-                                Angle += 90;
-                            else
-                                Angle += 180;
-                            break;
-                        default:
-                            Angle = 0;
-                            break;
-                    }
-
-                    RealDrivingDirection = loco.DrivingDirection;
-                }
+                UpdateRealDrivingDirection();
             }
 
-            if(e.PropertyName == "Speed")
+            if (e.PropertyName == "Speed")
             {
                 InvertDrivingDirectionIfDrivingDirectionHasChanged(loco.Speed);
 
@@ -113,7 +71,7 @@ namespace RoRClient.ViewModels.Game
             }
             if(e.PropertyName == "UpdateDrivingDirection")
             {
-                PropertyChangedExtendedEventArgs<Compass> eventArgs = (PropertyChangedExtendedEventArgs<Compass>)e;
+                /*PropertyChangedExtendedEventArgs<Compass> eventArgs = (PropertyChangedExtendedEventArgs<Compass>)e;
                 Compass model = eventArgs.NewValue;
                 switch (model)
                 {
@@ -146,7 +104,55 @@ namespace RoRClient.ViewModels.Game
                         break;
                 }
 
-                RealDrivingDirection = eventArgs.NewValue;
+                RealDrivingDirection = eventArgs.NewValue;*/
+                UpdateRealDrivingDirection();
+            }
+        }
+
+        private void UpdateRealDrivingDirection()
+        {
+            if (RealDrivingDirection != loco.DrivingDirection)
+            {
+                switch (loco.DrivingDirection)
+                {
+                    case Compass.NORTH:
+                        if (RealDrivingDirection.Equals(Compass.EAST))
+                            Angle -= 90;
+                        else if (RealDrivingDirection.Equals(Compass.WEST))
+                            Angle += 90;
+                        else
+                            Angle += 180;
+                        break;
+                    case Compass.EAST:
+                        if (RealDrivingDirection.Equals(Compass.SOUTH))
+                            Angle -= 90;
+                        else if (RealDrivingDirection.Equals(Compass.NORTH))
+                            Angle += 90;
+                        else
+                            Angle += 180;
+                        break;
+                    case Compass.SOUTH:
+                        if (RealDrivingDirection.Equals(Compass.WEST))
+                            Angle -= 90;
+                        else if (RealDrivingDirection.Equals(Compass.EAST))
+                            Angle += 90;
+                        else
+                            Angle += 180;
+                        break;
+                    case Compass.WEST:
+                        if (RealDrivingDirection.Equals(Compass.NORTH))
+                            Angle -= 90;
+                        else if (RealDrivingDirection.Equals(Compass.SOUTH))
+                            Angle += 90;
+                        else
+                            Angle += 180;
+                        break;
+                    default:
+                        Angle = 0;
+                        break;
+                }
+
+                RealDrivingDirection = loco.DrivingDirection;
             }
         }
 

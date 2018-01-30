@@ -114,6 +114,7 @@ namespace RoRClient.Models.Game
         public void UpdateDrivingDirectionAfterRespawn(Compass newDrivingDirection)
         {
             DrivingDirection = newDrivingDirection;
+            NotifyPropertyChanged("UpdateDrivingDirection");
         }
 
         public Guid PlayerId
