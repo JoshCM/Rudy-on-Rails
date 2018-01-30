@@ -96,11 +96,45 @@
                 <TextBlock Text="Jeder Spieler kann Sensoren gegen Gold auf dem Schienennetz platzieren. Dafür muss er auf ein Schienenstück klicken, welches in unmittelbarer Nähe vor seinem Zug ist. Danach wählt er unten 'Sensor platzieren' aus und der inaktive Sensor erscheint auf der Schiene. Um ein Skript einzustellen, muss der Spieler den Sensor nochmals anklicken und per Dropdown-Menü ein Skript auswählen oder ein selbstgeschriebenes Skript hochladen. Erst dann wird der Sensor aktiv. Ein Sensor ist nur eine gewisse Zeit aktiv und verschwindet danach wieder."
                        Style="{StaticResource DefaultTextBlockStyle}" />
 
-                <Label Content="Sensoren setzen" Style="{StaticResource DefaultSubHeaderStyle}"/>
+                <TextBlock Text="Vordefinierte Skripte:"  Style="{StaticResource DefaultTextBlockStyle}" FontWeight="DemiBold" />
+                <TextBlock Text="   • Zug anhalten"  Style="{StaticResource DefaultTextBlockStyle}"/>
+                <TextBlock Text="   • Weichen umstellen"  Style="{StaticResource DefaultTextBlockStyle}"/>
 
+                <TextBlock Text="Skripte selbst erstellen:"  Style="{StaticResource DefaultTextBlockStyle}" FontWeight="DemiBold" />
 
-
-
+                <TextBlock Text="   • Gibt das aktuelle Object als String zurück (Aktuell: 'Signals' und 'Switch') "  Style="{StaticResource DefaultTextBlockStyle}"/>
+                <TextBox Text="object = proxy.getObjectOnSquare()" Background="AntiqueWhite" Style="{StaticResource DefaultTextBoxStyle}"/>
+                <TextBlock Text="   • Gibt die Squares um den Sensor als tatsächliche Squares zurück "  Style="{StaticResource DefaultTextBlockStyle}"/>
+                <TextBox Text="squares = proxy.getSquaresAroundSensor()" Background="AntiqueWhite" Style="{StaticResource DefaultTextBoxStyle}"/>
+                <TextBlock Text="   • Gibt das Objekt auf dem mitgegebenem Square als String zurück (Aktuell: 'Signals' und 'Switch'): "  Style="{StaticResource DefaultTextBlockStyle}"/>
+                <TextBox Text="proxy.getObjectOnSuroundingSquare(Square square)" Background="AntiqueWhite" Style="{StaticResource DefaultTextBoxStyle}"/>
+                <TextBlock Text="   • Stellt die Signale auf einer Kreuzung um:"  Style="{StaticResource DefaultTextBlockStyle}"/>
+                <TextBox Text="object = proxy.getObjectOnSquare()  
+                                    if 'Signals' in object: 
+                                        proxy.switchSignals()" Background="AntiqueWhite" Style="{StaticResource DefaultTextBoxStyle}"/>
+                <TextBlock Text="   • Einstellungen der Signale auf einer Kreuzung konfigurieren "  Style="{StaticResource DefaultTextBlockStyle}"/>
+                <TextBox AcceptsReturn="True" 
+                         Text="object = proxy.getObjectOnSquare()
+                                        if 'Signals' in object:
+                                            proxy.changeSwitchInterval(int intervall)
+	                                        proxy.changeSignalsCost(int cost)
+	                                        proxy.changeSwitchPenalty(int penalty)" Background="AntiqueWhite" Style="{StaticResource DefaultTextBoxStyle}"/>
+                <TextBlock Text="   • Zug anhalten"  Style="{StaticResource DefaultTextBlockStyle}"/>
+                <TextBox Text="proxy.stop()" Background="AntiqueWhite" Style="{StaticResource DefaultTextBoxStyle}"/>
+                <TextBlock Text="   • Weiche, auf welchem der Sensor liegt, umstellen "  Style="{StaticResource DefaultTextBlockStyle}"/>
+                <TextBox AcceptsReturn="True" Text="object = proxy.getObjectOnSquare()
+                                        if 'Switch' in object:
+                                            proxy.changeSwitch()" Background="AntiqueWhite" Style="{StaticResource DefaultTextBoxStyle}"/>
+                <TextBlock Text="   • Alle Weichem im Umkreis umstellen "  Style="{StaticResource DefaultTextBlockStyle}"/>
+                <TextBox AcceptsReturn="True" Text="objects = proxy.getSquaresAroundSensor()
+                                        for x in objects:
+                                            proxy.changeSwitchAroundSensor(x)" Background="AntiqueWhite" Style="{StaticResource DefaultTextBoxStyle}"/>
+                <TextBlock Text="   • Stellt den Sensor auf dem mitgegebenem Square um "  Style="{StaticResource DefaultTextBlockStyle}"/>
+                <TextBox Text="proxy.changeSwitchAroundSensor(Square square)" Background="AntiqueWhite" Style="{StaticResource DefaultTextBoxStyle}"/>
+                <TextBlock Text="   • Lässt den Zug alle Ressourcen fallen, wenn genug Platz ist "  Style="{StaticResource DefaultTextBlockStyle}"/>
+                <TextBox Text="proxy.dropResourcesFromTrain()" Background="AntiqueWhite" Style="{StaticResource DefaultTextBoxStyle}"/>
+                <Label Content="Signale umstellen" Style="{StaticResource DefaultSubHeaderStyle}"/>
+                <TextBlock Text="Jeder Spieler kann gegen Gold Signale umstellen, die sich vor dem eigenen Zug befinden. Dafür muss der Spieler nur in die Mitter der Kreuzung mit Rechtsklick klicken. Erst nach dem ersten Umschalten eines Signals, kann dies wieder umgestellt werden. "  Style="{StaticResource DefaultTextBlockStyle}" />
                 <Label Content="Kollisionen" Style="{StaticResource DefaultSubHeaderStyle}"/>
                 <TextBlock Text="Wenn ein Spielerzug mit einem anderen Spielerzug zusammenstößt, verlieren die beteiligten Spieler einen Container und bekommen als Strafe Gold abgezogen. Sie starten wieder bei ihrem Heimat-Bahnhof. " 
                        Style="{StaticResource DefaultTextBlockStyle}" />
