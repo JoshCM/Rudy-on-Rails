@@ -237,8 +237,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Sound\BackgroundSound.cs" />
     <Compile Include="Sound\LocoSound.cs" />
     <Compile Include="Sound\SoundBase.cs" />
+    <Compile Include="Sound\SoundManager.cs" />
     <Compile Include="ViewModels\Base\CanvasViewModelBase.cs" />
     <Compile Include="ViewModels\Editor\PublictrainstationEditorViewModel.cs" />
     <Compile Include="ViewModels\Editor\TrainstationEditorViewModel.cs" />
@@ -655,8 +657,11 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Sound\Sounds\004.wav" />
-    <Content Include="Sound\Sounds\tschuk.wav" />
+    <Content Include="Resources\Sounds\004.wav" />
+    <Content Include="Resources\Sounds\BackgroundMusic.wav" />
+    <Content Include="Resources\Sounds\steam-train-loop.wav" />
+    <Content Include="Resources\Sounds\steam-train.wav" />
+    <Content Include="Resources\Sounds\tschuk.wav" />
     <Resource Include="Resources\Images\dummy.png" />
     <Resource Include="Resources\Images\trainstation_0.png" />
     <Resource Include="Resources\Images\trainstation_public.png" />
@@ -728,6 +733,7 @@
     <Resource Include="Resources\Images\stock_container_3.png" />
     <Resource Include="Resources\Images\sensor_active.png" />
     <Resource Include="Resources\Images\sensor_inactive.png" />
+    <Content Include="Resources\Sounds\tschuktschuk.wav" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

@@ -4,6 +4,7 @@ using RoRClient.Models.Base;
 using RoRClient.Models.Game;
 using System.Collections.ObjectModel;
 using RoRClient.Communication.Dispatcher;
+using RoRClient.Sound;
 
 namespace RoRClient.Models.Session
 {
@@ -14,9 +15,11 @@ namespace RoRClient.Models.Session
     public class EditorSession : RoRSession
     {
         private static EditorSession editorSession;
+        
 
         private EditorSession() : base()
         {
+            
         }
 
         public new void Init(string topicName)

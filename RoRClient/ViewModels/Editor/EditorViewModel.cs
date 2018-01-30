@@ -1,4 +1,5 @@
-﻿using RoRClient.ViewModels.Helper;
+﻿using RoRClient.Sound;
+using RoRClient.ViewModels.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace RoRClient.ViewModels.Editor
         private ToolbarViewModel toolbarViewModel;
         private TopMenuViewModel topMenuViewModel;
         private ObjectConfigurationViewModel objectConfigurationViewModel;
+        private BackgroundSound background = new BackgroundSound();
 
         public MapEditorViewModel MapViewModel
         {
@@ -53,8 +55,9 @@ namespace RoRClient.ViewModels.Editor
             this.uiState = uiState;
             toolbarViewModel = new ToolbarViewModel();
             mapViewModel = new MapEditorViewModel(toolbarViewModel, taskFactory);
-            topMenuViewModel = new TopMenuViewModel();
             objectConfigurationViewModel = new ObjectConfigurationViewModel(mapViewModel);
+            topMenuViewModel = new TopMenuViewModel();
+            background.PlayInLoop();
             ViewConstants.Init();
         }
     }

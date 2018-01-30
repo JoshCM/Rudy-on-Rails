@@ -18,7 +18,7 @@ namespace RoRClient.Models.Game
         private int speed;
         private Compass drivingDirection;
         private Guid playerId;
-        private LocoSound sound = new LocoSound();
+        private LocoSound sound;
 
         public Loco(Guid id, Guid playerId, Compass drivingDirection, Square square) : base(square)
         {
@@ -86,6 +86,17 @@ namespace RoRClient.Models.Game
             return carts.Where(x => x.Id == cartId).First();
         }
 
-        public LocoSound Sound => sound;
+        public LocoSound Sound
+        {
+            get
+            {
+                return sound;
+            }
+
+            set
+            {
+                sound = value;
+            }
+        }
     }
 }
