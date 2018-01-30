@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace RoRClient.Views.Game
 {
     /// <summary>
-    /// Interaktionslogik für TrainstationGameUserControl.xaml
+    /// Interaktionslogik für ScoreboardUserControl.xaml
     /// </summary>
-    public partial class TrainstationGameUserControl : CanvasUserControl
+    public partial class ScoreboardUserControl : UserControl
     {
-        public TrainstationGameUserControl()
+        public ScoreboardUserControl()
         {
             InitializeComponent();
         }

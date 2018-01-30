@@ -35,6 +35,10 @@ namespace RoRClient.Commands.Game.Update
             Loco loco = gameSession.GetLocoById(currentLocoId);
             Rail rail = square.PlaceableOnSquare as Rail;
             Cart cart = rail.PlaceableOnRail as Cart;
+            if(loco is GhostLoco)
+            {
+                cart.IsGhostCart = true;
+            }
             loco.AddCart(cart);
             rail.PlaceableOnRail = null;
         }

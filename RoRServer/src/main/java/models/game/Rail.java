@@ -10,6 +10,7 @@ import exceptions.RailSectionException;
 import models.session.GameSession;
 import models.session.GameSessionManager;
 import models.session.RoRSession;
+import resources.PropertyManager;
 
 /**
  * Klasse fuer Schienen, die einem Feld (Square) zugeordnet sind und ein
@@ -17,13 +18,12 @@ import models.session.RoRSession;
  * Weiche) besitzen
  */
 public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Comparable<Rail> {
-	public final static int AMOUNT_OF_GOLD_TO_GENERATE = 10;
-	public final static int AMOUNT_OF_COAl_TO_GENERATE = 15;
+	public final static int AMOUNT_OF_GOLD_TO_GENERATE = Integer.valueOf(PropertyManager.getProperty("amount_of_gold_to_generate"));
+	public final static int AMOUNT_OF_COAl_TO_GENERATE = Integer.valueOf(PropertyManager.getProperty("amount_of_coal_to_generate"));
 	
     private Signals signals;
 	// muss hier raus und eine Ebene tiefer(RailSection)
 	protected PlaceableOnRail placeableOnRail = null;
-	private Square square;
 	private UUID trainstationId;
 	protected List<RailSection> railSectionList;
 	protected List <RailSectionStatus> railSectionStatusList;
@@ -69,8 +69,6 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
     	this.placeableOnRail = placeableOnRail;
 	}
 
-
-	// TODO: Welche Ressourcen kann eine Schiene haben und wann?
     public void setResource(Resource resource) {
         this.resource = resource;
     }
@@ -198,16 +196,6 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         return railSectionList;
     }
 
-    public RailSection getActivDirection() {
-        for (RailSection railSection : railSectionList) {
-            if(railSection.getRailSectionStatus() == RailSectionStatus.ACTIVE){
-                return railSection;
-            }
-        }
-	    return railSectionList.get(0);
-    }
-
-
     public UUID getTrainstationId() {
         return trainstationId;
     }
@@ -302,6 +290,16 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         }
 
         return result;
+    }
+
+    public List <Compass> getAllCompassNodesOfRailSections(){
+        List <Compass> allNodes =  new ArrayList<Compass>();
+        for (RailSection railSection: railSectionList) {
+            for (Compass compass : railSection.getNodes()) {
+                allNodes.add(compass);
+            }
+        }
+        return allNodes;
     }
 
     @Override
@@ -412,7 +410,8 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 		return alignment;
 	}
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public Rail loadFromMap(Square square, RoRSession session) {
         Rail newRail = null;
         List <RailSection> railSections;
@@ -432,7 +431,11 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
 
         // Neues Rail erstellen und damit an den Client schicken
         if (rail instanceof Switch) {
-            newRail = new Switch(session.getSessionName(), square, railSectionPosition);
+            if (rail.getTrainstationId() != null) {
+                newRail = new Switch(session.getSessionName(), square, railSectionPosition, rail.getTrainstationId(), rail.getId());
+            } else {
+                newRail = new Switch(session.getSessionName(), square, railSectionPosition);
+            }
         } else {
             newRail = new Rail(session.getSessionName(), square, railSectionPosition, createSignals, trainstationId, rail.getId());
         }
@@ -441,6 +444,8 @@ public class Rail extends InteractiveGameObject implements PlaceableOnSquare, Co
         // Sonderfall für Krezungen, die Signale haben
         // ToDo: Refactoring, wenn die Modelstruktur umgebaut wurde!
         if(createSignals) {
+        	Signals oldSignals = rail.getSignals();
+        	newRail.getSignals().changeConfig(oldSignals.getAutoSwitchIntervalInSeconds(), oldSignals.getPenalty(), oldSignals.getSwitchCost());
         	if(rail.getSignals().isWestSignalActive() && rail.getSignals().isEastSignalActive()) {
         		newRail.getSignals().switchSignals();
         	}

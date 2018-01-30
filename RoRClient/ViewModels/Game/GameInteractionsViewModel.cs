@@ -25,6 +25,9 @@ namespace RoRClient.ViewModels.Game
         private bool canConfigureSensor = false;
         private MapGameViewModel mapGameViewModel;
         private int currentNumberOfOwnGhostLocoScript = 1;
+        private int currentNumberOfOwnSensorScript = 1;
+        private String selectedResource;
+        private bool tradeRelation = false;
 
         public GameInteractionsViewModel(TaskFactory taskFactory, MapGameViewModel mapGameViewModel)
         {
@@ -130,6 +133,38 @@ namespace RoRClient.ViewModels.Game
             }
         }
 
+        private ICommand addSensorScriptFromPlayerCommand;
+        public ICommand AddSensorScriptFromPlayerCommand
+        {
+            get
+            {
+                if (addSensorScriptFromPlayerCommand == null)
+                {
+                    addSensorScriptFromPlayerCommand = new ActionCommand(param => AddSensorScriptFromPlayer());
+                }
+                return addSensorScriptFromPlayerCommand;
+            }
+        }
+
+        private void AddSensorScriptFromPlayer()
+        {
+            string description = "Eigenes Script " + currentNumberOfOwnSensorScript;
+            string filename = CustomFileDialogs.AskUserToSelectPythonScript();
+
+            if (filename != null)
+            {
+                string scriptContent = File.ReadAllText(filename);
+                currentNumberOfOwnSensorScript += 1;
+
+                MessageInformation messageInformation = new MessageInformation();
+                messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
+                messageInformation.PutValue("description", description);
+                messageInformation.PutValue("scriptContent", scriptContent);
+                messageInformation.PutValue("scriptType", ScriptTypes.SENSOR.ToString());
+                GameSession.GetInstance().QueueSender.SendMessage("AddScriptFromPlayer", messageInformation);
+            }
+        }
+
         /// <summary>
         /// Command zum Platzieren eines Sensors
         /// </summary>
@@ -199,5 +234,70 @@ namespace RoRClient.ViewModels.Game
             GameSession.GetInstance().QueueSender.SendMessage("ChangeCurrentScriptOfSensor", message);
         }
 
+        public String SelectedResource
+        {
+            get
+            {
+                return selectedResource;
+            }
+            set
+            {
+                if (selectedResource != value)
+                {
+                    selectedResource = value;
+                    OnPropertyChanged("SelectedResource");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Command zum Austauschen von Ressourcen am Öffentlichen Bahnhof
+        /// </summary>
+        private ICommand exchangeResourceCommand;
+        public ICommand ExchangeResourceCommand
+        {
+            get
+            {
+                if (exchangeResourceCommand == null)
+                {
+                    exchangeResourceCommand = new ActionCommand(param => ExchangeResource());
+                }
+                return exchangeResourceCommand;
+            }
+        }
+
+        /// <summary>
+        /// Schickt eine Nachricht, um zu überprüfen, ob eine Ressource ausgetauscht werden kann (steht Loco vor Bahnhof?)
+        /// </summary>
+        private void ExchangeResource()
+        {
+            RoRSession gameSession = GameSession.GetInstance();
+            MessageInformation messageInformation = new MessageInformation();
+            messageInformation.PutValue("playerId", gameSession.OwnPlayer.Id);
+
+            if (SelectedResource == "Gold zu Kohle tauschen")
+            {
+                GameSession.GetInstance().QueueSender.SendMessage("ExchangeGoldToCoal", messageInformation);
+            } else if (SelectedResource == "Kohle zu Gold tauschen")
+            {
+                GameSession.GetInstance().QueueSender.SendMessage("ExchangeCoalToGold", messageInformation);
+            } else if (SelectedResource == "Gold zu Punkten tauschen")
+            {
+                GameSession.GetInstance().QueueSender.SendMessage("ExchangeGoldToPoints", messageInformation);
+            }
+        }
+
+        public bool TradeRelation
+        {
+            get
+            {
+                return tradeRelation;
+            }
+            set
+            {
+                tradeRelation = value;
+                OnPropertyChanged("TradeRelation");
+            }
+        }
     }
 }

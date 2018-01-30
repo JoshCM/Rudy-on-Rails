@@ -20,9 +20,10 @@ public class Scripts extends ModelBase {
 	}
 	
 	private void loadGhostLocoDefaultScripts() {
-		scripts.add(new Script(getSessionName(), "Schnell fahren", ScriptType.GHOSTLOCO, "ghostloco_default_drivefast"));
-		scripts.add(new Script(getSessionName(), "Langsam fahren", ScriptType.GHOSTLOCO, "ghostloco_default_driveslow"));
-		scripts.add(new Script(getSessionName(), "Gold stehlen", ScriptType.GHOSTLOCO, "ghostloco_default_stealgold"));
+		scripts.add(new Script(getSessionName(), "Default (schnell)", ScriptType.GHOSTLOCO, "ghostloco_default_drivefast"));
+		scripts.add(new Script(getSessionName(), "Default (langsam)", ScriptType.GHOSTLOCO, "ghostloco_default_driveslow"));
+		scripts.add(new Script(getSessionName(), "Nur Gold stehlen", ScriptType.GHOSTLOCO, "ghostloco_default_stealgold"));
+		scripts.add(new Script(getSessionName(), "Nichts machen", ScriptType.GHOSTLOCO, "ghostloco_default_doNothing"));
 	}
 	
 	private void loadSensorDefaultScripts() {
@@ -31,6 +32,8 @@ public class Scripts extends ModelBase {
 		scripts.add(new Script(getSessionName(), "InfoTrain", ScriptType.SENSOR, "info"));
 		scripts.add(new Script(getSessionName(), "StopTrain", ScriptType.SENSOR, "stop"));
 		scripts.add(new Script(getSessionName(), "DropResources", ScriptType.SENSOR, "drop"));
+		scripts.add(new Script(getSessionName(), "ChangeSwitch", ScriptType.SENSOR, "switch"));
+		scripts.add(new Script(getSessionName(), "ChangeSignalInterval", ScriptType.SENSOR, "signals"));
 	}
 	
 	public List<Script> getScripts() {

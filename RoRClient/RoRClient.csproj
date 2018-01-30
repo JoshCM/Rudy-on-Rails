@@ -108,6 +108,7 @@
     <Compile Include="BindingConverter\BooleanToVisibilityConverter.cs" />
     <Compile Include="BindingConverter\ObjectEqualsConverter.cs" />
     <Compile Include="BindingConverter\ObjectIsNullToBoolConverter.cs" />
+    <Compile Include="BindingConverter\EditorStockToImagePathConverter.cs" />
     <Compile Include="BindingConverter\PlayerToImagePathConverter.cs" />
     <Compile Include="BindingConverter\RailSectionsToImagePathConverter.cs" />
     <Compile Include="BindingConverter\IsNullToBooleanConverter.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Commands\Base\CreateStockCommandBase.cs" />
     <Compile Include="Commands\Base\CreatePlayertrainstationCommandBase.cs" />
     <Compile Include="Commands\Base\ICommand.cs" />
+    <Compile Include="Commands\Base\UpdateConfigOfSignalsCommandBase.cs" />
     <Compile Include="Commands\Editor\Create\CreatePublictrainstationCommand.cs" />
     <Compile Include="Commands\Editor\Delete\DeleteCraneCommand.cs" />
     <Compile Include="Commands\Editor\Other\InitMapSizeCommand.cs" />
@@ -176,6 +178,7 @@
     <Compile Include="Commands\Game\Update\UpdateCartToLocoAfterRespawnCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoForRespawnCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateColorOfPlayerCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateConfigOfSignalsCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCranePositionCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateLocoCrashedCommand.cs" />
     <Compile Include="Commands\Game\Delete\DeleteCartCommand.cs" />
@@ -269,6 +272,7 @@
     <Compile Include="ViewModels\Editor\TopMenuViewModel.cs" />
     <Compile Include="ViewModels\Game\MineGameViewModel.cs" />
     <Compile Include="ViewModels\Game\PublictrainstationGameViewModel.cs" />
+    <Compile Include="ViewModels\Game\ScoreboardViewModel.cs" />
     <Compile Include="ViewModels\Game\ScriptsViewModel.cs" />
     <Compile Include="ViewModels\Game\TopMenuViewModel.cs" />
     <Compile Include="ViewModels\Game\TrainstationGameViewModel.cs" />
@@ -385,6 +389,9 @@
     <Compile Include="Views\Game\PublictrainstationGameUserControl.xaml.cs">
       <DependentUpon>PublictrainstationGameUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\ScoreboardUserControl.xaml.cs">
+      <DependentUpon>ScoreboardUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\SquareGameUserControl.xaml.cs">
       <DependentUpon>SquareGameUserControl.xaml</DependentUpon>
     </Compile>
@@ -408,9 +415,6 @@
     </Compile>
     <Compile Include="Views\Game\PlayertrainstationGameUserControl.xaml.cs">
       <DependentUpon>PlayertrainstationGameUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Game\TrainstationGameUserControl.xaml.cs">
-      <DependentUpon>TrainstationGameUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Lobby\EditorLobbyView.xaml.cs">
       <DependentUpon>EditorLobbyView.xaml</DependentUpon>
@@ -507,6 +511,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Game\ScoreboardUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Game\SquareGameUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -538,10 +546,6 @@
     <Page Include="Views\Game\PlayertrainstationGameUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Game\TrainstationGameUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Lobby\EditorLobbyView.xaml">
       <SubType>Designer</SubType>
@@ -663,7 +667,6 @@
     <Resource Include="Resources\Images\dummy.png" />
     <Resource Include="Resources\Images\trainstation_0.png" />
     <Resource Include="Resources\Images\trainstation_public.png" />
-    <Resource Include="Resources\Images\game_minimap_dummy.png" />
     <Resource Include="Resources\Images\game_map_dummy.jpg" />
     <Resource Include="Resources\Images\rotate_right.png" />
     <Resource Include="Resources\Images\rotate_left.png" />
@@ -683,32 +686,22 @@
     <Resource Include="Resources\Images\Tools\other\mine.png" />
     <Resource Include="Resources\Images\ghosttrain.png" />
     <Resource Include="Resources\Images\gras.jpg" />
-    <Resource Include="Resources\Images\stock.png" />
-    <Resource Include="Resources\Images\stock_cart_0.png" />
     <Resource Include="Resources\Images\Tools\trainstations\playertrainstation.png" />
     <Resource Include="Resources\Images\container_points.png" />
     <Resource Include="Resources\Images\btn_back.png" />
     <Resource Include="Resources\Images\crane.png" />
-    <Resource Include="Resources\Images\Tools\other\crane.png" />
     <Resource Include="Resources\Images\Tools\rail\railcurve_ne.png" />
     <Resource Include="Resources\Images\Tools\rail\railcurve_nw.png" />
     <Resource Include="Resources\Images\Tools\rail\railcurve_se.png" />
     <Resource Include="Resources\Images\Tools\rail\railcurve_sw.png" />
     <Resource Include="Resources\Images\Tools\rail\rail_ew.png" />
     <Resource Include="Resources\Images\Tools\rail\rail_ns.png" />
-    <Resource Include="Resources\Images\trainstation_1.png" />
-    <Resource Include="Resources\Images\trainstation_2.png" />
-    <Resource Include="Resources\Images\trainstation_3.png" />
-    <Resource Include="Resources\Images\ghostcrane.png" />
     <Resource Include="Resources\Images\rail_EAST_NORTH.png" />
     <Resource Include="Resources\Images\rail_NORTH_WEST.png" />
     <Resource Include="Resources\Images\rail_EAST_SOUTH.png" />
     <Resource Include="Resources\Images\rail_SOUTH_WEST.png" />
     <Resource Include="Resources\Images\rail_EAST_WEST.png" />
     <Resource Include="Resources\Images\rail_NORTH_SOUTH.png" />
-    <Resource Include="Resources\Images\stock_cart_1.png" />
-    <Resource Include="Resources\Images\stock_cart_2.png" />
-    <Resource Include="Resources\Images\stock_cart_3.png" />
     <Resource Include="Resources\Images\changeSwitch.png" />
     <Resource Include="Resources\Images\rail_EAST_NORTH_inactive.png" />
     <Resource Include="Resources\Images\rail_EAST_SOUTH_inactive.png" />

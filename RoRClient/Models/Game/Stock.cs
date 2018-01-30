@@ -11,12 +11,14 @@ namespace RoRClient.Models.Game
     {
         private Compass alignment;
         private Guid trainstationId;
+        private TrainstationType trainstationType;
 
-        public Stock(Guid id, Square square, Compass alignment, Guid trainstationId) : base(square)
+        public Stock(Guid id, Square square, Compass alignment, Guid trainstationId, TrainstationType trainstationType) : base(square)
         {
             this.id = id;
             this.alignment = alignment;
             this.trainstationId = trainstationId;
+            this.trainstationType = trainstationType;
         }
         public Compass Alignment
         {
@@ -38,5 +40,18 @@ namespace RoRClient.Models.Game
                 return trainstationId;
             }
         }
+
+        public TrainstationType TrainstationType
+        {
+            get
+            {
+                return trainstationType;
+            }
+        }
+    }
+
+    public enum TrainstationType
+    {
+        PLAYER, PUBLIC
     }
 }

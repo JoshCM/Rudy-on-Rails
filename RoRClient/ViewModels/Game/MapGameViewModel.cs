@@ -31,6 +31,30 @@ namespace RoRClient.ViewModels.Game
             map = GameSession.GetInstance().Map;
             GameSession.GetInstance().PropertyChanged += OnGameSessionChanged;
             ViewConstants.PropertyChanged += OnViewConstantsChanged;
+            MainViewModel.IncreaseSpeedInput += OnIncreaseSpeedInputWasFired;
+            MainViewModel.DecreaseSpeedInput += OnDecreaseSpeedInputWasFired;
+            MainViewModel.StopOwnLocoInput += OnStopOwnLocoInputWasFired;
+        }
+
+        private void OnIncreaseSpeedInputWasFired(object sender, EventArgs eventArgs)
+        {
+            if (OwnLoco.Loco.Speed <= 5)
+            {
+                OwnLoco.Loco.Speed += 1;
+            }
+        }
+
+        private void OnDecreaseSpeedInputWasFired(object sender, EventArgs eventArgs)
+        {
+            if (OwnLoco.Loco.Speed >= -1)
+            {
+                OwnLoco.Loco.Speed -= 1;
+            }
+        }
+
+        private void OnStopOwnLocoInputWasFired(object sender, EventArgs eventArgs)
+        {
+            OwnLoco.Loco.Speed = 0;
         }
 
         public GameInteractionsViewModel GameInteractionsViewModel

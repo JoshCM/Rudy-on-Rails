@@ -13,6 +13,7 @@ import models.scripts.ScriptableObject;
 import models.scripts.ScriptableObjectManager;
 import models.scripts.Scripts;
 import persistent.MapManager;
+import resources.PropertyManager;
 
 /**
  * Oberklasse vom Game-Modus. 
@@ -20,7 +21,7 @@ import persistent.MapManager;
  * Erhaelt ueber einen QueueReceiver Anfragen von Clients, die mit der GameSession verbunden sind
  */
 public class GameSession extends RoRSession implements ModelObserver {
-	private final static int POINTS_TO_WIN = 100;
+	private final static int POINTS_TO_WIN = Integer.valueOf(PropertyManager.getProperty("points_to_win"));
 	private final static int TIME_BETWEEN_TICKS_IN_MILLISECONDS = 100;
 	
 	private Thread tickingThread;
@@ -83,7 +84,6 @@ public class GameSession extends RoRSession implements ModelObserver {
 			}
 		};
 		tickingThread.start();
-		
 	}
 	
 	/**
@@ -106,7 +106,6 @@ public class GameSession extends RoRSession implements ModelObserver {
 		this.stopped = true;
 		queueReceiver.stop();
 	}
-	
 
 	/**
 	 * Fügt dem Ticker eine Collection von TickableGameObjects hinzu
@@ -129,10 +128,23 @@ public class GameSession extends RoRSession implements ModelObserver {
 	 * @param playerId
 	 * @return
 	 */
-	public Loco getLocomotiveByPlayerId(UUID playerId) {
+	public PlayerLoco getPlayerLocoByPlayerId(UUID playerId) {
 		for (Loco loc : locos) {
-			if (loc.getPlayerId().toString().equals(playerId.toString())) {
-				return loc;
+			if (loc.getPlayerId().toString().equals(playerId.toString()) && loc instanceof PlayerLoco) {
+				return (PlayerLoco)loc;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * @param playerId
+	 * @return Die GhostLoco des Spielers mit der hereingereichten playerId
+	 */
+	public GhostLoco getGhostLocoByPlayerId(UUID playerId) {
+		for (Loco loco : locos) {
+			if (loco.getPlayerId().equals(playerId) && loco instanceof GhostLoco) {
+				return (GhostLoco)loco;
 			}
 		}
 		return null;
@@ -155,7 +167,6 @@ public class GameSession extends RoRSession implements ModelObserver {
 		message.putValue("playerId", player.getId());
 		notifyChange(message);
 	}
-	
 	
 	public void addMine(Mine mine) {
 		if(mine!=null) {
