@@ -103,7 +103,9 @@ public class PlayerLocoTests {
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession(UUID.randomUUID().toString(),
 				UUID.randomUUID(), "HostPlayer");
 
-		Map map = gameSession.getMap();
+		Map map = new Map("gameSession",50);
+		gameSession.setMap(map);
+		
 		Square square = map.getSquare(squarePosX, squarePosY);
 
 		Rail rail = new Rail(gameSession.getSessionName(), square, directions);
@@ -132,7 +134,9 @@ public class PlayerLocoTests {
 				UUID.randomUUID(), "HostPlayer");
 		Player player = new Player(gameSession.getSessionName(), "Hans", UUID.randomUUID(), true);
 
-		Map map = gameSession.getMap();
+		Map map = new Map("gameSession",50);
+		gameSession.setMap(map);
+		
 		Square squareLoco = map.getSquare(squarePosXLoco, squarePosYLoco);
 		Square squareCart = map.getSquare(squarePosXCart, squarePosYCart);
 
