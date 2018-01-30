@@ -33,7 +33,9 @@ public class RailTests {
 
 		EditorSession editorSession = EditorSessionManager.getInstance()
 				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "Player");
-		Map map = editorSession.getMap();
+		Map map = new Map("editorSession",50);
+		editorSession.setMap(map);
+		
 		Square square = map.getSquare(squarePosX, squarePosY);
 		Rail rail = new Rail(editorSession.getSessionName(), square, railSectionPositions);
 
@@ -53,7 +55,9 @@ public class RailTests {
 
 		EditorSession editorSession = EditorSessionManager.getInstance()
 				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "Player");
-		Map map = editorSession.getMap();
+		Map map = new Map("editorSession",50);
+		editorSession.setMap(map);
+		
 		Square square = map.getSquare(squarePosX, squarePosY);
 		UUID railId = UUID.randomUUID();
 		Rail rail = new Rail(editorSession.getSessionName(), square, railSectionPositions, UUID.randomUUID(), railId);
@@ -140,7 +144,9 @@ public class RailTests {
 
 		EditorSession editorSession = EditorSessionManager.getInstance()
 				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "Player");
-		Map map = editorSession.getMap();
+		Map map = new Map("editorSession",50);
+		editorSession.setMap(map);
+		
 		Square square = map.getSquare(squarePosX, squarePosY);
 		Rail rail = new Rail(editorSession.getSessionName(), square, railSectionPositions);
 		return rail;
@@ -162,7 +168,9 @@ public class RailTests {
 
 		EditorSession editorSession = EditorSessionManager.getInstance()
 				.createNewEditorSession(UUID.randomUUID().toString(), UUID.randomUUID(), "Player");
-		Map map = editorSession.getMap();
+		Map map = new Map("editorSession",50);
+		editorSession.setMap(map);
+		
 		Square square = map.getSquare(squarePosX, squarePosY);
 		Rail rail = new Rail(editorSession.getSessionName(), square, railSectionPositions, true);
 		Signals signals = rail.getSignals();

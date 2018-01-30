@@ -72,9 +72,11 @@ public class GhostLocoTests {
 		
 		GameSession gameSession = GameSessionManager.getInstance().createNewGameSession("TestSession",
 				UUID.randomUUID(), "HostPlayer");
+		Map map = new Map("gameSession",50);
+		gameSession.setMap(map);
+		
 		Player player = new Player(gameSession.getSessionName(), "Hans", UUID.randomUUID(), true);
 
-		Map map = gameSession.getMap();
 		Square squareLoco = map.getSquare(squarePosXLoco, squarePosYLoco);
 		Square squareCart = map.getSquare(squarePosXCart, squarePosYCart);
 		Square squareCart2 = map.getSquare(squarePosXCart2, squarePosYCart2);
