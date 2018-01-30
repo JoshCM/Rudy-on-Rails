@@ -50,7 +50,6 @@ namespace RoRClient.Models.Game
             {
                 changeSmokeVisibility = value;
             }
-
         }
 
         public void UpdateSmokeVisibility(String newVisibility)
@@ -138,7 +137,7 @@ namespace RoRClient.Models.Game
 
         public Cart GetCartById(Guid cartId)
         {
-            return carts.Where(x => x.Id == cartId).First();
+            return carts.Where(x => x.Id == cartId).FirstOrDefault();
         }
     }
 }

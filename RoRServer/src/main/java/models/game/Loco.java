@@ -325,22 +325,25 @@ public abstract class Loco extends TickableGameObject {
 	}
 
 	private boolean checkForCollision(Rail rail) {
-		List<Loco> locos = GameSessionManager.getInstance().getGameSession().getLocos();
+		if(this instanceof PlayerLoco) {
+			List<Loco> locos = GameSessionManager.getInstance().getGameSession().getLocos();
 
-		for (Loco loco : locos) {
-			if (!(loco instanceof GhostLoco)) {
-				if (loco.getRail() == rail) {
-					crashedLoco = loco;
-					return true;
-				}
-				for (Cart cart : loco.getCarts()) {
-					if (cart.getRail() == rail) {
+			for (Loco loco : locos) {
+				if (!(loco instanceof GhostLoco) && loco != this) {
+					if (loco.getRail() == rail) {
 						crashedLoco = loco;
 						return true;
+					}
+					for (Cart cart : loco.getCarts()) {
+						if (cart.getRail() == rail) {
+							crashedLoco = loco;
+							return true;
+						}
 					}
 				}
 			}
 		}
+		
 		return false;
 	}
 

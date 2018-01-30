@@ -66,24 +66,32 @@ namespace RoRClient.ViewModels.Game
                                 Angle -= 90;
                             else if (RealDrivingDirection.Equals(Compass.WEST))
                                 Angle += 90;
+                            else
+                                Angle += 180;
                             break;
                         case Compass.EAST:
                             if (RealDrivingDirection.Equals(Compass.SOUTH))
                                 Angle -= 90;
                             else if (RealDrivingDirection.Equals(Compass.NORTH))
                                 Angle += 90;
+                            else
+                                Angle += 180;
                             break;
                         case Compass.SOUTH:
                             if (RealDrivingDirection.Equals(Compass.WEST))
                                 Angle -= 90;
                             else if (RealDrivingDirection.Equals(Compass.EAST))
                                 Angle += 90;
+                            else
+                                Angle += 180;
                             break;
                         case Compass.WEST:
                             if (RealDrivingDirection.Equals(Compass.NORTH))
                                 Angle -= 90;
                             else if (RealDrivingDirection.Equals(Compass.SOUTH))
                                 Angle += 90;
+                            else
+                                Angle += 180;
                             break;
                         default:
                             Angle = 0;

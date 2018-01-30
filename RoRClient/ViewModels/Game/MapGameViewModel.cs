@@ -312,9 +312,11 @@ namespace RoRClient.ViewModels.Game
                 PropertyChangedExtendedEventArgs<Cart> eventArgs = (PropertyChangedExtendedEventArgs<Cart>)e;
                 Cart tempCart = eventArgs.OldValue;
 
-                foreach (CanvasGameViewModel cartGameViewModel in locos)
+                for(int i = locos.Count - 1; i >= 0; i--)
                 {
-                    if (cartGameViewModel is CartGameViewModel) {
+                    CanvasGameViewModel cartGameViewModel = locos[i];
+                    if(cartGameViewModel != null && cartGameViewModel is CartGameViewModel)
+                    {
                         CartGameViewModel tempCartGameViewModel = (CartGameViewModel)cartGameViewModel;
                         if (tempCartGameViewModel.Cart == tempCart)
                         {
