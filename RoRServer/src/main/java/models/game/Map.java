@@ -2,8 +2,6 @@ package models.game;
 
 import models.base.ModelBase;
 import models.helper.Validator;
-import persistent.MapManager;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

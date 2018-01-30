@@ -8,10 +8,11 @@ import com.google.gson.JsonObject;
 
 import communication.MessageInformation;
 import models.session.RoRSession;
+import resources.PropertyManager;
 
 public class Publictrainstation extends Trainstation {
 	
-	public static int TRADE_DISTANCE = 1;
+	public static int TRADE_DISTANCE = Integer.valueOf(PropertyManager.getProperty("publictrainstation_trade_distance"));
 	
 	public Publictrainstation(String sessionName, Square square, List<UUID> trainstationRailIds, UUID id,
 			Compass alignment, Stock stock) {
@@ -132,6 +133,7 @@ public class Publictrainstation extends Trainstation {
 		return result;
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

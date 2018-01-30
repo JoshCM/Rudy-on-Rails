@@ -116,8 +116,14 @@ namespace RoRClient.ViewModels.Game
         /// </summary>
         private void AddGhostLocoScriptFromPlayer()
         {
-            string description = "Eigenes Script " + currentNumberOfOwnGhostLocoScript;
+            
             string filename = CustomFileDialogs.AskUserToSelectPythonScript();
+            string scriptNameFromUser = PopupCreator.AskUserToInputString("Name des Scripts");
+
+            if (scriptNameFromUser == null)
+            {
+                scriptNameFromUser = "Eigenes Script " + currentNumberOfOwnGhostLocoScript;
+            }
 
             if (filename != null)
             {
@@ -126,7 +132,7 @@ namespace RoRClient.ViewModels.Game
 
                 MessageInformation messageInformation = new MessageInformation();
                 messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
-                messageInformation.PutValue("description", description);
+                messageInformation.PutValue("description", scriptNameFromUser);
                 messageInformation.PutValue("scriptContent", scriptContent);
                 messageInformation.PutValue("scriptType", ScriptTypes.GHOSTLOCO.ToString());
                 GameSession.GetInstance().QueueSender.SendMessage("AddScriptFromPlayer", messageInformation);
@@ -147,9 +153,14 @@ namespace RoRClient.ViewModels.Game
         }
 
         private void AddSensorScriptFromPlayer()
-        {
-            string description = "Eigenes Script " + currentNumberOfOwnSensorScript;
+        { 
             string filename = CustomFileDialogs.AskUserToSelectPythonScript();
+            string scriptNameFromUser = PopupCreator.AskUserToInputString("Name des Scripts");
+
+            if (scriptNameFromUser == null)
+            {
+                scriptNameFromUser = "Eigenes Script " + currentNumberOfOwnGhostLocoScript;
+            }
 
             if (filename != null)
             {
@@ -158,7 +169,7 @@ namespace RoRClient.ViewModels.Game
 
                 MessageInformation messageInformation = new MessageInformation();
                 messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
-                messageInformation.PutValue("description", description);
+                messageInformation.PutValue("description", scriptNameFromUser);
                 messageInformation.PutValue("scriptContent", scriptContent);
                 messageInformation.PutValue("scriptType", ScriptTypes.SENSOR.ToString());
                 GameSession.GetInstance().QueueSender.SendMessage("AddScriptFromPlayer", messageInformation);

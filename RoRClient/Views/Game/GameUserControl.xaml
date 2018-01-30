@@ -32,7 +32,7 @@
         <game:MapGameUserControl Grid.Row="1"
                                  Grid.Column="0"
                                  Grid.ColumnSpan="3" 
-                                 DataContext="{Binding MapGameViewModel}"/>
+                                 DataContext="{Binding MapGameViewModel}" Focusable="False"/>
         <game:GameInteractionUserControl Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
 
         <game:TopMenuUserControl Grid.Row="0"
@@ -40,7 +40,7 @@
                                    Grid.ColumnSpan="2"
                                    DataContext="{Binding TopMenuViewModel}"/>
 
-        <game:GameInteractionUserControl DataContext="{Binding GameInteractionsViewModel}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <game:GameInteractionUserControl DataContext="{Binding GameInteractionsViewModel}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Focusable="False"/>
         <game:TrainSpeedGameUserControl Grid.Row="2"
                                         Grid.Column="2"
                                         DataContext="{Binding MapGameViewModel}"/>
