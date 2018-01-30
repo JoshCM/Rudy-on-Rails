@@ -19,6 +19,7 @@ namespace RoRClient.Models.Game
         private Guid playerId;
         private string changeSmokeVisibility = "Hidden";
         private string changeExplosionVisibility = "Hidden";
+        private Boolean respawned = false;
 
         public Loco(Guid id, Guid playerId, Compass drivingDirection, Square square) : base(square)
         {
@@ -111,10 +112,29 @@ namespace RoRClient.Models.Game
                 }
             }
         }
+
+        public Boolean Respawned
+        {
+            get
+            {
+                return respawned;
+            }
+            set
+            {
+                if (respawned != value)
+                {
+                    respawned = value;
+                    NotifyPropertyChanged("Respawned");
+                }
+            }
+        }
+
         public void UpdateDrivingDirectionAfterRespawn(Compass newDrivingDirection)
         {
             DrivingDirection = newDrivingDirection;
+            Respawned = true;
         }
+
         public Guid PlayerId
         {
             get

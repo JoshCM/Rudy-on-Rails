@@ -105,7 +105,6 @@ namespace RoRClient.ViewModels.Game
             }
             if(e.PropertyName == "UpdateDrivingDirection")
             {
-                Console.WriteLine("\n\n DRIVING DIRECTION: " + loco.DrivingDirection + "\n\n REAL DRIVING DIRECTION: " + RealDrivingDirection + "\n\n");
                 PropertyChangedExtendedEventArgs<Compass> eventArgs = (PropertyChangedExtendedEventArgs<Compass>)e;
                 Compass model = eventArgs.NewValue;
                 switch (model)
@@ -140,6 +139,15 @@ namespace RoRClient.ViewModels.Game
                 }
 
                 RealDrivingDirection = eventArgs.NewValue;
+            }
+
+            if (e.PropertyName == "Respawned")
+            {
+                if (loco.Respawned == true)
+                {
+                    RealDrivingDirection = loco.DrivingDirection;
+                    loco.Respawned = false;
+                }
             }
         }
 
