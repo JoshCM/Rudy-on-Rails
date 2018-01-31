@@ -1,5 +1,6 @@
 ﻿using RoRClient.Communication.DataTransferObject;
 using RoRClient.Models.Session;
+using RoRClient.Sound;
 using RoRClient.ViewModels.Commands;
 using RoRClient.Views.Editor.Helper;
 using RoRClient.Views.Popup;
@@ -16,6 +17,46 @@ namespace RoRClient.ViewModels.Game
 {
     class TopMenuViewModel : ViewModelBase
     {
+        private String sound = "Sound Aus";
+        public String Sound
+        {
+            get
+            {
+                return sound;
+            }
+            set
+            {
+                sound = value;
+                OnPropertyChanged("Sound");
+            }
+        }
+
+        private bool muteSounds;
+        public bool MuteSounds
+        {
+            get
+            {
+                return muteSounds;
+            }
+            set
+            {
+                if (muteSounds == value) return;
+
+                muteSounds = value;
+                Sound = muteSounds ? "Sound An" : "Sound Aus";
+                if (muteSounds)
+                {
+                    SoundManager.StopSounds();
+                }
+                else
+                {
+                    SoundManager.PlaySounds();
+                }
+
+                OnPropertyChanged("MuteSound");
+            }
+        }
+
         private ICommand openRulesPopUpCommand;
 
         public ICommand OpenRulesPopUpCommand
@@ -57,6 +98,9 @@ namespace RoRClient.ViewModels.Game
             messageInformation.PutValue("playerId", GameSession.GetInstance().OwnPlayer.Id);
             messageInformation.PutValue("isHost", GameSession.GetInstance().OwnPlayer.IsHost);
             GameSession.GetInstance().QueueSender.SendMessage("LeaveGame", messageInformation);
+            SoundManager.StopSounds();
+            SoundManager.DeleteSounds();
+
         }
 
 

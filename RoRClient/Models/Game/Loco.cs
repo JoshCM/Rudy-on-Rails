@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RoRClient.Sound;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,6 +20,7 @@ namespace RoRClient.Models.Game
         private Guid playerId;
         private string changeSmokeVisibility = "Hidden";
         private string changeExplosionVisibility = "Hidden";
+        private LocoSound sound;
 
         public Loco(Guid id, Guid playerId, Compass drivingDirection, Square square) : base(square)
         {
@@ -139,6 +141,19 @@ namespace RoRClient.Models.Game
         public Cart GetCartById(Guid cartId)
         {
             return carts.Where(x => x.Id == cartId).FirstOrDefault();
+        }
+
+        public LocoSound Sound
+        {
+            get
+            {
+                return sound;
+            }
+
+            set
+            {
+                sound = value;
+            }
         }
     }
 }

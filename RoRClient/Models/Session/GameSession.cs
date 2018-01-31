@@ -2,10 +2,11 @@
 using RoRClient.Communication.Dispatcher;
 using RoRClient.Communication.Topic;
 using RoRClient.Models.Game;
-
+using RoRClient.Sound;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+
 
 namespace RoRClient.Models.Session
 {
@@ -20,8 +21,7 @@ namespace RoRClient.Models.Session
         private Scripts scripts = new Scripts();
 
         private GameSession() : base()
-        {
-            
+        {  
         }
 
         public Scripts Scripts

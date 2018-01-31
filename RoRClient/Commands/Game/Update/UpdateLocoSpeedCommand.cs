@@ -34,6 +34,15 @@ namespace RoRClient.Commands.Game.Update
             {
                 loco.UpdateSmokeVisibility("Visible");
             }
+            if (session.OwnPlayer.Id.Equals(loco.PlayerId)&& loco is PlayerLoco)
+            {
+                if(loco.Sound == null)
+                {
+                    loco.Sound = new Sound.LocoSound();
+                }
+                loco.Sound.Rate = loco.Speed;
+                loco.Sound.PlayInLoop();
+            }
         }
     }
 }
