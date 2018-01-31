@@ -17,7 +17,6 @@ namespace RoRClient.ViewModels.Game
             this.SquarePosY = gold.Square.PosY;
         }
 
-
         public Gold Gold
         {
             get

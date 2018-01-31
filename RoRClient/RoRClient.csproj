@@ -93,6 +93,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfAnimatedGif, Version=1.4.15.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfAnimatedGif.1.4.15\lib\net\WpfAnimatedGif.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -172,9 +175,13 @@
     <Compile Include="Commands\Game\Delete\DeletePlaceableCommand.cs" />
     <Compile Include="Commands\Game\Other\EndGameCommand.cs" />
     <Compile Include="Commands\Game\Other\RemoveResourceFromMineCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateCartToLocoAfterRespawnCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateLocoForRespawnCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateColorOfPlayerCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateConfigOfSignalsCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCranePositionCommand.cs" />
+    <Compile Include="Commands\Game\Update\UpdateLocoCrashedCommand.cs" />
+    <Compile Include="Commands\Game\Delete\DeleteCartCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateResourceLoadedOntoCartCommand.cs" />
     <Compile Include="Commands\Game\Update\UpdateCartPositionCommand.cs" />
     <Compile Include="Commands\Game\Create\CreatePlayertrainstationCommand.cs" />
@@ -211,6 +218,7 @@
     <Compile Include="Models\Game\GamePlayer.cs" />
     <Compile Include="Models\Game\GhostLoco.cs" />
     <Compile Include="Models\Game\Crane.cs" />
+    <Compile Include="Models\Game\Playertrainstation.cs" />
     <Compile Include="Models\Game\PointContainer.cs" />
     <Compile Include="Models\Game\Gold.cs" />
     <Compile Include="Models\Game\Loco.cs" />
@@ -225,7 +233,6 @@
     <Compile Include="Models\Game\Scripts.cs" />
     <Compile Include="Models\Game\Stock.cs" />
     <Compile Include="Models\Game\Signals.cs" />
-    <Compile Include="Models\Game\Playertrainstation.cs" />
     <Compile Include="Models\Game\Trainstation.cs" />
     <Compile Include="Models\Lobby\EditorInfo.cs" />
     <Compile Include="Models\Lobby\GameInfo.cs" />
@@ -364,6 +371,9 @@
     <Compile Include="Views\Game\GameResultView.xaml.cs">
       <DependentUpon>GameResultView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Game\PlayerLocoGameUserControl.xaml.cs">
+      <DependentUpon>PlayerLocoGameUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Game\PointContainerGameUserControl.xaml.cs">
       <DependentUpon>PointContainerGameUserControl.xaml</DependentUpon>
     </Compile>
@@ -374,9 +384,6 @@
       <DependentUpon>GhostLocoGameUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Game\LocoGameUserControl.cs" />
-    <Compile Include="Views\Game\PlayerLocoGameUserControl.xaml.cs">
-      <DependentUpon>PlayerLocoGameUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Game\MapGameUserControl.xaml.cs">
       <DependentUpon>MapGameUserControl.xaml</DependentUpon>
     </Compile>
@@ -480,6 +487,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Game\PlayerLocoGameUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
     <Page Include="Views\Game\PointContainerGameUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -491,10 +502,6 @@
     <Page Include="Views\Game\GhostLocoGameUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Game\PlayerLocoGameUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Game\MapGameUserControl.xaml">
       <SubType>Designer</SubType>
@@ -727,6 +734,8 @@
     <Resource Include="Resources\Images\sensor_active.png" />
     <Resource Include="Resources\Images\sensor_inactive.png" />
     <Content Include="Resources\Sounds\tschuktschuk.wav" />
+    <Resource Include="Resources\Images\smoke.gif" />
+    <Resource Include="Resources\Images\explosion.gif" />
     <Content Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />

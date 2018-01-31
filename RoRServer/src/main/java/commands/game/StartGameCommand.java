@@ -148,7 +148,7 @@ public class StartGameCommand extends CommandBase {
 				Rail rail = (Rail) map.getPlaceableOnSquareById(newPlayerTrainStation.getSpawnPointforLoco());
 				//Square locoSpawnPointSquare = rail.getSquareFromGameSession();
 				newTrainStation = newPlayerTrainStation;
-				
+				gameSession.setPlayerTrainstations((Playertrainstation) newTrainStation);
 				// setzt die farbe des naechsten spieler eins weiter
 				colorCounter += 1;
 			} else {
@@ -157,15 +157,11 @@ public class StartGameCommand extends CommandBase {
 			}
 			// Neue Trainstation auf Square setzen
 			trainstationSquare.setPlaceableOnSquare(newTrainStation);
-			
-			
 		}
-
 		// generiert an den erzeugenten rails resourcen
 		for (Rail generatedRail : generatedRails) {
 			generatedRail.generateResourcesNextToRail();
 		}
-
 		gameSession.start();
 	}
 	
@@ -179,7 +175,7 @@ public class StartGameCommand extends CommandBase {
 		gameSession.addLoco(ghostLoco);
 	}
 
-	private Compass getLocoDirectionbyTrainstation(Compass compass) {
+	public Compass getLocoDirectionbyTrainstation(Compass compass) {
 		switch (compass) {
 		case NORTH:
 			return Compass.EAST;

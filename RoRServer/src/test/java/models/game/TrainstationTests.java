@@ -26,8 +26,11 @@ public class TrainstationTests {
 		messageInformation.putValue("yPos", y);
 		messageInformation.putValue("alignment", Compass.EAST.toString());
 
-		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+		String sessionName = UUID.randomUUID().toString();
+		session = EditorSessionManager.getInstance().createNewEditorSession(sessionName,
 				UUID.randomUUID(), "Player");
+		Map map = new Map(sessionName,50);
+		session.setMap(map);
 		CreatePlayertrainstationCommand command = new CreatePlayertrainstationCommand(session, messageInformation);
 
 		String commandName = command.getClass().getName();
@@ -59,8 +62,11 @@ public class TrainstationTests {
 		messageInformation.putValue("yPos", 0);
 		messageInformation.putValue("alignment", Compass.EAST.toString());
 
-		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+		String sessionName = UUID.randomUUID().toString();
+		session = EditorSessionManager.getInstance().createNewEditorSession(sessionName,
 				UUID.randomUUID(), "Player");
+		Map map = new Map(sessionName,50);
+		session.setMap(map);
 		CreatePlayertrainstationCommand command = new CreatePlayertrainstationCommand(session, messageInformation);
 
 		String commandName = command.getClass().getName();
@@ -73,7 +79,7 @@ public class TrainstationTests {
 		createdCommand.execute();
 	}
 
-	@Test(expected = InvalidModelOperationException.class)
+	@Test(expected = exceptions.InvalidModelOperationException.class)
 	public void TrainstationRailBlockedByExistingRail() {
 		int trainstationX = 0;
 		int trainstationY = 4;
@@ -83,10 +89,15 @@ public class TrainstationTests {
 		messageInformation.putValue("yPos", trainstationY);
 		messageInformation.putValue("alignment", Compass.EAST.toString());
 
+		
 		// setzen der rail die die exception verursacht
-		session = EditorSessionManager.getInstance().createNewEditorSession(UUID.randomUUID().toString(),
+		String sessionName = UUID.randomUUID().toString();
+		session = EditorSessionManager.getInstance().createNewEditorSession(sessionName,
 				UUID.randomUUID(), "Player");
-		Square square = session.getMap().getSquare(trainstationX + 1, trainstationY);
+		Map map = new Map(sessionName,50);
+		session.setMap(map);
+		
+		Square square = map.getSquare(trainstationX + 1, trainstationY);
 		square.setPlaceableOnSquare(new Rail(session.getSessionName(),square,Arrays.asList(Compass.NORTH, Compass.SOUTH)));
 
 		CreatePlayertrainstationCommand command = new CreatePlayertrainstationCommand(session, messageInformation);
@@ -95,10 +106,12 @@ public class TrainstationTests {
 		Command createdCommand = null;
 		try {
 			createdCommand = CommandCreator.createCommandForName(commandName, session, messageInformation);
-		} catch (Exception e) {
 
+		} catch (Exception e) {
+			
 		}
 		createdCommand.execute();
+		System.out.println("test");
 	}
 	
 	@Test

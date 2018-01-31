@@ -18,6 +18,8 @@ namespace RoRClient.Models.Game
         private int speed;
         private Compass drivingDirection;
         private Guid playerId;
+        private string changeSmokeVisibility = "Hidden";
+        private string changeExplosionVisibility = "Hidden";
         private LocoSound sound;
 
         public Loco(Guid id, Guid playerId, Compass drivingDirection, Square square) : base(square)
@@ -27,10 +29,57 @@ namespace RoRClient.Models.Game
             this.playerId = playerId;
         }
 
+        public void RemoveCart(Cart cart)
+        {
+            carts.Remove(cart);
+            NotifyPropertyChanged("DeleteCarts", cart, null);
+        }
+
         public void AddCart(Cart cart)
         {
             carts.Add(cart);
             NotifyPropertyChanged("Carts", null, cart);
+        }
+
+
+        public String ChangeSmokeVisibility
+        {
+            get
+            {
+                return changeSmokeVisibility;
+            }
+            set
+            {
+                changeSmokeVisibility = value;
+            }
+        }
+
+        public void UpdateSmokeVisibility(String newVisibility)
+        {
+            changeSmokeVisibility = newVisibility;
+            NotifyPropertyChanged("ChangeSmokeVisibility", this.changeSmokeVisibility, newVisibility);
+        }
+
+        public String ChangeExplosionVisibility
+        {
+            get
+            {
+                Console.WriteLine("should get " + changeExplosionVisibility);
+                return changeExplosionVisibility;
+            }
+            set
+            {
+                Console.WriteLine("should set " + changeExplosionVisibility);
+                changeExplosionVisibility = value;
+            }
+
+        }
+
+        public void UpdateExplosionVisibility(String newVisibility)
+        {
+            Console.WriteLine("should update " + newVisibility);
+            changeExplosionVisibility = newVisibility;
+            NotifyPropertyChanged("ChangeExplosionVisibility", this.changeExplosionVisibility, newVisibility);
         }
 
         public int Speed
@@ -48,7 +97,6 @@ namespace RoRClient.Models.Game
                 }
             }
         }
-     
         public Compass DrivingDirection
         {
             get
@@ -64,6 +112,13 @@ namespace RoRClient.Models.Game
                 }
             }
         }
+
+        public void UpdateDrivingDirectionAfterRespawn(Compass newDrivingDirection)
+        {
+            DrivingDirection = newDrivingDirection;
+            NotifyPropertyChanged("UpdateDrivingDirection");
+        }
+
         public Guid PlayerId
         {
             get
@@ -73,6 +128,8 @@ namespace RoRClient.Models.Game
         }
 
         private ObservableCollection<Cart> carts = new ObservableCollection<Cart>();
+        
+
         public ObservableCollection<Cart> Carts
         {
             get
@@ -83,7 +140,7 @@ namespace RoRClient.Models.Game
 
         public Cart GetCartById(Guid cartId)
         {
-            return carts.Where(x => x.Id == cartId).First();
+            return carts.Where(x => x.Id == cartId).FirstOrDefault();
         }
 
         public LocoSound Sound

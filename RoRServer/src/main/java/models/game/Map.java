@@ -20,6 +20,7 @@ public class Map extends ModelBase {
 	private int mapSize;
 	private int availablePlayerSlots;
 
+
 	/**
 	 * Jedes Square auf der Map braucht einen Index, um jedem Objekt, das auf einem
 	 * Square platziert wird, ein eindeutiges Objekt zuzuordnen
@@ -28,7 +29,8 @@ public class Map extends ModelBase {
 		super(sessionName);
 		this.mapSize = mapSize;
 		squares = new Square[mapSize][mapSize];
-		
+
+
 		for(int x= 0; x < mapSize; x++) {
 			for(int y = 0; y < mapSize; y++) {
 				Square s = new Square(sessionName, x, y);
@@ -47,6 +49,7 @@ public class Map extends ModelBase {
 			for(Square square : squares) {
 				if(square.getPlaceableOnSquare() instanceof Playertrainstation) {
 					addAvailablePlayerSlot();
+
 				}
 			}
 		}
@@ -71,6 +74,8 @@ public class Map extends ModelBase {
 	public String getName() {
 		return name;
 	}
+
+
 
 	public void changeName(String name) {
 		this.name = name;
@@ -204,8 +209,12 @@ public class Map extends ModelBase {
 	 * @param alignment
 	 * @return Zugehöriges Square einer Rail
 	 */
-	private Square getTrainstationInteractiveGameObjectSquare(InteractiveGameObject trainstationInteractiveGameObject, Trainstation newTrainstation,
-			int oldPlaceableOnSquareXPos, int oldPlaceableOnSquareYPos) {
+	private Square getTrainstationInteractiveGameObjectSquare(
+			InteractiveGameObject trainstationInteractiveGameObject,
+			Trainstation newTrainstation,
+			int oldPlaceableOnSquareXPos,
+			int oldPlaceableOnSquareYPos
+	) {
 		int trainstationRailXSpan = trainstationInteractiveGameObject.getXPos() - oldPlaceableOnSquareXPos;
 		int trainstationRailYSpan = trainstationInteractiveGameObject.getYPos() - oldPlaceableOnSquareYPos;
 
@@ -220,7 +229,6 @@ public class Map extends ModelBase {
 	 * @param newSquare
 	 */
 	public void movePlaceableOnRail(Square oldSquare, Square newSquare) {
-		
 		notifyMovedMine(oldSquare, newSquare);
 	}
 	

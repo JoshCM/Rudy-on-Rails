@@ -133,16 +133,14 @@ namespace RoRClient.ViewModels.Game
         {
             get
             {
-                foreach(CanvasGameViewModel canvasGameViewModel in locos)
+                foreach (CanvasGameViewModel canvasGameViewModel in locos)
                 {
-                    if(canvasGameViewModel is LocoGameViewModel)
-                    {
+                    if (!(canvasGameViewModel is CartGameViewModel)){
                         LocoGameViewModel locoViewModel = (LocoGameViewModel)canvasGameViewModel;
                         if (locoViewModel.Loco.PlayerId == ClientConnection.GetInstance().ClientId)
-                        {
                             return locoViewModel;
-                        }
                     }
+                
                 }
                 return null;
             }
@@ -256,7 +254,6 @@ namespace RoRClient.ViewModels.Game
                         CanvasGameViewModel viewModel = factory.CreateGameViewModelForModel(rail.PlaceableOnRail, this);
 
                         taskFactory.StartNew(() => placeableOnRailCollection.Add(viewModel));
-
                     }
               
                 }
@@ -281,6 +278,7 @@ namespace RoRClient.ViewModels.Game
                 }
 
                 loco.PropertyChanged += OnCartAddedInLoco;
+                loco.PropertyChanged += OnCartDeletedInLoco;
             }
             else if(e.PropertyName == "Map")
             {
@@ -307,7 +305,26 @@ namespace RoRClient.ViewModels.Game
                 taskFactory.StartNew(() => locos.Add(cartGameViewModel));
             }
         }
+        private void OnCartDeletedInLoco(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "DeleteCarts")
+            {
+                PropertyChangedExtendedEventArgs<Cart> eventArgs = (PropertyChangedExtendedEventArgs<Cart>)e;
+                Cart tempCart = eventArgs.OldValue;
 
-        
+                for(int i = locos.Count - 1; i >= 0; i--)
+                {
+                    CanvasGameViewModel cartGameViewModel = locos[i];
+                    if(cartGameViewModel != null && cartGameViewModel is CartGameViewModel)
+                    {
+                        CartGameViewModel tempCartGameViewModel = (CartGameViewModel)cartGameViewModel;
+                        if (tempCartGameViewModel.Cart == tempCart)
+                        {
+                            taskFactory.StartNew(() => locos.Remove(cartGameViewModel));
+                        }
+                    }
+                }
+            }
+        }
     }
 }

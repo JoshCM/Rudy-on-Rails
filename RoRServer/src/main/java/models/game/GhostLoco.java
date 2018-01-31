@@ -129,6 +129,34 @@ public class GhostLoco extends Loco {
 			}
 		}
 	}
+
+	@Override
+	public Rail getNextRail(Compass compass, Square square) {
+		Square retSquare = null;
+		Rail newRail = null;
+
+		switch (compass) {
+			case NORTH:
+				retSquare = this.map.getSquare(square.getXIndex(), square.getYIndex() - 1);
+				break;
+			case EAST:
+				retSquare = this.map.getSquare(square.getXIndex() + 1, square.getYIndex());
+				break;
+			case SOUTH:
+				retSquare = this.map.getSquare(square.getXIndex(), square.getYIndex() + 1);
+				break;
+			case WEST:
+				retSquare = this.map.getSquare(square.getXIndex() - 1, square.getYIndex());
+				break;
+		}
+
+		newRail = (Rail) retSquare.getPlaceableOnSquare();
+
+		if (retSquare.getPlaceableOnSquare() instanceof Rail) {
+			return newRail;
+		}
+		return newRail;
+	}
 	
 	private void loadResourceOnCartAndRemoveItFromSquare(Cart cart, Resource resource) {
 		cart.loadResourceOntoCart(resource);
